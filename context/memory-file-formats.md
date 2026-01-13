@@ -4,16 +4,30 @@
 
 ```
 .local/                          # MEMORY_DIR（PJ CLAUDE.mdで定義、デフォルト: .local/）
-├── memory/                      # タスクごとのメモリディレクトリ
+├── memory/                      # タスクごとの詳細ログ
 │   ├── YYMMDD_auth-feature/     # YYMMDDは実際の日付（例: 260112 = 2026/01/12）
 │   │   ├── 05_log.md
 │   │   └── ...
 │   └── YYMMDD_bug-fix-123/
+├── memories/                    # インデックス層（検索用）
+│   └── <category>/
+│       └── <topic>.md
 └── issues/                      # codebase-reviewで生成されるissueファイル
     ├── critical-sec-ユーザー入力のSQLインジェクション脆弱性.md
     ├── major-perf-ページ一覧取得でN+1クエリが発生.md
     └── ...
 ```
+
+## 2層構造
+
+| 層 | 場所 | 用途 |
+|----|------|------|
+| 詳細ログ | `memory/YYMMDD_<task>/` | タスクの全記録（生ログ） |
+| インデックス | `memories/<category>/` | 要約・検索用（relatedで詳細を参照） |
+
+**検索フロー:**
+1. `rg "^summary:" .local/memories/` でサマリー検索
+2. 該当するメモリの`related`から詳細ログを参照
 
 ## メモリディレクトリ構成
 
@@ -151,4 +165,67 @@
 - 状況:
 - 対応:
 - 結果:
+```
+
+## memories/（インデックス層）
+
+場所: `${MEMORY_DIR}/memories/<category>/<topic>.md`
+
+タスク完了時に価値ある知見をインデックス化。要点のみ記載し、詳細はrelatedで参照。
+
+### フォーマット
+
+**Required:**
+```yaml
+---
+summary: "1-2行の説明（検索の判断材料）"
+created: 2026-01-14
+---
+```
+
+**Optional:**
+```yaml
+---
+summary: "N+1クエリ問題の解決 - eagerロードの適用"
+created: 2026-01-14
+updated: 2026-01-20
+status: resolved  # in-progress | resolved | blocked | abandoned
+tags: [performance, database]
+related:          # 詳細ログへの参照
+  - .local/memory/260114_n-plus-one-fix/
+---
+```
+
+### テンプレート
+
+```markdown
+---
+summary: "簡潔な説明"
+created: 2026-01-14
+tags: [tag1, tag2]
+related:
+  - .local/memory/YYMMDD_task-name/
+---
+
+# タイトル
+
+## 要点
+- ポイント1
+- ポイント2
+
+## 詳細
+→ related参照
+```
+
+### 検索方法
+
+```bash
+# サマリー一覧
+rg "^summary:" .local/memories/ --no-ignore --hidden
+
+# キーワード検索
+rg "^summary:.*keyword" .local/memories/ --no-ignore --hidden -i
+
+# タグ検索
+rg "^tags:.*keyword" .local/memories/ --no-ignore --hidden -i
 ```

@@ -20,7 +20,18 @@
 
 現在のタスクに関連する過去の情報を検索し、参照する:
 
-1. **過去のメモリディレクトリを検索**
+1. **memories/（インデックス層）を検索**（推奨）
+   ```bash
+   # サマリーからキーワード検索
+   rg "^summary:.*<キーワード>" ${MEMORY_DIR}/memories/ --no-ignore --hidden -i
+
+   # タグ検索
+   rg "^tags:.*<キーワード>" ${MEMORY_DIR}/memories/ --no-ignore --hidden -i
+
+   # 該当するメモリを読み、relatedから詳細ログを参照
+   ```
+
+2. **過去のメモリディレクトリを検索**（memories/で見つからない場合）
    ```bash
    # 関連キーワードでディレクトリ名を検索
    ls ${MEMORY_DIR}/memory/ | grep -i "<キーワード>"
@@ -29,12 +40,12 @@
    ls -la ${MEMORY_DIR}/memory/
    ```
 
-2. **関連する過去タスクのログを確認**
-   - 関連しそうなディレクトリの`05_log.md`を読む
+3. **関連する過去タスクのログを確認**
+   - memories/のrelatedから、または直接memory/ディレクトリの`05_log.md`を読む
    - 過去の調査結果、決定事項、発生した問題を把握
    - 同じ問題を繰り返さない
 
-3. **issueディレクトリを検索**
+4. **issueディレクトリを検索**
    ```bash
    # 関連キーワードでissueを検索
    ls ${MEMORY_DIR}/issues/ | grep -i "<キーワード>"
@@ -43,12 +54,12 @@
    ls ${MEMORY_DIR}/issues/ | grep "^high-"
    ```
 
-4. **関連issueの内容を確認**
+5. **関連issueの内容を確認**
    - 現在のタスクに関連するissueがあれば読む
    - 既知の問題点、改善案を参照
    - issueを解決するタスクなら、該当issueを必ず読む
 
-5. **参照結果を05_log.mdに記録**
+6. **参照結果を05_log.mdに記録**
    ```markdown
    ## 過去タスク・issue参照
 
@@ -195,6 +206,10 @@ agent --resume <session_id> -p "以下の改善を行いました: <改善内容
 2. 自律決定した事項
 3. 作成したブランチ名
 4. 残存する課題
+5. **価値ある知見があれば memories/ にインデックスを作成**
+   - `${MEMORY_DIR}/memories/<category>/<topic>.md` に保存
+   - `related` フィールドで memory/ の詳細ログを参照
+   - フォーマット: @context/memory-file-formats.md
 
 ## ユーザーへの質問
 

@@ -39,7 +39,7 @@ git clone <this-repo> ~/.claude
 
 | スキル | 説明 | トリガー |
 |--------|------|----------|
-| **agent-memory** | 会話をまたぐ永続メモリ（調査結果、決定事項の保存・検索） | 「記憶して」「思い出して」、価値ある発見時に自動 |
+| **agent-memory** | タスク知見のインデックス化（memory/への参照付き） | 「記憶して」「思い出して」、タスク完了時に自動 |
 | **codebase-review** | 6観点（perf/sec/test/arch/cq/docs）で並列レビュー | `/codebase-review`、品質監査依頼時 |
 | **pr-review** | Claude + GPT-5.2マルチモデルレビュー | PRレビュー依頼時 |
 | **project-init** | CLAUDE.md・.claude/の初期設定 | PJ初期化依頼時 |
@@ -69,19 +69,23 @@ CLAUDE.mdで定義された6フェーズワークフロー:
 5. **Phase 4: 品質確認** - lint/format/typecheck/test + agent review
 6. **Phase 5: 完了報告**
 
-## メモリディレクトリ
-
-各タスクの作業ログを `.local/memory/YYMMDD_<task_name>/` に保存:
+## メモリディレクトリ（2層構造）
 
 ```
 .local/
-├── memory/
+├── memory/              # 詳細ログ（タスク単位）
 │   └── YYMMDD_<task>/
-│       ├── 05_log.md      # 作業ログ（必須）
-│       ├── 30_plan.md     # 実装計画
+│       ├── 05_log.md    # 作業ログ
 │       └── ...
-└── issues/                # codebase-reviewで生成
+├── memories/            # インデックス層（検索用）
+│   └── <category>/
+│       └── <topic>.md   # 要約 + memory/への参照
+└── issues/              # codebase-reviewで生成
 ```
+
+**検索フロー:**
+1. `rg "^summary:" .local/memories/` でサマリー検索
+2. 該当するメモリの`related`から詳細ログを参照
 
 ## agent cli連携
 

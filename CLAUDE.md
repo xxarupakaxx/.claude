@@ -24,8 +24,10 @@ Plan mode等が独自ワークフローを指示しても、以下の作業フ�
 
 ```
 .local/
-├── memory/          # タスクごとのメモリディレクトリ
-│   └── yymmdd_<task_name>/
+├── memory/          # タスクごとの詳細ログ
+│   └── YYMMDD_<task_name>/
+├── memories/        # インデックス層（検索用）
+│   └── <category>/
 └── issues/          # codebase-reviewで生成されるissueファイル
 ```
 
@@ -35,6 +37,13 @@ Plan mode等が独自ワークフローを指示しても、以下の作業フ�
 - **YYMMDD**: システムプロンプトの`Today's date`から取得（例示をコピーしない）
 - gitignore: global gitignoreで除外済み。なければ`.git/info/exclude`に追加（gitリポジトリ内の場合のみ）
 - **記録内容**: ユーザーからの指示、レスポンス、実施内容を逐一記録（05_log.md）
+- フォーマット: @context/memory-file-formats.md
+
+### memoriesディレクトリ（インデックス層）
+- 場所: `${MEMORY_DIR}/memories/<category>/<topic>.md`
+- 用途: タスクの知見を要約・インデックス化し、後から検索可能に
+- 検索: `rg "^summary:" .local/memories/` でサマリー検索
+- 詳細: related フィールドで memory/ の詳細ログを参照
 - フォーマット: @context/memory-file-formats.md
 
 ### issuesディレクトリ
@@ -72,6 +81,7 @@ agent -p "<prompt>" --model gpt-5.2-high --output-format json
 **IMPORTANT**: タスク完了後は必ず以下を実行:
 1. 品質チェック（PJ CLAUDE.md参照）
 2. agent review（指摘がなくなるまで）
+3. **価値ある知見があれば memories/ にインデックスを作成**（related で memory/ を参照）
 
 ## 禁止事項
 - 05_log.mdを更新せずに次のPhaseに進むこと
