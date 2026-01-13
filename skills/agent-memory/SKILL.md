@@ -5,150 +5,128 @@ description: "Use this skill when the user asks to save, remember, recall, or or
 
 # Agent Memory
 
-A persistent memory space for storing knowledge that survives across conversations.
+タスクの知見をインデックス化し、後から検索・参照可能にする。
 
-**Location:** `.claude/skills/agent-memory/memories/`
+**Location:** `.local/memories/`（PJ単位）
+
+## 2層構造
+
+```
+.local/
+├── memory/          # 詳細ログ（既存）
+│   └── YYMMDD_<task>/
+│       ├── 05_log.md
+│       └── ...
+└── memories/        # インデックス（本スキル）
+    └── <category>/
+        └── <topic>.md
+```
+
+- **memory/**: タスクの全記録（生ログ）
+- **memories/**: 要約・インデックス（検索用）
+
+## 使い方
+
+**検索フロー:**
+1. 「〇〇について思い出して」
+2. memories/のsummaryを検索
+3. 該当するmemory/ディレクトリの詳細を参照
 
 ## Proactive Usage
 
-Save memories when you discover something worth preserving:
-- Research findings that took effort to uncover
-- Non-obvious patterns or gotchas in the codebase
-- Solutions to tricky problems
-- Architectural decisions and their rationale
-- In-progress work that may be resumed later
+**Save memories when:**
+- タスク完了時に価値ある知見があった
+- 調査で重要な発見があった
+- トリッキーな問題を解決した
+- アーキテクチャの決定をした
 
-Check memories when starting related work:
-- Before investigating a problem area
-- When working on a feature you've touched before
-- When resuming work after a conversation break
-
-Organize memories when needed:
-- Consolidate scattered memories on the same topic
-- Remove outdated or superseded information
-- Update status field when work completes, gets blocked, or is abandoned
-
-## Folder Structure
-
-When possible, organize memories into category folders. No predefined structure - create categories that make sense for the content.
-
-Guidelines:
-- Use kebab-case for folder and file names
-- Consolidate or reorganize as the knowledge base evolves
-
-Example:
-```text
-memories/
-├── file-processing/
-│   └── large-file-memory-issue.md
-├── dependencies/
-│   └── iconv-esm-problem.md
-└── project-context/
-    └── december-2025-work.md
-```
-
-This is just an example. Structure freely based on actual content.
+**Check memories when:**
+- 関連する作業を開始する前
+- 過去に触った機能を再度作業する時
+- 会話の途中で過去の文脈が必要な時
 
 ## Frontmatter
-
-All memories must include frontmatter with a `summary` field. The summary should be concise enough to determine whether to read the full content.
-
-**Summary is the decision point**: Agents scan summaries via `rg "^summary:"` to decide which memories to read in full. Write summaries that contain enough context to make this decision - what the memory is about, the key problem or topic, and why it matters.
 
 **Required:**
 ```yaml
 ---
-summary: "1-2 line description of what this memory contains"
-created: 2025-01-15  # YYYY-MM-DD format
+summary: "1-2行の説明（検索の判断材料）"
+created: 2026-01-14
 ---
 ```
 
 **Optional:**
 ```yaml
 ---
-summary: "Worker thread memory leak during large file processing - cause and solution"
-created: 2025-01-15
-updated: 2025-01-20
-status: in-progress  # in-progress | resolved | blocked | abandoned
-tags: [performance, worker, memory-leak]
-related: [src/core/file/fileProcessor.ts]
+summary: "N+1クエリ問題の解決 - eagerロードの適用"
+created: 2026-01-14
+updated: 2026-01-20
+status: resolved  # in-progress | resolved | blocked | abandoned
+tags: [performance, database]
+related:          # 詳細ログへの参照
+  - .local/memory/260114_n-plus-one-fix/
 ---
 ```
 
 ## Search Workflow
 
-Use summary-first approach to efficiently find relevant memories:
-
 ```bash
-# 1. List categories
-ls .claude/skills/agent-memory/memories/
+# 1. カテゴリ一覧
+ls .local/memories/
 
-# 2. View all summaries
-rg "^summary:" .claude/skills/agent-memory/memories/ --no-ignore --hidden
+# 2. サマリー一覧
+rg "^summary:" .local/memories/ --no-ignore --hidden
 
-# 3. Search summaries for keyword
-rg "^summary:.*keyword" .claude/skills/agent-memory/memories/ --no-ignore --hidden -i
+# 3. キーワードでサマリー検索
+rg "^summary:.*keyword" .local/memories/ --no-ignore --hidden -i
 
-# 4. Search by tag
-rg "^tags:.*keyword" .claude/skills/agent-memory/memories/ --no-ignore --hidden -i
+# 4. タグ検索
+rg "^tags:.*keyword" .local/memories/ --no-ignore --hidden -i
 
-# 5. Full-text search (when summary search isn't enough)
-rg "keyword" .claude/skills/agent-memory/memories/ --no-ignore --hidden -i
+# 5. 全文検索（サマリーで見つからない場合）
+rg "keyword" .local/memories/ --no-ignore --hidden -i
 
-# 6. Read specific memory file if relevant
+# 6. relatedから詳細ログを参照
 ```
-
-**Note:** Memory files are gitignored, so use `--no-ignore` and `--hidden` flags with ripgrep.
 
 ## Operations
 
 ### Save
 
-1. Determine appropriate category for the content
-2. Check if existing category fits, or create new one
-3. Write file with required frontmatter (use `date +%Y-%m-%d` for current date)
+タスク完了時に価値ある知見をインデックス化:
 
 ```bash
-mkdir -p .claude/skills/agent-memory/memories/category-name/
-# Note: Check if file exists before writing to avoid accidental overwrites
-cat > .claude/skills/agent-memory/memories/category-name/filename.md << 'EOF'
+mkdir -p .local/memories/category-name/
+cat > .local/memories/category-name/topic.md << 'EOF'
 ---
-summary: "Brief description of this memory"
-created: 2025-01-15
+summary: "簡潔な説明"
+created: 2026-01-14
+tags: [tag1, tag2]
+related:
+  - .local/memory/260114_task-name/
 ---
 
-# Title
+# タイトル
 
-Content here...
+## 要点
+- ポイント1
+- ポイント2
+
+## 詳細
+→ related参照
 EOF
 ```
 
 ### Maintain
 
-- **Update**: When information changes, update the content and add `updated` field to frontmatter
-- **Delete**: Remove memories that are no longer relevant
-  ```bash
-  trash .claude/skills/agent-memory/memories/category-name/filename.md
-  # Remove empty category folders
-  rmdir .claude/skills/agent-memory/memories/category-name/ 2>/dev/null || true
-  ```
-- **Consolidate**: Merge related memories when they grow
-- **Reorganize**: Move memories to better-fitting categories as the knowledge base evolves
+- **Update**: 情報が変わったら`updated`フィールドを追加して更新
+- **Delete**: 不要になったら削除
+- **Consolidate**: 関連するメモリをマージ
+- **Reorganize**: カテゴリを整理
 
 ## Guidelines
 
-1. **Write for resumption**: Memories exist to resume work later. Capture all key points needed to continue without losing context - decisions made, reasons why, current state, and next steps.
-2. **Write self-contained notes**: Include full context so the reader needs no prior knowledge to understand and act on the content
-3. **Keep summaries decisive**: Reading the summary should tell you if you need the details
-4. **Stay current**: Update or delete outdated information
-5. **Be practical**: Save what's actually useful, not everything
-
-## Content Reference
-
-When writing detailed memories, consider including:
-- **Context**: Goal, background, constraints
-- **State**: What's done, in progress, or blocked
-- **Details**: Key files, commands, code snippets
-- **Next steps**: What to do next, open questions
-
-Not all memories need all sections - use what's relevant.
+1. **要点のみ記載**: 詳細はrelatedで参照させる
+2. **summaryは検索の判断材料**: 読むべきか判断できる内容に
+3. **relatedを活用**: memory/の詳細ログへのリンクを必ず含める
+4. **実用的に**: 本当に価値のある知見のみ保存
