@@ -84,7 +84,7 @@ find . -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.py" -o -name "*.md" 
 
 **CRITICAL**: サブエージェントは必ず `subagent_type=general-purpose` を使用すること。
 - `Explore`エージェントはファイル探索専用でWriteツールを持たないため、issueファイルを作成できない
-- `general-purpose`エージェントは全ツール（Read, Write, Grep, Glob, Bash, WebSearch, context7等）にアクセス可能
+- `general-purpose`エージェントは全ツール（Read, Write, Grep, Glob, Bash, WebSearch, deepwiki等）にアクセス可能
 
 各サブエージェントには以下の情報を渡す:
 - メモリディレクトリのフルパス
@@ -132,7 +132,7 @@ find . -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.py" -o -name "*.md" 
 ### 2. ベストプラクティスの調査（IMPORTANT）
 問題を発見した場合、または問題が疑われる場合:
 
-1. **context7**で関連ライブラリのドキュメントを確認
+1. **deepwiki**で関連ライブラリのドキュメントを確認
    - 例: Drizzle ORMのN+1対策、Reactのメモ化ベストプラクティス等
    - resolve-library-id → query-docs の順で実行
 
@@ -254,7 +254,7 @@ type: {bug|improvement|feature}
 
 ## 改善案
 {どう改善すべきか}
-- ベストプラクティス: {context7/WebSearchで調査した内容}
+- ベストプラクティス: {deepwiki/WebSearchで調査した内容}
 
 ## 期待される効果
 {改善後のメリット}
@@ -296,8 +296,8 @@ type: {bug|improvement|feature}
 - キャッシュ活用の不足
 
 ベストプラクティス調査例:
-- context7: drizzle-orm → "batch query optimization"
-- context7: react → "useMemo useCallback performance"
+- deepwiki: drizzle-orm → "batch query optimization"
+- deepwiki: react → "useMemo useCallback performance"
 - WebSearch: "database query optimization patterns 2025"
 
 優先度判断基準:
@@ -328,7 +328,7 @@ type: {bug|improvement|feature}
 ベストプラクティス調査例:
 - WebSearch: "OWASP top 10 2025 prevention"
 - WebSearch: "timing safe comparison javascript"
-- context7: hono → "security middleware csrf"
+- deepwiki: hono → "security middleware csrf"
 
 優先度判断基準:
 - crit: 即座に悪用可能な脆弱性
@@ -353,7 +353,7 @@ type: {bug|improvement|feature}
 - テストの信頼性（フレーキーテスト）
 
 ベストプラクティス調査例:
-- context7: vitest → "testing patterns mocking"
+- deepwiki: vitest → "testing patterns mocking"
 - WebSearch: "test coverage best practices 2025"
 - WebSearch: "integration testing cloudflare workers"
 
@@ -382,7 +382,7 @@ PJ CLAUDE.mdのアーキテクチャルールを基準にレビュー:
 ベストプラクティス調査例:
 - WebSearch: "clean architecture typescript 2025"
 - WebSearch: "layered architecture dependency rules"
-- context7: hono → "middleware organization patterns"
+- deepwiki: hono → "middleware organization patterns"
 
 優先度判断基準:
 - crit: アーキテクチャの根本的な破綻
@@ -410,7 +410,7 @@ PJ CLAUDE.mdのアーキテクチャルールを基準にレビュー:
 
 ベストプラクティス調査例:
 - WebSearch: "typescript best practices 2025"
-- context7: biome → "linting rules configuration"
+- deepwiki: biome → "linting rules configuration"
 - WebSearch: "code smell detection patterns"
 
 優先度判断基準:
@@ -551,6 +551,6 @@ ${MEMORY_DIR}/
 - 同じ問題が複数の観点に該当する場合、最も重要な観点で1つだけ作成
 - 優先度critは慎重に使用（本当に即時対応が必要な場合のみ）
 - **コードベース全体を網羅的に確認すること（一部だけ見て終わりにしない）**
-- **問題発見時はcontext7/WebSearchでベストプラクティスを必ず調査**
+- **問題発見時はdeepwiki/WebSearchでベストプラクティスを必ず調査**
 - **CRITICAL: agent cli呼び出しは `--skip-multimodel` オプションが明示的に指定されない限り必須。自己判断でのスキップは禁止**
 - **サブエージェントプロンプトには共通テンプレート全体（タスク1〜4すべて）を含めること。観点別の詳細指示のみでは不十分**

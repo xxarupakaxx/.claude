@@ -37,7 +37,7 @@ ${MEMORY_DIR}/
 1. 要件の明確化（AskUserQuestionで確認）
 2. 包括調査
    - 既存コードベース調査
-   - context7/WebSearchで外部情報参照
+   - deepwiki/WebSearchで外部情報参照
 3. `${MEMORY_DIR}/tasks/YYMMDD_<task_name>/` ディレクトリ作成
    - 必ずdateコマンドで日付を確認すること
 4. 00_plan.md作成（全体計画）
