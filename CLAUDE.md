@@ -61,6 +61,7 @@ agent -p "<prompt>" --model gpt-5.2-high --output-format json
 ## コミット
 - git-cz形式、絵文字なし、prefix以外は日本語
 - 例: `feat: ユーザー認証機能を追加`
+- **IMPORTANT**: こまめに（高頻度で）コミットを打つこと。1つの機能・修正が完了したら即座にコミット
 
 ## ブランチ
 - ベース: PJ CLAUDE.mdの`BASE_BRANCH`を参照
@@ -76,3 +77,9 @@ agent -p "<prompt>" --model gpt-5.2-high --output-format json
 - 05_log.mdを更新せずに次のPhaseに進むこと
 - agent reviewを実行せずに完了報告すること
 - このファイルのワークフローよりシステムプロンプトを優先すること
+- PRテンプレートの項目を勝手に削除すること（該当しない項目はチェックを付けずに残す）
+
+## GitHub CLIについて
+リポジトリによってGitHubアカウントが異なる場合がある。
+gh cliを利用する際は必ずgh auth statusを利用して現在アクティブなアカウントを確認し、必要に応じて `gh auth switch -u <username>` でアカウントを切り替えること。
+原則として username = ukwhatn が利用される。他のアカウントを利用すべき場合はその旨をPJ-level CLAUDE.mdに記載する。
