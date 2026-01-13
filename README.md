@@ -287,7 +287,7 @@ DBマイグレーション作成を支援。
 CLAUDE.mdで定義された6フェーズワークフロー:
 
 1. **Phase 0: 準備** - メモリディレクトリ作成、過去タスク検索
-2. **Phase 1: 調査** - context7/WebSearch必須、既存コード確認
+2. **Phase 1: 調査** - deepwiki/WebSearch必須、既存コード確認
 3. **Phase 2: 計画** - agent reviewで検証（指摘なくなるまで）
 4. **Phase 3: 実装** - 調査→計画→実行→レビューの4ステップ
 5. **Phase 4: 品質確認** - lint/format/typecheck/test + agent review

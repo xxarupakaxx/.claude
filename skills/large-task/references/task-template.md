@@ -72,4 +72,4 @@ bun run dev
 ## 参考情報
 
 - [関連ドキュメントURL]
-- [context7で調べた情報のサマリ]
+- [deepwikiで調べた情報のサマリ]
