@@ -1,8 +1,11 @@
 *
 !.gitignore
+!/README.md
 !/CLAUDE.md
 !/commands/
 !/commands/**
+!/context/
+!/context/**
 !/skills/
 !/skills/**
 !/templates/
