@@ -20,6 +20,7 @@ git clone <this-repo> ~/.claude
 │   ├── commit.md          # /commit
 │   └── pr.md              # /pr
 ├── skills/                # 自動トリガースキル
+│   ├── agent-memory/
 │   ├── codebase-review/
 │   ├── create-skill/
 │   ├── database-migration/
@@ -38,6 +39,7 @@ git clone <this-repo> ~/.claude
 
 | スキル | 説明 | トリガー |
 |--------|------|----------|
+| **agent-memory** | 会話をまたぐ永続メモリ（調査結果、決定事項の保存・検索） | 「記憶して」「思い出して」、価値ある発見時に自動 |
 | **codebase-review** | 6観点（perf/sec/test/arch/cq/docs）で並列レビュー | `/codebase-review`、品質監査依頼時 |
 | **pr-review** | Claude + GPT-5.2マルチモデルレビュー | PRレビュー依頼時 |
 | **project-init** | CLAUDE.md・.claude/の初期設定 | PJ初期化依頼時 |
