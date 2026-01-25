@@ -91,4 +91,4 @@ claude -p "<prompt>" --output-format json
 ## GitHub CLIについて
 リポジトリによってGitHubアカウントが異なる場合がある。
 gh cliを利用する際は必ずgh auth statusを利用して現在アクティブなアカウントを確認し、必要に応じて `gh auth switch -u <username>` でアカウントを切り替えること。
-原則として username = ukwhatn が利用される。他のアカウントを利用すべき場合はその旨をPJ-level CLAUDE.mdに記載する。
+原則として username = xxarupakaxx が利用される。他のアカウントを利用すべき場合はその旨をPJ-level CLAUDE.mdに記載する。
