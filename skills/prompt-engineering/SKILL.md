@@ -3,256 +3,256 @@ name: prompt-engineering
 description: Use this skill when you writing commands, hooks, skills for Agent, or prompts for sub agents or any other LLM interaction, including optimizing prompts, improving LLM outputs, or designing production prompt templates.
 ---
 
-# Prompt Engineering Patterns
+# プロンプトエンジニアリングパターン
 
-Advanced prompt engineering techniques to maximize LLM performance, reliability, and controllability.
+LLMのパフォーマンス、信頼性、制御性を最大化するための高度なプロンプトエンジニアリング技術。
 
-## Core Capabilities
+## コア機能
 
-### 1. Few-Shot Learning
+### 1. Few-Shot Learning（少数例学習）
 
-Teach the model by showing examples instead of explaining rules. Include 2-5 input-output pairs that demonstrate the desired behavior. Use when you need consistent formatting, specific reasoning patterns, or handling of edge cases. More examples improve accuracy but consume tokens—balance based on task complexity.
+ルールを説明する代わりに、例を見せてモデルに教える。望ましい動作を示す2-5個の入出力ペアを含める。一貫したフォーマット、特定の推論パターン、エッジケースの処理が必要な場合に使用。例が多いほど精度は向上するがトークンを消費する—タスクの複雑さに応じてバランスを取る。
 
-**Example:**
-
-```markdown
-Extract key information from support tickets:
-
-Input: "My login doesn't work and I keep getting error 403"
-Output: {"issue": "authentication", "error_code": "403", "priority": "high"}
-
-Input: "Feature request: add dark mode to settings"
-Output: {"issue": "feature_request", "error_code": null, "priority": "low"}
-
-Now process: "Can't upload files larger than 10MB, getting timeout"
-```
-
-### 2. Chain-of-Thought Prompting
-
-Request step-by-step reasoning before the final answer. Add "Let's think step by step" (zero-shot) or include example reasoning traces (few-shot). Use for complex problems requiring multi-step logic, mathematical reasoning, or when you need to verify the model's thought process. Improves accuracy on analytical tasks by 30-50%.
-
-**Example:**
+**例:**
 
 ```markdown
-Analyze this bug report and determine root cause.
+サポートチケットから重要な情報を抽出:
 
-Think step by step:
-1. What is the expected behavior?
-2. What is the actual behavior?
-3. What changed recently that could cause this?
-4. What components are involved?
-5. What is the most likely root cause?
+入力: "ログインできず、エラー403が出続ける"
+出力: {"issue": "authentication", "error_code": "403", "priority": "high"}
 
-Bug: "Users can't save drafts after the cache update deployed yesterday"
+入力: "機能リクエスト: 設定にダークモードを追加してほしい"
+出力: {"issue": "feature_request", "error_code": null, "priority": "low"}
+
+次を処理: "10MB以上のファイルをアップロードできず、タイムアウトする"
 ```
 
-### 3. Prompt Optimization
+### 2. Chain-of-Thought（思考の連鎖）プロンプティング
 
-Systematically improve prompts through testing and refinement. Start simple, measure performance (accuracy, consistency, token usage), then iterate. Test on diverse inputs including edge cases. Use A/B testing to compare variations. Critical for production prompts where consistency and cost matter.
+最終回答の前にステップバイステップの推論を要求する。「ステップバイステップで考えてみましょう」（ゼロショット）を追加するか、推論の例（Few-shot）を含める。複数ステップのロジック、数学的推論が必要な複雑な問題、またはモデルの思考プロセスを検証する必要がある場合に使用。分析タスクの精度を30-50%向上させる。
 
-**Example:**
+**例:**
 
 ```markdown
-Version 1 (Simple): "Summarize this article"
-→ Result: Inconsistent length, misses key points
+このバグレポートを分析し、根本原因を特定。
 
-Version 2 (Add constraints): "Summarize in 3 bullet points"
-→ Result: Better structure, but still misses nuance
+ステップバイステップで考える:
+1. 期待される動作は何か？
+2. 実際の動作は何か？
+3. これを引き起こす可能性のある最近の変更は何か？
+4. 関係するコンポーネントは何か？
+5. 最も可能性の高い根本原因は何か？
 
-Version 3 (Add reasoning): "Identify the 3 main findings, then summarize each"
-→ Result: Consistent, accurate, captures key information
+バグ: "昨日キャッシュ更新がデプロイされた後、ユーザーが下書きを保存できない"
 ```
 
-### 4. Template Systems
+### 3. プロンプト最適化
 
-Build reusable prompt structures with variables, conditional sections, and modular components. Use for multi-turn conversations, role-based interactions, or when the same pattern applies to different inputs. Reduces duplication and ensures consistency across similar tasks.
+テストと改良を通じてプロンプトを体系的に改善する。シンプルに始め、パフォーマンス（精度、一貫性、トークン使用量）を測定し、反復する。エッジケースを含む多様な入力でテスト。バリエーションを比較するためにA/Bテストを使用。一貫性とコストが重要な本番プロンプトに不可欠。
 
-**Example:**
+**例:**
+
+```markdown
+バージョン1（シンプル）: "この記事を要約して"
+→ 結果: 長さが不安定、重要なポイントを見落とす
+
+バージョン2（制約を追加）: "3つの箇条書きで要約して"
+→ 結果: 構造は改善、しかしまだニュアンスを見落とす
+
+バージョン3（推論を追加）: "3つの主要な発見を特定し、それぞれを要約して"
+→ 結果: 一貫性があり、正確で、重要な情報を捉える
+```
+
+### 4. テンプレートシステム
+
+変数、条件付きセクション、モジュール式コンポーネントを持つ再利用可能なプロンプト構造を構築する。マルチターン会話、ロールベースのインタラクション、または同じパターンが異なる入力に適用される場合に使用。重複を減らし、類似タスク間の一貫性を確保する。
+
+**例:**
 
 ```python
-# Reusable code review template
+# 再利用可能なコードレビューテンプレート
 template = """
-Review this {language} code for {focus_area}.
+この{language}コードを{focus_area}の観点でレビュー。
 
-Code:
+コード:
 {code_block}
 
-Provide feedback on:
+以下についてフィードバック:
 {checklist}
 """
 
-# Usage
+# 使用方法
 prompt = template.format(
     language="Python",
-    focus_area="security vulnerabilities",
+    focus_area="セキュリティ脆弱性",
     code_block=user_code,
-    checklist="1. SQL injection\n2. XSS risks\n3. Authentication"
+    checklist="1. SQLインジェクション\n2. XSSリスク\n3. 認証"
 )
 ```
 
-### 5. System Prompt Design
+### 5. システムプロンプト設計
 
-Set global behavior and constraints that persist across the conversation. Define the model's role, expertise level, output format, and safety guidelines. Use system prompts for stable instructions that shouldn't change turn-to-turn, freeing up user message tokens for variable content.
+会話全体で持続するグローバルな動作と制約を設定する。モデルの役割、専門レベル、出力フォーマット、安全ガイドラインを定義する。ターンごとに変更すべきでない安定した指示にシステムプロンプトを使用し、ユーザーメッセージのトークンを可変コンテンツのために解放する。
 
-**Example:**
+**例:**
 
 ```markdown
-System: You are a senior backend engineer specializing in API design.
+System: あなたはAPI設計を専門とするシニアバックエンドエンジニアです。
 
-Rules:
-- Always consider scalability and performance
-- Suggest RESTful patterns by default
-- Flag security concerns immediately
-- Provide code examples in Python
-- Use early return pattern
+ルール:
+- 常にスケーラビリティとパフォーマンスを考慮
+- デフォルトでRESTfulパターンを提案
+- セキュリティの懸念は即座にフラグを立てる
+- Pythonでコード例を提供
+- 早期リターンパターンを使用
 
-Format responses as:
-1. Analysis
-2. Recommendation
-3. Code example
-4. Trade-offs
+レスポンスフォーマット:
+1. 分析
+2. 推奨
+3. コード例
+4. トレードオフ
 ```
 
-## Key Patterns
+## キーパターン
 
-### Progressive Disclosure
+### 段階的開示
 
-Start with simple prompts, add complexity only when needed:
+シンプルなプロンプトから始め、必要な場合にのみ複雑さを追加:
 
-1. **Level 1**: Direct instruction
-   - "Summarize this article"
+1. **レベル1**: 直接的な指示
+   - 「この記事を要約して」
 
-2. **Level 2**: Add constraints
-   - "Summarize this article in 3 bullet points, focusing on key findings"
+2. **レベル2**: 制約を追加
+   - 「この記事を3つの箇条書きで要約し、主要な発見に焦点を当てて」
 
-3. **Level 3**: Add reasoning
-   - "Read this article, identify the main findings, then summarize in 3 bullet points"
+3. **レベル3**: 推論を追加
+   - 「この記事を読み、主要な発見を特定し、3つの箇条書きで要約して」
 
-4. **Level 4**: Add examples
-   - Include 2-3 example summaries with input-output pairs
+4. **レベル4**: 例を追加
+   - 入出力ペアを含む2-3個のサンプル要約を含める
 
-### Instruction Hierarchy
+### 指示階層
 
 ```
-[System Context] → [Task Instruction] → [Examples] → [Input Data] → [Output Format]
+[システムコンテキスト] → [タスク指示] → [例] → [入力データ] → [出力フォーマット]
 ```
 
-### Error Recovery
+### エラー回復
 
-Build prompts that gracefully handle failures:
+失敗を優雅に処理するプロンプトを構築:
 
-- Include fallback instructions
-- Request confidence scores
-- Ask for alternative interpretations when uncertain
-- Specify how to indicate missing information
+- フォールバック指示を含める
+- 信頼度スコアを要求
+- 不確実な場合は代替解釈を求める
+- 情報が不足している場合の示し方を指定
 
-## Best Practices
+## ベストプラクティス
 
-1. **Be Specific**: Vague prompts produce inconsistent results
-2. **Show, Don't Tell**: Examples are more effective than descriptions
-3. **Test Extensively**: Evaluate on diverse, representative inputs
-4. **Iterate Rapidly**: Small changes can have large impacts
-5. **Monitor Performance**: Track metrics in production
-6. **Version Control**: Treat prompts as code with proper versioning
-7. **Document Intent**: Explain why prompts are structured as they are
+1. **具体的に**: 曖昧なプロンプトは一貫性のない結果を生む
+2. **説明より例示**: 説明より例の方が効果的
+3. **広範にテスト**: 多様で代表的な入力で評価
+4. **迅速に反復**: 小さな変更が大きな影響を与える可能性がある
+5. **パフォーマンス監視**: 本番でメトリクスを追跡
+6. **バージョン管理**: プロンプトを適切なバージョン管理でコードとして扱う
+7. **意図を文書化**: プロンプトがそのように構造化されている理由を説明
 
-## Common Pitfalls
+## 一般的な落とし穴
 
-- **Over-engineering**: Starting with complex prompts before trying simple ones
-- **Example pollution**: Using examples that don't match the target task
-- **Context overflow**: Exceeding token limits with excessive examples
-- **Ambiguous instructions**: Leaving room for multiple interpretations
-- **Ignoring edge cases**: Not testing on unusual or boundary inputs
+- **過剰エンジニアリング**: シンプルなものを試す前に複雑なプロンプトから始める
+- **例の汚染**: ターゲットタスクに一致しない例を使用
+- **コンテキストオーバーフロー**: 過度な例でトークン制限を超える
+- **曖昧な指示**: 複数の解釈の余地を残す
+- **エッジケースの無視**: 異常または境界入力でテストしない
 
-## Integration Patterns
+## 統合パターン
 
-### With RAG Systems
+### RAGシステムとの統合
 
 ```python
-# Combine retrieved context with prompt engineering
-prompt = f"""Given the following context:
+# 取得したコンテキストとプロンプトエンジニアリングを組み合わせる
+prompt = f"""以下のコンテキストに基づいて:
 {retrieved_context}
 
 {few_shot_examples}
 
-Question: {user_question}
+質問: {user_question}
 
-Provide a detailed answer based solely on the context above. If the context doesn't contain enough information, explicitly state what's missing."""
+上記のコンテキストのみに基づいて詳細な回答を提供してください。コンテキストに十分な情報がない場合は、何が不足しているか明示的に述べてください。"""
 ```
 
-### With Validation
+### バリデーションとの統合
 
 ```python
-# Add self-verification step
+# 自己検証ステップを追加
 prompt = f"""{main_task_prompt}
 
-After generating your response, verify it meets these criteria:
-1. Answers the question directly
-2. Uses only information from provided context
-3. Cites specific sources
-4. Acknowledges any uncertainty
+レスポンスを生成した後、以下の基準を満たしているか検証:
+1. 質問に直接回答している
+2. 提供されたコンテキストからの情報のみを使用している
+3. 特定のソースを引用している
+4. 不確実性を認めている
 
-If verification fails, revise your response."""
+検証に失敗した場合は、レスポンスを修正してください。"""
 ```
 
-## Performance Optimization
+## パフォーマンス最適化
 
-### Token Efficiency
+### トークン効率
 
-- Remove redundant words and phrases
-- Use abbreviations consistently after first definition
-- Consolidate similar instructions
-- Move stable content to system prompts
+- 冗長な言葉やフレーズを削除
+- 最初の定義後は一貫して略語を使用
+- 類似の指示を統合
+- 安定したコンテンツをシステムプロンプトに移動
 
-### Latency Reduction
+### レイテンシ削減
 
-- Minimize prompt length without sacrificing quality
-- Use streaming for long-form outputs
-- Cache common prompt prefixes
-- Batch similar requests when possible
+- 品質を損なわずにプロンプト長を最小化
+- 長文出力にはストリーミングを使用
+- 一般的なプロンプトプレフィックスをキャッシュ
+- 可能な場合は類似リクエストをバッチ処理
 
 ---
 
-# Agent Prompting Best Practices
+# エージェントプロンプティングのベストプラクティス
 
-Based on Anthropic's official best practices for agent prompting.
+Anthropic公式のエージェントプロンプティングベストプラクティスに基づく。
 
-## Core principles
+## コア原則
 
-### Context Window
+### コンテキストウィンドウ
 
-The “context window” refers to the entirety of the amount of text a language model can look back on and reference when generating new text plus the new text it generates. This is different from the large corpus of data the language model was trained on, and instead represents a “working memory” for the model. A larger context window allows the model to understand and respond to more complex and lengthy prompts, while a smaller context window may limit the model’s ability to handle longer prompts or maintain coherence over extended conversations.
+「コンテキストウィンドウ」とは、言語モデルが新しいテキストを生成する際に参照できるテキストの総量と、生成する新しいテキストを指す。これはモデルが訓練された大規模なデータコーパスとは異なり、モデルの「ワーキングメモリ」を表す。コンテキストウィンドウが大きいほど、より複雑で長いプロンプトを理解し応答できる。小さいコンテキストウィンドウは、長いプロンプトの処理や会話の一貫性維持を制限する可能性がある。
 
-- Progressive token accumulation: As the conversation advances through turns, each user message and assistant response accumulates within the context window. Previous turns are preserved completely.
-- Linear growth pattern: The context usage grows linearly with each turn, with previous turns preserved completely.
-- 200K token capacity: The total available context window (200,000 tokens) represents the maximum capacity for storing conversation history and generating new output from Claude.
-- Input-output flow: Each turn consists of:
-  - Input phase: Contains all previous conversation history plus the current user message
-  - Output phase: Generates a text response that becomes part of a future input
+- 累積的トークン蓄積: 会話がターンを重ねるにつれ、各ユーザーメッセージとアシスタントレスポンスがコンテキストウィンドウ内に蓄積される。以前のターンは完全に保持される。
+- 線形成長パターン: コンテキスト使用量は各ターンで線形に増加し、以前のターンは完全に保持される。
+- 200Kトークン容量: 利用可能なコンテキストウィンドウ総量（200,000トークン）は、会話履歴の保存とClaudeからの新しい出力生成の最大容量を表す。
+- 入出力フロー: 各ターンは以下で構成される:
+  - 入力フェーズ: 以前のすべての会話履歴と現在のユーザーメッセージを含む
+  - 出力フェーズ: 将来の入力の一部となるテキストレスポンスを生成
 
-### Concise is key
+### 簡潔さが鍵
 
-The context window is a public good. Your prompt, command, skill shares the context window with everything else Claude needs to know, including:
+コンテキストウィンドウは公共財。あなたのプロンプト、コマンド、スキルは、Claudeが知る必要のある他のすべてとコンテキストウィンドウを共有する:
 
-- The system prompt
-- Conversation history
-- Other commands, skills, hooks, metadata
-- Your actual request
+- システムプロンプト
+- 会話履歴
+- 他のコマンド、スキル、フック、メタデータ
+- 実際のリクエスト
 
-**Default assumption**: Claude is already very smart
+**デフォルトの前提**: Claudeはすでに非常に賢い
 
-Only add context Claude doesn't already have. Challenge each piece of information:
+Claudeがまだ持っていないコンテキストのみを追加する。各情報に挑戦する:
 
-- "Does Claude really need this explanation?"
-- "Can I assume Claude knows this?"
-- "Does this paragraph justify its token cost?"
+- 「Claudeは本当にこの説明が必要か？」
+- 「Claudeはこれを知っていると仮定できるか？」
+- 「この段落はそのトークンコストを正当化するか？」
 
-**Good example: Concise** (approximately 50 tokens):
+**良い例: 簡潔** (約50トークン):
 
-````markdown  theme={null}
-## Extract PDF text
+````markdown
+## PDFテキスト抽出
 
-Use pdfplumber for text extraction:
+pdfplumberでテキスト抽出:
 
 ```python
 import pdfplumber
@@ -262,298 +262,294 @@ with pdfplumber.open("file.pdf") as pdf:
 ```
 ````
 
-**Bad example: Too verbose** (approximately 150 tokens):
+**悪い例: 冗長すぎる** (約150トークン):
 
-```markdown  theme={null}
-## Extract PDF text
+```markdown
+## PDFテキスト抽出
 
-PDF (Portable Document Format) files are a common file format that contains
-text, images, and other content. To extract text from a PDF, you'll need to
-use a library. There are many libraries available for PDF processing, but we
-recommend pdfplumber because it's easy to use and handles most cases well.
-First, you'll need to install it using pip. Then you can use the code below...
+PDF（Portable Document Format）ファイルは、テキスト、画像、その他のコンテンツを含む一般的なファイル形式です。PDFからテキストを抽出するには、ライブラリを使用する必要があります。PDF処理には多くのライブラリがありますが、使いやすくほとんどのケースをうまく処理するpdfplumberをお勧めします。まず、pipでインストールする必要があります。そして以下のコードを使用できます...
 ```
 
-The concise version assumes Claude knows what PDFs are and how libraries work.
+簡潔なバージョンは、ClaudeがPDFとは何か、ライブラリがどのように機能するかを知っていると仮定している。
 
-### Set appropriate degrees of freedom
+### 適切な自由度を設定
 
-Match the level of specificity to the task's fragility and variability.
+タスクの脆弱性と変動性に応じて具体性のレベルを合わせる。
 
-**High freedom** (text-based instructions):
+**高い自由度**（テキストベースの指示）:
 
-Use when:
+使用する場面:
 
-- Multiple approaches are valid
-- Decisions depend on context
-- Heuristics guide the approach
+- 複数のアプローチが有効
+- 決定がコンテキストに依存
+- ヒューリスティクスがアプローチを導く
 
-Example:
+例:
 
-```markdown  theme={null}
-## Code review process
+```markdown
+## コードレビュープロセス
 
-1. Analyze the code structure and organization
-2. Check for potential bugs or edge cases
-3. Suggest improvements for readability and maintainability
-4. Verify adherence to project conventions
+1. コードの構造と組織を分析
+2. 潜在的なバグやエッジケースをチェック
+3. 可読性と保守性の改善を提案
+4. プロジェクト規約への準拠を確認
 ```
 
-**Medium freedom** (pseudocode or scripts with parameters):
+**中程度の自由度**（疑似コードまたはパラメータ付きスクリプト）:
 
-Use when:
+使用する場面:
 
-- A preferred pattern exists
-- Some variation is acceptable
-- Configuration affects behavior
+- 推奨パターンが存在
+- ある程度の変動が許容される
+- 設定が動作に影響
 
-Example:
+例:
 
-````markdown  theme={null}
-## Generate report
+````markdown
+## レポート生成
 
-Use this template and customize as needed:
+このテンプレートを使用し、必要に応じてカスタマイズ:
 
 ```python
 def generate_report(data, format="markdown", include_charts=True):
-    # Process data
-    # Generate output in specified format
-    # Optionally include visualizations
+    # データを処理
+    # 指定フォーマットで出力を生成
+    # オプションで視覚化を含める
 ```
 ````
 
-**Low freedom** (specific scripts, few or no parameters):
+**低い自由度**（特定のスクリプト、パラメータなしまたは少数）:
 
-Use when:
+使用する場面:
 
-- Operations are fragile and error-prone
-- Consistency is critical
-- A specific sequence must be followed
+- 操作が脆弱でエラーが起きやすい
+- 一貫性が重要
+- 特定のシーケンスに従う必要がある
 
-Example:
+例:
 
-````markdown  theme={null}
-## Database migration
+````markdown
+## データベースマイグレーション
 
-Run exactly this script:
+このスクリプトを正確に実行:
 
 ```bash
 python scripts/migrate.py --verify --backup
 ```
 
-Do not modify the command or add additional flags.
+コマンドを変更したり、追加のフラグを付けたりしないでください。
 ````
 
-**Analogy**: Think of Claude as a robot exploring a path:
+**アナロジー**: Claudeを道を探索するロボットと考える:
 
-- **Narrow bridge with cliffs on both sides**: There's only one safe way forward. Provide specific guardrails and exact instructions (low freedom). Example: database migrations that must run in exact sequence.
-- **Open field with no hazards**: Many paths lead to success. Give general direction and trust Claude to find the best route (high freedom). Example: code reviews where context determines the best approach.
+- **両側に崖がある狭い橋**: 安全な道は1つだけ。具体的なガードレールと正確な指示を提供（低い自由度）。例: 正確な順序で実行する必要があるデータベースマイグレーション。
+- **危険のない開けた野原**: 多くの道が成功に通じる。一般的な方向を示し、Claudeが最適なルートを見つけることを信頼（高い自由度）。例: コンテキストが最適なアプローチを決定するコードレビュー。
 
-# Persuasion Principles for Agent Communication
+# エージェントコミュニケーションの説得原則
 
-Usefull for writing prompts, including but not limited to: commands, hooks, skills for Claude Code, or prompts for sub agents or any other LLM interaction.
+Claude Code向けのコマンド、フック、スキル、サブエージェント向けプロンプト、その他のLLMインタラクションを含むプロンプト作成に有用。
 
-## Overview
+## 概要
 
-LLMs respond to the same persuasion principles as humans. Understanding this psychology helps you design more effective skills - not to manipulate, but to ensure critical practices are followed even under pressure.
+LLMは人間と同じ説得原則に反応する。この心理を理解することで、より効果的なスキルを設計できる—操作するためではなく、プレッシャー下でも重要な実践が確実に守られるようにするため。
 
-**Research foundation:** Meincke et al. (2025) tested 7 persuasion principles with N=28,000 AI conversations. Persuasion techniques more than doubled compliance rates (33% → 72%, p < .001).
+**研究基盤:** Meincke et al. (2025)は7つの説得原則をN=28,000のAI会話でテスト。説得技術はコンプライアンス率を2倍以上に向上させた（33% → 72%、p < .001）。
 
-## The Seven Principles
+## 7つの原則
 
-### 1. Authority
+### 1. 権威（Authority）
 
-**What it is:** Deference to expertise, credentials, or official sources.
+**内容:** 専門知識、資格、または公式情報源への従順。
 
-**How it works in prompts:**
+**プロンプトでの活用:**
 
-- Imperative language: "YOU MUST", "Never", "Always"
-- Non-negotiable framing: "No exceptions"
-- Eliminates decision fatigue and rationalization
+- 命令形の言語: 「必ず〜すること」「絶対に〜しない」「常に〜する」
+- 交渉不可のフレーミング: 「例外なし」
+- 決定疲れと合理化を排除
 
-**When to use:**
+**使用場面:**
 
-- Discipline-enforcing skills (TDD, verification requirements)
-- Safety-critical practices
-- Established best practices
+- 規律を強制するスキル（TDD、検証要件）
+- 安全性が重要な実践
+- 確立されたベストプラクティス
 
-**Example:**
-
-```markdown
-✅ Write code before test? Delete it. Start over. No exceptions.
-❌ Consider writing tests first when feasible.
-```
-
-### 2. Commitment
-
-**What it is:** Consistency with prior actions, statements, or public declarations.
-
-**How it works in prompts:**
-
-- Require announcements: "Announce skill usage"
-- Force explicit choices: "Choose A, B, or C"
-- Use tracking: TodoWrite for checklists
-
-**When to use:**
-
-- Ensuring skills are actually followed
-- Multi-step processes
-- Accountability mechanisms
-
-**Example:**
+**例:**
 
 ```markdown
-✅ When you find a skill, you MUST announce: "I'm using [Skill Name]"
-❌ Consider letting your partner know which skill you're using.
+✅ テストより先にコードを書いた？削除して。最初からやり直し。例外なし。
+❌ 可能な場合はテストを先に書くことを検討してください。
 ```
 
-### 3. Scarcity
+### 2. コミットメント（Commitment）
 
-**What it is:** Urgency from time limits or limited availability.
+**内容:** 以前の行動、発言、または公開宣言との一貫性。
 
-**How it works in prompts:**
+**プロンプトでの活用:**
 
-- Time-bound requirements: "Before proceeding"
-- Sequential dependencies: "Immediately after X"
-- Prevents procrastination
+- 宣言を要求: 「スキル使用を宣言」
+- 明示的な選択を強制: 「A、B、またはCを選択」
+- トラッキングを使用: チェックリスト用のTodoWrite
 
-**When to use:**
+**使用場面:**
 
-- Immediate verification requirements
-- Time-sensitive workflows
-- Preventing "I'll do it later"
+- スキルが実際に守られることを確保
+- 複数ステップのプロセス
+- 説明責任メカニズム
 
-**Example:**
+**例:**
 
 ```markdown
-✅ After completing a task, IMMEDIATELY request code review before proceeding.
-❌ You can review code when convenient.
+✅ スキルを見つけたら、必ず宣言すること: 「[スキル名]を使用します」
+❌ どのスキルを使用しているかパートナーに知らせることを検討してください。
 ```
 
-### 4. Social Proof
+### 3. 希少性（Scarcity）
 
-**What it is:** Conformity to what others do or what's considered normal.
+**内容:** 時間制限や限定的な利用可能性からの緊急性。
 
-**How it works in prompts:**
+**プロンプトでの活用:**
 
-- Universal patterns: "Every time", "Always"
-- Failure modes: "X without Y = failure"
-- Establishes norms
+- 時間制約のある要件: 「進む前に」
+- 順序依存: 「Xの直後に」
+- 先延ばしを防止
 
-**When to use:**
+**使用場面:**
 
-- Documenting universal practices
-- Warning about common failures
-- Reinforcing standards
+- 即時検証要件
+- 時間に敏感なワークフロー
+- 「後でやる」を防ぐ
 
-**Example:**
+**例:**
 
 ```markdown
-✅ Checklists without TodoWrite tracking = steps get skipped. Every time.
-❌ Some people find TodoWrite helpful for checklists.
+✅ タスク完了後、進む前に即座にコードレビューをリクエスト。
+❌ 都合の良いときにコードをレビューできます。
 ```
 
-### 5. Unity
+### 4. 社会的証明（Social Proof）
 
-**What it is:** Shared identity, "we-ness", in-group belonging.
+**内容:** 他者の行動や正常とされるものへの適合。
 
-**How it works in prompts:**
+**プロンプトでの活用:**
 
-- Collaborative language: "our codebase", "we're colleagues"
-- Shared goals: "we both want quality"
+- 普遍的パターン: 「毎回」「常に」
+- 失敗モード: 「YなしのX = 失敗」
+- 規範を確立
 
-**When to use:**
+**使用場面:**
 
-- Collaborative workflows
-- Establishing team culture
-- Non-hierarchical practices
+- 普遍的な実践の文書化
+- 一般的な失敗への警告
+- 基準の強化
 
-**Example:**
+**例:**
 
 ```markdown
-✅ We're colleagues working together. I need your honest technical judgment.
-❌ You should probably tell me if I'm wrong.
+✅ TodoWriteトラッキングなしのチェックリスト = ステップがスキップされる。毎回。
+❌ TodoWriteがチェックリストに役立つと思う人もいます。
 ```
 
-### 6. Reciprocity
+### 5. 一体感（Unity）
 
-**What it is:** Obligation to return benefits received.
+**内容:** 共有アイデンティティ、「私たち」意識、内集団への所属。
 
-**How it works:**
+**プロンプトでの活用:**
 
-- Use sparingly - can feel manipulative
-- Rarely needed in prompts
+- 協調的な言語: 「私たちのコードベース」「私たちは同僚」
+- 共有目標: 「私たちは両方とも品質を望んでいる」
 
-**When to avoid:**
+**使用場面:**
 
-- Almost always (other principles more effective)
+- 協調ワークフロー
+- チーム文化の確立
+- 非階層的な実践
 
-### 7. Liking
+**例:**
 
-**What it is:** Preference for cooperating with those we like.
+```markdown
+✅ 私たちは一緒に働く同僚です。あなたの正直な技術的判断が必要です。
+❌ 私が間違っていたら教えた方がいいかもしれません。
+```
 
-**How it works:**
+### 6. 互恵性（Reciprocity）
 
-- **DON'T USE for compliance**
-- Conflicts with honest feedback culture
-- Creates sycophancy
+**内容:** 受けた恩恵を返す義務。
 
-**When to avoid:**
+**活用方法:**
 
-- Always for discipline enforcement
+- 控えめに使用—操作的に感じられる可能性
+- プロンプトではほとんど必要ない
 
-## Principle Combinations by Prompt Type
+**避けるべき場面:**
 
-| Prompt Type | Use | Avoid |
+- ほぼ常に（他の原則の方が効果的）
+
+### 7. 好意（Liking）
+
+**内容:** 好きな相手と協力する傾向。
+
+**活用方法:**
+
+- **コンプライアンスのために使用しない**
+- 正直なフィードバック文化と矛盾
+- お世辞を生む
+
+**避けるべき場面:**
+
+- 規律強制では常に
+
+## プロンプトタイプ別の原則組み合わせ
+
+| プロンプトタイプ | 使用 | 避ける |
 |------------|-----|-------|
-| Discipline-enforcing | Authority + Commitment + Social Proof | Liking, Reciprocity |
-| Guidance/technique | Moderate Authority + Unity | Heavy authority |
-| Collaborative | Unity + Commitment | Authority, Liking |
-| Reference | Clarity only | All persuasion |
+| 規律強制 | 権威 + コミットメント + 社会的証明 | 好意、互恵性 |
+| ガイダンス/技術 | 中程度の権威 + 一体感 | 強い権威 |
+| 協調 | 一体感 + コミットメント | 権威、好意 |
+| リファレンス | 明確さのみ | すべての説得 |
 
-## Why This Works: The Psychology
+## なぜ機能するか: 心理学
 
-**Bright-line rules reduce rationalization:**
+**明確なルールは合理化を減らす:**
 
-- "YOU MUST" removes decision fatigue
-- Absolute language eliminates "is this an exception?" questions
-- Explicit anti-rationalization counters close specific loopholes
+- 「必ず〜すること」は決定疲れを排除
+- 絶対的な言語は「これは例外か？」という質問を排除
+- 明示的な反合理化は特定の抜け穴を塞ぐ
 
-**Implementation intentions create automatic behavior:**
+**実行意図は自動的な行動を生む:**
 
-- Clear triggers + required actions = automatic execution
-- "When X, do Y" more effective than "generally do Y"
-- Reduces cognitive load on compliance
+- 明確なトリガー + 必要なアクション = 自動実行
+- 「Xのとき、Yをする」は「一般的にYをする」より効果的
+- コンプライアンスの認知負荷を軽減
 
-**LLMs are parahuman:**
+**LLMは準人間的:**
 
-- Trained on human text containing these patterns
-- Authority language precedes compliance in training data
-- Commitment sequences (statement → action) frequently modeled
-- Social proof patterns (everyone does X) establish norms
+- これらのパターンを含む人間のテキストで訓練
+- 権威的な言語は訓練データでコンプライアンスに先行
+- コミットメントシーケンス（発言 → 行動）が頻繁にモデル化
+- 社会的証明パターン（みんながXをする）が規範を確立
 
-## Ethical Use
+## 倫理的使用
 
-**Legitimate:**
+**正当:**
 
-- Ensuring critical practices are followed
-- Creating effective documentation
-- Preventing predictable failures
+- 重要な実践が守られることを確保
+- 効果的なドキュメントの作成
+- 予測可能な失敗の防止
 
-**Illegitimate:**
+**不正:**
 
-- Manipulating for personal gain
-- Creating false urgency
-- Guilt-based compliance
+- 個人的利益のための操作
+- 偽の緊急性の作成
+- 罪悪感ベースのコンプライアンス
 
-**The test:** Would this technique serve the user's genuine interests if they fully understood it?
+**テスト:** この技術は、ユーザーが完全に理解した場合、ユーザーの真の利益に役立つか？
 
-## Quick Reference
+## クイックリファレンス
 
-When designing a prompt, ask:
+プロンプトを設計する際に問う:
 
-1. **What type is it?** (Discipline vs. guidance vs. reference)
-2. **What behavior am I trying to change?**
-3. **Which principle(s) apply?** (Usually authority + commitment for discipline)
-4. **Am I combining too many?** (Don't use all seven)
-5. **Is this ethical?** (Serves user's genuine interests?)
+1. **どのタイプか？**（規律 vs. ガイダンス vs. リファレンス）
+2. **どの行動を変えようとしているか？**
+3. **どの原則が適用されるか？**（通常、規律には権威 + コミットメント）
+4. **組み合わせすぎていないか？**（7つすべてを使用しない）
+5. **これは倫理的か？**（ユーザーの真の利益に役立つか？）
