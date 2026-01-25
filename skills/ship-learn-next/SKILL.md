@@ -1,6 +1,6 @@
 ---
 name: ship-learn-next
-description: Transform learning content (like YouTube transcripts, articles, tutorials) into actionable implementation plans using the Ship-Learn-Next framework. Use when user wants to turn advice, lessons, or educational content into concrete action steps, reps, or a learning quest.
+description: Ship-Learn-Nextフレームワークを使用して、学習コンテンツ（YouTubeトランスクリプト、記事、チュートリアル等）を実行可能な実装計画に変換。アドバイスや教訓を具体的なアクションステップ、rep、学習クエストに落とし込みたい場合に使用。
 allowed-tools: Read,Write
 ---
 

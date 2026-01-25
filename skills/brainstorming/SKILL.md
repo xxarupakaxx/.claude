@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+description: "クリエイティブな作業（機能作成、コンポーネント構築、機能追加、動作変更）の前に必ず使用。実装前にユーザーの意図、要件、設計を探索する。"
 ---
 
 # アイデアをデザインに昇華する

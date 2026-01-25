@@ -1,6 +1,6 @@
 ---
 name: agent-memory
-description: "Use this skill when the user asks to save, remember, recall, or organize memories. Triggers on: 'remember this', 'save this', 'note this', 'what did we discuss about...', 'check your notes', 'clean up memories'. Also use proactively when discovering valuable findings worth preserving."
+description: "メモリの保存・想起・整理を依頼された場合に使用。トリガー: '覚えて'、'保存して'、'メモして'、'〜について何を話した？'、'ノートを確認'、'メモリを整理'。価値ある発見を保存すべき場合はプロアクティブに使用。"
 ---
 
 # Agent Memory

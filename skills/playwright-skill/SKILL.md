@@ -1,115 +1,115 @@
 ---
 name: playwright-skill
-description: Complete browser automation with Playwright. Auto-detects dev servers, writes clean test scripts to /tmp. Test pages, fill forms, take screenshots, check responsive design, validate UX, test login flows, check links, automate any browser task. Use when user wants to test websites, automate browser interactions, validate web functionality, or perform any browser-based testing.
+description: Playwright による完全なブラウザ自動化。開発サーバーを自動検出し、クリーンなテストスクリプトを /tmp に書き出す。ページのテスト、フォーム入力、スクリーンショット取得、レスポンシブデザイン確認、UX 検証、ログインフロー検証、リンク切れチェック、あらゆるブラウザ作業の自動化に対応。Web サイトをテストしたい、ブラウザ操作を自動化したい、Web 機能を検証したい、またはブラウザベースのテストを行いたい場合に使用する。
 ---
 
-**IMPORTANT - Path Resolution:**
-This skill can be installed in different locations (plugin system, manual installation, global, or project-specific). Before executing any commands, determine the skill directory based on where you loaded this SKILL.md file, and use that path in all commands below. Replace `$SKILL_DIR` with the actual discovered path.
+**重要 - パス解決:**
+このスキルは複数の場所（プラグインシステム、手動インストール、グローバル、プロジェクト固有）にインストールされ得る。コマンドを実行する前に、読み込んだこの SKILL.md ファイルの場所に基づいてスキルディレクトリを特定し、以降のすべてのコマンドでそのパスを使うこと。`$SKILL_DIR` は、発見した実際のパスに置き換えること。
 
-Common installation paths:
+一般的なインストールパス:
 
-- Plugin system: `~/.claude/plugins/marketplaces/playwright-skill/skills/playwright-skill`
-- Manual global: `~/.claude/skills/playwright-skill`
-- Project-specific: `<project>/.claude/skills/playwright-skill`
+- プラグインシステム: `~/.claude/plugins/marketplaces/playwright-skill/skills/playwright-skill`
+- 手動グローバル: `~/.claude/skills/playwright-skill`
+- プロジェクト固有: `<project>/.claude/skills/playwright-skill`
 
-# Playwright Browser Automation
+# Playwright ブラウザ自動化
 
-General-purpose browser automation skill. I'll write custom Playwright code for any automation task you request and execute it via the universal executor.
+汎用のブラウザ自動化スキル。依頼された自動化タスクのためにカスタム Playwright コードを書き、ユニバーサル実行機構で実行する。
 
-**CRITICAL WORKFLOW - Follow these steps in order:**
+**重要ワークフロー - 次の手順を順番通りに必ず実行する:**
 
-1. **Auto-detect dev servers** - For localhost testing, ALWAYS run server detection FIRST:
+1. **開発サーバーの自動検出** - localhost をテストする場合、必ず最初にサーバー検出を実行する:
 
    ```bash
    cd $SKILL_DIR && node -e "require('./lib/helpers').detectDevServers().then(servers => console.log(JSON.stringify(servers)))"
-   ```
+````
 
-   - If **1 server found**: Use it automatically, inform user
-   - If **multiple servers found**: Ask user which one to test
-   - If **no servers found**: Ask for URL or offer to help start dev server
+* **1つ見つかった場合**: 自動的にそれを使い、ユーザーに知らせる
+* **複数見つかった場合**: どれをテストするかユーザーに確認する
+* **見つからない場合**: URL を尋ねる、または開発サーバーの起動を手伝うと提案する
 
-2. **Write scripts to /tmp** - NEVER write test files to skill directory; always use `/tmp/playwright-test-*.js`
+2. **スクリプトは /tmp に書く** - テストファイルはスキルディレクトリには絶対に書かず、必ず `/tmp/playwright-test-*.js` を使う
 
-3. **Use visible browser by default** - Always use `headless: false` unless user specifically requests headless mode
+3. **デフォルトは可視ブラウザ** - ユーザーが headless を明示しない限り、常に `headless: false` を使う
 
-4. **Parameterize URLs** - Always make URLs configurable via environment variable or constant at top of script
+4. **URL をパラメータ化する** - URL は必ず環境変数か、スクリプト先頭の定数で設定できるようにする
 
-## How It Works
+## 仕組み
 
-1. You describe what you want to test/automate
-2. I auto-detect running dev servers (or ask for URL if testing external site)
-3. I write custom Playwright code in `/tmp/playwright-test-*.js` (won't clutter your project)
-4. I execute it via: `cd $SKILL_DIR && node run.js /tmp/playwright-test-*.js`
-5. Results displayed in real-time, browser window visible for debugging
-6. Test files auto-cleaned from /tmp by your OS
+1. 何をテスト／自動化したいかをユーザーが説明する
+2. 実行中の開発サーバーを自動検出する（外部サイトなら URL を尋ねる）
+3. `/tmp/playwright-test-*.js` にカスタム Playwright コードを書く（プロジェクトが汚れない）
+4. `cd $SKILL_DIR && node run.js /tmp/playwright-test-*.js` で実行する
+5. 結果をリアルタイムで表示し、デバッグ用にブラウザも表示する
+6. テストファイルは OS により /tmp から自動的にクリーンアップされる
 
-## Setup (First Time)
+## セットアップ（初回のみ）
 
 ```bash
 cd $SKILL_DIR
 npm run setup
 ```
 
-This installs Playwright and Chromium browser. Only needed once.
+Playwright と Chromium ブラウザをインストールする。必要なのは一度だけ。
 
-## Execution Pattern
+## 実行パターン
 
-**Step 1: Detect dev servers (for localhost testing)**
+**ステップ1: 開発サーバー検出（localhost テスト用）**
 
 ```bash
 cd $SKILL_DIR && node -e "require('./lib/helpers').detectDevServers().then(s => console.log(JSON.stringify(s)))"
 ```
 
-**Step 2: Write test script to /tmp with URL parameter**
+**ステップ2: URL をパラメータ化して /tmp にテストスクリプトを書く**
 
 ```javascript
 // /tmp/playwright-test-page.js
 const { chromium } = require('playwright');
 
-// Parameterized URL (detected or user-provided)
-const TARGET_URL = 'http://localhost:3001'; // <-- Auto-detected or from user
+// パラメータ化された URL（検出結果またはユーザー指定）
+const TARGET_URL = 'http://localhost:3001'; // <-- 自動検出またはユーザー指定
 
 (async () => {
   const browser = await chromium.launch({ headless: false });
   const page = await browser.newPage();
 
   await page.goto(TARGET_URL);
-  console.log('Page loaded:', await page.title());
+  console.log('ページを読み込みました:', await page.title());
 
   await page.screenshot({ path: '/tmp/screenshot.png', fullPage: true });
-  console.log('📸 Screenshot saved to /tmp/screenshot.png');
+  console.log('📸 スクリーンショットを /tmp/screenshot.png に保存しました');
 
   await browser.close();
 })();
 ```
 
-**Step 3: Execute from skill directory**
+**ステップ3: スキルディレクトリから実行する**
 
 ```bash
 cd $SKILL_DIR && node run.js /tmp/playwright-test-page.js
 ```
 
-## Common Patterns
+## よくあるパターン
 
-### Test a Page (Multiple Viewports)
+### ページのテスト（複数ビューポート）
 
 ```javascript
 // /tmp/playwright-test-responsive.js
 const { chromium } = require('playwright');
 
-const TARGET_URL = 'http://localhost:3001'; // Auto-detected
+const TARGET_URL = 'http://localhost:3001'; // 自動検出
 
 (async () => {
   const browser = await chromium.launch({ headless: false, slowMo: 100 });
   const page = await browser.newPage();
 
-  // Desktop test
+  // デスクトップテスト
   await page.setViewportSize({ width: 1920, height: 1080 });
   await page.goto(TARGET_URL);
-  console.log('Desktop - Title:', await page.title());
+  console.log('Desktop - タイトル:', await page.title());
   await page.screenshot({ path: '/tmp/desktop.png', fullPage: true });
 
-  // Mobile test
+  // モバイルテスト
   await page.setViewportSize({ width: 375, height: 667 });
   await page.screenshot({ path: '/tmp/mobile.png', fullPage: true });
 
@@ -117,13 +117,13 @@ const TARGET_URL = 'http://localhost:3001'; // Auto-detected
 })();
 ```
 
-### Test Login Flow
+### ログインフローのテスト
 
 ```javascript
 // /tmp/playwright-test-login.js
 const { chromium } = require('playwright');
 
-const TARGET_URL = 'http://localhost:3001'; // Auto-detected
+const TARGET_URL = 'http://localhost:3001'; // 自動検出
 
 (async () => {
   const browser = await chromium.launch({ headless: false });
@@ -135,21 +135,21 @@ const TARGET_URL = 'http://localhost:3001'; // Auto-detected
   await page.fill('input[name="password"]', 'password123');
   await page.click('button[type="submit"]');
 
-  // Wait for redirect
+  // リダイレクトを待つ
   await page.waitForURL('**/dashboard');
-  console.log('✅ Login successful, redirected to dashboard');
+  console.log('✅ ログイン成功、ダッシュボードへリダイレクトされました');
 
   await browser.close();
 })();
 ```
 
-### Fill and Submit Form
+### フォーム入力と送信
 
 ```javascript
 // /tmp/playwright-test-form.js
 const { chromium } = require('playwright');
 
-const TARGET_URL = 'http://localhost:3001'; // Auto-detected
+const TARGET_URL = 'http://localhost:3001'; // 自動検出
 
 (async () => {
   const browser = await chromium.launch({ headless: false, slowMo: 50 });
@@ -159,18 +159,18 @@ const TARGET_URL = 'http://localhost:3001'; // Auto-detected
 
   await page.fill('input[name="name"]', 'John Doe');
   await page.fill('input[name="email"]', 'john@example.com');
-  await page.fill('textarea[name="message"]', 'Test message');
+  await page.fill('textarea[name="message"]', 'テストメッセージ');
   await page.click('button[type="submit"]');
 
-  // Verify submission
+  // 送信確認
   await page.waitForSelector('.success-message');
-  console.log('✅ Form submitted successfully');
+  console.log('✅ フォーム送信に成功しました');
 
   await browser.close();
 })();
 ```
 
-### Check for Broken Links
+### リンク切れチェック
 
 ```javascript
 const { chromium } = require('playwright');
@@ -198,14 +198,14 @@ const { chromium } = require('playwright');
     }
   }
 
-  console.log(`✅ Working links: ${results.working}`);
-  console.log(`❌ Broken links:`, results.broken);
+  console.log(`✅ 正常なリンク数: ${results.working}`);
+  console.log(`❌ 壊れているリンク:`, results.broken);
 
   await browser.close();
 })();
 ```
 
-### Take Screenshot with Error Handling
+### エラーハンドリング付きスクリーンショット
 
 ```javascript
 const { chromium } = require('playwright');
@@ -225,22 +225,22 @@ const { chromium } = require('playwright');
       fullPage: true,
     });
 
-    console.log('📸 Screenshot saved to /tmp/screenshot.png');
+    console.log('📸 スクリーンショットを /tmp/screenshot.png に保存しました');
   } catch (error) {
-    console.error('❌ Error:', error.message);
+    console.error('❌ エラー:', error.message);
   } finally {
     await browser.close();
   }
 })();
 ```
 
-### Test Responsive Design
+### レスポンシブデザインのテスト
 
 ```javascript
 // /tmp/playwright-test-responsive-full.js
 const { chromium } = require('playwright');
 
-const TARGET_URL = 'http://localhost:3001'; // Auto-detected
+const TARGET_URL = 'http://localhost:3001'; // 自動検出
 
 (async () => {
   const browser = await chromium.launch({ headless: false });
@@ -254,7 +254,7 @@ const TARGET_URL = 'http://localhost:3001'; // Auto-detected
 
   for (const viewport of viewports) {
     console.log(
-      `Testing ${viewport.name} (${viewport.width}x${viewport.height})`,
+      `テスト中: ${viewport.name} (${viewport.width}x${viewport.height})`,
     );
 
     await page.setViewportSize({
@@ -271,17 +271,17 @@ const TARGET_URL = 'http://localhost:3001'; // Auto-detected
     });
   }
 
-  console.log('✅ All viewports tested');
+  console.log('✅ 全ビューポートのテストが完了しました');
   await browser.close();
 })();
 ```
 
-## Inline Execution (Simple Tasks)
+## インライン実行（簡単な作業）
 
-For quick one-off tasks, you can execute code inline without creating files:
+ファイルを作らずに、ワンオフのコードをインラインで実行できる:
 
 ```bash
-# Take a quick screenshot
+# すぐスクリーンショットを撮る
 cd $SKILL_DIR && node run.js "
 const browser = await chromium.launch({ headless: false });
 const page = await browser.newPage();
@@ -292,75 +292,75 @@ await browser.close();
 "
 ```
 
-**When to use inline vs files:**
+**インラインとファイルの使い分け:**
 
-- **Inline**: Quick one-off tasks (screenshot, check if element exists, get page title)
-- **Files**: Complex tests, responsive design checks, anything user might want to re-run
+* **インライン**: 単発の簡易作業（スクショ、要素の有無、タイトル取得など）
+* **ファイル**: 複雑なテスト、レスポンシブ確認、再実行したくなる作業全般
 
-## Available Helpers
+## 利用可能なヘルパー
 
-Optional utility functions in `lib/helpers.js`:
+`lib/helpers.js` にある任意のユーティリティ関数:
 
 ```javascript
 const helpers = require('./lib/helpers');
 
-// Detect running dev servers (CRITICAL - use this first!)
+// 実行中の開発サーバー検出（重要 - 最初にこれを使う！）
 const servers = await helpers.detectDevServers();
-console.log('Found servers:', servers);
+console.log('見つかったサーバー:', servers);
 
-// Safe click with retry
+// リトライ付き安全クリック
 await helpers.safeClick(page, 'button.submit', { retries: 3 });
 
-// Safe type with clear
+// クリア付き安全タイピング
 await helpers.safeType(page, '#username', 'testuser');
 
-// Take timestamped screenshot
+// タイムスタンプ付きスクリーンショット
 await helpers.takeScreenshot(page, 'test-result');
 
-// Handle cookie banners
+// Cookie バナー対応
 await helpers.handleCookieBanner(page);
 
-// Extract table data
+// テーブルデータ抽出
 const data = await helpers.extractTableData(page, 'table.results');
 ```
 
-See `lib/helpers.js` for full list.
+全リストは `lib/helpers.js` を参照。
 
-## Custom HTTP Headers
+## カスタム HTTP ヘッダー
 
-Configure custom headers for all HTTP requests via environment variables. Useful for:
+環境変数で、すべての HTTP リクエストにカスタムヘッダーを設定できる。用途例:
 
-- Identifying automated traffic to your backend
-- Getting LLM-optimized responses (e.g., plain text errors instead of styled HTML)
-- Adding authentication tokens globally
+* バックエンド側で自動化トラフィックを識別する
+* LLM 最適化されたレスポンスを受け取る（装飾 HTML ではなくプレーンテキストエラーなど）
+* 認証トークンをグローバルに付与する
 
-### Configuration
+### 設定
 
-**Single header (common case):**
+**単一ヘッダー（一般的）:**
 
 ```bash
 PW_HEADER_NAME=X-Automated-By PW_HEADER_VALUE=playwright-skill \
   cd $SKILL_DIR && node run.js /tmp/my-script.js
 ```
 
-**Multiple headers (JSON format):**
+**複数ヘッダー（JSON 形式）:**
 
 ```bash
 PW_EXTRA_HEADERS='{"X-Automated-By":"playwright-skill","X-Debug":"true"}' \
   cd $SKILL_DIR && node run.js /tmp/my-script.js
 ```
 
-### How It Works
+### 仕組み
 
-Headers are automatically applied when using `helpers.createContext()`:
+`helpers.createContext()` を使うとヘッダーが自動適用される:
 
 ```javascript
 const context = await helpers.createContext(browser);
 const page = await context.newPage();
-// All requests from this page include your custom headers
+// この page からのすべてのリクエストにカスタムヘッダーが付く
 ```
 
-For scripts using raw Playwright API, use the injected `getContextOptionsWithHeaders()`:
+素の Playwright API を使うスクリプトでは、注入される `getContextOptionsWithHeaders()` を使う:
 
 ```javascript
 const context = await browser.newContext(
@@ -368,86 +368,88 @@ const context = await browser.newContext(
 );
 ```
 
-## Advanced Usage
+## 高度な使い方
 
-For comprehensive Playwright API documentation, see [API_REFERENCE.md](API_REFERENCE.md):
+Playwright API の包括的ドキュメントは [API_REFERENCE.md](API_REFERENCE.md) を参照:
 
-- Selectors & Locators best practices
-- Network interception & API mocking
-- Authentication & session management
-- Visual regression testing
-- Mobile device emulation
-- Performance testing
-- Debugging techniques
-- CI/CD integration
+* セレクタ／ロケータのベストプラクティス
+* ネットワークのインターセプトと API モック
+* 認証とセッション管理
+* ビジュアルリグレッションテスト
+* モバイル端末のエミュレーション
+* パフォーマンステスト
+* デバッグ手法
+* CI/CD 統合
 
 ## Tips
 
-- **CRITICAL: Detect servers FIRST** - Always run `detectDevServers()` before writing test code for localhost testing
-- **Custom headers** - Use `PW_HEADER_NAME`/`PW_HEADER_VALUE` env vars to identify automated traffic to your backend
-- **Use /tmp for test files** - Write to `/tmp/playwright-test-*.js`, never to skill directory or user's project
-- **Parameterize URLs** - Put detected/provided URL in a `TARGET_URL` constant at the top of every script
-- **DEFAULT: Visible browser** - Always use `headless: false` unless user explicitly asks for headless mode
-- **Headless mode** - Only use `headless: true` when user specifically requests "headless" or "background" execution
-- **Slow down:** Use `slowMo: 100` to make actions visible and easier to follow
-- **Wait strategies:** Use `waitForURL`, `waitForSelector`, `waitForLoadState` instead of fixed timeouts
-- **Error handling:** Always use try-catch for robust automation
-- **Console output:** Use `console.log()` to track progress and show what's happening
+* **重要: まずサーバー検出** - localhost テストでは、コードを書く前に必ず `detectDevServers()` を実行する
+* **カスタムヘッダー** - `PW_HEADER_NAME` / `PW_HEADER_VALUE` で自動化トラフィックを識別できる
+* **テストファイルは /tmp** - `/tmp/playwright-test-*.js` を使い、スキルディレクトリやプロジェクトには書かない
+* **URL をパラメータ化** - 検出／指定 URL は各スクリプト先頭の `TARGET_URL` 定数に置く
+* **デフォルトは可視ブラウザ** - headless を明示されない限り `headless: false`
+* **headless モード** - ユーザーが「headless」や「バックグラウンド」を明示したときのみ `headless: true`
+* **減速**: `slowMo: 100` で操作を見やすくする
+* **待ち戦略**: 固定 sleep ではなく `waitForURL` / `waitForSelector` / `waitForLoadState` を使う
+* **エラーハンドリング**: 堅牢な自動化のために try-catch を使う
+* **進捗ログ**: `console.log()` で進捗と状況を出力する
 
-## Troubleshooting
+## トラブルシューティング
 
-**Playwright not installed:**
+**Playwright が未インストール:**
 
 ```bash
 cd $SKILL_DIR && npm run setup
 ```
 
 **Module not found:**
-Ensure running from skill directory via `run.js` wrapper
+`run.js` ラッパー経由で、スキルディレクトリから実行していることを確認する
 
-**Browser doesn't open:**
-Check `headless: false` and ensure display available
+**ブラウザが開かない:**
+`headless: false` を確認し、表示環境があることを確認する
 
-**Element not found:**
-Add wait: `await page.waitForSelector('.element', { timeout: 10000 })`
+**要素が見つからない:**
+待ちを追加する: `await page.waitForSelector('.element', { timeout: 10000 })`
 
-## Example Usage
-
-```
-User: "Test if the marketing page looks good"
-
-Claude: I'll test the marketing page across multiple viewports. Let me first detect running servers...
-[Runs: detectDevServers()]
-[Output: Found server on port 3001]
-I found your dev server running on http://localhost:3001
-
-[Writes custom automation script to /tmp/playwright-test-marketing.js with URL parameterized]
-[Runs: cd $SKILL_DIR && node run.js /tmp/playwright-test-marketing.js]
-[Shows results with screenshots from /tmp/]
-```
+## 使用例
 
 ```
-User: "Check if login redirects correctly"
+ユーザー:「マーケティングページがいい感じに見えるかテストして」
 
-Claude: I'll test the login flow. First, let me check for running servers...
-[Runs: detectDevServers()]
-[Output: Found servers on ports 3000 and 3001]
-I found 2 dev servers. Which one should I test?
+Claude: 複数ビューポートでマーケティングページをテストします。まず実行中サーバーを検出します…
+[detectDevServers() を実行]
+[出力: ポート 3001 でサーバー発見]
+http://localhost:3001 で開発サーバーが動いているのを見つけました
+
+[/tmp/playwright-test-marketing.js に URL をパラメータ化してカスタムスクリプトを書き込み]
+[cd $SKILL_DIR && node run.js /tmp/playwright-test-marketing.js を実行]
+[/tmp/ のスクリーンショット付きで結果を表示]
+```
+
+```
+ユーザー:「ログイン後に正しくリダイレクトされるか確認して」
+
+Claude: ログインフローをテストします。まず実行中サーバーを確認します…
+[detectDevServers() を実行]
+[出力: ポート 3000 と 3001 を発見]
+開発サーバーが2つ見つかりました。どちらをテストしますか？
 - http://localhost:3000
 - http://localhost:3001
 
-User: "Use 3001"
+ユーザー:「3001で」
 
-[Writes login automation to /tmp/playwright-test-login.js]
-[Runs: cd $SKILL_DIR && node run.js /tmp/playwright-test-login.js]
-[Reports: ✅ Login successful, redirected to /dashboard]
+[/tmp/playwright-test-login.js にログイン自動化を書き込み]
+[cd $SKILL_DIR && node run.js /tmp/playwright-test-login.js を実行]
+[結果: ✅ ログイン成功、/dashboard へリダイレクト]
 ```
 
-## Notes
+## 注記
 
-- Each automation is custom-written for your specific request
-- Not limited to pre-built scripts - any browser task possible
-- Auto-detects running dev servers to eliminate hardcoded URLs
-- Test scripts written to `/tmp` for automatic cleanup (no clutter)
-- Code executes reliably with proper module resolution via `run.js`
-- Progressive disclosure - API_REFERENCE.md loaded only when advanced features needed
+* 自動化はリクエストごとにカスタムで作成する
+* 事前用意されたスクリプトに限定されず、あらゆるブラウザ作業が可能
+* 実行中の開発サーバーを自動検出し、URL のハードコードを避ける
+* テストスクリプトは `/tmp` に書き、プロジェクトを汚さない
+* `run.js` 経由の適切なモジュール解決で安定実行できる
+* 段階的な開示：高度な機能が必要なときだけ API_REFERENCE.md を読み込む
+
+```
