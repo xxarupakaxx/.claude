@@ -1,6 +1,6 @@
 ---
 name: prompt-engineering
-description: Use this skill when you writing commands, hooks, skills for Agent, or prompts for sub agents or any other LLM interaction, including optimizing prompts, improving LLM outputs, or designing production prompt templates.
+description: エージェント向けのコマンド、フック、スキル、サブエージェント向けプロンプト、その他LLMインタラクションを作成する際に使用。プロンプト最適化、LLM出力改善、本番用プロンプトテンプレート設計を含む。
 ---
 
 # プロンプトエンジニアリングパターン
