@@ -63,20 +63,33 @@ description: 既存設定と完全に整合したスキルを自動作成。~/.c
 
 ### Step 5: スキル設計
 
-**設計原則（@context/claude-customization-guide.md）:**
-- SKILL.mdは**500行以下**
-- descriptionに「**何をするか**」+「**いつ使うか**」
-- 詳細は別ファイルに分割（参照は**1階層のみ**）
-- 既存設定を`@context/xxx.md`形式で参照（重複記載しない）
+**設計原則:**
+参照: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices
+
+**命名規則（CRITICAL）:**
+- **gerund形式**（verb + -ing）を使用
+- Good: `implementing-kysely`, `processing-pdfs`, `reviewing-prs`, `managing-databases`
+- Bad: ~~`kysely`~~, ~~`pdf`~~, ~~`pr-review`~~, ~~`database`~~
+- 小文字・数字・ハイフンのみ（64文字以下）
+
+**description（CRITICAL）:**
+- **3人称**で記述（"I can..." や "You can..." は避ける）
+- 「**何をするか**」+「**いつ使うか**」を含める
+- 最大1024文字
 
 **description例:**
 ```yaml
-# Good
-description: PRレビュー。PR番号・ブランチ名指定時またはレビュー依頼時に使用。
+# Good（3人称 + What + When）
+description: Reviews pull requests for code quality and security. Use when PR number or branch is specified, or when review is requested.
 
-# Bad
-description: PRレビュー。
+# Bad（1人称、Whenがない）
+description: I can review PRs.
 ```
+
+**その他:**
+- SKILL.mdは**500行以下**
+- 詳細は別ファイルに分割（参照は**1階層のみ**）
+- 既存設定を`@context/xxx.md`形式で参照（重複記載しない）
 
 ### Step 6: スキル作成
 
@@ -130,6 +143,8 @@ description: <何をするか>。<いつ使うか>。使用タイミング: (1) 
 
 - 既存設定との整合性確認なしでスキル作成
 - 既存スキルと重複する機能の作成
+- **名詞形のスキル名**（`kysely`ではなく`implementing-kysely`）
+- **1人称のdescription**（"I can..."、"You can..."）
 - SKILL.mdに500行以上記載
 - references/内で更にファイル参照（1階層まで）
 - descriptionに「いつ使うか」がない
@@ -140,6 +155,8 @@ description: <何をするか>。<いつ使うか>。使用タイミング: (1) 
 - [ ] ~/.claude/context/claude-customization-guide.md を確認したか
 - [ ] 既存スキル一覧を確認したか
 - [ ] Skill/Command/CLAUDE.md追記の判定をしたか
+- [ ] **スキル名がgerund形式か**（implementing-xxx, processing-xxx）
+- [ ] **descriptionは3人称か**（"I can..."は不可）
 - [ ] descriptionに「何を」「いつ」が含まれるか
 - [ ] SKILL.mdは500行以下か
 - [ ] @context/xxx.md 形式で参照を記載したか
