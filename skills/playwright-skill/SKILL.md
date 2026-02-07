@@ -22,6 +22,31 @@ playwright-cli screenshot
 playwright-cli close
 ```
 
+## ファイル出力先ルール（IMPORTANT）
+
+**タスク作業中（メモリディレクトリが存在する場合）**、スクリーンショット・PDF・ビデオ・トレース等のファイル出力先は、現在のタスクのメモリディレクトリに保存する。
+
+```bash
+# 保存先: ${MEMORY_DIR}/memory/YYMMDD_<task_name>/
+# 例: .local/memory/260207_login-test/
+
+playwright-cli screenshot --filename=${MEMORY_DIR}/memory/YYMMDD_<task_name>/screenshot-top.png
+playwright-cli screenshot e5 --filename=${MEMORY_DIR}/memory/YYMMDD_<task_name>/screenshot-element.png
+playwright-cli pdf --filename=${MEMORY_DIR}/memory/YYMMDD_<task_name>/page.pdf
+playwright-cli video-stop ${MEMORY_DIR}/memory/YYMMDD_<task_name>/recording.webm
+playwright-cli snapshot --filename=${MEMORY_DIR}/memory/YYMMDD_<task_name>/snapshot.yaml
+playwright-cli state-save ${MEMORY_DIR}/memory/YYMMDD_<task_name>/auth-state.json
+```
+
+**命名規則:**
+- スクリーンショット: `screenshot-<用途>.png`（例: `screenshot-top.png`, `screenshot-mobile.png`, `screenshot-after-login.png`）
+- PDF: `<ページ名>.pdf`
+- ビデオ: `recording-<内容>.webm`
+- スナップショット: `snapshot-<ステップ>.yaml`
+- ストレージ状態: `state-<用途>.json`
+
+**タスク外（メモリディレクトリがない場合）**: `/tmp/` に保存する。
+
 ## コマンド一覧
 
 ### コア操作
