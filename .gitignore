@@ -8,5 +8,6 @@
 !/context/**
 !/skills/
 !/skills/**
+/skills/investigating-gcp-observability/
 !/templates/
 !/templates/**
