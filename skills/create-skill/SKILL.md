@@ -1,6 +1,6 @@
 ---
 name: create-skill
-description: 既存設定と完全に整合したスキルを自動作成。~/.claude/CLAUDE.md、context/*.md、既存スキルを自動参照し、重複・競合を避けたスキルを生成。使用: /create-skill --user <内容> または /create-skill --project <内容>
+description: 既存設定と完全に整合したスキルを自動作成。~/.claude/CLAUDE.md、context/*.md、既存スキルを自動参照し、重複・競合を避けたスキルを生成。使用タイミング: (1) 新しいスキルを作りたい場合、(2) /create-skill --user または --project 実行時。「スキルを追加して」「新しいスキルを作って」「SKILLを作成したい」等の依頼に対応。SKILL.md（YAML frontmatter付き）を生成。
 ---
 
 # Create Skill
@@ -76,13 +76,16 @@ description: 既存設定と完全に整合したスキルを自動作成。~/.c
 - **3人称**で記述（"I can..." や "You can..." は避ける）
 - 「**何をするか**」+「**いつ使うか**」を含める
 - 最大1024文字
+- XMLタグ（`<` や `>`）は含めない
+- ユーザーが言うかもしれない**具体的なタスク・フレーズ**を含める
+- 関連する場合は**ファイルタイプ**に言及する
 
 **description例:**
 ```yaml
-# Good（3人称 + What + When）
-description: Reviews pull requests for code quality and security. Use when PR number or branch is specified, or when review is requested.
+# Good（3人称 + What + When + 具体的タスク）
+description: Reviews pull requests for code quality and security. Use when PR number or branch is specified, or when review is requested. "PRをレビューして" "コードレビューお願い" 等の依頼に対応。
 
-# Bad（1人称、Whenがない）
+# Bad（1人称、Whenがない、具体的タスクなし）
 description: I can review PRs.
 ```
 
@@ -158,5 +161,8 @@ description: <何をするか>。<いつ使うか>。使用タイミング: (1) 
 - [ ] **スキル名がgerund形式か**（implementing-xxx, processing-xxx）
 - [ ] **descriptionは3人称か**（"I can..."は不可）
 - [ ] descriptionに「何を」「いつ」が含まれるか
+- [ ] descriptionにXMLタグ（`<` `>`）が含まれていないか
+- [ ] descriptionにユーザーが言いそうな具体的タスク・フレーズが含まれるか
+- [ ] 関連する場合、descriptionにファイルタイプが言及されているか
 - [ ] SKILL.mdは500行以下か
 - [ ] @context/xxx.md 形式で参照を記載したか
