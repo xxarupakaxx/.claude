@@ -5,7 +5,6 @@ description: |
   ダッシュボード、管理画面、LP、Webアプリケーション等のUI構築時に使用。
   Linear, Notion, Stripe, Vercel等のデザイン品質を再現し、
   AIっぽい平凡なデザインを避け、独自性のある洗練されたインターフェースを生成する。
-model: opus
 ---
 
 # UI/UX Design Skill

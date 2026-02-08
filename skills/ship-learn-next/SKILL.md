@@ -1,7 +1,6 @@
 ---
 name: ship-learn-next
 description: Ship-Learn-Nextフレームワークを使用して、学習コンテンツ（YouTubeトランスクリプト、記事、チュートリアル等）を実行可能な実装計画に変換。アドバイスや教訓を具体的なアクションステップ、rep、学習クエストに落とし込みたい場合に使用。
-model: opus
 allowed-tools: Read, Write
 ---
 
