@@ -1,0 +1,60 @@
+{
+  "cleanupPeriodDays": 99999,
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          { "type": "command", "command": "afplay /System/Library/Sounds/Pop.aiff 2>/dev/null || true" }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "afplay /System/Library/Sounds/Tink.aiff 2>/dev/null || true" }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "afplay /System/Library/Sounds/Purr.aiff 2>/dev/null || true" }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "afplay /System/Library/Sounds/Glass.aiff 2>/dev/null || true" }
+        ]
+      }
+    ]
+  },
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "1"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir'); dir=$(basename \"$cwd\"); branch=$(git -C \"$cwd\" rev-parse --abbrev-ref HEAD 2>/dev/null || echo ''); pct=$(echo \"$input\" | jq -r '.context_window.used_percentage // 0' | cut -d. -f1); in_tok=$(echo \"$input\" | jq -r '.context_window.total_input_tokens // 0'); out_tok=$(echo \"$input\" | jq -r '.context_window.total_output_tokens // 0'); in_k=$(awk \"BEGIN {printf \\\"%.1f\\\", $in_tok/1000}\"); out_k=$(awk \"BEGIN {printf \\\"%.1f\\\", $out_tok/1000}\"); if [ \"$pct\" -ge 90 ]; then pct_color='\\033[31m'; elif [ \"$pct\" -ge 70 ]; then pct_color='\\033[33m'; else pct_color='\\033[32m'; fi; if [ -n \"$branch\" ]; then printf \"\\033[36m%s\\033[0m \\033[33m(%s)\\033[0m ${pct_color}%d%%\\033[0m \\033[90min:%sk out:%sk\\033[0m\" \"$dir\" \"$branch\" \"$pct\" \"$in_k\" \"$out_k\"; else printf \"\\033[36m%s\\033[0m ${pct_color}%d%%\\033[0m \\033[90min:%sk out:%sk\\033[0m\" \"$dir\" \"$pct\" \"$in_k\" \"$out_k\"; fi"
+  },
+  "language": "japanese Explanatory learning",
+  "plansDirectory": "./local/plans",
+  "mcpServers": {
+    "deepwiki": {
+      "url": "https://mcp.deepwiki.com/sse",
+      "autoApprove": [
+        "read_wiki_structure",
+        "read_wiki_contents"
+      ]
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"],
+      "autoApprove": [
+        "resolve-library-id",
+        "get-library-docs"
+      ]
+    }
+  }
+}
