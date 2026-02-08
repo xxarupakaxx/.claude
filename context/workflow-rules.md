@@ -124,6 +124,41 @@ Taskツールで並列起動（subagent_type=general-purpose）:
 - 既存コードとの整合性を最優先
 - **→ 選択理由を05_log.mdに記録**
 
+### 1.3.1 大規模移行・メジャーバージョンアップ時の追加調査（IMPORTANT）
+
+ライブラリのメジャーバージョンアップや大規模移行を行う場合、通常の調査に加えて以下を実施:
+
+#### Step 1: Breaking Changesの網羅的整理
+
+1. **公式マイグレーションガイドを熟読**
+   - Context7 query-docs: "migration guide" / "breaking changes"
+   - deepwiki: リポジトリのCHANGELOGやdiscussions
+   - GitHub Issues: `label:migration` / `label:breaking-change`
+
+2. **影響範囲マトリックスの作成**
+   ```markdown
+   | Breaking Change | 検出コマンド | 影響ファイル数 | 対応方針 |
+   |----------------|-------------|--------------|---------|
+   | API名変更 | `grep -r "旧API名" src/` | N件 | 一括置換 |
+   | 新しい必須設定 | - | 設定ファイル | 手動追加 |
+   ```
+
+3. **影響ファイルの自動検出**（grepで事前にリストアップ）
+
+#### Step 2: PoC（Proof of Concept）先行
+
+**CRITICAL: いきなり全体移行しない。最小構成で動作確認を先に行う。**
+
+1. 最小限の構成（コンポーネント0個、モデル1個等）で新バージョンを動かす
+2. 発生するエラーと解決策を記録
+3. 解決パターンが確立されてから全体移行に進む
+
+#### Step 3: 段階的移行
+
+1. カテゴリごとに分割（例: import変更 → 設定変更 → API変更）
+2. 各カテゴリ完了後にコミット＋動作確認
+3. 問題発生時にrevert可能な粒度を維持
+
 ### 1.4 GO/NO-GO検証ゲート（IMPORTANT）
 
 調査完了後、実装に進む前に実現可能性を評価する。
