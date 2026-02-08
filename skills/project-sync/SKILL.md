@@ -1,6 +1,8 @@
 ---
 name: project-sync
 description: PJドキュメント同期。PJ CLAUDE.mdの更新依頼時やドキュメント整理依頼時に使用。user-level設定との整合性確認、ドキュメント分離原則の適用、不要ファイル削除を実施。
+model: opus
+allowed-tools: Read, Write, Bash, Glob, Grep
 ---
 
 # PJドキュメント同期
