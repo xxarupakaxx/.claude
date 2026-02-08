@@ -1,7 +1,6 @@
 ---
 name: pr-review
 description: PRレビュー。PR番号・ブランチ名指定時またはレビュー依頼時に使用。現在のセッションとClaude Code別セッションによるマルチ視点レビューでCritical/High/Medium分類の指摘を報告。
-model: opus
 context: fork
 allowed-tools: Bash(gh:*), Read, Grep, Glob
 ---

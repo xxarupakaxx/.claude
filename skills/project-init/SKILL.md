@@ -1,7 +1,6 @@
 ---
 name: project-init
 description: プロジェクト初期化。CLAUDE.mdや.claude/がない場合にテンプレートを適用し、PJ固有設定を促す。
-model: opus
 allowed-tools: Read, Write, Bash, Glob
 ---
 

@@ -1,7 +1,6 @@
 ---
 name: database-migration
 description: DBマイグレーション支援。スキーマ変更やマイグレーション作成依頼時に使用。ORM自動検出、命名規則確認、既存マイグレーションとの整合性を検証。
-model: opus
 allowed-tools: Read, Write, Bash, Glob, Grep
 ---
 

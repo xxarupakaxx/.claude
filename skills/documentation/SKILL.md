@@ -1,7 +1,6 @@
 ---
 name: documentation
 description: ドキュメント更新。コード変更後にnpm script/環境変数/API追加を検出した場合に使用。CLAUDE.md/README.md/API仕様の同期を支援。
-model: opus
 allowed-tools: Read, Write, Bash, Glob, Grep
 ---
 
