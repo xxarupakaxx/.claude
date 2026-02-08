@@ -98,6 +98,18 @@ API設計を行う専門エージェント。
 ```
 ```
 
+## フレームワーク別ドキュメント参照（Context7）
+
+API設計時はContext7でフレームワーク固有のベストプラクティスを確認:
+
+| フレームワーク | Context7 Library ID |
+|---------------|---------------------|
+| Express | `/expressjs/express` |
+| Hono | `/honojs/hono` |
+| NestJS | `/nestjs/nest` |
+| Fastify | `/fastify/fastify` |
+| tRPC | `/trpc/trpc` |
+
 ## チェックリスト
 
 - [ ] 既存APIとの整合性
@@ -106,3 +118,4 @@ API設計を行う専門エージェント。
 - [ ] ページネーション対応
 - [ ] エラーハンドリング
 - [ ] レート制限の考慮
+- [ ] **Context7でフレームワーク最新仕様を確認**

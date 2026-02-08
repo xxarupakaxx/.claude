@@ -577,6 +577,21 @@ border: 0.5px solid var(--border);
 - Vercel (https://vercel.com) — Boldness & Clarity
 - GitHub (https://github.com) — Utility & Function
 
+## 技術ドキュメント参照（Context7）
+
+UIライブラリの最新仕様はContext7で確認:
+
+| ライブラリ | Context7 Library ID | 用途 |
+|-----------|---------------------|------|
+| React | `/facebook/react` | コンポーネント設計 |
+| Next.js | `/vercel/next.js` | ルーティング、SSR |
+| Tailwind CSS | `/tailwindlabs/tailwindcss` | ユーティリティクラス |
+| shadcn/ui | `/shadcn-ui/ui` | コンポーネントライブラリ |
+| Radix UI | `/radix-ui/primitives` | アクセシブルなプリミティブ |
+| Framer Motion | `/framer/motion` | アニメーション |
+
+**活用場面**: 新しいコンポーネントAPIの確認、Tailwindクラスの最新構文など
+
 **Remember: Claude is capable of extraordinary creative work.**
 
 
