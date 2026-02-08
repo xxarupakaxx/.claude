@@ -10,6 +10,33 @@
 - エラー解決時の公式ドキュメント参照
 - 非推奨（deprecated）警告への対応時
 
+## メジャーバージョンアップ・大規模移行時（IMPORTANT）
+
+メジャーバージョンアップ時は以下の3ツールを**必ず全て使用**:
+
+| 順序 | ツール | 調査内容 |
+|------|--------|---------|
+| 1 | **Context7** | migration guide, breaking changes, 新API仕様 |
+| 2 | **deepwiki** | リポジトリの構造変更、examples/のサンプルコード |
+| 3 | **WebSearch/GitHub Issues** | 既知の問題、コミュニティの解決策 |
+
+### 調査クエリテンプレート
+
+```
+Context7:
+- query-docs: "v{旧} to v{新} migration"
+- query-docs: "breaking changes v{新}"
+- query-docs: "{具体的なエラーメッセージ}"
+
+deepwiki:
+- ask_question: "What are the major changes between v{旧} and v{新}?"
+- ask_question: "How to migrate from {旧API} to {新API}?"
+
+WebSearch:
+- "{ライブラリ名} v{新} migration issues"
+- "{ライブラリ名} v{新} {エラーメッセージ}"
+```
+
 ## Context7の使用手順
 
 1. `resolve-library-id`でライブラリIDを取得
@@ -58,6 +85,11 @@
 | Zod | `/colinhacks/zod` |
 | date-fns | `/date-fns/date-fns` |
 | Lodash | `/lodash/lodash` |
+
+### CMS/フレームワーク
+| ライブラリ | ID |
+|-----------|-----|
+| Payload CMS | `/payloadcms/payload` |
 
 ## ツールの使い分け
 
