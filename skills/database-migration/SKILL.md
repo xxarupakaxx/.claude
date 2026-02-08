@@ -51,6 +51,20 @@ npx drizzle-kit generate
 npx drizzle-kit migrate
 ```
 
+## ドキュメント参照（Context7）
+
+ORM固有の最新仕様はContext7で確認:
+
+| ORM | Context7 Library ID |
+|-----|---------------------|
+| Prisma | `/prisma/docs` |
+| Drizzle | `/drizzle-team/drizzle-orm` |
+| SQLAlchemy | `/sqlalchemy/sqlalchemy` |
+| TypeORM | `/typeorm/typeorm` |
+| Sequelize | `/sequelize/sequelize` |
+
+**使用例**: マイグレーション作成前に最新の構文・オプションを確認
+
 ## 実行手順
 
 ### 1. スキーマ変更の確認
