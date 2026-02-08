@@ -1,6 +1,8 @@
 ---
 name: codebase-review
 description: コードベース包括的レビュー。6観点（perf/sec/test/arch/cq/docs）を並列サブエージェントで実行し、優先度付きissueファイルをメモリディレクトリに生成。
+model: opus
+context: fork
 ---
 
 # コードベース包括的レビュー

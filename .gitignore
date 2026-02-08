@@ -9,5 +9,9 @@
 !/skills/
 !/skills/**
 /skills/investigating-gcp-observability/
+!/agents/
+!/agents/**
+!/rules/
+!/rules/**
 !/templates/
 !/templates/**

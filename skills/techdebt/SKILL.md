@@ -1,6 +1,8 @@
 ---
 name: techdebt
 description: 重複コードの発見・削除。セッション終了時または技術的負債の整理依頼時に使用。コードベース内の重複・類似コードを検出し、リファクタリング提案を行う。
+model: opus
+context: fork
 ---
 
 # Tech Debt - 重複コード検出・削除

@@ -1,6 +1,8 @@
 ---
 name: create-skill
 description: 既存設定と完全に整合したスキルを自動作成。~/.claude/CLAUDE.md、context/*.md、既存スキルを自動参照し、重複・競合を避けたスキルを生成。使用タイミング: (1) 新しいスキルを作りたい場合、(2) /create-skill --user または --project 実行時。「スキルを追加して」「新しいスキルを作って」「SKILLを作成したい」等の依頼に対応。SKILL.md（YAML frontmatter付き）を生成。
+model: opus
+allowed-tools: Read, Write, Glob, Grep
 ---
 
 # Create Skill

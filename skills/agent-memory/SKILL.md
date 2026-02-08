@@ -1,6 +1,8 @@
 ---
 name: agent-memory
 description: "メモリの保存・想起・整理を依頼された場合に使用。トリガー: '覚えて'、'保存して'、'メモして'、'〜について何を話した？'、'ノートを確認'、'メモリを整理'。価値ある発見を保存すべき場合はプロアクティブに使用。"
+model: opus
+allowed-tools: Read, Write, Grep, Glob
 ---
 
 # Agent Memory

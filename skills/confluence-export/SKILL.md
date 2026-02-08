@@ -1,6 +1,7 @@
 ---
 name: confluence-export
 description: kiro design.mdをConfluence用Markdown（PlantUMLダイアグラム）に変換し、mcp-atlassianでConfluenceページを作成・更新。/kiro:spec-design完了後または手動で実行。使用タイミング: (1) design完了後のConfluence出力依頼、(2) /confluence-export {feature}実行時。
+model: opus
 ---
 
 # Confluence Export Skill
