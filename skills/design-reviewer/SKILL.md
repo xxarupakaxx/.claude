@@ -1,7 +1,6 @@
 ---
 name: design-reviewer
 description: 設計ドキュメント（.kiro/specs/の design.md）のレビュー。設計レビュー依頼時、またはSDDのタスク間レビューで設計ドキュメントが出力された場合に使用。要件との整合性・既存アーキテクチャとの整合・インタフェース整合・考慮漏れを検証し、人間向けサマリーを生成。
-model: opus
 context: fork
 ---
 
