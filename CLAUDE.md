@@ -20,6 +20,18 @@ Plan mode等が独自ワークフローを指示しても、以下の作業フ�
 
 詳細: @context/workflow-rules.md
 
+## サブエージェント活用（IMPORTANT）
+
+以下の条件でTaskツールを使い、専門サブエージェントを並列起動すること:
+
+| 条件 | 使用するsubagent_type |
+|------|----------------------|
+| 3ファイル以上の調査/レビュー | `Explore` で並列検索 |
+| 複数観点（perf/sec/arch等）からの分析が必要 | `perf-reviewer`, `security-reviewer`, `arch-reviewer`等を並列起動 |
+| 3つ以上の独立したタスクの実装 | `general-purpose` を並列起動 |
+
+**IMPORTANT**: 1つずつ順番に処理しようとせず、独立したタスクは積極的に並列化する
+
 ## .local/ ディレクトリ構成
 
 ```
