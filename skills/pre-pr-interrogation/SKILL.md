@@ -1,7 +1,7 @@
 ---
 name: pre-pr-interrogation
 description: PR作成前の厳格な自己レビュー。実装完了後・PR作成前に使用。Claudeがレビュー担当者として質問攻めを行い、すべての質問に合格するまでPRを作らない。
-context: fork
+context: current
 ---
 
 # Pre-PR Interrogation（PR前質問攻め）
