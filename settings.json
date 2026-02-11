@@ -1,38 +1,51 @@
 {
   "cleanupPeriodDays": 99999,
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "1"
+  },
+  "model": "opus",
   "hooks": {
     "PostToolUse": [
       {
         "matcher": "Write|Edit",
         "hooks": [
-          { "type": "command", "command": "afplay /System/Library/Sounds/Pop.aiff 2>/dev/null || true" }
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Pop.aiff 2>/dev/null || true"
+          }
         ]
       },
       {
         "matcher": "Bash",
         "hooks": [
-          { "type": "command", "command": "afplay /System/Library/Sounds/Tink.aiff 2>/dev/null || true" }
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Tink.aiff 2>/dev/null || true"
+          }
         ]
       }
     ],
     "Stop": [
       {
         "hooks": [
-          { "type": "command", "command": "afplay /System/Library/Sounds/Purr.aiff 2>/dev/null || true" }
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Purr.aiff 2>/dev/null || true"
+          }
         ]
       }
     ],
     "SubagentStop": [
       {
         "hooks": [
-          { "type": "command", "command": "afplay /System/Library/Sounds/Glass.aiff 2>/dev/null || true" }
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Glass.aiff 2>/dev/null || true"
+          }
         ]
       }
     ]
-  },
-  "env": {
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "CLAUDE_CODE_ENABLE_TELEMETRY": "1"
   },
   "statusLine": {
     "type": "command",
@@ -50,7 +63,10 @@
     },
     "context7": {
       "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp@latest"],
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@latest"
+      ],
       "autoApprove": [
         "resolve-library-id",
         "get-library-docs"
