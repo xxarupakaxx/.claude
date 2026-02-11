@@ -1,5 +1,10 @@
 {
   "cleanupPeriodDays": 99999,
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "1"
+  },
+  "model": "opus",
   "hooks": {
     "PostToolUse": [
       {
@@ -41,10 +46,6 @@
         ]
       }
     ]
-  },
-  "env": {
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "CLAUDE_CODE_ENABLE_TELEMETRY": "1"
   },
   "statusLine": {
     "type": "command",
