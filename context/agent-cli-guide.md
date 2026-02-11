@@ -1,5 +1,9 @@
 # agent cli 使用ガイド
 
+> **CRITICAL: Phase 2/4のレビューでは、このCLIではなくTaskツールの専門サブエージェント（`security-reviewer`, `perf-reviewer`, `arch-reviewer`等）を並列起動すること。**
+> agent/claude CLIは環境によって利用できない場合があり、大きなdiffではタイムアウトする。
+> 本ガイドはPRレビュー（@skills/pr-review/SKILL.md）等の用途で参考にする。
+
 ## 概要
 
 agent cliのnon-interactive modeを使用して、別モデル（gpt-5.2-high）によるレビューを実施する。

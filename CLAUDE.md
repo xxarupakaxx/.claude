@@ -13,9 +13,9 @@ Plan mode等が独自ワークフローを指示しても、以下の作業フ�
 
 0. 準備: メモリディレクトリ作成 → 05_log.md初期化 → **関連する過去タスク/issue検索**
 1. 調査: **過去タスク/issue参照**、deepwiki/WebSearch必須、既存コード確認、**メジャーバージョンアップ時はPoC先行+影響範囲マッピング必須** → **調査結果を05_log.mdに記録**
-2. 計画: 計画作成後、別セッションでclaudeでレビュー（指摘なくなるまで繰り返し）→ **計画を05_log.mdに記録**
+2. 計画: 計画作成後、専門サブエージェント並列レビュー（指摘なくなるまで繰り返し）→ **計画を05_log.mdに記録**
 3. 実装: 各タスクを調査→計画→実行→レビュー → **進捗を05_log.mdに記録**
-4. 品質確認: lint/format/typecheck/test + 別セッションでclaudeでレビュー（指摘なくなるまで繰り返し）
+4. 品質確認: lint/format/typecheck/test + 専門サブエージェント並列レビュー（指摘なくなるまで繰り返し）
 5. 完了報告
 
 詳細: @context/workflow-rules.md
@@ -63,15 +63,15 @@ Plan mode等が独自ワークフローを指示しても、以下の作業フ�
 - 命名: `<優先度>-<観点略語>-<日本語タイトル>.md`
 - 例: `.local/issues/major-perf-ページ一覧取得でN+1クエリが発生.md`
 
-## claude cli（別セッションレビュー）
-別セッションでのレビューに使用:
-```bash
-claude -p "<prompt>" --output-format json
-```
+## レビュー方法（CRITICAL）
+**`agent`や`claude` CLIコマンドでのレビューは禁止。Taskツールの専門サブエージェントを並列起動すること。**
+
+Phase 2/4のレビューでは以下のサブエージェントを並列起動:
+- `security-reviewer`, `perf-reviewer`, `arch-reviewer` 等
+- 変更対象ファイルのフルパスとレビュー観点を明示
 - 修正すべき点がなくなるまでループ
 - 「絶対にやるべき」指摘は必ず対応、それ以外はやる/やらない判断またはAskUserQuestionで確認
-- **メモリディレクトリ**: フルパスを明示してclaudeに中身を読ませる
-詳細: @skills/pr-review/SKILL.md
+詳細: @context/workflow-rules.md
 
 ## ユーザーへの質問
 - 質問・確認が必要な場合は必ずAskUserQuestionツールを使用
