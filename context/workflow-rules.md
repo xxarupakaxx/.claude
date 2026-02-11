@@ -98,10 +98,15 @@ Taskツールで並列起動（subagent_type=general-purpose）:
 **→ 参照結果を05_log.mdに記録**
 
 ### 1.1 既存コードベースの調査
+
+**大規模・未知のコードベースの場合**: `exploring-codebase`スキルを使用し、3つの並列Exploreサブエージェント（Architecture Explorer / Data Flow Tracer / Dependency Mapper）で多角的に調査する。
+
+**通常の調査**:
 - 関連コードをすべて特定・読解
 - 設計パターン、命名規則、ディレクトリ構成を把握
 - 変更の影響範囲を特定
-- **→ 発見した内容を05_log.mdに記録**
+
+**→ 発見した内容を05_log.mdに記録**
 
 ### 1.2 ベストプラクティスの調査
 
