@@ -53,7 +53,10 @@
 
 Taskツールで並列起動: `arch-reviewer`, `security-reviewer`, `perf-reviewer`
 - レビュー対象ファイルのフルパスと計画ファイルのパスを渡す
-- 「絶対にやるべき」指摘は必ず修正、それ以外はやる/やらない判断またはAskUserQuestion
+- **IMPORTANT**: レビュー結果は05_log.mdに全件記録すること（minorも含む）。ユーザーが確認できる状態にする
+- 「絶対にやるべき」指摘は必ず修正
+- minor/non-criticalでも正しさ・一貫性に関わる指摘（バグ、不整合、ハードコード等）は修正する
+- 純粋なスタイル・好みの問題のみスキップ可。判断に迷う場合はAskUserQuestion
 - 修正すべき点がなくなるまで繰り返し
 
 ### User Validation Gate
@@ -77,7 +80,11 @@ PJ CLAUDE.md記載のコマンドで lint/format/typecheck/test を実行。
 
 Taskツールで並列起動: `security-reviewer`, `perf-reviewer`, `arch-reviewer`
 - 変更対象ファイルのフルパスとレビュー観点を明示
-- 「絶対にやるべき」指摘は必ず修正、修正すべき点がなくなるまで繰り返し
+- **IMPORTANT**: レビュー結果は05_log.mdに全件記録すること（minorも含む）。ユーザーが確認できる状態にする
+- 「絶対にやるべき」指摘は必ず修正
+- minor/non-criticalでも正しさ・一貫性に関わる指摘（バグ、不整合、ハードコード等）は修正する
+- 純粋なスタイル・好みの問題のみスキップ可。判断に迷う場合はAskUserQuestion
+- 修正すべき点がなくなるまで繰り返し
 - 厳格レビュー: `pre-pr-interrogation`スキルを使用
 
 ### Phase 4.5: セッション終了前チェック（推奨）
