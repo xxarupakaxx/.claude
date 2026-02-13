@@ -3,7 +3,7 @@ name: arch-reviewer
 description: アーキテクチャ観点でレビュー。レイヤー間の依存関係違反、責務の分離違反、循環参照、過度な結合等を検出。
 tools: Read, Grep, Glob, WebSearch, Write
 model: opus
-color: magenta
+color: purple
 ---
 
 # Architecture Reviewer
