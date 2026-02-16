@@ -51,7 +51,7 @@
 
 ### サブエージェント計画検証（ループ）
 
-Taskツールで並列起動: `arch-reviewer`, `security-reviewer`, `perf-reviewer`
+Taskツールで並列起動: `arch-reviewer`, `security-reviewer`, `perf-reviewer` + 変更内容に応じた追加レビューアー（下記「レビューアー選択ガイド」参照）
 - レビュー対象ファイルのフルパスと計画ファイルのパスを渡す
 - **IMPORTANT**: レビュー結果は05_log.mdに全件記録すること（minorも含む）。ユーザーが確認できる状態にする
 - 「絶対にやるべき」指摘は必ず修正
@@ -78,7 +78,7 @@ PJ CLAUDE.md記載のコマンドで lint/format/typecheck/test を実行。
 
 ### サブエージェント並列レビュー（ループ）
 
-Taskツールで並列起動: `security-reviewer`, `perf-reviewer`, `arch-reviewer`
+Taskツールで並列起動: `security-reviewer`, `perf-reviewer`, `arch-reviewer` + 変更内容に応じた追加レビューアー（下記「レビューアー選択ガイド」参照）
 - 変更対象ファイルのフルパスとレビュー観点を明示
 - **IMPORTANT**: レビュー結果は05_log.mdに全件記録すること（minorも含む）。ユーザーが確認できる状態にする
 - 「絶対にやるべき」指摘は必ず修正
@@ -98,6 +98,38 @@ Taskツールで並列起動: `security-reviewer`, `perf-reviewer`, `arch-review
 3. 作成したブランチ名
 4. 残存する課題
 5. 価値ある知見があれば memories/ にインデックス作成（`context/memory-file-formats.md`をReadで参照）
+
+## レビューアー選択ガイド
+
+### Tier 1: コア（常時起動）
+
+| エージェント | 観点 |
+|---|---|
+| `arch-reviewer` | アーキテクチャ・依存関係・責務分離 |
+| `security-reviewer` | セキュリティ脆弱性・認証認可 |
+| `perf-reviewer` | パフォーマンス・効率性 |
+
+### Tier 2: 変更内容に応じて追加
+
+| トリガー条件 | 追加エージェント |
+|---|---|
+| エラーハンドリング・外部API連携・リトライ処理 | `error-handling-reviewer` |
+| ログ・メトリクス・トレース・運用関連 | `observability-reviewer` |
+| テストコードの追加・変更 | `test-reviewer` |
+| コード品質・リファクタリング | `code-quality-reviewer` |
+| フロントエンド・UIコンポーネント | `a11y-reviewer` |
+| 非同期処理・並行処理・ワーカー | `concurrency-reviewer` |
+| APIエンドポイントの追加・変更 | `api-contract-reviewer` |
+| ドキュメント・CLAUDE.md変更 | `docs-reviewer` |
+
+### Tier 3: 特定条件で追加
+
+| トリガー条件 | 追加エージェント |
+|---|---|
+| 多言語対応・翻訳関連 | `i18n-reviewer` |
+| 個人情報・規制対応・ライセンス | `compliance-reviewer` |
+| Dockerfile・CI/CD・IaC変更 | `devops-reviewer` |
+| CLAUDE.md/rules準拠の検証 | `rule-validator` |
 
 ## 禁止事項
 
