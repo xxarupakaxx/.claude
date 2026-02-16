@@ -23,7 +23,7 @@
 | 条件 | subagent_type |
 |------|--------------|
 | 3ファイル以上の調査/レビュー | `Explore` で並列検索 |
-| 複数観点からの分析 | `perf-reviewer`, `security-reviewer`, `arch-reviewer`等を並列 |
+| 複数観点からの分析 | コア3種（`arch/security/perf`）+ 変更に応じた追加レビューアーを並列（`@context/workflow-rules.md`の選択ガイド参照） |
 | 3つ以上の独立タスク | `general-purpose` を並列 |
 
 **IMPORTANT**: 独立したタスクは積極的に並列化する
