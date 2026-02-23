@@ -12,6 +12,14 @@
 ├── memories/                    # インデックス層（検索用）
 │   └── <category>/
 │       └── <topic>.md
+├── solutions/                   # 構造化ソリューションDB（compounding-knowledgeで生成）
+│   ├── performance-issues/
+│   ├── security-issues/
+│   ├── runtime-errors/
+│   ├── build-issues/
+│   ├── architecture-decisions/
+│   ├── database-issues/
+│   └── integration-issues/
 └── issues/                      # codebase-reviewで生成されるissueファイル
     ├── critical-sec-ユーザー入力のSQLインジェクション脆弱性.md
     ├── major-perf-ページ一覧取得でN+1クエリが発生.md
@@ -24,6 +32,7 @@
 |----|------|------|
 | 詳細ログ | `memory/YYMMDD_<task>/` | タスクの全記録（生ログ） |
 | インデックス | `memories/<category>/` | 要約・検索用（relatedで詳細を参照） |
+| ソリューション | `solutions/<category>/` | 構造化された解決策DB（再利用可能） |
 
 **検索フロー:**
 1. `rg "^summary:" .local/memories/` でサマリー検索
@@ -229,3 +238,87 @@ rg "^summary:.*keyword" .local/memories/ --no-ignore --hidden -i
 # タグ検索
 rg "^tags:.*keyword" .local/memories/ --no-ignore --hidden -i
 ```
+
+## solutions/（構造化ソリューションDB）
+
+場所: `${MEMORY_DIR}/solutions/<category>/<filename>.md`
+
+`compounding-knowledge`スキルで生成。memories/より詳細な、再利用可能なソリューションドキュメント。
+`learnings-researcher`エージェントがYAML frontmatterの各フィールドをgrep検索可能。
+
+### カテゴリ
+
+| カテゴリ | 内容 |
+|---------|------|
+| `performance-issues/` | パフォーマンス問題と最適化 |
+| `security-issues/` | セキュリティ脆弱性と対策 |
+| `runtime-errors/` | 実行時エラーの解決 |
+| `build-issues/` | ビルド・設定・環境の問題 |
+| `architecture-decisions/` | アーキテクチャ決定と根拠 |
+| `database-issues/` | DB関連の問題と解決 |
+| `integration-issues/` | 外部サービス連携の問題 |
+
+新カテゴリの追加も可。
+
+### フォーマット
+
+```yaml
+---
+title: "N+1クエリによるAPI応答遅延の解決"
+problem_type: "performance"    # bug|performance|security|architecture|integration|build|database
+component: "users-api"
+tags: [database, n-plus-one, eager-loading]
+root_cause: "User.allの後にposts.countを個別クエリしていた"
+solution_summary: "includes(:posts)でeager loadingを適用"
+created: 2026-01-14
+severity: "major"              # critical|major|minor
+effort: "small"                # small|medium|large
+---
+
+# N+1クエリによるAPI応答遅延の解決
+
+## 問題
+
+[問題の詳細な説明]
+
+### 症状
+- 具体的な症状
+
+### 根本原因
+[root_causeの詳細]
+
+## 解決策
+
+### 手順
+1. ステップ
+
+### コード変更
+[主要変更のハイライト]
+
+## 予防策
+- 予防策
+
+## 参考情報
+- [URL等]
+```
+
+### 検索方法
+
+```bash
+# タイトル検索
+rg "^title:.*keyword" .local/solutions/ --no-ignore --hidden -i
+
+# タグ検索
+rg "^tags:.*keyword" .local/solutions/ --no-ignore --hidden -i
+
+# root_cause検索
+rg "^root_cause:.*keyword" .local/solutions/ --no-ignore --hidden -i
+
+# コンポーネント検索
+rg "^component:.*keyword" .local/solutions/ --no-ignore --hidden -i
+
+# problem_type検索
+rg "^problem_type:.*keyword" .local/solutions/ --no-ignore --hidden -i
+```
+
+**全文横断検索**: `learnings-researcher`エージェントが複数フィールドを並列grepしスコアリング。
