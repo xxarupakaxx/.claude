@@ -1,6 +1,6 @@
 ---
-name: pre-pr-interrogation
-description: PR作成前の厳格な自己レビュー。実装完了後・PR作成前に使用。Claudeがレビュー担当者として質問攻めを行い、すべての質問に合格するまでPRを作らない。
+name: interrogating-pre-pr
+description: Conducts strict human-in-the-loop interrogation before PR creation. Asks probing questions across 8 categories (intent, edge cases, error handling, performance, security, testing, consistency, impact) with minimum 5 rounds. Use when user says "質問攻めにして", "厳格にレビュー", "PRの前にチェック", "テストに合格するまでPRは作らないで", or when design intent confirmation is important for smaller changes.
 context: current
 ---
 
@@ -30,7 +30,7 @@ context: current
 
 - 「質問攻めにして」「テストに合格するまでPRは作らないで」と言われた場合
 - 「厳格にレビューして」「PRを出す前にチェックして」と言われた場合
-- `/pre-pr-interrogation` で明示的に呼び出された場合
+- `/interrogating-pre-pr` で明示的に呼び出された場合
 
 ## ワークフロー
 

@@ -109,7 +109,7 @@ Taskツールで並列起動: `security-reviewer`, `perf-reviewer`, `arch-review
 - 「絶対にやるべき」指摘は必ず修正
 - minor/non-criticalでも正しさ・一貫性に関わる指摘（バグ、不整合、ハードコード等）は修正する
 - 純粋なスタイル・好みの問題のみスキップ可。判断に迷う場合はAskUserQuestion
-- 厳格レビュー: `pre-pr-auto`（サブエージェント並列自動レビュー）または `pre-pr-interrogation`（ユーザーへの質問攻め）を使用
+- 厳格レビュー: `auto-reviewing-pre-pr`（サブエージェント並列自動レビュー）または `interrogating-pre-pr`（ユーザーへの質問攻め）を使用
 
 ### Phase 4.5: セッション終了前チェック（推奨）
 
