@@ -1,6 +1,6 @@
 ---
-name: pre-pr-auto
-description: PR作成前のサブエージェント並列自動レビュー。全専門レビューアーを5ラウンド並列起動し、メインコンテキストを圧迫せずに高品質なコードレビューを実施。
+name: auto-reviewing-pre-pr
+description: Runs automated parallel subagent review before PR creation. Launches all specialist reviewers (arch, security, perf + context-dependent reviewers) in parallel across minimum 5 rounds, keeping main context clean. Use when user says "自動レビューして", "サブエージェントでレビュー", "並列レビュー", "PR前の自動チェック", or for standard/large-scale changes. Preferred over interrogating-pre-pr for typical PR workflows.
 context: current
 ---
 
@@ -20,12 +20,12 @@ context: current
 
 | スキル | 方式 | 適用場面 |
 |--------|------|----------|
-| **pre-pr-auto**（本スキル） | サブエージェント並列自動レビュー | 通常のPR前レビュー、大規模変更 |
-| **pre-pr-interrogation** | ユーザーへの質問攻め | 設計意図の確認が重要な場合、小規模変更 |
+| **auto-reviewing-pre-pr**（本スキル） | サブエージェント並列自動レビュー | 通常のPR前レビュー、大規模変更 |
+| **interrogating-pre-pr** | ユーザーへの質問攻め | 設計意図の確認が重要な場合、小規模変更 |
 
 ## トリガー条件
 
-- `/pre-pr-auto` で明示的に呼び出された場合
+- `/auto-reviewing-pre-pr` で明示的に呼び出された場合
 - 「自動レビューして」「サブエージェントでレビューして」と言われた場合
 
 ## ワークフロー
