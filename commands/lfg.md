@@ -1,12 +1,13 @@
 ---
 name: lfg
-description: "Phase 0-5 + Compoundを自律チェーン実行する自律ワークフロー。/lfg <タスクの説明> で使用。"
+description: "Phase 0-5.5を自律チェーン実行する自律ワークフロー。/lfg <タスクの説明> で使用。"
 ---
 
-# LFG - Autonomous Workflow
+# LFG - Autonomous Workflow Orchestrator
 
-Phase 0からCompoundまでを自律的にチェーン実行する。
-ユーザーの介入を最小限にし、各フェーズのゲートを自動で通過する。
+`@context/workflow-rules.md` のPhase 0-5.5を自律的にチェーン実行する**薄いオーケストレータ**。
+
+**IMPORTANT**: 各Phaseの詳細はworkflow-rules.mdに従うこと。このコマンドはPhaseの手順を複製しない。
 
 ## 使い方
 
@@ -14,49 +15,32 @@ Phase 0からCompoundまでを自律的にチェーン実行する。
 /lfg <タスクの説明>
 ```
 
-## 実行フロー
+## オーケストレーション
 
-### Sequential Phase（順次実行）
+workflow-rules.mdの各Phaseを順次実行し、各Phase間のゲート判定のみを担当する。
 
-#### 1. Phase 0: 準備
-- メモリディレクトリ作成（`${MEMORY_DIR}/memory/YYMMDD_<task_name>/`）
-- 05_log.md初期化
-- 関連する過去タスク・issueを`learnings-researcher`で検索
+| Phase | 参照先 | ゲート |
+|-------|--------|--------|
+| 0: 準備 | `@context/workflow-rules.md` Phase 0 | AUTO |
+| 1: 調査 | `@context/workflow-rules.md` Phase 1 | GO→AUTO / それ以外→USER |
+| 2: 計画 | `@context/workflow-rules.md` Phase 2（deepening-plan + レビュー5ラウンド） | **USER（省略不可）** |
+| 3: 実装 | `@context/workflow-rules.md` Phase 3 | AUTO（10+タスクは中間報告） |
+| 4: 品質 | `@context/workflow-rules.md` Phase 4 | AUTO（指摘0でPASS） |
+| 5: 完了 | `@context/workflow-rules.md` Phase 5 | AUTO |
+| 5.5: Compound | `@context/workflow-rules.md` Phase 5.5 | AUTO（条件判定で実行/スキップ） |
 
-#### 2. Phase 1: 調査
-- 過去知見の参照（`learnings-researcher`エージェント）
-- コードベース調査（必要に応じて`exploring-codebase`スキル）
-- 外部情報参照（Context7 / deepwiki / WebSearch から最低1つ）
-- GO/NO-GO判定
+## ゲート判定ルール
 
-**AUTO-GATE**: GO判定の場合は自動で次へ。CONDITIONAL/NO-GO/DEFERの場合はユーザーに確認。
+### AUTO-GATE（自動通過）
+- Phase 0完了 → Phase 1へ
+- GO/NO-GO = GO → Phase 2へ
+- Phase 4で全レビューアーPASS → Phase 5へ
+- Phase 5.5の自動トリガー条件を満たす → 実行
 
-#### 3. Phase 2: 計画
-- 30_plan.md作成（4ステップ構造）
-- `/deepening-plan` で計画の深掘り
-- サブエージェント並列レビュー（5ラウンド制）
-
-**USER-GATE**: 計画をユーザーに提示し承認を得る（これは省略不可）
-
-#### 4. Phase 3: 実装
-- 各タスクを「調査→計画→実行→レビュー」で実行
-- こまめにコミット
-- 10+タスクの場合は中間報告
-
-#### 5. Phase 4: 品質確認
-- lint/format/typecheck/test実行
-- サブエージェント並列レビュー（5ラウンド制）
-- 指摘がなくなるまでループ
-
-#### 6. Phase 5: 完了報告
-- 実装サマリー
-- 自律決定事項
-- ブランチ名
-- 残存課題
-
-#### 7. Phase 5.5: Compound（自動提案）
-- `/compounding-knowledge` で知見を構造化保存
-- 保存すべき知見がない場合はスキップ
+### USER-GATE（ユーザー確認必須）
+- GO/NO-GO = CONDITIONAL / NO-GO / DEFER → ユーザーに報告
+- Phase 2のUser Validation Gate → **絶対に省略しない**
+- 10+タスクの中間報告
 
 ## 自律判断ルール
 
@@ -70,12 +54,10 @@ Phase 0からCompoundまでを自律的にチェーン実行する。
 - 既存APIの破壊的変更
 - 新しいライブラリの導入
 - アーキテクチャの変更
-- Phase 2の計画承認（必須）
-- GO/NO-GOがGO以外の場合
+- エラーリトライが3回失敗した場合
 
-## 注意事項
+## エラーハンドリング
 
-- Phase 2のUser Validation Gateは**絶対に省略しない**
-- 各Phaseで05_log.mdを更新する（通常フローと同じ）
-- エラーが発生した場合は自律リトライ（最大3回）→ユーザーに報告
-- ワークフロー全体のPhase 0-5ルール（`@context/workflow-rules.md`）に準拠
+- Phase内でエラー発生 → 自律リトライ（最大3回）
+- 3回失敗 → ユーザーに報告し判断を仰ぐ
+- Phase間では05_log.mdの更新を確認してから次へ進む

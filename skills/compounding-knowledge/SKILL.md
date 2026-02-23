@@ -14,9 +14,15 @@ description: |
 
 ## トリガー
 
-- Phase 5完了後に自動提案
+### 自動トリガー（プロアクティブに実行を提案）
+- **Phase 5.5**: `@context/workflow-rules.md` Phase 5.5の条件を満たす場合
+- **デバッグ成功時**: エラーを調査・解決した後（「直った」「解決した」「原因がわかった」等）
+- **ADR作成後**: `creating-adr`スキルでアーキテクチャ決定を記録した場合（ADRの内容をsolutions/architecture-decisions/にも変換）
+- **レビューで再発パターン検出時**: auto-reviewing-pre-prで過去と同じ指摘が繰り返された場合
+
+### 手動トリガー
 - ユーザーが明示的に実行（`/compounding-knowledge`）
-- 「問題が解決した」「うまくいった」等の発言
+- 「知見を保存して」「解決策を記録して」「compoundして」等の発言
 
 ## 実行フロー
 
