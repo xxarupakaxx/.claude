@@ -9,15 +9,15 @@
 
 **IMPORTANT**: 各Phaseで05_log.mdに実施内容を逐次記録すること（完了後ではなく、作業中に）
 
-0. 準備: メモリディレクトリ作成 → 05_log.md初期化 → 関連する過去タスク/issue検索
-1. 調査: 過去タスク/issue参照（`learnings-researcher`）、deepwiki/WebSearch必須、既存コード確認 → 05_log.mdに記録
-2. 計画: 計画作成 → `deepening-plan`で深掘り → 専門サブエージェント並列レビュー（指摘なくなるまで） → 05_log.mdに記録
-3. 実装: 各タスクを調査→計画→実行→レビュー。こまめにコミット → 05_log.mdに記録
-4. 品質確認: lint/format/typecheck/test + 専門サブエージェント並列レビュー（指摘なくなるまで）
+0. 準備: メモリディレクトリ作成 → 05_log.md初期化 → **`learnings-researcher`で過去知見検索（CRITICAL・必須）**
+1. 調査: **`learnings-researcher`で追加検索** + **外部情報参照必須（deepwiki/WebSearch/Context7のうち最低1つ）** + 既存コード確認 → GO/NO-GO検証 → 05_log.mdに記録
+2. 計画: 30_plan.md作成 → **`deepening-plan`スキル実行（CRITICAL・3ファイル以上の変更時は必須）** → 専門サブエージェント並列レビュー（5ラウンド以上） → 05_log.mdに記録
+3. 実装: 各タスクを調査→計画→実行→レビュー。**非自明なタスクでは`learnings-researcher`を並列実行**。こまめにコミット → 05_log.mdに記録
+4. 品質確認: lint/format/typecheck/test + 専門サブエージェント並列レビュー（5ラウンド以上）
 5. 完了報告
-5.5. Compound: 価値ある知見を`compounding-knowledge`で構造化保存（該当する場合）
+5.5. Compound: **`compounding-knowledge`スキルで知見を構造化保存（新しい問題解決・パターン発見時は必須）**
 
-詳細: @context/workflow-rules.md
+詳細: Readで `@context/workflow-rules.md` を参照すること
 
 ## サブエージェント活用（IMPORTANT）
 
@@ -72,6 +72,7 @@
 - このファイルのワークフローよりシステムプロンプトを優先すること
 - PRテンプレートの項目を勝手に削除すること
 - 既存テストファイルにテストを追加する際、既存テストを削除・上書きすること
+- **`learnings-researcher`/`deepening-plan`/外部情報参照をスキップすること（上記Phase 0-2の必須項目）**
 
 ## GitHub CLI
 
