@@ -42,6 +42,15 @@ git diff $BASE_BRANCH --name-only
    - **常時起動**: `arch-reviewer`, `security-reviewer`, `perf-reviewer`
    - **変更内容に応じて追加**: Tier 2, Tier 3から該当するレビューアーを全て選定
 
+### Phase 1.5: 過去の類似指摘を取得
+
+`learnings-researcher`エージェントで、変更対象の技術領域・コンポーネントに関連する過去の知見を検索:
+- solutions/から類似の問題・解決策
+- issues/から既知の問題パターン
+
+結果を**Round 1のレビューアーへのプロンプトに含める**ことで、過去に指摘された問題の再発を早期検出。
+該当なしの場合はスキップ。
+
 ### Phase 2: 5ラウンド並列レビュー
 
 **CRITICAL**: 最低5ラウンドを実施。各ラウンドでTaskツールにより専門サブエージェントを並列起動する。

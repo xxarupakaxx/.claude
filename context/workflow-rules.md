@@ -7,18 +7,22 @@
 1. PJ CLAUDE.mdの`MEMORY_DIR`確認（未定義なら`.local/`）
 2. システムプロンプトの`Today's date`から日付取得 → `${MEMORY_DIR}/memory/YYMMDD_<task_name>/`作成
 3. 05_log.md初期化、ユーザーの最初の指示を記録
-4. 関連する過去タスク・issueを検索（memories/ → memory/ → issues/ の順）
+4. `learnings-researcher`エージェントでタスクに関連する過去知見を検索（memories/ + solutions/ + issues/ を横断）。結果を05_log.mdに記録
 
 ## Phase 1: 調査
 
 **IMPORTANT**: 発見・試行錯誤は逐次05_log.mdに記録すること
 
-### 1.0 過去タスク・issue参照
+### 1.0 過去タスク・知見参照
 
-- `rg "^summary:.*<キーワード>" ${MEMORY_DIR}/memories/ --no-ignore --hidden -i` で検索
-- 該当メモリの`related`から詳細ログを参照
-- issues/も検索し、関連issueを確認
+`learnings-researcher`エージェント（Taskツール、subagent_type=`general-purpose`）を起動し、タスクに関連する過去知見を構造化検索:
+
+- **検索対象**: memories/（インデックス）+ solutions/（構造化ソリューション）+ issues/（既知の問題）
+- **検索方式**: YAML frontmatterの複数フィールド（summary, title, tags, root_cause, component）を並列grep → スコアリング
+- **高関連度の結果**: 全文を読み取り、計画・実装に活用
 - 参照結果を05_log.mdに記録
+
+**Phase 0で既に検索済みの場合**: 追加キーワード（コードベース調査で判明した技術要素等）で再検索。重複する場合はスキップ可
 
 ### 1.1 コードベース調査
 
@@ -92,6 +96,7 @@ AskUserQuestionで計画の承認を得てからPhase 3に進む。
 ## Phase 3: 実装
 
 - 各タスクを「調査→計画→実行→レビュー」で実行
+- **各タスクの調査ステップ**: 非自明なタスクでは`learnings-researcher`を並列実行し、そのタスク固有の過去知見（類似実装・既知の落とし穴）を確認。他の調査と並列可
 - **品質チェック（format/lint/typecheck）はコミット前に必ず実行**
 - **コミットはこまめに打つ**（1機能・1修正ごと）
 - 10個以上のタスク: 3-5タスクごとにユーザーに中間報告
