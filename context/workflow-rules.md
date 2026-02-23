@@ -144,7 +144,7 @@ Taskツールで並列起動: `security-reviewer`, `perf-reviewer`, `arch-review
 | ログ・メトリクス・トレース・運用関連 | `observability-reviewer` |
 | テストコードの追加・変更 | `test-reviewer` |
 | コード品質・リファクタリング | `code-quality-reviewer` |
-| フロントエンド・UIコンポーネント | `a11y-reviewer` |
+| フロントエンド・UIコンポーネント | `a11y-reviewer` + `ui-ux-reviewer` |
 | 非同期処理・並行処理・ワーカー | `concurrency-reviewer` |
 | APIエンドポイントの追加・変更 | `api-contract-reviewer` |
 | ドキュメント・CLAUDE.md変更 | `docs-reviewer` |
