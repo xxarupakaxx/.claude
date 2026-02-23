@@ -71,3 +71,13 @@
 --leading-normal: 1.5;
 --leading-relaxed: 1.625;
 ```
+
+---
+
+## タイポグラフィスケール（基本定義）
+
+```css
+--text-xs: 11px;  --text-sm: 12px;  --text-base: 14px;
+--text-lg: 16px;  --text-xl: 18px;  --text-2xl: 24px;
+--text-3xl: 32px; --text-4xl: 48px;
+```

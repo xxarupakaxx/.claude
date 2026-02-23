@@ -90,9 +90,12 @@ description: Reviews pull requests for code quality and security. Use when PR nu
 description: I can review PRs.
 ```
 
-**その他:**
-- SKILL.mdは**500行以下**
-- 詳細は別ファイルに分割（参照は**1階層のみ**）
+**段階的開示（Progressive Disclosure）— CRITICAL:**
+- SKILL.mdは**200行以下を推奨**（最大500行）
+- SKILL.mdに残すもの: トリガー条件、判断ツリー、実行フロー骨格、CRITICALルール
+- references/に移動するもの: コード例、テンプレート、詳細手順、リファレンス資料
+- SKILL.mdからは `Read references/xxx.md` で参照指示を記載
+- 参照は**1階層のみ**（references/内で更にファイル参照しない）
 - 既存設定を`@context/xxx.md`形式で参照（重複記載しない）
 
 ### Step 6: スキル作成
@@ -149,7 +152,7 @@ description: <何をするか>。<いつ使うか>。使用タイミング: (1) 
 - 既存スキルと重複する機能の作成
 - **名詞形のスキル名**（`kysely`ではなく`implementing-kysely`）
 - **1人称のdescription**（"I can..."、"You can..."）
-- SKILL.mdに500行以上記載
+- SKILL.mdに200行以上記載（references/に分離せずに）
 - references/内で更にファイル参照（1階層まで）
 - descriptionに「いつ使うか」がない
 
@@ -165,5 +168,5 @@ description: <何をするか>。<いつ使うか>。使用タイミング: (1) 
 - [ ] descriptionにXMLタグ（`<` `>`）が含まれていないか
 - [ ] descriptionにユーザーが言いそうな具体的タスク・フレーズが含まれるか
 - [ ] 関連する場合、descriptionにファイルタイプが言及されているか
-- [ ] SKILL.mdは500行以下か
+- [ ] SKILL.mdは200行以下か（超える場合references/に分離したか）
 - [ ] @context/xxx.md 形式で参照を記載したか
