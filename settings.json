@@ -6,6 +6,30 @@
   },
   "model": "opus",
   "hooks": {
+    "PreCompact": [
+      {
+        "matcher": "auto",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/pre-compact-handover.sh",
+            "timeout": 30,
+            "statusMessage": "Generating handover document..."
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/session-start-inject.sh"
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Write|Edit",
@@ -32,6 +56,15 @@
           {
             "type": "command",
             "command": "afplay /System/Library/Sounds/Purr.aiff 2>/dev/null || true"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/stop-workflow-check.sh",
+            "timeout": 10
           }
         ]
       }
