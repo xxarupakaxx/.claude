@@ -13,6 +13,8 @@
 /skills/investigating-gcp-observability/
 !/agents/
 !/agents/**
+!/hooks/
+!/hooks/**
 !/rules/
 !/rules/**
 !/templates/
