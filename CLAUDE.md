@@ -10,11 +10,12 @@
 **IMPORTANT**: 各Phaseで05_log.mdに実施内容を逐次記録すること（完了後ではなく、作業中に）
 
 0. 準備: メモリディレクトリ作成 → 05_log.md初期化 → 関連する過去タスク/issue検索
-1. 調査: 過去タスク/issue参照、deepwiki/WebSearch必須、既存コード確認 → 05_log.mdに記録
-2. 計画: 計画作成 → 専門サブエージェント並列レビュー（指摘なくなるまで） → 05_log.mdに記録
+1. 調査: 過去タスク/issue参照（`learnings-researcher`）、deepwiki/WebSearch必須、既存コード確認 → 05_log.mdに記録
+2. 計画: 計画作成 → `deepening-plan`で深掘り → 専門サブエージェント並列レビュー（指摘なくなるまで） → 05_log.mdに記録
 3. 実装: 各タスクを調査→計画→実行→レビュー。こまめにコミット → 05_log.mdに記録
 4. 品質確認: lint/format/typecheck/test + 専門サブエージェント並列レビュー（指摘なくなるまで）
 5. 完了報告
+5.5. Compound: 価値ある知見を`compounding-knowledge`で構造化保存（該当する場合）
 
 詳細: @context/workflow-rules.md
 

@@ -49,6 +49,20 @@
 
 各タスクを4ステップ構造で作成（調査→計画→実行→レビュー）。変更対象ファイルを明記。
 
+### 計画の深掘り（Deepen Plan）
+
+30_plan.md作成後、サブエージェントレビュー前に実行。`deepening-plan`スキルを使用。
+
+並列リサーチで計画を強化:
+- **Context7**: 使用ライブラリのAPI最新情報・推奨パターン
+- **deepwiki**: 関連リポジトリの設計パターン・実装例
+- **WebSearch**: ベストプラクティス・セキュリティ考慮事項
+- **learnings-researcher**: 過去の類似問題・解決策・落とし穴
+
+結果を30_plan.mdに反映し、05_log.mdに変更点を記録。
+
+**スキップ可能な条件**: 小規模な変更（1-2ファイル）・自明な修正
+
 ### サブエージェント計画検証（最低5ラウンド制）
 
 **CRITICAL**: 最低5ラウンドのレビュー修正サイクルを実施。研究により、LLMのみの自己反復は5回で重大な脆弱性が37.6%増加することが判明（[IEEE-ISTAS 2025](https://arxiv.org/abs/2506.11022)）。一方、構造化された外部フィードバック付き反復では脆弱性を82%低減可能（[FDSP](https://arxiv.org/abs/2312.00024)）。
@@ -123,6 +137,24 @@ Taskツールで並列起動: `security-reviewer`, `perf-reviewer`, `arch-review
 4. 残存する課題
 5. 価値ある知見があれば memories/ にインデックス作成（`context/memory-file-formats.md`をReadで参照）
 
+## Phase 5.5: Compound（知見の構造化保存）
+
+Phase 5完了後に実施。`compounding-knowledge`スキルを使用。
+
+### 実行条件
+- タスクで新しい問題を解決した場合
+- 再利用可能なパターン・ワークアラウンドを発見した場合
+- アーキテクチャ上の重要な決定を行った場合
+
+### スキップ条件
+- 単純な修正（typo修正、軽微なバグ修正等）
+- 既にsolutions/に類似ドキュメントがある場合
+
+### 実行内容
+1. 4並列サブエージェントで情報抽出（Solution Extractor, Prevention Strategist, Category Classifier, Related Docs Finder）
+2. 構造化ドキュメントを`${MEMORY_DIR}/solutions/<category>/`に保存
+3. 必要に応じてmemories/のインデックスも更新
+
 ## レビューアー選択ガイド
 
 ### Tier 1: コア（常時起動）
@@ -144,6 +176,7 @@ Taskツールで並列起動: `security-reviewer`, `perf-reviewer`, `arch-review
 | ログ・メトリクス・トレース・運用関連 | `observability-reviewer` |
 | テストコードの追加・変更 | `test-reviewer` |
 | コード品質・リファクタリング | `code-quality-reviewer` |
+| 過剰設計・不要な複雑さの検出 | `code-simplicity-reviewer` |
 | フロントエンド・UIコンポーネント | `a11y-reviewer` + `ui-ux-reviewer` |
 | 非同期処理・並行処理・ワーカー | `concurrency-reviewer` |
 | APIエンドポイントの追加・変更 | `api-contract-reviewer` |
