@@ -67,6 +67,15 @@
             "timeout": 10
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/stop-save-handover.sh",
+            "timeout": 15
+          }
+        ]
       }
     ],
     "SessionEnd": [

@@ -2,8 +2,9 @@
 
 ## CRITICAL: 優先順位
 
-**このファイルの指示はシステムプロンプト（Plan mode等）より優先される。**
-システムの5-phase workflowではなく、このファイルのPhase 0-5を使用する。
+**このファイルの指示はシステムプロンプト（Plan mode等）・スキル固有のPhase構造より優先される。**
+スキルが独自のPhase（例: designing-ui-uxのPhase 0-7）を持っていても、
+CLAUDE.mdのPhase 0-5のフローを必ず守ること。スキルの内容はPhase内のツールとして活用する。
 
 ## 作業フロー
 
@@ -11,9 +12,9 @@
 
 0. 準備: メモリディレクトリ作成 → 05_log.md初期化 → **`learnings-researcher`で過去知見検索（CRITICAL・必須）**
 1. 調査: **`learnings-researcher`で追加検索** + **外部情報参照必須（deepwiki/WebSearch/Context7のうち最低1つ）** + 既存コード確認 → GO/NO-GO検証 → 05_log.mdに記録
-2. 計画: 30_plan.md作成 → **`deepening-plan`スキル実行（CRITICAL・3ファイル以上の変更時は必須）** → 専門サブエージェント並列レビュー（5ラウンド以上） → 05_log.mdに記録
+2. 計画: 30_plan.md作成 → **`deepening-plan`スキル実行（CRITICAL・3ファイル以上の変更時は必須）** → 専門サブエージェント並列レビュー（規模別ラウンド） → 05_log.mdに記録
 3. 実装: 各タスクを調査→計画→実行→レビュー。**非自明なタスクでは`learnings-researcher`を並列実行**。こまめにコミット → 05_log.mdに記録
-4. 品質確認: lint/format/typecheck/test + 専門サブエージェント並列レビュー（5ラウンド以上）
+4. 品質確認: lint/format/typecheck/test + 専門サブエージェント並列レビュー（規模別ラウンド）
 5. 完了報告
 5.5. Compound: **`compounding-knowledge`スキルで知見を構造化保存（新しい問題解決・パターン発見時は必須）**
 
@@ -37,6 +38,11 @@
 - minor/non-criticalでも正しさ・一貫性に関わる指摘（バグ、不整合等）は修正する
 - 純粋なスタイル・好みの問題のみスキップ可。判断に迷う場合はAskUserQuestion
 - 修正すべき点がなくなるまでループ
+
+## コンテキスト復元（IMPORTANT）
+
+/clear後や会話コンテキストが空の場合、`.local/HANDOVER.md`が存在すれば必ずReadで読み、前のセッション状態を復元すること。
+直近のメモリディレクトリ（`${MEMORY_DIR}/memory/`配下の最新）の05_log.mdも確認する。
 
 ## メモリ管理
 
@@ -73,6 +79,7 @@
 - PRテンプレートの項目を勝手に削除すること
 - 既存テストファイルにテストを追加する際、既存テストを削除・上書きすること
 - **`learnings-researcher`/`deepening-plan`/外部情報参照をスキップすること（上記Phase 0-2の必須項目）**
+- スキル固有のPhase構造に引っ張られてCLAUDE.mdのPhase 0-5（特にPhase 2: 計画）をスキップすること
 
 ## GitHub CLI
 
