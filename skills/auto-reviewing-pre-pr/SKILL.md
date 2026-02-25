@@ -1,6 +1,6 @@
 ---
 name: auto-reviewing-pre-pr
-description: Runs automated parallel subagent review before PR creation. Launches all specialist reviewers (arch, security, perf + context-dependent reviewers) in parallel across minimum 5 rounds, keeping main context clean. Use when user says "自動レビューして", "サブエージェントでレビュー", "並列レビュー", "PR前の自動チェック", or for standard/large-scale changes. Preferred over interrogating-pre-pr for typical PR workflows.
+description: Runs automated parallel subagent review before PR creation. Launches all specialist reviewers (arch, security, perf + context-dependent reviewers) in parallel with scale-based rounds (small 2, medium 3, large 5), keeping main context clean. Use when user says "自動レビューして", "サブエージェントでレビュー", "並列レビュー", "PR前の自動チェック", or for standard/large-scale changes. Preferred over interrogating-pre-pr for typical PR workflows.
 context: current
 ---
 
@@ -9,7 +9,7 @@ context: current
 ## 概要
 
 実装完了後、PR作成前に全専門サブエージェントを並列起動して自動レビューを実施。
-**最低5ラウンド**のレビュー修正サイクルを、メインコンテキストを圧迫せずに実行する。
+**規模別ラウンド**（小: 2、中: 3、大: 5）のレビュー修正サイクルを、メインコンテキストを圧迫せずに実行する。
 
 ## 研究的根拠
 
@@ -51,9 +51,17 @@ git diff $BASE_BRANCH --name-only
 結果を**Round 1のレビューアーへのプロンプトに含める**ことで、過去に指摘された問題の再発を早期検出。
 該当なしの場合はスキップ。
 
-### Phase 2: 5ラウンド並列レビュー
+### Phase 2: 規模別ラウンド並列レビュー
 
-**CRITICAL**: 最低5ラウンドを実施。各ラウンドでTaskツールにより専門サブエージェントを並列起動する。
+**規模別ラウンド数**（変更ファイル数で判定）:
+
+| 規模 | ファイル数 | 最低ラウンド |
+|------|-----------|------------|
+| 小 | 1-3 | 2 |
+| 中 | 4-9 | 3 |
+| 大 | 10+ | 5 |
+
+各ラウンドでTaskツールにより専門サブエージェントを並列起動する。
 
 #### Round 1: 初回全面レビュー
 
@@ -69,41 +77,25 @@ Taskツールで**全選定レビューアーを並列起動**:
 
 結果を05_log.mdに全件記録。
 
-#### Round 2: 指摘修正 + 再レビュー
+#### Round 2: 指摘修正 + 再レビュー（全レビューアー再起動）
 
 1. Round 1のcritical/must-fix指摘を全て修正
 2. should-fix指摘のうち正しさ・一貫性に関わるものを修正
-3. **修正箇所のみ**を対象に、関連するレビューアーを再起動
+3. **全レビューアーを再起動**し、修正が新たな問題を生んでいないか確認
 
-#### Round 3: 中間検証（全レビューアー再起動）
+**小規模の場合**: 指摘が0件（またはnit/minorのみ）なら完了。
 
-**IMPORTANT**: 修正が新たな問題を生んでいないか確認するため、全レビューアーを再起動。
-- 変更全体（元の変更 + Round 1-2の修正）を対象
-- 新規検出された問題を修正
+#### Round 3以降（中・大規模時）
 
-**ユーザー確認ポイント**: AskUserQuestionで中間報告。
-
-```
-## Round 3 中間報告
-- 初回検出: X件 → 修正済み: Y件 → 新規検出: Z件
-- 残存critical/must-fix: N件
-```
-
-ユーザーに「続行」「方針変更」「中止」を確認。
-
-#### Round 4: 修正起因の問題に焦点
-
-1. Round 3の指摘を修正
+1. 前ラウンドの指摘を修正
 2. **修正が新たな脆弱性を生んでいないか**に重点を置き、`security-reviewer`を必ず再起動
 3. 他のレビューアーは指摘が残っている観点のみ再起動
 
-#### Round 5: 最終検証（全レビューアー再起動）
-
-**CRITICAL**: 全レビューアーを最終起動。変更全体を再レビュー。
+**中規模 Round 3 / 大規模 Round 5**: ユーザー確認ポイント（AskUserQuestionで中間報告）
 
 全レビューアーからの指摘が0件（またはnit/minorのみ）になるまで:
 - 指摘を修正 → 再レビュー（追加ラウンド）
-- **Round 5以降で指摘が残る場合**: 合格するまで継続
+- **最終ラウンドで指摘が残る場合**: 合格するまで継続
 
 ### Phase 3: 最終報告 + ユーザー承認
 
@@ -111,7 +103,7 @@ Taskツールで**全選定レビューアーを並列起動**:
 ## Pre-PR Auto Review 結果
 
 ### ラウンド実績
-- 実施ラウンド数: N（最低5）
+- 実施ラウンド数: N（規模別: 小2/中3/大5）
 - 起動レビューアー: [一覧]
 - 初回検出: X件 → 最終残存: Y件（nit/minorのみ）
 
@@ -120,9 +112,7 @@ Taskツールで**全選定レビューアーを並列起動**:
 |-------|------|------|------|------|
 | 1     |      |      | -    |      |
 | 2     |      |      |      |      |
-| 3     |      |      |      |      |
-| 4     |      |      |      |      |
-| 5     |      |      |      |      |
+| ...   |      |      |      |      |
 
 ### 最終レビュー結果（観点別）
 - arch-reviewer: PASS / FAIL（残存指摘数）
@@ -169,12 +159,37 @@ AskUserQuestionで最終承認を取得。
 - **minor**: 命名改善、コメント追加、軽微なリファクタリング
 - **nit**: スタイル、好み
 
-## 出力フォーマット
+## 出力フォーマット（IMPORTANT）
 ### [重要度] 指摘タイトル
 - ファイル: path/to/file.ts:L行番号
 - 問題: 具体的な問題の説明
-- 修正案: 具体的な修正方法
+- 修正案: **実装レベルで具体的に記述**（「〇〇のチェックを追加」ではなく「XX行の前に `if (!entity.fieldIds.includes(paramId))` を追加」のように）
+- 影響: ユーザー判断に委ねる場合でも、修正しない場合の具体的リスクと技術的修正案を必ず提示
 ```
+
+### security-reviewer向け追加観点（CRITICAL）
+
+security-reviewerへのプロンプトには、以下の観点を**必ず**含めること:
+
+```
+## セキュリティ追加チェックリスト（IDOR/パラメータレベル認可）
+
+APIエンドポイントの全リクエストパラメータ（path params, body params, query params）について:
+1. **データスコープ検証**: ユーザーが指定したリソースIDが、認証済みユーザーがアクセス可能なリソースのスコープ内か？
+   - 例: questionIdがattemptのquestionIdsに含まれるか、itemIdがorderのitemIdsに含まれるか
+   - 認証チェック（誰がアクセス）だけでなく、認可チェック（何にアクセスできるか）まで確認
+2. **マイグレーション遡及影響**: NULL許容カラム追加時、アプリコードのデフォルト値/フォールバック変更と組み合わせて既存データの振る舞いが変わらないか？
+   - 例: passing_score NULLカラム追加 + DEFAULT_PASSING_SCORE変更 → 既存レコードの合格ラインが遡及変更
+
+関連するドメインエンティティの定義（フィールド一覧）も確認し、欠落している検証を特定すること。
+```
+
+### コンテキスト拡張ルール
+
+API routeファイルのレビュー時は、diffだけでなく以下も含めること:
+- **呼び出し先のusecase/repository**: パラメータがどう使われるか追跡
+- **関連するドメインエンティティ定義**: どのフィールドが検証に使えるか確認
+- **マイグレーションファイル**: スキーマ変更とアプリコードのデフォルト値の整合性
 
 ## LLM連続反復ガード
 
@@ -185,7 +200,7 @@ AskUserQuestionで最終承認を取得。
 
 ## 禁止事項
 
-- 5ラウンド未満で完了とすること
+- 規模別最低ラウンド未満で完了とすること（小: 2、中: 3、大: 5）
 - レビューアーの指摘をメインコンテキストで「自己判断」してスキップすること（必ず修正 or ユーザー判断）
 - critical/must-fix指摘を残したままPR作成を許可すること
 - LLMのみの修正を4回以上連続で行うこと

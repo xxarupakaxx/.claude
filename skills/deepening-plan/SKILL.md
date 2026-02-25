@@ -15,7 +15,7 @@ description: |
 ## パイプライン上の位置
 
 ```
-Phase 2: 計画作成 → **deepening-plan** → サブエージェントレビュー（5ラウンド） → User Validation Gate
+Phase 2: 計画作成 → **deepening-plan** → サブエージェントレビュー（規模別ラウンド） → User Validation Gate
 ```
 
 - **入力**: 30_plan.md（実装計画）、solutions/の過去知見

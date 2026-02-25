@@ -1,6 +1,6 @@
 ---
 name: interrogating-pre-pr
-description: Conducts strict human-in-the-loop interrogation before PR creation. Asks probing questions across 8 categories (intent, edge cases, error handling, performance, security, testing, consistency, impact) with minimum 5 rounds. Use when user says "質問攻めにして", "厳格にレビュー", "PRの前にチェック", "テストに合格するまでPRは作らないで", or when design intent confirmation is important for smaller changes.
+description: Conducts strict human-in-the-loop interrogation before PR creation. Asks probing questions across 8 categories (intent, edge cases, error handling, performance, security, testing, consistency, impact) with scale-based rounds (small 2, medium 3, large 5). Use when user says "質問攻めにして", "厳格にレビュー", "PRの前にチェック", "テストに合格するまでPRは作らないで", or when design intent confirmation is important for smaller changes.
 context: current
 ---
 
@@ -9,7 +9,7 @@ context: current
 ## 概要
 
 実装完了後、PR作成前にClaudeがレビュー担当者役として厳格な質問攻めを行う。
-**最低5ラウンド**のレビュー修正サイクルを実施し、すべての質問に合格するまでPRは作成しない。
+**規模別ラウンド**（小: 2、中: 3、大: 5）のレビュー修正サイクルを実施し、すべての質問に合格するまでPRは作成しない。
 
 ## 研究的根拠（IMPORTANT）
 
@@ -44,9 +44,15 @@ git diff $BASE_BRANCH
 
 変更されたファイル、追加行数、削除行数を把握。
 
-### Phase 2: 質問攻め（Interrogation Loop — 最低5ラウンド）
+### Phase 2: 質問攻め（Interrogation Loop — 規模別ラウンド制）
 
-**CRITICAL**: 最低5ラウンドのレビュー修正サイクルを実施すること。早期に全問合格した場合でも、5ラウンド未満で終了してはならない。
+**規模別ラウンド数**（変更ファイル数で判定）:
+
+| 規模 | ファイル数 | 最低ラウンド |
+|------|-----------|------------|
+| 小 | 1-3 | 2 |
+| 中 | 4-9 | 3 |
+| 大 | 10+ | 5 |
 
 **レビュー担当者モードに切り替え:**
 
@@ -65,9 +71,9 @@ git diff $BASE_BRANCH
 | **既存コードとの整合性** | 既存パターンに従っている？命名規則は統一されている？ |
 | **影響範囲** | この変更で壊れる可能性のある機能は？後方互換性は？ |
 
-#### 2.2 質問プロセス（5ラウンド制）
+#### 2.2 質問プロセス（規模別ラウンド制）
 
-**CRITICAL**: 最低5ラウンドを実施。各ラウンドの構造:
+各ラウンドの構造:
 
 | ステップ | 内容 | 必須 |
 |----------|------|------|
@@ -78,11 +84,10 @@ git diff $BASE_BRANCH
 | 5. サブエージェントレビュー | security-reviewer等で修正箇所を検証 | Round 3, 5 |
 
 **ラウンド進行ルール:**
-- **Round 1-2**: 基本カテゴリ（意図、エッジケース、エラーハンドリング）を中心に質問
-- **Round 3**: 全カテゴリから質問 + security-reviewerによる中間検証
-- **Round 4**: 修正により新たに生じた問題に焦点（**修正が新たな脆弱性を生む可能性に注意**）
-- **Round 5**: 最終確認 + security-reviewer/perf-reviewerによる最終検証
-- **Round 5で指摘が残る場合**: 合格するまで追加ラウンドを継続
+- **Round 1**: 基本カテゴリ（意図、エッジケース、エラーハンドリング）を中心に質問
+- **Round 2**: 全カテゴリから質問 + security-reviewerによる検証
+- **Round 3以降**（中・大規模時）: 修正により新たに生じた問題に焦点 + 最終検証
+- **最終ラウンドで指摘が残る場合**: 合格するまで追加ラウンドを継続
 
 **LLMのみの連続反復は最大3回まで**（研究知見）。3回連続でLLMのみの修正を行った場合、次は必ず静的解析 + サブエージェントレビュー + 人間確認を挟むこと。
 
@@ -121,13 +126,13 @@ git diff $BASE_BRANCH
 
 ### Phase 3: 合格判定
 
-**最低5ラウンド完了後**、すべての質問に合格したら:
+**規模別最低ラウンド完了後**、すべての質問に合格したら:
 
 ```markdown
 ## Pre-PR Interrogation 結果
 
 ### ラウンド実績
-- 実施ラウンド数: N（最低5）
+- 実施ラウンド数: N（規模別: 小2/中3/大5）
 - 検出した問題数: X件
 - 修正した問題数: Y件
 - サブエージェント検証: Round 3, 5で実施
@@ -143,13 +148,12 @@ git diff $BASE_BRANCH
 - [x] 影響範囲
 
 ### ラウンドごとの改善
-- Round 1-2: <基本的な問題の修正>
-- Round 3: <中間検証で発見された問題の修正>
-- Round 4: <修正起因の新規問題の対応>
-- Round 5: <最終検証の結果>
+- Round 1: <基本レビュー>
+- Round 2: <再検証>
+- Round N: <最終検証の結果>
 
 ### PR作成準備完了
-5ラウンド以上のレビュー修正サイクルを完了し、すべての質問に合格しました。PRを作成できます。
+規模別ラウンドのレビュー修正サイクルを完了し、すべての質問に合格しました。PRを作成できます。
 ```
 
 ### Phase 4: PR作成へ
@@ -191,7 +195,7 @@ Claude: レビュー担当者として質問攻めを開始します。
 ## 禁止事項
 
 - 質問に合格していないのにPR作成を許可すること
-- **5ラウンド未満で完了とすること**（研究により、早期終了は脆弱性の見落としにつながる）
+- **規模別最低ラウンド未満で完了とすること（小: 2、中: 3、大: 5）**
 - 形式的な質問だけで終わらせること（実装の本質を突く質問をする）
 - 改善点があるのに「問題ない」と判定すること
 - LLMのみの修正を4回以上連続で行うこと（必ず外部フィードバックを挟む）
