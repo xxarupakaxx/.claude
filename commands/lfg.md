@@ -23,7 +23,7 @@ workflow-rules.mdの各Phaseを順次実行し、各Phase間のゲート判定�
 |-------|--------|--------|
 | 0: 準備 | `@context/workflow-rules.md` Phase 0 | AUTO |
 | 1: 調査 | `@context/workflow-rules.md` Phase 1 | GO→AUTO / それ以外→USER |
-| 2: 計画 | `@context/workflow-rules.md` Phase 2（deepening-plan + レビュー5ラウンド） | **USER（省略不可）** |
+| 2: 計画 | `@context/workflow-rules.md` Phase 2（deepening-plan + 規模別ラウンドレビュー） | **USER（省略不可）** |
 | 3: 実装 | `@context/workflow-rules.md` Phase 3 | AUTO（10+タスクは中間報告） |
 | 4: 品質 | `@context/workflow-rules.md` Phase 4 | AUTO（指摘0でPASS） |
 | 5: 完了 | `@context/workflow-rules.md` Phase 5 | AUTO |
