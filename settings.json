@@ -28,6 +28,16 @@
             "command": "bash ~/.claude/hooks/session-start-inject.sh"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/worktree-knowledge-link.sh",
+            "timeout": 5,
+            "statusMessage": "Checking worktree knowledge links..."
+          }
+        ]
       }
     ],
     "PostToolUse": [
@@ -46,6 +56,17 @@
           {
             "type": "command",
             "command": "afplay /System/Library/Sounds/Tink.aiff 2>/dev/null || true"
+          }
+        ]
+      },
+      {
+        "matcher": "EnterWorktree",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/worktree-knowledge-link.sh",
+            "timeout": 5,
+            "statusMessage": "Linking worktree knowledge..."
           }
         ]
       }
