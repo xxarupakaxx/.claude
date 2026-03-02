@@ -52,6 +52,7 @@ CLAUDE.mdのPhase 0-5のフローを必ず守ること。スキルの内容はPh
 - メモリファイル形式: `context/memory-file-formats.md` をReadで参照
 - memories/検索: `rg "^summary:" .local/memories/ --no-ignore --hidden` でサマリー検索
 - issues/: `${MEMORY_DIR}/issues/`（codebase-reviewスキルで使用）
+- **Worktree対応**: memories/solutions/issues/memory/はSessionStart・EnterWorktree時にメインworktreeの`.local/`へ自動シンボリックリンク（HANDOVER.md・plans/はローカル維持）
 
 ## ユーザーへの質問
 
