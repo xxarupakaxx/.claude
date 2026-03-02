@@ -322,3 +322,27 @@ rg "^problem_type:.*keyword" .local/solutions/ --no-ignore --hidden -i
 ```
 
 **全文横断検索**: `learnings-researcher`エージェントが複数フィールドを並列grepしスコアリング。
+
+## Worktree知見共有
+
+Git worktree使用時、知見ディレクトリはメインworktreeの`.local/`へ自動シンボリックリンクされる。
+
+### 共有（シンボリックリンク）
+| ディレクトリ | 理由 |
+|---|---|
+| `memories/` | インデックス層（全worktreeで検索可能に） |
+| `solutions/` | 構造化ソリューションDB |
+| `issues/` | コードベースレビュー結果 |
+| `memory/` | タスクログ（YYMMDD_taskでnamespaced、衝突しない） |
+
+### ローカル維持
+| ファイル | 理由 |
+|---|---|
+| `HANDOVER.md` | セッション固有の復元情報 |
+| `plans/` | worktree固有の計画 |
+
+### 仕組み
+- **SessionStart**: セッション開始時にworktree検出 → 自動リンク
+- **PostToolUse(EnterWorktree)**: worktree進入時に自動リンク
+- スクリプト: `~/.claude/hooks/worktree-knowledge-link.sh`
+- 既存データがある場合はメインにマージ後リンク作成
