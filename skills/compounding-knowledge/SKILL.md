@@ -121,11 +121,30 @@ effort: "small|medium|large"
 - 関連ソリューション: [solutions/内のパス]
 ```
 
-### Step 4: 保存 & インデックス更新
+### Step 4: 提案 & ユーザー承認（IMPORTANT）
 
-1. `${MEMORY_DIR}/solutions/<category>/<filename>.md` に保存
-2. 必要に応じて `memories/` にもインデックスを作成/更新
-3. 保存完了をユーザーに報告
+**Edit禁止ポリシー**: knowledge管理ファイルへの直接書き込みは禁止。
+
+1. **生成したドキュメントを提案として表示**
+   ```markdown
+   ## 保存提案
+
+   **保存先**: `${MEMORY_DIR}/solutions/<category>/<filename>.md`
+
+   ---
+   [生成したドキュメント全文]
+   ---
+   ```
+
+2. **AskUserQuestionで承認を取得**
+   - 「このまま保存」
+   - 「修正して保存」（修正点を入力）
+   - 「保存しない」
+
+3. **承認後のみWriteツールで保存**
+   - 保存後、`index.json`に新規エントリを追加（ref_count: 0）
+
+4. 必要に応じて `memories/` にもインデックスを作成（同様に提案→承認）
 
 ## solutions/ ディレクトリ構造
 

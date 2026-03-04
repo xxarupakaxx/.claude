@@ -60,6 +60,9 @@ rg "^component:.*<keyword>" ${MEMORY_DIR}/solutions/ --no-ignore --hidden -i
 | 2フィールド | 中 | frontmatter読み取り → 判断 |
 | 1フィールド | 低 | タイトル・サマリーのみ報告 |
 
+**参照回数ブースト**: `${MEMORY_DIR}/index.json`のref_countが高いファイルはスコアにボーナス。
+同じヒット数なら参照回数が多いファイルを優先表示。
+
 ## カテゴリベース絞り込み（オプション）
 
 問題の種類が明確な場合、solutions/の特定カテゴリに絞り込める:
@@ -98,3 +101,28 @@ grepでヒットが少ない場合:
 1. キーワードをより一般的な用語に拡大
 2. memories/とsolutions/の全ファイルリストをglobで取得し、ファイル名から推測
 3. 関連するissues/も検索
+
+## 参照回数の更新（IMPORTANT）
+
+検索完了後、結果として返却したファイルの参照回数を更新する:
+
+```bash
+INDEX_FILE="${MEMORY_DIR}/index.json"
+TODAY=$(date +%Y-%m-%d)
+
+# index.jsonがなければ初期化
+if [ ! -f "$INDEX_FILE" ]; then
+  echo '{"files":{},"synonyms":{}}' > "$INDEX_FILE"
+fi
+
+# 各ファイルのref_countを更新
+for path in <返却したファイルパス>; do
+  jq --arg path "$path" --arg today "$TODAY" '
+    .files[$path] //= {"ref_count": 0, "created": $today} |
+    .files[$path].ref_count += 1 |
+    .files[$path].last_accessed = $today
+  ' "$INDEX_FILE" > "$INDEX_FILE.tmp" && mv "$INDEX_FILE.tmp" "$INDEX_FILE"
+done
+```
+
+これにより、よく参照される知見が次回以降の検索で優先表示される。
