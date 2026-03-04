@@ -108,6 +108,15 @@
             "timeout": 10
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/knowledge-cleanup-check.sh",
+            "timeout": 10
+          }
+        ]
       }
     ],
     "SubagentStop": [
