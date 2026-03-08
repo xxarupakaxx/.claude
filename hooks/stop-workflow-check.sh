@@ -1,7 +1,7 @@
 #!/bin/bash
 # stop-workflow-check.sh
 # Claudeの応答完了時にワークフロー遵守をチェック
-# 05_log.mdが存在し、Phase移行時に更新されているか確認
+# 05_log.mdが存在し、レスポンス内のPhaseに対応する記録があるか確認
 
 INPUT=$(cat)
 
@@ -51,20 +51,31 @@ if [ ! -f "$LOG_FILE" ]; then
   exit 0
 fi
 
-# Phase移行キーワードを検出
-if echo "$LAST_MSG" | grep -qiE '(Phase [0-5].*完了|Phase [0-5].*移行|完了報告|品質確認完了|実装完了|計画承認|調査完了|次のPhase)'; then
-  # 05_log.md の最終更新時刻をチェック（macOS/Linux対応）
-  if [ "$(uname)" = "Darwin" ]; then
-    MOD_TIME=$(stat -f %m "$LOG_FILE")
-  else
-    MOD_TIME=$(stat -c %Y "$LOG_FILE")
-  fi
-  NOW=$(date +%s)
-  DIFF=$((NOW - MOD_TIME))
+# Phase移行の検出と内容ベースの整合性チェック
+# grepはファイルに直接実行（echo+pipeはマルチバイト文字で問題が出る）
 
-  # 5分以上更新されていない場合に警告
-  if [ "$DIFF" -gt 300 ]; then
-    echo "{\"decision\": \"block\", \"reason\": \"Phase移行が検出されましたが、05_log.mdが$(($DIFF / 60))分間更新されていません。現在のPhaseの作業内容を05_log.mdに記録してから次のPhaseに進んでください。\"}"
+# Phase 3（実装）完了を主張しているか
+if echo "$LAST_MSG" | grep -qiE '(Phase 3.*完了|実装完了|実装が完了)'; then
+  if ! grep -qE '(Phase 3|## .*実装|Step [0-9])' "$LOG_FILE"; then
+    echo '{"decision": "block", "reason": "実装完了が検出されましたが、05_log.mdにPhase 3（実装）の記録がありません。実装内容を記録してから完了報告してください。"}'
+    exit 0
+  fi
+fi
+
+# Phase 4（品質確認）完了を主張しているか
+if echo "$LAST_MSG" | grep -qiE '(Phase 4.*完了|品質確認完了|品質チェック.*通過|typecheck.*PASS)'; then
+  if ! grep -qE '(Phase 4|PASS|typecheck|lint)' "$LOG_FILE"; then
+    echo '{"decision": "block", "reason": "品質確認完了が検出されましたが、05_log.mdにPhase 4（品質確認）の記録がありません。チェック結果を記録してから完了報告してください。"}'
+    exit 0
+  fi
+fi
+
+# Phase 5（完了報告）を主張しているか
+if echo "$LAST_MSG" | grep -qiE '(Phase 5.*完了|完了報告|タスク完了)'; then
+  HAS_IMPL=$(grep -cE '(Phase 3|## .*実装|Step [0-9])' "$LOG_FILE")
+  HAS_QA=$(grep -cE '(Phase 4|PASS|typecheck|lint)' "$LOG_FILE")
+  if [ "$HAS_IMPL" -eq 0 ] || [ "$HAS_QA" -eq 0 ]; then
+    echo '{"decision": "block", "reason": "完了報告が検出されましたが、05_log.mdにPhase 3（実装）またはPhase 4（品質確認）の記録が不足しています。各Phaseの内容を記録してから完了報告してください。"}'
     exit 0
   fi
 fi
