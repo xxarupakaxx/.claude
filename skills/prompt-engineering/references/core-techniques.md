@@ -4,16 +4,29 @@
 
 ルールを説明する代わりに、例を見せてモデルに教える。望ましい動作を示す2-5個の入出力ペアを含める。一貫したフォーマット、特定の推論パターン、エッジケースの処理が必要な場合に使用。例が多いほど精度は向上するがトークンを消費する—タスクの複雑さに応じてバランスを取る。
 
+**ベストプラクティス（Claude 4.x）:**
+
+- `<example>`タグで例を囲む（複数は`<examples>`タグ内に）
+- 実際のユースケースに近い例を選ぶ
+- エッジケースを含む多様な例にする
+- 3-5個の例が最適
+
 **例:**
 
 ```markdown
 サポートチケットから重要な情報を抽出:
 
+<examples>
+<example>
 入力: "ログインできず、エラー403が出続ける"
 出力: {"issue": "authentication", "error_code": "403", "priority": "high"}
+</example>
 
+<example>
 入力: "機能リクエスト: 設定にダークモードを追加してほしい"
 出力: {"issue": "feature_request", "error_code": null, "priority": "low"}
+</example>
+</examples>
 
 次を処理: "10MB以上のファイルをアップロードできず、タイムアウトする"
 ```
@@ -21,6 +34,8 @@
 ## 2. Chain-of-Thought（思考の連鎖）プロンプティング
 
 最終回答の前にステップバイステップの推論を要求する。「ステップバイステップで考えてみましょう」（ゼロショット）を追加するか、推論の例（Few-shot）を含める。複数ステップのロジック、数学的推論が必要な複雑な問題、またはモデルの思考プロセスを検証する必要がある場合に使用。分析タスクの精度を30-50%向上させる。
+
+**注意（Claude 4.x）:** Extended thinkingが無効の場合、Claude Opus 4.5は「think」とその派生語に敏感。代わりに「consider」「evaluate」「reason through」を使用。
 
 **例:**
 
@@ -104,6 +119,72 @@ System: あなたはAPI設計を専門とするシニアバックエンドエン
 4. トレードオフ
 ```
 
+## 6. Claude 4.x固有テクニック
+
+### Adaptive Thinking
+
+Claude Opus 4.6はadaptive thinking（`thinking: {type: "adaptive"}`）を使用。モデルがクエリ複雑度に応じて自動的に思考深度を調整。effortパラメータ（low/medium/high/max）で制御。
+
+| effort | 用途 |
+|--------|------|
+| `max` | 最難問題（大規模コード移行、深い調査） |
+| `high` | 複雑な推論・エージェントワークフロー |
+| `medium` | 一般的なタスク（Sonnet 4.6推奨デフォルト） |
+| `low` | 高ボリューム・低レイテンシワークロード |
+
+**一般的な指示が処方的ステップより効果的**: 「thoroughly consider」は手書きのステップバイステップ計画より良い推論を生む。Claudeの推論は人間が処方するものを超えることが多い。
+
+**Multishot + Thinking**: few-shot例の中に`<thinking>`タグを含めると、Claudeはそのスタイルをextended thinkingブロックに一般化する。
+
+**Overthinking制御:**
+
+```text
+When deciding how to approach a problem, choose an approach and commit to it.
+Avoid revisiting decisions unless you encounter new information that directly
+contradicts your reasoning.
+```
+
+### 出力制御
+
+Claude 4.xのコミュニケーションスタイルは以前より簡潔・直接的。
+
+- **「何をするか」で指示**: 「markdownを使うな」→「滑らかな散文段落で書いて」
+- **XMLフォーマット指示**: `<smoothly_flowing_prose_paragraphs>`タグで出力形式を誘導
+- **プロンプトスタイル一致**: プロンプトのフォーマットが出力フォーマットに影響する
+- **LaTeX**: Opus 4.6はデフォルトでLaTeX使用。不要なら明示的にプレーンテキスト指示
+- **詳細度**: ツール使用後のサマリーが省略されがち。必要なら「ツール使用後に作業の概要を報告」と指示
+
+### 長コンテキスト最適化
+
+- **データを上部に配置**: ドキュメント→指示→例→クエリの順（最大30%精度向上）
+- **引用で根拠づけ**: 長文タスクでは関連部分の引用を先に要求
+- **XMLでメタデータ構造化**: `<document index="n"><source>...<document_content>...`
+
+### Overtrigger対策
+
+Claude 4.5/4.6はシステムプロンプトへの反応が強い。以前のモデル向けの攻撃的言語を緩和:
+
+- ❌ `CRITICAL: You MUST use this tool when...`
+- ✅ `Use this tool when...`
+- ❌ `If in doubt, use [tool]` → overtriggerの原因
+- ✅ `Use [tool] when it would enhance your understanding of the problem`
+
+### Self-Check パターン
+
+「終了前に、[テスト基準]に対して回答を検証せよ」を追加するとエラー捕捉率が大幅向上（特にコーディング・数学）。
+
+### Prefill代替パターン
+
+Claude 4.6でassistant turnのprefillは非対応。代替手段:
+
+| 旧パターン | 代替手段 |
+|-----------|---------|
+| 出力形式制御 | Structured Outputs / XMLタグ / 直接指示 |
+| 前置き除去 | 「前置きなしで直接回答」とシステムプロンプトに |
+| 不要な拒否回避 | 明確なプロンプティング（Claude 4.xは拒否精度が大幅改善） |
+| 継続 | ユーザーメッセージで「前回の回答は`[...]`で中断された。続きから」 |
+| コンテキスト注入 | ツール経由での注入 / コンテキスト圧縮時に注入 |
+
 ---
 
 ## 統合パターン
@@ -145,10 +226,11 @@ prompt = f"""{main_task_prompt}
 - 最初の定義後は一貫して略語を使用
 - 類似の指示を統合
 - 安定したコンテンツをシステムプロンプトに移動
+- LLM推論パフォーマンスは約3,000トークンで劣化開始。実用的スイートスポットは150-300語
 
 ### レイテンシ削減
 
 - 品質を損なわずにプロンプト長を最小化
 - 長文出力にはストリーミングを使用
-- 一般的なプロンプトプレフィックスをキャッシュ
+- 一般的なプロンプトプレフィックスをキャッシュ（Prompt Caching: コスト最大90%削減）
 - 可能な場合は類似リクエストをバッチ処理
