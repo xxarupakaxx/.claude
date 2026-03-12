@@ -4,6 +4,7 @@
 !/CLAUDE.md
 !/settings.json
 !/setup.sh
+!/statusline-command.sh
 !/commands/
 !/commands/**
 !/context/
