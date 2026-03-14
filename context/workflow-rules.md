@@ -199,6 +199,11 @@ Taskツールで並列起動: `security-reviewer`, `perf-reviewer`, `arch-review
 3. 作成したブランチ名
 4. 残存する課題
 5. 価値ある知見があれば memories/ にインデックス作成（`context/memory-file-formats.md`をReadで参照）
+6. **ローカル検証ガイド生成**（UI変更・API変更・DB変更を含む場合は必須）
+   - `/generate-verification-guide` スキルを実行
+   - 影響ページの探索 → テストケース生成 → チェックリスト出力
+   - 結果をメモリディレクトリの `90_verification.md` に保存
+   - **スキップ条件**: 設定ファイルのみの変更、テストのみの変更、ドキュメントのみの変更
 
 ## Phase 5.5: Compound（知見の構造化保存）
 
