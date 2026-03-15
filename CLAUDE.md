@@ -15,7 +15,7 @@ CLAUDE.mdのPhase 0-5のフローを必ず守ること。スキルの内容はPh
 2. 計画: 30_plan.md作成 → **`deepening-plan`スキル実行（CRITICAL・3ファイル以上の変更時は必須）** → 専門サブエージェント並列レビュー（規模別ラウンド） → 05_log.mdに記録
 3. 実装: 各タスクを調査→計画→実行→レビュー。**非自明なタスクでは`learnings-researcher`を並列実行**。こまめにコミット → 05_log.mdに記録
 4. 品質確認: lint/format/typecheck/test + 専門サブエージェント並列レビュー（規模別ラウンド）
-5. 完了報告 + **ローカル検証ガイド生成（UI/API/DB変更時は`/generate-verification-guide`実行）**
+5. 完了報告 + **ローカル検証ガイド生成（UI/API/DB変更時は`/generate-verification-guide`実行）** + **状態図生成（ワークフロー/状態管理/外部連携を含む場合は`/generate-state-diagram`実行）**
 5.5. Compound: **`compounding-knowledge`スキルで知見を構造化保存（新しい問題解決・パターン発見時は必須）**
 
 詳細: Readで `@context/workflow-rules.md` を参照すること
