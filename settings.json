@@ -193,24 +193,5 @@
   },
   "language": "japanese Explanatory learning",
   "plansDirectory": "./.local/plans",
-  "mcpServers": {
-    "deepwiki": {
-      "url": "https://mcp.deepwiki.com/sse",
-      "autoApprove": [
-        "read_wiki_structure",
-        "read_wiki_contents"
-      ]
-    },
-    "context7": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@upstash/context7-mcp@latest"
-      ],
-      "autoApprove": [
-        "resolve-library-id",
-        "get-library-docs"
-      ]
-    }
-  }
+  "mcpServers": {}
 }
