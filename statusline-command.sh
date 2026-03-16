@@ -120,20 +120,22 @@ if [ -n "$usage_data" ]; then
   fi
 fi
 
-# Build output
-output=""
-output=$(printf "\033[36m%s\033[0m" "$dir")
-
+# Build output - each printf is a separate line
+# Line 1: folder | repo|branch
+line1=$(printf "\033[36m%s\033[0m" "$dir")
 if [ -n "$repo_name" ] && [ -n "$branch" ]; then
-  output=$(printf "%b | \033[90m%s\033[0m|\033[33m%s\033[0m" "$output" "$repo_name" "$branch")
+  line1=$(printf "%b | \033[90m%s\033[0m|\033[33m%s\033[0m" "$line1" "$repo_name" "$branch")
 elif [ -n "$branch" ]; then
-  output=$(printf "%b | \033[33m%s\033[0m" "$output" "$branch")
+  line1=$(printf "%b | \033[33m%s\033[0m" "$line1" "$branch")
 fi
+printf "%b\n" "$line1"
 
-output=$(printf "%b | ${pct_color}%d%%\033[0m \033[35m%s\033[0m" "$output" "$pct" "$model")
+# Line 2: ctx% model
+printf "${pct_color}%d%%\033[0m \033[35m%s\033[0m\n" "$pct" "$model"
 
+# Line 3: OAuth usage (if available)
 if [ -n "$rate_info" ]; then
-  output=$(printf "%b%b" "$output" "$rate_info")
+  # Remove leading " | " from rate_info
+  rate_clean=$(printf "%b" "$rate_info" | sed 's/^ | //')
+  printf "%b\n" "$rate_clean"
 fi
-
-printf "%b" "$output"
