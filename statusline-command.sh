@@ -58,11 +58,11 @@ if [ -n "$five_h" ] && [ -n "$seven_d" ]; then
 
   five_reset_fmt=""
   if [ -n "$five_h_reset" ]; then
-    five_reset_fmt=$(date -r "$five_h_reset" "+%H:%M" 2>/dev/null || echo "")
+    five_reset_fmt=$(TZ=Asia/Tokyo date -r "$five_h_reset" "+%H:%M" 2>/dev/null || echo "")
   fi
   seven_reset_fmt=""
   if [ -n "$seven_d_reset" ]; then
-    seven_reset_fmt=$(date -r "$seven_d_reset" "+%m/%d %H:%M" 2>/dev/null || echo "")
+    seven_reset_fmt=$(TZ=Asia/Tokyo date -r "$seven_d_reset" "+%m/%d %H:%M" 2>/dev/null || echo "")
   fi
 
   rate_info=$(printf "${s_color}5h:%s%%\033[0m" "$five_h_int")
