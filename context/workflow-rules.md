@@ -42,6 +42,10 @@ Phase 0 ─→ Phase 1 ─→ Phase 2 ─→ Phase 3 ─→ Phase 4 ─→ Phase
 | `autonomous-loops` | スキル | 実行パターン集（Sequential / PR Loop / DAG） | 3（実行戦略） |
 | `subagent-driven-development` | スキル | タスクごとにサブエージェント + レビュー | 3（3+独立タスク時） |
 | `agent-teams` | スキル | 複数Claude Codeインスタンスで並列実行 | 3（10+ファイル時） |
+| `iterative-retrieval` | スキル | 検索結果が不十分な時の段階的リファインメント | 全Phase（状況発生時） |
+| `search-first` | スキル | 実装前の既存ツール検索（車輪の再発明防止） | 1, 2（新機能実装時） |
+| `/checkpoint` + `/verify` | スキル | 合格基準定義→自動検証ループ | 4（品質確認自動化） |
+| `cost-aware-llm` | スキル | サブエージェントのモデルルーティング | 全Phase（状況発生時） |
 
 ### 複利ループ
 
@@ -316,6 +320,41 @@ Phase 5完了後に実施。`compounding-knowledge`スキルを使用。
 | 個人情報・規制対応・ライセンス | `compliance-reviewer` |
 | Dockerfile・CI/CD・IaC変更 | `devops-reviewer` |
 | CLAUDE.md/rules準拠の検証 | `rule-validator` |
+
+## 状況別スキルディスパッチ（Cross-Phase）
+
+Phase直結でないユーティリティスキル。**状況が発生したら**使用する。
+
+### 検索・調査の精度が足りないとき
+
+| 状況 | スキル | やること |
+|------|--------|---------|
+| `learnings-researcher`の結果が不十分 | `iterative-retrieval` | 広い検索→評価→焦点絞り→追加検索を最大3ラウンド |
+| 新機能を実装しようとしている | `search-first` | npm/PyPI/GitHub/既存スキルを検索し、車輪の再発明を防止 |
+| サブエージェントに渡すコンテキストが不足 | `iterative-retrieval` | 段階的に必要情報を収集してからディスパッチ |
+
+### 品質確認を自動化したいとき
+
+| 状況 | スキル | やること |
+|------|--------|---------|
+| Phase 4で合格基準を定義→自動ループ | `/checkpoint` → `/verify` | 基準定義→全PASS まで検証→修正→再検証を自動繰り返し |
+| 手動確認チェックリストが必要 | `/generate-verification-guide` | UI/API/DB変更のローカル検証手順を生成 |
+| 両方使う場合 | `/verify` → `/generate-verification-guide` | 自動チェック後、残りを手動チェックリストで |
+
+### コスト・効率を最適化したいとき
+
+| 状況 | スキル | やること |
+|------|--------|---------|
+| サブエージェントのモデル選択に迷う | `cost-aware-llm`（+ `rules/model-routing.md`） | タスク複雑度に応じてhaiku/sonnet/opusを振り分け |
+| エージェントチームの構成に迷う | `team-builder` | 利用可能エージェントを一覧→タスクに最適な組み合わせを提案 |
+
+### メンテナンス（定期）
+
+| 状況 | スキル | やること |
+|------|--------|---------|
+| スキルが増えすぎた（月1回目安） | `skill-stocktake` | 全スキルをkeep/improve/retire/merge判定 |
+| スキルの品質を数値で評価したい | `eval-harness` | pass@kメトリクスで信頼性測定 |
+| 知見ファイルの整理 | `/cleanup-knowledge` | 30日未参照→アーカイブ候補、同一タグ→統合候補 |
 
 ## 禁止事項
 
