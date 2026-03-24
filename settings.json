@@ -57,9 +57,14 @@
     "Bash(rg:*)",
     "Bash(afplay:*)"
   ],
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "CLAUDE_CODE_ENABLE_TELEMETRY": "1"
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
+    "CLAUDE_CODE_NEW_INIT": "1"
   },
   "model": "opus[1m]",
   "hooks": {
