@@ -323,6 +323,45 @@ rg "^problem_type:.*keyword" .local/solutions/ --no-ignore --hidden -i
 
 **全文横断検索**: `learnings-researcher`エージェントが複数フィールドを並列grepしスコアリング。
 
+## SQLiteデータベース（memory.db）
+
+場所: `${MEMORY_DIR}/memory.db`（WALモード、StopHook実行時に自動作成）
+
+sui-memoryシステムがMarkdownファイルと並行してSQLiteに知見をインデックスする。
+Markdownファイルが正（Source of Truth）、SQLiteは検索エンジン。
+
+### テーブル構成
+
+| テーブル | 内容 |
+|---------|------|
+| `sessions` | セッション情報（session_id, project, cwd, branch） |
+| `chunks` | Q&Aチャンク（user_text, assistant_text, embedding） |
+| `chunks_fts` | FTS5全文検索インデックス（trigram） |
+| `knowledge` | memories/ + solutions/ のメタデータ + 全文 |
+| `knowledge_fts` | FTS5全文検索インデックス（trigram） |
+
+### 自動処理
+
+- **StopHook**: transcript解析 → chunks保存 → embedding計算 → knowledge同期
+- **SessionStartHook**: FTS5検索 → 過去メモリをstdoutでコンテキスト注入
+- **knowledge同期**: memories/ + solutions/ のMarkdownをfile_mtime比較で差分同期
+
+### 検索方法
+
+`learnings-researcher`エージェントがgrep検索と並列でSQLite検索を実行。
+手動検索する場合:
+```bash
+python3 -m uv run --project ~/.claude/sui-memory python -c "
+from sui_memory.db import get_connection, init_db
+from sui_memory.retriever import search
+conn = get_connection('${MEMORY_DIR}/memory.db')
+init_db(conn)
+for r in search(conn, 'keyword', limit=5):
+    print(f'{r.source}: {r.score:.4f} - {r.user_text[:100]}')
+conn.close()
+"
+```
+
 ## Worktree知見共有
 
 Git worktree使用時、知見ディレクトリはメインworktreeの`.local/`へ自動シンボリックリンクされる。
@@ -334,6 +373,7 @@ Git worktree使用時、知見ディレクトリはメインworktreeの`.local/`
 | `solutions/` | 構造化ソリューションDB |
 | `issues/` | コードベースレビュー結果 |
 | `memory/` | タスクログ（YYMMDD_taskでnamespaced、衝突しない） |
+| `memory.db` | SQLiteデータベース（sui-memory、WALモード対応） |
 
 ### ローカル維持
 | ファイル | 理由 |
