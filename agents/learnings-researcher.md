@@ -95,12 +95,40 @@ rg "^component:.*<keyword>" ${MEMORY_DIR}/solutions/ --no-ignore --hidden -i
 - ヒット数: X件
 ```
 
+## SQLite検索（sui-memory併用）
+
+`${MEMORY_DIR}/memory.db`が存在する場合、grep検索と**並列で**SQLite検索も実行する。
+
+### セッション履歴検索（chunksテーブル）
+過去のセッションのQ&A記録からFTS5+ベクトル検索で関連チャンクを取得。
+grep検索ではカバーできない「過去に議論した内容」を発見できる。
+
+```bash
+# SQLite検索の実行（uv経由）
+python3 -m uv run --project ~/.claude/sui-memory python -c "
+from sui_memory.db import get_connection, init_db
+from sui_memory.retriever import search
+conn = get_connection('${MEMORY_DIR}/memory.db')
+init_db(conn)
+results = search(conn, '<keyword>', limit=5)
+for r in results:
+    print(f'{r.source}: {r.score:.4f} - {r.user_text[:100]}')
+conn.close()
+"
+```
+
+### 統合スコアリング
+- grep結果とSQLite結果をマージ
+- SQLite結果はスコアが付いているためそのまま利用
+- grep高関連度 > SQLite上位 > grep中関連度 > SQLite下位 > grep低関連度
+
 ## フォールバック
 
 grepでヒットが少ない場合:
-1. キーワードをより一般的な用語に拡大
-2. memories/とsolutions/の全ファイルリストをglobで取得し、ファイル名から推測
-3. 関連するissues/も検索
+1. SQLite検索結果を優先（セッション履歴は常に豊富）
+2. キーワードをより一般的な用語に拡大
+3. memories/とsolutions/の全ファイルリストをglobで取得し、ファイル名から推測
+4. 関連するissues/も検索
 
 ## 参照回数の更新（IMPORTANT）
 
