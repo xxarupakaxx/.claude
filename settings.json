@@ -150,7 +150,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 -m uv run --project ~/.claude/sui-memory python -m sui_memory.hook_session_start",
+            "command": "uv run --project ~/.claude/sui-memory python -m sui_memory.hook_session_start",
             "timeout": 30,
             "statusMessage": "Loading past memories..."
           }
@@ -260,7 +260,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 -m uv run --project ~/.claude/sui-memory python -m sui_memory.hook_stop",
+            "command": "uv run --project ~/.claude/sui-memory python -m sui_memory.hook_stop",
             "timeout": 120,
             "statusMessage": "Saving session memory..."
           }
