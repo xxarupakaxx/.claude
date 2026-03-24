@@ -71,13 +71,9 @@ graph TD
 
 ### Phase 4: Adversarial Review Gate
 
-計画を**3つの観点**で敵対的にレビュー:
+`context/workflow-rules.md`の**レビューアー選択ガイド**に従い、Tier 1コア（`arch-reviewer`, `security-reviewer`, `perf-reviewer`）を並列起動 + `implementation-planner`で実装順序・並列化の最適性を検証。
 
-1. **`arch-reviewer`**: 依存関係の漏れ、レイヤー違反、責務の曖昧さ
-2. **`security-reviewer`**: セキュリティ上の考慮漏れ
-3. **`implementation-planner`**: 実装順序の最適性、並列化の可能性
-
-レビュー指摘を反映して計画を修正。
+レビュー指摘を反映して計画を修正。指摘が残る場合は追加ラウンド。
 
 ### Phase 5: 出力
 
@@ -108,6 +104,21 @@ graph TD
 - Estimated Sessions: N
 - Critical Path: WU-X → WU-Y → WU-Z
 ```
+
+## Workflowとの関係
+
+**Blueprintは Phase 0-5.5 の「上位レイヤー」として機能する。置き換えではない。**
+
+```
+/blueprint → blueprint.md（WU分割 + 依存DAG）
+  └─ WU-1 → セッション1: Phase 0（Cold-Start Brief読込）→ 1 → 2 → 3 → 4 → 5
+  └─ WU-2 → セッション2: Phase 0（Cold-Start Brief読込）→ 1 → 2 → 3 → 4 → 5
+  └─ WU-N → セッションN: Phase 0 → ... → 5 → 5.5
+```
+
+- **Blueprint Phase 1（目的の分解）** ≠ **Workflow Phase 1（詳細調査）**: Blueprintはマクロ分割のみ。各WU実行時のPhase 1は省略不可
+- **Blueprint Phase 4（Adversarial Review）** → `workflow-rules.md`のレビューアー選択ガイドに従う
+- **Cold-Start Brief** → Phase 0の「コンテキスト復元」で読み込まれる
 
 ## `/large-task`との違い
 

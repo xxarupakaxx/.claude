@@ -7,20 +7,23 @@
 このファイルが**Single Source of Truth**。全スキル・コマンドはここを参照し、Phaseの手順を複製しない。
 
 ```
-solutions/ ←──────────────────────────────────────────┐
-    │                                                  │
-    ▼                                                  │
-learnings-researcher ─── 過去知見を全Phaseに供給        │
-    │                                                  │
-    ▼                                                  │
+solutions/ ←──────────────────────────────────────────────────┐
+    │                                                          │
+    ▼                                                          │
+learnings-researcher ─── 過去知見を全Phaseに供給                │
+    │                                                          │
+    ▼                                                          │
+[Blueprint] ─→ blueprint.md（多セッション時のみ）               │
+    │           各WUのCold-Start Brief                         │
+    ▼                                                          │
 Phase 0 ─→ Phase 1 ─→ Phase 2 ─→ Phase 3 ─→ Phase 4 ─→ Phase 5 ─→ Phase 5.5
  prep       調査       計画        実装       品質確認    報告       compound
-                        │                     │                      │
-                   deepening-plan        auto-reviewing-         compounding-
-                   (並列リサーチ)          pre-pr                 knowledge
-                                        (並列レビュー)         (知見→solutions/)
-                                                                     │
-                                                                     └─→ solutions/
+  │                     │                     │                      │
+  │                deepening-plan        auto-reviewing-         compounding-
+  │                (並列リサーチ)          pre-pr                 knowledge
+  │                                     (並列レビュー)         (知見→solutions/)
+  │                                                                  │
+  └─ Cold-Start Brief読込（あれば）                                    └─→ solutions/
                                                                         （複利ループ）
 ```
 
@@ -35,6 +38,7 @@ Phase 0 ─→ Phase 1 ─→ Phase 2 ─→ Phase 3 ─→ Phase 4 ─→ Phase
 | `compounding-knowledge` | スキル | 知見を構造化してsolutions/に保存 | 5.5 + 自動トリガー |
 | `exploring-codebase` | スキル | 4並列エージェントでコードベース調査 | 1 |
 | `brainstorming` | スキル | 過去知見を含むアイデア探索 | 計画前 |
+| `/blueprint` | スキル | 多セッション・多PRの設計図（WU分割 + Cold-Start Brief + 依存DAG） | Phase 0の前（大規模時） |
 
 ### 複利ループ
 
@@ -48,12 +52,33 @@ Phase 0 ─→ Phase 1 ─→ Phase 2 ─→ Phase 3 ─→ Phase 4 ─→ Phase
 - ADR作成後（アーキテクチャ決定）
 - レビューで再発パターン検出時
 
+## Blueprint統合（大規模タスク時のみ）
+
+複数セッション・複数PRにまたがるタスクでは、Phase 0の**前に** `/blueprint` スキルを実行する。
+
+- **Blueprint → Phase 0-5.5**: blueprint.mdの各Work Unit（WU）を、個別セッションのPhase 0-5.5で実行する
+- **Cold-Start Brief → Phase 0**: WUのCold-Start Briefがあれば、Phase 0でコンテキスト復元に使用する
+- **Blueprintの調査はPhase 1を代替しない**: Blueprint Phase 1（目的の分解）はマクロ分割のみ。各WU実行時のPhase 1（詳細調査）は省略不可
+- **Blueprintのレビューはworkflow-rules.mdのレビューアー選択ガイドに従う**
+
+### Blueprintを使うべき場面
+
+- 明らかに1セッションで完了しない大規模タスク
+- 複数PRに分割すべき変更
+- ユーザーが「blueprintを作って」「大規模な計画を」と依頼した場合
+
+### Blueprintを使わない場面
+
+- 1セッションで完了する通常タスク → 通常のPhase 0-5.5のみ
+- `/large-task`で十分な場合（セッション分割のみ必要で、依存DAGやCold-Start Briefが不要）
+
 ## Phase 0: 準備
 
 1. PJ CLAUDE.mdの`MEMORY_DIR`確認（未定義なら`.local/`）
 2. システムプロンプトの`Today's date`から日付取得 → `${MEMORY_DIR}/memory/YYMMDD_<task_name>/`作成
 3. 05_log.md初期化、ユーザーの最初の指示を記録
-4. `learnings-researcher`エージェントでタスクに関連する過去知見を検索（memories/ + solutions/ + issues/ を横断）。結果を05_log.mdに記録
+4. **Blueprint WUのCold-Start Briefがあれば読み込み**（blueprint.mdの該当WUセクション）
+5. `learnings-researcher`エージェントでタスクに関連する過去知見を検索（memories/ + solutions/ + issues/ を横断）。結果を05_log.mdに記録
 
 ## Phase 1: 調査
 
