@@ -10,7 +10,8 @@ CLAUDE.mdのPhase 0-5のフローを必ず守ること。スキルの内容はPh
 
 **IMPORTANT**: 各Phaseで05_log.mdに実施内容を逐次記録すること（完了後ではなく、作業中に）
 
-0. 準備: メモリディレクトリ作成 → 05_log.md初期化 → **`learnings-researcher`で過去知見検索（CRITICAL・必須）**
+B. **Blueprint（大規模タスクのみ）**: 多セッション・多PRの設計図 → blueprint.md生成 → 各WUをPhase 0-5.5で実行（詳細は`@context/workflow-rules.md`）
+0. 準備: メモリディレクトリ作成 → 05_log.md初期化 → **Blueprint WUのCold-Start Brief読込（あれば）** → **`learnings-researcher`で過去知見検索（CRITICAL・必須）**
 1. 調査: **`learnings-researcher`で追加検索** + **外部情報参照必須（deepwiki/WebSearch/Context7のうち最低1つ）** + 既存コード確認 → GO/NO-GO検証 → 05_log.mdに記録
 2. 計画: 30_plan.md作成 → **`deepening-plan`スキル実行（CRITICAL・3ファイル以上の変更時は必須）** → 専門サブエージェント並列レビュー（規模別ラウンド） → 05_log.mdに記録
 3. 実装: 各タスクを調査→計画→実行→レビュー。**非自明なタスクでは`learnings-researcher`を並列実行**。こまめにコミット → 05_log.mdに記録
