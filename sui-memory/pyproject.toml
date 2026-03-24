@@ -1,0 +1,18 @@
+[project]
+name = "sui-memory"
+version = "0.1.0"
+description = "SQLite-based long-term memory system for Claude Code"
+readme = "README.md"
+authors = [
+    { name = "Yoshiki Morii", email = "yoshiki.morii.001@layerx.co.jp" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "sentence-transformers>=5.0",
+    "sqlite-vec>=0.1.7",
+    "numpy>=2.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.0,<0.12.0"]
+build-backend = "uv_build"
