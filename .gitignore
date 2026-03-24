@@ -20,3 +20,11 @@
 !/rules/**
 !/templates/
 !/templates/**
+!/sui-memory/
+!/sui-memory/**
+# Exclude uv/Python artifacts in sui-memory
+/sui-memory/.venv/
+/sui-memory/uv.lock
+/sui-memory/__pycache__/
+/sui-memory/**/__pycache__/
+/sui-memory/*.egg-info/
