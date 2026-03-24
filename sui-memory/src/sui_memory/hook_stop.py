@@ -7,6 +7,7 @@ Reads JSON from stdin: {session_id, transcript_path, cwd, stop_hook_active, ...}
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -42,6 +43,19 @@ def main() -> None:
 
     if not session_id or not transcript_path:
         return
+
+    # Validate paths
+    transcript_path = os.path.realpath(transcript_path)
+    if not os.path.isfile(transcript_path):
+        return
+
+    # Ensure transcript is within expected Claude directory
+    claude_dir = os.path.realpath(str(Path.home() / ".claude"))
+    if not transcript_path.startswith(claude_dir):
+        return
+
+    if cwd:
+        cwd = os.path.realpath(cwd)
 
     # Resolve DB path: use project-local .local/memory.db if it exists,
     # otherwise fall back to global

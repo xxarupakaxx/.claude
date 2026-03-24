@@ -3,7 +3,22 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
+
+# Patterns for detecting secrets/credentials in text
+_SECRET_PATTERNS = [
+    re.compile(r"sk-[a-zA-Z0-9_-]{20,}"),           # OpenAI/Stripe API keys
+    re.compile(r"ghp_[a-zA-Z0-9]{36,}"),             # GitHub personal access tokens
+    re.compile(r"ghs_[a-zA-Z0-9]{36,}"),             # GitHub server tokens
+    re.compile(r"github_pat_[a-zA-Z0-9_]{22,}"),     # GitHub fine-grained PATs
+    re.compile(r"AKIA[0-9A-Z]{16}"),                  # AWS access key IDs
+    re.compile(r"xox[bpsa]-[a-zA-Z0-9-]{10,}"),      # Slack tokens
+    re.compile(r"Bearer\s+[a-zA-Z0-9._\-]{20,}"),    # Bearer tokens
+    re.compile(r"password\s*[=:]\s*\S{8,}", re.IGNORECASE),  # password assignments
+    re.compile(r"secret\s*[=:]\s*\S{8,}", re.IGNORECASE),    # secret assignments
+    re.compile(r"token\s*[=:]\s*['\"]?[a-zA-Z0-9._\-]{20,}"),  # token assignments
+]
 
 
 def parse_transcript(transcript_path: str | Path) -> list[dict]:
@@ -35,6 +50,13 @@ def parse_transcript(transcript_path: str | Path) -> list[dict]:
     return _pair_entries(entries)
 
 
+def _mask_secrets(text: str) -> str:
+    """Mask potential secrets/credentials in text."""
+    for pattern in _SECRET_PATTERNS:
+        text = pattern.sub("[REDACTED]", text)
+    return text
+
+
 def _pair_entries(entries: list[dict]) -> list[dict]:
     """Pair user and assistant entries into Q&A chunks."""
     chunks = []
@@ -61,7 +83,8 @@ def _pair_entries(entries: list[dict]) -> list[dict]:
             if assistant_text:
                 chunks.append({
                     **pending_user,
-                    "assistant_text": assistant_text,
+                    "user_text": _mask_secrets(pending_user["user_text"]),
+                    "assistant_text": _mask_secrets(assistant_text),
                 })
                 pending_user = None
 
