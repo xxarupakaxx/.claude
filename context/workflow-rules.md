@@ -39,6 +39,9 @@ Phase 0 ─→ Phase 1 ─→ Phase 2 ─→ Phase 3 ─→ Phase 4 ─→ Phase
 | `exploring-codebase` | スキル | 4並列エージェントでコードベース調査 | 1 |
 | `brainstorming` | スキル | 過去知見を含むアイデア探索 | 計画前 |
 | `/blueprint` | スキル | 多セッション・多PRの設計図（WU分割 + Cold-Start Brief + 依存DAG） | Phase 0の前（大規模時） |
+| `autonomous-loops` | スキル | 実行パターン集（Sequential / PR Loop / DAG） | 3（実行戦略） |
+| `subagent-driven-development` | スキル | タスクごとにサブエージェント + レビュー | 3（3+独立タスク時） |
+| `agent-teams` | スキル | 複数Claude Codeインスタンスで並列実行 | 3（10+ファイル時） |
 
 ### 複利ループ
 
@@ -177,12 +180,36 @@ AskUserQuestionで計画の承認を得てからPhase 3に進む。
 
 ## Phase 3: 実装
 
+### 実行戦略の選択
+
+タスクの規模・独立性に応じて実行戦略を選択する。`autonomous-loops`の3パターンが基盤。
+
+| 条件 | 戦略 | 使用スキル |
+|------|------|-----------|
+| タスクが少数・密結合 | **デフォルト（逐次）** | なし（手動で1タスクずつ） |
+| 3+個の独立タスク（1セッション内） | **サブエージェント駆動** | `subagent-driven-development` |
+| レビュー→修正→再レビューの繰り返し | **PRループ** | `autonomous-loops`（パターン2） |
+| Blueprint WUの依存順実行 | **DAGオーケストレーション** | `autonomous-loops`（パターン3）+ `agent-teams` |
+| 10+ファイルの同時変更 | **Agent Teams** | `agent-teams` |
+
+**判断フロー:**
+```
+タスク数が3+で独立？ → YES → subagent-driven-development
+  ↓ NO
+Blueprint WUの実行？ → YES → DAGオーケストレーション
+  ↓ NO
+10+ファイル同時変更？ → YES → agent-teams
+  ↓ NO
+デフォルト（逐次実行）
+```
+
+### 実行ルール
+
 - 各タスクを「調査→計画→実行→レビュー」で実行
 - **各タスクの調査ステップ**: 非自明なタスクでは`learnings-researcher`を並列実行し、そのタスク固有の過去知見（類似実装・既知の落とし穴）を確認。他の調査と並列可
 - **品質チェック（format/lint/typecheck）はコミット前に必ず実行**
 - **コミットはこまめに打つ**（1機能・1修正ごと）
 - 10個以上のタスク: 3-5タスクごとにユーザーに中間報告
-- Agent Teams: 10+ファイルの同時変更時に検討（`agent-teams`スキル参照）
 
 ## Phase 4: 品質確認
 
