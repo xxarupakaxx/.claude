@@ -52,7 +52,13 @@ CLAUDE.mdのPhase 0-5のフローを必ず守ること。スキルの内容はPh
 - メモリファイル形式: `context/memory-file-formats.md` をReadで参照
 - memories/検索: `rg "^summary:" .local/memories/ --no-ignore --hidden` でサマリー検索
 - issues/: `${MEMORY_DIR}/issues/`（codebase-reviewスキルで使用）
-- **Worktree対応**: memories/solutions/issues/memory/はSessionStart・EnterWorktree時にメインworktreeの`.local/`へ自動シンボリックリンク（HANDOVER.md・plans/はローカル維持）
+- **Worktree対応**: memories/solutions/issues/memory/memory.dbはSessionStart・EnterWorktree時にメインworktreeの`.local/`へ自動シンボリックリンク（HANDOVER.md・plans/はローカル維持）
+- **sui-memory（SQLite長期記憶）**:
+  - DB: `${MEMORY_DIR}/memory.db`（自動作成、WALモード）
+  - StopHookでセッションのQ&Aチャンクを自動保存+ベクトル化（Ruri v3-30m）
+  - SessionStartHookで過去メモリをFTS5検索→コンテキスト自動注入
+  - memories/solutions/のMarkdownは自動的にSQLiteにインデックス同期
+  - `learnings-researcher`はgrep検索に加えSQLite検索も併用
 
 ## ユーザーへの質問
 
