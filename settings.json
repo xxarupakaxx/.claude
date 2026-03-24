@@ -145,6 +145,17 @@
             "statusMessage": "Checking worktree knowledge links..."
           }
         ]
+      },
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -m uv run --project ~/.claude/sui-memory python -m sui_memory.hook_session_start",
+            "timeout": 30,
+            "statusMessage": "Loading past memories..."
+          }
+        ]
       }
     ],
     "PostToolUse": [
@@ -243,6 +254,16 @@
             "type": "command",
             "command": "bash ~/.claude/hooks/stop-console-log-audit.sh",
             "timeout": 10
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -m uv run --project ~/.claude/sui-memory python -m sui_memory.hook_stop",
+            "timeout": 120,
+            "statusMessage": "Saving session memory..."
           }
         ]
       }

@@ -52,8 +52,25 @@ for dir in memories solutions issues memory; do
   LINKED=$((LINKED + 1))
 done
 
+# memory.db ファイルのシンボリックリンク（SQLiteメモリDB共有）
+DB_TARGET="$WT_LOCAL/memory.db"
+DB_SOURCE="$MAIN_LOCAL/memory.db"
+if [ ! -L "$DB_TARGET" ] && [ ! -f "$DB_TARGET" ]; then
+  # memory.dbが存在しなくてもリンクを作成（StopHookが作成する）
+  ln -s "$DB_SOURCE" "$DB_TARGET"
+  LINKED=$((LINKED + 1))
+elif [ -f "$DB_TARGET" ] && [ ! -L "$DB_TARGET" ]; then
+  # worktree側に実ファイルがある場合はメインにコピーしてからリンク
+  if [ ! -f "$DB_SOURCE" ]; then
+    cp "$DB_TARGET" "$DB_SOURCE"
+  fi
+  rm -f "$DB_TARGET" "${DB_TARGET}-wal" "${DB_TARGET}-shm"
+  ln -s "$DB_SOURCE" "$DB_TARGET"
+  LINKED=$((LINKED + 1))
+fi
+
 if [ "$LINKED" -gt 0 ]; then
-  echo "Worktree knowledge linked: $LINKED dirs -> $MAIN_LOCAL/"
+  echo "Worktree knowledge linked: $LINKED items -> $MAIN_LOCAL/"
 fi
 
 exit 0

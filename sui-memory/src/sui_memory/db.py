@@ -46,6 +46,8 @@ CREATE TABLE IF NOT EXISTS chunks (
 );
 
 CREATE INDEX IF NOT EXISTS idx_chunks_session_id ON chunks(session_id);
+CREATE INDEX IF NOT EXISTS idx_chunks_project ON chunks(project);
+CREATE INDEX IF NOT EXISTS idx_chunks_created_at ON chunks(created_at);
 
 -- FTS5 full-text search index for chunks (trigram tokenizer for Japanese)
 CREATE VIRTUAL TABLE IF NOT EXISTS chunks_fts USING fts5(
@@ -134,6 +136,14 @@ def get_connection(db_path: Path | str = DEFAULT_DB_PATH) -> sqlite3.Connection:
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA journal_mode=WAL")
     conn.execute("PRAGMA foreign_keys=ON")
+    conn.execute("PRAGMA busy_timeout=5000")
+
+    # Set restrictive file permissions (owner read/write only)
+    import os
+    try:
+        os.chmod(str(db_path), 0o600)
+    except OSError:
+        pass
 
     conn.enable_load_extension(True)
     sqlite_vec.load(conn)
