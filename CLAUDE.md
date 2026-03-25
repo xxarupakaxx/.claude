@@ -8,6 +8,7 @@ CLAUDE.mdのPhase 0-5のフローを必ず守ること。スキルの内容はPh
 
 ## 作業フロー
 
+**CRITICAL: タスクの規模・種類に関わらず、必ずPhase 0（準備）から順に開始すること。「簡単なデータ更新」「設定変更のみ」等の主観的判断でPhaseをスキップしてはならない。**
 **IMPORTANT**: 各Phaseで05_log.mdに実施内容を逐次記録すること（完了後ではなく、作業中に）
 
 B. **Blueprint（大規模タスクのみ）**: 多セッション・多PRの設計図 → blueprint.md生成 → 各WUをPhase 0-5.5で実行（詳細は`@context/workflow-rules.md`）
@@ -88,6 +89,7 @@ B. **Blueprint（大規模タスクのみ）**: 多セッション・多PRの設
 - 既存テストファイルにテストを追加する際、既存テストを削除・上書きすること
 - **`learnings-researcher`/`deepening-plan`/外部情報参照をスキップすること（上記Phase 0-2の必須項目）**
 - スキル固有のPhase構造に引っ張られてCLAUDE.mdのPhase 0-5（特にPhase 2: 計画）をスキップすること
+- タスクが「簡単」「データ更新のみ」と主観的に判断してPhase 0-2をスキップすること（規模に関わらず必須）
 
 ## GitHub CLI
 
