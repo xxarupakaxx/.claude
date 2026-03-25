@@ -21,6 +21,7 @@ def sync_knowledge(conn: sqlite3.Connection, memory_dir: Path) -> None:
 
     Only processes files that have been modified since last sync (mtime-based).
     """
+    memory_dir = memory_dir.resolve()
     memories_dir = memory_dir / "memories"
     solutions_dir = memory_dir / "solutions"
 
@@ -28,11 +29,11 @@ def sync_knowledge(conn: sqlite3.Connection, memory_dir: Path) -> None:
 
     if memories_dir.is_dir():
         for md_file in memories_dir.rglob("*.md"):
-            all_files.append(("memory", md_file))
+            all_files.append(("memory", md_file.resolve()))
 
     if solutions_dir.is_dir():
         for md_file in solutions_dir.rglob("*.md"):
-            all_files.append(("solution", md_file))
+            all_files.append(("solution", md_file.resolve()))
 
     if not all_files:
         return

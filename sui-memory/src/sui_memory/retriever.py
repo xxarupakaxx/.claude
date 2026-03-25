@@ -6,6 +6,7 @@ import sqlite3
 import time
 from dataclasses import dataclass
 
+from .db import increment_knowledge_ref
 from .embedder import encode_query, to_blob
 
 
@@ -66,6 +67,15 @@ def search(
         result = results[k]
         result.score = scores[k]
         final.append(result)
+
+    # Increment ref_count for returned knowledge results
+    for result in final:
+        if result.source == "knowledge":
+            try:
+                increment_knowledge_ref(conn, result.id)
+            except Exception:
+                pass
+
     return final
 
 
