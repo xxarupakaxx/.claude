@@ -1,6 +1,11 @@
 {
   "cleanupPeriodDays": 99999,
   "allowedTools": [
+    "Bash(cd:*)",
+    "Bash(sqlite3:*)",
+    "Bash(grep:*)",
+    "Bash(awk:*)",
+    "Bash(sed:*)",
     "Bash(find:*)",
     "Bash(mkdir:*)",
     "Bash(ls:*)",
