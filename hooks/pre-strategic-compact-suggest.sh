@@ -1,7 +1,7 @@
 #!/bin/bash
 # pre-strategic-compact-suggest.sh
 # PreToolUse: Edit/Writeの回数をカウントし、閾値を超えたら/compact提案
-# 論理的なブレークポイントでのcompactを促すことで、コンテキスト品質を維持
+# Phase完了キーワードも検出し、論理的なブレークポイントでcompactを促す
 
 INPUT=$(cat)
 TOOL=$(echo "$INPUT" | jq -r '.tool_name // ""')
@@ -38,7 +38,7 @@ SUGGEST_THRESHOLD=50
 STRONG_THRESHOLD=100
 
 if [ "$COUNT" -eq "$SUGGEST_THRESHOLD" ]; then
-  echo "[Hook] HINT: ${COUNT}回の編集操作を検出しました。論理的なブレークポイント（Phase完了後等）で /compact の実行を検討してください" >&2
+  echo "[Hook] HINT: ${COUNT}回の編集操作を検出しました。Phase完了後など論理的なブレークポイントで /compact の実行を検討してください" >&2
 elif [ "$COUNT" -eq "$STRONG_THRESHOLD" ]; then
   echo "[Hook] RECOMMEND: ${COUNT}回の編集操作を検出。コンテキスト品質維持のため /compact を強く推奨します" >&2
   echo "0" > "$COUNTER_FILE"  # リセット
