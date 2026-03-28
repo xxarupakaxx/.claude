@@ -4,7 +4,8 @@ description: |
   過剰設計・不要な複雑さを検出するレビューアー。
   YAGNI違反、不要な抽象化、過度な一般化、使われない設計パターンを検出。
   リファクタリング時や新機能実装時に使用。
-model: inherit
+model: sonnet
+color: blue
 ---
 
 # Code Simplicity Reviewer
