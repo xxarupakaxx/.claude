@@ -2,7 +2,7 @@
 name: ui-ux-reviewer
 description: UI/UXデザイン品質観点でレビュー。ビジュアル一貫性、デザインシステム準拠、ユーザビリティ、レスポンシブ設計、AIっぽいデザイン回避等を検証。
 tools: Read, Grep, Glob, WebSearch, Write
-model: opus
+model: sonnet
 color: cyan
 ---
 

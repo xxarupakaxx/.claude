@@ -3,7 +3,7 @@ name: prd-reviewer
 description: PRD（プロダクト要件定義書）との乖離を検出。未実装機能、過剰実装、振る舞いの乖離、受入条件の未充足を検出。
 tools: Read, Grep, Glob, Write
 model: opus
-color: magenta
+color: purple
 ---
 
 # PRD Reviewer

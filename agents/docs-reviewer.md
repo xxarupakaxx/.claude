@@ -2,7 +2,7 @@
 name: docs-reviewer
 description: ドキュメント観点でレビュー。CLAUDE.md、README.md、API仕様の不足・陳腐化、ドキュメント間の矛盾等を検出。
 tools: Read, Grep, Glob, Write
-model: opus
+model: sonnet
 color: cyan
 ---
 

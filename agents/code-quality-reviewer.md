@@ -2,7 +2,7 @@
 name: code-quality-reviewer
 description: コード品質観点でレビュー。命名の不統一、重複コード、過度に長い関数、ネストの深さ、不要なコード等を検出。
 tools: Read, Grep, Glob, Write
-model: opus
+model: sonnet
 color: blue
 ---
 
