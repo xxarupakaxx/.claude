@@ -260,6 +260,9 @@ PJ CLAUDE.md記載のコマンドで lint/format/typecheck/test を実行。
 ### Sprint Contract検証（Phase 2.5でcheckpoint.mdが作成されている場合）
 `/verify`を実行し、Phase 2.5で定義した合格基準に対して自動検証。全基準PASSまで修正→再検証を繰り返す。
 
+### Playwright E2Eスモークテスト（UI変更を含む場合）
+Tier 2レビューアー選択ガイドの「Playwright E2Eスモークテスト」セクションに従い実施。
+
 ### サブエージェント並列レビュー（規模別ラウンド制）
 
 Phase 2と同じ規模別ラウンド数を適用（小: 1、中: 2、大: 3）。早期完了条件も同様。
