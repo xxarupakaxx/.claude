@@ -2,7 +2,7 @@
 name: perf-reviewer
 description: パフォーマンス観点でコードをレビュー。N+1クエリ、不要な再レンダリング、メモリリーク、非効率なアルゴリズム等を検出。
 tools: Read, Grep, Glob, WebSearch, Write
-model: opus
+model: sonnet
 color: yellow
 ---
 

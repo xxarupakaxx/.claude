@@ -2,7 +2,7 @@
 name: compliance-reviewer
 description: コンプライアンス・規制観点でレビュー。個人情報保護(GDPR等)、監査ログ、OSSライセンス互換性、データ保持ポリシー等を検証。
 tools: Read, Grep, Glob, WebSearch, Write
-model: opus
+model: sonnet
 color: red
 ---
 

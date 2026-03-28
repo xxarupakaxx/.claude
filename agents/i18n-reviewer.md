@@ -2,7 +2,7 @@
 name: i18n-reviewer
 description: 国際化(i18n)・ローカライゼーション(l10n)観点でレビュー。ハードコード文字列、ロケール依存処理、RTL未対応、翻訳キー管理の問題等を検出。
 tools: Read, Grep, Glob, WebSearch, Write
-model: opus
+model: sonnet
 color: green
 ---
 
