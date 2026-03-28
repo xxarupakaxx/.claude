@@ -2,7 +2,7 @@
 name: observability-reviewer
 description: 可観測性観点でレビュー。ログ・メトリクス・トレースの3本柱を検証。構造化ログ欠如、ログレベル誤用、トレーシング不足、機密情報のログ出力等を検出。
 tools: Read, Grep, Glob, WebSearch, Write
-model: opus
+model: sonnet
 color: gray
 ---
 

@@ -2,7 +2,7 @@
 name: devops-reviewer
 description: DevOps・インフラ観点でレビュー。Dockerfileベストプラクティス、CI/CD設定、環境変数管理、IaCセキュリティ、デプロイ設定等を検証。
 tools: Read, Grep, Glob, WebSearch, Write
-model: opus
+model: sonnet
 color: blue
 ---
 

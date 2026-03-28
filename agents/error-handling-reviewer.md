@@ -2,7 +2,7 @@
 name: error-handling-reviewer
 description: エラーハンドリング・耐障害性観点でレビュー。汎用catch、エラー握りつぶし、リトライ/サーキットブレーカー欠如、リソースリーク等を検出。
 tools: Read, Grep, Glob, WebSearch, Write
-model: opus
+model: sonnet
 color: orange
 ---
 

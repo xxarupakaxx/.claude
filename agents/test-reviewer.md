@@ -2,7 +2,7 @@
 name: test-reviewer
 description: テスト観点でレビュー。単体テスト・統合テスト・E2Eテストの不足、エッジケースのカバレッジ不足等を検出。
 tools: Read, Grep, Glob, WebSearch, Write
-model: opus
+model: sonnet
 color: green
 ---
 

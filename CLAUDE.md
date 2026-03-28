@@ -8,15 +8,17 @@ CLAUDE.mdのPhase 0-5のフローを必ず守ること。スキルの内容はPh
 
 ## 作業フロー
 
-**CRITICAL: タスクの規模・種類に関わらず、必ずPhase 0（準備）から順に開始すること。「簡単なデータ更新」「設定変更のみ」等の主観的判断でPhaseをスキップしてはならない。**
-**IMPORTANT**: 各Phaseで05_log.mdに実施内容を逐次記録すること（完了後ではなく、作業中に）
+**CRITICAL: タス��の規模・種類に関わらず、必ずPhase 0（準備）から順に開始すること。「簡単��データ更新」「設定変更のみ」等の主観的判断でPhaseをスキップし��はならない。**
+**ただし、Fast Track条件（1-2ファイル・50行以下・既存パターン踏襲・セキュリティ無関係）を全て満たす場合は、ユーザー確認の上でFast Trackルートを適用可（詳細: `@context/workflow-rules.md`）**
+**IMPORTANT**: 各Phaseで05_log.mdに実施内容を逐次��録すること（完了後ではなく、作業中に）
 
 B. **Blueprint（大規模タスクのみ）**: 多セッション・多PRの設計図 → blueprint.md生成 → 各WUをPhase 0-5.5で実行（詳細は`@context/workflow-rules.md`）
 0. 準備: メモリディレクトリ作成 → 05_log.md初期化 → **Blueprint WUのCold-Start Brief読込（あれば）** → **`learnings-researcher`で過去知見検索（CRITICAL・必須）**
 1. 調査: **`learnings-researcher`で追加検索** + **外部情報参照必須（deepwiki/WebSearch/Context7のうち最低1つ）** + 既存コード確認 → GO/NO-GO検証 → 05_log.mdに記録
 2. 計画: 30_plan.md作成 → **`deepening-plan`スキル実行（CRITICAL・3ファイル以上の変更時は必須）** → 専門サブエージェント並列レビュー（規模別ラウンド） → 05_log.mdに記録
+2.5. Acceptance Criteria: Sprint Contract定義 → `/checkpoint`でcheckpoint.mdに合格基準を記録（自明なタスクはスキップ可）
 3. 実装: 各タスクを調査→計画→実行→レビュー。**非自明なタスクでは`learnings-researcher`を並列実行**。こまめにコミット → 05_log.mdに記録
-4. 品質確認: lint/format/typecheck/test + 専門サブエージェント並列レビュー（規模別ラウンド）
+4. 品質確認: lint/format/typecheck/test + **Sprint Contract検証（`/verify`）** + 専門サブエージェント並列レビュー（規模別ラウンド） + **UI変更時はPlaywright E2Eスモークテスト**
 5. 完了報告 + **ローカル検証ガイド生成（UI/API/DB変更時は`/generate-verification-guide`実行）** + **状態図生成（ワークフロー/状態管理/外部連携を含む場合は`/generate-state-diagram`実行）**
 5.5. Compound: **`compounding-knowledge`スキルで知見を構造化保存（新しい問題解決・パターン発見時は必須）**
 

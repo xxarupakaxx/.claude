@@ -2,7 +2,7 @@
 name: a11y-reviewer
 description: アクセシビリティ観点でレビュー。WCAG準拠、ARIA属性、キーボードナビゲーション、色コントラスト、セマンティックHTML等を検証。
 tools: Read, Grep, Glob, WebSearch, Write
-model: opus
+model: sonnet
 color: pink
 ---
 
