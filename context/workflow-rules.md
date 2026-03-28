@@ -79,6 +79,26 @@ Phase 0 ─→ Phase 1 ─→ Phase 2 ─→ Phase 3 ─→ Phase 4 ─→ Phase
 - 1セッションで完了する通常タスク → 通常のPhase 0-5.5のみ
 - `/large-task`で十分な場合（セッション分割のみ必要で、依存DAGやCold-Start Briefが不要）
 
+## Fast Track（小規模タスク向け軽量ルート）
+
+**背景**: Anthropic研究 "Harness Design for Long-Running Apps" の知見: 「ハーネスの各部品はモデルの限界への仮定をエンコードしている。モデル改善に伴い不要なスキャフォールディングを削除すべき」
+
+**適用条件**（全て満たす場合のみ）:
+- 変更ファイル数が1-2
+- 変更行数が50行以下
+- 既存パターンの踏襲（新規アーキテクチャ判断なし）
+- セキュリティ・認証に関わらない
+
+**Fast Trackフロー**:
+1. **Phase 0**: メモリディレクトリ作成 + 05_log.md初期化（learnings-researcherはスキップ可）
+2. **Phase 1**: 対象ファイル読み取り + 影響確認（外部情報参照はスキップ可）
+3. **Phase 2**: 計画を05_log.mdに簡潔に記録（30_plan.md作成・deepening-plan・サブエージェントレビューはスキップ可）
+4. **Phase 3**: 実装 + コミット
+5. **Phase 4**: lint/format/typecheck + **コア1レビューアー**（変更内容に最も関連するもの1つ）で1ラウンド
+6. **Phase 5**: 簡潔な完了報告
+
+**IMPORTANT**: Fast Track適用はユーザーへの確認後に行う。判断に迷う場合は通常フロー。
+
 ## Phase 0: 準備
 
 1. PJ CLAUDE.mdの`MEMORY_DIR`確認（未定義なら`.local/`）
@@ -180,7 +200,24 @@ Taskツールで並列起動: `arch-reviewer`, `security-reviewer`, `perf-review
 
 ### User Validation Gate
 
-AskUserQuestionで計画の承認を得てからPhase 3に進む。
+AskUserQuestionで計画の承認を得てからPhase 2.5に進む。
+
+## Phase 2.5: Acceptance Criteria定義（Sprint Contract）
+
+**背景**: Anthropic研究 "Harness Design for Long-Running Apps" により、実装前にテスト可能な成功基準を定義することで品質が大幅に向上することが判明。
+
+計画承認後、実装開始前に以下を実施:
+
+1. **合格基準リストの作成**: 各タスクに対して具体的・テスト可能な完了条件を定義
+   - 「〜が動作する」ではなく「〜の入力に対して〜が返される」レベルの具体性
+   - 機能要件 + エッジケース + エラーケースを含む
+2. **`/checkpoint` でcheckpoint.mdに記録**: Phase 4の`/verify`で自動検証に使用
+3. **基準の規模目安**:
+   - 小規模（1-3ファイル）: 5-10個の基準
+   - 中規模（4-9ファイル）: 10-20個の基準
+   - 大規模（10+ファイル）: 20-30個の基準
+
+**スキップ条件**: typo修正、設定変更のみ等の自明なタスク
 
 ## Phase 3: 実装
 
@@ -219,6 +256,9 @@ Blueprint WUの実行？ → YES → DAGオーケストレーション
 
 ### 自動チェック
 PJ CLAUDE.md記載のコマンドで lint/format/typecheck/test を実行。
+
+### Sprint Contract検証（Phase 2.5でcheckpoint.mdが作成されている場合）
+`/verify`を実行し、Phase 2.5で定義した合格基準に対して自動検証。全基準PASSまで修正→再検証を繰り返す。
 
 ### サブエージェント並列レビュー（規模別ラウンド制）
 
@@ -307,10 +347,23 @@ Phase 5完了後に実施。`compounding-knowledge`スキルを使用。
 | テストコードの追加・変更 | `test-reviewer` |
 | コード品質・リファクタリング | `code-quality-reviewer` |
 | 過剰設計・不要な複雑さの検出 | `code-simplicity-reviewer` |
-| フロントエンド・UIコンポーネント | `a11y-reviewer` + `ui-ux-reviewer` |
+| フロントエンド・UIコンポーネント | `a11y-reviewer` + `ui-ux-reviewer` + **Playwright E2Eスモークテスト**（下記参照） |
 | 非同期処理・並行処理・ワーカー | `concurrency-reviewer` |
 | APIエンドポイントの追加・変更 | `api-contract-reviewer` |
 | ドキュメント・CLAUDE.md変更 | `docs-reviewer` |
+
+### Playwright E2Eスモークテスト（UI変更時）
+
+UI/フロントエンド変更を含むPhase 4で、コードレビューに加えて実環境テストを実施:
+
+1. `playwright-skill` を使用してdev serverに対して操作
+2. 変更した画面のスクリーンショット取得・目視確認
+3. Sprint Contract（Phase 2.5）で定義した**UI関連の合格基準**を実際に操作して検証
+4. 結果を05_log.mdに記録
+
+**スキップ条件**: UIに影響しないバックエンドのみの変更、CSS微調整
+
+**背景**: Anthropic研究では、エバリュエーターがPlaywrightで実アプリに触って検証することで品質が大幅に向上した。
 
 ### Tier 3: 特定条件で追加
 
