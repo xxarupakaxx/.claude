@@ -23,6 +23,56 @@ playwright-cli screenshot
 playwright-cli close
 ```
 
+## ブラウザ表示モード
+
+デフォルトはヘッドレス（画面なし）。ログイン画面の操作確認やデバッグには `--headed` を使用:
+
+```bash
+# ブラウザウィンドウを表示して開く
+playwright-cli open https://app.example.com --headed
+
+# 永続プロファイル + headed（ログイン状態をディスクに保持）
+playwright-cli open https://app.example.com --headed --persistent
+```
+
+## ログイン・認証フロー
+
+### 基本パターン: CLIでログイン → 状態保存 → 再利用
+
+```bash
+# 1. ログインページを開く（headed で目視確認したい場合）
+playwright-cli open https://app.example.com/login --headed
+
+# 2. snapshotで要素IDを確認してフォーム入力
+playwright-cli snapshot
+playwright-cli fill e1 "user@example.com"
+playwright-cli fill e2 "password"
+playwright-cli click e3  # ログインボタン
+
+# 3. 認証状態を保存
+playwright-cli state-save auth.json
+
+# 4. 以降のセッションで復元（headlessでもOK）
+playwright-cli open https://app.example.com
+playwright-cli state-load auth.json
+```
+
+### 永続プロファイルパターン（毎回ログイン不要）
+
+```bash
+# 初回: headed + persistent でログイン操作
+playwright-cli open https://app.example.com/login --headed --persistent
+
+# 次回以降: persistent だけで認証状態が維持される
+playwright-cli open https://app.example.com --persistent
+```
+
+### 注意事項
+
+- 認証状態ファイル（auth.json等）はコミットしない（`.gitignore` に追加）
+- 機密情報は環境変数を使用
+- 自動化完了後は状態ファイルを削除
+
 ## ファイル出力先ルール（IMPORTANT）
 
 **タスク作業中（メモリディレクトリが存在する場合）**、スクリーンショット・PDF・ビデオ・トレース等のファイル出力先は、現在のタスクのメモリディレクトリに保存する。
