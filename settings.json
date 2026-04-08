@@ -308,5 +308,7 @@
     "Bash(jq:*)",
     "Bash(rg:*)",
     "Bash(afplay:*)"
-  ]
+  ],
+  "effortLevel": "high",
+  "showThinkingSummaries": true
 }
