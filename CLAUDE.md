@@ -56,7 +56,8 @@ B. **Blueprint（大規模タスクのみ）**: 多セッション・多PRの設
 - メモリファイル形式: `context/memory-file-formats.md` をReadで参照
 - memories/検索: `rg "^summary:" .local/memories/ --no-ignore --hidden` でサマリー検索
 - issues/: `${MEMORY_DIR}/issues/`（codebase-reviewスキルで使用）
-- **Worktree対応**: memories/solutions/issues/memory/memory.dbはSessionStart・EnterWorktree時にメインworktreeの`.local/`へ自動シンボリックリンク（HANDOVER.md・plans/はローカル維持）
+- **Worktree対応**: memories/solutions/issues/memory/memory.dbはSessionStart・EnterWorktree時にメインworktreeの`.local/`へ自動シンボリックリンク（HANDOVER.md・plans/はローカル維持）。リポジトリルート`.local/`とPJ CLAUDE.mdの`MEMORY_DIR`配下の`.local/`の両方が対象
+- **IMPORTANT（Worktree時のmemory.db参照）**: worktree環境で`${MEMORY_DIR}/memory.db`の知見が不十分な場合、メインworktreeの同パスも確認すること（シンボリックリンク未作成の可能性あり）
 - **sui-memory（SQLite長期記憶）**:
   - DB: `${MEMORY_DIR}/memory.db`（自動作成、WALモード）
   - StopHookでセッションのQ&Aチャンクを自動保存+ベクトル化（Ruri v3-30m）
