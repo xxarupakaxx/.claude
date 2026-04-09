@@ -4,7 +4,10 @@
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
     "CLAUDE_CODE_NEW_INIT": "1",
-    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "65"
+    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "65",
+    "BARK_DEVICE_KEY": "b517e812bd9d4ec75fe6c5683564a1548013ea2421300d6db2a9a703f284adc4",
+    "BARK_ENCRYPT_KEY": "349d5256bcf5e49e3997891e35378ac3",
+    "BARK_ENCRYPT_IV": "92719143e89baa31"
   },
   "attribution": {
     "commit": "",
@@ -230,6 +233,17 @@
         ]
       }
     ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt|idle_prompt|elicitation_dialog",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/bark-notify.sh"
+          }
+        ]
+      }
+    ],
     "SubagentStop": [
       {
         "hooks": [
@@ -247,6 +261,7 @@
   },
   "language": "japanese Explanatory learning",
   "plansDirectory": "./.local/plans",
+  "voiceEnabled": false,
   "allowedTools": [
     "Bash(cd:*)",
     "Bash(sqlite3:*)",
