@@ -260,8 +260,10 @@
     "command": "bash ~/.claude/statusline-command.sh"
   },
   "language": "japanese Explanatory learning",
+  "effortLevel": "high",
   "plansDirectory": "./.local/plans",
   "voiceEnabled": false,
+  "showThinkingSummaries": true,
   "allowedTools": [
     "Bash(cd:*)",
     "Bash(sqlite3:*)",
@@ -323,7 +325,5 @@
     "Bash(jq:*)",
     "Bash(rg:*)",
     "Bash(afplay:*)"
-  ],
-  "effortLevel": "high",
-  "showThinkingSummaries": true
+  ]
 }

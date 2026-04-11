@@ -64,6 +64,67 @@ git log <BASE_BRANCH>..HEAD --oneline
 | データフロー | 外部システム連携がある場合 | flowchart LR |
 | シーケンス | 複数システム間の時系列やり取り | sequenceDiagram |
 
+### Mermaid構文の注意事項（CRITICAL）
+
+**stateDiagram-v2で日本語state名を使う場合、自己参照サイクルエラーを防ぐため以下を厳守する。**
+
+#### ルール1: state名は英語IDで定義し、ラベルで日本語を表示する
+
+```mermaid
+%% ✅ 正しい: 英語ID + 日本語ラベル + noteはID参照
+state "トリガー" as trigger
+note right of trigger
+    説明テキスト
+end note
+
+%% ❌ NG: 日本語state名をそのままnoteターゲットに使う → サイクルエラー
+state トリガー {
+    note right of トリガー
+        説明テキスト
+    end note
+}
+```
+
+#### ルール2: stateブロック内でそのstate自身の名前をnoteターゲットにしない
+
+```mermaid
+%% ✅ 正しい: ブロック外でnoteを付ける
+state "評価基準取得" as criteria_fetch {
+    [*] --> dept_search
+}
+note right of criteria_fetch
+    説明テキスト
+end note
+
+%% ✅ 正しい: ブロック内の子stateにnoteを付ける
+state "評価基準取得" as criteria_fetch {
+    state "部署基準検索" as dept_search
+    note right of dept_search
+        子stateへの説明
+    end note
+}
+
+%% ❌ NG: ブロック内で親stateと同名のターゲット → サイクルエラー
+state 基準取得 {
+    note right of 基準取得
+        説明テキスト
+    end note
+}
+```
+
+#### ルール3: flowchartではノードIDに日本語を使わず角括弧内に記載する
+
+```mermaid
+%% ✅ 正しい
+flowchart LR
+    A[コール詳細ページ]
+    PG[(call_evaluations テーブル)]
+
+%% ❌ NG: <br>タグとstyle指定は環境依存で崩れる場合がある
+    DB[(call_evaluations<br>テーブル)]
+    style DB stroke-dasharray: 5 5
+```
+
 ### Step 4: 各図の生成
 
 #### 全体フロー（必須）
