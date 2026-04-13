@@ -1,15 +1,17 @@
 ---
 name: generate-state-diagram
-description: ブランチの変更内容からMermaid状態図・処理フロー図を自動生成する
+description: ブランチの変更内容からMermaid状態図・処理フロー図・ドメインモデル図を自動生成する
 triggers:
   - "状態図生成"
   - "state diagram"
   - "処理フロー図"
   - "フロー図"
+  - "ドメインモデル図"
+  - "domain model"
 invocation: user
 ---
 
-# ブランチ状態図・処理フロー図生成スキル
+# ブランチ状態図・処理フロー図・ドメインモデル図生成スキル
 
 ## 概要
 
@@ -51,6 +53,8 @@ git log <BASE_BRANCH>..HEAD --oneline
 - UIの状態管理（フィルタ, ページネーション, 表示切替）
 - 条件分岐・エラーハンドリング
 - ファイル間の呼び出し関係
+- ドメインエンティティ（構造体/モデル、集約ルート、値オブジェクト）
+- エンティティ間の関連（1:N, N:M, 所有関係、参照関係）
 
 ### Step 3: 図の構成を決定
 
@@ -63,6 +67,7 @@ git log <BASE_BRANCH>..HEAD --oneline
 | 条件分岐 | 重要な分岐ロジックがある場合 | stateDiagram-v2 (choice) |
 | データフロー | 外部システム連携がある場合 | flowchart LR |
 | シーケンス | 複数システム間の時系列やり取り | sequenceDiagram |
+| ドメインモデル | エンティティ/集約の関連がある場合 | classDiagram or erDiagram |
 
 ### Mermaid構文の注意事項（CRITICAL）
 
@@ -125,6 +130,29 @@ flowchart LR
     style DB stroke-dasharray: 5 5
 ```
 
+#### ルール4: classDiagram / erDiagramでは関連の方向とカーディナリティを明示する
+
+```mermaid
+%% ✅ 正しい: classDiagramでドメインモデルを表現
+classDiagram
+    class Invoice {
+        +String id
+        +Date issueDate
+        +InvoiceStatus status
+    }
+    class Journal {
+        +String id
+        +Amount debit
+        +Amount credit
+    }
+    Invoice "1" --> "*" Journal : 仕訳を持つ
+
+%% ✅ 正しい: erDiagramでテーブル関連を表現
+erDiagram
+    INVOICES ||--o{ JOURNALS : has
+    JOURNALS }o--|| ACCOUNT_ITEMS : references
+```
+
 ### Step 4: 各図の生成
 
 #### 全体フロー（必須）
@@ -148,6 +176,13 @@ flowchart LR
 - subgraphで各システムをグループ化
 - データの流れを矢印で表現
 - 点線矢印で間接的な参照を表現
+
+#### ドメインモデル（エンティティ/集約の関連がある場合）
+- エンティティ（構造体/クラス）を主要なフィールドと共に表示
+- 集約ルート・値オブジェクトの区別をnoteで補足
+- エンティティ間の関連（1:1, 1:N, N:M）を矢印とカーディナリティで表現
+- **重要**: 各エンティティの「ビジネス上の役割」をnoteで補足（テーブル名だけでなく「何を表現しているか」）
+- DDDの用語（集約、値オブジェクト等）を使う場合は用語集で定義
 
 ### Step 5: 補足情報の追加
 
@@ -200,6 +235,12 @@ flowchart LR
 ## 3. 状態遷移（該当する場合）
 
 （Mermaid stateDiagram-v2。各状態の意味とユーザーへの見え方をnoteで補足）
+
+---
+
+## N-1. ドメインモデル（該当する場合）
+
+（Mermaid classDiagram or erDiagram。エンティティの役割・関連の意味をnoteで補足）
 
 ---
 
