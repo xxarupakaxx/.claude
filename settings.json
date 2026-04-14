@@ -164,6 +164,16 @@
             "statusMessage": "Linking worktree knowledge..."
           }
         ]
+      },
+      {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/post-skill-usage-track.sh",
+            "timeout": 3
+          }
+        ]
       }
     ],
     "Stop": [
