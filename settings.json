@@ -273,7 +273,6 @@
   "effortLevel": "high",
   "plansDirectory": "./.local/plans",
   "voiceEnabled": false,
-  "showThinkingSummaries": true,
   "allowedTools": [
     "Bash(cd:*)",
     "Bash(sqlite3:*)",
