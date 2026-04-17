@@ -11,7 +11,7 @@ if [ -z "$SKILL_NAME" ]; then
 fi
 
 USAGE_FILE="$HOME/.claude/skill-usage.jsonl"
-
+O
 jq -n \
   --arg skill "$SKILL_NAME" \
   --arg ts "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" \
