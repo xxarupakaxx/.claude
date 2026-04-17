@@ -7,13 +7,14 @@
     "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "65",
     "BARK_DEVICE_KEY": "b517e812bd9d4ec75fe6c5683564a1548013ea2421300d6db2a9a703f284adc4",
     "BARK_ENCRYPT_KEY": "349d5256bcf5e49e3997891e35378ac3",
-    "BARK_ENCRYPT_IV": "92719143e89baa31"
+    "BARK_ENCRYPT_IV": "92719143e89baa31",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
   },
   "attribution": {
     "commit": "",
     "pr": ""
   },
-  "model": "opus[1m]",
+  "model": "claude-opus-4-7",
   "hooks": {
     "PreToolUse": [
       {
