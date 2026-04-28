@@ -271,7 +271,7 @@
     "command": "bash ~/.claude/statusline-command.sh"
   },
   "language": "japanese Explanatory learning",
-  "effortLevel": "high",
+  "effortLevel": "max",
   "plansDirectory": "./.local/plans",
   "skipDangerousModePermissionPrompt": true,
   "voiceEnabled": false,
