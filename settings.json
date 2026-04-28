@@ -273,6 +273,7 @@
   "language": "japanese Explanatory learning",
   "effortLevel": "high",
   "plansDirectory": "./.local/plans",
+  "skipDangerousModePermissionPrompt": true,
   "voiceEnabled": false,
   "allowedTools": [
     "Bash(cd:*)",
@@ -335,5 +336,6 @@
     "Bash(jq:*)",
     "Bash(rg:*)",
     "Bash(afplay:*)"
-  ]
+  ],
+  "theme": "light"
 }
