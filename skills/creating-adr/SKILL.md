@@ -98,10 +98,19 @@ description: ADR（Architecture Decision Record）を作成・更新する。技
 
 ### Step 4: 配置先の決定
 
-ADRファイルの配置先を確認:
+#### 計画段階（30_plan.md と同セッション・実装着手前）の場合
+- `${MEMORY_DIR}/memory/<task>/adr/NNNN-<タイトル>.md` を優先
+- タスクメモリ内に複数 ADR を作成し、30_plan.md からリンクする
+- ナンバリングはタスク内で連番（0001 から）
+- Status は `Proposed` で開始
+
+#### 永続化したい技術判断（実装着手後・タスク完了後）の場合
 1. `docs/adr/` が存在する場合 → そこに配置
 2. `docs/decisions/` が存在する場合 → そこに配置
-3. 上記がない場合 → AskUserQuestionで配置先を確認
+3. 上記がない場合 → AskUserQuestion で配置先を確認
+
+#### 計画段階 → 永続化への昇格
+タスク完了後（Phase 5.5）、ADR が長期参照価値を持つと判断したら `${MEMORY_DIR}/memory/<task>/adr/` から `docs/adr/` へコピー（ナンバリングは PJ 全体で連番に振り直し）。
 
 **命名規則**: `NNNN-<タイトル>.md`（例: `0001-use-kysely-for-orm.md`）
 
