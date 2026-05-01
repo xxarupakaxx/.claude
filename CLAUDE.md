@@ -8,7 +8,7 @@ CLAUDE.mdのPhase 0-5のフローを必ず守ること。スキルの内容はPh
 
 ## 行動規範（4原則）
 
-Andrej Karpathy の LLM コーディング観察に基づく行動規範。
+LLM コーディングで陥りがちな失敗を減らすための行動規範。
 コード生成・編集・レビュー時は以下を全タスクで意識すること。
 
 1. **Think Before Coding** — 仮定を勝手に置かない・混乱を隠さない・トレードオフを表に出す
@@ -33,7 +33,6 @@ Andrej Karpathy の LLM コーディング観察に基づく行動規範。
    - 多段タスクは `Step → verify: check` の plan を先に書く
    - 強い合格基準は独立ループを可能にする（弱い基準は確認を増やす）
 
-出典: https://github.com/forrestchang/andrej-karpathy-skills （Karpathy の X 投稿に基づく）
 **注意**: 些末タスク（typo 修正・自明な 1 行変更）にはこの規範を厳格適用しない。判断で使い分ける。
 
 ## 作業フロー
