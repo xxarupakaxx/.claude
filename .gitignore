@@ -28,3 +28,7 @@
 /sui-memory/__pycache__/
 /sui-memory/**/__pycache__/
 /sui-memory/*.egg-info/
+!/evals/
+!/evals/**
+# Exclude eval results runtime artifacts
+/evals/reviewer/results/**/raw/

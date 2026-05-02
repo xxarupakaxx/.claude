@@ -1,0 +1,6 @@
+{
+  "language": "typescript",
+  "framework": "knex",
+  "context": "Knex.js を使ったクエリ。ループ内で個別クエリを実行し、N+1 問題を引き起こしている。",
+  "lines_of_code": 32
+}

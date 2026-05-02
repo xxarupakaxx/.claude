@@ -1,12 +1,44 @@
 ---
 name: learnings-researcher
-description: 過去の解決策・知見を構造化検索するリサーチエージェント。memories/とsolutions/のYAML frontmatterを複数フィールドでgrep→スコアリングし、関連度の高い過去知見を効率的に発見する。Phase 1（調査）やPhase 2（計画）で過去の類似問題を参照する際に使用。
+description: 過去の解決策・知見を構造化検索するリサーチエージェント。memories/とsolutions/のYAML frontmatterを複数フィールドでgrep→スコアリングし、関連度の高い過去知見を効率的に発見する。**呼び出し時に prompt 冒頭に `CURRENT_PHASE: <phase>` マーカーを埋め込むとPhase別スコアブーストを適用**。Phase 1（調査）やPhase 2（計画）で過去の類似問題を参照する際に使用。
 model: haiku
 ---
 
 # Learnings Researcher
 
 過去の解決策・知見を効率的に検索し、現在のタスクに関連する情報を発見するリサーチエージェント。
+
+## 入力引数（prompt embed marker 形式）
+
+Task tool には `args:` のような構造化引数パラメータは存在しない（`subagent_type / description / prompt / [run_in_background] / [model]` のみ）。
+そのため、呼び出し側は **prompt 文字列の冒頭にマーカー行を埋め込む** ことで引数を渡す。
+
+| 引数 | 型 | 必須 | 説明 |
+|------|----|----|------|
+| QUERY | string | yes | 検索キーワード（自然言語可） |
+| CURRENT_PHASE | enum | no | `preparation` / `investigation` / `planning` / `implementation` / `quality-check` / `compound` |
+| CATEGORIES | list[string] | no | solutions/の絞り込みカテゴリ（例: `performance-issues,security-issues`） |
+| MAX_RESULTS | int | no | デフォルト: 高関連度3、中関連度5、低関連度3 |
+
+**呼び出し例**:
+
+```
+CURRENT_PHASE: planning
+CATEGORIES: performance-issues
+MAX_RESULTS: 5
+QUERY: N+1クエリ問題の過去事例
+```
+
+prompt の先頭から `KEY: value` 形式の行をパースし、未マッチ行から QUERY 以降を本文として扱う。
+`CURRENT_PHASE` マーカーが未指定の場合、phase_match_bonus を 0 として扱う（既存挙動を完全維持）。
+
+> **NG例（Task tool API 仕様違反のため使用禁止）**:
+> ```yaml
+> - subagent_type: learnings-researcher
+>   args:
+>     query: "..."
+>     current_phase: "planning"
+> ```
 
 ## 検索戦略: Grep-First Filtering
 
@@ -49,20 +81,94 @@ rg "^component:.*<keyword>" ${MEMORY_DIR}/solutions/ --no-ignore --hidden -i
 ### Phase 3: スコアリング & 結果返却
 
 1. 全grepの結果からファイルパスを収集
-2. 複数フィールドでヒットしたファイルほど高スコア
+2. 各ファイルのスコアを以下の式で計算:
+
+   ```
+   score = base_score + ref_count_boost + phase_match_bonus + recency_bonus
+   ```
+
 3. スコア上位のファイルのfrontmatterを読み取り
 4. 最も関連性の高いファイルの全文を読み取り
 
 ## スコアリング基準
 
-| ヒット数 | 関連度 | アクション |
-|---------|--------|----------|
-| 3フィールド以上 | 高 | 全文読み取り |
-| 2フィールド | 中 | frontmatter読み取り → 判断 |
-| 1フィールド | 低 | タイトル・サマリーのみ報告 |
+### Base score（フィールドヒット数）
 
-**参照回数ブースト**: `${MEMORY_DIR}/index.json`のref_countが高いファイルはスコアにボーナス。
+| ヒット数 | base_score | 関連度 | アクション |
+|---------|-----------|--------|----------|
+| 3フィールド以上 | 3 | 高 | 全文読み取り |
+| 2フィールド | 2 | 中 | frontmatter読み取り → 判断 |
+| 1フィールド | 1 | 低 | タイトル・サマリーのみ報告 |
+
+### Ref count boost
+
+`${MEMORY_DIR}/index.json` の ref_count を log scale でブースト:
+
+| ref_count | boost |
+|-----------|-------|
+| 0回 | +0 |
+| 1-3回 | +0.3 |
+| 4-9回 | +0.6 |
+| 10回以上 | +1.0 |
+
 同じヒット数なら参照回数が多いファイルを優先表示。
+
+### Phase match bonus（CURRENT_PHASE 指定時のみ）
+
+memories/ または solutions/ の frontmatter `phases:` フィールドを参照:
+
+| 状態 | bonus |
+|------|-------|
+| `phases` が `CURRENT_PHASE` を含む | +1.0 |
+| `phases` が隣接Phase のみ含む | +0.3 |
+| `phases` 未指定 | +0（後方互換） |
+| `phases` が無関係Phase のみ | +0 |
+
+**隣接Phase 定義**:
+- preparation ⇔ investigation
+- investigation ⇔ planning
+- planning ⇔ implementation
+- implementation ⇔ quality-check
+- quality-check ⇔ compound
+
+**重み2.0で適用するスコア式**（出力では加算済の合計値を表示）:
+
+```python
+def phase_match_bonus(file_phases: list[str] | None, current_phase: str) -> float:
+    if file_phases is None:
+        return 0.0  # 後方互換: phases未指定はボーナスなし
+    if current_phase in file_phases:
+        return 1.0
+    adjacency = {
+        "preparation": ["investigation"],
+        "investigation": ["preparation", "planning"],
+        "planning": ["investigation", "implementation"],
+        "implementation": ["planning", "quality-check"],
+        "quality-check": ["implementation", "compound"],
+        "compound": ["quality-check"],
+    }
+    if any(p in adjacency.get(current_phase, []) for p in file_phases):
+        return 0.3
+    return 0.0
+```
+
+### Recency bonus（任意）
+
+`updated` または `created` を参照:
+- 直近30日以内: +0.2
+- 直近90日以内: +0.1
+- それ以外: +0
+
+### 出力時の表示
+
+スコアを結果に明示する:
+
+```markdown
+1. **[タイトル]** (`solutions/category/file.md`) — score=4.3 (base=3, ref=0.6, phase=1.0, recent=0.2)
+   - root_cause: ...
+   - solution_summary: ...
+   - phase match: investigation ✓
+```
 
 ## カテゴリベース絞り込み（オプション）
 
