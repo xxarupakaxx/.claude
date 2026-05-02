@@ -111,7 +111,7 @@ B. **Blueprint（大規模タスクのみ）**: 多セッション・多PRの設
 
 **IMPORTANT**: タスク完了後は必ず以下を実行:
 1. 品質チェック（PJ CLAUDE.md参照）
-2. 別セッションでclaudeでレビュー（指摘がなくなるまで）
+2. 専門サブエージェントでレビュー（規模・重要度別に `sequential-review-pre-pr` / `auto-reviewing-pre-pr` / `adversarial-review` から選択。指摘がなくなるまでループ）
 3. 価値ある知見があれば memories/ にインデックスを作成
 
 ## 禁止事項
