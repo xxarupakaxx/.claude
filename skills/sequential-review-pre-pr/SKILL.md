@@ -10,7 +10,7 @@ context: current
 
 実装完了後、PR 作成前に **段階的に** レビューを実施し、コストとカバレッジのバランスを取る。
 
-- Stage 1: 必須3観点（arch / security / code-simplicity）のみ並列起動
+- Stage 1: 必須3観点（prd / rule-validator / arch）のみ並列起動（spec compliance 先行）
 - Stage 1 PASS → Phase 4 へ（コスト約 1/5）
 - Stage 1 FAIL → Stage 2（全観点レビュー）に昇格
 
@@ -49,11 +49,13 @@ git diff $BASE_BRANCH --stat
 
 ### Phase 2: Stage 1 — 軽量レビュー
 
-Task ツールで以下を **並列起動**:
+Task ツールで以下を **並列起動**（spec compliance 先行）:
 
-- `arch-reviewer` (sonnet)
-- `security-reviewer` (opus, 軽量プロンプト: 機密情報・認証・入力検証のみ)
-- `code-simplicity-reviewer` (sonnet)
+- `prd-reviewer` (opus, 要件・仕様との乖離検出)
+- `rule-validator` (sonnet, CLAUDE.md/rules/ への準拠)
+- `arch-reviewer` (sonnet, アーキテクチャ整合性)
+
+> **設計意図（obra/superpowers パターン）**: spec/rule/arch 違反があるなら、quality reviewer を全部走らせるのは無駄。Stage 1 で根本問題を潰してから Stage 2 へ進む。
 
 各 reviewer のプロンプトに以下を追記:
 
@@ -64,9 +66,11 @@ Task ツールで以下を **並列起動**:
 | 結果 | 判定 | 次アクション |
 |------|------|------------|
 | CRITICAL=0, IMPORTANT≤2, NEEDS_DEEPER_REVIEW=false | Stage 1 PASS | Phase 4（最終報告）へ |
-| CRITICAL≥1 | Stage 1 FAIL | Stage 2 へ昇格 |
+| CRITICAL≥1（spec/rule/arch 違反） | Stage 1 FAIL | **Stage 2 不要、根本修正してから Stage 1 再実行** |
 | IMPORTANT≥3 | Stage 1 FAIL | Stage 2 へ昇格 |
 | NEEDS_DEEPER_REVIEW=true | Stage 1 FAIL | Stage 2 へ昇格 |
+
+> Stage 1 CRITICAL は spec compliance 違反を意味するため、quality reviewer (Stage 2) を回しても無駄。修正後 Stage 1 から再実行する。
 
 ### Phase 3: Stage 2 — 全観点レビュー（FAIL 時のみ）
 

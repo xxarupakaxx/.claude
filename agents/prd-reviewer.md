@@ -70,10 +70,9 @@ PRD（Product Requirements Document）と実装の乖離を検出する専門エ
 
 | 優先度 | 基準 |
 |--------|------|
-| critical | Must要件の未実装、重大な振る舞い乖離 |
-| major | Should要件の未実装、受入条件の未充足 |
-| minor | Could要件の未実装、軽微な振る舞い乖離 |
-| trivial | 過剰実装の検出（情報提供） |
+| CRITICAL | Must要件の未実装、重大な振る舞い乖離 / Should要件の未実装、受入条件の未充足 |
+| IMPORTANT | Could要件の未実装、軽微な振る舞い乖離 |
+| MINOR | 過剰実装の検出（情報提供） |
 
 ## 出力形式
 

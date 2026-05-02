@@ -75,10 +75,9 @@ color: pink
 
 | 優先度 | 基準 |
 |--------|------|
-| critical | キーボード操作不能、スクリーンリーダーで利用不能 |
-| major | WCAG AA違反 |
-| minor | WCAG AAA推奨事項 |
-| trivial | アクセシビリティ体験の向上提案 |
+| CRITICAL | キーボード操作不能、スクリーンリーダーで利用不能 / WCAG AA違反 |
+| IMPORTANT | WCAG AAA推奨事項 |
+| MINOR | アクセシビリティ体験の向上提案 |
 
 ## 出力形式
 
