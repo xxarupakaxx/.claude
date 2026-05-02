@@ -205,9 +205,99 @@ erDiagram
 判定ロジック、分類定義、計算式、マッピングテーブルなど。
 コードを読まなくても理解できるレベルの説明を記載。
 
-### Step 6: 出力
+### Step 6: ドラフト保存（Validator前）
 
-メモリディレクトリの `91_state_diagram.md` に保存。
+メモリディレクトリの `91_state_diagram.md` （または指定ファイル名）にドラフトとして保存する。次の Step 6.5 で構文検証してから最終確定する。
+
+> 既存ファイルがある場合は上書きせず `<filename>.draft.md` に一旦保存し、Validator PASS 後に rename する案も可。
+
+### Step 6.5: Mermaid Validator ループ（CRITICAL・必須）
+
+**背景**: 過去、生成した Mermaid 図が構文エラーで render されない事案が複数発生（`[/text]` のスラッシュ衝突、`<task>` HTML タグ、`-.text.->` のドット衝突、stateDiagram の二重定義 等）。**生成して終わり** ではなく、**MCP server で構文検証してから完了** とする。
+
+#### 前提条件
+
+`~/.claude.json` の `mcpServers` に `mermaid-mcp` が登録されていること:
+
+```json
+{
+  "mcpServers": {
+    "mermaid-mcp": {
+      "type": "http",
+      "url": "https://mcp.mermaid.ai/mcp"
+    }
+  }
+}
+```
+
+#### 検証ループ手順
+
+```
+1. 生成した .md ファイルから ```mermaid ... ``` ブロックを正規表現で全抽出
+   (例: Bash で `awk '/^```mermaid$/,/^```$/' file.md`)
+
+2. 各ブロックを連番付きでメモリに保持
+   - block_1: flowchart TD ...
+   - block_2: stateDiagram-v2 ...
+   - block_N: ...
+
+3. 各ブロックを順次 mcp__mermaid-mcp__validate_and_render_mermaid_diagram に投入
+   - 入力: { "code": "<mermaid 構文>" }
+   - 出力: { "valid": true/false, "errors": [...], "rendered_url": "..." }
+
+4. エラーがあればエラー内容を解析して該当ブロックを修正
+   - 典型的な修正パターン:
+     a. ノードラベルに /, :, +, (, ), <, > が含まれる → ダブルクォート ["..."] で囲む
+     b. 矢印ラベルにドット . が含まれる → -. "text" .-> 形式に変更
+     c. stateDiagram で同じ state が二重定義 → 重複削除
+     d. <br/> タグが効かない → 改行 \n または引用符化
+     e. & 演算子（古い mermaid 非対応）→ 個別矢印に展開
+
+5. 修正後、再度 validator に投入
+   - 最大 3 ラウンド試行
+   - 全 PASS なら Step 7 へ
+
+6. 3 ラウンド経ても失敗するブロックは、当該 mermaid ブロック直前に警告コメントを残す:
+   ```markdown
+   <!-- ⚠️ Mermaid Validator FAILED after 3 rounds. Last error: <内容> -->
+   <!-- レンダリングされない可能性があります。手動確認が必要です。 -->
+   ```
+   そして処理を続行（他ブロックは PASS とみなしてユーザーに通知）
+
+7. 検証ログを `91_state_diagram.validation.log` に保存:
+   ```
+   [PASS] block_1 (flowchart TD)
+   [PASS] block_2 (stateDiagram-v2)
+   [FAIL→PASS] block_3 (sequenceDiagram, 1 round)
+   [FAIL] block_4 (classDiagram) — see warning comment in file
+   ```
+```
+
+#### 修正対応の優先順位
+
+| エラー種別 | 対応 |
+|----------|------|
+| Syntax Error (致命的) | 必ず修正、ループ続行 |
+| Warning (推奨修正) | 修正試行、PASS なら次へ |
+| Render Warning（描画上の問題のみ）| 警告コメント残して続行 |
+
+#### スキップ条件
+
+- ファイル中に Mermaid ブロックが 0 個
+- ユーザーが明示的に `--skip-validator` を指定（オプション）
+- MCP server がオフライン（連続 3 回タイムアウト）→ 警告コメントを残して続行
+
+### Step 7: Validator PASS 後の最終保存
+
+- `.draft.md` を rename して正式ファイル化
+- 検証ログを `<filename>.validation.log` として併存保存
+- 警告コメントが残っている場合はユーザーに**明示的に通知**
+
+### Step 8: 出力完了
+
+メモリディレクトリに以下が保存されていることを確認:
+- `91_state_diagram.md`（または指定ファイル名）
+- `91_state_diagram.validation.log`（検証ログ）
 
 ## 出力テンプレート
 
@@ -263,6 +353,22 @@ erDiagram
 - **「なぜ」の説明**: 処理内容（WHAT）だけでなく、背景・理由（WHY）を必ず含める。例: 「Phase1対象ユーザーのみに制限」→ noteで「PoC期間中のため段階展開」と補足
 - **具体性**: 抽象的な「データ処理」ではなく「7シグナル+IS判定の構造化出力」のように具体的に
 - **用語集の充実**: 社内用語・略語・ドメイン固有の概念は全て用語集で定義
+- **Mermaid 構文検証済み（CRITICAL）**: Step 6.5 で `mcp__mermaid-mcp__validate_and_render_mermaid_diagram` を通過、または 3 ラウンド失敗時の警告コメント付きで完了
 - **Mermaid互換**: GitHub/VSCode/Notionでそのままレンダリング可能
 - **既存機能との区別**: このブランチの新規追加と既存機能を明確に区別する
 - **エラーケース・例外の記載**: 正常系だけでなく、失敗時の動作も図に含める
+
+## Mermaid 構文の頻出エラーと修正パターン（経験則）
+
+過去の生成失敗事例から学んだパターン。Step 6.5 の validator 修正ループで参照:
+
+| エラーパターン | 原因 | 修正 |
+|--------------|------|------|
+| `NodeID[/label]` がパースエラー | `[/text/]` は parallelogram 形状指定。スラッシュ片方だけだと不正 | `NodeID["/label"]` |
+| `NodeID[label<br/>line2]` がレンダリング崩れ | `<br/>` を含むラベルは引用符必須 | `NodeID["label<br/>line2"]` |
+| `A -.Phase 1.5.-> B` がパースエラー | 矢印ラベル中のドット `.` が終端マーカー `.->` と衝突 | `A -. "Phase 1.5" .-> B` |
+| stateDiagram で `state foo` と `state "Foo Label" as foo` が両方ある | 同一 state の二重定義 | 後者のみ残す |
+| `<task>` がレンダリングされない | HTML タグとして解釈される | `&lt;task&gt;` または `[task]` のような別表記 |
+| `A & B & C --> D` がパースエラー | `&` 演算子は mermaid v9.4+ のみ | `A --> D` `B --> D` `C --> D` に展開 |
+| classDiagram で `+String id` が消える | 引数なし型のフィールド | `+String id` のままで OK、表示崩れは renderer 依存 |
+| flowchart で日本語ノード ID | 日本語は引用符内のみ可 | `A["日本語ラベル"]` の形式
