@@ -93,6 +93,7 @@ title: "問題のタイトル"
 problem_type: "bug|performance|security|architecture|integration|build|database"
 component: "影響を受けたコンポーネント"
 tags: [tag1, tag2, tag3]
+phases: [planning, implementation, quality-check]  # REQUIRED: この知見が活きるPhase群
 root_cause: "根本原因の1行サマリー"
 solution_summary: "解決策の1行サマリー"
 created: YYYY-MM-DD
@@ -135,6 +136,7 @@ learning_type: "api-discovery|library-behavior|design-pattern|integration-techni
 source: "調査元（Context7/deepwiki/公式ドキュメント/実験等）"
 component: "適用先コンポーネント"
 tags: [tag1, tag2, tag3]
+phases: [investigation, planning]  # REQUIRED: この知見が活きるPhase群
 discovery_summary: "発見の1行サマリー"
 applied_in: "この知見を適用したコミットやファイル"
 created: YYYY-MM-DD

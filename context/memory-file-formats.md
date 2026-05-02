@@ -200,10 +200,26 @@ created: 2026-01-14
 updated: 2026-01-20
 status: resolved  # in-progress | resolved | blocked | abandoned
 tags: [performance, database]
+phases: [investigation, quality-check]  # この知見が活きるPhase群（後述）
 related:          # 詳細ログへの参照
   - .local/memory/260114_n-plus-one-fix/
 ---
 ```
+
+**`phases` フィールド（推奨）**:
+
+`learnings-researcher` の Phase scoring で使用される。CLAUDE.md の Phase 0-5.5 に対応:
+
+| phases 値 | CLAUDE.md Phase | 主な参照場面 |
+|----------|------------------|--------------|
+| `preparation` | Phase 0 | メモリ初期化、過去類似タスク確認 |
+| `investigation` | Phase 1 | 既存実装確認、技術調査 |
+| `planning` | Phase 2 | 計画立案、ADR検討 |
+| `implementation` | Phase 3 | 実装中の落とし穴回避 |
+| `quality-check` | Phase 4 | レビュー観点、テスト方針 |
+| `compound` | Phase 5.5 | 知見構造化のテンプレ参考 |
+
+未指定時は phase scoring boost が 0（従来挙動を維持）。新規 memories/solutions 作成時は推奨。
 
 ### テンプレート
 
@@ -212,6 +228,7 @@ related:          # 詳細ログへの参照
 summary: "簡潔な説明"
 created: 2026-01-14
 tags: [tag1, tag2]
+phases: [investigation, planning]  # この知見が活きるPhase群（推奨）
 related:
   - .local/memory/YYMMDD_task-name/
 ---
@@ -268,6 +285,7 @@ title: "N+1クエリによるAPI応答遅延の解決"
 problem_type: "performance"    # bug|performance|security|architecture|integration|build|database
 component: "users-api"
 tags: [database, n-plus-one, eager-loading]
+phases: [investigation, planning, quality-check]  # この知見が活きるPhase群（推奨）
 root_cause: "User.allの後にposts.countを個別クエリしていた"
 solution_summary: "includes(:posts)でeager loadingを適用"
 created: 2026-01-14
