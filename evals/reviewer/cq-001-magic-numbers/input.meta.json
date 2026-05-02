@@ -1,0 +1,6 @@
+{
+  "language": "typescript",
+  "framework": "none",
+  "context": "OrderProcessor の process / processRefund に複数のコード品質問題（マジックナンバー、1文字変数、ロジック重複）が混在。",
+  "lines_of_code": 50
+}
