@@ -206,9 +206,12 @@ related:          # 詳細ログへの参照
 ---
 ```
 
-**`phases` フィールド（推奨）**:
+**`phases` フィールド（推奨 — 強く推奨。`compounding-knowledge` 生成物では必須）**:
 
 `learnings-researcher` の Phase scoring で使用される。CLAUDE.md の Phase 0-5.5 に対応:
+
+> 後方互換性のため未指定でも動作するが、未指定時は phase_match_bonus = 0 となり関連度が下がる。
+> `compounding-knowledge` skill で新規作成される memories/solutions では **必須**（SKILL.md L96, L139 参照）。
 
 | phases 値 | CLAUDE.md Phase | 主な参照場面 |
 |----------|------------------|--------------|

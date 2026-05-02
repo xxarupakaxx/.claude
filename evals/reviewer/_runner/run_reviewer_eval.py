@@ -14,8 +14,8 @@ Note:
 import argparse
 import json
 import re
+import sys
 from pathlib import Path
-from typing import Any
 
 EVAL_ROOT = Path(__file__).parent.parent
 
@@ -144,8 +144,15 @@ def compute_cohen_kappa(human: list[str], machine: list[str]) -> float:
     if not human or not machine:
         return 0.0
     if len(human) != len(machine):
-        # len 不一致のときは短い方に合わせる
+        # len 不一致は通常 human=ラベラー数, machine=k回試行 で発生する
+        # 短い方に切り詰めると kappa が過大/過小推定される。stderr に警告を出す
         n = min(len(human), len(machine))
+        print(
+            f"[WARN] compute_cohen_kappa: len mismatch human={len(human)}, "
+            f"machine={len(machine)} -> truncated to {n}. "
+            "kappa may be biased; consider aligning sample counts in dataset.",
+            file=sys.stderr,
+        )
         human, machine = human[:n], machine[:n]
     n = len(human)
 
