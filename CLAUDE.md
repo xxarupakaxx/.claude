@@ -47,7 +47,7 @@ B. **Blueprint（大規模タスクのみ）**: 多セッション・多PRの設
 2. 計画: 30_plan.md作成 → **`deepening-plan`スキル実行（CRITICAL・3ファイル以上の変更時は必須）** → **重要技術判断は`creating-adr`でADR化**（複数案比較・採用根拠を構造化、`@context/workflow-rules.md`参照） → 専門サブエージェント並列レビュー（規模別ラウンド） → 05_log.mdに記録
 2.5. Acceptance Criteria: Sprint Contract定義 → `/checkpoint`でcheckpoint.mdに合格基準を記録（自明なタスクはスキップ可）
 3. 実装: 各タスクを調査→計画→実行→レビュー。**非自明なタスクでは`learnings-researcher`を並列実行**。こまめにコミット → 05_log.mdに記録
-4. 品質確認: lint/format/typecheck/test + **Sprint Contract検証（`/verify`）** + 専門サブエージェント並列レビュー（規模別ラウンド） + **UI変更時はPlaywright E2Eスモークテスト**
+4. 品質確認: lint/format/typecheck/test + **Sprint Contract検証（`/verify`）** + 専門サブエージェント並列レビュー（規模別ラウンド／3戦略から選択：軽量 `sequential-review-pre-pr` ／ 標準 `auto-reviewing-pre-pr` ／ 深掘り `adversarial-review`） + **UI変更時はPlaywright E2Eスモークテスト**
 5. 完了報告 + **ローカル検証ガイド生成（UI/API/DB変更時は`/generate-verification-guide`実行）** + **状態図生成（ワークフロー/状態管理/外部連携を含む場合は`/generate-state-diagram`実行）**
 5.5. Compound: **`compounding-knowledge`スキルで知見を構造化保存（新しい問題解決・パターン発見時は必須）**
 
@@ -66,11 +66,13 @@ B. **Blueprint（大規模タスクのみ）**: 多セッション・多PRの設
 ## レビュー方法（CRITICAL）
 
 **`agent`や`claude` CLIでのレビューは禁止。Taskツールの専門サブエージェントを並列起動すること。**
-- レビュー結果は05_log.mdに全件記録（minorも含む。ユーザーが確認できる状態にする）
-- 「絶対にやるべき」指摘は必ず対応
-- minor/non-criticalでも正しさ・一貫性に関わる指摘（バグ、不整合等）は修正する
+- severity は **CRITICAL / IMPORTANT / MINOR** の 3 階級（旧: critical/must-fix/should-fix/minor/nit を統合）
+- レビュー結果は05_log.mdに全件記録（MINOR も含む。ユーザーが確認できる状態にする）
+- 「絶対にやるべき」指摘（CRITICAL）は必ず対応
+- MINOR (= non-critical) でも正しさ・一貫性に関わる指摘（バグ、不整合等）は修正する
 - 純粋なスタイル・好みの問題のみスキップ可。判断に迷う場合はAskUserQuestion
 - 修正すべき点がなくなるまでループ
+- レビュー戦略は規模・重要度で選択: 軽量→`sequential-review-pre-pr` / 標準→`auto-reviewing-pre-pr` / 深掘り→`adversarial-review`
 
 ## コンテキスト復元（IMPORTANT）
 
