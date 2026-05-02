@@ -1,0 +1,45 @@
+{
+  "test_id": "cq-001-magic-numbers",
+  "category": "code-quality",
+  "target_reviewer": "code-quality-reviewer",
+  "language": "typescript",
+  "must_detect": [
+    {
+      "finding_id": "F1",
+      "line_range": [7, 22],
+      "severity": "IMPORTANT",
+      "min_severity": "IMPORTANT",
+      "fuzzy_line_tolerance": 5,
+      "patterns": [
+        "(マジックナンバー|magic number|定数化|named constant)",
+        "(100|1000000|50000|500)"
+      ]
+    },
+    {
+      "finding_id": "F2",
+      "line_range": [33, 45],
+      "severity": "IMPORTANT",
+      "min_severity": "IMPORTANT",
+      "fuzzy_line_tolerance": 5,
+      "patterns": [
+        "(重複|duplicat|同じロジック|extract|共通化)",
+        "(process|processRefund)"
+      ]
+    }
+  ],
+  "may_detect": [
+    {
+      "finding_id": "F3",
+      "line_range": [22, 26],
+      "severity": "MINOR",
+      "min_severity": "MINOR",
+      "fuzzy_line_tolerance": 5,
+      "patterns": ["(命名|naming|変数名|意味のある名前|x )"]
+    }
+  ],
+  "must_not_detect": [],
+  "human_label": {
+    "labelers": ["alpaca", "reviewer-A"],
+    "labels": ["IMPORTANT", "IMPORTANT"]
+  }
+}

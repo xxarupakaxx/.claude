@@ -1,0 +1,6 @@
+{
+  "language": "typescript",
+  "framework": "vitest",
+  "context": "parsePositiveInteger 関数のテスト。ハッピーパスのみで境界値・異常系・型違反のカバレッジが不足。",
+  "lines_of_code": 30
+}

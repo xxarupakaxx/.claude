@@ -1,0 +1,53 @@
+{
+  "test_id": "test-001-missing-edge-case",
+  "category": "test",
+  "target_reviewer": "test-reviewer",
+  "language": "typescript",
+  "must_detect": [
+    {
+      "finding_id": "F1",
+      "line_range": [14, 30],
+      "severity": "IMPORTANT",
+      "min_severity": "IMPORTANT",
+      "fuzzy_line_tolerance": 5,
+      "patterns": [
+        "(エッジケース|境界値|edge case|boundary)",
+        "(負|negative|0|空|empty|小数|float|decimal|invalid)"
+      ]
+    },
+    {
+      "finding_id": "F2",
+      "line_range": [14, 30],
+      "severity": "IMPORTANT",
+      "min_severity": "IMPORTANT",
+      "fuzzy_line_tolerance": 5,
+      "patterns": [
+        "(異常系|error case|throw|エラー)",
+        "(test|テスト|expect.*throw|toThrow)"
+      ]
+    }
+  ],
+  "may_detect": [
+    {
+      "finding_id": "F3",
+      "line_range": [14, 30],
+      "severity": "MINOR",
+      "min_severity": "MINOR",
+      "fuzzy_line_tolerance": 5,
+      "patterns": ["(MAX_SAFE_INTEGER|オーバーフロー|overflow)"]
+    },
+    {
+      "finding_id": "F4",
+      "line_range": [14, 30],
+      "severity": "MINOR",
+      "min_severity": "MINOR",
+      "fuzzy_line_tolerance": 5,
+      "patterns": ["(全角|unicode|non-ASCII|locale)"]
+    }
+  ],
+  "must_not_detect": [],
+  "human_label": {
+    "labelers": ["alpaca", "reviewer-A"],
+    "labels": ["IMPORTANT", "IMPORTANT"]
+  }
+}
