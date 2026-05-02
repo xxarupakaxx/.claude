@@ -1,0 +1,45 @@
+{
+  "test_id": "arch-001-shotgun-surgery",
+  "category": "arch",
+  "target_reviewer": "arch-reviewer",
+  "language": "typescript",
+  "must_detect": [
+    {
+      "finding_id": "F1",
+      "line_range": [4, 42],
+      "severity": "IMPORTANT",
+      "min_severity": "IMPORTANT",
+      "fuzzy_line_tolerance": 5,
+      "patterns": [
+        "(shotgun surgery|散在|重複|duplicat)",
+        "(税率|tax rate|1\\.10|magic number|マジックナンバー)"
+      ]
+    },
+    {
+      "finding_id": "F2",
+      "line_range": [4, 42],
+      "severity": "IMPORTANT",
+      "min_severity": "IMPORTANT",
+      "fuzzy_line_tolerance": 5,
+      "patterns": [
+        "(凝集度|cohesion|単一責務|single responsibility)",
+        "(共通|extract|抽出|module|関数化)"
+      ]
+    }
+  ],
+  "may_detect": [
+    {
+      "finding_id": "F3",
+      "line_range": [4, 42],
+      "severity": "MINOR",
+      "min_severity": "MINOR",
+      "fuzzy_line_tolerance": 5,
+      "patterns": ["(domain|ドメイン|Money|Value Object)"]
+    }
+  ],
+  "must_not_detect": [],
+  "human_label": {
+    "labelers": ["alpaca", "reviewer-A"],
+    "labels": ["IMPORTANT", "IMPORTANT"]
+  }
+}

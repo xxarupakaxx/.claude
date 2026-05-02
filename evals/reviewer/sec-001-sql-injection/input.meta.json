@@ -1,0 +1,6 @@
+{
+  "language": "typescript",
+  "framework": "express",
+  "context": "ユーザー検索・取得・削除のREST API。db.raw でSQL文字列を実行する。",
+  "lines_of_code": 32
+}

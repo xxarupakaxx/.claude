@@ -1,0 +1,58 @@
+{
+  "test_id": "sec-001-sql-injection",
+  "category": "security",
+  "target_reviewer": "security-reviewer",
+  "language": "typescript",
+  "must_detect": [
+    {
+      "finding_id": "F1",
+      "line_range": [8, 9],
+      "severity": "CRITICAL",
+      "min_severity": "CRITICAL",
+      "fuzzy_line_tolerance": 3,
+      "patterns": [
+        "SQL ?(injection|インジェクション)",
+        "(parameterized|placeholder|prepared statement|プレースホル|バインド)"
+      ]
+    },
+    {
+      "finding_id": "F2",
+      "line_range": [17, 18],
+      "severity": "CRITICAL",
+      "min_severity": "CRITICAL",
+      "fuzzy_line_tolerance": 3,
+      "patterns": [
+        "SQL ?(injection|インジェクション)",
+        "(string concatenation|文字列連結|連結).*SQL"
+      ]
+    }
+  ],
+  "may_detect": [
+    {
+      "finding_id": "F3",
+      "line_range": [25, 28],
+      "severity": "IMPORTANT",
+      "min_severity": "IMPORTANT",
+      "fuzzy_line_tolerance": 3,
+      "patterns": ["(unvalidated|入力検証|input validation)"]
+    },
+    {
+      "finding_id": "F4",
+      "line_range": [25, 28],
+      "severity": "IMPORTANT",
+      "min_severity": "IMPORTANT",
+      "fuzzy_line_tolerance": 3,
+      "patterns": ["(authorization|認可|認証)"]
+    }
+  ],
+  "must_not_detect": [
+    {
+      "line_range": [1, 4],
+      "patterns": ["import statement.*vulnerab"]
+    }
+  ],
+  "human_label": {
+    "labelers": ["alpaca", "reviewer-A"],
+    "labels": ["CRITICAL", "CRITICAL"]
+  }
+}

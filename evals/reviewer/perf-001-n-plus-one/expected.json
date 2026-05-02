@@ -1,0 +1,44 @@
+{
+  "test_id": "perf-001-n-plus-one",
+  "category": "perf",
+  "target_reviewer": "perf-reviewer",
+  "language": "typescript",
+  "must_detect": [
+    {
+      "finding_id": "F1",
+      "line_range": [9, 17],
+      "severity": "CRITICAL",
+      "min_severity": "IMPORTANT",
+      "fuzzy_line_tolerance": 3,
+      "patterns": [
+        "(N\\+1|N plus 1|エヌプラスワン|N\\+1 ?クエリ)",
+        "(eager|join|whereIn|preload|一括|バッチ|GROUP BY)"
+      ]
+    },
+    {
+      "finding_id": "F2",
+      "line_range": [25, 30],
+      "severity": "CRITICAL",
+      "min_severity": "IMPORTANT",
+      "fuzzy_line_tolerance": 3,
+      "patterns": [
+        "(N\\+1|loop.*query|ループ内.*クエリ|ループ内.*SQL)"
+      ]
+    }
+  ],
+  "may_detect": [
+    {
+      "finding_id": "F3",
+      "line_range": [4, 32],
+      "severity": "MINOR",
+      "min_severity": "MINOR",
+      "fuzzy_line_tolerance": 5,
+      "patterns": ["(index|インデックス|user_id)"]
+    }
+  ],
+  "must_not_detect": [],
+  "human_label": {
+    "labelers": ["alpaca", "reviewer-A"],
+    "labels": ["CRITICAL", "CRITICAL"]
+  }
+}

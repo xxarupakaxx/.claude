@@ -1,0 +1,6 @@
+{
+  "language": "typescript",
+  "framework": "none",
+  "context": "価格計算ロジック (税率10%) が4ファイルにマジックナンバーとして散在。税率変更時に4箇所修正が必要。",
+  "lines_of_code": 42
+}
