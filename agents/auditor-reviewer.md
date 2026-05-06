@@ -33,9 +33,9 @@ Adversarial review における「審判」役。Red と Blue の応酬を読み
 ## アンチ多数決原則（CRITICAL）
 
 - **多数決は confabulation consensus を生む**: 全員同じ嘘に収束するリスクあり
-- Red と Blue の **不一致点** を優先的に分析する（一致点は再検証必要なし）
-- Red:AGREE + Blue:AGREE でも、Auditor が独立に Read で検証してから採用する
-- 不一致 > 一致の優先順位で時間配分する
+- **不一致点を優先**: Blue の verdict が DISAGREE/PARTIAL の指摘や、Red/Blue で severity 評価が分かれた箇所は、Auditor が必ず詳細に Read 検証する（時間配分の大半をここに使う）
+- **一致点もスポット検証**: Red:AGREE + Blue:AGREE でも、Auditor は独立 Read で最低限の確認（該当行の存在・記述の事実性）を行ってから採用する。詳細検証ではなくスポットチェック（時間配分は最小限）
+- 多数決禁止: Red+Blue が一致していても自動採用しない
 
 ## モデル選択（重要）
 
@@ -57,7 +57,9 @@ Adversarial review における「審判」役。Red と Blue の応酬を読み
 
 ## Input Contract（厳守）
 
-- `red_findings[i].file + ":" + red_findings[i].line` をキーとして `blue_responses` にマッチさせる
+- マッチングキー: `red_findings[i].finding_id` を一意キーとし、対応する `blue_responses[j].red_finding_id` でマッチさせる（推奨）
+- 互換性: `finding_id` がない古い JSONL は `red_findings[i].file + ":" + red_findings[i].line` でフォールバックマッチ（同一行に複数指摘がある場合は曖昧マッチとして警告）
+- 警告は `audit.jsonl` に `{"role":"auditor","verdict":"WARNING","red_ref":"<file:line>","rationale":"ambiguous fallback match: multiple red findings at same file:line without finding_id"}` を出力する
 - マッチしない指摘（Blue がスキップ）は `unmatched: true` で扱い、Auditor が直接検証する
 
 ## 出力形式
@@ -76,7 +78,7 @@ Adversarial review における「審判」役。Red と Blue の応酬を読み
 | role | "auditor" | yes | 固定 |
 | red_ref | string | yes | Red の `file:line` |
 | blue_ref | string \| null | yes | Blue の `red_claim_ref` （未マッチは null） |
-| verdict | enum | yes | ADOPT / DOWNGRADE / UPGRADE / REJECT / ESCALATE |
+| verdict | enum | yes | ADOPT / DOWNGRADE / UPGRADE / REJECT / ESCALATE / WARNING |
 | final_severity | enum | yes | CRITICAL / IMPORTANT / MINOR / none / unknown |
 | fix_plan | string \| null | conditional | ADOPT / DOWNGRADE / UPGRADE で必須 |
 | rationale | string | yes | 判定根拠（独立検証の証拠を含む） |
@@ -88,6 +90,7 @@ Adversarial review における「審判」役。Red と Blue の応酬を読み
 - `UPGRADE`: 採用、severity を上げる（Blue も見落とした重大性を Auditor が指摘）
 - `REJECT`: 却下
 - `ESCALATE`: 人間判断要
+- `WARNING`: 入力データの整合性問題（フォールバックマッチが曖昧、重複 finding_id 等）。verdict 判定とは別軸の運用警告
 
 ## 出力先
 

@@ -17,7 +17,8 @@ context: current
 ## 研究的根拠
 
 - **WebSearch 由来の業界知見**: 2段階構成で **token cost -60〜90%**（spec違反時に quality leg 全部スキップ可能）
-- 対象は「中〜大規模変更（10ファイル以上）」が ROI 最大、小規模（1-3 files）は並列のままが速い
+- **小規模変更（1-3 files / <50 LOC）**: Stage 1 のみ実行で完了する想定（CRITICAL=0 を期待）。エージェント数 1/5、auto-reviewing-pre-pr より低コスト
+- **中〜大規模（4+ files）**: Stage 1 で根本問題を捕捉 → Stage 2 昇格、または直接 auto-reviewing-pre-pr を推奨
 - obra/superpowers の "Only dispatch after spec compliance review passes" 原則に基づく
 
 ## auto-reviewing-pre-pr との使い分け

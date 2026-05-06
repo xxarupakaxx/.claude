@@ -1,13 +1,14 @@
-# agent cli 使用ガイド
+# [DEPRECATED] agent cli 使用ガイド
 
-> **CRITICAL: Phase 2/4のレビューでは、このCLIではなくTaskツールの専門サブエージェント（`security-reviewer`, `perf-reviewer`, `arch-reviewer`等）を並列起動すること。**
+> **このドキュメントは履歴的参考用。実運用ではTaskツールの専門サブエージェント（`security-reviewer`, `perf-reviewer`, `arch-reviewer`等）を並列起動すること。**
 > agent/claude CLIは環境によって利用できない場合があり、大きなdiffではタイムアウトする。
-> 本ガイドはPRレビュー（@skills/pr-review/SKILL.md）等の用途で参考にする。
+> 本ガイドのモデル名（`gpt-5.2-high` 等）は過去の例示であり、現時点では使用しない。
+> Phase 2/4のレビュー戦略は `auto-reviewing-pre-pr` / `sequential-review-pre-pr` / `adversarial-review` を参照。
 
-## 概要
+## 概要（参考）
 
-agent cliのnon-interactive modeを使用して、別モデル（gpt-5.2-high）によるレビューを実施する。
-Claude Codeとは異なる観点からの分析により、計画・実装の品質を向上させる。
+過去にagent cliのnon-interactive modeを使用して別モデルによるレビューを実施していた。
+現在はマルチモデル検証は廃止し、Taskツールの専門サブエージェント並列起動のみで実施する。
 
 **重要**: レビューは「指摘がなくなるまで修正→再レビューを繰り返す」ループで実施する。
 
@@ -29,6 +30,8 @@ agent -p "<プロンプト>" --model gpt-5.2-high --output-format json
 
 ## レビューループの実施方法
 
+> ※ 以下は履歴記録。現在は Task ツールの専門サブエージェント（auto-reviewing-pre-pr / sequential-review-pre-pr / adversarial-review）を使用すること（冒頭 NOTE 参照）。
+
 すべてのレビューは以下のループで実施:
 
 **初回**:
@@ -45,6 +48,8 @@ agent -p "<プロンプト>" --model gpt-5.2-high --output-format json
 **終了条件**: 修正すべき点がなくなる（「指摘なし」または対応不要の指摘のみ）
 
 ## ユースケース
+
+> ※ 以下は履歴記録。現在は Task ツールの専門サブエージェントを使用すること（冒頭 NOTE 参照）。
 
 ### 1. 計画レビュー（Phase 2）
 
