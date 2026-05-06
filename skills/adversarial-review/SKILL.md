@@ -26,8 +26,8 @@ R5（2026-05-02 改訂）に基づき以下の構成:
 ## アンチ多数決原則（CRITICAL）
 
 - **多数決は confabulation consensus を生む**: 全員同じ嘘に収束するリスクあり
-- Auditor は Red と Blue の **不一致点** を優先的に分析する（一致点は再検証必要なし）
-- Red:AGREE + Blue:AGREE のケースでも、Auditor は独立に Read で確認してから採用する
+- Auditor は Red と Blue の **不一致点** を優先的に分析する（一致点は独立 Read でスポット検証）
+- Red:AGREE + Blue:AGREE のケースでも、Auditor は独立に Read で最低限の確認を行ってから採用する（詳細検証ではなくスポットチェックでよい）
 
 ## トリガー条件
 

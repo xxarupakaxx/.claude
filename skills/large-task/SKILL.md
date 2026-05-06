@@ -42,7 +42,7 @@ ${MEMORY_DIR}/
    - 必ずdateコマンドで日付を確認すること
 4. 00_plan.md作成（全体計画）
 5. 01_xxx.md, 02_xxx.md... 作成（個別タスク）
-6. agent reviewで計画検証（指摘なくなるまで）
+6. Taskツールの専門サブエージェントで計画レビュー（指摘がなくなるまで）
 
 ### /large-task implement <task_num>
 
@@ -85,8 +85,8 @@ ${MEMORY_DIR}/
 | リスク | 影響度 | 対策 |
 |-------|-------|------|
 
-## agent reviewの結果
-[計画フェーズでのagent指摘と対応]
+## サブエージェントレビューの結果
+[計画フェーズでのサブエージェント指摘と対応]
 ```
 
 ### 個別タスクファイル（01_xxx.md等）
@@ -147,5 +147,4 @@ bun run test
 
 - ワークフロー詳細: @context/workflow-rules.md
 - メモリファイル形式: @context/memory-file-formats.md
-- agent cli: @context/agent-cli-guide.md
 - PJ固有設定: PJ CLAUDE.md

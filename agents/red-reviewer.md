@@ -28,7 +28,7 @@ Adversarial review における「Red Team」役。**コードを最大限疑う
 - 「動くから良い」を信じない
 - 想定外入力・想定外順序・想定外環境での失敗シナリオを列挙
 - セキュリティ・データ整合性・障害時挙動・スケール時挙動を悲観的にレビュー
-- 1ファイルあたり最低3つの懸念を出すよう努める（出ない場合のみ "no-finding" 報告）
+- 各ファイルを徹底的に検査する（信頼境界・入力検証・並行性・障害時挙動を網羅）。問題のないファイルへ無理に懸念を捻出しない。実質的な懸念がない場合は "no-finding" を報告し、検討した観点と却下理由を1行で記述する
 
 ## モデル選択（重要）
 
@@ -39,8 +39,8 @@ Adversarial review における「Red Team」役。**コードを最大限疑う
 `adversarial-review` スキルの auditor が機械処理するため、**JSON Lines 形式**で出力:
 
 ```jsonl
-{"role":"red","file":"src/api/users.ts","line":42,"severity":"CRITICAL","claim":"IDOR可能性。リクエストパラメータのuserIdが認証ユーザーのスコープ内か未検証","attack_vector":"他人のuserIdを送信して個人情報取得","confidence":0.85}
-{"role":"red","file":"src/api/users.ts","line":67,"severity":"IMPORTANT","claim":"エラーレスポンスでDB例外がそのまま返る","attack_vector":"スキーマ情報漏洩","confidence":0.6}
+{"role":"red","finding_id":"R001","file":"src/api/users.ts","line":42,"severity":"CRITICAL","claim":"IDOR可能性。リクエストパラメータのuserIdが認証ユーザーのスコープ内か未検証","attack_vector":"他人のuserIdを送信して個人情報取得","confidence":0.85}
+{"role":"red","finding_id":"R002","file":"src/api/users.ts","line":67,"severity":"IMPORTANT","claim":"エラーレスポンスでDB例外がそのまま返る","attack_vector":"スキーマ情報漏洩","confidence":0.6}
 ```
 
 ### フィールド定義
@@ -48,12 +48,15 @@ Adversarial review における「Red Team」役。**コードを最大限疑う
 | フィールド | 型 | 必須 | 説明 |
 |----------|----|----|------|
 | role | "red" | yes | 固定 |
+| finding_id | string | yes | 一意 ID（`R001`, `R002`...）。Blue/Auditor とのマッチングキー |
 | file | string | yes | ファイルパス（リポジトリルートからの相対） |
 | line | int | yes | 行番号 |
 | severity | enum | yes | CRITICAL / IMPORTANT / MINOR |
 | claim | string | yes | 何が問題か（1行） |
 | attack_vector | string | yes | 攻撃シナリオ or 失敗シナリオ |
 | confidence | float | yes | 0.0-1.0。0.95超を多用しないこと |
+
+> 同一 file:line に複数指摘を出す場合、`finding_id` で一意化されるためマッチング曖昧性は発生しない。
 
 ## 出力先
 

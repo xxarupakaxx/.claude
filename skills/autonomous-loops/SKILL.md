@@ -88,8 +88,9 @@ Execution:
 
 ## 安全ガード（全パターン共通）
 
-- **最大ループ回数**: 設定可能（デフォルト: 5）
-- **タイムアウト**: 各ステップに上限設定
-- **失敗エスカレーション**: 連続失敗でユーザーに報告
-- **LLM連続修正上限**: 3回（workflow-rules.md準拠）
-- **checkpoint保存**: 各ラウンドでcheckpoint.mdに状態保存
+- **最大ループ回数**: デフォルト 5。`orchestrate` の runs.yaml または `checkpoint.md` の `max_iterations` フィールドで上書き可
+- **タイムアウト**: 各ステップ デフォルト 30 分。orchestrate 設定で上書き可
+- **失敗エスカレーション**: 連続 2 回失敗 → AskUserQuestion で人間判断を求める
+- **最大ループ超過時**: ESCALATE として残存タスクと進捗を AskUserQuestion でユーザーに報告
+- **LLM連続修正上限**: 3 回（workflow-rules.md / auto-reviewing-pre-pr SKILL.md 準拠）
+- **checkpoint保存**: 各ラウンド終了時に `checkpoint.md` へ状態保存（再開可能性を担保）

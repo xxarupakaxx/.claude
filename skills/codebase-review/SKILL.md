@@ -27,16 +27,15 @@ context: fork
 | Code Quality | cq | 命名、一貫性、可読性、不要コード |
 | Documentation | docs | ドキュメント不足、内容の陳腐化 |
 
-## 優先度定義
+## 優先度定義（CLAUDE.md 標準 3 階級に準拠）
 
-| 優先度 | 略称 | 説明 | 対応期限 |
-|--------|------|------|---------|
-| critical | crit | 即座に対応必須（本番障害、重大脆弱性） | 即時 |
-| major | maj | 早期対応推奨（バグ、セキュリティリスク） | 次リリースまで |
-| minor | min | 改善推奨（設計改善、技術的負債） | 計画的に対応 |
-| trivial | triv | 余裕があれば対応（軽微な改善） | 任意 |
+| 優先度 | 説明 | 対応期限 |
+|--------|------|---------|
+| CRITICAL | 即座に対応必須（本番障害、重大脆弱性、データ破壊） | 即時 |
+| IMPORTANT | 早期対応推奨（バグ、セキュリティリスク、一貫性違反） | 次リリースまで |
+| MINOR | 改善推奨（命名・スタイル、軽微な技術的負債） | 計画的に対応 |
 
-※ アルファベット順でソートすると正しい優先度順になる
+> 旧 critical/major/minor/trivial 4 階級は廃止。CLAUDE.md の severity 体系（CRITICAL/IMPORTANT/MINOR）に統一。
 
 ## 実行手順
 
@@ -68,20 +67,8 @@ find . -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.py" -o -name "*.md" 
 
 ### Phase 1: 並列サブエージェント実行
 
----
-**親エージェント（Claude Code）への警告**
-
-サブエージェントプロンプト作成時に以下を**絶対に守ること**:
-
-1. `--skip-multimodel` オプションが**明示的に指定されていない限り**、タスク3（agent cliによる並行レビュー）の指示を**削除・省略してはならない**
-2. 「時間短縮」「コスト削減」「効率化」を理由にした自己判断でのスキップは**禁止**
-3. サブエージェントプロンプトには必ず**タスク1〜4すべて**を含めること
-
-**違反した場合**: レビューは不完全とみなされ、ユーザーに説明責任が発生する
-
----
-
 **CRITICAL**: 6つのサブエージェントを**同時に**起動する。Taskツールを1つのメッセージで6回呼び出す。
+agent / claude CLI を使った別モデル検証は廃止（CLAUDE.md / context/agent-cli-guide.md と整合）。Taskツールの専門サブエージェント並列起動のみで実施する。
 
 **CRITICAL**: サブエージェントは必ず `subagent_type=general-purpose` を使用すること。
 - `Explore`エージェントはファイル探索専用でWriteツールを持たないため、issueファイルを作成できない
@@ -112,9 +99,7 @@ find . -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.py" -o -name "*.md" 
 ls -la ${MEMORY_DIR}/issues/
 ```
 
-2. マルチモデル検証の統計を集計（各issueファイルから）
-
-3. サマリーファイルを作成
+2. サマリーファイルを作成
 
 ### Phase 3: サマリー作成
 
@@ -128,31 +113,24 @@ YYYY-MM-DD HH:MM
 
 | 優先度 | 件数 |
 |--------|------|
-| crit   | X    |
-| high   | X    |
-| mid    | X    |
-| low    | X    |
+| CRITICAL | X |
+| IMPORTANT | X |
+| MINOR | X |
 | **合計** | **X** |
 
-| 観点 | crit | high | mid | low | 計 |
-|------|------|------|-----|-----|-----|
-| perf | X | X | X | X | X |
-| sec  | X | X | X | X | X |
-| test | X | X | X | X | X |
-| arch | X | X | X | X | X |
-| cq   | X | X | X | X | X |
-| docs | X | X | X | X | X |
+| 観点 | CRITICAL | IMPORTANT | MINOR | 計 |
+|------|----------|-----------|-------|-----|
+| perf | X | X | X | X |
+| sec  | X | X | X | X |
+| test | X | X | X | X |
+| arch | X | X | X | X |
+| cq   | X | X | X | X |
+| docs | X | X | X | X |
 
-## マルチモデル検証結果
-- 両者一致（高信頼度）: X件
-- Claude Codeのみ検出: X件
-- agent cliのみ検出 → 採用: X件
-- 優先度差異あり: X件
-
-## Critical Issues（要即時対応）
+## CRITICAL Issues（要即時対応）
 ...
 
-## High Priority Issues（要早期対応）
+## IMPORTANT Issues（要早期対応）
 ...
 
 ## 推奨対応順序
@@ -174,11 +152,10 @@ ${MEMORY_DIR}/
 │   └── YYMMDD_codebase-review/
 │       ├── 05_log.md          # 作業ログ
 │       └── summary.md         # レビューサマリー
-└── issues/                    # issueファイル（マルチモデル検証済み）
-    ├── critical-*.md          # 各issueにマルチモデル検証結果を含む
-    ├── major-*.md             # アルファベット順で優先度順にソート
-    ├── minor-*.md
-    └── trivial-*.md
+└── issues/                    # issueファイル（severity 別に命名）
+    ├── CRITICAL-*.md
+    ├── IMPORTANT-*.md
+    └── MINOR-*.md
 ```
 
 ## オプション引数
@@ -188,9 +165,8 @@ ${MEMORY_DIR}/
 
 --scope <path>      対象ディレクトリを限定（例: src/server）
 --focus <観点>      特定の観点のみ実行（例: sec,perf）
---priority <level>  指定優先度以上のみ報告（例: high）
+--priority <level>  指定優先度以上のみ報告（CRITICAL / IMPORTANT / MINOR）
 --github            issueをGitHubに登録
---skip-multimodel   agent cli並行レビューをスキップ（Claude Codeのみ）
 ```
 
 ## 注意事項
@@ -199,8 +175,6 @@ ${MEMORY_DIR}/
 - 各サブエージェントは独立して動作し、他のエージェントの結果を待たない
 - issueファイルのタイトル部分は日本語で具体的に記述
 - 同じ問題が複数の観点に該当する場合、最も重要な観点で1つだけ作成
-- 優先度critは慎重に使用（本当に即時対応が必要な場合のみ）
+- 優先度CRITICALは慎重に使用（本当に即時対応が必要な場合のみ）
 - **コードベース全体を網羅的に確認すること（一部だけ見て終わりにしない）**
 - **問題発見時はdeepwiki/WebSearchでベストプラクティスを必ず調査**
-- **CRITICAL: agent cli呼び出しは `--skip-multimodel` オプションが明示的に指定されない限り必須。自己判断でのスキップは禁止**
-- **サブエージェントプロンプトには共通テンプレート全体（タスク1〜4すべて）を含めること。観点別の詳細指示のみでは不十分**
