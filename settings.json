@@ -283,6 +283,8 @@
   "effortLevel": "max",
   "plansDirectory": "./.local/plans",
   "skipDangerousModePermissionPrompt": true,
+  "theme": "light",
+  "remoteControlAtStartup": true,
   "voiceEnabled": false,
   "allowedTools": [
     "Bash(cd:*)",
@@ -346,5 +348,5 @@
     "Bash(rg:*)",
     "Bash(afplay:*)"
   ],
-  "theme": "light"
+  "skipAutoPermissionPrompt": true
 }
