@@ -1,3 +1,4 @@
+
 ---
 globs: ["**/auth/**", "**/api/**", "**/middleware/**", "**/routes/**"]
 ---
