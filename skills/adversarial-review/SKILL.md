@@ -75,9 +75,9 @@ Task ツールで `red-reviewer` を起動。出力（JSONL）を `${MEMORY_DIR}
 }
 ```
 
-### Phase 5: 結果集約
+### Phase 5: 結果集約とユーザー報告（CRITICAL）
 
-`audit.jsonl` を読み、verdict 別に集計:
+`audit.jsonl` を読み、verdict 別に集計し、**チャット上に以下のサマリーを必ず出力する**（ファイル保存だけで終わらせない）。ユーザーが ADOPT/UPGRADE の対応可否、ESCALATE の判断、REJECT の妥当性を確認できる状態にしてから Phase 6 に進む:
 
 ```markdown
 ## Adversarial Review Result
@@ -126,5 +126,6 @@ ADOPT の全件修正後、再度 Adversarial Review を回す（最大 2 サイ
 - Red をスキップして Blue から始めること
 - Auditor の verdict を主観で書き換えること
 - ESCALATE をユーザーに見せずに勝手に判定すること
+- **Phase 5 のサマリーをチャット出力せずに Phase 6（修正）や完了報告へ進むこと**
 - Auditor が Read で直接コードを確認せず Red/Blue の rationale だけで判定すること
 - 多数決（Red+Blue 一致なら自動採用）を使うこと

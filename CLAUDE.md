@@ -67,7 +67,7 @@ B. **Blueprint（大規模タスクのみ）**: 多セッション・多PRの設
 
 **`agent`や`claude` CLIでのレビューは禁止。Taskツールの専門サブエージェントを並列起動すること。**
 - severity は **CRITICAL / IMPORTANT / MINOR** の 3 階級（旧: critical/must-fix/should-fix/minor/nit を統合）
-- レビュー結果は05_log.mdに全件記録（MINOR も含む。ユーザーが確認できる状態にする）
+- レビュー結果は05_log.mdに全件記録（MINOR も含む）し、**完了直後にチャット上へサマリーを必ず出力する**（severity別件数・CRITICAL/IMPORTANT全件・ESCALATE項目）。ユーザーが採否判断できる状態にしてから次のアクションに進むこと
 - 「絶対にやるべき」指摘（CRITICAL）は必ず対応
 - MINOR (= non-critical) でも正しさ・一貫性に関わる指摘（バグ、不整合等）は修正する
 - 純粋なスタイル・好みの問題のみスキップ可。判断に迷う場合はAskUserQuestion
