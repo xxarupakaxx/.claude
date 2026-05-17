@@ -46,9 +46,11 @@ description: |
 
 ### Step 2: 並列サブエージェント起動
 
-以下の4つのサブエージェント（`general-purpose`）を**並列**で起動:
+以下の4つのサブエージェント（`general-purpose`）を**並列**で起動。
+**コスト最適化のため、Agentツール呼び出し時に必ず`model`パラメータを指定すること**
+（未指定だとOpusで起動されコスト増大）。割当は`~/.claude/rules/model-routing.md`に準拠。
 
-#### 2-1: Solution Extractor
+#### 2-1: Solution Extractor (`model: "sonnet"`)
 ```
 05_log.mdとdiffを分析し、以下を抽出:
 - root_cause: 根本原因（1-2文）
@@ -56,7 +58,7 @@ description: |
 - code_changes: 主要なコード変更のサマリー
 ```
 
-#### 2-2: Prevention Strategist
+#### 2-2: Prevention Strategist (`model: "sonnet"`)
 ```
 この問題の再発を防ぐための戦略を提案:
 - prevention: 予防策のリスト
@@ -64,7 +66,7 @@ description: |
 - related_patterns: 類似問題のパターン
 ```
 
-#### 2-3: Category Classifier
+#### 2-3: Category Classifier (`model: "haiku"`)
 ```
 solutions/の既存カテゴリを確認し、最適なカテゴリとファイル名を決定:
 - category: solutions/下のサブディレクトリ名
@@ -74,7 +76,7 @@ build-issues, architecture-decisions, database-issues, integration-issues
 新カテゴリの作成も可。
 ```
 
-#### 2-4: Related Docs Finder
+#### 2-4: Related Docs Finder (`model: "haiku"`)
 ```
 関連する外部ドキュメント・GitHub Issue・Stack Overflowの記事を検索:
 - references: 関連URLのリスト
