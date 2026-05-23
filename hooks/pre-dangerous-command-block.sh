@@ -30,11 +30,23 @@ BLOCKED_LOG="$LOG_DIR/blocked.jsonl"
 mkdir -p "$LOG_DIR" "$STATE_DIR" 2>/dev/null
 
 # バイパスチェック: hardgate_bypass.json があり expires_at > now なら BYPASS=1
+# Hard cap: issued_at から 3600秒 (1時間) を超える bypass は無効化 (security CRITICAL C2)
 BYPASS=0
 BYPASS_REASON=""
+BYPASS_MAX_TTL=3600
 if [ -f "$BYPASS_FILE" ]; then
   EXPIRES_AT=$(jq -r '.expires_at // 0' "$BYPASS_FILE" 2>/dev/null)
+  ISSUED_AT=$(jq -r '.issued_at // 0' "$BYPASS_FILE" 2>/dev/null)
   NOW=$(date +%s)
+  # Hard cap チェック
+  if [ -n "$ISSUED_AT" ] && [ "$ISSUED_AT" -gt 0 ] 2>/dev/null; then
+    REQUESTED_TTL=$((EXPIRES_AT - ISSUED_AT))
+    if [ "$REQUESTED_TTL" -gt "$BYPASS_MAX_TTL" ] 2>/dev/null; then
+      echo "[Hook] WARNING: bypass TTL ($REQUESTED_TTL s) > max ($BYPASS_MAX_TTL s). Bypass無視" >&2
+      rm -f "$BYPASS_FILE" 2>/dev/null
+      EXPIRES_AT=0
+    fi
+  fi
   if [ -n "$EXPIRES_AT" ] && [ "$EXPIRES_AT" -gt "$NOW" ] 2>/dev/null; then
     BYPASS=1
     BYPASS_REASON=$(jq -r '.reason // "no reason"' "$BYPASS_FILE" 2>/dev/null)
@@ -43,6 +55,20 @@ if [ -f "$BYPASS_FILE" ]; then
     rm -f "$BYPASS_FILE" 2>/dev/null
   fi
 fi
+
+# シークレット redaction (security CRITICAL C1)
+# - URL中の認証情報 (https://user:PASS@host)
+# - 長すぎる CMD は 200 文字でtruncate
+redact_secrets() {
+  local s="$1"
+  # https?://user:pass@host → https://user:***@host
+  s=$(echo "$s" | sed -E 's#(https?://[^:/[:space:]]+):[^@[:space:]]+@#\1:***REDACTED***@#g')
+  # truncate
+  if [ ${#s} -gt 200 ]; then
+    s="${s:0:200}...[truncated]"
+  fi
+  printf '%s' "$s"
+}
 
 # JSON 1行を blocked.jsonl に flock で排他追記
 log_block() {
@@ -60,13 +86,26 @@ log_block() {
   else
     bypass_reason_json="null"
   fi
-  local cmd_json
-  cmd_json=$(jq -nc --arg c "$CMD" '$c')
-  # macOS は flock 不在のため単純 append (POSIX O_APPEND は概ね atomic)
-  printf '{"timestamp":"%s","session_id":"%s","pattern_id":"%s","message":%s,"command":%s,"bypass_used":%s,"bypass_reason":%s}\n' \
-    "$timestamp" "$session_id" "$pattern_id" \
-    "$(jq -nc --arg m "$message" '$m')" \
-    "$cmd_json" "$bypass_used" "$bypass_reason_json" >> "$BLOCKED_LOG"
+  local cmd_redacted
+  cmd_redacted=$(redact_secrets "$CMD")
+  # 全フィールドを jq で一度に組み立て (log injection 対策)
+  jq -nc \
+    --arg ts "$timestamp" \
+    --arg sid "$session_id" \
+    --arg pid "$pattern_id" \
+    --arg msg "$message" \
+    --arg cmd "$cmd_redacted" \
+    --arg bu "$bypass_used" \
+    --arg br "$BYPASS_REASON" \
+    '{
+      timestamp: $ts,
+      session_id: $sid,
+      pattern_id: $pid,
+      message: $msg,
+      command: $cmd,
+      bypass_used: ($bu == "true"),
+      bypass_reason: (if $br == "" then null else $br end)
+    }' >> "$BLOCKED_LOG"
 }
 
 # パターンマッチ時の共通処理
