@@ -2,6 +2,10 @@
 # pre-dangerous-command-block.sh
 # PreToolUse: 破壊的コマンドをブロック（exit 2でツール実行を阻止）
 # 対象: rm -rf /, DROP TABLE/DATABASE, format/fdisk等
+#
+# WU-1 拡張 (2026-05-24):
+# - blocked.jsonl ロギング
+# - /hardgate-disable によるTTL付きバイパス
 
 INPUT=$(cat)
 TOOL=$(echo "$INPUT" | jq -r '.tool_name // ""')
@@ -16,113 +20,160 @@ if [ -z "$CMD" ]; then
   exit 0
 fi
 
-# パターン1: rm -rf / (ルートディレクトリの再帰的削除)
-if echo "$CMD" | grep -qE 'rm\s+(-[a-zA-Z]*r[a-zA-Z]*f|--recursive\s+--force|-[a-zA-Z]*f[a-zA-Z]*r)\s+/\s*$'; then
-  echo '[Hook] BLOCKED: rm -rf / は実行できません' >&2
-  exit 2
+# ========== Helper Functions ==========
+
+LOG_DIR="$HOME/.claude/.local/hooks/log"
+STATE_DIR="$HOME/.claude/.local/hooks/state"
+BYPASS_FILE="$STATE_DIR/hardgate_bypass.json"
+BLOCKED_LOG="$LOG_DIR/blocked.jsonl"
+
+mkdir -p "$LOG_DIR" "$STATE_DIR" 2>/dev/null
+
+# バイパスチェック: hardgate_bypass.json があり expires_at > now なら BYPASS=1
+BYPASS=0
+BYPASS_REASON=""
+if [ -f "$BYPASS_FILE" ]; then
+  EXPIRES_AT=$(jq -r '.expires_at // 0' "$BYPASS_FILE" 2>/dev/null)
+  NOW=$(date +%s)
+  if [ -n "$EXPIRES_AT" ] && [ "$EXPIRES_AT" -gt "$NOW" ] 2>/dev/null; then
+    BYPASS=1
+    BYPASS_REASON=$(jq -r '.reason // "no reason"' "$BYPASS_FILE" 2>/dev/null)
+  else
+    # 期限切れ → 自動削除
+    rm -f "$BYPASS_FILE" 2>/dev/null
+  fi
 fi
+
+# JSON 1行を blocked.jsonl に flock で排他追記
+log_block() {
+  local pattern_id="$1"
+  local message="$2"
+  local timestamp
+  timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+  local session_id
+  session_id=$(echo "$INPUT" | jq -r '.session_id // ""')
+  local bypass_used
+  if [ "$BYPASS" = "1" ]; then bypass_used="true"; else bypass_used="false"; fi
+  local bypass_reason_json
+  if [ -n "$BYPASS_REASON" ]; then
+    bypass_reason_json=$(jq -nc --arg r "$BYPASS_REASON" '$r')
+  else
+    bypass_reason_json="null"
+  fi
+  local cmd_json
+  cmd_json=$(jq -nc --arg c "$CMD" '$c')
+  # macOS は flock 不在のため単純 append (POSIX O_APPEND は概ね atomic)
+  printf '{"timestamp":"%s","session_id":"%s","pattern_id":"%s","message":%s,"command":%s,"bypass_used":%s,"bypass_reason":%s}\n' \
+    "$timestamp" "$session_id" "$pattern_id" \
+    "$(jq -nc --arg m "$message" '$m')" \
+    "$cmd_json" "$bypass_used" "$bypass_reason_json" >> "$BLOCKED_LOG"
+}
+
+# パターンマッチ時の共通処理
+# usage: try_block <pattern_id> <regex> <user_message>
+try_block() {
+  local pattern_id="$1"
+  local regex="$2"
+  local message="$3"
+  if echo "$CMD" | grep -qE "$regex"; then
+    log_block "$pattern_id" "$message"
+    if [ "$BYPASS" = "1" ]; then
+      echo "[Hook] BYPASS (reason: $BYPASS_REASON): $message" >&2
+      return 1  # bypass: don't block but log
+    fi
+    echo "[Hook] BLOCKED: $message" >&2
+    exit 2
+  fi
+}
+
+# SQL系は -qiE (大文字小文字無視)
+try_block_i() {
+  local pattern_id="$1"
+  local regex="$2"
+  local message="$3"
+  if echo "$CMD" | grep -qiE "$regex"; then
+    log_block "$pattern_id" "$message"
+    if [ "$BYPASS" = "1" ]; then
+      echo "[Hook] BYPASS (reason: $BYPASS_REASON): $message" >&2
+      return 1
+    fi
+    echo "[Hook] BLOCKED: $message" >&2
+    exit 2
+  fi
+}
+
+# ========== Pattern Matchers ==========
+
+# パターン1: rm -rf / (ルートディレクトリの再帰的削除)
+try_block "rm-rf-root" 'rm\s+(-[a-zA-Z]*r[a-zA-Z]*f|--recursive\s+--force|-[a-zA-Z]*f[a-zA-Z]*r)\s+/\s*$' \
+  'rm -rf / は実行できません'
 
 # パターン2: rm -rf /* (ルート直下のワイルドカード削除)
-if echo "$CMD" | grep -qE 'rm\s+(-[a-zA-Z]*r[a-zA-Z]*f|--recursive)\s+/\*'; then
-  echo '[Hook] BLOCKED: rm -rf /* は実行できません' >&2
-  exit 2
-fi
+try_block "rm-rf-rootstar" 'rm\s+(-[a-zA-Z]*r[a-zA-Z]*f|--recursive)\s+/\*' \
+  'rm -rf /* は実行できません'
 
 # パターン3: rm -rf ~ (ホームディレクトリの再帰的削除)
-if echo "$CMD" | grep -qE 'rm\s+(-[a-zA-Z]*r[a-zA-Z]*f|--recursive)\s+~/?\s*$'; then
-  echo '[Hook] BLOCKED: ホームディレクトリの再帰的削除は実行できません' >&2
-  exit 2
-fi
+try_block "rm-rf-home" 'rm\s+(-[a-zA-Z]*r[a-zA-Z]*f|--recursive)\s+~/?\s*$' \
+  'ホームディレクトリの再帰的削除は実行できません'
 
 # パターン4: SQL破壊系 (DROP TABLE/DATABASE)
-if echo "$CMD" | grep -qiE '(DROP\s+(TABLE|DATABASE|SCHEMA)\s|TRUNCATE\s+TABLE\s|DELETE\s+FROM\s+\S+\s*;?\s*$)'; then
-  echo '[Hook] BLOCKED: 破壊的SQLコマンドは直接実行できません。マイグレーションを使用してください' >&2
-  exit 2
-fi
+try_block_i "sql-destructive" '(DROP\s+(TABLE|DATABASE|SCHEMA)\s|TRUNCATE\s+TABLE\s|DELETE\s+FROM\s+\S+\s*;?\s*$)' \
+  '破壊的SQLコマンドは直接実行できません。マイグレーションを使用してください'
 
 # パターン5: ディスクフォーマット系
-if echo "$CMD" | grep -qE '(mkfs\.|fdisk\s|dd\s+if=.+of=/dev/)'; then
-  echo '[Hook] BLOCKED: ディスク操作コマンドは実行できません' >&2
-  exit 2
-fi
+try_block "disk-format" '(mkfs\.|fdisk\s|dd\s+if=.+of=/dev/)' \
+  'ディスク操作コマンドは実行できません'
 
 # パターン6: chmod 777 再帰的
-if echo "$CMD" | grep -qE 'chmod\s+(-R\s+)?777\s+/'; then
-  echo '[Hook] WARNING: chmod 777 はセキュリティリスクがあります' >&2
-  exit 2
-fi
+try_block "chmod-777" 'chmod\s+(-R\s+)?777\s+/' \
+  'chmod 777 はセキュリティリスクがあります'
 
 # パターン7: git push --force to main/master
-if echo "$CMD" | grep -qE 'git\s+push\s+.*--force.*\s+(main|master)'; then
-  echo '[Hook] BLOCKED: main/masterへのforce pushは実行できません' >&2
-  exit 2
-fi
+try_block "git-push-force-main" 'git\s+push\s+.*--force.*\s+(main|master)' \
+  'main/masterへのforce pushは実行できません'
 
-# パターン8: git push --force-with-lease to main/master（より安全だがmain/masterは禁止）
-if echo "$CMD" | grep -qE 'git\s+push\s+.*--force-with-lease.*\s+(main|master)\b'; then
-  echo '[Hook] BLOCKED: main/masterへの--force-with-leaseも禁止です' >&2
-  exit 2
-fi
+# パターン8: git push --force-with-lease to main/master
+try_block "git-push-force-with-lease-main" 'git\s+push\s+.*--force-with-lease.*\s+(main|master)\b' \
+  'main/masterへの--force-with-leaseも禁止です'
 
-# パターン9: git reset --hard origin/main|master (リモート追従のhard reset)
-if echo "$CMD" | grep -qE 'git\s+reset\s+--hard\s+(origin/)?(main|master)\b'; then
-  echo '[Hook] BLOCKED: main/masterへのhard resetは禁止（明示的にユーザー承認が必要）' >&2
-  exit 2
-fi
+# パターン9: git reset --hard origin/main|master
+try_block "git-reset-hard-main" 'git\s+reset\s+--hard\s+(origin/)?(main|master)\b' \
+  'main/masterへのhard resetは禁止（明示的にユーザー承認が必要）'
 
-# パターン10: git branch -D main|master / develop（保護ブランチの強制削除）
-if echo "$CMD" | grep -qE 'git\s+branch\s+(-D|-d\s+--force|--delete\s+--force)\s+(main|master|develop)\b'; then
-  echo '[Hook] BLOCKED: 保護ブランチ(main/master/develop)の強制削除は禁止' >&2
-  exit 2
-fi
+# パターン10: git branch -D main|master / develop
+try_block "git-branch-delete-protected" 'git\s+branch\s+(-D|-d\s+--force|--delete\s+--force)\s+(main|master|develop)\b' \
+  '保護ブランチ(main/master/develop)の強制削除は禁止'
 
 # パターン11: git push --delete でリモートのmain/master削除
-if echo "$CMD" | grep -qE 'git\s+push\s+\S+\s+(--delete|:)\s*(main|master)\b'; then
-  echo '[Hook] BLOCKED: リモートmain/masterの削除は禁止' >&2
-  exit 2
-fi
+try_block "git-push-delete-main" 'git\s+push\s+\S+\s+(--delete|:)\s*(main|master)\b' \
+  'リモートmain/masterの削除は禁止'
 
-# パターン12: git clean -fdx (untracked + .gitignore対象まで消す危険操作)
-if echo "$CMD" | grep -qE 'git\s+clean\s+(-[a-zA-Z]*f[a-zA-Z]*d[a-zA-Z]*x|-[a-zA-Z]*f[a-zA-Z]*x[a-zA-Z]*d|-[a-zA-Z]*x[a-zA-Z]*f[a-zA-Z]*d|-[a-zA-Z]*x[a-zA-Z]*d[a-zA-Z]*f|-[a-zA-Z]*d[a-zA-Z]*f[a-zA-Z]*x|-[a-zA-Z]*d[a-zA-Z]*x[a-zA-Z]*f)\b'; then
-  echo '[Hook] BLOCKED: git clean -fdx は.gitignore対象まで削除するため禁止（-fd までに留めてください）' >&2
-  exit 2
-fi
+# パターン12: git clean -fdx
+try_block "git-clean-fdx" 'git\s+clean\s+(-[a-zA-Z]*f[a-zA-Z]*d[a-zA-Z]*x|-[a-zA-Z]*f[a-zA-Z]*x[a-zA-Z]*d|-[a-zA-Z]*x[a-zA-Z]*f[a-zA-Z]*d|-[a-zA-Z]*x[a-zA-Z]*d[a-zA-Z]*f|-[a-zA-Z]*d[a-zA-Z]*f[a-zA-Z]*x|-[a-zA-Z]*d[a-zA-Z]*x[a-zA-Z]*f)\b' \
+  'git clean -fdx は.gitignore対象まで削除するため禁止（-fd までに留めてください）'
 
-# パターン13: git filter-branch / filter-repo（履歴書き換え）
-if echo "$CMD" | grep -qE 'git\s+(filter-branch|filter-repo)\b'; then
-  echo '[Hook] BLOCKED: 履歴書き換え（filter-branch/filter-repo）は明示的承認が必要' >&2
-  exit 2
-fi
+# パターン13: git filter-branch / filter-repo
+try_block "git-filter" 'git\s+(filter-branch|filter-repo)\b' \
+  '履歴書き換え（filter-branch/filter-repo）は明示的承認が必要'
 
-# パターン14: git config --global の user.* / safe.* 改変（CLAUDE.md「NEVER update the git config」）
-if echo "$CMD" | grep -qE 'git\s+config\s+(--global|--system)\b'; then
-  echo '[Hook] BLOCKED: git config --global/--system の変更は禁止（CLAUDE.md規約）' >&2
-  exit 2
-fi
+# パターン14: git config --global / --system
+try_block "git-config-global" 'git\s+config\s+(--global|--system)\b' \
+  'git config --global/--system の変更は禁止（CLAUDE.md規約）'
 
-# パターン15: git update-ref / symbolic-ref で main/master を直接書き換え
-if echo "$CMD" | grep -qE 'git\s+(update-ref|symbolic-ref)\s+(refs/heads/)?(main|master)\b'; then
-  echo '[Hook] BLOCKED: main/masterのref直接書き換えは禁止' >&2
-  exit 2
-fi
+# パターン15: git update-ref / symbolic-ref で main/master 直接書き換え
+try_block "git-update-ref-main" 'git\s+(update-ref|symbolic-ref)\s+(refs/heads/)?(main|master)\b' \
+  'main/masterのref直接書き換えは禁止'
 
-# パターン16: git reflog expire --expire=now --all（reflog全削除でリカバリ不可に）
-if echo "$CMD" | grep -qE 'git\s+reflog\s+expire\s+.*--expire=now.*--all'; then
-  echo '[Hook] BLOCKED: reflog全削除はリカバリ不可になるため禁止' >&2
-  exit 2
-fi
+# パターン16: git reflog expire --expire=now --all
+try_block "git-reflog-expire-all" 'git\s+reflog\s+expire\s+.*--expire=now.*--all' \
+  'reflog全削除はリカバリ不可になるため禁止'
 
-# パターン17: git commit --amend after push（明示メッセージで警告）
-# ※確実な検出は困難なので、--no-verify との併用のみブロック
-if echo "$CMD" | grep -qE 'git\s+commit\s+.*--amend.*--no-verify'; then
-  echo '[Hook] BLOCKED: --amend と --no-verify の併用は禁止（フックスキップ＋履歴改変）' >&2
-  exit 2
-fi
+# パターン17: git commit --amend --no-verify
+try_block "git-amend-no-verify" 'git\s+commit\s+.*--amend.*--no-verify' \
+  '--amend と --no-verify の併用は禁止（フックスキップ＋履歴改変）'
 
-# パターン18: git push --no-verify (フックスキップ)
-if echo "$CMD" | grep -qE 'git\s+push\s+.*--no-verify\b'; then
-  echo '[Hook] BLOCKED: git push --no-verify は禁止（フックをスキップしないこと）' >&2
-  exit 2
-fi
+# パターン18: git push --no-verify
+try_block "git-push-no-verify" 'git\s+push\s+.*--no-verify\b' \
+  'git push --no-verify は禁止（フックをスキップしないこと）'
 
 exit 0
