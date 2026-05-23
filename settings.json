@@ -125,7 +125,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ~/.claude/hooks/userPromptSubmit-phase-gate.sh",
+            "command": "bash ~/.claude/hooks/pre-prompt-phase-gate.sh",
             "timeout": 5
           }
         ]
@@ -208,7 +208,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ~/.claude/hooks/postToolUseFailure-escalate.sh",
+            "command": "bash ~/.claude/hooks/post-failure-escalate.sh",
             "timeout": 3
           }
         ]
@@ -305,7 +305,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ~/.claude/hooks/taskCompleted-compound.sh",
+            "command": "bash ~/.claude/hooks/stop-subagent-compound.sh",
             "timeout": 5
           }
         ]

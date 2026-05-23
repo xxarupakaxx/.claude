@@ -1,6 +1,6 @@
 #!/bin/bash
-# userPromptSubmit-phase-gate.sh
-# UserPromptSubmit: Phase 2 (計画) 未完での実装着手を警告 (exit 1, ブロックではない)
+# pre-prompt-phase-gate.sh
+# UserPromptSubmit event: Phase 2 (計画) 未完での実装着手を警告 (exit 1, ブロックではない)
 #
 # 検出: 「実装」「コード書く」「ファイル作成」系のキーワードを含むユーザープロンプト
 # 条件: 直近メモリディレクトリの 05_log.md に "## Phase 2: 計画完了" マーカーが無い
@@ -23,14 +23,20 @@ if [ "$CLAUDE_SKIP_PHASE_GATE" = "1" ]; then
 fi
 
 # 「実装」系キーワード判定（過剰検知を避けるため、限定的に）
-if ! echo "$PROMPT" | grep -qE '実装してください|実装して下さい|コード書いて|ファイル作成して|機能追加して|機能を追加して|ファイルを作って' ; then
+# 日本語 + 英語の両方をカバー
+if ! echo "$PROMPT" | grep -qE '実装してください|実装して下さい|コード書いて|ファイル作成して|機能追加して|機能を追加して|ファイルを作って|implement (this|the|a )|create (this|the|a )?file|build (this|the) feature' ; then
   exit 0
 fi
 
-# 直近メモリディレクトリの 05_log.md 探索
+# 直近メモリディレクトリの 05_log.md 探索 (空白入りパス対応)
 LATEST_LOG=""
 if [ -d "$HOME/.claude/.local/memory" ]; then
-  LATEST_LOG=$(find "$HOME/.claude/.local/memory" -name "05_log.md" -type f 2>/dev/null | xargs -I{} stat -f "%m {}" {} 2>/dev/null | sort -rn | head -1 | awk '{print $2}')
+  # macOS: stat -f "%m %N" / Linux: stat -c "%Y %n"
+  if stat -f "%m %N" /dev/null > /dev/null 2>&1; then
+    LATEST_LOG=$(find "$HOME/.claude/.local/memory" -name "05_log.md" -type f -exec stat -f "%m %N" {} \; 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2-)
+  else
+    LATEST_LOG=$(find "$HOME/.claude/.local/memory" -name "05_log.md" -type f -exec stat -c "%Y %n" {} \; 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2-)
+  fi
 fi
 
 # 05_log.md 不在 → 軽量タスクとみなして素通り (R003 残存リスクとして許容、CALIB で再評価)
@@ -38,8 +44,8 @@ if [ -z "$LATEST_LOG" ] || [ ! -f "$LATEST_LOG" ]; then
   exit 0
 fi
 
-# Phase 2 完了マーカーチェック
-if grep -qE '^##\s*Phase 2:?\s*(計画完了|Plan完了|完了)' "$LATEST_LOG" 2>/dev/null; then
+# Phase 2 完了マーカーチェック (語彙拡張)
+if grep -qE '^##\s*Phase 2:?\s*(計画完了|Plan完了|完了|完了済|終了|Done)' "$LATEST_LOG" 2>/dev/null; then
   exit 0
 fi
 

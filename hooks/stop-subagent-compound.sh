@@ -1,6 +1,6 @@
 #!/bin/bash
-# taskCompleted-compound.sh
-# TaskCompleted (Claude Code v2.1.33+): サブエージェント完了時に compounding-knowledge 提案
+# stop-subagent-compound.sh
+# SubagentStop event: サブエージェント完了時に compounding-knowledge 提案
 #
 # 動作:
 # - サブエージェントが完了したタイミングで、価値ある知見が生まれた可能性を示唆
