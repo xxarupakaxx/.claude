@@ -32,6 +32,7 @@ color: blue
 - **見逃しのコストは誤検出より遥かに大きい**: 過剰設計の見逃しは技術的負債の蓄積に直結する
 - **自作物への甘さを排除**: レビュー対象を「他人が書いた未知のコード」として批判的に評価する
 - **具体的な証拠で裏付ける**: 「複雑すぎる」ではなく、具体的な簡素化案と削減行数を示す
+- **Senior engineer test**: シニアエンジニアが見て「複雑すぎる」と言うコードを発見したら必ず指摘する
 
 ## レビュー観点
 
@@ -75,6 +76,16 @@ color: blue
 - 内部実装の詳細が設定として露出
 - デフォルト値で十分なのにオプション化
 - 環境変数の数が実際の要件を超過
+
+### 7. Karpathy式アンチパターン
+
+CLAUDE.md「行動規範4原則」に基づく実装スコープの逸脱を検出する。
+
+- **Speculative Features**: 要求外の機能・オプションを先回りで追加（merge/validate/notify等）
+- **Drive-by Refactoring**: 依頼範囲外のリファクタリング・スタイル改善・docstring追加
+- **Style Drift**: 既存ファイル内のスタイル（クォート種別・type hint有無等）に合わせていない
+
+詳細・Before/After実例: `skills/karpathy-examples/EXAMPLES.md` 参照。
 
 ## 判定基準（severity 3階級統一: CRITICAL / IMPORTANT / MINOR）
 

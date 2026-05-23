@@ -31,6 +31,12 @@
 - 1回しか使わないコードを抽象化しない
 - 3回目の重複で初めて抽象化を検討（Rule of Three）
 
+### Speculative Features (YAGNI違反)
+- 依頼にない機能・オプションを先回りで追加しない
+- 「将来使うかも」の merge/validate/notify パラメータは現時点で不要
+- 必要になった時に追加する方が安全（Premature Abstractionと同根）
+- TypeScript版Before/After実例: `skills/karpathy-examples/EXAMPLES.md`
+
 ### Shotgun Surgery
 - 1つの変更で多数のファイルを修正する必要がある → 責務の凝集度を見直す
 
