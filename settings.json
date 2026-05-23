@@ -10,6 +10,11 @@
     "BARK_ENCRYPT_IV": "92719143e89baa31",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
   },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "model": "claude-opus-4-7",
   "skillOverrides": {
     "analyse": "off",
     "analyse-problem": "off",
@@ -17,11 +22,6 @@
     "why": "off",
     "plan-do-check-act": "off"
   },
-  "attribution": {
-    "commit": "",
-    "pr": ""
-  },
-  "model": "claude-opus-4-7",
   "hooks": {
     "PreToolUse": [
       {
@@ -316,12 +316,25 @@
     "type": "command",
     "command": "bash ~/.claude/statusline-command.sh"
   },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true,
+    "session-report@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    }
+  },
   "language": "japanese Explanatory learning",
-  "effortLevel": "max",
   "plansDirectory": "./.local/plans",
   "skipDangerousModePermissionPrompt": true,
   "theme": "light",
   "remoteControlAtStartup": true,
+  "skipAutoPermissionPrompt": true,
   "voiceEnabled": false,
   "allowedTools": [
     "Bash(cd:*)",
@@ -384,6 +397,5 @@
     "Bash(jq:*)",
     "Bash(rg:*)",
     "Bash(afplay:*)"
-  ],
-  "skipAutoPermissionPrompt": true
+  ]
 }
