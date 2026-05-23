@@ -120,8 +120,9 @@ graph TD
 - **Blueprint Phase 4（Adversarial Review）** → `workflow-rules.md`のレビューアー選択ガイドに従う
 - **Cold-Start Brief** → Phase 0の「コンテキスト復元」で読み込まれる
 
-## `/large-task`との違い
+## 大規模タスクへの対応 (large-task merged)
 
-- `/large-task`: セッション分割 + タスクテンプレート（実装寄り）
-- `/blueprint`: 依存グラフ + cold-start brief + adversarial review（設計寄り）
-- 両方を組み合わせ可能: blueprint → large-task で各WUを実装
+blueprint は単発の大規模タスク（多セッション分割が必要なもの）にも対応する:
+- WU=1 でも cold-start brief 形式で生成可能
+- セッション分割 + タスクテンプレートは Cold-Start Brief で代替
+- 「複数セッションかかる単発実装」はそのまま blueprint を使う（旧 large-task の役割）

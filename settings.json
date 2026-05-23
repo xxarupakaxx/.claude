@@ -10,6 +10,13 @@
     "BARK_ENCRYPT_IV": "92719143e89baa31",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
   },
+  "skillOverrides": {
+    "analyse": "off",
+    "analyse-problem": "off",
+    "cause-and-effect": "off",
+    "why": "off",
+    "plan-do-check-act": "off"
+  },
   "attribution": {
     "commit": "",
     "pr": ""
