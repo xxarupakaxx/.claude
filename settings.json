@@ -14,7 +14,6 @@
     "commit": "",
     "pr": ""
   },
-  "model": "claude-opus-4-7",
   "skillOverrides": {
     "analyse": "off",
     "analyse-problem": "off",
@@ -319,7 +318,8 @@
   "enabledPlugins": {
     "typescript-lsp@claude-plugins-official": true,
     "session-report@claude-plugins-official": true,
-    "claude-md-management@claude-plugins-official": true
+    "claude-md-management@claude-plugins-official": true,
+    "atlassian@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
@@ -336,6 +336,14 @@
   "remoteControlAtStartup": true,
   "skipAutoPermissionPrompt": true,
   "voiceEnabled": false,
+  "mcpServers": {
+    "workflow-html-app": {
+      "command": "node",
+      "args": [
+        "/Users/yoshiki.morii/.claude/mcp-servers/workflow-html-app/dist/main.js"
+      ]
+    }
+  },
   "allowedTools": [
     "Bash(cd:*)",
     "Bash(sqlite3:*)",
@@ -397,5 +405,6 @@
     "Bash(jq:*)",
     "Bash(rg:*)",
     "Bash(afplay:*)"
-  ]
+  ],
+  "model": "sonnet"
 }
