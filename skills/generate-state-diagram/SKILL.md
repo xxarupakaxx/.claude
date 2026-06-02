@@ -1,6 +1,6 @@
 ---
 name: generate-state-diagram
-description: ブランチの変更内容からMermaid状態図・処理フロー図・ドメインモデル図を自動生成する
+description: ブランチの変更内容からMermaid状態図・処理フロー図・ドメインモデル図を自動生成する。HTMLビューア表示にも対応。
 triggers:
   - "状態図生成"
   - "state diagram"
@@ -9,6 +9,7 @@ triggers:
   - "ドメインモデル図"
   - "domain model"
 invocation: user
+allowed-tools: Read, Bash, Glob, Grep, Write, mcp__mermaid-mcp__validate_and_render_mermaid_diagram, mcp__workflow-html-app__view-diagram
 ---
 
 # ブランチ状態図・処理フロー図・ドメインモデル図生成スキル
@@ -142,6 +143,21 @@ git log <BASE_BRANCH>..HEAD --oneline
 - `.draft.md` を rename して正式ファイル化
 - 検証ログを併存保存
 - 警告コメントが残っている場合はユーザーに**明示的に通知**
+
+### Step 8: HTMLビューア表示（オプション）
+
+Mermaid図をインタラクティブなHTMLビューアで表示する。ズーム・パン操作が可能。
+
+```
+mcp__workflow-html-app__view-diagram(
+  mermaidCode: "<Mermaidコード>",
+  title: "<図のタイトル>"
+)
+```
+
+- 複数の図がある場合は、メイン図（全体フロー）を優先して表示
+- ユーザーが明示的にHTMLビューアを要求した場合、または大規模な図の場合に使用
+- Validator PASSしたMermaidコードのみを渡すこと
 
 ## 出力テンプレート
 
