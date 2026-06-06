@@ -9,7 +9,7 @@ triggers:
   - "ドメインモデル図"
   - "domain model"
 invocation: user
-allowed-tools: Read, Bash, Glob, Grep, Write, mcp__mermaid-mcp__validate_and_render_mermaid_diagram, mcp__workflow-html-app__view-diagram
+allowed-tools: Read, Bash, Glob, Grep, Write, mcp__workflow-html-app__view-diagram
 ---
 
 # ブランチ状態図・処理フロー図・ドメインモデル図生成スキル
@@ -69,7 +69,7 @@ git log <BASE_BRANCH>..HEAD --oneline
 | シーケンス | 複数システム間の時系列やり取り | sequenceDiagram |
 | ドメインモデル | エンティティ/集約の関連がある場合 | classDiagram or erDiagram |
 
-**Mermaid 構文ルール (CRITICAL)**: `references/mermaid-syntax.md` 参照。
+**Mermaid 構文ルール**: `references/mermaid-syntax.md` 参照。
 日本語ラベル・state命名・flowchartノードID・classDiagram関連表現の罠を回避する。
 
 ### Step 4: 各図の生成
@@ -121,30 +121,11 @@ git log <BASE_BRANCH>..HEAD --oneline
 判定ロジック、分類定義、計算式、マッピングテーブルなど。
 コードを読まなくても理解できるレベルの説明を記載。
 
-### Step 6: ドラフト保存（Validator前）
+### Step 6: 最終保存
 
-メモリディレクトリの `91_state_diagram.md` （または指定ファイル名）にドラフトとして保存する。次の Step 6.5 で構文検証してから最終確定する。
+メモリディレクトリの `91_state_diagram.md` （または指定ファイル名）に保存する。
 
-> 既存ファイルがある場合は `.draft.md` に保存し、Validator PASS 後に rename する案も可。
-
-### Step 6.5: Mermaid Validator ループ（CRITICAL・必須）
-
-**生成して終わり** ではなく、**MCP server で構文検証してから完了** とする。
-詳細手順: `references/validator-loop.md` 参照。
-
-要点:
-- ```mermaid ... ``` ブロックを全抽出 → 順次 `mcp__mermaid-mcp__validate_and_render_mermaid_diagram` に投入
-- エラーは典型パターンに沿って修正 → 再投入（最大3ラウンド）
-- 3ラウンド失敗時は警告コメント残して続行
-- 検証ログを `<filename>.validation.log` に保存
-
-### Step 7: Validator PASS 後の最終保存
-
-- `.draft.md` を rename して正式ファイル化
-- 検証ログを併存保存
-- 警告コメントが残っている場合はユーザーに**明示的に通知**
-
-### Step 8: HTMLビューア表示（オプション）
+### Step 7: HTMLビューア表示（オプション）
 
 Mermaid図をインタラクティブなHTMLビューアで表示する。ズーム・パン操作が可能。
 
@@ -157,7 +138,6 @@ mcp__workflow-html-app__view-diagram(
 
 - 複数の図がある場合は、メイン図（全体フロー）を優先して表示
 - ユーザーが明示的にHTMLビューアを要求した場合、または大規模な図の場合に使用
-- Validator PASSしたMermaidコードのみを渡すこと
 
 ## 出力テンプレート
 
@@ -195,7 +175,6 @@ mcp__workflow-html-app__view-diagram(
 - **「なぜ」の説明**: WHAT だけでなく WHY を必ず含める
 - **具体性**: 抽象的でなく具体的な記述
 - **用語集の充実**: 社内用語・略語を全て定義
-- **Mermaid 構文検証済み**: Step 6.5 で validator 通過 or 警告コメント付き
 - **Mermaid互換**: GitHub/VSCode/Notionでそのままレンダリング可能
 - **既存機能との区別**: 新規追加と既存機能を明確に区別
 - **エラーケース記載**: 正常系だけでなく失敗時の動作も図に含める
@@ -203,4 +182,3 @@ mcp__workflow-html-app__view-diagram(
 ## 参考
 
 - `references/mermaid-syntax.md`: Mermaid 構文ルール 1-4 + 頻出エラーパターン
-- `references/validator-loop.md`: Validator ループ詳細手順
