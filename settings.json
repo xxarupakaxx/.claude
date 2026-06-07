@@ -14,6 +14,7 @@
     "commit": "",
     "pr": ""
   },
+  "model": "opus[1m]",
   "skillOverrides": {
     "analyse": "off",
     "analyse-problem": "off",
@@ -338,9 +339,10 @@
   "voiceEnabled": false,
   "mcpServers": {
     "workflow-html-app": {
-      "command": "node",
+      "command": "bash",
       "args": [
-        "/Users/yoshiki.morii/.claude/mcp-servers/workflow-html-app/dist/main.js"
+        "-c",
+        "exec node \"$HOME/.claude/mcp-servers/workflow-html-app/dist/main.js\""
       ]
     }
   },
@@ -405,6 +407,5 @@
     "Bash(jq:*)",
     "Bash(rg:*)",
     "Bash(afplay:*)"
-  ],
-  "model": "sonnet"
+  ]
 }
