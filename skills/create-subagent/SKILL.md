@@ -1,12 +1,12 @@
 ---
 name: create-subagent
-description: 自然言語の要件から ~/.claude/agents/<name>.md 雛形を生成するメタスキル。YAML frontmatter（name/description/tools/model/color）+ 起動条件 + 出力フォーマット + Tier 1/2/3レビュー姿勢 + スコアリングルーブリックを含むベストプラクティス準拠の雛形を作る。使用タイミング: (1) 新しいサブエージェントを追加したいとき、(2) /create-subagent <要件> 実行時、(3) 「サブエージェントを作って」「専門エージェントを追加」「reviewer を作って」等の依頼時。create-skill の派生としてエージェント定義に特化。
+description: 自然言語の要件から ~/.Codex/agents/<name>.md 雛形を生成するメタスキル。YAML frontmatter（name/description/tools/model/color）+ 起動条件 + 出力フォーマット + Tier 1/2/3レビュー姿勢 + スコアリングルーブリックを含むベストプラクティス準拠の雛形を作る。使用タイミング: (1) 新しいサブエージェントを追加したいとき、(2) /create-subagent <要件> 実行時、(3) 「サブエージェントを作って」「専門エージェントを追加」「reviewer を作って」等の依頼時。create-skill の派生としてエージェント定義に特化。
 allowed-tools: Read, Write, Glob, Grep, AskUserQuestion
 ---
 
 # Create Subagent
 
-自然言語の要件から `~/.claude/agents/<name>.md` 雛形を生成するメタスキル。
+自然言語の要件から `~/.Codex/agents/<name>.md` 雛形を生成するメタスキル。
 
 ## 既存設定との関係
 
@@ -39,14 +39,14 @@ allowed-tools: Read, Write, Glob, Grep, AskUserQuestion
 | Tier 3 | セキュリティ・PRDレビュー・複雑判断 | **opus** |
 | Explorer | ファイル検索・パターンマッチ | haiku |
 
-判定指針: `~/.claude/rules/model-routing.md` を参照。
+判定指針: `~/.Codex/rules/model-routing.md` を参照。
 
 ### Step 3: name / description 設計
 
 **name 規約:**
 - 小文字・ハイフン・数字のみ（64文字以下）
 - 役割を即座に判別できる名前（例: `dependency-mapper`, `api-contract-reviewer`）
-- 既存 `~/.claude/agents/` と重複しないこと（Glob で確認）
+- 既存 `~/.Codex/agents/` と重複しないこと（Glob で確認）
 
 **description 規約（CRITICAL）:**
 - 3人称・1024文字以内・XMLタグ不可
@@ -67,7 +67,7 @@ allowed-tools: Read, Write, Glob, Grep, AskUserQuestion
 
 ### Step 5: 配置と確認
 
-- 配置先: `~/.claude/agents/<name>.md`
+- 配置先: `~/.Codex/agents/<name>.md`
 - 既存ファイル上書き時は AskUserQuestion で確認
 - 作成後、起動方法（Task tool での呼び出し例）を報告
 
@@ -125,6 +125,6 @@ allowed-tools: Read, Write, Glob, Grep, AskUserQuestion
 - `create-skill` — スキル生成の姉妹（本スキルはエージェント生成版）
 - `create-hook` — Hook 雛形生成
 - `create-mcp-server` — MCPサーバ雛形生成
-- `~/.claude/rules/model-routing.md` — model 選定基準
-- `~/.claude/rules/architecture-language.md` — 共通語彙
-- 既存例: `~/.claude/agents/security-reviewer.md`, `learnings-researcher.md`, `arch-reviewer.md`
+- `~/.Codex/rules/model-routing.md` — model 選定基準
+- `~/.Codex/rules/architecture-language.md` — 共通語彙
+- 既存例: `~/.Codex/agents/security-reviewer.md`, `learnings-researcher.md`, `arch-reviewer.md`

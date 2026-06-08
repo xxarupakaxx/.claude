@@ -1,6 +1,6 @@
 ---
 name: documentation
-description: ドキュメント更新。コード変更後にnpm script/環境変数/API追加を検出した場合に使用。CLAUDE.md/README.md/API仕様の同期を支援。
+description: ドキュメント更新。コード変更後にnpm script/環境変数/API追加を検出した場合に使用。AGENTS.md/README.md/API仕様の同期を支援。
 allowed-tools: Read, Write, Bash, Glob, Grep
 ---
 
@@ -28,17 +28,17 @@ git diff <base-branch>
 
 | カテゴリ | 例 | 更新対象 |
 |---------|-----|---------|
-| コマンド変更 | npm script追加 | CLAUDE.md, README.md |
+| コマンド変更 | npm script追加 | AGENTS.md, README.md |
 | API変更 | エンドポイント追加 | API仕様書 |
 | 設定変更 | 環境変数追加 | README.md |
-| アーキテクチャ変更 | 新規レイヤー | CLAUDE.md |
+| アーキテクチャ変更 | 新規レイヤー | AGENTS.md |
 
 ### 3. 更新提案の作成
 
 ```markdown
 ## ドキュメント更新提案
 
-### CLAUDE.md
+### AGENTS.md
 **現在:**
 ```
 npm run lint

@@ -21,7 +21,7 @@ description: "Karpathy 4原則違反のTypeScript Before/After実例集。code-s
 
 ## 関連
 
-主原則本体は `~/.claude/CLAUDE.md` の「行動規範（4原則）」セクション（SSoT）。
+主原則本体は `~/.Codex/AGENTS.md` の「行動規範（4原則）」セクション（SSoT）。
 
 参照規約:
 - `rules/common-patterns.md`（Speculative Features アンチパターン）
