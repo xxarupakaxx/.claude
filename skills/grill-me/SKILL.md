@@ -36,7 +36,7 @@ description: "計画・設計のストレステスト。決定木の各ブラン
 
 ### 3. 重要判断が確定した時 → ADR
 
-以下の3条件を**全て**満たす判断のみADR化（`~/.claude/rules/adr-criteria.md`参照）:
+以下の3条件を**全て**満たす判断のみADR化（`~/.Codex/rules/adr-criteria.md`参照）:
 1. **Hard to reverse**: 後戻りが困難（DB schema, API 仕様, 言語選定など）
 2. **Surprising without context**: 背景なしには驚かれる選択
 3. **Result of real trade-off**: 複数案を実質比較した結果
@@ -46,4 +46,4 @@ description: "計画・設計のストレステスト。決定木の各ブラン
 ### 4. タイミング
 
 - 質問1問ごとに即時記録ではなく、**1つの決定木ブランチが解決した時点**で反映
-- ユーザーに「今の合意をCONTEXT/ADRに記録していい？」と確認してから書く（CLAUDE.md知見ファイルEdit禁止ポリシーに準拠）
+- ユーザーに「今の合意をCONTEXT/ADRに記録していい？」と確認してから書く（AGENTS.md知見ファイルEdit禁止ポリシーに準拠）

@@ -11,6 +11,24 @@ git clone <this-repo> ~/.claude
 # または既存の~/.claude/にマージ
 ```
 
+### Codex / ~/.agents の SSoT セットアップ
+
+Codex は user skills を `~/.agents/skills` から読みます。このリポジトリでは
+`~/.claude/skills` を SSoT として git 管理し、`~/.agents/skills` はそこへの
+symlink にします。
+
+```bash
+~/.claude/scripts/setup-agents-ssot.sh
+```
+
+既存の `~/.agents/skills` を先に `~/.claude/skills` へ取り込む場合:
+
+```bash
+~/.claude/scripts/setup-agents-ssot.sh --import-existing
+```
+
+既存の `~/.agents/skills` は `~/.agents/skills.backup-YYYYMMDD-HHMMSS` に退避されます。
+
 ## 構成
 
 ```

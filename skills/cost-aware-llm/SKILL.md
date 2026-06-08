@@ -8,7 +8,7 @@ description: LLMコスト最適化。サブエージェントに haiku/sonnet/op
 サブエージェント起動時の **モデル選択判断スキル**。
 全タスクに Opus は不要。タスク複雑度で haiku/sonnet/opus を使い分けてコストを最適化する。
 
-詳細ルールは `~/.claude/rules/model-routing.md` に集約済み。本スキルは判断の起点として使う。
+詳細ルールは `~/.Codex/rules/model-routing.md` に集約済み。本スキルは判断の起点として使う。
 
 ## クイック判断
 
@@ -43,5 +43,5 @@ description: LLMコスト最適化。サブエージェントに haiku/sonnet/op
 
 ## 関連
 
-- `~/.claude/rules/model-routing.md` — 詳細な選択基準とサブエージェント別の割り当て
+- `~/.Codex/rules/model-routing.md` — 詳細な選択基準とサブエージェント別の割り当て
 - Tier 1-3 レビューアーは既に sonnet で十分な品質（懐疑姿勢+ルーブリック搭載済）

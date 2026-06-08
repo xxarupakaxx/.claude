@@ -5,6 +5,8 @@
 !/settings.json
 !/setup.sh
 !/statusline-command.sh
+!/scripts/
+!/scripts/**
 !/commands/
 !/commands/**
 !/context/

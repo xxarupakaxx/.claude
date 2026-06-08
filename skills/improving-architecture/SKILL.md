@@ -10,7 +10,7 @@ allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Task
 
 ## CRITICAL: 用語の統一
 
-このスキルでは `~/.claude/rules/architecture-language.md` の語彙を使う。
+このスキルでは `~/.Codex/rules/architecture-language.md` の語彙を使う。
 全ての分析・提案で以下の用語を一貫して使用すること:
 
 - **Module（モジュール）**: 一定の責務を持つコード単位
@@ -126,7 +126,7 @@ rg "^import.*from '@/foo/internals'" --count-matches
 
 ## Phase 5: ADR化（重要判断時のみ）
 
-`~/.claude/rules/adr-criteria.md` の3条件を確認:
+`~/.Codex/rules/adr-criteria.md` の3条件を確認:
 1. **Hard to reverse**（後戻りが困難）
 2. **Surprising without context**（背景なしには驚かれる選択）
 3. **Result of real trade-off**（複数案の比較が実質的に行われた）
@@ -142,7 +142,7 @@ rg "^import.*from '@/foo/internals'" --count-matches
 
 ### 6.2 検証
 
-CLAUDE.mdワークフロー Phase 4と統合:
+AGENTS.mdワークフロー Phase 4と統合:
 - lint/format/typecheck/test
 - 専門サブエージェント（`arch-reviewer` 必須）でレビュー
 - Sprint Contractがあれば `/verify`

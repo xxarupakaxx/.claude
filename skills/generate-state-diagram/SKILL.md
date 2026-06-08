@@ -123,11 +123,16 @@ git log <BASE_BRANCH>..HEAD --oneline
 
 ### Step 6: 最終保存
 
-メモリディレクトリの `91_state_diagram.md` （または指定ファイル名）に保存する。
+メモリディレクトリに **標準で以下の2ファイルを保存する**。
 
-### Step 7: HTMLビューア表示（オプション）
+- `91_state_diagram.md`: GitHub/VSCode/Notionでそのまま読めるMarkdown版
+- `91_state_diagram.html`: Mermaid図をブラウザで確認できるHTML版
 
-Mermaid図をインタラクティブなHTMLビューアで表示する。ズーム・パン操作が可能。
+**CRITICAL**: `/generate-state-diagram` 実行時は、ユーザーが明示的に不要と言わない限り `.html` も必ず生成する。Markdownだけで完了しない。
+
+### Step 7: HTML生成・ビューア表示（標準）
+
+Mermaid図をインタラクティブなHTMLビューアまたは静的HTMLで表示する。ズーム・パン操作が可能なビューアが使える場合は優先する。
 
 ```
 mcp__workflow-html-app__view-diagram(
@@ -137,7 +142,9 @@ mcp__workflow-html-app__view-diagram(
 ```
 
 - 複数の図がある場合は、メイン図（全体フロー）を優先して表示
-- ユーザーが明示的にHTMLビューアを要求した場合、または大規模な図の場合に使用
+- `mcp__workflow-html-app__view-diagram` が使える環境では、メイン図をビューア表示する
+- MCPビューアが使えない、または複数図を1つの成果物として渡したい場合は、`91_state_diagram.md` の内容を静的HTML化して `91_state_diagram.html` を保存する
+- 最終報告では `.md` と `.html` の両方のパスを提示する
 
 ## 出力テンプレート
 
@@ -167,6 +174,9 @@ mcp__workflow-html-app__view-diagram(
 
 ## N+1. ファイル構成マップ
 （ツリー表示 + 1行コメント）
+
+## N+2. HTML出力
+同じ内容を `91_state_diagram.html` として保存し、ブラウザで確認できるようにする。
 ```
 
 ## 出力の品質基準（CRITICAL）

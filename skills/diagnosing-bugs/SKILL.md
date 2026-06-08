@@ -79,7 +79,7 @@ allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Task, WebFetch, WebSearch
 
 絞り込み中に追加観測が必要なら:
 - `console.log`/`logger.debug`/`println` を該当箇所に注入
-- **後で必ず削除**（CLAUDE.md禁止事項: 本番コードへのconsole.log残存）
+- **後で必ず削除**（AGENTS.md禁止事項: 本番コードへのconsole.log残存）
 - 一時的なトレースは `// TRACE-DIAGNOSE-XXXX` コメントで識別可能にしておく
 
 ## Phase 4: 仮説の検証と根本原因
@@ -108,7 +108,7 @@ allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Task, WebFetch, WebSearch
 ### 5.1 テストで再発防止
 
 - Phase 2で作った「最小再現」を**そのまま回帰テストに昇格**
-- テストランナーで永続化（CLAUDE.mdワークフローのPhase 4品質確認に組み込む）
+- テストランナーで永続化（AGENTS.mdワークフローのPhase 4品質確認に組み込む）
 
 ### 5.2 トレースの削除
 

@@ -45,7 +45,7 @@ git diff $BASE_BRANCH --name-only > /tmp/adv_files.txt
 mkdir -p ${MEMORY_DIR}/memory/<task>/adv
 ```
 
-CLAUDE.md と PJ ルールを読み込んで、Phase 2 のプロンプトに含める。
+AGENTS.md と PJ ルールを読み込んで、Phase 2 のプロンプトに含める。
 
 ### Phase 2: Red 起動（直列、最初は Red 単独）
 

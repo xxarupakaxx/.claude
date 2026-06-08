@@ -48,7 +48,7 @@ description: |
 
 以下の4つのサブエージェント（`general-purpose`）を**並列**で起動。
 **コスト最適化のため、Agentツール呼び出し時に必ず`model`パラメータを指定すること**
-（未指定だとOpusで起動されコスト増大）。割当は`~/.claude/rules/model-routing.md`に準拠。
+（未指定だとOpusで起動されコスト増大）。割当は`~/.Codex/rules/model-routing.md`に準拠。
 
 #### 2-1: Solution Extractor (`model: "sonnet"`)
 ```

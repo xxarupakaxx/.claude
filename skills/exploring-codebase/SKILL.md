@@ -41,7 +41,7 @@ description: コードベースの構造・パターン・依存関係を3つの
 
 #### Agent 1: Architecture Explorer
 
-**エージェント定義**: `~/.claude/agents/architecture-explorer.md`
+**エージェント定義**: `~/.Codex/agents/architecture-explorer.md`
 
 **プロンプトテンプレート**:
 ```
@@ -51,13 +51,13 @@ description: コードベースの構造・パターン・依存関係を3つの
 関心事: {keywords}（なければ全体像把握）
 深さ: {depth}
 
-~/.claude/agents/architecture-explorer.md の調査項目・出力形式に従って調査してください。
+~/.Codex/agents/architecture-explorer.md の調査項目・出力形式に従って調査してください。
 エージェント定義ファイルを最初に読み込んでから作業を開始すること。
 ```
 
 #### Agent 2: Data Flow Tracer
 
-**エージェント定義**: `~/.claude/agents/data-flow-tracer.md`
+**エージェント定義**: `~/.Codex/agents/data-flow-tracer.md`
 
 **プロンプトテンプレート**:
 ```
@@ -67,13 +67,13 @@ description: コードベースの構造・パターン・依存関係を3つの
 関心事: {keywords}（なければ主要フローを追跡）
 深さ: {depth}
 
-~/.claude/agents/data-flow-tracer.md の調査項目・出力形式に従って調査してください。
+~/.Codex/agents/data-flow-tracer.md の調査項目・出力形式に従って調査してください。
 エージェント定義ファイルを最初に読み込んでから作業を開始すること。
 ```
 
 #### Agent 3: Dependency Mapper
 
-**エージェント定義**: `~/.claude/agents/dependency-mapper.md`
+**エージェント定義**: `~/.Codex/agents/dependency-mapper.md`
 
 **プロンプトテンプレート**:
 ```
@@ -83,7 +83,7 @@ description: コードベースの構造・パターン・依存関係を3つの
 関心事: {keywords}（なければ全体の依存関係を分析）
 深さ: {depth}
 
-~/.claude/agents/dependency-mapper.md の調査項目・出力形式に従って調査してください。
+~/.Codex/agents/dependency-mapper.md の調査項目・出力形式に従って調査してください。
 エージェント定義ファイルを最初に読み込んでから作業を開始すること。
 ```
 
@@ -98,10 +98,10 @@ description: コードベースの構造・パターン・依存関係を3つの
 探索対象: {target_dir}
 関心事: {keywords}
 
-~/.claude/agents/learnings-researcher.md の検索戦略に従って、
+~/.Codex/agents/learnings-researcher.md の検索戦略に従って、
 memories/、solutions/、issues/ を横断検索してください。
 エージェント定義ファイルを最初に読み込んでから作業を開始すること。
-MEMORY_DIRはPJ CLAUDE.mdで定義（未定義なら .local/）。
+MEMORY_DIRはPJ AGENTS.mdで定義（未定義なら .local/）。
 ```
 
 **スキップ条件**: MEMORY_DIRにmemories/やsolutions/が存在しない場合（新規PJ等）
@@ -158,7 +158,7 @@ MEMORY_DIRはPJ CLAUDE.mdで定義（未定義なら .local/）。
 
 ## Agent Teams連携
 
-`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` が有効な場合、`~/.claude/agents/` の定義をTeamメンバーとして直接使用可能。大規模コードベースではAgent Teamsでの並列探索がより効果的。
+`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` が有効な場合、`~/.Codex/agents/` の定義をTeamメンバーとして直接使用可能。大規模コードベースではAgent Teamsでの並列探索がより効果的。
 
 ## 既存設定への参照
 

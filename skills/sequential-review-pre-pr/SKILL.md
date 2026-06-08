@@ -53,7 +53,7 @@ git diff $BASE_BRANCH --stat
 Task ツールで以下を **並列起動**（spec compliance 先行）:
 
 - `prd-reviewer` (opus, 要件・仕様との乖離検出)
-- `rule-validator` (sonnet, CLAUDE.md/rules/ への準拠)
+- `rule-validator` (sonnet, AGENTS.md/rules/ への準拠)
 - `arch-reviewer` (sonnet, アーキテクチャ整合性)
 
 > **設計意図（obra/superpowers パターン）**: spec/rule/arch 違反があるなら、quality reviewer を全部走らせるのは無駄。Stage 1 で根本問題を潰してから Stage 2 へ進む。
