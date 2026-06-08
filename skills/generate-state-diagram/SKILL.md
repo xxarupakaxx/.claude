@@ -145,6 +145,8 @@ mcp__workflow-html-app__view-diagram(
 - `mcp__workflow-html-app__view-diagram` が使える環境では、メイン図をビューア表示する
 - MCPビューアが使えない、または複数図を1つの成果物として渡したい場合は、`91_state_diagram.md` の内容を静的HTML化して `91_state_diagram.html` を保存する
 - 最終報告では `.md` と `.html` の両方のパスを提示する
+- Validator PASSしたMermaidコードのみを渡すこと
+- **フォールバックHTMLを直接生成する場合は必ずライトテーマを使用すること**（ダークテーマ禁止）
 
 ## 出力テンプレート
 

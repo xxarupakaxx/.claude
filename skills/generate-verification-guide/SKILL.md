@@ -1,12 +1,13 @@
 ---
 name: generate-verification-guide
-description: 実装完了後にローカル環境での動作確認手順・チェックリストを自動生成する
+description: 実装完了後にローカル環境での動作確認手順・チェックリストを自動生成する。HTMLビューア表示にも対応。
 triggers:
   - "検証ガイド生成"
   - "verification guide"
   - "ローカル検証"
   - "動作確認手順"
 invocation: user
+allowed-tools: Read, Bash, Glob, Grep, Write, mcp__workflow-html-app__view-verification
 ---
 
 # ローカル検証ガイド生成スキル
@@ -126,6 +127,20 @@ git diff <BASE_BRANCH>...HEAD --stat
 ## トラブルシューティング
 ### Q: ...
 ```
+
+### Step 6: HTMLビューア表示（オプション）
+
+検証ガイドをインタラクティブなHTMLビューアで表示する。チェックリストの進捗トラッキング付き。
+
+```
+mcp__workflow-html-app__view-verification(
+  content: "<90_verification.mdの内容>"
+)
+```
+
+- ユーザーが明示的にHTMLビューアを要求した場合に使用
+- チェックボックスをクリックすると進捗バーが更新される
+- 検証項目の完了状況を視覚的に確認できる
 
 ## 出力の品質基準
 
