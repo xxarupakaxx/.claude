@@ -134,6 +134,16 @@ git log <BASE_BRANCH>..HEAD --oneline
 
 Mermaid図をインタラクティブなHTMLビューアまたは静的HTMLで表示する。ズーム・パン操作が可能なビューアが使える場合は優先する。
 
+#### 静的HTMLのMermaidコピー機能（CRITICAL）
+
+`91_state_diagram.html` を静的HTMLとして直接生成する場合、Mermaid図ごとに必ずコピー用UIを配置する。
+
+- 各図の近くに `Mermaidをコピー` / `Copy Mermaid` ボタンを置く
+- ボタンは該当図の**生Mermaidコード**をクリップボードにコピーする（SVG/HTML化後の内容をコピーしてはならない）
+- 複数図がある場合、各ボタンは自分の図だけをコピーする
+- `navigator.clipboard.writeText` を基本とし、失敗時も `<textarea>` fallback 等でコピー可能にする
+- コピー完了/失敗の状態を短いテキストで表示する
+
 ```
 mcp__workflow-html-app__view-diagram(
   mermaidCode: "<Mermaidコード>",
@@ -144,6 +154,7 @@ mcp__workflow-html-app__view-diagram(
 - 複数の図がある場合は、メイン図（全体フロー）を優先して表示
 - `mcp__workflow-html-app__view-diagram` が使える環境では、メイン図をビューア表示する
 - MCPビューアが使えない、または複数図を1つの成果物として渡したい場合は、`91_state_diagram.md` の内容を静的HTML化して `91_state_diagram.html` を保存する
+- 静的HTML内にMermaid図が1つでもある場合は、各図に生Mermaidコードをコピーできるボタンを配置する
 - 最終報告では `.md` と `.html` の両方のパスを提示する
 - Validator PASSしたMermaidコードのみを渡すこと
 - **フォールバックHTMLを直接生成する場合は必ずライトテーマを使用すること**（ダークテーマ禁止）
@@ -178,7 +189,7 @@ mcp__workflow-html-app__view-diagram(
 （ツリー表示 + 1行コメント）
 
 ## N+2. HTML出力
-同じ内容を `91_state_diagram.html` として保存し、ブラウザで確認できるようにする。
+同じ内容を `91_state_diagram.html` として保存し、Mermaidコードをコピーできるボタン付きでブラウザ確認できるようにする。
 ```
 
 ## 出力の品質基準（CRITICAL）
@@ -188,6 +199,7 @@ mcp__workflow-html-app__view-diagram(
 - **具体性**: 抽象的でなく具体的な記述
 - **用語集の充実**: 社内用語・略語を全て定義
 - **Mermaid互換**: GitHub/VSCode/Notionでそのままレンダリング可能
+- **Mermaidコピー性**: HTML版では各Mermaid図の生コードをワンクリックでコピー可能
 - **既存機能との区別**: 新規追加と既存機能を明確に区別
 - **エラーケース記載**: 正常系だけでなく失敗時の動作も図に含める
 
