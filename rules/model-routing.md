@@ -2,45 +2,33 @@
 
 Agentツールでサブエージェントを起動する際に適用されるルール。
 
-## モデル選択基準
+## Codexでの基本方針
 
-### Haiku (`model: "haiku"`)
-- ファイル検索・パターンマッチ（Exploreサブエージェント）
-- 単純な分類・振り分け
-- learnings-researcher
-- フォーマット変換
+`agents/*.md` の frontmatter には `model:` を書かない。
+専門サブエージェントは親スレッドのモデルを継承させ、起動側が必要な場合だけ明示指定する。
 
-### Sonnet (`model: "sonnet"`)
-- コードレビュー（Tier 1: arch-reviewer, perf-reviewer）
-- コードレビュー（Tier 2-3: code-quality, test, error-handling, observability, a11y, ui-ux, concurrency, api-contract, docs, i18n, compliance, devops, rule-validator, code-simplicity）
-- 1-3ファイルの実装
-- テスト生成
-- ドキュメント生成
+Codex の `spawn_agent` で明示できる model override は以下のみ:
 
-### Opus（デフォルト、指定不要）
-- **security-reviewer**（セキュリティ分析は常にOpus）
-- **prd-reviewer**（要件との乖離検出は複雑な判断を伴う）
-- アーキテクチャ設計
-- 複数ファイルにまたがるデバッグ
-- 10+ファイルのリファクタリング
+- `gpt-5.5`: 複雑な設計判断、セキュリティ分析、広範なレビュー
+- `gpt-5.4`: 通常のコードレビュー、1-3ファイルの実装、テスト生成
+- `gpt-5.4-mini`: grep結果の整理、単純な分類、軽量な読み取り調査
 
 ## 判断フロー
 
 ```
-タスクは検索/読み取りのみ？ → YES → haiku
+明示指定が本当に必要？ → NO → model未指定で親モデル継承
+  ↓ YES
+タスクは検索/読み取り中心？ → YES → gpt-5.4-mini
   ↓ NO
-タスクは定形パターンの適用？ → YES → sonnet
+タスクは定形レビュー・小規模実装？ → YES → gpt-5.4
   ↓ NO
-セキュリティレビュー or PRDレビュー？ → YES → opus
+セキュリティレビュー or 複雑判断？ → YES → gpt-5.5
   ↓ NO
-タスクは複雑な判断を含む？ → YES → opus
-  ↓ NO
-sonnet
+gpt-5.4
 ```
 
 ## 注意
 
-- 迷ったらsonnetを選択（コスパ最良）
-- セキュリティ関連は必ずopus
-- modelパラメータ未指定時はOpusが使われる
-- Tier 1-3レビューアーは懐疑的評価姿勢+スコアリングルーブリック搭載済みのため、sonnetでも十分な品質を確保
+- 迷ったら `model` を指定しない。
+- `sonnet`, `opus`, `haiku` は Codex の `spawn_agent` では model override として使わない。
+- Tier 1-3レビューアーは各 `agents/*.md` の評価姿勢とルーブリックで品質を担保する。

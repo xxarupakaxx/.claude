@@ -2,7 +2,6 @@
 name: api-contract-reviewer
 description: API契約・互換性観点でレビュー。後方互換性の破壊、RESTful規約違反、エラーレスポンス不整合、スキーマ検証不足等を検出。
 tools: Read, Grep, Glob, WebSearch, Write
-model: sonnet
 color: cyan
 ---
 

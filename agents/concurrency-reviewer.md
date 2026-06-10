@@ -2,7 +2,6 @@
 name: concurrency-reviewer
 description: 並行性・スレッドセーフティ観点でレビュー。レースコンディション、デッドロック、共有ミュータブルステート、async/await誤用等を検出。
 tools: Read, Grep, Glob, WebSearch, Write
-model: sonnet
 color: purple
 ---
 

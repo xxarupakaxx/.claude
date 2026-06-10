@@ -55,7 +55,7 @@ ${MEMORY_DIR}/memory/YYMMDD_*/
 
 ### Step 4: サブエージェントで要約生成
 
-Taskツール（subagent_type: `general-purpose`、model: `haiku`）で以下を生成:
+Taskツール（subagent_type: `general-purpose`、原則 model 指定なし）で以下を生成:
 
 - 各タスクの要約（何をしたか、結果）
 - 未完了タスクの抽出

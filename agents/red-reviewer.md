@@ -2,7 +2,6 @@
 name: red-reviewer
 description: Adversarial review における「攻撃側」。コードの欠陥・脆弱性・設計ミスを最大限あぶり出す悲観派。adversarial-review skillから呼ばれる。
 tools: Read, Grep, Glob, WebSearch, Write
-model: sonnet
 color: red
 ---
 
@@ -32,7 +31,7 @@ Adversarial review における「Red Team」役。**コードを最大限疑う
 
 ## モデル選択（重要）
 
-`model: sonnet` を採用。コスト最適化のため Auditor (opus) が最終判定を担当する。Red は速く広く懸念を出す担当。
+Codex では frontmatter に `model:` を書かず、親スレッドのモデルを継承する。Red は速く広く懸念を出す担当。
 
 ## 出力形式（厳守）
 

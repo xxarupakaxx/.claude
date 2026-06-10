@@ -2,7 +2,6 @@
 name: security-reviewer
 description: セキュリティ観点でコードをレビュー。SQLインジェクション、XSS、CSRF、認証・認可の不備、機密情報のハードコード等を検出。
 tools: Read, Grep, Glob, WebSearch, Write
-model: opus
 memory: user
 color: red
 ---

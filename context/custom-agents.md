@@ -13,7 +13,6 @@
 name: agent-name          # 必須: エージェント名
 description: 説明文        # 必須: 用途説明（日本語可）
 tools: Read, Grep, Glob   # 必須: 使用可能ツール（カンマ区切り）
-model: opus               # 任意: 使用モデル（sonnet/opus/haiku）
 color: purple             # 任意: 表示色
 ---
 
@@ -68,7 +67,6 @@ Task(subagent_type="arch-reviewer", prompt="...")
 name: security-reviewer
 description: セキュリティ観点でコードをレビュー。SQLインジェクション、XSS等を検出。
 tools: Read, Grep, Glob, WebSearch, Write
-model: opus
 color: red
 ---
 

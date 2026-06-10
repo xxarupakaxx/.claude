@@ -9,7 +9,6 @@
 name: <kebab-case-name>
 description: <50-200字。何を検出/分析/生成するか。trigger語を3個以上含める>
 tools: <最小権限。例: Read, Grep, Glob, Write>
-model: <haiku|sonnet|opus> # rules/model-routing.md 参照
 color: <blue|green|red|yellow|purple|cyan|magenta>
 memory: <user|project|local> # 必要なら v2.1.33+ で有効
 ---
@@ -75,8 +74,7 @@ Total: <重み付き合計>/<max>
 
 ## model 選択
 
-- haiku: 検索・grep・分類 (例: learnings-researcher, explore)
-- sonnet: 定形レビュー・1-3ファイル実装 (Tier 1-3 reviewer)
-- opus: セキュリティ分析・複雑判断 (security-reviewer, prd-reviewer)
+Codex では frontmatter に `model:` を書かず、親スレッドのモデル継承を基本にする。
+明示指定が必要な場合は、起動側の `spawn_agent` で `gpt-5.5`, `gpt-5.4`, `gpt-5.4-mini` のいずれかを指定する。
 
 詳細: `~/.claude/rules/model-routing.md`
