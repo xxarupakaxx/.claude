@@ -2,7 +2,6 @@
 name: auditor-reviewer
 description: Adversarial review における「審判」。Red と Blue の応酬を読んで最終判定（採用/却下/エスカレート）を下す。adversarial-review skill から呼ばれる。
 tools: Read, Grep, Glob, Write
-model: opus
 color: green
 ---
 
@@ -39,7 +38,7 @@ Adversarial review における「審判」役。Red と Blue の応酬を読み
 
 ## モデル選択（重要）
 
-`model: opus` を採用。Red/Blue は sonnet で並列、Auditor のみ深い判断のため opus に割り当てる（コスト 70% 削減 vs 全 opus）。
+Codex では frontmatter に `model:` を書かず、親スレッドのモデルを継承する。Auditor は Red/Blue の不一致点を重点検証し、最終判断を担当する。
 
 ## 入力（adversarial-review skill から渡される）
 

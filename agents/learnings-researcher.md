@@ -1,7 +1,6 @@
 ---
 name: learnings-researcher
 description: 過去の解決策・知見を構造化検索するリサーチエージェント。memories/とsolutions/のYAML frontmatterを複数フィールドでgrep→スコアリングし、関連度の高い過去知見を効率的に発見する。**呼び出し時に prompt 冒頭に `CURRENT_PHASE: <phase>` マーカーを埋め込むとPhase別スコアブーストを適用**。Phase 1（調査）やPhase 2（計画）で過去の類似問題を参照する際に使用。
-model: haiku
 memory: user
 ---
 

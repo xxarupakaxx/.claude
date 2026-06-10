@@ -149,7 +149,6 @@ playwright-cli goto http://localhost:3000
 ```
 Agent(
   subagent_type: "ui-ux-reviewer",
-  model: "sonnet",  # model-routing.md準拠: UI/UXレビューはsonnet
   description: "Design evaluation iteration {N}",
   prompt: <<以下のプロンプト>>
 )

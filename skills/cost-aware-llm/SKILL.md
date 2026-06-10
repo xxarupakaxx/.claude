@@ -1,23 +1,24 @@
 ---
 name: cost-aware-llm
-description: LLMコスト最適化。サブエージェントに haiku/sonnet/opus を適切に割り当てる判断ガイド。「コスト最適化して」「どのモデルを使うべき」等の依頼時に参照。詳細ルートは rules/model-routing.md に集約。
+description: LLMコスト最適化。サブエージェントの model override を指定するか、親モデル継承に任せるかの判断ガイド。「コスト最適化して」「どのモデルを使うべき」等の依頼時に参照。詳細ルートは rules/model-routing.md に集約。
 ---
 
 # Cost-Aware LLM Pipeline
 
 サブエージェント起動時の **モデル選択判断スキル**。
-全タスクに Opus は不要。タスク複雑度で haiku/sonnet/opus を使い分けてコストを最適化する。
+Codex では通常 `model` を指定せず、親スレッドのモデル継承に任せる。明示指定が必要な場合だけ、タスク複雑度で `gpt-5.5` / `gpt-5.4` / `gpt-5.4-mini` を選ぶ。
 
-詳細ルールは `~/.Codex/rules/model-routing.md` に集約済み。本スキルは判断の起点として使う。
+詳細ルールは `~/.claude/rules/model-routing.md` に集約済み。本スキルは判断の起点として使う。
 
 ## クイック判断
 
 ```
-タスクは検索/読み取りのみ？     → YES → haiku
-タスクは定形パターン適用？     → YES → sonnet
-セキュリティ/PRDレビュー？     → YES → opus（必須）
-タスクは複雑な判断を含む？     → YES → opus
-迷ったら                       → sonnet (コスパ最良)
+明示指定が本当に必要？         → NO  → model未指定
+タスクは検索/読み取りのみ？     → YES → gpt-5.4-mini
+タスクは定形パターン適用？     → YES → gpt-5.4
+セキュリティ/PRDレビュー？     → YES → gpt-5.5
+タスクは複雑な判断を含む？     → YES → gpt-5.5
+迷ったら                       → model未指定
 ```
 
 ## いつ呼ぶか
@@ -37,11 +38,11 @@ description: LLMコスト最適化。サブエージェントに haiku/sonnet/op
 
 | パターン | 推定比 |
 |----------|--------|
-| 全 Opus | 100% |
-| Opus + Sonnet サブエージェント | ~60% |
-| Opus + Sonnet + Haiku | ~40% |
+| すべて高精度モデル指定 | 100% |
+| 親モデル継承 + 必要箇所のみ `gpt-5.4` | ~60% |
+| 軽量調査のみ `gpt-5.4-mini` | ~40% |
 
 ## 関連
 
-- `~/.Codex/rules/model-routing.md` — 詳細な選択基準とサブエージェント別の割り当て
-- Tier 1-3 レビューアーは既に sonnet で十分な品質（懐疑姿勢+ルーブリック搭載済）
+- `~/.claude/rules/model-routing.md` — 詳細な選択基準とサブエージェント別の割り当て
+- Tier 1-3 レビューアーは各 agent 定義の懐疑姿勢とルーブリックで品質を担保する
