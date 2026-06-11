@@ -1,17 +1,15 @@
 # Agent Template Reference
 
-`~/.claude/agents/<name>.md` の生成テンプレート集。`create-subagent` スキルから参照される。
+`~/.codex/agents/<name>.toml` の生成テンプレート集。`create-subagent` スキルから参照される。
 
 ## 基本テンプレート
 
-```markdown
----
-name: <kebab-case-name>
-description: <50-200字。何を検出/分析/生成するか。trigger語を3個以上含める>
-tools: <最小権限。例: Read, Grep, Glob, Write>
-color: <blue|green|red|yellow|purple|cyan|magenta>
-memory: <user|project|local> # 必要なら v2.1.33+ で有効
----
+```toml
+name = "<kebab-case-name>"
+description = "<50-200字。何を検出/分析/生成するか。trigger語を3個以上含める>"
+model = "gpt-5.4"
+service_tier = "priority"
+developer_instructions = """
 
 # <Agent Display Name>
 
@@ -43,6 +41,7 @@ memory: <user|project|local> # 必要なら v2.1.33+ で有効
 
 - 並列起動可: <他のレビューアーと並列実行可能か>
 - 入力依存: <別エージェントの出力に依存するか>
+"""
 ```
 
 ## レビューアーのスコアリングルーブリック例
@@ -72,9 +71,9 @@ Total: <重み付き合計>/<max>
 | 書き込み系 (modeler, planner) | Read, Grep, Glob, Write |
 | Full (general-purpose系) | * |
 
-## model 選択
+## model / service_tier 選択
 
-Codex では frontmatter に `model:` を書かず、親スレッドのモデル継承を基本にする。
-明示指定が必要な場合は、起動側の `spawn_agent` で `gpt-5.5`, `gpt-5.4`, `gpt-5.4-mini` のいずれかを指定する。
+Codex agent TOML には `model` と `service_tier` を必ず書く。
+通常は `model = "gpt-5.4"` / `service_tier = "priority"`、複雑判断のみ `model = "gpt-5.5"` / `service_tier = "priority"` に上げる。
 
 詳細: `~/.claude/rules/model-routing.md`
