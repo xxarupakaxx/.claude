@@ -66,6 +66,17 @@ B. **Blueprint（大規模タスクのみ）**: 多セッション・多PRの設
 
 **IMPORTANT**: 独立したタスクは積極的に並列化する
 
+### Codex `spawn_agent` の model/service_tier
+
+現行の Codex `spawn_agent` は親モデル継承または `service_tier` 未指定で
+`spawn_agent could not resolve the child model for service tier validation`
+になることがある。サブエージェント起動時は当面、以下のペアを明示すること。
+
+- 通常の調査・レビュー・小規模実装: `model: gpt-5.4`, `service_tier: priority`
+- セキュリティ・PRD・重要設計判断など重いレビュー: `model: gpt-5.5`, `service_tier: priority`
+- `gpt-5.4-mini` は `priority` 非対応かつ未指定経路が失敗するため、当面使用しない
+- `sonnet` / `opus` / `haiku` は Codex `spawn_agent` の model override として指定しない
+
 ## レビュー方法（CRITICAL）
 
 **`agent`や`claude` CLIでのレビューは禁止。Taskツールの専門サブエージェントを並列起動すること。**
