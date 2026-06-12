@@ -46,7 +46,7 @@ description: |
 
 ### Step 2: 並列サブエージェント起動
 
-以下の4つのサブエージェント（`general-purpose`）を**並列**で起動。
+以下の4つのサブエージェント（Codex `agent_type="worker"`）を**並列**で起動。
 Codex では原則 `model` を指定せず、親モデル継承に任せる。明示指定が必要な場合のみ `~/.claude/rules/model-routing.md` に従う。
 
 #### 2-1: Solution Extractor

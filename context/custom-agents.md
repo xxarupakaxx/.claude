@@ -54,10 +54,10 @@ color: purple             # 任意: 表示色
 
 ## 呼び出し方法
 
-Taskツールで`subagent_type`に指定:
+Codex `spawn_agent` で `agent_type` に指定:
 
 ```
-Task(subagent_type="arch-reviewer", prompt="...")
+spawn_agent(agent_type="arch-reviewer", message="...")
 ```
 
 ## 例: レビュワーエージェント

@@ -55,7 +55,7 @@ ${MEMORY_DIR}/memory/YYMMDD_*/
 
 ### Step 4: サブエージェントで要約生成
 
-Taskツール（subagent_type: `general-purpose`、`model: gpt-5.4`, `service_tier: priority`）で以下を生成:
+Codex `spawn_agent`（`agent_type: default`、`model` / `service_tier` は省略）で以下を生成:
 
 - 各タスクの要約（何をしたか、結果）
 - 未完了タスクの抽出

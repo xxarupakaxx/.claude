@@ -45,7 +45,7 @@ git log <BASE_BRANCH>..HEAD --oneline
 
 ブランチの全体像を取得。
 
-### Step 2: Exploreサブエージェントで深掘り調査
+### Step 2: `explorer`サブエージェントで深掘り調査
 
 変更ファイルの中から以下を重点的に調査:
 - ワークフロー/オーケストレーション層（Temporal, cron, queue等）

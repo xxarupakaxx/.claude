@@ -1,15 +1,15 @@
 ---
 name: exploring-codebase
-description: コードベースの構造・パターン・依存関係を3つの並列Exploreサブエージェント＋過去知見検索で深堀り調査。新しいPJの理解、機能追加前の影響範囲調査、アーキテクチャ把握に使用。「コードベースを調べて」「アーキテクチャを理解したい」「影響範囲を調査して」「構造を把握したい」等の依頼に対応。
+description: コードベースの構造・パターン・依存関係を3つの並列 `explorer`/専門探索サブエージェント＋過去知見検索で深堀り調査。新しいPJの理解、機能追加前の影響範囲調査、アーキテクチャ把握に使用。「コードベースを調べて」「アーキテクチャを理解したい」「影響範囲を調査して」「構造を把握したい」等の依頼に対応。
 ---
 
 # コードベース深堀り探索
 
-3つの専門Exploreサブエージェント + 過去知見検索を並列起動し、コードベースを多角的に調査する。
+3つの専門探索サブエージェント + 過去知見検索を並列起動し、コードベースを多角的に調査する。
 
 ## 既存設定との関係
 
-- **Phase 0-5（@context/workflow-rules.md）**: Phase 1（調査）の補完。通常のExplore探索より深い多角的調査が必要な場合に使用
+- **Phase 0-5（@context/workflow-rules.md）**: Phase 1（調査）の補完。通常の `explorer` 探索より深い多角的調査が必要な場合に使用
 - **メモリディレクトリ（@context/memory-file-formats.md）**: 結果を05_log.mdに記録
 - **codebase-review**: レビュー（品質問題の検出）ではなく、理解（構造の把握）が目的
 
@@ -29,9 +29,9 @@ description: コードベースの構造・パターン・依存関係を3つの
 - **関心事・キーワード**: 特定の機能、モジュール、技術要素（あれば）
 - **探索の深さ**: quick / medium / thorough（デフォルト: medium）
 
-### Step 2: 3つのExploreサブエージェント + 過去知見検索を並列起動
+### Step 2: 3つの探索サブエージェント + 過去知見検索を並列起動
 
-**CRITICAL**: Taskツールで以下4つを**同時に**起動する。
+**CRITICAL**: Codex `spawn_agent` で以下4つを**同時に**起動する。
 
 各エージェントには以下の情報を渡す:
 - 探索対象ディレクトリのフルパス
@@ -41,7 +41,7 @@ description: コードベースの構造・パターン・依存関係を3つの
 
 #### Agent 1: Architecture Explorer
 
-**エージェント定義**: `~/.Codex/agents/architecture-explorer.md`
+**agent_type**: `architecture-explorer`（未ロード時は `explorer`）
 
 **プロンプトテンプレート**:
 ```
@@ -51,13 +51,12 @@ description: コードベースの構造・パターン・依存関係を3つの
 関心事: {keywords}（なければ全体像把握）
 深さ: {depth}
 
-~/.Codex/agents/architecture-explorer.md の調査項目・出力形式に従って調査してください。
-エージェント定義ファイルを最初に読み込んでから作業を開始すること。
+`architecture-explorer` の調査項目・出力形式に従って調査してください。
 ```
 
 #### Agent 2: Data Flow Tracer
 
-**エージェント定義**: `~/.Codex/agents/data-flow-tracer.md`
+**agent_type**: `data-flow-tracer`（未ロード時は `explorer`）
 
 **プロンプトテンプレート**:
 ```
@@ -67,13 +66,12 @@ description: コードベースの構造・パターン・依存関係を3つの
 関心事: {keywords}（なければ主要フローを追跡）
 深さ: {depth}
 
-~/.Codex/agents/data-flow-tracer.md の調査項目・出力形式に従って調査してください。
-エージェント定義ファイルを最初に読み込んでから作業を開始すること。
+`data-flow-tracer` の調査項目・出力形式に従って調査してください。
 ```
 
 #### Agent 3: Dependency Mapper
 
-**エージェント定義**: `~/.Codex/agents/dependency-mapper.md`
+**agent_type**: `dependency-mapper`（未ロード時は `explorer`）
 
 **プロンプトテンプレート**:
 ```
@@ -83,13 +81,12 @@ description: コードベースの構造・パターン・依存関係を3つの
 関心事: {keywords}（なければ全体の依存関係を分析）
 深さ: {depth}
 
-~/.Codex/agents/dependency-mapper.md の調査項目・出力形式に従って調査してください。
-エージェント定義ファイルを最初に読み込んでから作業を開始すること。
+`dependency-mapper` の調査項目・出力形式に従って調査してください。
 ```
 
 #### Agent 4: Learnings Researcher（過去知見検索）
 
-**サブエージェント**: `learnings-researcher`（subagent_type="general-purpose"）
+**agent_type**: `learnings-researcher`（未ロード時は `explorer` またはローカル `rg`/SQLite検索で代替）
 
 **プロンプトテンプレート**:
 ```
@@ -98,9 +95,8 @@ description: コードベースの構造・パターン・依存関係を3つの
 探索対象: {target_dir}
 関心事: {keywords}
 
-~/.Codex/agents/learnings-researcher.md の検索戦略に従って、
+`learnings-researcher` の検索戦略に従って、
 memories/、solutions/、issues/ を横断検索してください。
-エージェント定義ファイルを最初に読み込んでから作業を開始すること。
 MEMORY_DIRはPJ AGENTS.mdで定義（未定義なら .local/）。
 ```
 
@@ -143,7 +139,7 @@ MEMORY_DIRはPJ AGENTS.mdで定義（未定義なら .local/）。
 
 ## 探索の深さガイド
 
-| 深さ | Explore thoroughness | 所要時間目安 | 用途 |
+| 深さ | explorer thoroughness | 所要時間目安 | 用途 |
 |------|---------------------|-------------|------|
 | quick | quick | 短い | 技術スタックとディレクトリ構成の概要把握 |
 | medium | medium | 中程度 | 標準的なコードベース理解 |

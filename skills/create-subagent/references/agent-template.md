@@ -69,11 +69,10 @@ Total: <重み付き合計>/<max>
 |----------|-----------|
 | 読み取り系 (researcher, reviewer) | Read, Grep, Glob, WebSearch |
 | 書き込み系 (modeler, planner) | Read, Grep, Glob, Write |
-| Full (general-purpose系) | * |
+| Full / worker系 | * |
 
 ## model / service_tier 選択
 
-Codex agent TOML には `model` と `service_tier` を必ず書く。
-通常は `model = "gpt-5.4"` / `service_tier = "priority"`、複雑判断のみ `model = "gpt-5.5"` / `service_tier = "priority"` に上げる。
+Codex agent TOML では role の既定値として `model` と `service_tier` を書いてよい。通常は `model = "gpt-5.4"` / `service_tier = "priority"`、複雑判断のみ `model = "gpt-5.5"` / `service_tier = "priority"` に上げる。
 
-詳細: `~/.claude/rules/model-routing.md`
+ただし `spawn_agent` 呼び出し時は通常 `model` / `service_tier` を省略し、TOMLと親モデル継承に任せる。詳細: `~/.claude/rules/model-routing.md`
