@@ -45,9 +45,9 @@ git diff <BASE_BRANCH>...HEAD --stat
 - **DB**: `migrations/`, `contexts/`, `infrastructure/`
 - **ロジック**: `lib/`, `usecase/`, `action.ts`
 
-### Step 2: 影響ページの探索（Explore サブエージェント）
+### Step 2: 影響ページの探索（`explorer` サブエージェント）
 
-変更ファイルから影響を受けるページを特定するため、Explore サブエージェントを起動。
+変更ファイルから影響を受けるページを特定するため、`explorer` サブエージェントを起動。
 
 プロンプト:
 ```

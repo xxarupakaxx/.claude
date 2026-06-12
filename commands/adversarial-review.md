@@ -21,8 +21,8 @@ description: Red→Blue→Auditor の3エージェント敵対的レビューを
 
 ## コスト方針
 
-- Red/Blue は `model: gpt-5.4`, `service_tier: priority`
-- 判断が重い Auditor は `model: gpt-5.5`, `service_tier: priority`
+- Red/Blue/Auditor はそれぞれ `agent_type` のみ指定し、`model` / `service_tier` は通常省略
+- role既定は Red/Blue が `gpt-5.4` + `priority`、Auditor が `gpt-5.5` + `priority`
 - `sonnet` / `opus` / `haiku` は Codex の model override として指定しない
 
 詳細は `~/.claude/skills/adversarial-review/SKILL.md` 参照。

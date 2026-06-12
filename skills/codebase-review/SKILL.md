@@ -67,12 +67,12 @@ find . -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.py" -o -name "*.md" 
 
 ### Phase 1: 並列サブエージェント実行
 
-**CRITICAL**: 6つのサブエージェントを**同時に**起動する。Taskツールを1つのメッセージで6回呼び出す。
-agent / Codex CLI を使った別モデル検証は廃止（AGENTS.md / context/agent-cli-guide.md と整合）。Taskツールの専門サブエージェント並列起動のみで実施する。
+**CRITICAL**: 6つのサブエージェントを**同時に**起動する。Codex `spawn_agent` を1つのメッセージで6回呼び出す。
+agent / Codex CLI を使った別モデル検証は廃止（AGENTS.md / context/agent-cli-guide.md と整合）。Codex `spawn_agent` の専門サブエージェント並列起動のみで実施する。
 
-**CRITICAL**: サブエージェントは必ず `subagent_type=general-purpose` を使用すること。
-- `Explore`エージェントはファイル探索専用でWriteツールを持たないため、issueファイルを作成できない
-- `general-purpose`エージェントは全ツール（Read, Write, Grep, Glob, Bash, WebSearch, deepwiki等）にアクセス可能
+**CRITICAL**: issueファイル作成を伴うため、汎用実行枠は `agent_type="worker"` を使用すること。
+- `explorer` は読み取り調査向きで、issueファイル作成が必要な作業には使わない
+- `general-purpose` は Claude Task 由来の名前で、Codex `spawn_agent.agent_type` ではない
 
 各サブエージェントには以下の情報を渡す:
 - メモリディレクトリのフルパス

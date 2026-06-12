@@ -148,7 +148,7 @@ playwright-cli goto http://localhost:3000
 
 ```
 Agent(
-  subagent_type: "ui-ux-reviewer",
+  agent_type: "ui-ux-reviewer",
   description: "Design evaluation iteration {N}",
   prompt: <<以下のプロンプト>>
 )

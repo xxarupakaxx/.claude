@@ -34,7 +34,7 @@ allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Task
 
 ### 1.2 現状の把握
 
-`exploring-codebase` スキルまたは `Explore` サブエージェントで:
+`exploring-codebase` スキルまたは `explorer` サブエージェントで:
 - 対象モジュールの公開API（=Interface）を列挙
 - 呼び出し箇所を全て洗い出し（Leverageの規模を把握）
 - 内部の依存関係を確認

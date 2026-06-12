@@ -6,18 +6,17 @@ description: LLMコスト最適化。サブエージェントの model override 
 # Cost-Aware LLM Pipeline
 
 サブエージェント起動時の **モデル選択判断スキル**。
-現行の Codex `spawn_agent` は親モデル継承または `service_tier` なしの起動が失敗することがあるため、起動時は `model` と `service_tier` をペアで明示する。
+現行 Codex `spawn_agent` は、通常 `model` と `service_tier` を省略して親モデル継承と agent role の既定値に任せる。`service_tier` だけの指定はモデル解決エラーの原因になるため避ける。
 
 詳細ルールは `~/.claude/rules/model-routing.md` に集約済み。本スキルは判断の起点として使う。
 
 ## クイック判断
 
 ```
-タスクは検索/読み取りのみ？     → YES → model: gpt-5.4, service_tier: priority
-タスクは定形パターン適用？     → YES → model: gpt-5.4, service_tier: priority
-セキュリティ/PRDレビュー？     → YES → model: gpt-5.5, service_tier: priority
-タスクは複雑な判断を含む？     → YES → model: gpt-5.5, service_tier: priority
-迷ったら                       → model: gpt-5.4, service_tier: priority
+通常の検索/読み取り/定形タスク？ → YES → model/service_tier を省略
+セキュリティ/PRDレビュー？       → YES → 必要な場合のみ model: gpt-5.5, service_tier: priority
+タスクは複雑な判断を含む？       → YES → 必要な場合のみ model: gpt-5.5, service_tier: priority
+迷ったら                         → model/service_tier を省略
 ```
 
 ## いつ呼ぶか
@@ -38,8 +37,8 @@ description: LLMコスト最適化。サブエージェントの model override 
 | パターン | 推定比 |
 |----------|--------|
 | すべて高精度モデル指定 | 100% |
-| 通常タスクを `gpt-5.4` + `priority` に寄せる | ~60% |
-| 複雑判断のみ `gpt-5.5` + `priority` に昇格 | ~70% |
+| 通常タスクは親モデル継承に任せる | ~60% |
+| 複雑判断のみ必要に応じて `gpt-5.5` + `priority` に昇格 | ~70% |
 
 ## 関連
 

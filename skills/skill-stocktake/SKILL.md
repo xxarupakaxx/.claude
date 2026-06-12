@@ -65,7 +65,7 @@ jq -r 'select(.timestamp >= "YYYY-MM-DDT00:00:00Z") | .skill' ~/.Codex/skill-usa
 
 ### Step 2: 並列評価
 
-各スキルを`Explore`サブエージェントで評価（5並列）:
+各スキルを`explorer`サブエージェントで評価（5並列）:
 
 **評価プロンプト**:
 > このスキルのSKILL.mdを読み、以下を評価してください:

@@ -10,7 +10,7 @@ allowed-tools: Read, Write, Glob, Grep, AskUserQuestion
 
 ## 既存設定との関係
 
-- **rules/model-routing.md**: Codex `spawn_agent` の model/service_tier ペア指定ルールに従う
+- **rules/model-routing.md**: Codex `spawn_agent` の role選択と model/service_tier 省略方針に従う
 - **rules/architecture-language.md**: 用語統一（Module/Interface/Depth 等）
 - **create-skill**: スキル生成の姉妹スキル。本スキルはエージェント生成に特化
 
@@ -32,12 +32,12 @@ allowed-tools: Read, Write, Glob, Grep, AskUserQuestion
 
 ### Step 2: Tier 判定（CRITICAL）
 
-| Tier | 役割例 | spawn時の指定 |
+| Tier | 役割例 | TOML既定 / spawn時 |
 |------|--------|-------|
-| Tier 1 | アーキ/性能レビュー（標準・常時呼ばれる） | `model: gpt-5.4`, `service_tier: priority` |
-| Tier 2 | 品質・テスト・観測性・a11y 等の追加レビュー | `model: gpt-5.4`, `service_tier: priority` |
-| Tier 3 | セキュリティ・PRDレビュー・複雑判断 | `model: gpt-5.5`, `service_tier: priority` |
-| Explorer | ファイル検索・パターンマッチ | `model: gpt-5.4`, `service_tier: priority` |
+| Tier 1 | アーキ/性能レビュー（標準・常時呼ばれる） | TOML既定は `gpt-5.4` + `priority`、spawn時は通常省略 |
+| Tier 2 | 品質・テスト・観測性・a11y 等の追加レビュー | TOML既定は `gpt-5.4` + `priority`、spawn時は通常省略 |
+| Tier 3 | セキュリティ・PRDレビュー・複雑判断 | TOML既定は `gpt-5.5` + `priority`、spawn時は通常省略 |
+| Explorer | ファイル検索・パターンマッチ | TOML既定は `gpt-5.4` + `priority`、spawn時は通常省略 |
 
 判定指針: `~/.claude/rules/model-routing.md` を参照。
 
@@ -70,7 +70,7 @@ allowed-tools: Read, Write, Glob, Grep, AskUserQuestion
 
 - 配置先: `~/.codex/agents/<name>.toml`
 - 既存ファイル上書き時は AskUserQuestion で確認
-- 作成後、起動方法（Task tool での呼び出し例）を報告
+- 作成後、起動方法（Codex `spawn_agent` での `agent_type` 指定例）を報告
 
 ## 設計原則
 
@@ -105,7 +105,7 @@ allowed-tools: Read, Write, Glob, Grep, AskUserQuestion
 - **Tool の取りすぎ**: `Bash` を漫然と付与しない（最小権限）
 - **description に1人称**: "I can review..." は不可。3人称で記述
 - **トリガー曖昧**: 「いつ呼ばれるか」が読み手に伝わらない description
-- **model単独指定**: Codex `spawn_agent` では `model` だけでなく `service_tier: priority` も合わせて指定する
+- **service_tier単独指定**: Codex `spawn_agent` ではモデル解決エラーの原因になるため避ける。spawn時は通常 `model` / `service_tier` をどちらも省略する
 - **Do Not Trust Preamble 省略**: レビュー系エージェントでは必須
 - **スコアリングルーブリック欠如**: レビュー系で「主観評価のみ」は禁止
 - **既存と重複**: 同名・同責務エージェントを増殖させない
@@ -114,7 +114,7 @@ allowed-tools: Read, Write, Glob, Grep, AskUserQuestion
 
 - [ ] name は小文字ハイフン形式・既存と衝突なし
 - [ ] description は3人称・1024文字以内・トリガー語を含む
-- [ ] model override を指定する場合は rules/model-routing.md に整合
+- [ ] TOMLのmodel/service_tier、または例外的なspawn overrideは rules/model-routing.md に整合
 - [ ] tools は最小権限
 - [ ] レビュー系は Do Not Trust Preamble を含む
 - [ ] レビュー系はスコアリングルーブリックを含む
