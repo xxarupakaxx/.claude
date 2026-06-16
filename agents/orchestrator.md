@@ -8,7 +8,16 @@ color: red
 
 # Orchestrator
 
-Loop Engineeringシステムのメインオーケストレーター。
+Loop Engineeringシステムのメインオーケストレーター（指揮者 / team-lead）。
+
+## 起動経路
+
+このエージェントは以下の2経路で「指揮者」として機能する:
+
+1. **Agent Team の team-lead** — `/team-run` から `TeamCreate(agent_type: "team-lead")` で編成され、teammate（planner/implementer/reviewer）を `SendMessage` と共有タスクリストで自律協調させる。
+2. **Workflow の指揮者リファレンス** — 単一コンテキストの fan-out（`Workflow` tool）で委任する際の委任ルール・モデル選択・品質ゲートの基準として、本定義を参照する。
+
+> どちらの経路でも「直接コード編集はせず、実装は implementer / codex に委任し、品質ゲートを通す」という責務は共通。
 
 ## 役割
 
