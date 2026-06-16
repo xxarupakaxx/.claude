@@ -141,7 +141,7 @@ ${analysis.subtasks.map((s, i) => `${i + 1}. ${s.title}: ${s.description ?? ''}`
 - 既存パターンに合わせる
 - YAGNI: 依頼にない機能は追加しない
 - こまめにgit commit
-`, { label: 'implement-simple', phase: 'Implement', isolation: 'worktree' })
+`, { label: 'implement-simple', phase: 'Implement' })
 } else {
   log('パイプライン実装モード')
   implResult = await pipeline(
@@ -158,12 +158,14 @@ ${typeof spec === 'string' ? spec : JSON.stringify(spec)}
 
 ## ルール
 - このサブタスクの範囲のみ実装
+- 直前のサブタスクの変更の上に積み増す（同一ブランチ/作業ツリー）
 - テストも書く
 - git commit する
 `, {
       label: `impl-${idx}`,
       phase: 'Implement',
-      isolation: 'worktree',
+      // 逐次サブタスクは互いの変更を前提に積み増すため worktree 隔離しない
+      // （隔離すると後続サブタスクが前の成果を見られず、かつメイン未統合になる）
     }),
   )
 }
