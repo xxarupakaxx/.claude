@@ -7,8 +7,13 @@ description: "自律ループパターン集。シーケンシャルパイプラ
 
 ## 概要
 
-エージェントが自律的に繰り返し実行するための3つのパターンを定義。
-`/orchestrate`や`agent-teams`と組み合わせて使用。
+エージェントが自律的に繰り返し実行するための3つのパターンを定義。各パターンは以下の**実体**で実現する（抽象論ではなく既存の実装に紐付く）:
+
+| パターン | 実装機構 |
+|---------|---------|
+| 1. シーケンシャルパイプライン | `Workflow` tool の `pipeline()` |
+| 2. PRループ（レビュー→修正→再レビュー） | `workflows/pr-review-loop.js`（または `auto-reviewing-pre-pr` を手動ループ） |
+| 3. DAGオーケストレーション | `Workflow` tool の `parallel()`/`pipeline()`（依存順に段組み）、エージェント間協調が要るなら `/team-run`（Agent Teams） |
 
 ## パターン1: シーケンシャルパイプライン
 
@@ -18,7 +23,7 @@ description: "自律ループパターン集。シーケンシャルパイプラ
 [Step 1] → output1 → [Step 2] → output2 → [Step 3] → 最終結果
 ```
 
-**使用場面**: `/orchestrate`のworkflow実行
+**使用場面**: `Workflow` tool の `pipeline()`（各item をステージ列に流す）
 **ゲート条件**: 各ステップ完了後に品質チェック
 
 ```markdown
@@ -44,7 +49,7 @@ PR作成→レビュー→修正→再レビューを合格まで繰り返す。
                       [修正] → ... (最大3回)
 ```
 
-**使用場面**: `auto-reviewing-pre-pr`の拡張
+**使用場面**: `workflows/pr-review-loop.js`（並列専門レビュー→自動修正→再レビュー、最大3R）。スケジュールタスク `pr-review` がこれを呼ぶ。
 **ゲート条件**: CRITICAL/IMPORTANT指摘が0件
 
 ```markdown
@@ -69,7 +74,7 @@ PR-Loop:
                                    [E: Tests]
 ```
 
-**使用場面**: `blueprint`の依存グラフの実行、`agent-teams`との組み合わせ
+**使用場面**: `Workflow` tool で依存順に `parallel()` を段組みする（`blueprint`の依存グラフ実行）。エージェント間の往復協調が要る場合は `/team-run`（Agent Teams）
 
 ```markdown
 DAG:
@@ -88,7 +93,7 @@ Execution:
 
 ## 安全ガード（全パターン共通）
 
-- **最大ループ回数**: デフォルト 5。`orchestrate` の runs.yaml または `checkpoint.md` の `max_iterations` フィールドで上書き可
+- **最大ループ回数**: デフォルト 5（pr-review-loop は 3）。Workflowスクリプト内の `maxRounds` 引数、または `checkpoint.md` の合格基準で制御する
 - **タイムアウト**: 各ステップ デフォルト 30 分。orchestrate 設定で上書き可
 - **失敗エスカレーション**: 連続 2 回失敗 → AskUserQuestion で人間判断を求める
 - **最大ループ超過時**: ESCALATE として残存タスクと進捗を AskUserQuestion でユーザーに報告
