@@ -207,12 +207,17 @@ Summary ──→ Slack日次サマリー投稿
 
 ## マルチモデルディスパッチ
 
-| ロール | モデル | 呼び出し方法 |
-|--------|--------|-------------|
-| Orchestrator / Judge | opus | agent() model:"opus" |
-| Standard Worker | sonnet | agent() デフォルト（親継承） |
-| 重い実装 | gpt-5.x（Codex側で管理） | Agent(subagent_type:"codex:codex-rescue") |
-| 専門レビュー | 継承 | Agent(subagent_type:"arch-reviewer") 等 |
+| 用途 | 呼び出し方法 | モデル |
+|------|---------|--------|
+| コードベース探索 | `Agent(subagent_type: "Explore")` | sonnet |
+| 軽量ワーカー | `Agent(model: "sonnet")` | sonnet |
+| 判定・設計判断・レビュー | `Agent(model: "opus")` | opus |
+| 重い実装 | `Agent(subagent_type: "codex:codex-rescue")` | gpt-5.x（Codex側で管理） |
+| 専門レビュー | `Agent(subagent_type: "arch-reviewer")` 等 | 継承 |
+| 過去知見検索 | `Agent(subagent_type: "learnings-researcher")` | 継承 |
+| パイプライン制御 | `Workflow({script: ...})` | — |
+
+詳細: `~/.claude/rules/model-routing.md`（Single Source of Truth）
 
 ## ファイル配置
 
