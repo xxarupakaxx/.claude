@@ -5,18 +5,38 @@
 
 ## アーキテクチャ概要
 
+### 3層構成
+
+```
+Layer 1: Global Foundation  (~/.claude/ — git管理)
+  agents/ workflows/ hooks/ commands/ scheduled-tasks/ context/ templates/
+
+Layer 2: User Config        (~/.claude/config/user.json — gitignore)
+  email, github_username, slack_channel, jira_jql ...
+
+Layer 3: Project Override   (<repo>/.claude/ — PJごと)
+  CLAUDE.md(BASE_BRANCH等) agents/domain-reviewer.md backlog.md
+```
+
+- Layer 1はgit cloneで任意のPCに展開可能
+- Layer 2はマシン固有（`config/user.example.json`をコピーして作成）
+- Layer 3はプロジェクトリポジトリに同梱（`templates/project-setup/`を雛形として使用）
+
+### 実行レイヤー
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │                  Scheduled Tasks                     │
 │  morning-kickoff(9:00) │ hour-calendar(毎時)        │
 │  jira-spec-poll(毎時)  │ evening-review(18:00)      │
 └──────────┬──────────────┬──────────────┬────────────┘
-           │              │              │
+           │  config/user.json を args で渡す
            ▼              ▼              ▼
 ┌──────────────────────────────────────────────────────┐
 │                    Workflows                          │
 │  morning-kickoff.js  │ implementation-drive.js       │
 │  tournament-ab.js    │ evening-review.js             │
+│  (args.config ?? agent('load config') でユーザー設定取得)
 └──────────┬──────────────┬──────────────┬─────────────┘
            │              │              │
            ▼              ▼              ▼
@@ -198,6 +218,9 @@ Summary ──→ Slack日次サマリー投稿
 
 ```
 ~/.claude/
+├── config/                         # ユーザー設定（Layer 2）
+│   ├── user.example.json           # テンプレート（git管理）
+│   └── user.json                   # 実値（gitignore）
 ├── agents/                         # エージェント定義
 │   ├── orchestrator.md
 │   ├── implementer.md
@@ -222,6 +245,11 @@ Summary ──→ Slack日次サマリー投稿
 │   ├── hour-calendar/SKILL.md      # 既存（拡張済み）
 │   ├── jira-spec-poll/SKILL.md
 │   └── evening-review/SKILL.md
+├── templates/                      # PJテンプレート（Layer 3の雛形）
+│   └── project-setup/.claude/
+│       ├── CLAUDE.md               # PJ設定テンプレート
+│       ├── agents/domain-reviewer.md
+│       └── backlog.md              # Bullpenタスクキュー
 ├── context/
 │   └── loop-engineering.md         # このファイル
 └── settings.json                   # Hook登録済み
@@ -242,6 +270,13 @@ which codex
 
 # Cursor Agent（オプション）
 which cursor-agent
+```
+
+### 1.5. ユーザー設定の初期化
+```bash
+# テンプレートをコピーして自分の情報を入力
+cp ~/.claude/config/user.example.json ~/.claude/config/user.json
+# user.json を編集: email, github_username, slack channel 等を設定
 ```
 
 ### 2. ファイル存在確認

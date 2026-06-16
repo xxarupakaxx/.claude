@@ -16,6 +16,9 @@
 /skills/investigating-gcp-observability/
 !/agents/
 !/agents/**
+!/config/
+!/config/user.example.json
+/config/user.json
 !/hooks/
 !/hooks/**
 !/workflows/
