@@ -3,6 +3,25 @@
 > 自律的な開発・レビューループを実現するClaude Code設定群の全体像。
 > このドキュメント単体でシステムの理解・セットアップ・運用が可能。
 
+## 実行モデル（正典）
+
+**指揮者 = Claude Code。** オーケストレーションは以下の Claude-native 機構に一本化する（Codex spawn_agent は重い実装の委任先として補助的に使う）。
+
+| 用途 | 機構 |
+|------|------|
+| パイプライン制御・並列fan-out | **Workflow tool**（`agent()`/`parallel()`/`pipeline()`） |
+| 専門レビュー・調査・軽量ワーカー | **Agent(subagent_type / model)** |
+| 重い実装の委任 | `Agent(subagent_type: "codex:codex-rescue")` |
+| 異ベンダー視点のレビュー | `Agent(subagent_type: "cursor:cursor-rescue")` |
+
+> Agent Teams（`TeamCreate`/`SendMessage`、`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`）は**実験的扱い**。現状のLoopは「親が一括投入するWorkflow fan-out」であり、エージェント同士が自律的にメッセージ協調する真のチーム協調は未配線。採用する場合は本ドキュメントに正規経路を追記してから使う（`teams/` 配下のアドホック残骸は設計の一部ではない）。
+
+## 現状ステータス（2026-06-17 時点）
+
+- **配線済み・自律稼働**: `hour-calendar`(毎時) / `morning-kickoff`(09:00) / `jira-spec-poll`(毎時) / `evening-review`(18:00) / `pr-review`(毎時, pr-review-loop経由) / `security-audit`(毎朝) / `slack-to-jira`(毎時) / `generate-diagram-pr`(毎時) / `daily-news`(09:10)
+- **スケジューラの制約（重要）**: これらは Claude アプリ起動中のみ発火する**ベストエフォート**。OSレベルの cron/launchd ではないため「毎時」は保証されない（アプリ未起動時はスキップ、次回起動時に実行）。24/7 が必要なループは launchd 等でCLIをヘッドレス起動する構成が別途必要。
+- **dead/未配線**: `orchestrator` agent は現状どの実行系からも `agentType` 起動されない（このファイルが定義する Conductor パターンの**参照仕様**であり、実際の指揮者役は Workflow が担う）。`implementer`/`ab-judge`/`minutes-classifier` も workflow 内では inline プロンプトで代替している。
+
 ## アーキテクチャ概要
 
 ### 3層構成
@@ -183,14 +202,21 @@ Improve ──→ [alert≥warning] → モデルダウングレード提案
 Summary ──→ Slack日次サマリー投稿
 ```
 
-## スケジュールタスク一覧
+## スケジュールタスク一覧（登録済み）
 
-| タスク | 間隔 | 内容 | ワークフロー |
+| タスク | 間隔 | 内容 | 委任先 |
 |--------|------|------|-------------|
 | `morning-kickoff` | 毎朝9:00 | 日次計画作成→Slack通知 | morning-kickoff.js |
-| `hour-calendar` | 毎時 | 議事録要約 + アクション分類→自動実行/dailyノート | — (直接実行) |
-| `jira-spec-poll` | 毎時 | 新規チケット検出→仕様書ドラフト生成 | — (直接実行) |
+| `hour-calendar` | 毎時 | 議事録要約→dailyノート追記 + アクション分類→自律実行 | 直接実行（config駆動: notes.daily_dir） |
+| `jira-spec-poll` | 毎時 | 新規チケット検出→仕様書ドラフト生成 | 直接実行 |
 | `evening-review` | 毎夕18:00 | コスト/失敗分析→改善提案→Slackサマリー | evening-review.js |
+| `pr-review` | 毎時 | PRコメント検知→レビュー→修正→再レビュー | pr-review-loop.js |
+| `security-audit` | 毎朝 | Security Audit Criticalメール→調査→冪等にJira起票+PR | 直接実行（冪等性ガードあり） |
+| `slack-to-jira` | 毎時 | 直近1hの自投稿→チームタスクを冪等にJira起票 | 直接実行（dedup+時間窓） |
+| `generate-diagram-pr` | 毎時 | オープンPRに状態図を冪等に投稿/更新 | generate-state-diagram スキル |
+| `daily-news` | 毎朝9:10 | 野球ニュース要約（個人用・実験的） | 直接実行 |
+
+> 旧 `hour-calnedar`（typo）は無効化済み。後継は `hour-calendar`。
 
 ## Hook定義
 
@@ -339,8 +365,8 @@ grep "stop-harness-improve" ~/.claude/settings.json
 
 ## 安全設計
 
-1. **AIタスク自動実行の安全弁**: 曖昧なアクション項目はhuman_actionに分類（minutes-classifier）
-2. **ハーネス改善の承認制**: harness-improverは提案のみ、自動適用しない
-3. **コスト暴走防止**: budget.remaining()ガード + post-cost-track hook + evening-reviewのアラート
-4. **Worktree分離**: tournament-abの並列実装はisolation:"worktree"で競合を防止
-5. **セキュリティ判定**: ab-judgeはセキュリティスコア2以下の実装を勝者にしない
+1. **自律タスクの安全弁**: 信頼タスク（hour-calendar等）の auto_execute は確認なしで自律実行する方針。ただし金額・契約・人事・本番操作・対人連絡は必ず human_action に分類して実行しない（曖昧なものも human_action 側へ倒す）。外部書き込み（Jira起票/PR作成/Slack投稿）は冪等性ガード（既存検索→更新 or 新規）を必須とする。
+2. **ハーネス改善の承認制**: harness-improver / evening-review の CLAUDE.md・rules 改変提案は**自動適用しない**（自己改変は全自律の例外、必ず人間承認）。
+3. **コスト追跡**: post-cost-track hook（実装済）+ evening-review のアラート（実装済）でコストを可視化。※ `budget.remaining()` による workflow 内ハードガードは**未実装（TODO）**。
+4. **Worktree分離**: tournament-ab / implementation-drive の並列実装は isolation:"worktree" で競合を防止。※ worktree 成果のメイン統合は未配線（TODO: ALL-WORKTREE-NO-MERGE）。
+5. **セキュリティ判定（コード強制）**: tournament-ab は security 平均が閾値（≦2）以下の案を勝者から除外するハードガードを **Decide フェーズのコードで強制**（両案違反なら winner:null → implementation-drive 側も失敗扱い）。プロンプト文言だけに依存しない。
