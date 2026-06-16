@@ -74,6 +74,17 @@ let round = 0
 let lastFindings = []
 
 while (round < maxRounds) {
+  // コスト暴走ガード: 予算(+Nk)指定時、残量が閾値未満なら打ち切ってエスカレーション
+  if (budget.total && budget.remaining() < 40_000) {
+    phase('Report')
+    log(`予算残量不足(${Math.round(budget.remaining() / 1000)}k)でレビューループを打ち切り`)
+    return {
+      result: 'ESCALATE',
+      rounds: round,
+      reason: 'budget exhausted',
+      remaining: lastFindings.filter((f) => f.severity === 'CRITICAL' || f.severity === 'IMPORTANT'),
+    }
+  }
   round++
   phase('Review')
   log(`Round ${round}/${maxRounds}: 並列レビュー実行`)

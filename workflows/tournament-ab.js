@@ -54,6 +54,12 @@ const spec = args?.spec ?? ''
 const testCmd = args?.testCmd ?? 'npm test'
 const baseFile = args?.baseFile ?? ''
 
+// コスト暴走ガード: A/B並列実装+3ジャッジは高コスト。予算(+Nk)指定時、残量不足なら開始しない
+if (budget.total && budget.remaining() < 80_000) {
+  log(`予算残量不足(${Math.round(budget.remaining() / 1000)}k)でトーナメントを中止`)
+  return { winner: null, reason: 'budget exhausted before tournament' }
+}
+
 // --- Phase 1: Implement ---
 phase('Implement')
 log(`A/Bトーナメント開始: ${task}`)
