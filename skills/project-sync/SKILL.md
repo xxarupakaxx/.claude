@@ -1,6 +1,6 @@
 ---
 name: project-sync
-description: PJドキュメント同期。PJ AGENTS.mdの更新依頼時やドキュメント整理依頼時に使用。user-level設定との整合性確認、ドキュメント分離原則の適用、不要ファイル削除を実施。
+description: PJドキュメント同期。PJ CLAUDE.mdの更新依頼時やドキュメント整理依頼時に使用。user-level設定との整合性確認、ドキュメント分離原則の適用、不要ファイル削除を実施。
 allowed-tools: Read, Write, Bash, Glob, Grep
 ---
 
@@ -8,33 +8,33 @@ allowed-tools: Read, Write, Bash, Glob, Grep
 
 ## トリガー条件
 
-- PJ AGENTS.mdの更新を依頼された場合
+- PJ CLAUDE.mdの更新を依頼された場合
 - ドキュメント構造の整理を依頼された場合
-- 「user-level AGENTS.mdに合わせて」と指示された場合
+- 「user-level CLAUDE.mdに合わせて」と指示された場合
 
 ## ドキュメント分離原則
 
 | 対象 | 配置場所 | 用途 |
 |------|---------|------|
 | **人間向け** | README.md, docs/ | プロジェクト説明、API仕様、アーキテクチャ図 |
-| **エージェント向け** | AGENTS.md, .Codex/context/ | AI向け指示、作業ルール |
+| **エージェント向け** | CLAUDE.md, .claude/context/ | AI向け指示、作業ルール |
 
 ## 実行手順
 
 ### 1. 現状把握
 
 ```bash
-# PJ AGENTS.mdの確認
-cat AGENTS.md 2>/dev/null || echo "AGENTS.md not found"
-wc -l AGENTS.md 2>/dev/null
+# PJ CLAUDE.mdの確認
+cat CLAUDE.md 2>/dev/null || echo "CLAUDE.md not found"
+wc -l CLAUDE.md 2>/dev/null
 
 # ドキュメント構造の確認
-ls -la .Codex/ 2>/dev/null
+ls -la .claude/ 2>/dev/null
 ls -la docs/ 2>/dev/null
 
 # user-level設定の確認
-cat ~/.Codex/AGENTS.md
-ls ~/.Codex/context/
+cat ~/.claude/CLAUDE.md
+ls ~/.claude/context/
 ```
 
 ### 2. 差分分析
@@ -43,7 +43,7 @@ ls ~/.Codex/context/
 
 | 項目 | 確認内容 |
 |------|---------|
-| AGENTS.md行数 | 60行以下か |
+| CLAUDE.md行数 | 60行以下か |
 | 変数定義 | MEMORY_DIR, BASE_BRANCH があるか |
 | 品質チェック | lint/format/typecheck/test コマンドがあるか |
 | @参照 | 詳細をcontext/に委譲しているか |
@@ -54,7 +54,7 @@ ls ~/.Codex/context/
 ```markdown
 ## 更新提案
 
-### AGENTS.md
+### CLAUDE.md
 **現状:** XX行
 **提案:** 以下に簡素化
 
@@ -84,7 +84,7 @@ npm test
 - [ ] <ファイル> → <移動先>（理由: ...）
 
 ### 新規作成
-- [ ] .Codex/context/<name>.md（用途: ...）
+- [ ] .claude/context/<name>.md（用途: ...）
 ```
 
 ### 4. ユーザー確認
@@ -98,27 +98,27 @@ AskUserQuestionで以下を確認:
 
 承認後、以下を実行:
 
-1. AGENTS.mdの更新（60行以下に）
+1. CLAUDE.mdの更新（60行以下に）
 2. 不要ファイルの削除
 3. ファイルの移動・リネーム
-4. .Codex/context/の作成（必要な場合）
+4. .claude/context/の作成（必要な場合）
 
 ### 6. 検証
 
 ```bash
 # 行数確認
-wc -l AGENTS.md
+wc -l CLAUDE.md
 
 # 構造確認
-ls -la .Codex/
+ls -la .claude/
 
 # @参照の動作確認（手動）
 ```
 
-## AGENTS.md設計原則
+## CLAUDE.md設計原則
 
 ### 60行以下ルール
-- 詳細は`@.Codex/context/`に委譲
+- 詳細は`@.claude/context/`に委譲
 - Progressive Disclosure（段階的開示）を活用
 
 ### 必須セクション
@@ -146,13 +146,13 @@ BASE_BRANCH=<branch>
 | 判断 | 条件 |
 |------|------|
 | **削除** | 古いagent定義、重複ドキュメント、空ファイル |
-| **移動** | エージェント向け内容がdocs/にある場合 → .Codex/context/ |
+| **移動** | エージェント向け内容がdocs/にある場合 → .claude/context/ |
 | **統合** | 類似内容の複数ファイル → 1ファイルに |
 | **保持** | 人間向けドキュメント（README, docs/）、PJ固有設定 |
 
 ## チェックリスト
 
-- [ ] AGENTS.mdが60行以下
+- [ ] CLAUDE.mdが60行以下
 - [ ] 変数（MEMORY_DIR, BASE_BRANCH）が定義済み
 - [ ] 品質チェックコマンドが記載済み
 - [ ] ドキュメント分離原則に従っている

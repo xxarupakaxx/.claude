@@ -63,6 +63,6 @@ description: Clean Architecture + DDD 観点での重要アーキテクチャ判
 
 ## 関連ルール
 
-- `~/.Codex/rules/architecture-language.md`: 設計語彙 (Module/Depth/Information Hiding/Seam/Leverage)
-- `~/.Codex/rules/common-patterns.md`: 推奨パターン / アンチパターン
-- `~/.Codex/rules/common-coding-style.md`: コーディング規約
+- `~/.claude/rules/architecture-language.md`: 設計語彙 (Module/Depth/Information Hiding/Seam/Leverage)
+- `~/.claude/rules/common-patterns.md`: 推奨パターン / アンチパターン
+- `~/.claude/rules/common-coding-style.md`: コーディング規約

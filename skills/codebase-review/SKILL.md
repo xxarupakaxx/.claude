@@ -27,7 +27,7 @@ context: fork
 | Code Quality | cq | 命名、一貫性、可読性、不要コード |
 | Documentation | docs | ドキュメント不足、内容の陳腐化 |
 
-## 優先度定義（AGENTS.md 標準 3 階級に準拠）
+## 優先度定義（CLAUDE.md 標準 3 階級に準拠）
 
 | 優先度 | 説明 | 対応期限 |
 |--------|------|---------|
@@ -35,7 +35,7 @@ context: fork
 | IMPORTANT | 早期対応推奨（バグ、セキュリティリスク、一貫性違反） | 次リリースまで |
 | MINOR | 改善推奨（命名・スタイル、軽微な技術的負債） | 計画的に対応 |
 
-> 旧 critical/major/minor/trivial 4 階級は廃止。AGENTS.md の severity 体系（CRITICAL/IMPORTANT/MINOR）に統一。
+> 旧 critical/major/minor/trivial 4 階級は廃止。CLAUDE.md の severity 体系（CRITICAL/IMPORTANT/MINOR）に統一。
 
 ## 実行手順
 
@@ -44,7 +44,7 @@ context: fork
 1. ディレクトリの確認・作成
 
 ```bash
-# PJ AGENTS.mdのMEMORY_DIRを確認（未定義なら.local/）
+# PJ CLAUDE.mdのMEMORY_DIRを確認（未定義なら.local/）
 # システムプロンプトのToday's dateから日付を取得（例示をコピーしない）
 mkdir -p ${MEMORY_DIR}/memory/YYMMDD_codebase-review
 mkdir -p ${MEMORY_DIR}/issues
@@ -52,7 +52,7 @@ mkdir -p ${MEMORY_DIR}/issues
 
 2. 05_log.mdを初期化
 
-3. PJのAGENTS.mdとcontext/を確認し、アーキテクチャルールを把握
+3. PJのCLAUDE.mdとcontext/を確認し、アーキテクチャルールを把握
 
 4. **コードベース構造の把握**
 
@@ -67,26 +67,26 @@ find . -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.py" -o -name "*.md" 
 
 ### Phase 1: 並列サブエージェント実行
 
-**CRITICAL**: 6つのサブエージェントを**同時に**起動する。Codex `spawn_agent` を1つのメッセージで6回呼び出す。
-agent / Codex CLI を使った別モデル検証は廃止（AGENTS.md / context/agent-cli-guide.md と整合）。Codex `spawn_agent` の専門サブエージェント並列起動のみで実施する。
+**CRITICAL**: 6つのサブエージェントを**同時に**起動する。Agent Tool を1つのメッセージで6回呼び出す。
+Agent CLI を使った別モデル検証は廃止。Agent Tool の専門サブエージェント並列起動のみで実施する。
 
-**CRITICAL**: issueファイル作成を伴うため、汎用実行枠は `agent_type="worker"` を使用すること。
+**CRITICAL**: issueファイル作成を伴うため、汎用実行枠は `subagent_type="general-purpose"` を使用すること。
 - `explorer` は読み取り調査向きで、issueファイル作成が必要な作業には使わない
-- `general-purpose` は Claude Task 由来の名前で、Codex `spawn_agent.agent_type` ではない
+- `general-purpose` は Claude Code の汎用 Agent であり、専門 subagent_type ではない
 
 各サブエージェントには以下の情報を渡す:
 - メモリディレクトリのフルパス
-- PJ AGENTS.mdの内容（アーキテクチャルール等）
+- PJ CLAUDE.mdの内容（アーキテクチャルール等）
 - 対象リポジトリのパス
 - 担当観点とレビュー基準
 - **コードベース構造情報**（Phase 0で取得）
 
 **各サブエージェントのプロンプト構成:**
 1. 共通テンプレート: `Read templates/shared-template.md` の内容を使用
-   - フルパス: `~/.Codex/skills/codebase-review/templates/shared-template.md`
+   - フルパス: `~/.claude/skills/codebase-review/templates/shared-template.md`
    - タスク1〜4、issueファイル形式、注意事項を含む
 2. 観点別詳細指示: `Read templates/perspective-prompts.md` から担当観点の指示を挿入
-   - フルパス: `~/.Codex/skills/codebase-review/templates/perspective-prompts.md`
+   - フルパス: `~/.claude/skills/codebase-review/templates/perspective-prompts.md`
    - 共通テンプレートの `## あなたの担当観点` セクションに該当観点の内容を挿入する
 
 ### Phase 2: 結果の集約
