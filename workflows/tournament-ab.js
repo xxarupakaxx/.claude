@@ -250,11 +250,11 @@ if (aBlocked && bBlocked) {
 } else if (bBlocked) {
   winner = 'A'
   reason = `B excluded by security floor (sec ${secB.toFixed(1)})`
-} else if (aWins > bWins) winner = 'A'
-else if (bWins > aWins) winner = 'B'
-else if (scoreA > scoreB + 0.3) winner = 'A'
-else if (scoreB > scoreA + 0.3) winner = 'B'
-else winner = 'tie'
+} else if (aWins > bWins) { winner = 'A'; reason = `A won by votes (${aWins}-${bWins})` }
+else if (bWins > aWins) { winner = 'B'; reason = `B won by votes (${bWins}-${aWins})` }
+else if (scoreA > scoreB + 0.3) { winner = 'A'; reason = 'A won by weighted score' }
+else if (scoreB > scoreA + 0.3) { winner = 'B'; reason = 'B won by weighted score' }
+else { winner = 'tie'; reason = 'too close to call' }
 
 const result = {
   winner,
