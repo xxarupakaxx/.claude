@@ -9,12 +9,13 @@
 
 | 用途 | 機構 |
 |------|------|
-| パイプライン制御・並列fan-out | **Workflow tool**（`agent()`/`parallel()`/`pipeline()`） |
+| パイプライン制御・並列fan-out | **Workflow tool**（`agent()`/`parallel()`/`pipeline()`）※既定 |
+| エージェント間の自律協調（複数ターン） | **Agent Teams**（`/team-run` → `TeamCreate`/`SendMessage`/共有タスクリスト） |
 | 専門レビュー・調査・軽量ワーカー | **Agent(subagent_type / model)** |
 | 重い実装の委任 | `Agent(subagent_type: "codex:codex-rescue")` |
 | 異ベンダー視点のレビュー | `Agent(subagent_type: "cursor:cursor-rescue")` |
 
-> Agent Teams（`TeamCreate`/`SendMessage`、`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`）は**実験的扱い**。現状のLoopは「親が一括投入するWorkflow fan-out」であり、エージェント同士が自律的にメッセージ協調する真のチーム協調は未配線。採用する場合は本ドキュメントに正規経路を追記してから使う（`teams/` 配下のアドホック残骸は設計の一部ではない）。
+> **Workflow と Agent Teams の使い分け**: 大半のLoopタスクは Workflow（親が一括投入する並列fan-out、ワーカーは独立・短命）で足りる。エージェント同士が `SendMessage` で往復対話し、共有タスクリストから自律的に仕事を取り、**複数ターンに渡って協調**する必要がある場合のみ Agent Teams（`/team-run`、team-lead = `orchestrator` agent）を使う。`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` で有効。`teams/` 配下に実行時状態が生成される（完了後の整理対象）。
 
 ## 現状ステータス（2026-06-17 時点）
 
