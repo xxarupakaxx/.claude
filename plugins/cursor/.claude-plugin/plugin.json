@@ -1,0 +1,8 @@
+{
+  "name": "cursor",
+  "version": "1.0.0",
+  "description": "Use Cursor agents from Claude Code to review code or delegate tasks (opus / gpt-5.5).",
+  "author": {
+    "name": "Cookie-gg"
+  }
+}

@@ -34,3 +34,15 @@
 !/evals/**
 # Exclude eval results runtime artifacts
 /evals/reviewer/results/**/raw/
+# Include plugin configuration
+!/plugins/
+!/plugins/installed_plugins.json
+!/plugins/known_marketplaces.json
+!/plugins/cursor/
+!/plugins/cursor/**
+# Exclude plugin caches and downloaded content
+/plugins/cache/
+/plugins/marketplaces/
+/plugins/data/
+/plugins/plugin-catalog-cache.json
+/plugins/.last_inuse_sweep
