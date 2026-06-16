@@ -12,7 +12,7 @@ color: cyan
 
 ## 入力
 
-hour-calnedar scheduled taskが生成した議事録サマリー。以下の構造を期待:
+hour-calendar scheduled taskが生成した議事録サマリー。以下の構造を期待:
 - 概要
 - 主要な論点
 - やること（ネクストアクション）
