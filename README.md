@@ -329,16 +329,17 @@ CLAUDE.mdで定義された6フェーズワークフロー:
 1. `rg "^summary:" .local/memories/` でサマリー検索
 2. 該当するメモリの`related`から詳細ログを参照
 
-## agent cli連携
+## サブエージェント・別モデル連携
 
-別モデル（GPT-5.2-high）によるレビューを実施:
+指揮者（Claude Code）が Workflow tool + `Agent(subagent_type/model)` で委任する。重い実装は別モデル（Codex/GPT-5.x）に委任:
 
-```bash
-agent -p "<prompt>" --model gpt-5.2-high --output-format json
+```
+Agent(subagent_type: "codex:codex-rescue", prompt: "<重い実装タスク>")
+Agent(subagent_type: "cursor:cursor-rescue", prompt: "<異ベンダー視点の設計レビュー>")
 ```
 
-- 修正すべき点がなくなるまでループ
-- `--resume <session_id>`でセッション継続
+- 専門レビューは `arch-reviewer` / `security-reviewer` 等を並列起動（修正すべき点がなくなるまでループ）
+- 実行モデルの詳細は `rules/model-routing.md`、Loop全体は `context/loop-engineering.md`
 
 ## プロジェクト設定
 
