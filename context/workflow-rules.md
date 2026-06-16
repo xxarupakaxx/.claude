@@ -528,7 +528,7 @@ Phase直結でないユーティリティスキル。**状況が発生したら*
 
 | 状況 | スキル | やること |
 |------|--------|---------|
-| サブエージェントのモデル選択に迷う | `cost-aware-llm`（+ `rules/model-routing.md`） | model override が必要か判断し、必要時のみ `gpt-5.*` を選ぶ |
+| サブエージェントのモデル選択に迷う | `cost-aware-llm`（+ `rules/model-routing.md`） | model override が必要か判断し、必要時のみ `model: "opus"` を指定 |
 | エージェントチームの構成に迷う | `team-builder` | 利用可能エージェントを一覧→タスクに最適な組み合わせを提案 |
 
 ### メンテナンス（定期）

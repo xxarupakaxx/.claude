@@ -279,7 +279,7 @@ re_review_priority: high        # high / medium / low
 
 ### issues/ frontmatter ライフサイクル管理（運用手順）
 
-各ラウンドでメインの Codex は以下を実行する（自動運用の主体・タイミングを明示）:
+各ラウンドでメインの Claude Code は以下を実行する（自動運用の主体・タイミングを明示）:
 
 1. **ラウンド開始時**:
    - `glob` で `${MEMORY_DIR}/issues/*.md` を取得

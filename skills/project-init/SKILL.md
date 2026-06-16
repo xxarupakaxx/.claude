@@ -1,6 +1,6 @@
 ---
 name: project-init
-description: プロジェクト初期化。AGENTS.mdや.Codex/がない場合にテンプレートを適用し、PJ固有設定を促す。
+description: プロジェクト初期化。CLAUDE.mdや.claude/がない場合にテンプレートを適用し、PJ固有設定を促す。
 allowed-tools: Read, Write, Bash, Glob
 ---
 
@@ -9,8 +9,8 @@ allowed-tools: Read, Write, Bash, Glob
 ## トリガー条件
 
 以下のいずれかの場合に使用:
-- プロジェクトルートにAGENTS.mdが存在しない
-- .Codex/ディレクトリが存在しない
+- プロジェクトルートにCLAUDE.mdが存在しない
+- .claude/ディレクトリが存在しない
 - ユーザーがプロジェクト初期化を要求した
 
 ## 実行手順
@@ -18,12 +18,12 @@ allowed-tools: Read, Write, Bash, Glob
 ### 1. テンプレートの確認
 
 ```bash
-ls ~/.Codex/templates/project/
+ls ~/.claude/templates/project/
 ```
 
-### 2. AGENTS.mdの作成
+### 2. CLAUDE.mdの作成
 
-PJルートに以下の内容でAGENTS.mdを作成:
+PJルートに以下の内容でCLAUDE.mdを作成:
 
 ```markdown
 # <プロジェクト名>
@@ -78,7 +78,7 @@ AskUserQuestionツールで以下を確認:
 
 ### 5. 設定の調整
 
-ユーザーの回答に基づいてAGENTS.mdを調整。
+ユーザーの回答に基づいてCLAUDE.mdを調整。
 
 ## モノレポの場合
 
