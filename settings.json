@@ -14,7 +14,7 @@
     "commit": "",
     "pr": ""
   },
-  "model": "opus[1m]",
+  "model": "sonnet",
   "skillOverrides": {
     "analyse": "off",
     "analyse-problem": "off",
@@ -320,13 +320,20 @@
     "typescript-lsp@claude-plugins-official": true,
     "session-report@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
-    "atlassian@claude-plugins-official": true
+    "atlassian@claude-plugins-official": true,
+    "codex@openai-codex": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
       "source": {
         "source": "github",
         "repo": "anthropics/claude-plugins-official"
+      }
+    },
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
       }
     }
   },
