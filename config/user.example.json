@@ -10,5 +10,8 @@
   "jira": {
     "assignee_jql": "assignee = currentUser()",
     "default_project": ""
+  },
+  "notes": {
+    "daily_dir": "~/.claude/.local/daily"
   }
 }
