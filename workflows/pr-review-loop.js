@@ -86,7 +86,8 @@ while (round < maxRounds) {
     }
   }
   round++
-  phase('Review')
+  // phase はグローバル状態のため parallel 内で競合しうる。各 agent の opts.phase で
+  // グループ化し、ループ内ではグローバル phase() を呼ばない（公式 loop パターン準拠）。
   log(`Round ${round}/${maxRounds}: 並列レビュー実行`)
 
   const reviews = await parallel(
@@ -96,13 +97,14 @@ while (round < maxRounds) {
         phase: 'Review',
         agentType: d.agentType,
         schema: FINDINGS_SCHEMA,
-      })
+      }).then((r) => (r ? { ...r, _key: d.key } : null))
     )
   )
 
+  // dimension は reviewer の自己申告でなく安定キー(d.key)を使う
   const findings = reviews
     .filter(Boolean)
-    .flatMap((r) => (r.findings || []).map((f) => ({ ...f, dimension: r.dimension })))
+    .flatMap((r) => (r.findings || []).map((f) => ({ ...f, dimension: r._key })))
   const high = findings.filter((f) => f.severity === 'CRITICAL' || f.severity === 'IMPORTANT')
   lastFindings = findings
 
@@ -121,8 +123,7 @@ while (round < maxRounds) {
     return { result: 'NEEDS_WORK', rounds: round, high }
   }
 
-  // 修正フェーズ
-  phase('Fix')
+  // 修正フェーズ（グループ化は fix agent の opts.phase:'Fix' に委ねる）
   log(`Round ${round}: CRITICAL/IMPORTANT ${high.length}件を修正`)
   const fix = await agent(
     `次のレビュー指摘を修正せよ。対象差分: ${diffSpec}
