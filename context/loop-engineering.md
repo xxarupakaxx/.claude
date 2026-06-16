@@ -369,5 +369,5 @@ grep "stop-harness-improve" ~/.claude/settings.json
 1. **自律タスクの安全弁**: 信頼タスク（hour-calendar等）の auto_execute は確認なしで自律実行する方針。ただし金額・契約・人事・本番操作・対人連絡は必ず human_action に分類して実行しない（曖昧なものも human_action 側へ倒す）。外部書き込み（Jira起票/PR作成/Slack投稿）は冪等性ガード（既存検索→更新 or 新規）を必須とする。
 2. **ハーネス改善の承認制**: harness-improver / evening-review の CLAUDE.md・rules 改変提案は**自動適用しない**（自己改変は全自律の例外、必ず人間承認）。
 3. **コスト追跡**: post-cost-track hook（実装済）+ evening-review のアラート（実装済）でコストを可視化。※ `budget.remaining()` による workflow 内ハードガードは**未実装（TODO）**。
-4. **Worktree分離**: tournament-ab / implementation-drive の並列実装は isolation:"worktree" で競合を防止。※ worktree 成果のメイン統合は未配線（TODO: ALL-WORKTREE-NO-MERGE）。
+4. **Worktree分離**: tournament-ab の**並列A/B実装**のみ isolation:"worktree" で競合を防止（比較用。勝者worktreeのメイン統合は手動）。implementation-drive の逐次サブタスクは隔離せず同一作業ツリーで積み増す（前段成果の上に実装）。
 5. **セキュリティ判定（コード強制）**: tournament-ab は security 平均が閾値（≦2）以下の案を勝者から除外するハードガードを **Decide フェーズのコードで強制**（両案違反なら winner:null → implementation-drive 側も失敗扱い）。プロンプト文言だけに依存しない。
