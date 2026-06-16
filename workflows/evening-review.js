@@ -58,6 +58,24 @@ const FAILURE_SCHEMA = {
   required: ['patterns', 'total_errors'],
 }
 
+const USER_CONFIG_SCHEMA = {
+  type: 'object',
+  properties: {
+    user: { type: 'object', properties: { email: { type: 'string' }, github_username: { type: 'string' } }, required: ['email'] },
+    slack: { type: 'object', properties: { notification_channel: { type: 'string' }, dm_fallback: { type: 'boolean' } } },
+    jira: { type: 'object', properties: { assignee_jql: { type: 'string' } } },
+  },
+  required: ['user', 'slack'],
+}
+
+const config = args?.config ?? await agent(`
+Read the file ~/.claude/config/user.json and return its full JSON contents.
+If the file does not exist, return: {"user":{"email":"","github_username":""},"slack":{"notification_channel":"","dm_fallback":true},"jira":{"assignee_jql":"assignee = currentUser()"}}
+`, { label: 'load-config', schema: USER_CONFIG_SCHEMA })
+
+const slackChannel = config.slack?.notification_channel || ''
+const slackTarget = slackChannel ? `${slackChannel}チャンネル` : '自分のDM'
+
 // --- Phase 1: Cost ---
 phase('Cost')
 log('本日のコスト集計を開始')
@@ -205,7 +223,7 @@ if (costReport?.recommendations?.length) {
 const summaryText = summaryLines.join('\n')
 
 await agent(`
-以下のサマリーをSlackに投稿してください。投稿先は自分のDMまたはtimes-yoshikiチャンネル。
+以下のサマリーをSlackの${slackTarget}に投稿してください。
 投稿できない場合はテキストをそのまま返してください。
 
 ---

@@ -1,0 +1,14 @@
+{
+  "user": {
+    "email": "your-email@example.com",
+    "github_username": "your-github-username"
+  },
+  "slack": {
+    "notification_channel": "times-yourname",
+    "dm_fallback": true
+  },
+  "jira": {
+    "assignee_jql": "assignee = currentUser()",
+    "default_project": ""
+  }
+}
