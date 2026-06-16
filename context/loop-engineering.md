@@ -8,7 +8,7 @@
 ```
 ┌─────────────────────────────────────────────────────┐
 │                  Scheduled Tasks                     │
-│  morning-kickoff(9:00) │ hour-calnedar(毎時)        │
+│  morning-kickoff(9:00) │ hour-calendar(毎時)        │
 │  jira-spec-poll(毎時)  │ evening-review(18:00)      │
 └──────────┬──────────────┬──────────────┬────────────┘
            │              │              │
@@ -168,7 +168,7 @@ Summary ──→ Slack日次サマリー投稿
 | タスク | 間隔 | 内容 | ワークフロー |
 |--------|------|------|-------------|
 | `morning-kickoff` | 毎朝9:00 | 日次計画作成→Slack通知 | morning-kickoff.js |
-| `hour-calnedar` | 毎時 | 議事録要約 + アクション分類→自動実行/dailyノート | — (直接実行) |
+| `hour-calendar` | 毎時 | 議事録要約 + アクション分類→自動実行/dailyノート | — (直接実行) |
 | `jira-spec-poll` | 毎時 | 新規チケット検出→仕様書ドラフト生成 | — (直接実行) |
 | `evening-review` | 毎夕18:00 | コスト/失敗分析→改善提案→Slackサマリー | evening-review.js |
 
@@ -219,7 +219,7 @@ Summary ──→ Slack日次サマリー投稿
 │   └── loop-status.md
 ├── scheduled-tasks/                # スケジュールタスク
 │   ├── morning-kickoff/SKILL.md
-│   ├── hour-calnedar/SKILL.md      # 既存（拡張済み）
+│   ├── hour-calendar/SKILL.md      # 既存（拡張済み）
 │   ├── jira-spec-poll/SKILL.md
 │   └── evening-review/SKILL.md
 ├── context/
@@ -256,7 +256,7 @@ ls ~/.claude/workflows/{tournament-ab,morning-kickoff,implementation-drive,eveni
 ls -la ~/.claude/hooks/{post-cost-track,stop-harness-improve}.sh
 
 # スケジュールタスク（4ディレクトリ）
-ls ~/.claude/scheduled-tasks/{morning-kickoff,hour-calnedar,jira-spec-poll,evening-review}/SKILL.md
+ls ~/.claude/scheduled-tasks/{morning-kickoff,hour-calendar,jira-spec-poll,evening-review}/SKILL.md
 
 # コマンド
 ls ~/.claude/commands/loop-status.md
