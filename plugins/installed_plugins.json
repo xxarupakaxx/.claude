@@ -1,0 +1,75 @@
+{
+  "version": 2,
+  "plugins": {
+    "slack@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/yoshiki.morii/work/moonshot",
+        "installPath": "/Users/yoshiki.morii/.claude/plugins/cache/claude-plugins-official/slack/236752ad9ab3",
+        "version": "236752ad9ab3",
+        "installedAt": "2026-03-25T13:57:22.480Z",
+        "lastUpdated": "2026-03-25T13:57:22.480Z",
+        "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
+      }
+    ],
+    "typescript-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/yoshiki.morii/.claude/plugins/cache/claude-plugins-official/typescript-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-05-25T07:26:46.280Z",
+        "lastUpdated": "2026-05-25T07:26:46.280Z",
+        "gitCommitSha": "9cacdc0d22152add09ad92206cc705b2666c61cc"
+      }
+    ],
+    "session-report@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/yoshiki.morii/.claude/plugins/cache/claude-plugins-official/session-report/9cacdc0d2215",
+        "version": "9cacdc0d2215",
+        "installedAt": "2026-05-25T07:26:46.280Z",
+        "lastUpdated": "2026-05-25T07:26:46.280Z",
+        "gitCommitSha": "9cacdc0d22152add09ad92206cc705b2666c61cc"
+      }
+    ],
+    "claude-md-management@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/yoshiki.morii/.claude/plugins/cache/claude-plugins-official/claude-md-management/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-05-25T07:26:46.280Z",
+        "lastUpdated": "2026-05-25T07:26:46.280Z",
+        "gitCommitSha": "9cacdc0d22152add09ad92206cc705b2666c61cc"
+      }
+    ],
+    "atlassian@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/yoshiki.morii/.claude/plugins/cache/claude-plugins-official/atlassian/9b52fb18e184",
+        "version": "9b52fb18e184",
+        "installedAt": "2026-06-02T03:32:50.443Z",
+        "lastUpdated": "2026-06-02T03:32:50.443Z",
+        "gitCommitSha": "9b52fb18e184edc307ce33f8bf4cdf148dedf1f2"
+      }
+    ],
+    "codex@openai-codex": [
+      {
+        "scope": "user",
+        "installPath": "/Users/yoshiki.morii/.claude/plugins/cache/openai-codex/codex/1.0.4",
+        "version": "1.0.4",
+        "installedAt": "2026-06-16T07:51:18.372Z",
+        "lastUpdated": "2026-06-16T07:51:18.372Z",
+        "gitCommitSha": "807e03ac9d5aa23bc395fdec8c3767500a86b3cf"
+      }
+    ],
+    "cursor@local": [
+      {
+        "scope": "user",
+        "installPath": "~/.claude/plugins/cursor",
+        "version": "1.0.0",
+        "installedAt": "2026-06-16T07:53:00.000Z",
+        "lastUpdated": "2026-06-16T07:53:00.000Z"
+      }
+    ]
+  }
+}

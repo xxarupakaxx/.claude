@@ -1,0 +1,18 @@
+{
+  "claude-plugins-official": {
+    "source": {
+      "source": "github",
+      "repo": "anthropics/claude-plugins-official"
+    },
+    "installLocation": "/Users/yoshiki.morii/.claude/plugins/marketplaces/claude-plugins-official",
+    "lastUpdated": "2026-06-02T03:31:40.054Z"
+  },
+  "openai-codex": {
+    "source": {
+      "source": "github",
+      "repo": "openai/codex-plugin-cc"
+    },
+    "installLocation": "/Users/yoshiki.morii/.claude/plugins/marketplaces/openai-codex",
+    "lastUpdated": "2026-06-16T07:51:03.760Z"
+  }
+}
