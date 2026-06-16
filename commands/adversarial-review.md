@@ -21,8 +21,7 @@ description: Red→Blue→Auditor の3エージェント敵対的レビューを
 
 ## コスト方針
 
-- Red/Blue/Auditor はそれぞれ `agent_type` のみ指定し、`model` / `service_tier` は通常省略
-- role既定は Red/Blue が `gpt-5.4` + `priority`、Auditor が `gpt-5.5` + `priority`
-- `sonnet` / `opus` / `haiku` は Codex の model override として指定しない
+- Red/Blue は `Agent(subagent_type: "xxx")` で model 省略（親継承）、Auditor のみ `model: "opus"` 指定
+- model 指定は審判（Auditor）のみ。Red/Blue は親セッションのモデルを継承
 
 詳細は `~/.claude/skills/adversarial-review/SKILL.md` 参照。

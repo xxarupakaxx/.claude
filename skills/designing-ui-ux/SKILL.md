@@ -349,6 +349,6 @@ React(`/facebook/react`), Next.js(`/vercel/next.js`), Tailwind(`/tailwindlabs/ta
 
 ## 出典
 
-frontend-design(Anthropic), Codex-design-skill(Dammyjay93), ui-ux-pro-max-skill(nextlevelbuilder), interface-design(Dammyjay93), bencium-Codex-design-skill(bencium), Codex-designer-skill(joeseesun), v0 System Prompt(Vercel)
+frontend-design(Anthropic), claude-design-skill(Dammyjay93), ui-ux-pro-max-skill(nextlevelbuilder), interface-design(Dammyjay93), bencium-claude-design-skill(bencium), Codex-designer-skill(joeseesun), v0 System Prompt(Vercel)
 
-**Remember: Codex is capable of extraordinary creative work.**
+**Remember: Claude Code is capable of extraordinary creative work.**

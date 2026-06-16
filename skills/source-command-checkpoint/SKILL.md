@@ -16,7 +16,7 @@ Use this skill when the user asks to run the migrated source command `checkpoint
 
 ## 手順
 
-1. PJ AGENTS.mdから品質チェックコマンドを取得
+1. PJ CLAUDE.mdから品質チェックコマンドを取得
 2. プロジェクトの技術スタックに合わせた合格基準を自動生成
 3. 各基準の現在の状態を実行して確認
 4. `${MEMORY_DIR}/memory/YYMMDD_<task>/checkpoint.md` に保存

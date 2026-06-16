@@ -31,7 +31,7 @@ description: コードベースの構造・パターン・依存関係を3つの
 
 ### Step 2: 3つの探索サブエージェント + 過去知見検索を並列起動
 
-**CRITICAL**: Codex `spawn_agent` で以下4つを**同時に**起動する。
+**CRITICAL**: Agent Tool で以下4つを**同時に**起動する。
 
 各エージェントには以下の情報を渡す:
 - 探索対象ディレクトリのフルパス
@@ -41,7 +41,7 @@ description: コードベースの構造・パターン・依存関係を3つの
 
 #### Agent 1: Architecture Explorer
 
-**agent_type**: `architecture-explorer`（未ロード時は `explorer`）
+**subagent_type**: `architecture-explorer`（未ロード時は `explorer`）
 
 **プロンプトテンプレート**:
 ```
@@ -56,7 +56,7 @@ description: コードベースの構造・パターン・依存関係を3つの
 
 #### Agent 2: Data Flow Tracer
 
-**agent_type**: `data-flow-tracer`（未ロード時は `explorer`）
+**subagent_type**: `data-flow-tracer`（未ロード時は `explorer`）
 
 **プロンプトテンプレート**:
 ```
@@ -71,7 +71,7 @@ description: コードベースの構造・パターン・依存関係を3つの
 
 #### Agent 3: Dependency Mapper
 
-**agent_type**: `dependency-mapper`（未ロード時は `explorer`）
+**subagent_type**: `dependency-mapper`（未ロード時は `explorer`）
 
 **プロンプトテンプレート**:
 ```
@@ -86,7 +86,7 @@ description: コードベースの構造・パターン・依存関係を3つの
 
 #### Agent 4: Learnings Researcher（過去知見検索）
 
-**agent_type**: `learnings-researcher`（未ロード時は `explorer` またはローカル `rg`/SQLite検索で代替）
+**subagent_type**: `learnings-researcher`（未ロード時は `explorer` またはローカル `rg`/SQLite検索で代替）
 
 **プロンプトテンプレート**:
 ```
@@ -97,7 +97,7 @@ description: コードベースの構造・パターン・依存関係を3つの
 
 `learnings-researcher` の検索戦略に従って、
 memories/、solutions/、issues/ を横断検索してください。
-MEMORY_DIRはPJ AGENTS.mdで定義（未定義なら .local/）。
+MEMORY_DIRはPJ CLAUDE.mdで定義（未定義なら .local/）。
 ```
 
 **スキップ条件**: MEMORY_DIRにmemories/やsolutions/が存在しない場合（新規PJ等）
@@ -154,7 +154,7 @@ MEMORY_DIRはPJ AGENTS.mdで定義（未定義なら .local/）。
 
 ## Agent Teams連携
 
-`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` が有効な場合、`~/.Codex/agents/` の定義をTeamメンバーとして直接使用可能。大規模コードベースではAgent Teamsでの並列探索がより効果的。
+`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` が有効な場合、`~/.claude/agents/` の定義をTeamメンバーとして直接使用可能。大規模コードベースではAgent Teamsでの並列探索がより効果的。
 
 ## 既存設定への参照
 
