@@ -40,7 +40,7 @@ color: orange
 コスト超過時に以下を提案:
 - opus → sonnet への切り替え候補タスク
 - sonnet → haiku への切り替え候補タスク
-- Codex gpt-5.4 → gpt-5.4-mini への切り替え候補タスク
+- Codex gpt-5.x → 軽量モデルへの切り替え候補タスク
 
 ## 出力形式
 
