@@ -265,7 +265,7 @@ which claude
 # GitHub CLI
 gh auth status
 
-# Codex CLI（オプション）
+# Codex（オプション — codex:codex-rescue 経由で委任）
 which codex
 
 # Cursor Agent（オプション）
