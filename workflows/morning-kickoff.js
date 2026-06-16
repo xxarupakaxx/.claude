@@ -9,6 +9,26 @@ export const meta = {
   ],
 }
 
+const USER_CONFIG_SCHEMA = {
+  type: 'object',
+  properties: {
+    user: { type: 'object', properties: { email: { type: 'string' }, github_username: { type: 'string' } }, required: ['email'] },
+    slack: { type: 'object', properties: { notification_channel: { type: 'string' }, dm_fallback: { type: 'boolean' } } },
+    jira: { type: 'object', properties: { assignee_jql: { type: 'string' } } },
+  },
+  required: ['user', 'slack'],
+}
+
+const config = args?.config ?? await agent(`
+Read the file ~/.claude/config/user.json and return its full JSON contents.
+If the file does not exist, return: {"user":{"email":"","github_username":""},"slack":{"notification_channel":"","dm_fallback":true},"jira":{"assignee_jql":"assignee = currentUser()"}}
+`, { label: 'load-config', schema: USER_CONFIG_SCHEMA })
+
+const userEmail = config.user?.email || ''
+const slackChannel = config.slack?.notification_channel || ''
+const jiraJql = config.jira?.assignee_jql || 'assignee = currentUser()'
+const slackTarget = slackChannel ? `${slackChannel}チャンネル` : '自分のDM'
+
 const DAILY_PLAN_SCHEMA = {
   type: 'object',
   properties: {
@@ -30,7 +50,7 @@ log('データ収集開始')
 
 const [jiraData, calendarData, carryoverData, prData] = await parallel([
   () => agent(`
-Jiraで自分（yoshiki.morii@dena.com）にアサインされたチケットを取得してください。
+Jiraで自分（${userEmail}）にアサインされたチケットを取得してください。
 ステータス: Open, In Progress, To Do のもの。
 各チケットについて以下を返してください:
 - チケットキー
@@ -39,7 +59,7 @@ Jiraで自分（yoshiki.morii@dena.com）にアサインされたチケットを
 - 優先度
 - 期限
 - Epic（あれば）
-JQLを使ってください: assignee = currentUser() AND statusCategory != Done ORDER BY priority DESC, duedate ASC
+JQLを使ってください: ${jiraJql} AND statusCategory != Done ORDER BY priority DESC, duedate ASC
 `, { label: 'jira-tickets', phase: 'Gather' }),
 
   () => agent(`
@@ -142,7 +162,7 @@ const formatPlan = (p) => {
 
 const slackMsg = formatPlan(plan)
 const notifyResult = await agent(`
-以下のメッセージをSlackの自分のDM（またはtimes-yoshikiチャンネル）に投稿してください。
+以下のメッセージをSlackの${slackTarget}に投稿してください。
 投稿できない場合は、メッセージ内容をそのまま返してください。
 
 ---
