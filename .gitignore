@@ -18,6 +18,10 @@
 !/agents/**
 !/hooks/
 !/hooks/**
+!/workflows/
+!/workflows/**
+!/scheduled-tasks/
+!/scheduled-tasks/**
 !/rules/
 !/rules/**
 !/templates/
