@@ -212,6 +212,16 @@
             "timeout": 3
           }
         ]
+      },
+      {
+        "matcher": "Bash|Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/post-cost-track.sh",
+            "timeout": 3
+          }
+        ]
       }
     ],
     "Stop": [
@@ -257,6 +267,15 @@
             "command": "uv run --project ~/.claude/sui-memory python -m sui_memory.hook_stop",
             "timeout": 120,
             "statusMessage": "Saving session memory..."
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/stop-harness-improve.sh",
+            "timeout": 10
           }
         ]
       }
