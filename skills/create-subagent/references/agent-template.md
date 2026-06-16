@@ -73,6 +73,6 @@ Total: <重み付き合計>/<max>
 
 ## model / service_tier 選択
 
-Codex agent TOML では role の既定値として `model` と `service_tier` を書いてよい。通常は `model = "gpt-5.4"` / `service_tier = "priority"`、複雑判断のみ `model = "gpt-5.5"` / `service_tier = "priority"` に上げる。
+Claude Code Agent Tool では通常 `model` を省略し、親セッションのモデルを継承させる。判定・レビューには `model: "opus"`、軽量タスクには `model: "sonnet"` を明示。
 
-ただし `spawn_agent` 呼び出し時は通常 `model` / `service_tier` を省略し、TOMLと親モデル継承に任せる。詳細: `~/.claude/rules/model-routing.md`
+詳細: `~/.claude/rules/model-routing.md`

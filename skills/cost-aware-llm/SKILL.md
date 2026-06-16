@@ -6,7 +6,7 @@ description: LLMコスト最適化。サブエージェントの model override 
 # Cost-Aware LLM Pipeline
 
 サブエージェント起動時の **モデル選択判断スキル**。
-現行 Codex `spawn_agent` は、通常 `model` と `service_tier` を省略して親モデル継承と agent role の既定値に任せる。`service_tier` だけの指定はモデル解決エラーの原因になるため避ける。
+Claude Code の Agent Tool は、通常 `model` を省略して親セッションのモデルを継承させる。明示指定は特定用途（`model: "opus"` で判定、`model: "sonnet"` で軽量タスク）のみ。
 
 詳細ルールは `~/.claude/rules/model-routing.md` に集約済み。本スキルは判断の起点として使う。
 

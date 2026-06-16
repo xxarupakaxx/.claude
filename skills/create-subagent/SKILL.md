@@ -10,7 +10,7 @@ allowed-tools: Read, Write, Glob, Grep, AskUserQuestion
 
 ## 既存設定との関係
 
-- **rules/model-routing.md**: Codex `spawn_agent` の role選択と model/service_tier 省略方針に従う
+- **rules/model-routing.md**: Agent Tool の model 選択方針に従う
 - **rules/architecture-language.md**: 用語統一（Module/Interface/Depth 等）
 - **create-skill**: スキル生成の姉妹スキル。本スキルはエージェント生成に特化
 
@@ -68,9 +68,9 @@ allowed-tools: Read, Write, Glob, Grep, AskUserQuestion
 
 ### Step 5: 配置と確認
 
-- 配置先: `~/.codex/agents/<name>.toml`
+- 配置先: `~/.claude/agents/<name>.md`
 - 既存ファイル上書き時は AskUserQuestion で確認
-- 作成後、起動方法（Codex `spawn_agent` での `agent_type` 指定例）を報告
+- 作成後、起動方法（`Agent(subagent_type: "<name>")` 指定例）を報告
 
 ## 設計原則
 
@@ -105,7 +105,7 @@ allowed-tools: Read, Write, Glob, Grep, AskUserQuestion
 - **Tool の取りすぎ**: `Bash` を漫然と付与しない（最小権限）
 - **description に1人称**: "I can review..." は不可。3人称で記述
 - **トリガー曖昧**: 「いつ呼ばれるか」が読み手に伝わらない description
-- **service_tier単独指定**: Codex `spawn_agent` ではモデル解決エラーの原因になるため避ける。spawn時は通常 `model` / `service_tier` をどちらも省略する
+- **model の不要な明示指定**: 通常は `model` を省略し親セッションのモデルを継承させる
 - **Do Not Trust Preamble 省略**: レビュー系エージェントでは必須
 - **スコアリングルーブリック欠如**: レビュー系で「主観評価のみ」は禁止
 - **既存と重複**: 同名・同責務エージェントを増殖させない
