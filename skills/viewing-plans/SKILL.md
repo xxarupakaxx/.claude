@@ -49,14 +49,14 @@ allowed-tools: Read, mcp__workflow-html-app__view-plan
 
 - MCP Apps が自動的にHTML UIを開く
 - ユーザーはインタラクティブに計画を閲覧・コメント追加可能
-- コメントはpostMessage経由でCodexに送信される
+- コメントはpostMessage経由でClaude Codeに送信される
 
 ## 機能概要
 
 ### Plan Viewer（計画ビューア）
 - Markdownレンダリング（見出し、リスト、コードブロック）
 - DOMPurifyによるXSS対策
-- コメント追加・Codexへのフィードバック送信
+- コメント追加・Claude Codeへのフィードバック送信
 
 ### Log Viewer（ログビューア）※予定
 - Phase自動検出・タイムライン表示
@@ -72,7 +72,7 @@ allowed-tools: Read, mcp__workflow-html-app__view-plan
 
 ```
 # 自動発動（Phase 2完了後）
-1. Codexが30_plan.mdの作成を完了
+1. Claude Codeが30_plan.mdの作成を完了
 2. Read で30_plan.mdを読み込み
 3. mcp__workflow-html-app__view-plan に content を渡す
 4. HTML UI が自動表示される（ユーザー操作不要）
@@ -81,7 +81,7 @@ allowed-tools: Read, mcp__workflow-html-app__view-plan
 ```
 # 手動トリガー
 ユーザー: 計画をビューアで見たい
-Codex:
+Claude Code:
 1. メモリディレクトリから30_plan.mdを特定
 2. Read で読み込み
 3. view-plan MCPツールを呼び出し

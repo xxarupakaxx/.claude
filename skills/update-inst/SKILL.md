@@ -1,6 +1,6 @@
 ---
 name: update-inst
-description: user-level指示の更新。Codexが間違いを犯した際に、再発防止のためAGENTS.md/context/を更新。`/update-inst <間違えた内容>` で使用。
+description: user-level指示の更新。Claude Codeが間違いを犯した際に、再発防止のためCLAUDE.md/context/を更新。`/update-inst <間違えた内容>` で使用。
 allowed-tools: Read, Write, Glob, Grep
 ---
 
@@ -8,12 +8,12 @@ allowed-tools: Read, Write, Glob, Grep
 
 ## 概要
 
-Codexが間違いを犯した際、その原因を分析し、再発防止のためuser-level AGENTS.mdや関連ファイルを更新する。
+Claude Codeが間違いを犯した際、その原因を分析し、再発防止のためuser-level CLAUDE.mdや関連ファイルを更新する。
 
 ## トリガー条件
 
 - `/update-inst <間違えた内容>` が実行された場合
-- Codexが指示に反した行動をした際に、ユーザーが再発防止を依頼した場合
+- Claude Codeが指示に反した行動をした際に、ユーザーが再発防止を依頼した場合
 
 ## 実行手順
 
@@ -33,9 +33,9 @@ Codexが間違いを犯した際、その原因を分析し、再発防止のた
 
 | ファイル | 確認観点 |
 |---------|---------|
-| `~/.Codex/AGENTS.md` | 全PJ共通の作業フロー、基本ルール |
-| `~/.Codex/context/*.md` | 詳細ルール、フォーマット定義 |
-| `~/.Codex/skills/*/SKILL.md` | スキル固有のルール |
+| `~/.claude/CLAUDE.md` | 全PJ共通の作業フロー、基本ルール |
+| `~/.claude/context/*.md` | 詳細ルール、フォーマット定義 |
+| `~/.claude/skills/*/SKILL.md` | スキル固有のルール |
 
 ### Phase 2: 修正方針の決定
 
@@ -99,7 +99,7 @@ Codexが間違いを犯した際、その原因を分析し、再発防止のた
 ## 修正のベストプラクティス
 
 ### 1. 60行ルールを維持
-- AGENTS.mdは60行以下に収める
+- CLAUDE.mdは60行以下に収める
 - 詳細は`@`参照でcontext/に委譲
 
 ### 2. 強調表現の適切な使用

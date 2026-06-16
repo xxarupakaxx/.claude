@@ -209,10 +209,10 @@ Summary ──→ Slack日次サマリー投稿
 
 | ロール | モデル | 呼び出し方法 |
 |--------|--------|-------------|
-| Orchestrator / Judge | claude-opus-4-6 | agent() model:"opus" |
-| Standard Worker | claude-sonnet-4-6 | agent() デフォルト |
-| Codex実装 | gpt-5.4 | Agent(subagent_type:"codex:codex-rescue") |
-| Cursor設計レビュー | gpt-5.5-high | Agent(subagent_type:"cursor:cursor-rescue") |
+| Orchestrator / Judge | opus | agent() model:"opus" |
+| Standard Worker | sonnet | agent() デフォルト（親継承） |
+| 重い実装 | gpt-5.x（Codex側で管理） | Agent(subagent_type:"codex:codex-rescue") |
+| 専門レビュー | 継承 | Agent(subagent_type:"arch-reviewer") 等 |
 
 ## ファイル配置
 

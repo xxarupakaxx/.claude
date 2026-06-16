@@ -1,6 +1,6 @@
 ---
 name: create-skill
-description: 既存設定と完全に整合したスキルを自動作成。~/.Codex/AGENTS.md、context/*.md、既存スキルを自動参照し、重複・競合を避けたスキルを生成。使用タイミング: (1) 新しいスキルを作りたい場合、(2) /create-skill --user または --project 実行時。「スキルを追加して」「新しいスキルを作って」「SKILLを作成したい」等の依頼に対応。SKILL.md（YAML frontmatter付き）を生成。
+description: 既存設定と完全に整合したスキルを自動作成。~/.claude/CLAUDE.md、context/*.md、既存スキルを自動参照し、重複・競合を避けたスキルを生成。使用タイミング: (1) 新しいスキルを作りたい場合、(2) /create-skill --user または --project 実行時。「スキルを追加して」「新しいスキルを作って」「SKILLを作成したい」等の依頼に対応。SKILL.md（YAML frontmatter付き）を生成。
 allowed-tools: Read, Write, Glob, Grep
 ---
 
@@ -29,43 +29,43 @@ allowed-tools: Read, Write, Glob, Grep
 ### Step 2: 既存設定の読み込み（必須）
 
 **常に読み込む:**
-- `~/.Codex/AGENTS.md` - user-level設定
-- `~/.Codex/context/*.md` - 特に以下が重要:
-  - `Codex-customization-guide.md` - Skills/Commands/AGENTS.mdの使い分け
+- `~/.claude/CLAUDE.md` - user-level設定
+- `~/.claude/context/*.md` - 特に以下が重要:
+  - `claude-customization-guide.md` - Skills/Commands/CLAUDE.mdの使い分け
   - `workflow-rules.md` - Phase 0-5ワークフロー
   - `memory-file-formats.md` - メモリディレクトリ構造
 
 **--project時に追加で読み込む:**
-- `./AGENTS.md` - project-level設定
+- `./CLAUDE.md` - project-level設定
 - `./context/*.md` - project-level参照ファイル
 
 **既存スキルの確認:**
-- `~/.Codex/skills/*/SKILL.md` のfrontmatter（name, description）を取得
+- `~/.claude/skills/*/SKILL.md` のfrontmatter（name, description）を取得
 - 重複・競合がないか確認
 
-### Step 3: Skill vs Command vs AGENTS.md 判定
+### Step 3: Skill vs Command vs CLAUDE.md 判定
 
-@context/Codex-customization-guide.md に従い判定:
+@context/claude-customization-guide.md に従い判定:
 
 | 選択 | 条件 |
 |------|------|
 | **Skill** | 自動トリガー、ドメイン知識、スクリプト同梱 |
 | **Command** | ユーザー制御、引数必須、ショートカット |
-| **AGENTS.md追記** | 常時適用ルール、60行以下に収まる |
+| **CLAUDE.md追記** | 常時適用ルール、60行以下に収まる |
 
 ### Step 4: 整合性チェック
 
 1. **ワークフローとの整合**: Phase 0-5、4ステップ構造との関係
 2. **ディレクトリ構造**: MEMORY_DIR、memory/、tasks/等との整合
 3. **既存スキルとの重複**: 同じ機能を持つスキルがないか
-4. **スコープ判定**: user vs project（@context/Codex-customization-guide.md参照）
+4. **スコープ判定**: user vs project（@context/claude-customization-guide.md参照）
 
 問題があればAskUserQuestionで確認。
 
 ### Step 5: スキル設計
 
 **設計原則:**
-参照: https://platform.Codex.com/docs/en/agents-and-tools/agent-skills/best-practices
+参照: https://docs.anthropic.com/docs/en/agents-and-tools/agent-skills/best-practices
 
 **命名規則（CRITICAL）:**
 - **gerund形式**（verb + -ing）を使用
@@ -101,8 +101,8 @@ description: I can review PRs.
 ### Step 6: スキル作成
 
 **配置先:**
-- `--user`: `~/.Codex/skills/<skill-name>/`
-- `--project`: `./.Codex/skills/<skill-name>/`
+- `--user`: `~/.claude/skills/<skill-name>/`
+- `--project`: `./.claude/skills/<skill-name>/`
 
 **構造（Progressive Disclosure）:**
 ```
@@ -158,10 +158,10 @@ description: <何をするか>。<いつ使うか>。使用タイミング: (1) 
 
 ## チェックリスト
 
-- [ ] ~/.Codex/AGENTS.md を読んだか
-- [ ] ~/.Codex/context/Codex-customization-guide.md を確認したか
+- [ ] ~/.claude/CLAUDE.md を読んだか
+- [ ] ~/.claude/context/claude-customization-guide.md を確認したか
 - [ ] 既存スキル一覧を確認したか
-- [ ] Skill/Command/AGENTS.md追記の判定をしたか
+- [ ] Skill/Command/CLAUDE.md追記の判定をしたか
 - [ ] **スキル名がgerund形式か**（implementing-xxx, processing-xxx）
 - [ ] **descriptionは3人称か**（"I can..."は不可）
 - [ ] descriptionに「何を」「いつ」が含まれるか

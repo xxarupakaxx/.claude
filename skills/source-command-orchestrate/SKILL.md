@@ -46,7 +46,7 @@ Use this skill when the user asks to run the migrated source command `orchestrat
 各エージェントに対して:
 
 1. **コンテキスト注入**: タスク説明 + 前のエージェントのハンドオフドキュメント
-2. **エージェント実行**: Codex `spawn_agent`（agent_type指定）で実行
+2. **エージェント実行**: Agent Tool（subagent_type指定）で実行
 3. **ハンドオフ生成**: 結果を構造化ドキュメントとして整理
 4. **次のエージェントへ引き継ぎ**
 
@@ -122,4 +122,4 @@ Use this skill when the user asks to run the migrated source command `orchestrat
 
 - 各エージェントのハンドオフは05_log.mdにも記録する
 - チェーン中にブロッカーが出たら中断してユーザーに報告
-- エージェント名は `~/.Codex/agents/` 配下の定義に準拠
+- エージェント名は `~/.claude/agents/` 配下の定義に準拠

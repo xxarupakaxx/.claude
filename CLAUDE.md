@@ -17,7 +17,7 @@ Claude Code (conductor)
 |------|---------|--------|
 | コードベース探索 | `Agent(subagent_type: "Explore")` | sonnet |
 | 軽量ワーカー | `Agent(model: "sonnet")` | sonnet |
-| 判定・設計判断 | `Agent(model: "opus")` | opus |
+| 判定・設計判断・レビュー | `Agent(model: "opus")` | opus |
 | 重い実装 | `Agent(subagent_type: "codex:codex-rescue")` | gpt-5.x |
 | 専門レビュー | `Agent(subagent_type: "arch-reviewer")` 等 | 継承 |
 | 過去知見検索 | `Agent(subagent_type: "learnings-researcher")` | 継承 |
