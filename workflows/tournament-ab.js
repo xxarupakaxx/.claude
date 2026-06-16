@@ -198,10 +198,6 @@ if (valid.length === 0) {
   return { winner: null, reason: 'all judges failed' }
 }
 
-const xWins = valid.filter(v => v.winner === 'X').length
-const yWins = valid.filter(v => v.winner === 'Y').length
-const ties = valid.filter(v => v.winner === 'tie').length
-
 const weightedScore = (scores) => {
   const w = { correctness: 3, maintainability: 2, performance: 2, security: 2, brevity: 1 }
   let sum = 0
@@ -215,27 +211,56 @@ const weightedScore = (scores) => {
   return wSum > 0 ? sum / wSum : 0
 }
 
+// X/Y は提示順（swapOrderで入替済み）。集計・レポートは必ず実A/Bへ写像してから扱う。
+const xIsA = !swapOrder // false: X=A,Y=B / true: X=B,Y=A
+const mapAB = (xVal, yVal) => (xIsA ? [xVal, yVal] : [yVal, xVal])
+
+const xWins = valid.filter(v => v.winner === 'X').length
+const yWins = valid.filter(v => v.winner === 'Y').length
+const ties = valid.filter(v => v.winner === 'tie').length
+const [aWins, bWins] = mapAB(xWins, yWins)
+
 const avgScoreX = valid.reduce((s, v) => s + weightedScore(v.scores.X), 0) / valid.length
 const avgScoreY = valid.reduce((s, v) => s + weightedScore(v.scores.Y), 0) / valid.length
+const [scoreA, scoreB] = mapAB(avgScoreX, avgScoreY)
 
-// X/Yの勝者を実際のA/Bにマッピング（swapOrderを考慮）
-const xIsA = !swapOrder // swapOrder=false: X=A, Y=B / swapOrder=true: X=B, Y=A
+// セキュリティ下限ハードガード: security平均が閾値以下の案は勝者にしない
+// （ab-judge.md / loop-engineering.md が約束する安全保証をコードで強制する）
+const avgSecX = valid.reduce((s, v) => s + (v.scores.X.security ?? 0), 0) / valid.length
+const avgSecY = valid.reduce((s, v) => s + (v.scores.Y.security ?? 0), 0) / valid.length
+const [secA, secB] = mapAB(avgSecX, avgSecY)
+const SEC_FLOOR = 2
+const aBlocked = secA <= SEC_FLOOR
+const bBlocked = secB <= SEC_FLOOR
+
 let winner
-if (xWins > yWins) winner = xIsA ? 'A' : 'B'
-else if (yWins > xWins) winner = xIsA ? 'B' : 'A'
-else if (avgScoreX > avgScoreY + 0.3) winner = xIsA ? 'A' : 'B'
-else if (avgScoreY > avgScoreX + 0.3) winner = xIsA ? 'B' : 'A'
+let reason
+if (aBlocked && bBlocked) {
+  winner = null
+  reason = `security floor violated (A:${secA.toFixed(1)}, B:${secB.toFixed(1)} <= ${SEC_FLOOR})`
+} else if (aBlocked) {
+  winner = 'B'
+  reason = `A excluded by security floor (sec ${secA.toFixed(1)})`
+} else if (bBlocked) {
+  winner = 'A'
+  reason = `B excluded by security floor (sec ${secB.toFixed(1)})`
+} else if (aWins > bWins) winner = 'A'
+else if (bWins > aWins) winner = 'B'
+else if (scoreA > scoreB + 0.3) winner = 'A'
+else if (scoreB > scoreA + 0.3) winner = 'B'
 else winner = 'tie'
 
 const result = {
   winner,
-  votes: { A: xWins, B: yWins, tie: ties },
-  avgScores: { A: Math.round(avgScoreX * 100) / 100, B: Math.round(avgScoreY * 100) / 100 },
+  reason,
+  votes: { A: aWins, B: bWins, tie: ties },
+  avgScores: { A: Math.round(scoreA * 100) / 100, B: Math.round(scoreB * 100) / 100 },
+  security: { A: Math.round(secA * 100) / 100, B: Math.round(secB * 100) / 100 },
   verdicts: valid,
   implA,
   implB,
 }
 
-log(`結果: ${winner === 'tie' ? '引き分け' : winner + '案が勝利'} (A:${avgScoreX.toFixed(2)} vs B:${avgScoreY.toFixed(2)})`)
+log(`結果: ${winner === null ? 'セキュリティ下限割れで勝者なし' : winner === 'tie' ? '引き分け' : winner + '案が勝利'} (A:${scoreA.toFixed(2)} vs B:${scoreB.toFixed(2)}, sec A:${secA.toFixed(1)}/B:${secB.toFixed(1)})`)
 
 return result

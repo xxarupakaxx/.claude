@@ -118,7 +118,12 @@ if (analysis.useTournament) {
     task: `${ticketKey}: ${analysis.title}`,
     spec: typeof spec === 'string' ? spec : JSON.stringify(spec),
   })
-} else if (analysis.complexity === 'simple') {
+  // セキュリティ下限割れ等で勝者なしなら、下流に流さず失敗扱い
+  if (implResult && implResult.winner === null) {
+    log(`トーナメント勝者なし: ${implResult.reason ?? 'no winner'}`)
+    return { success: false, reason: implResult.reason ?? 'tournament: no winner', tournament: implResult }
+  }
+} else if (analysis.complexity === 'simple' || !analysis.subtasks?.length) {
   log('シンプル実装モード')
   implResult = await agent(`
 以下の仕様に基づいてコードを実装してください。
@@ -163,27 +168,46 @@ ${typeof spec === 'string' ? spec : JSON.stringify(spec)}
   )
 }
 
-// --- Phase 4: Verify ---
+// --- Phase 4: Verify（review→fix→re-review 自律ループ）---
 phase('Verify')
-log('テスト・レビュー実行中')
+log('検証＋自動修正ループ実行中（CRITICAL/IMPORTANTが0になるまで最大3ラウンド）')
+
+const VERIFY_SCHEMA = {
+  type: 'object',
+  properties: {
+    passed: { type: 'boolean' },
+    rounds: { type: 'number' },
+    remaining: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: { severity: { type: 'string' }, title: { type: 'string' } },
+        required: ['severity', 'title'],
+      },
+    },
+    summary: { type: 'string' },
+  },
+  required: ['passed', 'summary'],
+}
 
 const verifyResult = await agent(`
-実装結果を検証してください。
+実装結果を検証し、CRITICAL/IMPORTANT指摘が無くなるまで「レビュー→修正→再レビュー」を最大3ラウンド繰り返してください（信頼タスク全自律: 確認不要で修正してよい）。
 
 ## 実装結果
 ${typeof implResult === 'string' ? implResult : JSON.stringify(implResult)}
 
-## 検証項目
-1. テスト実行（プロジェクトのテストコマンドを探して実行）
-2. lint / format チェック
-3. TypeScriptなら型チェック
-4. 変更ファイルのコードレビュー（セキュリティ、パフォーマンス、可読性）
+## 各ラウンドの手順
+1. テスト実行（プロジェクトのテストコマンドを探して実行） / lint・format / TypeScriptなら型チェック
+2. 変更ファイルをコードレビュー（セキュリティ・パフォーマンス・可読性・テスト網羅）。指摘を severity (CRITICAL/IMPORTANT/MINOR) で分類
+3. CRITICAL/IMPORTANT が残っていれば surgical に修正して git commit → 次ラウンドで再検証
+4. CRITICAL/IMPORTANT が 0 になったら合格として終了（MINORは残してよい）
 
 ## 出力
-- 全テスト通過したか
-- 指摘事項があれば severity (CRITICAL/IMPORTANT/MINOR) 付きでリスト
-- 総合判定: PASS / FAIL
-`, { label: 'verify', phase: 'Verify' })
+- passed: 最終的に CRITICAL/IMPORTANT が 0 なら true
+- rounds: 実施ラウンド数
+- remaining: 3ラウンドでも残った CRITICAL/IMPORTANT のリスト
+- summary: テスト結果と対応内容の要約
+`, { label: 'verify', phase: 'Verify', schema: VERIFY_SCHEMA })
 
 // --- Phase 5: Report ---
 phase('Report')
