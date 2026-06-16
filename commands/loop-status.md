@@ -39,7 +39,7 @@ Loop Engineering用のエージェント（`~/.claude/agents/` 配下）:
 
 [Scheduled Tasks]
   morning-kickoff   : last=09:00 status=ok
-  hour-calnedar     : last=15:00 status=ok
+  hour-calendar     : last=15:00 status=ok
   jira-spec-poll    : last=15:00 status=ok
   evening-review    : last=18:00 status=ok
 

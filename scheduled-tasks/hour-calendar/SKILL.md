@@ -1,5 +1,5 @@
 ---
-name: hour-calnedar
+name: hour-calendar
 description: 議事録確認してまとめるくん
 ---
 
