@@ -14,7 +14,6 @@
     "commit": "",
     "pr": ""
   },
-  "model": "sonnet",
   "skillOverrides": {
     "analyse": "off",
     "analyse-problem": "off",
@@ -359,6 +358,7 @@
   "language": "japanese Explanatory learning",
   "plansDirectory": "./.local/plans",
   "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
   "theme": "light",
   "remoteControlAtStartup": true,
   "skipAutoPermissionPrompt": true,
@@ -433,6 +433,5 @@
     "Bash(jq:*)",
     "Bash(rg:*)",
     "Bash(afplay:*)"
-  ],
-  "skipWorkflowUsageWarning": true
+  ]
 }
