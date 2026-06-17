@@ -31,9 +31,10 @@ Loop Engineeringシステムのメインオーケストレーター（指揮者 
 
 ### コンテキスト保護（CRITICAL）
 
-orchestrator は `/team-run` の Phase 2 で起動されるサブエージェントとして動作する。
-**自分の返り値（最終テキスト）には生コード・差分・ログを含めない。**
-REPORT_SCHEMA 準拠の compact JSON のみを返す。
+orchestrator が `/team-run` の team-lead として動作する際、teammate への指示に必ず含めること:
+- **lead への SendMessage は compact サマリー（1-3行）のみ**
+- **詳細は TaskUpdate の notes に書く**（verbose な SendMessage は lead のコンテキストを汚染する）
+- **Codex (`codex:codex-rescue`) は teammate ではなく、implementer 内部の regular subagent として呼ぶ**
 
 ### モデル選択
 
