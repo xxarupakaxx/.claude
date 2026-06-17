@@ -4,15 +4,15 @@
       "source": "github",
       "repo": "anthropics/claude-plugins-official"
     },
-    "installLocation": "/Users/yoshiki.morii/.claude/plugins/marketplaces/claude-plugins-official",
-    "lastUpdated": "2026-06-17T01:13:11.291Z"
+    "installLocation": "/Users/yoshiki.morii.001/.claude/plugins/marketplaces/claude-plugins-official",
+    "lastUpdated": "2026-06-17T13:40:07.667Z"
   },
   "openai-codex": {
     "source": {
       "source": "github",
       "repo": "openai/codex-plugin-cc"
     },
-    "installLocation": "/Users/yoshiki.morii/.claude/plugins/marketplaces/openai-codex",
-    "lastUpdated": "2026-06-16T07:51:03.760Z"
+    "installLocation": "/Users/yoshiki.morii.001/.claude/plugins/marketplaces/openai-codex",
+    "lastUpdated": "2026-06-17T13:40:12.587Z"
   }
 }

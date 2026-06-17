@@ -5,7 +5,7 @@
       {
         "scope": "project",
         "projectPath": "/Users/yoshiki.morii/work/moonshot",
-        "installPath": "/Users/yoshiki.morii/.claude/plugins/cache/claude-plugins-official/slack/236752ad9ab3",
+        "installPath": "/Users/yoshiki.morii.001/.claude/plugins/cache/claude-plugins-official/slack/236752ad9ab3",
         "version": "236752ad9ab3",
         "installedAt": "2026-03-25T13:57:22.480Z",
         "lastUpdated": "2026-03-25T13:57:22.480Z",
@@ -15,7 +15,7 @@
     "typescript-lsp@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/yoshiki.morii/.claude/plugins/cache/claude-plugins-official/typescript-lsp/1.0.0",
+        "installPath": "/Users/yoshiki.morii.001/.claude/plugins/cache/claude-plugins-official/typescript-lsp/1.0.0",
         "version": "1.0.0",
         "installedAt": "2026-05-25T07:26:46.280Z",
         "lastUpdated": "2026-05-25T07:26:46.280Z",
@@ -25,7 +25,7 @@
     "session-report@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/yoshiki.morii/.claude/plugins/cache/claude-plugins-official/session-report/9cacdc0d2215",
+        "installPath": "/Users/yoshiki.morii.001/.claude/plugins/cache/claude-plugins-official/session-report/9cacdc0d2215",
         "version": "9cacdc0d2215",
         "installedAt": "2026-05-25T07:26:46.280Z",
         "lastUpdated": "2026-05-25T07:26:46.280Z",
@@ -35,7 +35,7 @@
     "claude-md-management@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/yoshiki.morii/.claude/plugins/cache/claude-plugins-official/claude-md-management/1.0.0",
+        "installPath": "/Users/yoshiki.morii.001/.claude/plugins/cache/claude-plugins-official/claude-md-management/1.0.0",
         "version": "1.0.0",
         "installedAt": "2026-05-25T07:26:46.280Z",
         "lastUpdated": "2026-05-25T07:26:46.280Z",
@@ -45,21 +45,11 @@
     "atlassian@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/yoshiki.morii/.claude/plugins/cache/claude-plugins-official/atlassian/9b52fb18e184",
+        "installPath": "/Users/yoshiki.morii.001/.claude/plugins/cache/claude-plugins-official/atlassian/9b52fb18e184",
         "version": "9b52fb18e184",
         "installedAt": "2026-06-02T03:32:50.443Z",
         "lastUpdated": "2026-06-02T03:32:50.443Z",
         "gitCommitSha": "9b52fb18e184edc307ce33f8bf4cdf148dedf1f2"
-      }
-    ],
-    "codex@openai-codex": [
-      {
-        "scope": "user",
-        "installPath": "/Users/yoshiki.morii/.claude/plugins/cache/openai-codex/codex/1.0.4",
-        "version": "1.0.4",
-        "installedAt": "2026-06-16T07:51:18.372Z",
-        "lastUpdated": "2026-06-16T07:51:18.372Z",
-        "gitCommitSha": "807e03ac9d5aa23bc395fdec8c3767500a86b3cf"
       }
     ],
     "cursor@local": [
@@ -69,6 +59,26 @@
         "version": "1.0.0",
         "installedAt": "2026-06-16T07:53:00.000Z",
         "lastUpdated": "2026-06-16T07:53:00.000Z"
+      }
+    ],
+    "code-simplifier@claude-plugins-official": [
+      {
+        "scope": "local",
+        "projectPath": "/Users/yoshiki.morii.001/ghq/github.com/LayerXcom/layerone/web/apps/sales-portal-webapp",
+        "installPath": "/Users/yoshiki.morii.001/.claude/plugins/cache/claude-plugins-official/code-simplifier/unknown",
+        "version": "unknown",
+        "installedAt": "2026-06-17T12:33:13.532Z",
+        "lastUpdated": "2026-06-17T12:33:13.532Z"
+      }
+    ],
+    "codex@openai-codex": [
+      {
+        "scope": "user",
+        "installPath": "/Users/yoshiki.morii.001/.claude/plugins/cache/openai-codex/codex/1.0.4",
+        "version": "1.0.4",
+        "installedAt": "2026-06-17T13:46:15.767Z",
+        "lastUpdated": "2026-06-17T13:46:15.767Z",
+        "gitCommitSha": "807e03ac9d5aa23bc395fdec8c3767500a86b3cf"
       }
     ]
   }
