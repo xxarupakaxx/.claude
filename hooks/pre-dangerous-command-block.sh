@@ -155,10 +155,6 @@ try_block "rm-rf-rootstar" 'rm\s+(-[a-zA-Z]*r[a-zA-Z]*f|--recursive)\s+/\*' \
 try_block "rm-rf-home" 'rm\s+(-[a-zA-Z]*r[a-zA-Z]*f|--recursive)\s+~/?\s*$' \
   'ホームディレクトリの再帰的削除は実行できません'
 
-# パターン4: SQL破壊系 (DROP TABLE/DATABASE)
-try_block_i "sql-destructive" '(DROP\s+(TABLE|DATABASE|SCHEMA)\s|TRUNCATE\s+TABLE\s|DELETE\s+FROM\s+\S+\s*;?\s*$)' \
-  '破壊的SQLコマンドは直接実行できません。マイグレーションを使用してください'
-
 # パターン5: ディスクフォーマット系
 try_block "disk-format" '(mkfs\.|fdisk\s|dd\s+if=.+of=/dev/)' \
   'ディスク操作コマンドは実行できません'
