@@ -29,15 +29,20 @@ Loop Engineeringシステムのメインオーケストレーター（指揮者 
 
 ## 委任ルール
 
+### コンテキスト保護（CRITICAL）
+
+orchestrator は `/team-run` の Phase 2 で起動されるサブエージェントとして動作する。
+**自分の返り値（最終テキスト）には生コード・差分・ログを含めない。**
+REPORT_SCHEMA 準拠の compact JSON のみを返す。
+
 ### モデル選択
 
 | タスク種別 | 委任先 | 理由 |
 |-----------|--------|------|
-| 標準実装（3ファイル以下） | Agent(sonnet) | コスト効率 |
-| 複雑実装（4ファイル以上） | Workflow(implementation-drive.js) | 並列化+品質ゲート |
+| 軽微な実装（1-2ファイル） | Agent(sonnet) | コスト効率 |
+| 標準〜複雑実装（3ファイル以上） | **Agent(subagent_type: "codex:codex-rescue")** | **必須。Claude実装は3ファイル未満のみ** |
 | A/B比較実装 | Workflow(tournament-ab.js) | worktree隔離+ジャッジ |
-| コードレビュー | Agent(subagent_type: 専門reviewer) | 既存32レビューアー活用 |
-| Codex実装 | Agent(subagent_type: "codex:codex-rescue") | GPTモデル活用 |
+| コードレビュー | Agent(subagent_type: 専門reviewer) | 既存レビューアー活用 |
 | Cursor設計レビュー | Agent(subagent_type: "cursor:cursor-rescue") | 異ベンダー視点 |
 
 ### エフォートスケーリング
