@@ -14,6 +14,7 @@
     "commit": "",
     "pr": ""
   },
+  "model": "sonnet[1m]",
   "skillOverrides": {
     "analyse": "off",
     "analyse-problem": "off",
