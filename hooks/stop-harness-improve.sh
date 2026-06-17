@@ -20,9 +20,15 @@ if [ -z "$RECENT_SESSION" ] || [ ! -f "$RECENT_SESSION" ]; then
 fi
 
 # エラーパターンのカウント（軽量チェック）
-ERROR_COUNT=$(grep -c '"error"' "$RECENT_SESSION" 2>/dev/null || echo 0)
-RETRY_COUNT=$(grep -ci 'retry\|retrying\|again' "$RECENT_SESSION" 2>/dev/null || echo 0)
+# 注意: grep -c は0件マッチでも "0" を出力するので `|| echo 0` は付けない。
+#       付けると grep の "0" と echo の "0" が連結され "0\n0" の2行になり、
+#       整数比較で `integer expression expected`、jq --argjson で `invalid JSON` を起こす。
+ERROR_COUNT=$(grep -c '"error"' "$RECENT_SESSION" 2>/dev/null)
+ERROR_COUNT=${ERROR_COUNT:-0}
+RETRY_COUNT=$(grep -ci 'retry\|retrying\|again' "$RECENT_SESSION" 2>/dev/null)
+RETRY_COUNT=${RETRY_COUNT:-0}
 REPEATED_READ=$(grep -o '"Read"' "$RECENT_SESSION" 2>/dev/null | wc -l | tr -d ' ')
+REPEATED_READ=${REPEATED_READ:-0}
 
 # 閾値判定: 重要な失敗パターンがある場合のみ記録
 NEEDS_REVIEW=0
