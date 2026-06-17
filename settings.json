@@ -433,5 +433,6 @@
     "Bash(jq:*)",
     "Bash(rg:*)",
     "Bash(afplay:*)"
-  ]
+  ],
+  "skipWorkflowUsageWarning": true
 }
