@@ -54,6 +54,8 @@ verbose な出力（生コード・差分・ログ）を送られると lead の
 
 ## フロー
 
+0. **PJ設定読込**: 実行PJの `.claude/context/team-run.md` があれば**必ず読み**、以降のチーム編成・通知先・実装方針・レビュー観点に反映する。無ければ PJ CLAUDE.md のチーム/レビュー関連記述を参照。どちらも無ければグローバル既定で進める。（雛形: `templates/project-setup/.claude/context/team-run.md`）
+
 ### Phase 1: 計画（メインセッション担当）
 
 1. **前提確認**: `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` が settings.json に設定されていること
@@ -141,15 +143,26 @@ verbose な出力（生コード・差分・ログ）を送られると lead の
     - Blockers: [...]
     ```
 
+### Phase 3: PR作成＋継続監視（実装成果をPRにするタスクの場合）
+
+11. **PR作成＋継続監視**: 「PR作成して終わり」にしない。
+    - `/pr` で Draft PR を作成（状態図があれば埋め込み）
+    - Draft PR の間は `/pr-watch` は CI のみ監視する。レビューコメント対応まで自動化する場合は Ready for review にしてから継続監視を続ける
+    - 作成したPR番号で CI/レビューの30分おき継続監視を起動する。`/loop` は Claude Code built-in の slash command なので、チャットで **`/loop 30m /pr-watch <PR>`** を手動実行する
+    - 起動後は CI全green＆レビュー対応完了まで自動対応し続け、完了後 `/pr-watch` が「対応不要」を報告（ユーザーが `Esc` で停止）。同一PRへの監視ループは二重起動しない
+
 ## 安全・制約
 
 - 外部書き込み（PR/Jira/Slack）は冪等に（既存検索→更新 or 新規）
 - teammate 数は4目安、差し戻しは最大3回（無限ループ防止）
+- teammate が idle でも慌てない（idle=入力待ち。メッセージで起こせる）
 - `teams/` 配下に実行時状態が生成される（v2.1.178+ は自動クリーンアップ）
 - `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` が settings.json に設定されていること
 
 ## 参照
 
-- `agents/orchestrator.md` — team-lead の役割定義
+- `<project-root>/.claude/context/team-run.md` — **PJ固有設定**（通知チャンネル・実装方針・編成デフォルト・レビュー観点）。雛形: `templates/project-setup/.claude/context/team-run.md`
+- `agents/orchestrator.md` — team-lead（指揮者）の役割定義
 - `context/loop-engineering.md` — 実行モデルの正典
 - `skills/autonomous-loops/SKILL.md` — DAG/PRループのパターン
+- `commands/pr-watch.md` — 完了後のCI/レビュー継続監視（Phase 3で起動）

@@ -49,8 +49,8 @@ PR作成→レビュー→修正→再レビューを合格まで繰り返す。
                       [修正] → ... (最大3回)
 ```
 
-**使用場面**: `workflows/pr-review-loop.js`（並列専門レビュー→自動修正→再レビュー、最大3R）。スケジュールタスク `pr-review` がこれを呼ぶ。
-**ゲート条件**: CRITICAL/IMPORTANT指摘が0件
+**使用場面**: `workflows/pr-review-loop.js`（並列専門レビュー→自動修正→再レビュー、最大3R）。スケジュールタスク `pr-review` がこれを呼ぶ。PR作成後の**CIステータス＋レビュー継続監視**は `/pr-watch`（`/loop 30m /pr-watch <PR>` で30分おき）が担い、CI失敗の自動修正（`gh pr checks`→失敗ログ→修正→push）を pr-review-loop に上乗せする。
+**ゲート条件**: CRITICAL/IMPORTANT指摘が0件 かつ CI全green
 
 ```markdown
 PR-Loop:

@@ -15,18 +15,21 @@ const USER_CONFIG_SCHEMA = {
     user: { type: 'object', properties: { email: { type: 'string' }, github_username: { type: 'string' } }, required: ['email'] },
     slack: { type: 'object', properties: { notification_channel: { type: 'string' }, dm_fallback: { type: 'boolean' } } },
     jira: { type: 'object', properties: { assignee_jql: { type: 'string' } } },
+    notes: { type: 'object', properties: { daily_dir: { type: 'string' }, daily_filename_format: { type: 'string' } } },
   },
   required: ['user', 'slack'],
 }
 
 const config = args?.config ?? await agent(`
 Read the file ~/.claude/config/user.json and return its full JSON contents.
-If the file does not exist, return: {"user":{"email":"","github_username":""},"slack":{"notification_channel":"","dm_fallback":true},"jira":{"assignee_jql":"assignee = currentUser()"}}
+If the file does not exist, return: {"user":{"email":"","github_username":""},"slack":{"notification_channel":"","dm_fallback":true},"jira":{"assignee_jql":"assignee = currentUser()"},"notes":{"daily_dir":"~/.claude/.local/daily","daily_filename_format":"YYYY-MM-DD.md"}}
 `, { label: 'load-config', schema: USER_CONFIG_SCHEMA })
 
 const userEmail = config.user?.email || ''
 const slackChannel = config.slack?.notification_channel || ''
 const jiraJql = config.jira?.assignee_jql || 'assignee = currentUser()'
+const dailyDir = config.notes?.daily_dir || '~/.claude/.local/daily'
+const dailyFilenameFormat = config.notes?.daily_filename_format || 'YYYY-MM-DD.md'
 const slackTarget = slackChannel ? `${slackChannel}チャンネル` : '自分のDM'
 
 const DAILY_PLAN_SCHEMA = {
@@ -74,9 +77,14 @@ Google Calendarから今日の予定を取得してください。
 `, { label: 'calendar-events', phase: 'Gather' }),
 
   () => agent(`
-昨日のdailyノート（~/.claude/.local/daily/ 配下の最新ファイル）を読み、
-未完了のタスク（チェックボックスが未チェック [ ] のもの）を抽出してください。
-ファイルが見つからない場合は空リストを返してください。
+昨日のdailyノートを読み、未完了のタスク（チェックボックスが未チェック [ ] のもの）を抽出してください。
+
+dailyノートの場所: ${dailyDir}/ 配下
+ファイル名の形式: ${dailyFilenameFormat}（例: 2026-06-16.md。YYYY/MM/DD は年/月/日のゼロ埋め）
+読むファイル: まず「昨日の日付」のファイルを探し、無ければディレクトリ内で最新の日付ファイルを読む。
+（今日の日付はシステムプロンプトの Today's date を基準にし、その1日前を昨日とする）
+
+ファイルやディレクトリが見つからない場合は空リストを返してください。
 `, { label: 'carryover-tasks', phase: 'Gather' }),
 
   () => agent(`
