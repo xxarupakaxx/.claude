@@ -15,6 +15,7 @@
     "watch_repos": ["your-repo-name"]
   },
   "notes": {
-    "daily_dir": "~/.claude/.local/daily"
+    "daily_dir": "~/.claude/.local/daily",
+    "daily_filename_format": "YYYY-MM-DD.md"
   }
 }
