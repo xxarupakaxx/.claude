@@ -15,7 +15,7 @@
 | 重い実装の委任 | `Agent(subagent_type: "codex:codex-rescue")` |
 | 異ベンダー視点のレビュー | `Agent(subagent_type: "cursor:cursor-rescue")` |
 
-> **Workflow と Agent Teams の使い分け**: 大半のLoopタスクは Workflow（親が一括投入する並列fan-out、ワーカーは独立・短命）で足りる。エージェント同士が `SendMessage` で往復対話し、共有タスクリストから自律的に仕事を取り、**複数ターンに渡って協調**する必要がある場合のみ Agent Teams（`/team-run`、team-lead = `orchestrator` agent）を使う。`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` で有効。`teams/` 配下に実行時状態が生成される（完了後の整理対象）。
+> **Workflow と Agent Teams の使い分け**: 大半のLoopタスクは Workflow（親が一括投入する並列fan-out、ワーカーは独立・短命）で足りる。エージェント同士が `SendMessage` で往復対話し、共有タスクリストから自律的に仕事を取り、**複数ターンに渡って協調**する必要がある場合のみ Agent Teams（`/team-run`、team-lead = main session）を使う。`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` で有効。`teams/` 配下に実行時状態が生成される（完了後の整理対象）。
 
 ## 現状ステータス（2026-06-17 時点）
 
@@ -32,7 +32,7 @@ Layer 1: Global Foundation  (~/.claude/ — git管理)
   agents/ workflows/ hooks/ commands/ scheduled-tasks/ context/ templates/
 
 Layer 2: User Config        (~/.claude/config/user.json — gitignore)
-  email, github_username, slack_channel, jira_jql ...
+  user.email, user.github_username, slack.notification_channel, jira.assignee_jql ...
 
 Layer 3: Project Override   (<repo>/.claude/ — PJごと)
   CLAUDE.md(BASE_BRANCH等) agents/domain-reviewer.md backlog.md
@@ -231,6 +231,10 @@ Summary ──→ Slack日次サマリー投稿
 | コマンド | 説明 |
 |---------|------|
 | `/loop-status` | 全ループの状態表示（スケジュールタスク/ワークフロー/コスト/改善提案） |
+| `/pr-watch [PR]` | PRのCI/レビューを1サイクル点検し未対応を自動対応。`/loop 30m /pr-watch <PR>` で30分おき継続監視 |
+| `/team-run "<タスク>"` | Agent Team編成。完了後 Phase 3 で `/loop 30m /pr-watch <PR>` を手動実行しCI/レビュー継続監視 |
+
+> **`/loop` 監視と `scheduled-tasks/pr-review` の役割差**: `/loop` は Claude Code built-in（指定間隔で slash command を再実行）。`/loop 30m /pr-watch <PR>` は**現セッション中**に特定PR1本を30分おき監視（team-run成果のコンテキストを引き継げる／`Esc` で停止）。一方 `scheduled-tasks/pr-review` は**全 watch_repos** を毎時バッチ巡回（アプリ起動中のベストエフォート）。前者はセッション内の能動監視、後者は常設の定期巡回。CI失敗の自動修正（`gh pr checks`→失敗ログ→修正→push）は `/pr-watch` のみが行う。
 
 ## マルチモデルディスパッチ
 
@@ -271,7 +275,9 @@ Summary ──→ Slack日次サマリー投稿
 │   ├── post-cost-track.sh
 │   └── stop-harness-improve.sh
 ├── commands/                       # コマンド
-│   └── loop-status.md
+│   ├── loop-status.md
+│   ├── pr-watch.md
+│   └── team-run.md
 ├── scheduled-tasks/                # スケジュールタスク
 │   ├── morning-kickoff/SKILL.md
 │   ├── hour-calendar/SKILL.md      # 既存（拡張済み）
@@ -280,6 +286,7 @@ Summary ──→ Slack日次サマリー投稿
 ├── templates/                      # PJテンプレート（Layer 3の雛形）
 │   └── project-setup/.claude/
 │       ├── CLAUDE.md               # PJ設定テンプレート
+│       ├── context/team-run.md     # team-run PJ設定（通知/編成/方針）
 │       ├── agents/domain-reviewer.md
 │       └── backlog.md              # Bullpenタスクキュー
 ├── context/
@@ -308,7 +315,7 @@ which cursor-agent
 ```bash
 # テンプレートをコピーして自分の情報を入力
 cp ~/.claude/config/user.example.json ~/.claude/config/user.json
-# user.json を編集: email, github_username, slack channel 等を設定
+# user.json を編集: user.email, user.github_username, slack.notification_channel 等を設定
 ```
 
 ### 2. ファイル存在確認
@@ -326,7 +333,7 @@ ls -la ~/.claude/hooks/{post-cost-track,stop-harness-improve}.sh
 ls ~/.claude/scheduled-tasks/{morning-kickoff,hour-calendar,jira-spec-poll,evening-review}/SKILL.md
 
 # コマンド
-ls ~/.claude/commands/loop-status.md
+ls ~/.claude/commands/{loop-status,pr-watch,team-run}.md
 ```
 
 ### 3. Settings.json確認

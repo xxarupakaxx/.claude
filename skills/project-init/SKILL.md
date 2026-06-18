@@ -18,7 +18,7 @@ allowed-tools: Read, Write, Bash, Glob
 ### 1. テンプレートの確認
 
 ```bash
-ls ~/.claude/templates/project/
+ls ~/.claude/templates/project-setup/.claude/
 ```
 
 ### 2. CLAUDE.mdの作成
@@ -45,6 +45,9 @@ npm test
 ```
 
 ### 3. gitignore設定
+
+必要に応じて `~/.claude/templates/project-setup/.claude/context/team-run.md` を
+PJ の `.claude/context/team-run.md` にコピーし、通知先・編成・レビュー観点をPJ用に調整する。
 
 `.local/`がgitに追跡されないよう設定:
 
