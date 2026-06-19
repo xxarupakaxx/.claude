@@ -52,6 +52,17 @@ verbose な出力（生コード・差分・ログ）を送られると lead の
 - JSON を送る場合も必ず ≤200字に収める
 ```
 
+## lead の進捗共有ポリシー
+
+team-lead はユーザー確認待ちで作業を止めすぎず、自律的に進める。
+ただし、ユーザーが状況を追えるよう、進捗共有は怠らない。
+
+- 作業開始時に、目的・進め方・編成方針を簡潔に報告する
+- Phase遷移時、重要タスク完了時、長時間作業が続く前後に進捗を報告する
+- 報告には「完了したこと / 現在やっていること / 次にやること / ブロッカー / ユーザー判断が必要なこと」を含める
+- 仕様変更・大きな方針転換・破壊的操作・外部に見える副作用・自動解決できないブロッカーは必ずユーザー確認を取る
+- 判断不要な通常作業は確認待ちにせず、TaskCreate/TaskUpdateで状態を更新しながら自律的に進める
+
 ## フロー
 
 0. **PJ設定読込**: 実行PJの `.claude/context/team-run.md` があれば**必ず読み**、以降のチーム編成・通知先・実装方針・レビュー観点に反映する。無ければ PJ CLAUDE.md のチーム/レビュー関連記述を参照。どちらも無ければグローバル既定で進める。（雛形: `templates/project-setup/.claude/context/team-run.md`）
@@ -74,6 +85,7 @@ verbose な出力（生コード・差分・ログ）を送られると lead の
      model: "opus",
      prompt: """
        タスクを最大10件に分解し、blockedBy で依存を明示せよ。
+       計画作成が長引く場合は、lead に compact サマリーで途中状況を伝える。
        完了後、以下の JSON を lead に SendMessage せよ（JSON 以外は含めるな）:
        {
          "summary": "<200字以内>",
@@ -129,6 +141,7 @@ verbose な出力（生コード・差分・ログ）を送られると lead の
        TaskList で承認済みタスクを取得し実装せよ。
        codexRequired=true のタスクは必ず Agent({subagent_type:"codex:codex-rescue"}) で Codex に委任。
        Codex は teammate ではなく、あなたのコンテキスト内で動く subagent として扱う。
+       各タスクの開始・完了・blocked は TaskUpdate で必ず更新し、lead がユーザーへ進捗共有できる状態を保つ。
        完了時: TaskUpdate でステータスを更新し、lead には以下 JSON のみ SendMessage せよ:
        {"status":"done|blocked","changedFiles":["..."],"summary":"<100字以内>"}
      """
@@ -145,6 +158,7 @@ verbose な出力（生コード・差分・ログ）を送られると lead の
      prompt: """
        実装された変更をレビューせよ。
        指摘があれば implementer に直接 SendMessage して修正を依頼してよい（peer-to-peer）。
+       レビュー開始・完了・差し戻しは TaskUpdate で更新し、lead がユーザーへ進捗共有できる状態を保つ。
        lead には最終所見を以下 JSON のみ SendMessage せよ:
        {"findings":[{"severity":"CRITICAL|IMPORTANT|MINOR","message":"<100字以内>"}]}
      """
@@ -161,6 +175,7 @@ verbose な出力（生コード・差分・ログ）を送られると lead の
     ```
     ## Orchestration Report
     - Status: SHIP | NEEDS_WORK | BLOCKED
+    - Task Status: done / in_progress / blocked / pending の件数と主要タスク
     - Changed Files: [...]
     - Review Findings: [...]
     - Blockers: [...]
