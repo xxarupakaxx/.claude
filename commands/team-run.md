@@ -71,6 +71,7 @@ verbose な出力（生コード・差分・ログ）を送られると lead の
      team_name: <team_name>,
      name: "planner",
      subagent_type: "Plan",
+     model: "opus",
      prompt: """
        タスクを最大10件に分解し、blockedBy で依存を明示せよ。
        完了後、以下の JSON を lead に SendMessage せよ（JSON 以外は含めるな）:
@@ -103,6 +104,7 @@ verbose な出力（生コード・差分・ログ）を送られると lead の
      team_name: <team_name>,
      name: "explorer",
      subagent_type: "Explore",   // built-in。whole file ではなく excerpt を読む探索特化
+     model: "haiku",
      prompt: """
        TaskList の explore タスクを担当し、コードベースを調査せよ。
        **検索ファースト厳守**（`rules/tool-invocation.md`）:
@@ -122,6 +124,7 @@ verbose な出力（生コード・差分・ログ）を送られると lead の
      team_name: <team_name>,
      name: "implementer",
      subagent_type: "implementer",
+     model: "sonnet",
      prompt: """
        TaskList で承認済みタスクを取得し実装せよ。
        codexRequired=true のタスクは必ず Agent({subagent_type:"codex:codex-rescue"}) で Codex に委任。
@@ -138,6 +141,7 @@ verbose な出力（生コード・差分・ログ）を送られると lead の
      team_name: <team_name>,
      name: "reviewer",
      subagent_type: "arch-reviewer",   // または security-reviewer / perf-reviewer
+     model: "opus",
      prompt: """
        実装された変更をレビューせよ。
        指摘があれば implementer に直接 SendMessage して修正を依頼してよい（peer-to-peer）。
