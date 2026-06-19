@@ -97,6 +97,25 @@ verbose な出力（生コード・差分・ログ）を送られると lead の
 
 5. **TaskCreate** で承認済みタスクをリスト登録（`blockedBy` で依存を設定）
 
+5.5. **explorer teammate を spawn**（`type:"explore"` タスクがある場合のみ）:
+   ```
+   Agent({
+     team_name: <team_name>,
+     name: "explorer",
+     subagent_type: "Explore",   // built-in。whole file ではなく excerpt を読む探索特化
+     prompt: """
+       TaskList の explore タスクを担当し、コードベースを調査せよ。
+       **検索ファースト厳守**（`rules/tool-invocation.md`）:
+       rg/Grep/Glob で広く絞り込んでから、確定した必要箇所だけ Read する。
+       ディレクトリを1ファイルずつ全読みするな。
+       完了時: TaskUpdate に発見の詳細を書き、lead には以下 JSON のみ SendMessage せよ:
+       {"status":"done","findings":["<各≤80字>"],"keyFiles":["path:line"]}
+     """
+   })
+   ```
+   > explore 結果（keyFiles 等）を implementer の spawn プロンプトに渡すと手戻りが減る。
+   > 探索を `Explore` 以外（implementer 兼任等）で済ませると1ファイルずつ Read する非効率に陥るので避ける。
+
 6. **implementer teammate を spawn**（承認後のみ）:
    ```
    Agent({
