@@ -19,6 +19,8 @@ color: green
 
 ## 調査手順
 
+> **検索ファースト**（`rules/tool-invocation.md`）: 各ステップは rg/Grep/Glob で広く絞り込んでから、確定した必要箇所だけ Read する。ディレクトリを1ファイルずつ全読みしない。
+
 1. ルーティング定義ファイルを特定（Grep: router, route, controller, handler）
 2. エンドポイント一覧を抽出（Grep: GET, POST, PUT, DELETE, app.get等）
 3. データモデル/スキーマ定義を探索（Grep: schema, model, entity, migration）

@@ -19,6 +19,8 @@ color: blue
 
 ## 調査手順
 
+> **検索ファースト**（`rules/tool-invocation.md`）: 各ステップは rg/Grep/Glob で広く絞り込んでから、確定した必要箇所だけ Read する。ディレクトリを1ファイルずつ全読みしない。
+
 1. パッケージマネージャの設定ファイルを読み込み（Read: package.json等）
 2. 主要な外部ライブラリとその用途を整理
 3. 内部importパターンを分析（Grep: import, require, from）
