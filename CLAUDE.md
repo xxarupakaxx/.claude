@@ -15,11 +15,11 @@ Claude Code (conductor)
 
 | 用途 | 呼び出し | モデル |
 |------|---------|--------|
-| コードベース探索 | `Agent(subagent_type: "Explore")` | sonnet |
-| 軽量ワーカー | `Agent(model: "sonnet")` | sonnet |
-| 判定・設計判断・レビュー | `Agent(model: "opus")` | opus |
+| 探索・監視（explore/pr-watch等） | `Agent(model: "haiku")` | haiku |
+| 軽量ワーカー・実装 | `Agent(model: "sonnet")` | sonnet |
+| 判定・設計判断・計画・レビュー | `Agent(model: "opus")` | opus |
 | 重い実装 | `Agent(subagent_type: "codex:codex-rescue")` | gpt-5.x |
-| 専門レビュー | `Agent(subagent_type: "arch-reviewer")` 等 | 継承 |
+| 専門レビュー | `Agent(subagent_type: "arch-reviewer")` 等 | opus推奨（明示指定） |
 | 過去知見検索 | `Agent(subagent_type: "learnings-researcher")` | 継承 |
 | パイプライン制御 | `Workflow({script: ...})` | — |
 
