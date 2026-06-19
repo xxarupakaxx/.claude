@@ -44,7 +44,7 @@
 # Include plugin configuration
 !/plugins/
 !/plugins/installed_plugins.json
-!/plugins/known_marketplaces.json
+/plugins/known_marketplaces.json
 !/plugins/cursor/
 !/plugins/cursor/**
 # Exclude plugin caches and downloaded content
