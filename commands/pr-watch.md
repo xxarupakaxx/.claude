@@ -1,21 +1,20 @@
 ---
-allowed-tools: Bash(git:*), Bash(gh:*), Read, Write, Workflow, Agent
+allowed-tools: Bash(git:*), Bash(gh:*), Read, Write, Workflow, Agent, Skill
 argument-hint: [PR番号]
-description: PRのCIステータスとレビューコメントを1サイクル点検し、未対応を自動対応する（/loop 30m /pr-watch で30分おき継続監視）
+description: PRのCIステータスとレビューコメントを監視し未対応を自動対応する。起動時に /loop で30分おき継続監視を自動開始（Esc で停止）
 ---
 
 # /pr-watch — PR継続監視・自動対応（CI + レビュー）
 
-PR 1本のCIステータスとレビューコメントを**1サイクル**点検し、未対応があれば自動対応する。
-`/loop 30m /pr-watch <PR>` で30分おきに継続実行すれば、CI/レビューを監視し**対応し続ける**。
+PR 1本のCIステータスとレビューコメントを点検し、未対応があれば自動対応する。
+**初回起動時に `/loop 30m /pr-watch <PR>` を自動開始**し、以降は30分おきに継続監視する（`Esc` で停止）。
 
-> `/loop` は Claude Code built-in（指定間隔で slash command を再実行する）。本コマンド単体は1サイクル分の点検・対応を行い、継続監視は `/loop` が担う。
+> 内部で `Skill({ skill: "loop", args: "30m /pr-watch [PR番号]" })` を呼び出してループを起動する。2回目以降の呼び出し（ループ再実行時）はスキップして1サイクルのみ実行する。
 
 ## 使い方
 
 ```
-/pr-watch [PR番号]              # 1回だけ点検・対応
-/loop 30m /pr-watch [PR番号]    # 30分おきに継続監視（Esc で停止）
+/pr-watch [PR番号]    # 起動 → 自動でループ開始（30分おき継続監視）
 ```
 
 ## 自律方針（CLAUDE.md準拠）
@@ -39,6 +38,12 @@ PR 1本のCIステータスとレビューコメントを**1サイクル**点検
    - 解決できない → 「監視対象のPRなし」と報告して**終了**
 3. **PRメタ取得**: `gh pr view "$PR" --json number,title,author,headRefName,state,isDraft,url`
    - **state が OPEN 以外（CLOSED / MERGED）** → state から当該PRキーを**削除して Write** し**終了**（dead branch への push 防止 + state 肥大防止）
+3.5. **ループ自動起動チェック（初回のみ）**:
+   - state[PR].loop_active が `true` → スキップ（既にループ動作中）
+   - state[PR].loop_active が未設定 / false → 以下を実行:
+     1. `state[PR].loop_active = true` を state に Write
+     2. `Skill({ skill: "loop", args: "30m /pr-watch [PR番号]" })` を呼び出してループを起動
+     - ループは30分おきに本コマンドを再実行する。再実行時は `loop_active: true` のためこのステップはスキップされ、1サイクルのみ実行される
 4. **author判定（fail-closed）**: `me="$(gh api user -q .login)"`（実認証アカウント。`config/user.json` の `github_username` は使わない）
    - `author.login` と `me` が**ともに非空**で、**大文字小文字を無視して一致**するときのみ **author**（autoFix 可）
    - どちらかが空/null、`me` 取得失敗、不一致 → **reviewer 扱い（push 禁止）**
@@ -108,6 +113,7 @@ gh pr checks "$PR" --json name,state,bucket,link,workflow
   ```json
   {
     "<PR番号>": {
+      "loop_active": true,
       "last_ci_buckets": { "<check名>": "pass | fail | pending" },
       "ci_fix_attempts": { "<check名>": 0 },
       "pending_streak": 0,
@@ -118,6 +124,7 @@ gh pr checks "$PR" --json name,state,bucket,link,workflow
     }
   }
   ```
+- `loop_active`: `true` のとき loop skill の再起動をスキップする（二重起動防止）。PR が CLOSED/MERGED になると当該キーごと削除される
 - 値ドメインは `gh pr checks` の `bucket`（pass / fail / pending / skipping / cancel）に統一
 - **競合検出（多重起動・fail-closed）**: ステップ0で `active_run_id` を取得し、Write/push の**直前に state を再 Read** する。`active_run_id` が自分の `run_id` と異なる、または `last_run` が想定外に変わっていれば、**自分の Write を破棄し push を見送る**（lost update と二重 push を防ぐ）
 - **終了処理**: サイクル終了時に state を再 Read し、`active_run_id` が自分の `run_id` と一致する場合だけ `active_run_id` / `active_started_at` を削除して Write する
