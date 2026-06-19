@@ -231,10 +231,10 @@ Summary ──→ Slack日次サマリー投稿
 | コマンド | 説明 |
 |---------|------|
 | `/loop-status` | 全ループの状態表示（スケジュールタスク/ワークフロー/コスト/改善提案） |
-| `/pr-watch [PR]` | PRのCI/レビューを1サイクル点検し未対応を自動対応。`/loop 30m /pr-watch <PR>` で30分おき継続監視 |
-| `/team-run "<タスク>"` | Agent Team編成。完了後 Phase 3 で `/loop 30m /pr-watch <PR>` を手動実行しCI/レビュー継続監視 |
+| `/pr-watch [PR]` | PRのCI/レビューを監視し未対応を自動対応。起動時に `/loop 30m /pr-watch <PR>` を自動開始（Esc で停止） |
+| `/team-run "<タスク>"` | Agent Team編成。完了後 Phase 3 で `/pr-watch <PR>` を実行するとループが自動起動しCI/レビュー継続監視 |
 
-> **`/loop` 監視と `scheduled-tasks/pr-review` の役割差**: `/loop` は Claude Code built-in（指定間隔で slash command を再実行）。`/loop 30m /pr-watch <PR>` は**現セッション中**に特定PR1本を30分おき監視（team-run成果のコンテキストを引き継げる／`Esc` で停止）。一方 `scheduled-tasks/pr-review` は**全 watch_repos** を毎時バッチ巡回（アプリ起動中のベストエフォート）。前者はセッション内の能動監視、後者は常設の定期巡回。CI失敗の自動修正（`gh pr checks`→失敗ログ→修正→push）は `/pr-watch` のみが行う。
+> **`/pr-watch` 監視と `scheduled-tasks/pr-review` の役割差**: `/pr-watch <PR>` は起動時に `/loop 30m /pr-watch <PR>` を自動開始し、**現セッション中**に特定PR1本を30分おき能動監視する（team-run成果のコンテキストを引き継げる／`Esc` で停止）。2回目以降の呼び出しは state の `loop_active: true` により二重起動を防止。一方 `scheduled-tasks/pr-review` は**全 watch_repos** を毎時バッチ巡回（アプリ起動中のベストエフォート）。CI失敗の自動修正（`gh pr checks`→失敗ログ→修正→push）は `/pr-watch` のみが行う。
 
 ## マルチモデルディスパッチ
 
