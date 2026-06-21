@@ -328,6 +328,15 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/team-budget-guard.sh",
+            "timeout": 5
+          }
+        ]
       }
     ]
   },
