@@ -18,13 +18,17 @@ INPUT=$(cat)
 [ "${CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS:-}" = "1" ] || exit 0
 
 # 最新の team-journal.md を探す
-JOURNAL=$(find "$HOME/.claude/.local/memory" -name "team-journal.md" -type f 2>/dev/null | xargs ls -t 2>/dev/null | head -1)
+JOURNAL=$(find "$HOME/.claude/.local/memory" -name "team-journal.md" -type f -print0 2>/dev/null | xargs -0 ls -t 2>/dev/null | head -1)
 [ -z "$JOURNAL" ] && exit 0
 
-# Attribution 節のテーブル行数を数え、ヘッダ+区切りの2行を引く = 差し戻し回数
-ATTR_LINES=$(awk '/## 失敗・差し戻し Attribution/{f=1} /^## /&&!/Attribution/{f=0} f&&/^\|/' "$JOURNAL" 2>/dev/null | wc -l | tr -d ' ')
-RETRIES=$((ATTR_LINES - 2))
-[ "$RETRIES" -lt 0 ] && RETRIES=0
+# Attribution 節のデータ行のみ数える(ヘッダ=agent含む行・区切り=| -始まり を明示除外)
+RETRIES=$(awk '
+  /## 失敗・差し戻し Attribution/ {f=1; next}
+  /^## / {f=0}
+  f && /^\|/ && !/agent/ && !/^\| *-/ {c++}
+  END {print c+0}
+' "$JOURNAL" 2>/dev/null)
+[ -z "$RETRIES" ] && RETRIES=0
 
 THRESHOLD=3
 if [ "$RETRIES" -gt "$THRESHOLD" ]; then
