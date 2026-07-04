@@ -71,6 +71,7 @@ symlink にします。
 | **create-skill** | 既存設定と整合したスキル自動作成 | `/create-skill <内容>` |
 | **update-inst** | 間違いの再発防止ルール追加 | `/update-inst <間違えた内容>` |
 | **ui-ux-design** | プロダクショングレードのUI/UX生成 | UI構築依頼時 |
+| **ask-skill-router** | user-invoked / model-invoked を分け、重いflowの前に最小のskill経路を選ぶ | 「どのskill」「ask-matt相当」「flow選んで」 |
 
 ## スキル詳細
 
