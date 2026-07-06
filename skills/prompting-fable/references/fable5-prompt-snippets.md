@@ -4,7 +4,8 @@
 https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5
 
 すべて公式ガイド掲載の原文（英語）。プロンプトへはこのままコピペして使う。
-[S番号] は SKILL.md の各差分末尾に付記された snippet 番号（差分番号とは一致しない）。
+[S番号] は SKILL.md の各 Step から参照される snippet 番号（Step 2 の項目番号 # とは一致しない）。
+一部の見出し（S8, S13）は関連 snippet を複数含むため、組み込む際は見出し内の全ブロックを確認する。
 
 ## S1. Overplanning 抑止（Longer turns by default）
 
