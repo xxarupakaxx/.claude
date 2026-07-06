@@ -158,3 +158,7 @@ B. **Blueprint（大規模タスクのみ）**: 多セッション・多PRの設
 ## GitHub CLI
 
 gh cli利用時は `gh auth status` でアカウント確認、必要に応じて `gh auth switch -u <username>` で切替。原則 username = xxarupakaxx。
+
+## 情報源の明記
+
+WebSearch/WebFetch/deepwiki等で外部記事を調査した場合、回答の最後に参考リンク（タイトル+URL）を列挙する。
