@@ -33,7 +33,20 @@ if [ -z "$MEMORY_BASE" ]; then
 fi
 
 # 最新のメモリディレクトリを検索
-LATEST_DIR=$(find "$MEMORY_BASE" -maxdepth 1 -type d -name "[0-9]*" 2>/dev/null | sort -r | head -1)
+# タスクディレクトリ名（YYMMDD_taskname）は同日に複数あると命名の文字列順が日付順と一致しないため、
+# 名前のsort -rではなく05_log.mdの更新時刻（無ければディレクトリ自体のmtime）で最新を判定する。
+LATEST_DIR=""
+LATEST_MTIME=-1
+while IFS= read -r dir; do
+  target="$dir/05_log.md"
+  [ -f "$target" ] || target="$dir"
+  mtime=$(stat -f %m "$target" 2>/dev/null || stat -c %Y "$target" 2>/dev/null)
+  [ -z "$mtime" ] && continue
+  if [ "$mtime" -gt "$LATEST_MTIME" ]; then
+    LATEST_MTIME=$mtime
+    LATEST_DIR=$dir
+  fi
+done < <(find "$MEMORY_BASE" -maxdepth 1 -type d -name "[0-9]*" 2>/dev/null)
 
 if [ -z "$LATEST_DIR" ]; then
   exit 0
