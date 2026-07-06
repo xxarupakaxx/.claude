@@ -132,6 +132,8 @@ Claude Opus 4.6はadaptive thinking（`thinking: {type: "adaptive"}`）を使用
 | `medium` | 一般的なタスク（Sonnet 4.6推奨デフォルト） |
 | `low` | 高ボリューム・低レイテンシワークロード |
 
+**注（旧世代向け記述）**: 上記のeffort 4値（最上位`max`）はOpus 4.6世代時点のもの。Opus 4.7以降・Fable 5では`xhigh`（`high`と`max`の間）が追加されている。Fable 5向けのeffort指針は`skills/prompting-fable`を参照（公式ガイド準拠）。
+
 **一般的な指示が処方的ステップより効果的**: 「thoroughly consider」は手書きのステップバイステップ計画より良い推論を生む。Claudeの推論は人間が処方するものを超えることが多い。
 
 **Multishot + Thinking（Claude固有）**: few-shot例の中に`<thinking>`タグを含めると、Claudeはそのスタイルをextended thinkingブロックに一般化する。
