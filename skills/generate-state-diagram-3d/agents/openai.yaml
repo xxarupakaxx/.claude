@@ -1,0 +1,4 @@
+interface:
+  display_name: "Generate State Diagram 3D"
+  short_description: "Create workflow-html-app 2.5D diagrams"
+  default_prompt: "Use $generate-state-diagram-3d to create a workflow-html-app 2.5D state diagram for this branch."
