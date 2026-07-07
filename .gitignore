@@ -23,8 +23,8 @@
 !/hooks/**
 !/workflows/
 !/workflows/**
-!/scheduled-tasks/
-!/scheduled-tasks/**
+# Business-specific automation, excluded from version control
+/scheduled-tasks/
 !/rules/
 !/rules/**
 !/templates/
