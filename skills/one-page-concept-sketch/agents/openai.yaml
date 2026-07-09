@@ -1,4 +1,4 @@
 interface:
   display_name: "One Page Concept Sketch"
-  short_description: "一枚で概念と判断基準が伝わる手書き風の図解を設計する"
-  default_prompt: "Use $one-page-concept-sketch to turn this idea into a single hand-drawn concept sketch."
+  short_description: "調査済み内容を過不足なく一枚の手書き風図解に圧縮する"
+  default_prompt: "Use $one-page-concept-sketch to research this source and turn it into a single hand-drawn concept sketch."
