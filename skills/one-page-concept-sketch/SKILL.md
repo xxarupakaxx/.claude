@@ -1,6 +1,6 @@
 ---
 name: one-page-concept-sketch
-description: Create a single hand-drawn, black-and-white concept sketch that makes an idea understandable at a glance. Use when the user asks for an image, diagram, infographic, explainer sheet, one-page summary, whiteboard-style visual, handwritten Japanese style, sketchnote, or "one image that shows what this is about"; also use when turning a concept, article, decision rule, product idea, architecture principle, or meeting insight into a compact visual artifact.
+description: Create a single hand-drawn, black-and-white concept sketch that makes an idea understandable at a glance without omitting central information. Use when the user asks for an image, diagram, infographic, explainer sheet, one-page summary, whiteboard-style visual, handwritten Japanese style, sketchnote, or "one image that shows what this is about"; also use when turning a concept, article, decision rule, product idea, architecture principle, or meeting insight into a compact visual artifact. For specified articles, URLs, papers, transcripts, or complex source material, first perform deep-research-style source coverage so the final visual is neither under-informed nor overloaded.
 ---
 
 # One Page Concept Sketch
@@ -24,6 +24,33 @@ Choose the production mode before drafting.
 - Use a prompt plus layout spec when the user asks for guidance rather than an actual file.
 
 If using an image generation tool, keep text short and expect to manually revise or rebuild text-heavy areas as SVG/HTML if legibility fails.
+
+## Source Coverage Contract
+
+When the input is an article, URL, paper, transcript, long note, or user-specified source, do not start from visual layout.
+First establish what must be represented.
+
+Use the available `deep-research` skill or the same discipline when the source is long, disputed, technical, current, or supported by external references.
+For a single short source, a lighter source pass is acceptable, but it must still produce the coverage map below.
+
+Create a compact coverage map before drawing:
+
+- **Source scope**: what source material was read and what was not accessible.
+- **Core claims**: the source's central claims, not every sentence.
+- **Mechanism**: the causal chain, decision rule, process, or trade-off that explains those claims.
+- **Evidence anchors**: the facts, examples, or citations that support each core claim.
+- **Nuance and limits**: caveats, counterpoints, uncertainty, and scope restrictions.
+- **Visual slot**: where each core claim appears in the image.
+
+Every core claim must be either represented in the image or explicitly excluded as non-essential for the requested visual.
+Do not silently drop a claim because it is inconvenient to draw.
+
+If a source cannot fit into one readable image, keep the image focused and provide a short companion note with:
+
+- what the image covers,
+- what was intentionally left out,
+- why it was left out,
+- where the omitted detail belongs if the user wants a fuller artifact.
 
 ## Structure
 
@@ -63,8 +90,9 @@ Before drawing, reduce the idea to:
 - **Contrast**: wrong intuition versus better framing.
 - **Takeaway**: what to preserve, avoid, decide, or do next.
 
-Delete supporting details that do not help the mechanism.
+Delete only supporting details that do not change the source's core claims, mechanism, caveats, or decision implications.
 If a sentence cannot fit in a small label, turn it into a shorter noun phrase or move it to a point box.
+If a detail is important but too dense for the image, preserve it in the companion note rather than pretending it does not matter.
 
 ## Text Rules
 
@@ -94,12 +122,15 @@ Do not mix more than two patterns in one image.
 
 ## Workflow
 
-1. Extract the concept and write the compression bullets.
-2. Choose one common pattern.
-3. Draft the layout as text first: title, subtitle, sections, point boxes, summary band.
-4. Produce the artifact in the chosen output mode.
-5. Check legibility at small size.
-6. Remove any decorative element that does not explain the idea.
+1. Identify whether the request is source-based or concept-only.
+2. For source-based requests, run the Source Coverage Contract before visual drafting.
+3. Extract the concept and write the compression bullets.
+4. Choose one common pattern.
+5. Draft the layout as text first: title, subtitle, sections, point boxes, summary band.
+6. Map every core claim to a visible slot or the companion note.
+7. Produce the artifact in the chosen output mode.
+8. Check legibility at small size.
+9. Remove any decorative element that does not explain the idea.
 
 ## Image Generation Prompt Template
 
@@ -125,6 +156,9 @@ For Japanese-heavy images, shorten the text further or create SVG/HTML instead.
 
 Pass the artifact only if all checks are true:
 
+- For source-based requests, every core claim is covered in the image or named in the companion note.
+- The image reflects the source's caveats and scope limits when they affect the takeaway.
+- The artifact avoids both missing central information and dumping raw detail into tiny unreadable text.
 - The title and subtitle are readable at phone width.
 - The main claim is visible without reading every caption.
 - Arrows show cause, time, or choice clearly.
