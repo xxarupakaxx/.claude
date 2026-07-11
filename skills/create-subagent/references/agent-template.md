@@ -9,7 +9,7 @@
 name: <kebab-case-name>
 description: "<50-200字。何を検出/分析/生成するか。trigger語を3個以上含める>"
 tools: [Read, Grep, Glob, WebSearch, Write]
-# model: 省略推奨（親セッション継承）。判定・レビューなら "opus"、軽量なら "sonnet"
+# model: 省略可。短い低リスクhelperは "haiku"、探索とroutine実装は "sonnet"、判定とレビューは "opus"
 ---
 
 # <Agent Display Name>
@@ -73,6 +73,13 @@ Total: <重み付き合計>/<max>
 
 ## model 選択
 
-Claude Code Agent Tool では通常 `model` を省略し、親セッションのモデルを継承させる。判定・レビューには `model: "opus"`、軽量タスクには `model: "sonnet"` を明示。
+Claude Code Agent Tool では通常 `model` を省略し、親セッションのモデルを継承させる。
+
+- `haiku`：commit文案、短い要約、定型整形、重複検出。
+- `sonnet`：探索、routine実装、通常ワーカー。
+- `opus`：計画、重要判断、セキュリティ、専門レビュー。
+
+実際の `git add`、`git commit`、`git push` は shell で実行する。
+commit に関して agent へ任せるのはメッセージ文案だけである。
 
 詳細: `~/.claude/rules/model-routing.md`
