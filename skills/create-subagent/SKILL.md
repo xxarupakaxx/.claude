@@ -1,6 +1,6 @@
 ---
 name: create-subagent
-description: 自然言語の要件から ~/.claude/agents/<name>.md 雛形を生成するメタスキル。Markdown + YAML frontmatter（name/description/tools/model）+ 起動条件 + 出力フォーマット + Tier 1/2/3レビュー姿勢 + スコアリングルーブリックを含むベストプラクティス準拠の雛形を作る。使用タイミング: (1) 新しいサブエージェントを追加したいとき、(2) /create-subagent <要件> 実行時、(3) 「サブエージェントを作って」「専門エージェントを追加」「reviewer を作って」等の依頼時。create-skill の派生としてエージェント定義に特化。
+description: "自然言語の要件から ~/.claude/agents/<name>.md 雛形を生成するメタスキル。Markdown + YAML frontmatter（name/description/tools/model）+ 起動条件 + 出力フォーマット + Tier 1/2/3レビュー姿勢 + スコアリングルーブリックを含むベストプラクティス準拠の雛形を作る。使用タイミング: (1) 新しいサブエージェントを追加したいとき、(2) /create-subagent <要件> 実行時、(3) 「サブエージェントを作って」「専門エージェントを追加」「reviewer を作って」等の依頼時。create-skill の派生としてエージェント定義に特化。"
 allowed-tools: Read, Write, Glob, Grep, AskUserQuestion
 ---
 
@@ -34,10 +34,12 @@ allowed-tools: Read, Write, Glob, Grep, AskUserQuestion
 
 | Tier | 役割例 | model 指定 |
 |------|--------|-------|
-| Tier 1 | アーキ/性能レビュー（標準・常時呼ばれる） | 省略（親セッション継承） |
-| Tier 2 | 品質・テスト・観測性・a11y 等の追加レビュー | 省略（親セッション継承） |
-| Tier 3 | セキュリティ・PRDレビュー・複雑判断 | `model: "opus"` を検討 |
-| Explorer | ファイル検索・パターンマッチ | `model: "sonnet"` で軽量に |
+| Tier 1 | アーキ/性能レビュー（標準・常時呼ばれる） | `model: "opus"` |
+| Tier 2 | 品質・テスト・観測性・a11y 等の追加レビュー | `model: "opus"` |
+| Tier 3 | セキュリティ・PRDレビュー・複雑判断 | `model: "opus"` |
+| Explorer | ファイル検索・パターンマッチ | `model: "sonnet"` |
+| Helper | commit文案・短い要約・定型整形・重複検出 | `model: "haiku"` |
+| Routine implementer | 既知パターンの通常実装 | `model: "sonnet"` |
 
 判定指針: `~/.claude/rules/model-routing.md` を参照。
 
@@ -106,6 +108,8 @@ allowed-tools: Read, Write, Glob, Grep, AskUserQuestion
 - **description に1人称**: "I can review..." は不可。3人称で記述
 - **トリガー曖昧**: 「いつ呼ばれるか」が読み手に伝わらない description
 - **model の不要な明示指定**: 通常は `model` を省略し親セッションのモデルを継承させる
+- **Haikuへの過剰委任**: 設計判断、セキュリティ、GO/NO-GO、最終レビューに `haiku` を使わない
+- **commit作業の丸投げ**: agentが担当できるのはcommitメッセージの文案だけ。実際の `git add`、`git commit`、`git push` はshellで実行する
 - **Do Not Trust Preamble 省略**: レビュー系エージェントでは必須
 - **スコアリングルーブリック欠如**: レビュー系で「主観評価のみ」は禁止
 - **既存と重複**: 同名・同責務エージェントを増殖させない
