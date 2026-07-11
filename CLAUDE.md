@@ -133,6 +133,11 @@ B. **Blueprint（大規模タスクのみ）**: 多セッション・多PRの設
   - SessionStartHookで過去メモリをFTS5検索→コンテキスト自動注入
   - memories/solutions/のMarkdownは自動的にSQLiteにインデックス同期
 
+## viewing-plans の表示
+
+- **IMPORTANT**: `viewing-plans` の成果物としてローカルHTMLまたは表示URLを生成した場合は、ユーザーへの案内前に `open "<absolute-path-or-URL>"` で実際に開き、MCP Apps がUIを直接開く場合を除いてパスやURLだけを提示して完了しない。
+  `open` に失敗した場合は、失敗内容と対象パスまたはURLを報告する。
+
 ## ユーザーへの質問
 
 **IMPORTANT**: 曖昧な点があればエスパーせず必ずAskUserQuestionで質問する
