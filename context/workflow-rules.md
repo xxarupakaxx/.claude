@@ -545,6 +545,8 @@ python3 scripts/generate-roadmap-view.py --hub --memory-root "$MEMORY_DIR/memory
 
 `--memory-root` は複数回指定できる。current thread ID を取得できた場合は task directory の `task-meta.json` に保存し、完全一致だけを確定済み対応として扱う。path・title・更新時刻による一致は候補表示に留めて自動確定せず、承認は Codex 会話を正本とする。Hub は loopback 限定の session key 付き API を使い、provider を定期再取得し、ブラウザ heartbeat が途絶えると終了する。provider の一時障害中は直近の成功結果を保持して degraded 状態を表示する。
 
+Task Hubは各sessionの計画全文よりLive Activityを優先する。session JSONLの末尾最大1MBから直近24時間・最大100イベントだけを正規化し、turn実行中、user待ち、未完了tool、sub-agent観測数、最終イベント、経過時間、明示blockerを表示する。command arguments、tool output本文、24時間より古い会話contextは収集しない。選択sessionの下位層で設計Plan、承認、実装計画、成果物、検証結果を表示する。
+
 ### MCP Apps ツール
 
 | ツール名 | MCPツール | 対象ファイル | 主な機能 |

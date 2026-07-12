@@ -20,6 +20,8 @@ python3 scripts/generate-roadmap-view.py --hub --memory-root "$MEMORY_DIR/memory
 
 Hub は loopback 上の OS 割当 port で起動し、URL fragment の session key でローカル API を保護する。Codex app-server と memory task を定期再取得し、provider の一時障害中は直近の成功結果を保持して degraded 状態を表示する。ブラウザ heartbeat が途絶えると Hub は終了する。
 
+Hubの主表示は計画書ではなくLive Sessionとする。Codex app-serverが返すsession pathからJSONL末尾最大1MBだけを読み、直近24時間・最大100イベントへ制限する。turn状態、user待ち、未完了tool call、直近のsub-agent観測、最終イベント、経過時間、明示blockerを先に表示し、その下に設計Plan、承認、実装計画、成果物、検証結果を置く。command引数、tool出力全文、古い会話contextは表示用modelへ入れない。
+
 ## 自動発動条件
 
 以下のタイミングで**自動的に**発動（ユーザー確認不要）：
