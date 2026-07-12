@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Roadmap Viewer</title>
+  <style>
+    :root {
+      --bg: #f7f7f4;
+      --surface: #ffffff;
+      --surface-soft: #f3f4f0;
+      --surface-accent: #edf5f1;
+      --ink: #171b19;
+      --muted: #626a65;
+      --faint: #89908b;
+      --line: #d8ddd8;
+      --line-strong: #b9c1bb;
+      --accent: #2f6f5e;
+      --accent-strong: #245748;
+      --accent-button: #2f6f5e;
+      --accent-button-hover: #245748;
+      --accent-blue: #3568a8;
+      --good: #327a50;
+      --warn: #996c18;
+      --danger: #a4473e;
+      --focus: #2f70c9;
+      --radius: 8px;
+      --shadow: 0 8px 24px rgba(28, 38, 33, 0.055);
+      --header-height: 64px;
+      color-scheme: light;
+    }
+
+    [data-theme="dark"] {
+      --bg: #141714;
+      --surface: #1c211e;
+      --surface-soft: #242a26;
+      --surface-accent: #20342d;
+      --ink: #edf1ee;
+      --muted: #b7bfba;
+      --faint: #8f9892;
+      --line: #374039;
+      --line-strong: #536057;
+      --accent: #77b7a3;
+      --accent-strong: #9bd0be;
+      --accent-button: #2f6f5e;
+      --accent-button-hover: #245748;
+      --accent-blue: #8db8ef;
+      --good: #83c99b;
+      --warn: #e0b867;
+      --danger: #e18c82;
+      --focus: #8bbcff;
+      --shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+      color-scheme: dark;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-padding-top: calc(var(--header-height) + 12px); background: var(--bg); }
+    body {
+      margin: 0;
+      min-width: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", sans-serif;
+      font-size: 14px;
+      line-height: 1.45;
+      text-rendering: optimizeLegibility;
+    }
+    button, input, select, summary { font: inherit; }
+    button { color: inherit; }
+    button:focus-visible, input:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
+      outline: 3px solid color-mix(in srgb, var(--focus) 72%, transparent);
+      outline-offset: 2px;
+    }
+    button, summary, [data-source], [data-task-toggle] { -webkit-tap-highlight-color: transparent; }
+    .skip-link {
+      position: fixed;
+      z-index: 100;
+      top: 8px;
+      left: 8px;
+      padding: 8px 12px;
+      border-radius: var(--radius);
+      background: var(--ink);
+      color: var(--bg);
+      transform: translateY(-150%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      min-height: var(--header-height);
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--bg) 94%, transparent);
+      backdrop-filter: blur(14px);
+    }
+    .header-inner {
+      max-width: 1540px;
+      min-height: var(--header-height);
+      margin: 0 auto;
+      padding: 9px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { min-width: 0; display: flex; align-items: center; gap: 11px; }
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      flex: 0 0 36px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      background: var(--surface);
+      padding: 6px;
+    }
+    .brand-copy { min-width: 0; }
+    .brand-copy h1 { margin: 0; font-size: 17px; font-weight: 760; line-height: 1.2; letter-spacing: -0.01em; }
+    .brand-copy p {
+      max-width: min(58vw, 760px);
+      margin: 2px 0 0;
+      overflow: hidden;
+      color: var(--muted);
+      font-size: 11.5px;
+      line-height: 1.2;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .toolbar { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+    .live-badge {
+      min-height: 34px;
+      padding: 6px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 720;
+      white-space: nowrap;
+    }
+    .live-badge .icon { width: 15px; height: 15px; }
+    .live-badge.live { color: var(--good); border-color: color-mix(in srgb, var(--good) 42%, var(--line)); }
+    .live-badge.waiting { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 42%, var(--line)); }
+    .live-badge.error { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 42%, var(--line)); }
+    .last-updated { color: var(--muted); font-size: 12px; white-space: nowrap; }
+    .btn {
+      min-height: 38px;
+      padding: 7px 11px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--ink);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      font-weight: 650;
+      transition: background 140ms ease, border-color 140ms ease, transform 140ms ease;
+    }
+    .btn:hover { border-color: var(--accent); background: var(--surface-accent); }
+    .btn:active { transform: translateY(1px); }
+    .btn.primary { border-color: var(--accent-button); background: var(--accent-button); color: #fff; }
+    .btn.primary:hover { border-color: var(--accent-button-hover); background: var(--accent-button-hover); }
+    .btn.primary .icon { filter: brightness(0) invert(1); }
+    .btn.icon-only { width: 38px; padding: 7px; }
+    .file-input { display: none; }
+    .icon { width: 18px; height: 18px; flex: 0 0 auto; object-fit: contain; }
+    .shell { max-width: 1540px; margin: 0 auto; padding: 18px 20px 24px; }
+    .panel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+    .section-title { margin: 0; font-size: 16px; font-weight: 760; letter-spacing: -0.01em; }
+    .section-heading {
+      min-height: 48px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+    .section-meta { color: var(--muted); font-size: 12px; text-align: right; }
+    .now-strip {
+      min-height: 76px;
+      margin-bottom: 12px;
+      padding: 10px 16px;
+      display: grid;
+      grid-template-columns: 68px minmax(135px, .75fr) minmax(180px, 1.1fr) minmax(110px, .5fr) minmax(190px, 1.05fr) minmax(170px, .85fr) minmax(150px, .75fr);
+      align-items: center;
+      gap: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .now-label {
+      align-self: stretch;
+      margin: -1px 14px -1px -1px;
+      display: grid;
+      place-items: center;
+      border-radius: 7px;
+      background: var(--accent-button);
+      color: #fff;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: .03em;
+    }
+    .now-cell { min-width: 0; padding: 1px 18px; border-left: 1px solid var(--line); }
+    .now-cell:first-of-type { border-left: 0; }
+    .now-cell small { display: block; margin-bottom: 2px; color: var(--muted); font-size: 11.5px; }
+    .now-cell strong {
+      display: block;
+      overflow: hidden;
+      font-size: 15px;
+      font-weight: 760;
+      line-height: 1.35;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .now-pulse { display: grid; grid-template-columns: 28px minmax(0, 1fr); align-items: center; gap: 8px; }
+    .now-pulse .icon-wrap {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: var(--surface-soft);
+    }
+    .now-pulse .icon { width: 16px; height: 16px; }
+    .task-count { display: flex; align-items: baseline; gap: 6px; }
+    .task-count strong { font-size: 18px; }
+    .task-count span { color: var(--muted); font-size: 12px; }
+    .count-track { height: 5px; margin-top: 6px; overflow: hidden; border-radius: 999px; background: var(--line); }
+    .count-fill { width: 0; height: 100%; background: var(--accent); transition: width 220ms ease; }
+    .artifact-jump {
+      display: none;
+      margin-top: 5px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--accent);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 720;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .workspace { display: grid; grid-template-columns: minmax(0, 1fr) 350px; gap: 12px; align-items: stretch; }
+    .plan-canvas { min-width: 0; overflow: hidden; }
+    .plan-body { padding: 14px 16px 12px; }
+    .phase-rail {
+      position: relative;
+      margin: 0 0 12px;
+      padding: 4px 8px 2px;
+      display: grid;
+      grid-template-columns: repeat(6, minmax(88px, 1fr));
+      gap: 0;
+    }
+    .phase-rail::before {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      left: 20px;
+      height: 2px;
+      background: var(--line-strong);
+      content: "";
+    }
+    .phase-rail::after {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: var(--phase-progress, 0%);
+      height: 2px;
+      background: var(--accent);
+      content: "";
+      transition: width 220ms ease;
+    }
+    .phase-step { position: relative; z-index: 1; min-width: 0; display: grid; justify-items: center; text-align: center; }
+    .phase-marker {
+      width: 31px;
+      height: 31px;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--line-strong);
+      border-radius: 50%;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    .phase-step.complete .phase-marker {
+      border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+      background: var(--surface-accent);
+      color: var(--accent);
+    }
+    .phase-step.in-progress .phase-marker {
+      border-color: var(--accent);
+      background: var(--surface-accent);
+      color: var(--accent-strong);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 11%, transparent);
+    }
+    .phase-step strong { margin-top: 6px; font-size: 12.5px; }
+    .phase-step span { color: var(--muted); font-size: 11px; }
+    .phase-marker .icon { width: 16px; height: 16px; }
+    .task-tree { overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); }
+    .task-table-head, .task-row-main {
+      display: grid;
+      grid-template-columns: minmax(250px, 1.45fr) minmax(110px, .55fr) minmax(150px, .78fr) minmax(180px, 1fr);
+      align-items: center;
+      gap: 12px;
+    }
+    .task-table-head {
+      min-height: 38px;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface-soft);
+      color: var(--muted);
+      font-size: 11.5px;
+      font-weight: 680;
+    }
+    .task-row { border-bottom: 1px solid var(--line); background: var(--surface); }
+    .task-row.current { outline: 2px dotted var(--focus); outline-offset: -3px; }
+    .task-row:last-child { border-bottom: 0; }
+    .task-row-main { min-height: 41px; padding: 7px 10px; }
+    .task-row.current > .task-row-main { background: var(--surface-accent); }
+    .task-row.recorded > .task-row-main { background: color-mix(in srgb, var(--surface-soft) 62%, transparent); }
+    .task-primary { min-width: 0; display: flex; align-items: center; gap: 8px; }
+    .task-toggle {
+      width: 36px;
+      height: 36px;
+      padding: 5px;
+      flex: 0 0 36px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      cursor: pointer;
+    }
+    .task-toggle:hover { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+    .task-toggle .icon { width: 16px; height: 16px; transition: transform 140ms ease; }
+    .task-toggle[aria-expanded="true"] .icon { transform: rotate(90deg); }
+    .task-status-icon { width: 23px; height: 23px; flex: 0 0 23px; }
+    .task-name { min-width: 0; }
+    .task-name strong {
+      display: inline;
+      overflow: hidden;
+      font-size: 13.5px;
+      font-weight: 730;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .task-name span { display: inline; margin-left: 7px; color: var(--muted); font-size: 11.5px; }
+    .task-cell {
+      min-width: 0;
+      overflow: hidden;
+      color: var(--muted);
+      font-size: 12px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .mobile-label { display: none; }
+    .state-chip { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font-size: 12px; font-weight: 680; }
+    .state-chip.complete { color: var(--good); }
+    .state-chip.in-progress { color: var(--accent); }
+    .state-chip.blocked { color: var(--danger); }
+    .state-chip .icon { width: 15px; height: 15px; }
+    .task-details { padding: 0 12px 10px 67px; color: var(--muted); font-size: 12px; }
+    .task-details[hidden] { display: none; }
+    .step-list { margin: 5px 0 0; padding-left: 18px; }
+    .step-list li { margin: 2px 0; }
+    .next-steps {
+      min-height: 38px;
+      margin-top: 8px;
+      padding: 7px 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow: hidden;
+      border: 1px solid color-mix(in srgb, var(--accent-blue) 30%, var(--line));
+      border-radius: var(--radius);
+      background: color-mix(in srgb, var(--accent-blue) 6%, var(--surface));
+      color: var(--accent-blue);
+      font-size: 11.5px;
+    }
+    .next-steps > strong { white-space: nowrap; }
+    .next-step-sequence { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .execution-pulse { min-width: 0; }
+    .pulse-body { height: calc(100% - 49px); padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+    .pulse-kicker { color: var(--muted); font-size: 11px; font-weight: 720; letter-spacing: .03em; }
+    .pulse-task { margin: 4px 0 0; font-size: 21px; font-weight: 780; line-height: 1.25; letter-spacing: -0.02em; }
+    .pulse-phase { margin-top: 6px; display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
+    .pulse-metrics { display: grid; gap: 7px; color: var(--muted); font-size: 12px; }
+    .metric-row { display: grid; grid-template-columns: 20px 72px minmax(0, 1fr); align-items: center; gap: 5px; }
+    .metric-row .icon { width: 15px; height: 15px; }
+    .pulse-card { padding: 11px 12px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .pulse-card h3 { margin: 0 0 8px; font-size: 12px; }
+    .recent-list { margin: 0; padding: 0; display: grid; gap: 7px; list-style: none; }
+    .recent-item { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; align-items: center; gap: 7px; font-size: 12px; }
+    .recent-item .icon { width: 16px; height: 16px; }
+    .recent-item strong { overflow: hidden; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+    .recent-item time { color: var(--muted); font-size: 11px; }
+    .waiting-copy { margin: 0; color: var(--muted); font-size: 12px; }
+    .history-button { width: 100%; margin-top: auto; }
+    .artifact-shelf { margin-top: 12px; overflow: hidden; }
+    .artifact-grid { padding: 10px 12px 12px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+    .artifact-card {
+      min-width: 0;
+      min-height: 84px;
+      padding: 11px 12px;
+      display: grid;
+      grid-template-columns: 35px minmax(0, 1fr) 18px;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      text-align: left;
+      cursor: pointer;
+    }
+    .artifact-card:hover { border-color: var(--accent); background: var(--surface-accent); }
+    .artifact-icon {
+      width: 35px;
+      height: 35px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface-soft);
+    }
+    .artifact-icon .icon { width: 22px; height: 22px; }
+    .artifact-copy { min-width: 0; }
+    .artifact-copy strong { display: block; overflow: hidden; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+    .artifact-copy span { display: block; margin-top: 4px; overflow: hidden; color: var(--muted); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+    .artifact-state {
+      display: inline-flex !important;
+      width: fit-content;
+      margin-top: 4px !important;
+      padding: 1px 5px;
+      border: 1px solid color-mix(in srgb, var(--good) 35%, var(--line));
+      border-radius: 4px;
+      background: color-mix(in srgb, var(--good) 8%, var(--surface));
+      color: var(--good) !important;
+      font-weight: 700;
+    }
+    .utility-disclosure { margin-top: 12px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .utility-disclosure > summary {
+      min-height: 44px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      cursor: pointer;
+      list-style: none;
+      font-size: 12px;
+    }
+    .utility-disclosure > summary::-webkit-details-marker { display: none; }
+    .utility-disclosure > summary strong { font-size: 13px; }
+    .utility-title { margin: 0; font-size: 13px; font-weight: 760; }
+    .utility-links { color: var(--muted); }
+    .summary-chevron { margin-left: auto; transition: transform 140ms ease; }
+    .utility-disclosure[open] .summary-chevron { transform: rotate(90deg); }
+    .utility-content {
+      padding: 14px 16px 16px;
+      display: grid;
+      grid-template-columns: minmax(230px, .8fr) minmax(260px, 1fr) minmax(300px, 1.25fr);
+      gap: 12px;
+      border-top: 1px solid var(--line);
+    }
+    .utility-card { min-width: 0; padding: 12px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface-soft); }
+    .utility-card h3 { margin: 0 0 8px; font-size: 12.5px; }
+    .drop-zone {
+      min-height: 86px;
+      padding: 14px;
+      display: grid;
+      place-items: center;
+      border: 1px dashed var(--line-strong);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--muted);
+      text-align: center;
+      cursor: pointer;
+    }
+    .drop-zone.dragover { border-color: var(--accent); background: var(--surface-accent); color: var(--ink); }
+    .utility-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
+    .utility-stat { padding: 7px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); text-align: center; }
+    .utility-stat strong { display: block; font-size: 17px; }
+    .utility-stat span { color: var(--muted); font-size: 10px; }
+    .risk-list, .source-list, .log-list { display: grid; gap: 6px; }
+    .risk-item, .source-button, .artifact-record, .log-item {
+      padding: 7px 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .source-button { width: 100%; text-align: left; cursor: pointer; }
+    .source-button:hover { border-color: var(--accent); }
+    .source-button strong, .artifact-record strong { display: block; color: var(--ink); }
+    .source-preview {
+      max-height: 260px;
+      margin: 8px 0 0;
+      padding: 10px;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--ink);
+      font: 11px/1.55 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .empty { padding: 10px; color: var(--muted); font-size: 12px; }
+    .toast {
+      position: fixed;
+      z-index: 60;
+      right: 18px;
+      bottom: 18px;
+      max-width: min(380px, calc(100vw - 36px));
+      padding: 10px 13px;
+      border-radius: var(--radius);
+      background: var(--ink);
+      color: var(--bg);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(18px);
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .flash { animation: evidence-pulse 900ms ease; }
+    @keyframes evidence-pulse {
+      0%, 100% { box-shadow: var(--shadow); }
+      45% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent), var(--shadow); }
+    }
+    @media (max-width: 1180px) {
+      .shell { display: flex; flex-direction: column; }
+      .now-strip { order: 1; }
+      .artifact-shelf { order: 2; margin: 0 0 12px; }
+      .workspace { order: 3; }
+      .utility-disclosure { order: 4; }
+      .artifact-jump { display: inline-flex; }
+      .now-strip { grid-template-columns: 64px repeat(6, minmax(118px, 1fr)); overflow: hidden; }
+      .now-cell { padding: 1px 10px; }
+      .workspace { grid-template-columns: minmax(0, 1fr) 310px; }
+      .task-table-head, .task-row-main { grid-template-columns: minmax(230px, 1.35fr) 105px 120px minmax(145px, .8fr); }
+      .task-name strong { display: block; overflow: visible; text-overflow: clip; white-space: normal; }
+      .task-name span { display: block; margin-left: 0; }
+    }
+    @media (max-width: 1100px) {
+      .now-strip { grid-template-columns: 64px repeat(3, minmax(0, 1fr)); row-gap: 8px; }
+      .now-label { grid-row: 1 / 3; }
+      .now-cell { min-height: 42px; border-left: 1px solid var(--line); }
+      .now-cell strong { white-space: normal; }
+    }
+    @media (max-width: 960px) {
+      .header-inner { align-items: flex-start; }
+      .last-updated { display: none; }
+      .now-strip { grid-template-columns: 64px repeat(2, minmax(0, 1fr)); row-gap: 8px; }
+      .now-label { grid-row: 1 / 4; }
+      .now-cell { min-height: 42px; border-left: 1px solid var(--line); }
+      .workspace { grid-template-columns: 1fr; }
+      .pulse-body { height: auto; display: grid; grid-template-columns: 1fr 1fr; }
+      .pulse-summary { grid-row: span 2; }
+      .history-button { margin-top: 0; }
+      .artifact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .utility-content { grid-template-columns: 1fr 1fr; }
+      .utility-card:last-child { grid-column: 1 / -1; }
+    }
+    @media (max-width: 720px) {
+      :root { --header-height: 104px; }
+      .header-inner { padding: 10px 14px; flex-direction: column; gap: 8px; }
+      .brand { width: 100%; }
+      .brand-copy p { max-width: calc(100vw - 80px); }
+      .toolbar { width: 100%; justify-content: flex-start; overflow: hidden; }
+      .toolbar .btn-label { display: none; }
+      #export-json .btn-label { display: inline; }
+      .toolbar .btn { min-width: 44px; min-height: 44px; }
+      .live-badge { min-height: 38px; }
+      .shell { padding: 12px; }
+      .now-strip { padding: 8px; grid-template-columns: 52px 1fr; }
+      .now-label { grid-row: 1 / 7; margin-right: 8px; font-size: 15px; }
+      .now-cell { min-height: 42px; padding: 3px 10px; border-left: 1px solid var(--line); }
+      .now-cell strong { white-space: normal; font-size: 13px; }
+      .phase-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding: 0; }
+      .phase-rail::before, .phase-rail::after { display: none; }
+      .phase-step {
+        min-height: 48px;
+        padding: 5px 6px;
+        grid-template-columns: 28px 1fr;
+        justify-items: start;
+        align-items: center;
+        column-gap: 7px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        text-align: left;
+      }
+      .phase-marker { grid-row: span 2; width: 27px; height: 27px; }
+      .phase-step strong, .phase-step span { margin: 0; }
+      .task-table-head { display: none; }
+      .task-row-main { grid-template-columns: minmax(0, 1fr); gap: 5px; padding: 9px; }
+      .task-toggle { width: 40px; height: 40px; flex-basis: 40px; }
+      .task-name strong, .task-name span { display: block; margin-left: 0; }
+      .task-cell { padding-left: 59px; white-space: normal; }
+      .task-cell:empty { display: none; }
+      .mobile-label { display: inline-block; min-width: 58px; color: var(--muted); font-size: 10.5px; font-weight: 700; }
+      .task-details { padding: 0 10px 10px 68px; }
+      .next-steps { align-items: flex-start; flex-direction: column; gap: 3px; }
+      .next-step-sequence { white-space: normal; }
+      .pulse-body { grid-template-columns: 1fr; }
+      .pulse-summary { grid-row: auto; }
+      .artifact-grid { grid-template-columns: 1fr; }
+      .artifact-card { min-height: 78px; }
+      .utility-links { display: none; }
+      .utility-content { grid-template-columns: 1fr; }
+      .utility-card:last-child { grid-column: auto; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">メイン内容へ移動</a>
+  <!-- Existing Roadmap Viewer brand asset. UI icons use Tabler Icons (MIT), encoded as data URIs for offline use. -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <img class="brand-mark" id="brand-mark" data-icon="slash" alt="">
+        <div class="brand-copy">
+          <h1>Roadmap Viewer</h1>
+          <p id="source-line">計画・実行・成果物を一つの画面で確認</p>
+        </div>
+      </div>
+      <div class="toolbar" role="group" aria-label="Viewer操作">
+        <span class="live-badge" id="live-status">
+          <img class="icon" id="live-status-icon" alt="">
+          <span id="live-status-text" aria-live="polite">Static</span>
+        </span>
+        <span class="last-updated" id="header-updated">最終更新: —</span>
+        <button class="btn primary" type="button" id="open-files" aria-label="Roadmapファイルを開く" title="Roadmapファイルを開く">
+          <img class="icon" data-icon="folder" alt=""><span class="btn-label">ファイルを開く</span>
+        </button>
+        <button class="btn" type="button" id="export-json" aria-label="Roadmap JSONを書き出す" title="Roadmap JSONを書き出す">
+          <img class="icon" data-icon="download" alt=""><span class="btn-label">JSON</span>
+        </button>
+        <button class="btn icon-only" type="button" id="theme-toggle" aria-label="ダークテーマに切り替える" aria-pressed="false" title="ダークテーマに切り替える">
+          <img class="icon" data-icon="palette" alt="">
+        </button>
+        <button class="btn icon-only" type="button" id="open-utility" aria-label="診断と詳細を開く" aria-controls="utility-disclosure" aria-expanded="false" title="診断と詳細を開く">
+          <img class="icon" data-icon="dots" alt="">
+        </button>
+        <input class="file-input" id="file-input" type="file" multiple accept=".md,.markdown,.txt,.json">
+      </div>
+    </div>
+  </header>
+
+  <main class="shell" id="main-content" tabindex="-1">
+    <section class="now-strip" id="now-strip" aria-labelledby="now-heading">
+      <h2 class="visually-hidden" id="now-heading">いまの状態</h2>
+      <div class="now-label" aria-hidden="true">いま</div>
+      <div class="now-cell"><small>現在フェーズ</small><strong id="now-phase">Phase —</strong></div>
+      <div class="now-cell"><small>全体状態</small><strong id="now-status">計画を読み込み中</strong></div>
+      <div class="now-cell">
+        <small>進捗</small>
+        <div class="task-count"><strong id="now-count">0 / 0</strong><span>完了</span></div>
+        <div class="count-track" id="task-progress" role="progressbar" aria-label="固定Taskの完了数" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0">
+          <div class="count-fill" id="task-progress-fill"></div>
+        </div>
+        <button class="artifact-jump" id="artifact-jump" type="button">成果物 0件</button>
+      </div>
+      <div class="now-cell"><small>次のチェックポイント</small><strong id="now-checkpoint">計画を読み込む</strong></div>
+      <div class="now-cell now-pulse">
+        <span class="icon-wrap"><img class="icon" data-icon="play" alt=""></span>
+        <span><small>アクティブ</small><strong id="now-active">—</strong></span>
+      </div>
+      <div class="now-cell now-pulse">
+        <span class="icon-wrap"><img class="icon" id="now-waiting-icon" data-icon="clock" alt=""></span>
+        <span><small id="now-waiting-label">待ち</small><strong id="now-waiting">—</strong></span>
+      </div>
+    </section>
+
+    <div class="workspace">
+      <section class="panel plan-canvas" aria-labelledby="plan-canvas-title">
+        <div class="section-heading">
+          <h2 class="section-title" id="plan-canvas-title">計画キャンバス</h2>
+          <span class="section-meta" id="plan-meta">PhaseとTaskを読み込み中</span>
+        </div>
+        <div class="plan-body">
+          <div class="phase-rail" id="phase-rail" role="list" aria-label="ワークフローのPhase"></div>
+          <div class="task-tree" id="task-tree" role="table" aria-label="実装計画のTask"></div>
+          <div class="next-steps" id="next-steps">
+            <strong>次の3ステップ:</strong><span class="next-step-sequence" id="next-step-sequence">計画を読み込む</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel execution-pulse" id="execution-pulse" aria-labelledby="pulse-title">
+        <div class="section-heading">
+          <h2 class="section-title" id="pulse-title">実行パルス</h2>
+          <span class="section-meta" id="freshness-label">Static</span>
+        </div>
+        <div class="pulse-body">
+          <section class="pulse-summary">
+            <div class="pulse-kicker">アクティブタスク</div>
+            <h3 class="pulse-task" id="pulse-task">稼働中のTaskなし</h3>
+            <div class="pulse-phase"><span id="pulse-phase">Phase —</span><span class="state-chip" id="pulse-state">待ち</span></div>
+            <div class="pulse-metrics">
+              <div class="metric-row"><img class="icon" data-icon="list" alt=""><span>Task進捗</span><strong id="pulse-elapsed">—</strong></div>
+              <div class="metric-row"><img class="icon" data-icon="refresh" alt=""><span>最終更新</span><strong id="pulse-updated">—</strong></div>
+            </div>
+          </section>
+          <section class="pulse-card"><h3>直近の完了</h3><ul class="recent-list" id="recent-completions" role="log" aria-live="off" aria-label="直近の完了"></ul></section>
+          <section class="pulse-card"><h3 id="waiting-title">待ちの理由</h3><p class="waiting-copy" id="waiting-reason">計画を読み込むと表示します。</p></section>
+          <button class="btn history-button" type="button" id="show-history" aria-controls="utility-disclosure" aria-expanded="false">履歴と診断を表示<img class="icon" data-icon="chevron" alt=""></button>
+        </div>
+      </aside>
+    </div>
+
+    <section class="panel artifact-shelf" id="artifact-shelf" tabindex="-1" aria-labelledby="artifact-title">
+      <div class="section-heading"><h2 class="section-title" id="artifact-title">成果物シェルフ</h2><span class="section-meta" id="artifact-meta">0件</span></div>
+      <div class="artifact-grid" id="artifact-grid"></div>
+    </section>
+
+    <details class="utility-disclosure" id="utility-disclosure">
+      <summary>
+        <h2 class="utility-title">ユーティリティ（診断・マップ・指標）</h2>
+        <span class="utility-links">手動ファイル読込　/　生Markdown　/　Review　/　リスク・不明点</span>
+        <img class="icon summary-chevron" data-icon="chevron" alt="">
+      </summary>
+      <div class="utility-content">
+        <section class="utility-card">
+          <h3>手動ファイル読込</h3>
+          <div class="drop-zone" id="drop-zone" tabindex="0" role="button" aria-label="Roadmapファイルを読み込む"><span>Markdownまたはroadmap JSONをドロップ</span></div>
+          <div class="utility-stats" id="review-stats"></div>
+        </section>
+        <section class="utility-card"><h3>リスク・直近ログ</h3><div class="risk-list" id="risk-list"></div><div class="log-list" id="log-list" tabindex="-1"></div></section>
+        <section class="utility-card">
+          <h3>ソースと生Markdown</h3>
+          <div class="source-list" id="source-list"></div>
+          <pre class="source-preview" id="source-preview" role="region" aria-label="選択したソースの内容" tabindex="-1">ソースを選択してください。</pre>
+          <h3>全成果物</h3>
+          <div class="source-list" id="all-artifact-list" tabindex="-1"></div>
+        </section>
+      </div>
+    </details>
+  </main>
+
+  <div class="visually-hidden" id="state-announcer" role="status" aria-live="polite"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script id="embedded-snapshot" type="application/json">{"__ROADMAP_SNAPSHOT_JSON__": true}</script>
+  <script>
+    /* ROADMAP_MODEL_START */
+    const PHASES = [
+      { number: '0', label: '準備', aliases: ['準備', 'preparation'] },
+      { number: '1', label: '調査', aliases: ['調査', 'investigation', 'research'] },
+      { number: '2', label: '計画', aliases: ['計画', 'planning', 'plan'] },
+      { number: '3', label: '実装', aliases: ['実装', 'implementation', 'build'] },
+      { number: '4', label: '品質確認', aliases: ['品質', 'review', '検証', 'quality'] },
+      { number: '5', label: '完了報告', aliases: ['完了', '報告', 'report'] }
+    ];
+    const MODEL_KNOWN_FILES = [
+      '00_spec.md', '10_task.md', '20_survey.md', '20_survey_external.md', '30_plan.md',
+      '40_progress.md', '80_review.md', '90_verification.md', '05_log.md', '99_history.md',
+      'checkpoint.md', 'team-journal.md'
+    ];
+    function asText(value) { return typeof value === 'string' ? value : ''; }
+    function normalizeSnapshot(snapshotInput) {
+      const snapshot = snapshotInput && typeof snapshotInput === 'object' ? snapshotInput : {};
+      const files = snapshot.files && typeof snapshot.files === 'object' ? snapshot.files : {};
+      const normalizedFiles = {};
+      Object.keys(files).sort().forEach(name => {
+        if (typeof files[name] === 'string') normalizedFiles[name] = files[name];
+      });
+      const sources = Array.isArray(snapshot.sources) ? snapshot.sources : [];
+      const sourceByName = new Map(sources.map(item => [asText(item?.name), item]));
+      const artifactInput = Array.isArray(snapshot.artifacts) && snapshot.artifacts.length
+        ? snapshot.artifacts
+        : Object.keys(normalizedFiles).map(name => ({
+            name,
+            path: name,
+            type: name.includes('.') ? name.split('.').pop() : 'file',
+            size: normalizedFiles[name].length,
+            modifiedAt: sourceByName.get(name)?.modifiedAt || sourceByName.get(name)?.modified_at || snapshot.generatedAt || snapshot.generated_at || ''
+          }));
+      const artifacts = artifactInput
+        .filter(item => item && typeof item === 'object').map(item => ({
+            name: asText(item.name) || asText(item.path).split('/').pop() || 'artifact',
+            path: asText(item.path) || asText(item.name),
+            type: asText(item.type) || 'file',
+            size: Number.isFinite(Number(item.size)) ? Number(item.size) : 0,
+            modifiedAt: asText(item.modifiedAt || item.modified_at),
+            state: asText(item.state || item.status)
+          })).sort((a, b) => a.path.localeCompare(b.path));
+      return {
+        version: Number(snapshot.version) || 1,
+        title: asText(snapshot.title) || inferTitle(normalizedFiles) || 'Roadmap',
+        taskDir: asText(snapshot.taskDir || snapshot.task_dir),
+        generatedAt: asText(snapshot.generatedAt || snapshot.generated_at),
+        fingerprint: asText(snapshot.fingerprint),
+        files: normalizedFiles,
+        sources: sources.length ? sources : Object.keys(normalizedFiles).map(name => ({ name, size: normalizedFiles[name].length })),
+        artifacts
+      };
+    }
+    function stableArtifactValue(artifacts) {
+      return (artifacts || []).map(item => [item.path || '', item.type || '', Number(item.size) || 0, item.modifiedAt || '', item.state || '']);
+    }
+    function snapshotSignature(snapshotInput) {
+      const snapshot = normalizeSnapshot(snapshotInput);
+      return JSON.stringify({
+        fingerprint: snapshot.fingerprint,
+        files: Object.keys(snapshot.files).sort().map(name => [name, snapshot.files[name]]),
+        artifacts: stableArtifactValue(snapshot.artifacts)
+      });
+    }
+    function inferTitle(files) {
+      for (const name of ['30_plan.md', '00_spec.md', '05_log.md']) {
+        const match = asText(files[name]).match(/^#\s+(.+)$/m);
+        if (match) return match[1].trim();
+      }
+      return Object.keys(files)[0] || '';
+    }
+    function checkboxStats(text) {
+      const matches = Array.from(asText(text).matchAll(/^\s*[-*]\s+\[([ xX])\]\s+(.+)$/gm));
+      return {
+        total: matches.length,
+        done: matches.filter(match => match[1].toLowerCase() === 'x').length,
+        steps: matches.map(match => ({ label: match[2].trim(), complete: match[1].toLowerCase() === 'x' }))
+      };
+    }
+    function fallbackBulletSteps(text) {
+      return Array.from(asText(text).matchAll(/^\s*[-*]\s+(?!\[[ xX]\])(.+)$/gm))
+        .map(match => match[1].trim())
+        .filter(label => label && !/^(owner|status|evidence)\s*:/i.test(label))
+        .map(label => ({ label, complete: false }));
+    }
+    function parseProgressSignals(progress) {
+      const signals = new Map();
+      const ensure = number => {
+        if (!signals.has(number)) signals.set(number, {});
+        return signals.get(number);
+      };
+      for (const match of asText(progress).matchAll(/^\s*[-*]\s+\[([ xX])\]\s+(?:Task|タスク)\s+(\d+(?:\.\d+)?)\b.*$/gmi)) {
+        ensure(match[2]).checked = match[1].toLowerCase() === 'x';
+      }
+      let tableColumns = null;
+      for (const line of asText(progress).split('\n')) {
+        if (!/^\s*\|.*\|\s*$/.test(line)) {
+          tableColumns = null;
+          continue;
+        }
+        const cells = line.split('|').slice(1, -1).map(cell => cell.trim());
+        if (cells.every(cell => /^:?-{3,}:?$/.test(cell))) continue;
+        const taskIndex = cells.findIndex(cell => /^(タスク|task)$/i.test(cell));
+        if (taskIndex >= 0) {
+          tableColumns = {
+            task: taskIndex,
+            status: cells.findIndex(cell => /^(状態|status)$/i.test(cell)),
+            progress: cells.findIndex(cell => /^(進捗|progress)$/i.test(cell))
+          };
+          continue;
+        }
+        if (!tableColumns) continue;
+        const taskCell = cells[tableColumns.task] || '';
+        const statusCell = tableColumns.status >= 0 ? cells[tableColumns.status] || '' : '';
+        const progressCell = tableColumns.progress >= 0 ? cells[tableColumns.progress] || '' : '';
+        const taskMatch = taskCell.match(/(?:Task|タスク)\s+(\d+(?:\.\d+)?)/i);
+        if (!taskMatch) continue;
+        const signal = ensure(taskMatch[1]);
+        const ratio = progressCell.match(/(\d+)\s*\/\s*(\d+)/);
+        if (ratio) { signal.done = Number(ratio[1]); signal.total = Number(ratio[2]); }
+        if (/^(完了|complete|done)$/i.test(statusCell)) signal.status = 'complete';
+        else if (/^(進行中|実行中|in[\s-]?progress|active)$/i.test(statusCell)) signal.status = 'in-progress';
+        else if (/^(blocked|ブロック|停止|失敗)$/i.test(statusCell)) signal.status = 'blocked';
+        else if (/^(未着手|planned|待ち|pending)$/i.test(statusCell)) signal.status = 'planned';
+      }
+      return signals;
+    }
+    function extractTasks(files) {
+      const plan = asText(files['30_plan.md'] || files['10_task.md']);
+      const progress = asText(files['40_progress.md']);
+      const headingRe = /^#{2,3}\s+(?:Task|タスク)\s+(\d+(?:\.\d+)?)\s*[:：]\s*(.+)$/gmi;
+      const matches = Array.from(plan.matchAll(headingRe));
+      const allHeadings = Array.from(plan.matchAll(/^(#{1,6})\s+.+$/gm));
+      const signals = parseProgressSignals(progress);
+      return matches.map((match, index) => {
+        const start = (match.index || 0) + match[0].length;
+        const level = match[0].match(/^#+/)?.[0].length || 2;
+        const nextTask = matches[index + 1];
+        const nextPeerSection = allHeadings.find(heading =>
+          (heading.index || 0) > (match.index || 0)
+          && heading[1].length <= level
+          && !/^#{2,3}\s+(?:Task|タスク)\s+\d+(?:\.\d+)?\s*[:：]/i.test(heading[0])
+        );
+        const end = Math.min(nextTask?.index ?? plan.length, nextPeerSection?.index ?? plan.length);
+        const body = plan.slice(start, end);
+        const stats = checkboxStats(body);
+        const signal = signals.get(match[1]) || {};
+        const target = body.match(/\*\*(?:変更対象|target)\s*[:：]\*\*\s*(.+)/i)?.[1]?.trim() || '';
+        const blockedBy = (body.match(/\*\*blockedBy\s*[:：]\*\*\s*(.+)/i)?.[1]?.trim() || '').replace(/[。.]+$/, '');
+        const note = body.match(/\*\*(?:備考|note)\s*[:：]\*\*\s*(.+)/i)?.[1]?.trim() || '';
+        const total = Number.isFinite(signal.total) ? signal.total : stats.total;
+        let done = Number.isFinite(signal.done) ? signal.done : stats.done;
+        let status = signal.status || 'planned';
+        if (signal.checked === true) status = 'complete';
+        else if (signal.checked === false && status === 'planned' && done > 0) status = 'in-progress';
+        if (!signal.status) {
+          if (total > 0 && done >= total) status = 'complete';
+          else if (done > 0) status = 'in-progress';
+        }
+        if (status === 'complete' && total > 0) done = total;
+        const steps = stats.steps.length ? stats.steps : fallbackBulletSteps(body);
+        return {
+          number: match[1], title: match[2].trim(), target, blockedBy, note, body,
+          steps, total, done,
+          ratio: total ? Math.max(0, Math.min(1, done / total)) : status === 'complete' ? 1 : 0,
+          status
+        };
+      });
+    }
+    function extractLogEntries(files) {
+      const log = asText(files['05_log.md']);
+      const headings = Array.from(log.matchAll(/^##\s+(.+)$/gm));
+      return headings.map((match, index) => {
+        const start = (match.index || 0) + match[0].length;
+        const end = headings[index + 1]?.index ?? log.length;
+        const body = log.slice(start, end).trim();
+        return {
+          title: match[1].trim(), body,
+          phase: match[1].match(/Phase\s+(\d+(?:\.\d+)?)/i)?.[1] || '',
+          time: match[1].match(/\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}/)?.[0] || '',
+          summary: summarize(body)
+        };
+      }).reverse();
+    }
+    function summarize(text) {
+      return asText(text).replace(/```[\s\S]*?```/g, ' ').replace(/[#>*_`|[\]-]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 160);
+    }
+    function extractReviewCounts(files) {
+      const text = `${asText(files['05_log.md'])}\n${asText(files['80_review.md'])}`;
+      const counts = { critical: 0, important: 0, minor: 0, hasReview: false };
+      const re = /(?:Severity\s*[:：]\s*)?\b(CRITICAL|IMPORTANT|MINOR)\b\s*(?:\||[:：])?\s*(\d+)\s*(?:件)?/gi;
+      for (const match of text.matchAll(re)) {
+        counts[match[1].toLowerCase()] = Number(match[2]);
+        counts.hasReview = true;
+      }
+      if (/APPROVE|NEEDS[- ]REVISION|レビュー結果|review/i.test(text)) counts.hasReview = true;
+      return counts;
+    }
+    function riskSections(markdown) {
+      const text = asText(markdown);
+      const headings = Array.from(text.matchAll(/^(#{1,6})\s+(.+)$/gm));
+      const sections = [];
+      headings.forEach((heading, index) => {
+        if (!/(リスク|懸念|risk|unknown)/i.test(heading[2])) return;
+        const level = heading[1].length;
+        const start = (heading.index || 0) + heading[0].length;
+        let end = text.length;
+        for (let cursor = index + 1; cursor < headings.length; cursor += 1) {
+          if (headings[cursor][1].length <= level) { end = headings[cursor].index || text.length; break; }
+        }
+        sections.push(text.slice(start, end));
+      });
+      return sections;
+    }
+    function extractRisks(files) {
+      const risks = [];
+      for (const section of riskSections(files['30_plan.md'])) {
+        for (const line of section.split('\n')) {
+          if (/^\s*\|.*\|\s*$/.test(line)) {
+            const cells = line.split('|').slice(1, -1).map(cell => cell.trim());
+            if (!cells[0] || /^(リスク|懸念|risk)$/i.test(cells[0]) || /^:?-{3}/.test(cells[0])) continue;
+            risks.push({ title: cells[0], impact: cells[1] || '', mitigation: cells[2] || '' });
+          } else {
+            const bullet = line.match(/^\s*[-*]\s+(.+)/);
+            if (bullet && !/^\[[ xX]\]/.test(bullet[1])) risks.push({ title: bullet[1].trim(), impact: '', mitigation: '' });
+          }
+        }
+      }
+      const seen = new Set();
+      return risks.filter(risk => {
+        const key = risk.title.toLowerCase();
+        if (!key || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    }
+    function extractPhaseSignals(files, entries) {
+      const combined = [files['40_progress.md'], files['05_log.md'], files['team-journal.md']]
+        .map(asText).join('\n');
+      const statusText = combined.split('\n').filter(line =>
+        /^#{1,6}\s+.*\bPhase\s+\d/i.test(line)
+        || /^\s*[-*]\s+現在地\s*[:：]\s*Phase\s+\d/i.test(line)
+        || /^\s*[-*]\s+Phase\s+\d+(?:\.\d+)?\s*[:：]/i.test(line)
+        || /^\s*現在地\s*[:：]\s*Phase\s+\d/i.test(line)
+      ).join('\n');
+      const explicitCurrent = asText(files['40_progress.md']).match(/現在地\s*[:：]\s*Phase\s+(\d+(?:\.\d+)?)/i)?.[1] || '';
+      const displayNumber = number => {
+        if (PHASES.some(phase => phase.number === number)) return number;
+        const major = number.split('.')[0];
+        return PHASES.some(phase => phase.number === major) ? major : '';
+      };
+      const explicitDisplay = displayNumber(explicitCurrent);
+      const subphaseLabels = { '2.5': 'Acceptance Criteria', '5.5': 'Compound' };
+      const states = new Map();
+      for (const phase of PHASES) {
+        const number = phase.number.replace('.', '\\.');
+        const completeRe = new RegExp(`Phase\\s+${number}(?![\\d.])\\s*[:：-]?\\s*[^、,|:：\\n]{0,24}(?:完了(?!条件|基準|要件|判定)|complete(?:d)?\\b|approved\\b|終了(?!条件|基準))`, 'i');
+        const activeRe = new RegExp(`Phase\\s+${number}(?![\\d.])\\s*[:：-]?\\s*[^、,|:：\\n]{0,24}(?:開始|進行中|実行中|in[ -]?progress)`, 'i');
+        if (completeRe.test(statusText)) states.set(phase.number, 'complete');
+        if (activeRe.test(statusText)) states.set(phase.number, 'in-progress');
+      }
+      if (explicitDisplay) states.set(explicitDisplay, 'in-progress');
+      const explicitIndex = PHASES.findIndex(phase => phase.number === explicitDisplay);
+      if (explicitIndex >= 0) PHASES.slice(0, explicitIndex).forEach(phase => states.set(phase.number, 'complete'));
+      return PHASES.map(phase => {
+        const entry = entries.find(item => item.phase === phase.number);
+        const isExplicit = phase.number === explicitDisplay && explicitCurrent;
+        return {
+          ...phase,
+          status: states.get(phase.number) || 'planned',
+          note: entry?.title || '',
+          workflowNumber: isExplicit ? explicitCurrent : '',
+          workflowLabel: isExplicit ? subphaseLabels[explicitCurrent] || phase.label : ''
+        };
+      });
+    }
+    function freshnessFor(snapshot, nowMs) {
+      const timestamp = Date.parse(snapshot.generatedAt);
+      if (!Number.isFinite(timestamp)) return { state: 'unknown', ageMs: null, label: '更新時刻なし' };
+      const ageMs = Math.max(0, nowMs - timestamp);
+      if (ageMs > 15 * 60 * 1000) return { state: 'stale', ageMs, label: '更新待ち' };
+      return { state: 'fresh', ageMs, label: '最新' };
+    }
+    function buildModel(snapshotInput, options = {}) {
+      const snapshot = normalizeSnapshot(snapshotInput);
+      const nowMs = Number.isFinite(options.nowMs) ? options.nowMs : Date.now();
+      const tasks = extractTasks(snapshot.files);
+      const entries = extractLogEntries(snapshot.files);
+      const reviews = extractReviewCounts(snapshot.files);
+      const risks = extractRisks(snapshot.files);
+      const phases = extractPhaseSignals(snapshot.files, entries);
+      const freshness = freshnessFor(snapshot, nowMs);
+      const recordedActiveTask = tasks.find(task => task.status === 'in-progress') || null;
+      const activeTask = freshness.state === 'fresh' ? recordedActiveTask : null;
+      const completedTasks = tasks.filter(task => task.status === 'complete');
+      const activePhase = phases.find(phase => phase.status === 'in-progress') || phases.find(phase => phase.status === 'planned') || phases[phases.length - 1];
+      const nextSteps = tasks.filter(task => task.status !== 'complete').slice(0, 3);
+      const unresolvedDependencies = recordedActiveTask
+        ? Array.from(recordedActiveTask.blockedBy.matchAll(/(?:Task|タスク)\s+(\d+(?:\.\d+)?)/gi))
+            .map(match => match[1])
+            .filter(number => tasks.find(task => task.number === number)?.status !== 'complete')
+        : [];
+      const waiting = freshness.state === 'stale'
+        ? { state: 'waiting', reason: '最終更新が古いため、実行状態の更新を待っています。' }
+        : freshness.state === 'unknown'
+          ? { state: 'waiting', reason: '更新時刻が不明なため、実行状態を確認できません。' }
+        : activeTask
+          ? unresolvedDependencies.length
+            ? { state: 'waiting', reason: `Task ${unresolvedDependencies.join('、Task ')}の完了を待っています。` }
+            : { state: 'active', reason: `ブロッカーなし。「${activeTask.title}」を進行中です。` }
+          : nextSteps[0]
+            ? { state: 'waiting', reason: `${nextSteps[0].title}の開始を待っています。` }
+            : { state: 'complete', reason: '計画内のTaskは完了しています。' };
+      return {
+        snapshot, tasks, entries, reviews, risks, phases, freshness, recordedActiveTask,
+        activeTask, activePhase, nextSteps, waiting, artifacts: snapshot.artifacts,
+        completedTasks, fixedProgress: { done: completedTasks.length, total: tasks.length }
+      };
+    }
+    function artifactStateFor(artifact, model) {
+      const path = artifact.path;
+      const phaseComplete = number => model.phases.some(phase => phase.number === number && phase.status === 'complete');
+      if (/90_verification\.md$/i.test(path)) {
+        return /final result:\s*passed|全PASS|検証.*成功/i.test(model.snapshot.files[path] || '') ? '検証済み' : '検証記録';
+      }
+      if (/80_review\.md$/i.test(path)) {
+        return model.reviews.hasReview && model.reviews.critical === 0 && model.reviews.important === 0 ? 'レビュー済み' : 'レビュー記録';
+      }
+      if (/checkpoint\.md$/i.test(path)) return '合格基準';
+      if (/survey|research/i.test(path)) return phaseComplete('1') ? '調査済み' : '調査記録';
+      if (/30_plan\.md$/i.test(path)) return phaseComplete('2') ? '計画確定' : '計画';
+      if (/team-journal/i.test(path)) return '稼働記録';
+      return artifact.state || '生成済み';
+    }
+    globalThis.__ROADMAP_MODEL__ = {
+      PHASES, MODEL_KNOWN_FILES, normalizeSnapshot, snapshotSignature, inferTitle,
+      checkboxStats, extractTasks, extractLogEntries, extractReviewCounts,
+      extractRisks, extractPhaseSignals, buildModel, artifactStateFor
+    };
+    /* ROADMAP_MODEL_END */
+
+    const ROADMAP_MODEL = globalThis.__ROADMAP_MODEL__;
+    const KNOWN_FILES = ROADMAP_MODEL.MODEL_KNOWN_FILES;
+    let currentSnapshot = ROADMAP_MODEL.normalizeSnapshot({ title: 'Roadmap Viewer', files: {} });
+    let currentModel = null;
+    let lastSnapshotSignature = '';
+    let liveTimer = null;
+    let clockTimer = null;
+    let hasLiveConnection = false;
+    let livePolling = false;
+    let pollGeneration = 0;
+    let taskExpansionInitialized = false;
+    let selectedSource = '';
+    const expandedTasks = new Set();
+
+    // Tabler Icons 3.x paths (MIT). Encoded as image data URIs for self-contained file:// mode.
+    const TABLER_PATHS = {
+      folder: "<path d='M5 19l2 -8h12l-2 8z'/><path d='M5 19c-1.1 0-2-.9-2-2v-12c0-1.1 .9-2 2-2h4l3 3h5c1.1 0 2 .9 2 2v3'/>",
+      download: "<path d='M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2'/><path d='M7 11l5 5l5 -5'/><path d='M12 4v12'/>",
+      palette: "<path d='M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.58 9 8c0 1.1 -.9 2 -2 2h-2.35a2 2 0 0 0 -1.8 2.87l.25 .51a2 2 0 0 1 -1.8 2.87z'/><path d='M7.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0'/><path d='M10.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0'/><path d='M14.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0'/>",
+      dots: "<path d='M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0'/><path d='M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0'/><path d='M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0'/>",
+      play: "<path d='M7 4v16l13 -8z'/>",
+      check: "<path d='M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0'/><path d='M9 12l2 2l4 -4'/>",
+      clock: "<path d='M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0'/><path d='M12 7v5l3 3'/>",
+      refresh: "<path d='M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4'/><path d='M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4'/>",
+      chevron: "<path d='M9 6l6 6l-6 6'/>",
+      alert: "<path d='M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0'/><path d='M12 8v4'/><path d='M12 16h.01'/>",
+      file: "<path d='M14 3v4a1 1 0 0 0 1 1h4'/><path d='M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z'/><path d='M9 13h6'/><path d='M9 17h6'/>",
+      list: "<path d='M9 6h11'/><path d='M9 12h11'/><path d='M9 18h11'/><path d='M5 6v.01'/><path d='M5 12v.01'/><path d='M5 18v.01'/>",
+      chart: "<path d='M4 19v-6h4v6z'/><path d='M10 19v-10h4v10z'/><path d='M16 19v-14h4v14z'/>",
+      clipboard: "<path d='M9 5h6'/><path d='M9 3h6a2 2 0 0 1 2 2v1h1a2 2 0 0 1 2 2v11a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h1v-1a2 2 0 0 1 2 -2z'/><path d='M9 14l2 2l4 -4'/>",
+      users: "<path d='M9 11a4 4 0 1 0 0 -8a4 4 0 0 0 0 8'/><path d='M17 11a4 4 0 1 0 0 -8'/><path d='M3 21v-2a6 6 0 0 1 12 0v2'/><path d='M15 15a6 6 0 0 1 6 6'/>",
+      slash: "<path d='M5 19l14 -14'/>"
+    };
+    function iconColor() { return document.body?.dataset.theme === 'dark' ? '#9bd0be' : '#2f6f5e'; }
+    function tablerData(name, color = iconColor()) {
+      const body = TABLER_PATHS[name] || TABLER_PATHS.file;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`;
+      return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+    }
+    function applyIcons(root = document) {
+      root.querySelectorAll('img[data-icon]').forEach(image => { image.src = tablerData(image.dataset.icon); });
+    }
+    function iconHtml(name, className = 'icon') { return `<img class="${className}" data-icon="${name}" src="${tablerData(name)}" alt="">`; }
+    function byId(id) { return document.getElementById(id); }
+    function storageGet(key) { try { return localStorage.getItem(key) || ''; } catch { return ''; } }
+    function storageSet(key, value) { try { localStorage.setItem(key, value); } catch { return; } }
+    function escapeHtml(value) {
+      return String(value ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
+    }
+    function parseEmbeddedSnapshot() {
+      try {
+        const data = JSON.parse(byId('embedded-snapshot').textContent || 'null');
+        return data && !data.__ROADMAP_SNAPSHOT_JSON__ ? data : null;
+      } catch { return null; }
+    }
+    function statusLabel(status) {
+      return { complete: '完了', 'in-progress': '進行中', blocked: 'ブロック', planned: '未着手' }[status] || '未着手';
+    }
+    function iconForStatus(status) {
+      if (status === 'complete') return 'check';
+      if (status === 'in-progress') return 'play';
+      if (status === 'blocked') return 'alert';
+      return 'clock';
+    }
+    function formatAbsolute(value) {
+      const date = new Date(value);
+      if (!Number.isFinite(date.getTime())) return '時刻不明';
+      return new Intl.DateTimeFormat('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(date);
+    }
+    function formatRelative(value, now = Date.now()) {
+      const date = new Date(value);
+      if (!Number.isFinite(date.getTime())) return '時刻不明';
+      const seconds = Math.max(0, Math.round((now - date.getTime()) / 1000));
+      if (seconds < 60) return `${seconds}秒前`;
+      const minutes = Math.floor(seconds / 60);
+      if (minutes < 60) return `${minutes}分前`;
+      const hours = Math.floor(minutes / 60);
+      if (hours < 24) return `${hours}時間前`;
+      return `${Math.floor(hours / 24)}日前`;
+    }
+    function preferredArtifacts(model) {
+      const preferred = [
+        ['30_plan.md', '実装計画'], ['20_survey_external.md', '外部UX調査'],
+        ['90_verification.md', '検証結果'], ['checkpoint.md', 'Sprint Contract'],
+        ['80_review.md', 'レビュー結果'], ['team-journal.md', 'Team Journal']
+      ];
+      const byPath = new Map(model.artifacts.map(item => [item.path, item]));
+      const selected = [];
+      for (const [path, label] of preferred) {
+        const item = byPath.get(path);
+        if (item) selected.push({ ...item, label });
+      }
+      for (const artifact of model.artifacts) {
+        if (selected.length >= 4) break;
+        if (!selected.some(item => item.path === artifact.path) && !artifact.path.startsWith('audit/')) selected.push({ ...artifact, label: artifact.name });
+      }
+      return selected.slice(0, 4);
+    }
+    function artifactIconFor(path) {
+      if (/survey|research/i.test(path)) return 'chart';
+      if (/checkpoint|verification|review/i.test(path)) return 'clipboard';
+      if (/team-journal/i.test(path)) return 'users';
+      if (/plan|task/i.test(path)) return 'list';
+      return 'file';
+    }
+    function artifactRelationFor(path) {
+      if (/survey|research/i.test(path)) return '調査';
+      if (/checkpoint|verification|review/i.test(path)) return '品質確認';
+      if (/team-journal/i.test(path)) return 'team-run';
+      if (/plan|task/i.test(path)) return '計画';
+      return '成果物';
+    }
+    function captureFocusKey() {
+      const element = document.activeElement;
+      if (!element || element === document.body) return null;
+      if (element.id) return { type: 'id', value: element.id };
+      for (const attribute of ['data-task-toggle', 'data-artifact', 'data-source']) {
+        if (element.hasAttribute?.(attribute)) return { type: attribute, value: element.getAttribute(attribute) };
+      }
+      return null;
+    }
+    function restoreFocusKey(key, fallbackId = '') {
+      if (!key) return;
+      let target = null;
+      if (key.type === 'id') target = byId(key.value);
+      else target = Array.from(document.querySelectorAll(`[${key.type}]`)).find(element => element.getAttribute(key.type) === key.value);
+      (target || (fallbackId ? byId(fallbackId) : null))?.focus({ preventScroll: true });
+    }
+    function render(snapshotInput, options = {}) {
+      const previousModel = currentModel;
+      const focusKey = captureFocusKey();
+      currentSnapshot = ROADMAP_MODEL.normalizeSnapshot(snapshotInput);
+      lastSnapshotSignature = ROADMAP_MODEL.snapshotSignature(currentSnapshot);
+      currentModel = ROADMAP_MODEL.buildModel(currentSnapshot);
+      const activeNumber = currentModel.activeTask?.number;
+      if (!taskExpansionInitialized) {
+        if (activeNumber) expandedTasks.add(activeNumber);
+        taskExpansionInitialized = true;
+      } else if (activeNumber && activeNumber !== previousModel?.activeTask?.number) {
+        expandedTasks.add(activeNumber);
+      }
+      renderHeader(currentModel);
+      renderNowStrip(currentModel);
+      renderPhases(currentModel);
+      renderTasks(currentModel);
+      renderPulse(currentModel);
+      renderArtifacts(currentModel);
+      renderUtility(currentModel);
+      if (previousModel && options.announce !== false) announceMeaningfulChange(previousModel, currentModel);
+      requestAnimationFrame(() => restoreFocusKey(focusKey));
+    }
+    function renderHeader(model) {
+      byId('source-line').textContent = model.snapshot.taskDir || `${Object.keys(model.snapshot.files).length} files loaded`;
+      const updated = model.snapshot.generatedAt;
+      byId('header-updated').textContent = updated ? `最終更新: ${formatRelative(updated)}` : '最終更新: —';
+      byId('header-updated').title = updated ? formatAbsolute(updated) : '';
+    }
+    function renderNowStrip(model) {
+      const phase = model.activePhase;
+      const active = model.activeTask;
+      const progress = model.fixedProgress;
+      byId('now-phase').textContent = phase ? `Phase ${phase.workflowNumber || phase.number} ${phase.workflowLabel || phase.label}` : 'Phase —';
+      byId('now-status').textContent = model.waiting.state === 'complete'
+        ? `完了・${progress.done}/${progress.total}`
+        : active
+          ? `${phase?.label || '実行'}中・${progress.done}/${progress.total}完了・${model.waiting.state === 'active' ? 'ブロッカーなし' : '依存待ち'}`
+          : model.freshness.state === 'stale' ? '更新待ち' : '状態確認待ち';
+      byId('now-count').textContent = `${progress.done} / ${progress.total}`;
+      const progressbar = byId('task-progress');
+      if (progress.total) {
+        progressbar.setAttribute('aria-valuemin', '0');
+        progressbar.setAttribute('aria-valuemax', String(progress.total));
+        progressbar.setAttribute('aria-valuenow', String(progress.done));
+        progressbar.setAttribute('aria-valuetext', `${progress.total}件中${progress.done}件完了`);
+      } else {
+        ['aria-valuemin', 'aria-valuemax', 'aria-valuenow'].forEach(name => progressbar.removeAttribute(name));
+        progressbar.setAttribute('aria-valuetext', '対象Taskなし');
+      }
+      byId('task-progress-fill').style.width = progress.total ? `${Math.round(progress.done / progress.total * 100)}%` : '0%';
+      byId('now-checkpoint').textContent = model.nextSteps[0]?.title || '完了報告を確認';
+      byId('now-active').textContent = active?.title || '稼働中のTaskなし';
+      const noWait = model.waiting.state === 'active' || model.waiting.state === 'complete';
+      byId('now-waiting-label').textContent = model.waiting.state === 'active' ? 'ブロッカー' : '待ち';
+      byId('now-waiting').textContent = noWait ? 'なし' : model.waiting.reason;
+      byId('now-waiting-icon').src = tablerData(noWait ? 'check' : 'clock');
+      byId('artifact-jump').textContent = `全${model.artifacts.length}件を見る`;
+      byId('plan-meta').textContent = `${model.phases.filter(item => item.status === 'complete').length}フェーズ完了 / 全${model.tasks.length}タスク`;
+      byId('next-step-sequence').textContent = model.nextSteps.length
+        ? model.nextSteps.map((task, index) => `${index + 1} ${task.title}`).join('　→　')
+        : '計画内のTaskは完了しています';
+    }
+    function renderPhases(model) {
+      const visible = model.phases;
+      const complete = visible.filter(phase => phase.status === 'complete').length;
+      const currentIndex = visible.findIndex(phase => phase.status === 'in-progress');
+      const progressIndex = currentIndex >= 0 ? currentIndex : Math.max(0, complete - 1);
+      const rail = byId('phase-rail');
+      rail.style.setProperty('--phase-progress', `${visible.length > 1 ? progressIndex / (visible.length - 1) * 100 : 0}%`);
+      rail.innerHTML = visible.map(phase => `
+        <div class="phase-step ${escapeHtml(phase.status)}" role="listitem" ${phase.status === 'in-progress' ? 'aria-current="step"' : ''} aria-label="Phase ${escapeHtml(phase.workflowNumber || phase.number)} ${escapeHtml(phase.workflowLabel || phase.label)}: ${escapeHtml(statusLabel(phase.status))}">
+          <span class="phase-marker" aria-hidden="true">${phase.status === 'complete' ? iconHtml('check') : escapeHtml(phase.workflowNumber || phase.number)}</span>
+          <strong>${escapeHtml(phase.workflowLabel || phase.label)}</strong><span>${escapeHtml(statusLabel(phase.status))}</span>
+        </div>`).join('');
+    }
+    function renderTasks(model) {
+      const tree = byId('task-tree');
+      if (!model.tasks.length) {
+        tree.innerHTML = '<div class="empty">30_plan.mdのTask見出しを読み込むと計画を表示します。</div>';
+        return;
+      }
+      const head = '<div class="task-table-head" role="row"><span role="columnheader">タスク</span><span role="columnheader">状態</span><span role="columnheader">依存（blockedBy）</span><span role="columnheader">備考</span></div>';
+      const rows = model.tasks.map(task => {
+        const current = model.activeTask?.number === task.number;
+        const recordedOnly = !current && model.recordedActiveTask?.number === task.number;
+        const displayedStatus = recordedOnly ? '記録上進行中' : statusLabel(task.status);
+        const expanded = expandedTasks.has(task.number);
+        const detailId = `task-detail-${task.number.replace('.', '-')}`;
+        return `
+          <article class="task-row ${current ? 'current' : recordedOnly ? 'recorded' : ''}" data-task="${escapeHtml(task.number)}" role="rowgroup">
+            <div class="task-row-main" role="row">
+              <div class="task-primary" role="cell">
+                <button class="task-toggle" type="button" data-task-toggle="${escapeHtml(task.number)}" aria-expanded="${expanded}" aria-controls="${detailId}" aria-label="Task ${escapeHtml(task.number)}の詳細を${expanded ? '閉じる' : '開く'}">${iconHtml('chevron')}</button>
+                ${iconHtml(iconForStatus(task.status), 'task-status-icon')}
+                <span class="task-name"><strong>${escapeHtml(task.title)}</strong><span>Task ${escapeHtml(task.number)}${current ? '・現在' : recordedOnly ? '・記録' : ''}</span></span>
+              </div>
+              <span class="task-cell" role="cell" aria-label="状態: ${escapeHtml(displayedStatus)}"><span class="mobile-label" aria-hidden="true">状態</span><span class="state-chip ${recordedOnly ? 'recorded' : escapeHtml(task.status)}">${iconHtml(recordedOnly ? 'clock' : iconForStatus(task.status))}${escapeHtml(displayedStatus)}</span></span>
+              <span class="task-cell" role="cell" aria-label="依存: ${escapeHtml(task.blockedBy || 'なし')}"><span class="mobile-label" aria-hidden="true">依存</span>${escapeHtml(task.blockedBy || '—')}</span>
+              <span class="task-cell" role="cell" aria-label="備考: ${escapeHtml(task.note || task.target || (task.total ? `${task.done}/${task.total}チェック` : 'なし'))}"><span class="mobile-label" aria-hidden="true">備考</span>${escapeHtml(task.note || task.target || (task.total ? `${task.done}/${task.total}チェック` : '—'))}</span>
+            </div>
+            <div class="task-details" id="${detailId}" role="region" aria-label="Task ${escapeHtml(task.number)}の詳細" ${expanded ? '' : 'hidden'}>
+              ${task.target ? `<strong>変更対象:</strong> ${escapeHtml(task.target)}` : ''}
+              ${task.steps.length ? `<ul class="step-list">${task.steps.slice(0, 3).map(step => `<li>${step.complete ? '完了: ' : ''}${escapeHtml(step.label)}</li>`).join('')}</ul>${task.steps.length > 3 ? `<span>ほか${task.steps.length - 3}項目</span>` : ''}` : '<span>詳細チェックリストなし</span>'}
+            </div>
+          </article>`;
+      }).join('');
+      tree.innerHTML = head + rows;
+    }
+    function renderPulse(model) {
+      const active = model.activeTask;
+      const recorded = model.recordedActiveTask;
+      const phase = model.activePhase;
+      byId('pulse-task').textContent = active?.title || (recorded ? `${recorded.title}（記録のみ）` : '稼働中のTaskなし');
+      byId('pulse-phase').textContent = phase ? `Phase ${phase.workflowNumber || phase.number} ${phase.workflowLabel || phase.label}` : 'Phase —';
+      const state = byId('pulse-state');
+      state.className = `state-chip ${active ? 'in-progress' : model.waiting.state === 'complete' ? 'complete' : ''}`;
+      state.innerHTML = `${iconHtml(active ? 'play' : model.waiting.state === 'complete' ? 'check' : 'clock')}${active ? '進行中' : model.waiting.state === 'complete' ? '完了' : '待ち'}`;
+      const pulseTask = active || recorded;
+      byId('pulse-elapsed').textContent = pulseTask?.total ? `${pulseTask.done}/${pulseTask.total}` : '算定不可';
+      byId('pulse-updated').textContent = model.snapshot.generatedAt ? formatRelative(model.snapshot.generatedAt) : '—';
+      byId('pulse-updated').title = model.snapshot.generatedAt ? formatAbsolute(model.snapshot.generatedAt) : '';
+      byId('freshness-label').textContent = model.freshness.label;
+      const noWait = model.waiting.state === 'active' || model.waiting.state === 'complete';
+      byId('waiting-title').textContent = model.waiting.state === 'active' ? 'ブロッカー' : '待ちの理由';
+      byId('waiting-reason').textContent = noWait ? 'なし' : model.waiting.reason;
+      const recent = model.completedTasks.slice(-4).reverse();
+      byId('recent-completions').innerHTML = recent.length
+        ? recent.map(task => `<li class="recent-item">${iconHtml('check')}<strong>${escapeHtml(task.title)}</strong><span>完了</span></li>`).join('')
+        : '<li class="empty">完了Taskはまだありません。</li>';
+    }
+    function renderArtifacts(model) {
+      const preferred = preferredArtifacts(model);
+      const artifacts = matchMedia('(max-width: 720px)').matches ? preferred.slice(0, 1) : preferred;
+      byId('artifact-meta').textContent = `${artifacts.length}件表示 / 全${model.artifacts.length}件`;
+      byId('artifact-grid').innerHTML = artifacts.length
+        ? artifacts.map(artifact => `
+            <button class="artifact-card" type="button" data-artifact="${escapeHtml(artifact.path)}" title="${escapeHtml(artifact.path)}">
+              <span class="artifact-icon">${iconHtml(artifactIconFor(artifact.path))}</span>
+              <span class="artifact-copy"><strong>${escapeHtml(artifact.label || artifact.name)}</strong><span>${escapeHtml(artifactRelationFor(artifact.path))}・更新 ${escapeHtml(formatRelative(artifact.modifiedAt))}</span><span class="artifact-state">${escapeHtml(artifactStateFor(artifact, model))}</span></span>
+              ${iconHtml('chevron')}
+            </button>`).join('')
+        : '<div class="empty">成果物metadataを生成すると、ここに更新証拠を表示します。</div>';
+    }
+    function renderUtility(model) {
+      const review = model.reviews;
+      byId('review-stats').innerHTML = [['Critical', review.critical], ['Important', review.important], ['Minor', review.minor]]
+        .map(([label, count]) => `<div class="utility-stat"><strong>${count}</strong><span>${label}</span></div>`).join('');
+      byId('risk-list').innerHTML = model.risks.length
+        ? model.risks.slice(0, 4).map(risk => `<div class="risk-item"><strong>${escapeHtml(risk.title)}</strong>${risk.mitigation ? `<div>${escapeHtml(risk.mitigation)}</div>` : ''}</div>`).join('')
+        : '<div class="empty">openなリスクは抽出されていません。</div>';
+      byId('log-list').innerHTML = model.entries.length
+        ? model.entries.slice(0, 4).map(entry => `<div class="log-item"><strong>${escapeHtml(entry.title)}</strong><div>${escapeHtml(entry.summary)}</div></div>`).join('')
+        : '<div class="empty">05_log.mdの履歴はありません。</div>';
+      const names = Object.keys(model.snapshot.files).sort((a, b) => {
+        const ai = KNOWN_FILES.indexOf(a);
+        const bi = KNOWN_FILES.indexOf(b);
+        if (ai === -1 && bi === -1) return a.localeCompare(b);
+        if (ai === -1) return 1;
+        if (bi === -1) return -1;
+        return ai - bi;
+      });
+      if (!selectedSource || !Object.hasOwn(model.snapshot.files, selectedSource)) selectedSource = names[0] || '';
+      byId('source-list').innerHTML = names.length
+        ? names.map(name => `<button class="source-button" type="button" data-source="${escapeHtml(name)}" aria-pressed="${name === selectedSource}"><strong>${escapeHtml(name)}</strong>${model.snapshot.files[name].length.toLocaleString()}文字</button>`).join('')
+        : '<div class="empty">ソースなし</div>';
+      const previewText = selectedSource ? model.snapshot.files[selectedSource] : 'ソースを選択してください。';
+      if (byId('source-preview').textContent !== previewText) byId('source-preview').textContent = previewText;
+      byId('all-artifact-list').innerHTML = model.artifacts.length
+        ? model.artifacts.map(artifact => `<div class="artifact-record"><strong>${escapeHtml(artifact.path)}</strong>${escapeHtml(artifactStateFor(artifact, model))}・${Number(artifact.size).toLocaleString()} bytes・更新 ${escapeHtml(formatRelative(artifact.modifiedAt))}</div>`).join('')
+        : '<div class="empty">成果物metadataなし</div>';
+    }
+    function announceMeaningfulChange(previous, next) {
+      const messages = [];
+      if (previous.activePhase?.number !== next.activePhase?.number) messages.push(`現在フェーズがPhase ${next.activePhase?.number || '不明'}へ変わりました。`);
+      if (previous.fixedProgress.done !== next.fixedProgress.done) messages.push(`完了Taskが${next.fixedProgress.done}件になりました。`);
+      if (previous.activeTask?.number !== next.activeTask?.number) messages.push(next.activeTask ? `アクティブTaskが「${next.activeTask.title}」へ変わりました。` : 'アクティブTaskは待ち状態になりました。');
+      if (previous.activeTask?.number === next.activeTask?.number && next.activeTask && (previous.activeTask.done !== next.activeTask.done || previous.activeTask.total !== next.activeTask.total)) {
+        messages.push(`アクティブTaskの進捗が${next.activeTask.done}/${next.activeTask.total}になりました。`);
+      }
+      if (previous.freshness.state !== next.freshness.state) messages.push(`更新状態が「${next.freshness.label}」になりました。`);
+      if (previous.waiting.reason !== next.waiting.reason) {
+        const label = next.waiting.state === 'active' ? 'ブロッカー' : next.waiting.state === 'complete' ? '完了状態' : '待ち状態';
+        messages.push(`${label}: ${next.waiting.state === 'active' ? 'なし' : next.waiting.reason}`);
+      }
+      const previousArtifacts = new Map(previous.artifacts.map(item => [item.path, item.modifiedAt]));
+      const changedArtifacts = next.artifacts.filter(item => previousArtifacts.get(item.path) !== item.modifiedAt);
+      if (changedArtifacts.length) {
+        messages.push(`成果物「${changedArtifacts.slice(0, 2).map(item => item.name).join('、')}」が更新されました。`);
+        flash(byId('artifact-shelf'));
+      }
+      if (messages.length) {
+        byId('state-announcer').textContent = messages.join(' ');
+        flash(byId('now-strip'));
+      }
+    }
+    function flash(element) {
+      element.classList.remove('flash');
+      requestAnimationFrame(() => element.classList.add('flash'));
+      window.setTimeout(() => element.classList.remove('flash'), 1000);
+    }
+    function setLiveStatus(kind, text) {
+      const badge = byId('live-status');
+      const label = byId('live-status-text');
+      const nextClass = `live-badge ${kind}`;
+      byId('live-status-icon').src = tablerData(kind === 'live' ? 'check' : kind === 'error' ? 'alert' : kind === 'waiting' ? 'refresh' : 'clock');
+      if (badge.className === nextClass && label.textContent === text) return;
+      badge.className = nextClass;
+      label.textContent = text;
+    }
+    function openUtility(section = '') {
+      const details = byId('utility-disclosure');
+      details.open = true;
+      ['open-utility', 'show-history'].forEach(id => byId(id).setAttribute('aria-expanded', 'true'));
+      details.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      const target = section ? byId(section) : details.querySelector('summary');
+      requestAnimationFrame(() => target?.focus({ preventScroll: true }));
+    }
+    function stopLivePolling() {
+      if (liveTimer !== null) window.clearInterval(liveTimer);
+      liveTimer = null;
+      hasLiveConnection = false;
+      livePolling = false;
+      pollGeneration += 1;
+    }
+    function refreshFreshness() {
+      if (!currentModel) return;
+      const previous = currentModel;
+      const next = ROADMAP_MODEL.buildModel(currentSnapshot);
+      const focusKey = captureFocusKey();
+      currentModel = next;
+      renderHeader(next);
+      renderNowStrip(next);
+      renderTasks(next);
+      renderPulse(next);
+      renderArtifacts(next);
+      renderUtility(next);
+      requestAnimationFrame(() => restoreFocusKey(focusKey, focusKey?.type === 'data-artifact' ? 'artifact-shelf' : ''));
+      if (previous.freshness.state !== next.freshness.state || previous.activeTask?.number !== next.activeTask?.number || previous.waiting.reason !== next.waiting.reason) {
+        announceMeaningfulChange(previous, next);
+      }
+    }
+    async function loadFiles(fileList) {
+      const files = {};
+      if (!Array.from(fileList || []).length) return;
+      stopLivePolling();
+      setLiveStatus('static', 'Static');
+      for (const file of Array.from(fileList || [])) {
+        const text = await file.text();
+        if (file.name.toLowerCase().endsWith('.json')) {
+          try {
+            const parsed = JSON.parse(text);
+            render(parsed);
+            showToast(`${file.name}を読み込みました`);
+            return;
+          } catch {
+            showToast(`${file.name}は有効なJSONではありません`);
+            continue;
+          }
+        }
+        files[file.name] = text;
+      }
+      if (!Object.keys(files).length) return;
+      render({
+        version: 1,
+        title: ROADMAP_MODEL.inferTitle(files) || 'Manual Roadmap',
+        generatedAt: new Date().toISOString(),
+        files,
+        sources: Object.keys(files).map(name => ({ name, size: files[name].length }))
+      });
+      showToast(`${Object.keys(files).length}ファイルを読み込みました`);
+    }
+    function exportJson() {
+      const blob = new Blob([JSON.stringify(currentSnapshot, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'roadmap-snapshot.json';
+      link.click();
+      URL.revokeObjectURL(url);
+      showToast('roadmap JSONを書き出しました');
+    }
+    function showToast(message) {
+      const toast = byId('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+    async function pollSnapshot(generation = pollGeneration) {
+      try {
+        const response = await fetch(`roadmap-snapshot.json?ts=${Date.now()}`, { cache: 'no-store' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const snapshot = await response.json();
+        if (!livePolling || generation !== pollGeneration) return;
+        const signature = ROADMAP_MODEL.snapshotSignature(snapshot);
+        if (signature !== lastSnapshotSignature) render(snapshot);
+        else refreshFreshness();
+        hasLiveConnection = true;
+        setLiveStatus('live', 'Live');
+      } catch {
+        if (!livePolling || generation !== pollGeneration) return;
+        setLiveStatus(hasLiveConnection ? 'error' : 'waiting', hasLiveConnection ? '接続喪失' : '更新待ち');
+      }
+    }
+    function startLivePolling() {
+      const isHttp = location.protocol === 'http:' || location.protocol === 'https:';
+      if (!isHttp) { setLiveStatus('static', 'Static'); return; }
+      stopLivePolling();
+      livePolling = true;
+      pollGeneration += 1;
+      const generation = pollGeneration;
+      setLiveStatus('waiting', '更新待ち');
+      pollSnapshot(generation);
+      liveTimer = window.setInterval(() => pollSnapshot(generation), 2000);
+    }
+    function setupInteractions() {
+      const fileInput = byId('file-input');
+      byId('open-files').addEventListener('click', () => fileInput.click());
+      fileInput.addEventListener('change', async () => {
+        try { await loadFiles(fileInput.files); }
+        catch { showToast('ファイルを読み込めませんでした'); }
+        finally { fileInput.value = ''; }
+      });
+      byId('export-json').addEventListener('click', exportJson);
+      byId('theme-toggle').addEventListener('click', () => {
+        const next = document.body.dataset.theme === 'dark' ? '' : 'dark';
+        document.body.dataset.theme = next;
+        storageSet('roadmapViewerTheme', next);
+        const toggle = byId('theme-toggle');
+        const dark = next === 'dark';
+        toggle.setAttribute('aria-pressed', String(dark));
+        toggle.setAttribute('aria-label', dark ? 'ライトテーマに切り替える' : 'ダークテーマに切り替える');
+        toggle.title = toggle.getAttribute('aria-label');
+        applyIcons();
+        const liveKind = ['live', 'waiting', 'error'].find(kind => byId('live-status').classList.contains(kind)) || 'static';
+        setLiveStatus(liveKind, byId('live-status-text').textContent);
+      });
+      byId('open-utility').addEventListener('click', () => openUtility());
+      byId('show-history').addEventListener('click', () => openUtility('log-list'));
+      byId('artifact-jump').addEventListener('click', () => openUtility('all-artifact-list'));
+      byId('utility-disclosure').addEventListener('toggle', event => {
+        const open = event.currentTarget.open;
+        ['open-utility', 'show-history'].forEach(id => byId(id).setAttribute('aria-expanded', String(open)));
+      });
+      const dropZone = byId('drop-zone');
+      ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(name => {
+        dropZone.addEventListener(name, event => { event.preventDefault(); event.stopPropagation(); });
+      });
+      ['dragenter', 'dragover'].forEach(name => dropZone.addEventListener(name, () => dropZone.classList.add('dragover')));
+      ['dragleave', 'drop'].forEach(name => dropZone.addEventListener(name, () => dropZone.classList.remove('dragover')));
+      dropZone.addEventListener('drop', event => loadFiles(event.dataTransfer.files).catch(() => showToast('ファイルを読み込めませんでした')));
+      dropZone.addEventListener('click', () => fileInput.click());
+      dropZone.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); fileInput.click(); }
+      });
+      document.addEventListener('click', event => {
+        const toggle = event.target.closest('[data-task-toggle]');
+        if (toggle) {
+          const detail = byId(toggle.getAttribute('aria-controls'));
+          const expanded = toggle.getAttribute('aria-expanded') === 'true';
+          toggle.setAttribute('aria-expanded', String(!expanded));
+          toggle.setAttribute('aria-label', `Task ${toggle.dataset.taskToggle}の詳細を${expanded ? '開く' : '閉じる'}`);
+          detail.hidden = expanded;
+          if (expanded) expandedTasks.delete(toggle.dataset.taskToggle);
+          else expandedTasks.add(toggle.dataset.taskToggle);
+          return;
+        }
+        const source = event.target.closest('[data-source]');
+        if (source) {
+          selectedSource = source.dataset.source;
+          const preview = currentSnapshot.files[selectedSource] || '';
+          if (byId('source-preview').textContent !== preview) byId('source-preview').textContent = preview;
+          document.querySelectorAll('[data-source]').forEach(button => button.setAttribute('aria-pressed', String(button === source)));
+          byId('state-announcer').textContent = `${selectedSource}を表示しました。`;
+          byId('source-preview').focus({ preventScroll: true });
+          return;
+        }
+        const artifact = event.target.closest('[data-artifact]');
+        if (artifact) {
+          openUtility('source-preview');
+          const name = artifact.dataset.artifact;
+          const preview = currentSnapshot.files[name] || `成果物: ${name}\n本文はmetadataのみ収集しています。`;
+          if (byId('source-preview').textContent !== preview) byId('source-preview').textContent = preview;
+          byId('state-announcer').textContent = `${name}を表示しました。`;
+        }
+      });
+      let resizeTimer = null;
+      window.addEventListener('resize', () => {
+        window.clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(() => {
+          if (!currentModel) return;
+          const focusKey = captureFocusKey();
+          renderArtifacts(currentModel);
+          requestAnimationFrame(() => restoreFocusKey(focusKey, focusKey?.type === 'data-artifact' ? 'artifact-shelf' : ''));
+        }, 120);
+      });
+    }
+    function initialize() {
+      document.body.dataset.theme = storageGet('roadmapViewerTheme');
+      const dark = document.body.dataset.theme === 'dark';
+      byId('theme-toggle').setAttribute('aria-pressed', String(dark));
+      byId('theme-toggle').setAttribute('aria-label', dark ? 'ライトテーマに切り替える' : 'ダークテーマに切り替える');
+      applyIcons();
+      setupInteractions();
+      render(parseEmbeddedSnapshot() || { title: 'Roadmap Viewer', files: {} }, { announce: false });
+      startLivePolling();
+      clockTimer = window.setInterval(refreshFreshness, 30000);
+    }
+    initialize();
+  </script>
+</body>
+</html>
