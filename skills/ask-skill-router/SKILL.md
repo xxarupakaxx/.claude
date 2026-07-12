@@ -12,8 +12,8 @@ description: "skill / plugin / agent route を選ぶ canonical entrypoint。user
 
 1. project の `AGENTS.md` / `CLAUDE.md` / `README.md` を先に読む。
 2. no skill で足りるか、user-invoked か model-invoked かをこの skill で決める。
-3. 具体的な plugin / skill / agent / orchestration tool の選択と Delegation Gate は `context/agent-team-routing.md` を読む。
-4. engineering skill を選んだ場合、接続先 Phase と境界は `context/workflow-rules.md` の Phase adapter を読む。
+3. 具体的な plugin / skill / agent / orchestration tool の選択と Delegation Gate は `../../context/agent-team-routing.md` を読む。
+4. engineering skill を選んだ場合、接続先 Phase と境界は `../../context/workflow-rules.md` の Phase adapter を読む。
 
 ## 判断原則
 
@@ -27,20 +27,20 @@ description: "skill / plugin / agent route を選ぶ canonical entrypoint。user
 
 | 症状 | 推奨 route | 起動権 |
 |---|---|---|
-| 何を作るべきか曖昧 | `grill-me`、必要なら `brainstorming` | user-invoked |
-| engineering lifecycle の分岐が必要 | `context/agent-team-routing.md` の Engineering Lanes | route ごとに判定 |
+| 何を作るべきか曖昧で codebase / 状態付き docs がない | `grill-me`、必要なら `brainstorming` | user-invoked |
+| engineering lifecycle の分岐が必要 | `../../context/agent-team-routing.md` の Engineering Lanes | route ごとに判定 |
 | 独立タスクを複数担当へ割りたい | `team-run`、`orchestrate` | user-invoked |
 | 原因不明の不具合で再現器がない | `diagnosing-bugs` | model-invoked |
 | test seam があり新規ロジックやバグ修正を進める | `tdd` | model-invoked |
 | 外部事実や最新仕様が必要 | `research`、Context7、WebSearch、deepwiki | model-invoked |
 | 完了前の証拠が弱い | `verification-loop`、`verify`、適切な review skill | model-invoked |
-| plugin が所有する source / deliverable を扱う | `context/agent-team-routing.md` の plugin route | route ごとに判定 |
+| plugin が所有する source / deliverable を扱う | `../../context/agent-team-routing.md` の plugin route | route ごとに判定 |
 
 ## 選択手順
 
 1. user intent と期待成果物を一文にする。
 2. no skill で閉じられなければ、上表で bottleneck を一つ選ぶ。
-3. `context/agent-team-routing.md` で具体 route、起動権、Delegation Gate、外部書き込み gate を確認する。
+3. `../../context/agent-team-routing.md` で具体 route、起動権、Delegation Gate、外部書き込み gate を確認する。
 4. project rule と矛盾する route は採用せず、より小さい route または user confirmation へ戻す。
 
 ## 出力形式
