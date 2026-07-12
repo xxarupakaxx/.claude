@@ -392,6 +392,10 @@ test('task hub shell exposes list detail status settings and responsive behavior
   assert.match(html, /activeSubagentCount/);
   assert.match(html, /runningTools/);
   assert.match(html, /elapsedSeconds/);
+  assert.match(html, /body\.task-hub-active\s*\{[^}]*overflow:\s*hidden/);
+  assert.match(html, /\.task-sidebar\s*\{[^}]*overflow-y:\s*auto/);
+  assert.match(html, /\.task-detail\s*\{[^}]*overflow-y:\s*auto/);
+  assert.match(html, /overscroll-behavior:\s*contain/);
 });
 
 test('the selected Plan Canvas information architecture remains in the HTML', () => {

@@ -689,10 +689,11 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
     }
-    .task-hub { min-height: calc(100vh - var(--header-height)); display: grid; grid-template-columns: minmax(260px, 320px) 1fr; }
+    body.task-hub-active { height: 100vh; overflow: hidden; }
+    .task-hub { height: 100vh; overflow: hidden; display: grid; grid-template-columns: minmax(260px, 320px) 1fr; }
     .task-hub[hidden] { display: none; }
-    .task-sidebar { border-right: 1px solid var(--line); background: var(--surface); padding: 16px; overflow-y: auto; }
-    .task-detail { padding: 24px; min-width: 0; }
+    .task-sidebar { height: 100vh; border-right: 1px solid var(--line); background: var(--surface); padding: 16px; overflow-y: auto; overscroll-behavior: contain; }
+    .task-detail { height: 100vh; padding: 24px; min-width: 0; overflow-y: auto; overscroll-behavior: contain; }
     .provider-status { padding: 10px; margin-bottom: 12px; border: 1px solid var(--line); border-radius: 6px; }
     .provider-status.stopped { border-color: var(--danger); color: var(--danger); }
     .hub-section { margin: 16px 0; }
@@ -718,7 +719,7 @@
     .hub-settings label { display: grid; grid-template-columns: 1fr 72px; gap: 8px; margin: 8px 0; }
     @media (max-width: 1023px) {
       .task-hub { display: block; }
-      .task-sidebar { border-right: 0; min-height: calc(100vh - var(--header-height)); }
+      .task-sidebar { border-right: 0; }
       .task-detail { display: none; }
       .task-hub.show-detail .task-sidebar { display: none; }
       .task-hub.show-detail .task-detail { display: block; }
@@ -2043,6 +2044,7 @@
       showToast('Codexで開けませんでした');
     }
     async function initializeTaskHub() {
+      document.body.classList.add('task-hub-active');
       document.querySelector('.app-header').hidden = true;
       byId('main-content').hidden = true;
       byId('task-hub').hidden = false;
