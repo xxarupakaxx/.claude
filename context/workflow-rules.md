@@ -541,13 +541,14 @@ Phase直結でないユーティリティスキル。**状況が発生したら*
 
 ## HTML Viewer Tools
 
-計画ファイル・ログをMCP Apps経由でインタラクティブに閲覧するためのHTMLビューア。
-**自動発動**によりユーザー操作不要で表示される。
+計画ファイル・ログ・レビュー結果をブラウザでインタラクティブに閲覧するためのHTMLビューア。
+Roadmap Viewer は `roadmap.html` を生成し、「現在地」「稼働中の作業」「成果物」「計画」「更新鮮度」を同じ画面で確認できるようにする。`--serve --watch` で起動すると、Claude CodeまたはCoworkの横で開いたブラウザが `roadmap-snapshot.json` をpollingし、source内容または表示対象artifact metadataが変化したときだけ自動更新される。Plan Viewer / Log Viewer は個別ファイルの詳細確認に使う。
 
 ### MCP Apps ツール
 
 | ツール名 | MCPツール | 対象ファイル | 主な機能 |
 |---------|----------|------------|---------|
+| Roadmap Viewer | ローカルHTML (`tools/roadmap_viewer.html`) + `scripts/generate-roadmap-view.py` | 00_spec.md / 30_plan.md / 40_progress.md / 80_review.md / 05_log.md、任意の team-journal.md / 90_verification.md | 「いま」、計画キャンバス、実行パルス、成果物シェルフ、更新鮮度、live polling |
 | Plan Viewer | `mcp__workflow-html-app__view-plan` | 30_plan.md | Markdownレンダリング、コメント機能、Claudeへのフィードバック送信 |
 | Log Viewer | `mcp__workflow-html-app__view-plan` | 05_log.md | Phase検出、タイムライン可視化（予定） |
 
@@ -555,21 +556,35 @@ Phase直結でないユーティリティスキル。**状況が発生したら*
 
 以下のタイミングで`viewing-plans`スキルが**自動的に**発動：
 
-1. **Phase 2完了時**: 30_plan.md作成後、`mcp__workflow-html-app__view-plan`でHTML UIを表示
-2. **Phase 5完了時**: 05_log.md確定後、同様にHTML UIを表示
+1. **Phase 2完了時**: 30_plan.md作成後、`scripts/generate-roadmap-view.py <memory_dir>` で `roadmap.html` を生成
+2. **横で見たい場合**: `scripts/generate-roadmap-view.py <memory_dir> --serve --watch` を起動し、表示URLを案内
+3. **Phase 3/4更新時**: `40_progress.md` / `80_review.md` / `05_log.md` / `team-journal.md` / `90_verification.md` または成果物metadataの変更後、watch中なら `roadmap-snapshot.json` が更新され、ブラウザが自動再描画
+4. **Phase 5完了時**: 最終 `roadmap.html` を生成し、必要に応じて個別Plan/Log Viewerも表示
 
 ### 使用方法（自動）
 
 ```
-1. Read ツールで対象ファイル（30_plan.md / 05_log.md）を読み込み
-2. mcp__workflow-html-app__view-plan に content（Markdownコンテンツ）を渡す
-3. MCP Apps が自動的にHTML UIを開く（ユーザー操作不要）
+1. メモリディレクトリ（${MEMORY_DIR}/memory/<task>）を特定
+2. python3 scripts/generate-roadmap-view.py <memory_dir> を実行
+3. 生成された <memory_dir>/roadmap.html をユーザーに提示
+4. 詳細確認が必要なら Read で30_plan.md / 05_log.mdを読み込み、MCP Apps viewerへ渡す
 ```
+
+ライブ表示:
+
+```bash
+python3 scripts/generate-roadmap-view.py <memory_dir> --serve --watch
+```
+
+`--serve` は既定で `127.0.0.1` + port `0`（空きポート自動割当）を使う。複数セッションで同時起動する場合はメモリディレクトリを分け、必要時のみ `--port <port>` を指定する。
+
+generatorはtask directory配下の通常ファイルを成果物metadataとして再帰収集する。symlinkは追跡せず、`roadmap.html`、`roadmap-snapshot.json`、一時ファイルは対象外とする。入力fingerprintが不変なwatch cycleでは、HTMLとsnapshotのmtimeを変更しない。
 
 ### 手動トリガー
 
 以下のフレーズでも発動可能：
 - 「計画をビューアで見たい」「HTMLで確認したい」
+- 「ロードマップを見たい」「roadmap.htmlを出して」
 - 「ログをタイムラインで見たい」
 - `/viewing-plans` 実行
 
