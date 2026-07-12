@@ -689,6 +689,32 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
     }
+    .task-hub { min-height: calc(100vh - var(--header-height)); display: grid; grid-template-columns: minmax(260px, 320px) 1fr; }
+    .task-hub[hidden] { display: none; }
+    .task-sidebar { border-right: 1px solid var(--line); background: var(--surface); padding: 16px; overflow-y: auto; }
+    .task-detail { padding: 24px; min-width: 0; }
+    .provider-status { padding: 10px; margin-bottom: 12px; border: 1px solid var(--line); border-radius: 6px; }
+    .provider-status.stopped { border-color: var(--danger); color: var(--danger); }
+    .hub-section { margin: 16px 0; }
+    .hub-section h2 { font-size: 13px; margin: 0 0 6px; color: var(--muted); }
+    .hub-task { display: block; width: 100%; text-align: left; padding: 10px; margin: 4px 0; color: inherit; background: transparent; border: 1px solid transparent; border-radius: 6px; }
+    .hub-task:hover, .hub-task[aria-current="true"] { background: var(--surface-soft); border-color: var(--line); }
+    .hub-task small, .hub-task span { display: block; color: var(--muted); margin-top: 3px; }
+    .hub-detail-section { margin: 0 0 22px; }
+    .hub-detail-section > h2 { font-size: 16px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+    .hub-detail-section .markdown-body { overflow-wrap: anywhere; }
+    .hub-empty { color: var(--muted); }
+    .hub-back { display: none; margin-bottom: 12px; }
+    .hub-status-token { font-weight: 700; }
+    .hub-settings label { display: grid; grid-template-columns: 1fr 72px; gap: 8px; margin: 8px 0; }
+    @media (max-width: 1023px) {
+      .task-hub { display: block; }
+      .task-sidebar { border-right: 0; min-height: calc(100vh - var(--header-height)); }
+      .task-detail { display: none; }
+      .task-hub.show-detail .task-sidebar { display: none; }
+      .task-hub.show-detail .task-detail { display: block; }
+      .hub-back { display: inline-flex; }
+    }
   </style>
 </head>
 <body>
@@ -725,6 +751,19 @@
       </div>
     </div>
   </header>
+
+  <div class="task-hub" id="task-hub" hidden>
+    <aside class="task-sidebar" aria-label="全task一覧">
+      <div class="provider-status" id="provider-status" role="status" aria-live="polite"></div>
+      <nav id="task-sections" aria-label="task状態別一覧"></nav>
+      <details class="hub-settings">
+        <summary>表示設定</summary>
+        <label>停止判定（分）<input id="hub-stale-minutes" type="number" min="1" max="1440"></label>
+        <label>最近完了（時間）<input id="hub-recent-hours" type="number" min="1" max="720"></label>
+      </details>
+    </aside>
+    <main class="task-detail" id="task-detail" tabindex="-1"></main>
+  </div>
 
   <main class="shell" id="main-content" tabindex="-1">
     <section class="now-strip" id="now-strip" aria-labelledby="now-heading">
@@ -1108,6 +1147,46 @@
       }
       return output.join('');
     }
+    function groupTaskSections(tasks) {
+      const grouped = { running: [], waiting: [], recent_completed: [] };
+      for (const task of Array.isArray(tasks) ? tasks : []) {
+        if (Object.hasOwn(grouped, task?.section)) grouped[task.section].push(task);
+      }
+      return grouped;
+    }
+    function normalizeApproval(value) {
+      const token = asText(value).trim().toLowerCase().replace(/[\s_-]+/g, '');
+      if (['waiting', 'pending', 'awaiting', '承認待ち'].includes(token)) return 'waiting';
+      if (['approved', 'approve', '承認済み', '承認'].includes(token)) return 'approved';
+      if (['revising', 'revision', 'needsrevision', '差し戻し', '修正中'].includes(token)) return 'revising';
+      return 'unknown';
+    }
+    function extractPlanSections(task) {
+      const detail = task?.detail && typeof task.detail === 'object' ? task.detail : task || {};
+      const files = detail.files && typeof detail.files === 'object' ? detail.files : {};
+      const metadata = detail.metadata && typeof detail.metadata === 'object' ? detail.metadata : {};
+      const designNames = ['00_spec.md', '10_design.md', 'design.md', 'blueprint.md'];
+      const implementationNames = ['30_plan.md', 'implementation-plan.md'];
+      const firstFile = names => names.map(name => asText(files[name])).find(Boolean) || '';
+      return {
+        designPlan: firstFile(designNames),
+        implementationPlan: firstFile(implementationNames),
+        approval: normalizeApproval(metadata.approvalState ?? metadata.approval_state ?? detail.approvalState ?? detail.approval_state)
+      };
+    }
+    function clampNumber(value, minimum, maximum, fallback) {
+      const number = Number(value);
+      return Number.isFinite(number) && number >= minimum
+        ? Math.min(number, maximum)
+        : fallback;
+    }
+    function taskHubSettings(storage = {}) {
+      return {
+        staleMinutes: clampNumber(storage.staleMinutes, 1, 1440, 15),
+        recentCompletedHours: clampNumber(storage.recentCompletedHours, 1, 720, 24),
+        recentCompletedCollapsed: storage.recentCompletedCollapsed !== false
+      };
+    }
     function extractReviewCounts(files) {
       const text = `${asText(files['05_log.md'])}\n${asText(files['80_review.md'])}`;
       const counts = { critical: 0, important: 0, minor: 0, hasReview: false };
@@ -1263,7 +1342,8 @@
       PHASES, MODEL_KNOWN_FILES, normalizeSnapshot, snapshotSignature, inferTitle,
       checkboxStats, extractTasks, extractLogEntries, extractReviewCounts,
       extractRisks, extractPhaseSignals, buildModel, artifactStateFor,
-      renderInlineMarkdown, renderWorkflowMarkdown
+      renderInlineMarkdown, renderWorkflowMarkdown, groupTaskSections,
+      extractPlanSections, taskHubSettings
     };
     /* ROADMAP_MODEL_END */
 
@@ -1816,7 +1896,164 @@
         }, 120);
       });
     }
+    function hubSessionKey() {
+      return new URLSearchParams(location.hash.slice(1)).get('session') || '';
+    }
+    function hubStoredSettings() {
+      let stored = {};
+      try { stored = JSON.parse(storageGet('roadmapTaskHubSettings') || '{}'); } catch { stored = {}; }
+      return ROADMAP_MODEL.taskHubSettings(stored);
+    }
+    function saveHubSettings(settings) {
+      storageSet('roadmapTaskHubSettings', JSON.stringify(settings));
+    }
+    function hubRequest(path, options = {}) {
+      return fetch(path, {
+        ...options,
+        cache: 'no-store',
+        headers: { ...(options.headers || {}), 'X-Roadmap-Session': hubSessionKey() }
+      });
+    }
+    function hubFreshnessLabel(task, settings, now = Date.now()) {
+      const updated = Date.parse(task.updatedAt);
+      const stopped = task.freshness === 'stale' || !Number.isFinite(updated) || now - updated > settings.staleMinutes * 60000;
+      return stopped ? '更新停止' : '更新中';
+    }
+    function renderHubList(payload, selectedId) {
+      const settings = hubStoredSettings();
+      const grouped = ROADMAP_MODEL.groupTaskSections(payload.tasks);
+      grouped.recent_completed = grouped.recent_completed.filter(task => {
+        const updated = Date.parse(task.updatedAt);
+        return Number.isFinite(updated) && Date.now() - updated <= settings.recentCompletedHours * 3600000;
+      });
+      const status = byId('provider-status');
+      const synced = payload.lastSuccessfulSync ? new Date(payload.lastSuccessfulSync).toLocaleString('ja-JP') : '同期実績なし';
+      status.className = `provider-status${payload.connected ? '' : ' stopped'}`;
+      status.textContent = payload.connected
+        ? `接続中・最終同期 ${synced}`
+        : `プロバイダー停止・最終成功 ${synced}${payload.error ? `・${payload.error}` : ''}`;
+      const sectionNames = { running: '実行中', waiting: '待機・更新停止', recent_completed: '最近完了' };
+      byId('task-sections').innerHTML = Object.entries(sectionNames).map(([key, label]) => {
+        const tasks = grouped[key];
+        const body = tasks.length ? tasks.map(task => {
+          const freshness = hubFreshnessLabel(task, settings);
+          return `<button class="hub-task" type="button" data-hub-task="${escapeMarkdownHtml(task.id)}" aria-current="${task.id === selectedId}"><strong>${escapeMarkdownHtml(task.title)}</strong><span>${escapeMarkdownHtml(task.explicitState || task.section)}・${freshness}</span><small>${escapeMarkdownHtml(task.updatedAt || '更新時刻なし')}</small></button>`;
+        }).join('') : '<p class="hub-empty">該当taskなし</p>';
+        if (key === 'recent_completed') return `<details class="hub-section" ${settings.recentCompletedCollapsed ? '' : 'open'}><summary>${label}（${tasks.length}）</summary>${body}</details>`;
+        return `<section class="hub-section"><h2>${label}（${tasks.length}）</h2>${body}</section>`;
+      }).join('');
+    }
+    function hubMarkdownSection(title, markdown) {
+      return `<section class="hub-detail-section"><h2>${title}</h2><div class="markdown-body">${markdown ? ROADMAP_MODEL.renderWorkflowMarkdown(markdown) : '<p class="hub-empty">記録なし</p>'}</div></section>`;
+    }
+    function hubText(value) {
+      if (typeof value === 'string') return value;
+      return value && typeof value === 'object' ? JSON.stringify(value, null, 2) : '';
+    }
+    function renderHubDetail(task, focusHeading = true) {
+      const detail = task.detail && typeof task.detail === 'object' ? task.detail : {};
+      const files = detail.files && typeof detail.files === 'object' ? detail.files : {};
+      const plans = ROADMAP_MODEL.extractPlanSections(task);
+      const summary = hubText(task.summary);
+      const artifacts = Array.isArray(detail.artifacts) ? detail.artifacts : [];
+      const artifactMarkdown = artifacts.map(item => `- ${item.name || item.path || 'artifact'}`).join('\n');
+      const next = files['40_progress.md'] || summary;
+      const logs = files['05_log.md'] || files['team-journal.md'] || '';
+      const approvalLabels = { waiting: '承認待ち', approved: '承認済み', revising: '修正中', unknown: '状態不明' };
+      byId('task-detail').innerHTML = `
+        <button class="btn hub-back" type="button" id="hub-back">← 一覧へ戻る</button>
+        <h1 tabindex="-1" id="hub-detail-heading">${escapeMarkdownHtml(task.title)}</h1>
+        <p>${escapeMarkdownHtml(task.explicitState || task.section)}・${escapeMarkdownHtml(hubFreshnessLabel(task, hubStoredSettings()))}</p>
+        <button class="btn primary" type="button" id="hub-open-codex">Codexで開く</button>
+        ${hubMarkdownSection('概要', summary)}
+        ${hubMarkdownSection('設計Plan', plans.designPlan)}
+        <section class="hub-detail-section"><h2>承認</h2><p class="hub-status-token">${approvalLabels[plans.approval]}</p></section>
+        ${hubMarkdownSection('実装計画', plans.implementationPlan)}
+        ${hubMarkdownSection('実装状況', files['40_progress.md'] || '')}
+        ${hubMarkdownSection('成果物', artifactMarkdown)}
+        ${hubMarkdownSection('次の一手', next)}
+        ${hubMarkdownSection('ログ / 原文', logs)}
+      `;
+      byId('task-hub').classList.add('show-detail');
+      byId('hub-back').addEventListener('click', () => {
+        byId('task-hub').classList.remove('show-detail');
+        document.querySelector(`[data-hub-task="${CSS.escape(task.id)}"]`)?.focus();
+      });
+      byId('hub-open-codex').addEventListener('click', () => openHubTask(task));
+      if (focusHeading) byId('hub-detail-heading').focus({ preventScroll: true });
+    }
+    async function openHubTask(task) {
+      const response = await hubRequest(`/api/tasks/${encodeURIComponent(task.id)}/open`, { method: 'POST' });
+      if (response.ok) return;
+      const payload = await response.json().catch(() => ({}));
+      if (response.status === 409 && payload.threadId) {
+        try {
+          await navigator.clipboard.writeText(payload.threadId);
+          showToast('Codex thread IDをコピーしました');
+        } catch { showToast(`Codex thread ID: ${payload.threadId}`); }
+        return;
+      }
+      showToast('Codexで開けませんでした');
+    }
+    async function initializeTaskHub() {
+      document.querySelector('.app-header').hidden = true;
+      byId('main-content').hidden = true;
+      byId('task-hub').hidden = false;
+      const settings = hubStoredSettings();
+      byId('hub-stale-minutes').value = settings.staleMinutes;
+      byId('hub-recent-hours').value = settings.recentCompletedHours;
+      let selectedId = '';
+      let tasks = new Map();
+      const refresh = async () => {
+        try {
+          const response = await hubRequest('/api/tasks');
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const payload = await response.json();
+          tasks = new Map(payload.tasks.map(task => [task.id, task]));
+          if (selectedId && !tasks.has(selectedId)) selectedId = '';
+          renderHubList(payload, selectedId);
+          if (selectedId) renderHubDetail(tasks.get(selectedId), false);
+        } catch (error) {
+          byId('provider-status').className = 'provider-status stopped';
+          byId('provider-status').textContent = `Task Hub停止・${error.message}`;
+        }
+      };
+      byId('task-sections').addEventListener('click', event => {
+        const button = event.target.closest('[data-hub-task]');
+        if (!button) return;
+        selectedId = button.dataset.hubTask;
+        document.querySelectorAll('[data-hub-task]').forEach(item => item.setAttribute('aria-current', String(item === button)));
+        renderHubDetail(tasks.get(selectedId));
+      });
+      byId('task-sections').addEventListener('toggle', event => {
+        if (!event.target.matches('.hub-section')) return;
+        const next = { ...hubStoredSettings(), recentCompletedCollapsed: !event.target.open };
+        saveHubSettings(next);
+      }, true);
+      byId('task-sections').addEventListener('keydown', event => {
+        if (!['ArrowDown', 'ArrowUp', 'Enter'].includes(event.key)) return;
+        const buttons = Array.from(document.querySelectorAll('[data-hub-task]'));
+        const index = buttons.indexOf(document.activeElement);
+        if (event.key === 'Enter') { document.activeElement?.click(); return; }
+        event.preventDefault();
+        buttons[(index + (event.key === 'ArrowDown' ? 1 : -1) + buttons.length) % buttons.length]?.focus();
+      });
+      for (const [id, key] of [['hub-stale-minutes', 'staleMinutes'], ['hub-recent-hours', 'recentCompletedHours']]) {
+        byId(id).addEventListener('change', event => {
+          const next = ROADMAP_MODEL.taskHubSettings({ ...hubStoredSettings(), [key]: event.target.value });
+          saveHubSettings(next);
+          event.target.value = next[key];
+          refresh();
+        });
+      }
+      await refresh();
+      window.setInterval(refresh, 2000);
+      const heartbeat = () => hubRequest('/api/heartbeat', { method: 'POST' }).catch(() => {});
+      heartbeat();
+      window.setInterval(heartbeat, 5000);
+    }
     function initialize() {
+      if (hubSessionKey()) { initializeTaskHub(); return; }
       document.body.dataset.theme = storageGet('roadmapViewerTheme');
       const dark = document.body.dataset.theme === 'dark';
       byId('theme-toggle').setAttribute('aria-pressed', String(dark));

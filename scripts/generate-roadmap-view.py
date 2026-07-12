@@ -5,6 +5,7 @@ import argparse
 import functools
 import hashlib
 import http.server
+import importlib.util
 import json
 import os
 import re
@@ -283,7 +284,18 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Generate a browser-readable roadmap.html from a Codex task memory directory."
     )
-    parser.add_argument("task_dir", help="Path to .local/memory/<task>")
+    parser.add_argument("task_dir", nargs="?", help="Path to .local/memory/<task>")
+    parser.add_argument(
+        "--hub",
+        action="store_true",
+        help="Open the Roadmap Task Hub instead of a single task roadmap.",
+    )
+    parser.add_argument(
+        "--memory-root",
+        action="append",
+        default=[],
+        help="Memory root to discover in --hub mode. May be repeated.",
+    )
     parser.add_argument(
         "-o",
         "--output",
@@ -326,11 +338,46 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         action="store_true",
         help="Open the generated file or local server URL in the default browser.",
     )
-    return parser.parse_args(argv)
+    args = parser.parse_args(argv)
+    if args.hub and args.task_dir:
+        parser.error("task_dir cannot be used with --hub")
+    if not args.hub and not args.task_dir:
+        parser.error("task_dir is required unless --hub is used")
+    return args
+
+
+def run_task_hub(
+    memory_roots: list[Path],
+    *,
+    host: str,
+    port: int,
+    open_browser: bool,
+) -> int:
+    hub_path = ROOT / "scripts" / "roadmap_task_hub.py"
+    spec = importlib.util.spec_from_file_location("roadmap_task_hub", hub_path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"cannot load Task Hub backend: {hub_path}")
+    hub = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = hub
+    spec.loader.exec_module(hub)
+    return hub.run_task_hub(
+        memory_roots,
+        host=host,
+        port=port,
+        open_browser=open_browser,
+    )
 
 
 def main(argv: list[str]) -> int:
     args = parse_args(argv)
+    if args.hub:
+        return run_task_hub(
+            [Path(root).expanduser().resolve() for root in args.memory_root],
+            host=args.host,
+            port=args.port,
+            open_browser=args.open,
+        )
+
     task_dir = Path(args.task_dir).expanduser().resolve()
     if not task_dir.is_dir():
         print(f"task_dir is not a directory: {task_dir}", file=sys.stderr)
