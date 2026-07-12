@@ -303,6 +303,18 @@ def run_refresh_lifecycle(
         wait(poll_interval)
 
 
+def serve_task_hub(
+    server: ThreadingHTTPServer, session: TaskHubSession
+) -> None:
+    """Serve HTTP while provider and memory refreshes run independently."""
+    refresh_thread = threading.Thread(
+        target=run_refresh_lifecycle, args=(session,), daemon=True
+    )
+    refresh_thread.start()
+    while not session.should_stop():
+        server.handle_request()
+
+
 def make_task_index_builder(
     provider: object, memory_roots: list[Path]
 ) -> Callable[[], dict[str, object]]:
@@ -748,9 +760,7 @@ def run_task_hub(
     if open_browser:
         webbrowser.open(url)
     try:
-        while not session.should_stop():
-            session.refresh()
-            server.handle_request()
+        serve_task_hub(server, session)
     except KeyboardInterrupt:
         print("\nstopping roadmap task hub", file=sys.stderr)
     finally:
