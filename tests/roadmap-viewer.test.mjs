@@ -218,6 +218,24 @@ test('does not turn review headings about completion criteria into phase complet
   assert.equal(states['5'], 'planned');
 });
 
+test('later completion events supersede historical phase start events', () => {
+  const result = model.buildModel(model.normalizeSnapshot({
+    generatedAt,
+    files: {
+      '05_log.md': [
+        '## Phase 0 準備開始',
+        '## Phase 0 完了、Phase 1 調査開始',
+        '## Phase 1 完了、Phase 2 計画開始',
+        '## Phase 2 完了',
+        '## Phase 3 実装開始',
+        '## Phase 5 完了'
+      ].join('\n\n')
+    }
+  }), { nowMs });
+
+  assert.deepEqual(Array.from(result.phases, phase => phase.status), Array(6).fill('complete'));
+});
+
 test('stops parent task bodies before nested task headings', () => {
   const nested = model.buildModel(model.normalizeSnapshot({
     generatedAt,
