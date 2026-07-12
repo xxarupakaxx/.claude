@@ -10,13 +10,23 @@ allowed-tools: Read, mcp__workflow-html-app__view-plan
 
 Roadmap Viewer は「現在地」「稼働中の作業」「成果物」「計画」「更新鮮度」を一つの画面で確認する俯瞰ビューを担当する。`--serve --watch` で起動すると、Claude CodeまたはCoworkの横に置いたブラウザが自動更新される。Plan Viewer / Log Viewer はMarkdownの詳細確認用として使う。
 
+複数 task を横断して見る場合は Roadmap Task Hub を使う:
+
+```bash
+python3 scripts/generate-roadmap-view.py --hub --memory-root "$MEMORY_DIR/memory" --open
+```
+
+`--memory-root` は複数回指定できる。current thread ID を取得できた場合は `task-meta.json` の `thread_id` に保存し、完全一致だけを確定済み対応として扱う。path・title・更新時刻による一致は候補として表示するだけで自動確定せず、採用の承認は Codex 会話を正本とする。
+
+Hub は loopback 上の OS 割当 port で起動し、URL fragment の session key でローカル API を保護する。Codex app-server と memory task を定期再取得し、provider の一時障害中は直近の成功結果を保持して degraded 状態を表示する。ブラウザ heartbeat が途絶えると Hub は終了する。
+
 ## 自動発動条件
 
 以下のタイミングで**自動的に**発動（ユーザー確認不要）：
 
 1. **Phase 2完了時**: `${MEMORY_DIR}/memory/<task>/roadmap.html` を生成し、Roadmap Viewerで表示
 2. **横で見たい場合**: `scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --watch` を起動し、表示URLを案内
-3. **Phase 3/4の節目**: `40_progress.md` / `80_review.md` / `05_log.md` / `team-journal.md` / `90_verification.md` または成果物metadataの更新後、watch中ならブラウザが自動更新
+3. **Phase 3/4の節目**: `40_progress.md` / `80_review.md` / `05_log.md` 更新後、watch中ならブラウザが自動更新
 4. **Phase 5完了時**: Roadmap Viewerで最終状態を表示し、必要に応じて05_log.mdをlog_viewerで表示
 
 ## 手動トリガー

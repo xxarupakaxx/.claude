@@ -7,6 +7,7 @@ import tempfile
 import time
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,6 +38,43 @@ class RoadmapGeneratorContractTest(unittest.TestCase):
     def tearDown(self) -> None:
         roadmap.TEMPLATE = self.previous_template
         self.temp_dir.cleanup()
+
+    def test_hub_mode_does_not_require_task_dir(self) -> None:
+        args = roadmap.parse_args(["--hub", "--memory-root", "/tmp/memory"])
+
+        self.assertTrue(args.hub)
+        self.assertIsNone(args.task_dir)
+
+    def test_single_task_serve_watch_cli_remains_supported(self) -> None:
+        args = roadmap.parse_args([str(self.task_dir), "--serve", "--watch"])
+
+        self.assertEqual(args.task_dir, str(self.task_dir))
+        self.assertTrue(args.serve)
+        self.assertTrue(args.watch)
+        self.assertFalse(args.hub)
+
+    def test_hub_mode_rejects_task_dir(self) -> None:
+        with self.assertRaises(SystemExit):
+            roadmap.parse_args([str(self.task_dir), "--hub"])
+
+    def test_hub_mode_delegates_memory_roots_and_server_options(self) -> None:
+        with mock.patch.object(roadmap, "run_task_hub", return_value=17) as run_hub:
+            result = roadmap.main([
+                "--hub",
+                "--memory-root", "/tmp/one",
+                "--memory-root", "/tmp/two",
+                "--host", "localhost",
+                "--port", "4321",
+                "--open",
+            ])
+
+        self.assertEqual(result, 17)
+        run_hub.assert_called_once_with(
+            [Path("/tmp/one").resolve(), Path("/tmp/two").resolve()],
+            host="localhost",
+            port=4321,
+            open_browser=True,
+        )
 
     def test_snapshot_v1_includes_optional_workflow_inputs(self) -> None:
         (self.task_dir / "team-journal.md").write_text("# Team Journal\n")

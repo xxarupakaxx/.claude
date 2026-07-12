@@ -91,6 +91,53 @@ const files = {
 const generatedAt = '2026-07-12T02:59:30.000Z';
 const nowMs = Date.parse('2026-07-12T03:00:00.000Z');
 
+test('groups tasks into running, waiting and recent completed sections', () => {
+  const grouped = model.groupTaskSections([
+    { id: '1', section: 'running' },
+    { id: '2', section: 'waiting' },
+    { id: '3', section: 'recent_completed' },
+    { id: '4', section: 'unsupported' }
+  ]);
+
+  assert.deepEqual(Array.from(grouped.running, task => task.id), ['1']);
+  assert.deepEqual(Array.from(grouped.waiting, task => task.id), ['2']);
+  assert.deepEqual(Array.from(grouped.recent_completed, task => task.id), ['3']);
+});
+
+test('separates design and implementation plans and normalizes approval', () => {
+  const result = model.extractPlanSections({
+    files: {
+      '00_spec.md': '# Design plan',
+      '30_plan.md': '# Implementation plan'
+    },
+    metadata: { approvalState: 'approved' }
+  });
+
+  assert.equal(result.designPlan, '# Design plan');
+  assert.equal(result.implementationPlan, '# Implementation plan');
+  assert.equal(result.approval, 'approved');
+});
+
+test('does not treat candidate memory matches as confirmed plans', () => {
+  const result = model.extractPlanSections({
+    matchState: 'candidate',
+    matchCandidates: [{ detail: { files: { '00_spec.md': '# Candidate design' } } }],
+    detail: { files: { '30_plan.md': '# Confirmed implementation' } }
+  });
+
+  assert.equal(result.designPlan, '');
+  assert.equal(result.implementationPlan, '# Confirmed implementation');
+  assert.equal(result.approval, 'unknown');
+});
+
+test('clamps task hub settings and defaults invalid stored values', () => {
+  assert.deepEqual(
+    JSON.parse(JSON.stringify(model.taskHubSettings({ staleMinutes: 'oops', recentCompletedHours: 0, recentCompletedCollapsed: false }))),
+    { staleMinutes: 15, recentCompletedHours: 24, recentCompletedCollapsed: false }
+  );
+  assert.equal(model.taskHubSettings({ staleMinutes: 9999, recentCompletedHours: 48 }).staleMinutes, 1440);
+});
+
 test('normalizes heading, colon, decimal task, Japanese checklist and progress table variants', () => {
   const normalized = model.normalizeSnapshot({
     version: 1,
@@ -320,6 +367,25 @@ test('renders workflow markdown safely without an external parser', () => {
   assert.match(rendered, /&lt;img src=x onerror=alert\(1\)&gt;/);
   assert.doesNotMatch(rendered, /href="javascript:/);
   assert.doesNotMatch(rendered, /<img src=x/);
+});
+
+test('keeps malformed markdown table input visible as escaped source text', () => {
+  const rendered = model.renderWorkflowMarkdown('| A | B |\n| -- | broken |\n<script>x</script>');
+
+  assert.match(rendered, /\| A \| B \|/);
+  assert.match(rendered, /&lt;script&gt;x&lt;\/script&gt;/);
+  assert.doesNotMatch(rendered, /<table>/);
+});
+
+test('task hub shell exposes list detail status settings and responsive behavior', () => {
+  for (const id of ['task-hub', 'provider-status', 'task-sections', 'task-detail', 'hub-stale-minutes', 'hub-recent-hours']) {
+    assert.match(html, new RegExp(`id=["']${id}["']`));
+  }
+  assert.match(html, /@media \(max-width: 1023px\)/);
+  assert.match(html, /setInterval\(refresh, 2000\)/);
+  assert.match(html, /setInterval\(heartbeat, 5000\)/);
+  assert.match(html, /response\.status === 409/);
+  assert.match(html, /renderWorkflowMarkdown\(markdown\)/);
 });
 
 test('the selected Plan Canvas information architecture remains in the HTML', () => {
