@@ -290,6 +290,38 @@ test('artifact completion labels require phase evidence instead of file existenc
   assert.equal(model.artifactStateFor(surveyArtifact, completed), '調査済み');
 });
 
+test('renders workflow markdown safely without an external parser', () => {
+  const rendered = model.renderWorkflowMarkdown(`# 見出し
+
+- [x] **完了**した作業
+- [ ] 未完了の作業
+
+| 項目 | 状態 |
+| --- | --- |
+| Parser | ready |
+
+> 補足
+
+\`inline\` and [OpenAI](https://openai.com)
+
+\`\`\`html
+<script>alert('xss')</script>
+\`\`\`
+
+<img src=x onerror=alert(1)>
+[危険](javascript:alert(1))`);
+
+  assert.match(rendered, /<h1>見出し<\/h1>/);
+  assert.match(rendered, /type="checkbox" disabled checked/);
+  assert.match(rendered, /<table>/);
+  assert.match(rendered, /<blockquote>補足<\/blockquote>/);
+  assert.match(rendered, /href="https:\/\/openai\.com"/);
+  assert.match(rendered, /&lt;script&gt;alert\(&#039;xss&#039;\)&lt;\/script&gt;/);
+  assert.match(rendered, /&lt;img src=x onerror=alert\(1\)&gt;/);
+  assert.doesNotMatch(rendered, /href="javascript:/);
+  assert.doesNotMatch(rendered, /<img src=x/);
+});
+
 test('the selected Plan Canvas information architecture remains in the HTML', () => {
   for (const id of [
     'now-strip',
@@ -315,6 +347,8 @@ test('the selected Plan Canvas information architecture remains in the HTML', ()
   assert.match(html, /const current = model\.activeTask/);
   assert.match(html, /function refreshFreshness\(/);
   assert.match(html, /id="all-artifact-list"/);
+  assert.match(html, /id="preview-rendered"/);
+  assert.match(html, /id="preview-raw"/);
   assert.doesNotMatch(html, /id="source-preview"[^>]*aria-live/);
   assert.doesNotMatch(html, /function brandData\(/);
 });

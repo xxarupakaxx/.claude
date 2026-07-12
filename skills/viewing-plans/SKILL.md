@@ -95,6 +95,7 @@ python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --w
 - 生成済みHTMLにsnapshotを埋め込むため、追加サーバーなしで `file://` 表示できる
 - `--serve --watch` では `roadmap-snapshot.json` をpollingし、source内容または表示対象artifact metadataが変化したときだけ自動更新する
 - 手動で複数Markdown/JSONをドラッグ&ドロップして確認可能
+- 選択したMarkdownは、HTMLをescapeした自己完結の整形プレビューと原文を切り替えて確認できる
 
 ### Plan Viewer（計画ビューア）
 - Markdownレンダリング（見出し、リスト、コードブロック）
