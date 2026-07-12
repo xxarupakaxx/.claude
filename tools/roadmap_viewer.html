@@ -1022,16 +1022,20 @@
       const explicitDisplay = displayNumber(explicitCurrent);
       const subphaseLabels = { '2.5': 'Acceptance Criteria', '5.5': 'Compound' };
       const states = new Map();
-      for (const phase of PHASES) {
-        const number = phase.number.replace('.', '\\.');
-        const completeRe = new RegExp(`Phase\\s+${number}(?![\\d.])\\s*[:：-]?\\s*[^、,|:：\\n]{0,24}(?:完了(?!条件|基準|要件|判定)|complete(?:d)?\\b|approved\\b|終了(?!条件|基準))`, 'i');
-        const activeRe = new RegExp(`Phase\\s+${number}(?![\\d.])\\s*[:：-]?\\s*[^、,|:：\\n]{0,24}(?:開始|進行中|実行中|in[ -]?progress)`, 'i');
-        if (completeRe.test(statusText)) states.set(phase.number, 'complete');
-        if (activeRe.test(statusText)) states.set(phase.number, 'in-progress');
+      const stateRe = /Phase\s+(\d+(?:\.\d+)?)(?![\d.])\s*[:：-]?\s*([^、,|:：\n]{0,24}?)(完了(?!条件|基準|要件|判定)|complete(?:d)?\b|approved\b|終了(?!条件|基準)|開始|進行中|実行中|in[ -]?progress)/gi;
+      for (const line of statusText.split('\n')) {
+        for (const match of line.matchAll(stateRe)) {
+          const number = displayNumber(match[1]);
+          if (!number) continue;
+          const token = match[3].toLowerCase();
+          states.set(number, /開始|進行中|実行中|in[ -]?progress/.test(token) ? 'in-progress' : 'complete');
+        }
       }
       if (explicitDisplay) states.set(explicitDisplay, 'in-progress');
       const explicitIndex = PHASES.findIndex(phase => phase.number === explicitDisplay);
-      if (explicitIndex >= 0) PHASES.slice(0, explicitIndex).forEach(phase => states.set(phase.number, 'complete'));
+      const highestCompleteIndex = PHASES.reduce((highest, phase, index) => states.get(phase.number) === 'complete' ? index : highest, -1);
+      const completedThrough = explicitIndex >= 0 ? explicitIndex - 1 : highestCompleteIndex;
+      if (completedThrough >= 0) PHASES.slice(0, completedThrough + 1).forEach(phase => states.set(phase.number, 'complete'));
       return PHASES.map(phase => {
         const entry = entries.find(item => item.phase === phase.number);
         const isExplicit = phase.number === explicitDisplay && explicitCurrent;
