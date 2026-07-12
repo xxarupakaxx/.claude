@@ -515,19 +515,72 @@
     .source-button { width: 100%; text-align: left; cursor: pointer; }
     .source-button:hover { border-color: var(--accent); }
     .source-button strong, .artifact-record strong { display: block; color: var(--ink); }
+    .preview-toolbar {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .preview-toolbar strong { color: var(--ink); font-size: 11px; }
+    .preview-modes { display: inline-flex; padding: 2px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-soft); }
+    .preview-mode {
+      min-height: 30px;
+      padding: 4px 9px;
+      border: 0;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .preview-mode[aria-pressed="true"] { background: var(--surface); color: var(--accent); box-shadow: 0 1px 3px rgba(20, 30, 25, .1); }
     .source-preview {
-      max-height: 260px;
+      max-height: 380px;
       margin: 8px 0 0;
-      padding: 10px;
+      padding: 12px;
       overflow: auto;
       border: 1px solid var(--line);
       border-radius: 6px;
       background: var(--surface);
       color: var(--ink);
-      font: 11px/1.55 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      white-space: pre-wrap;
+      font-size: 12.5px;
+      line-height: 1.65;
       word-break: break-word;
     }
+    .source-preview.raw { font: 11px/1.55 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; white-space: pre-wrap; }
+    .source-preview.rendered { white-space: normal; }
+    .source-preview.rendered > :first-child { margin-top: 0; }
+    .source-preview.rendered > :last-child { margin-bottom: 0; }
+    .source-preview.rendered h1, .source-preview.rendered h2, .source-preview.rendered h3,
+    .source-preview.rendered h4, .source-preview.rendered h5, .source-preview.rendered h6 {
+      margin: 18px 0 7px;
+      color: var(--ink);
+      line-height: 1.35;
+      letter-spacing: -.01em;
+    }
+    .source-preview.rendered h1 { padding-bottom: 7px; border-bottom: 1px solid var(--line); font-size: 20px; }
+    .source-preview.rendered h2 { padding-bottom: 5px; border-bottom: 1px solid var(--line); font-size: 17px; }
+    .source-preview.rendered h3 { font-size: 15px; }
+    .source-preview.rendered h4, .source-preview.rendered h5, .source-preview.rendered h6 { font-size: 13px; }
+    .source-preview.rendered p { margin: 7px 0; }
+    .source-preview.rendered ul, .source-preview.rendered ol { margin: 7px 0; padding-left: 22px; }
+    .source-preview.rendered li { margin: 3px 0; }
+    .source-preview.rendered .md-check { margin-left: -20px; display: flex; align-items: flex-start; gap: 7px; list-style: none; }
+    .source-preview.rendered .md-check input { width: 15px; height: 15px; margin: 3px 0 0; accent-color: var(--accent-button); }
+    .source-preview.rendered code { padding: 1px 4px; border-radius: 4px; background: var(--surface-soft); font: 11px/1.55 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    .source-preview.rendered pre { margin: 9px 0; padding: 10px; overflow: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-soft); }
+    .source-preview.rendered pre code { padding: 0; background: transparent; white-space: pre; }
+    .source-preview.rendered blockquote { margin: 9px 0; padding: 7px 10px; border-left: 3px solid var(--accent); background: var(--surface-soft); color: var(--muted); }
+    .source-preview.rendered hr { margin: 14px 0; border: 0; border-top: 1px solid var(--line); }
+    .source-preview.rendered a, .source-preview.rendered .md-wikilink { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+    .md-table-wrap { margin: 9px 0; overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; }
+    .source-preview.rendered table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+    .source-preview.rendered th, .source-preview.rendered td { padding: 7px 8px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .source-preview.rendered th:last-child, .source-preview.rendered td:last-child { border-right: 0; }
+    .source-preview.rendered tbody tr:last-child td { border-bottom: 0; }
+    .source-preview.rendered th { background: var(--surface-soft); font-weight: 750; }
     .empty { padding: 10px; color: var(--muted); font-size: 12px; }
     .toast {
       position: fixed;
@@ -743,7 +796,7 @@
     <details class="utility-disclosure" id="utility-disclosure">
       <summary>
         <h2 class="utility-title">ユーティリティ（診断・マップ・指標）</h2>
-        <span class="utility-links">手動ファイル読込　/　生Markdown　/　Review　/　リスク・不明点</span>
+        <span class="utility-links">手動ファイル読込　/　Markdownプレビュー　/　Review　/　リスク・不明点</span>
         <img class="icon summary-chevron" data-icon="chevron" alt="">
       </summary>
       <div class="utility-content">
@@ -754,9 +807,16 @@
         </section>
         <section class="utility-card"><h3>リスク・直近ログ</h3><div class="risk-list" id="risk-list"></div><div class="log-list" id="log-list" tabindex="-1"></div></section>
         <section class="utility-card">
-          <h3>ソースと生Markdown</h3>
+          <h3>ソースとMarkdown</h3>
           <div class="source-list" id="source-list"></div>
-          <pre class="source-preview" id="source-preview" role="region" aria-label="選択したソースの内容" tabindex="-1">ソースを選択してください。</pre>
+          <div class="preview-toolbar">
+            <strong id="preview-label">プレビュー</strong>
+            <div class="preview-modes" role="group" aria-label="Markdown表示方法">
+              <button class="preview-mode" id="preview-rendered" type="button" data-preview-mode="rendered" aria-pressed="true">整形</button>
+              <button class="preview-mode" id="preview-raw" type="button" data-preview-mode="raw" aria-pressed="false">原文</button>
+            </div>
+          </div>
+          <div class="source-preview rendered" id="source-preview" role="region" aria-label="選択したソースの整形表示" tabindex="-1">ソースを選択してください。</div>
           <h3>全成果物</h3>
           <div class="source-list" id="all-artifact-list" tabindex="-1"></div>
         </section>
@@ -955,6 +1015,99 @@
     function summarize(text) {
       return asText(text).replace(/```[\s\S]*?```/g, ' ').replace(/[#>*_`|[\]-]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 160);
     }
+    function escapeMarkdownHtml(value) {
+      return asText(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
+    }
+    function renderInlineMarkdown(value) {
+      const tokens = [];
+      const stash = html => {
+        const token = `\u0000${tokens.length}\u0000`;
+        tokens.push(html);
+        return token;
+      };
+      let source = asText(value);
+      source = source.replace(/`([^`\n]+)`/g, (_, code) => stash(`<code>${escapeMarkdownHtml(code)}</code>`));
+      source = source.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/gi, (_, label, url) => stash(`<a href="${escapeMarkdownHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeMarkdownHtml(label)}</a>`));
+      source = source.replace(/\[\[([^\]]+)\]\]/g, (_, label) => stash(`<span class="md-wikilink">${escapeMarkdownHtml(label)}</span>`));
+      let html = escapeMarkdownHtml(source)
+        .replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/__([^_\n]+)__/g, '<strong>$1</strong>')
+        .replace(/~~([^~\n]+)~~/g, '<del>$1</del>');
+      html = html.replace(/\u0000(\d+)\u0000/g, (_, index) => tokens[Number(index)] || '');
+      return html;
+    }
+    function splitMarkdownTableRow(line) {
+      return asText(line).trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map(cell => cell.trim());
+    }
+    function renderWorkflowMarkdown(markdown) {
+      const lines = asText(markdown).replace(/\r\n?/g, '\n').split('\n');
+      const output = [];
+      for (let index = 0; index < lines.length;) {
+        const line = lines[index];
+        if (!line.trim()) { index += 1; continue; }
+        const fence = line.match(/^\s*```\s*([\w-]*)\s*$/);
+        if (fence) {
+          const code = [];
+          index += 1;
+          while (index < lines.length && !/^\s*```\s*$/.test(lines[index])) { code.push(lines[index]); index += 1; }
+          if (index < lines.length) index += 1;
+          const language = fence[1] ? ` data-language="${escapeMarkdownHtml(fence[1])}"` : '';
+          output.push(`<pre><code${language}>${escapeMarkdownHtml(code.join('\n'))}</code></pre>`);
+          continue;
+        }
+        const heading = line.match(/^(#{1,6})\s+(.+)$/);
+        if (heading) {
+          const level = heading[1].length;
+          output.push(`<h${level}>${renderInlineMarkdown(heading[2])}</h${level}>`);
+          index += 1;
+          continue;
+        }
+        if (/^\s*\|?.+\|.+\|?\s*$/.test(line) && /^\s*\|?\s*:?-{3,}:?(?:\s*\|\s*:?-{3,}:?)+\s*\|?\s*$/.test(lines[index + 1] || '')) {
+          const headers = splitMarkdownTableRow(line);
+          const rows = [];
+          index += 2;
+          while (index < lines.length && /^\s*\|?.+\|.+\|?\s*$/.test(lines[index])) { rows.push(splitMarkdownTableRow(lines[index])); index += 1; }
+          output.push(`<div class="md-table-wrap"><table><thead><tr>${headers.map(cell => `<th>${renderInlineMarkdown(cell)}</th>`).join('')}</tr></thead><tbody>${rows.map(row => `<tr>${headers.map((_, cellIndex) => `<td>${renderInlineMarkdown(row[cellIndex] || '')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`);
+          continue;
+        }
+        const unordered = line.match(/^\s*[-*+]\s+(.+)$/);
+        const ordered = line.match(/^\s*\d+[.)]\s+(.+)$/);
+        if (unordered || ordered) {
+          const orderedList = Boolean(ordered);
+          const items = [];
+          const pattern = orderedList ? /^\s*\d+[.)]\s+(.+)$/ : /^\s*[-*+]\s+(.+)$/;
+          while (index < lines.length) {
+            const item = lines[index].match(pattern);
+            if (!item) break;
+            const checkbox = item[1].match(/^\[([ xX])\]\s+(.+)$/);
+            if (checkbox) {
+              const checked = checkbox[1].toLowerCase() === 'x';
+              items.push(`<li class="md-check"><input type="checkbox" disabled ${checked ? 'checked ' : ''}aria-label="${checked ? '完了' : '未完了'}"><span>${renderInlineMarkdown(checkbox[2])}</span></li>`);
+            } else {
+              items.push(`<li>${renderInlineMarkdown(item[1])}</li>`);
+            }
+            index += 1;
+          }
+          const tag = orderedList ? 'ol' : 'ul';
+          output.push(`<${tag}>${items.join('')}</${tag}>`);
+          continue;
+        }
+        if (/^\s*>\s?/.test(line)) {
+          const quote = [];
+          while (index < lines.length && /^\s*>\s?/.test(lines[index])) { quote.push(lines[index].replace(/^\s*>\s?/, '')); index += 1; }
+          output.push(`<blockquote>${quote.map(renderInlineMarkdown).join('<br>')}</blockquote>`);
+          continue;
+        }
+        if (/^\s*(?:---+|___+|\*\*\*+)\s*$/.test(line)) {
+          output.push('<hr>');
+          index += 1;
+          continue;
+        }
+        output.push(`<p>${renderInlineMarkdown(line)}</p>`);
+        index += 1;
+      }
+      return output.join('');
+    }
     function extractReviewCounts(files) {
       const text = `${asText(files['05_log.md'])}\n${asText(files['80_review.md'])}`;
       const counts = { critical: 0, important: 0, minor: 0, hasReview: false };
@@ -1109,7 +1262,8 @@
     globalThis.__ROADMAP_MODEL__ = {
       PHASES, MODEL_KNOWN_FILES, normalizeSnapshot, snapshotSignature, inferTitle,
       checkboxStats, extractTasks, extractLogEntries, extractReviewCounts,
-      extractRisks, extractPhaseSignals, buildModel, artifactStateFor
+      extractRisks, extractPhaseSignals, buildModel, artifactStateFor,
+      renderInlineMarkdown, renderWorkflowMarkdown
     };
     /* ROADMAP_MODEL_END */
 
@@ -1125,6 +1279,8 @@
     let pollGeneration = 0;
     let taskExpansionInitialized = false;
     let selectedSource = '';
+    let previewMode = storageGet('roadmapViewerPreviewMode') === 'raw' ? 'raw' : 'rendered';
+    let previewSourceText = '';
     const expandedTasks = new Set();
 
     // Tabler Icons 3.x paths (MIT). Encoded as image data URIs for self-contained file:// mode.
@@ -1161,6 +1317,19 @@
     function storageSet(key, value) { try { localStorage.setItem(key, value); } catch { return; } }
     function escapeHtml(value) {
       return String(value ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
+    }
+    function renderSourcePreview(text, sourceName = selectedSource) {
+      const preview = byId('source-preview');
+      previewSourceText = String(text ?? '');
+      preview.classList.toggle('rendered', previewMode === 'rendered');
+      preview.classList.toggle('raw', previewMode === 'raw');
+      if (previewMode === 'rendered') preview.innerHTML = ROADMAP_MODEL.renderWorkflowMarkdown(previewSourceText);
+      else preview.textContent = previewSourceText;
+      byId('preview-rendered').setAttribute('aria-pressed', String(previewMode === 'rendered'));
+      byId('preview-raw').setAttribute('aria-pressed', String(previewMode === 'raw'));
+      const label = sourceName || '選択したソース';
+      byId('preview-label').textContent = label;
+      preview.setAttribute('aria-label', `${label}の${previewMode === 'rendered' ? '整形表示' : '原文表示'}`);
     }
     function parseEmbeddedSnapshot() {
       try {
@@ -1408,7 +1577,7 @@
         ? names.map(name => `<button class="source-button" type="button" data-source="${escapeHtml(name)}" aria-pressed="${name === selectedSource}"><strong>${escapeHtml(name)}</strong>${model.snapshot.files[name].length.toLocaleString()}文字</button>`).join('')
         : '<div class="empty">ソースなし</div>';
       const previewText = selectedSource ? model.snapshot.files[selectedSource] : 'ソースを選択してください。';
-      if (byId('source-preview').textContent !== previewText) byId('source-preview').textContent = previewText;
+      if (previewSourceText !== previewText) renderSourcePreview(previewText, selectedSource);
       byId('all-artifact-list').innerHTML = model.artifacts.length
         ? model.artifacts.map(artifact => `<div class="artifact-record"><strong>${escapeHtml(artifact.path)}</strong>${escapeHtml(artifactStateFor(artifact, model))}・${Number(artifact.size).toLocaleString()} bytes・更新 ${escapeHtml(formatRelative(artifact.modifiedAt))}</div>`).join('')
         : '<div class="empty">成果物metadataなし</div>';
@@ -1598,6 +1767,14 @@
         if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); fileInput.click(); }
       });
       document.addEventListener('click', event => {
+        const previewToggle = event.target.closest('[data-preview-mode]');
+        if (previewToggle) {
+          previewMode = previewToggle.dataset.previewMode === 'raw' ? 'raw' : 'rendered';
+          storageSet('roadmapViewerPreviewMode', previewMode);
+          renderSourcePreview(previewSourceText, selectedSource);
+          byId('state-announcer').textContent = `Markdownを${previewMode === 'rendered' ? '整形表示' : '原文表示'}へ切り替えました。`;
+          return;
+        }
         const toggle = event.target.closest('[data-task-toggle]');
         if (toggle) {
           const detail = byId(toggle.getAttribute('aria-controls'));
@@ -1613,7 +1790,7 @@
         if (source) {
           selectedSource = source.dataset.source;
           const preview = currentSnapshot.files[selectedSource] || '';
-          if (byId('source-preview').textContent !== preview) byId('source-preview').textContent = preview;
+          renderSourcePreview(preview, selectedSource);
           document.querySelectorAll('[data-source]').forEach(button => button.setAttribute('aria-pressed', String(button === source)));
           byId('state-announcer').textContent = `${selectedSource}を表示しました。`;
           byId('source-preview').focus({ preventScroll: true });
@@ -1624,7 +1801,7 @@
           openUtility('source-preview');
           const name = artifact.dataset.artifact;
           const preview = currentSnapshot.files[name] || `成果物: ${name}\n本文はmetadataのみ収集しています。`;
-          if (byId('source-preview').textContent !== preview) byId('source-preview').textContent = preview;
+          renderSourcePreview(preview, name);
           byId('state-announcer').textContent = `${name}を表示しました。`;
         }
       });
