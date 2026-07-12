@@ -258,6 +258,40 @@ class FakeClock:
 
 
 class TaskHubSessionTest(unittest.TestCase):
+    def test_server_handles_heartbeat_while_refresh_is_slow(self):
+        refresh_started = threading.Event()
+        release_refresh = threading.Event()
+
+        def slow_builder():
+            refresh_started.set()
+            release_refresh.wait(timeout=1)
+            return {
+                "provider": hub.ProviderSnapshot(
+                    (), True, "2026-07-12T00:00:00+00:00"
+                ),
+                "index": {"tasks": (), "archivedCount": 0},
+            }
+
+        session = hub.TaskHubSession(heartbeat_timeout=1, index_builder=slow_builder)
+        server = hub.create_task_hub_server(("127.0.0.1", 0), session)
+        thread = threading.Thread(
+            target=hub.serve_task_hub, args=(server, session), daemon=True
+        )
+        thread.start()
+        self.addCleanup(release_refresh.set)
+        self.addCleanup(server.server_close)
+
+        self.assertTrue(refresh_started.wait(timeout=1))
+        connection = HTTPConnection(*server.server_address, timeout=0.5)
+        connection.request(
+            "POST", "/api/heartbeat", headers={"X-Roadmap-Session": session.key}
+        )
+        response = connection.getresponse()
+        response.read()
+        self.assertEqual(response.status, 204)
+
+        release_refresh.set()
+
     def test_session_stops_after_heartbeat_timeout(self):
         clock = FakeClock()
         session = hub.TaskHubSession(
