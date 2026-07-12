@@ -67,6 +67,66 @@ class CodexAppServerProviderTest(unittest.TestCase):
         with self.assertRaisesRegex(hub.ProviderError, "failed"):
             provider.list_threads()
 
+    def test_provider_keeps_app_server_session_path_for_live_activity(self):
+        thread = hub.CodexAppServerProvider._to_thread({
+            "id": "t1", "name": "Live", "cwd": "/repo",
+            "status": {"type": "active"}, "createdAt": 10, "updatedAt": 20,
+            "path": "/tmp/session.jsonl",
+        })
+        self.assertEqual(thread.session_path, "/tmp/session.jsonl")
+
+
+class SessionActivityTest(unittest.TestCase):
+    def setUp(self):
+        self.temporary_directory = tempfile.TemporaryDirectory()
+        self.path = Path(self.temporary_directory.name) / "session.jsonl"
+
+    def tearDown(self):
+        self.temporary_directory.cleanup()
+
+    def write_events(self, events):
+        self.path.write_text("".join(json.dumps(event) + "\n" for event in events))
+
+    def test_reads_only_recent_live_signals_without_exposing_arguments_or_outputs(self):
+        self.write_events([
+            {"timestamp": "2026-07-12T08:00:00Z", "type": "event_msg", "payload": {"type": "task_started", "started_at": 1783843200, "turn_id": "turn-1"}},
+            {"timestamp": "2026-07-12T08:00:01Z", "type": "response_item", "payload": {"type": "agent_message", "phase": "commentary", "message": "Live activityを実装しています", "author": "assistant"}},
+            {"timestamp": "2026-07-12T08:00:02Z", "type": "response_item", "payload": {"type": "function_call", "call_id": "call-1", "name": "exec_command", "namespace": "functions", "arguments": "SECRET-COMMAND"}},
+            {"timestamp": "2026-07-12T08:00:03Z", "type": "event_msg", "payload": {"type": "sub_agent_activity", "kind": "started", "agent_thread_id": "agent-1", "agent_path": "/root/worker"}},
+        ])
+        activity = hub.read_session_activity(
+            self.path, now=datetime(2026, 7, 12, 8, 1, tzinfo=timezone.utc)
+        )
+        self.assertEqual(activity["turnState"], "running")
+        self.assertEqual(activity["currentAction"], "Live activityを実装しています")
+        self.assertEqual(activity["runningTools"][0]["name"], "functions.exec_command")
+        self.assertEqual(activity["activeSubagentCount"], 1)
+        self.assertNotIn("SECRET-COMMAND", json.dumps(activity))
+
+    def test_completed_turn_is_user_waiting_and_keeps_recent_completion(self):
+        self.write_events([
+            {"timestamp": "2026-07-12T08:00:00Z", "type": "event_msg", "payload": {"type": "task_started", "started_at": 1783843200, "turn_id": "turn-1"}},
+            {"timestamp": "2026-07-12T08:02:00Z", "type": "event_msg", "payload": {"type": "task_complete", "completed_at": 1783843320, "duration_ms": 120000, "last_agent_message": "実装が完了しました", "turn_id": "turn-1"}},
+        ])
+        activity = hub.read_session_activity(
+            self.path, now=datetime(2026, 7, 12, 8, 3, tzinfo=timezone.utc)
+        )
+        self.assertEqual(activity["turnState"], "user_waiting")
+        self.assertEqual(activity["lastCompleted"], "実装が完了しました")
+        self.assertEqual(activity["activeSubagentCount"], 0)
+        self.assertEqual(activity["elapsedSeconds"], 120)
+
+    def test_explicit_blocked_message_sets_blocker(self):
+        self.write_events([
+            {"timestamp": "2026-07-12T08:00:00Z", "type": "event_msg", "payload": {"type": "task_started", "started_at": 1783843200, "turn_id": "turn-1"}},
+            {"timestamp": "2026-07-12T08:00:01Z", "type": "response_item", "payload": {"type": "agent_message", "phase": "commentary", "message": "BLOCKED: API権限がありません", "author": "assistant"}},
+        ])
+        activity = hub.read_session_activity(
+            self.path, now=datetime(2026, 7, 12, 8, 1, tzinfo=timezone.utc)
+        )
+        self.assertEqual(activity["turnState"], "blocked")
+        self.assertEqual(activity["blocker"], "API権限がありません")
+
 
 class MemoryDiscoveryTest(unittest.TestCase):
     def setUp(self):

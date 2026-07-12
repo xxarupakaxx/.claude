@@ -700,6 +700,15 @@
     .hub-task { display: block; width: 100%; text-align: left; padding: 10px; margin: 4px 0; color: inherit; background: transparent; border: 1px solid transparent; border-radius: 6px; }
     .hub-task:hover, .hub-task[aria-current="true"] { background: var(--surface-soft); border-color: var(--line); }
     .hub-task small, .hub-task span { display: block; color: var(--muted); margin-top: 3px; }
+    .hub-task .hub-live-action { color: var(--text); font-weight: 600; line-height: 1.35; }
+    .hub-live-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; font-size: 12px; color: var(--muted); }
+    .hub-live-grid { display: grid; grid-template-columns: repeat(4, minmax(120px, 1fr)); gap: 10px; margin: 12px 0 22px; }
+    .hub-live-card { padding: 12px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); }
+    .hub-live-card small { display: block; color: var(--muted); margin-bottom: 6px; }
+    .hub-live-card strong { overflow-wrap: anywhere; }
+    .hub-event-list { list-style: none; margin: 0; padding: 0; }
+    .hub-event-list li { display: grid; grid-template-columns: 84px 72px 1fr; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--line); }
+    .hub-event-list time, .hub-event-list span { color: var(--muted); font-size: 12px; }
     .hub-detail-section { margin: 0 0 22px; }
     .hub-detail-section > h2 { font-size: 16px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
     .hub-detail-section .markdown-body { overflow-wrap: anywhere; }
@@ -714,6 +723,9 @@
       .task-hub.show-detail .task-sidebar { display: none; }
       .task-hub.show-detail .task-detail { display: block; }
       .hub-back { display: inline-flex; }
+      .hub-live-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hub-event-list li { grid-template-columns: 72px 1fr; }
+      .hub-event-list li strong { grid-column: 1 / -1; }
     }
   </style>
 </head>
@@ -1919,6 +1931,19 @@
       const stopped = task.freshness === 'stale' || !Number.isFinite(updated) || now - updated > settings.staleMinutes * 60000;
       return stopped ? '更新停止' : '更新中';
     }
+    function hubActivity(task) {
+      const detail = task?.detail && typeof task.detail === 'object' ? task.detail : {};
+      return detail.activity && typeof detail.activity === 'object' ? detail.activity : {};
+    }
+    function hubDuration(seconds) {
+      const value = Math.max(0, Number(seconds) || 0);
+      if (value < 60) return `${Math.floor(value)}秒`;
+      if (value < 3600) return `${Math.floor(value / 60)}分`;
+      return `${Math.floor(value / 3600)}時間${Math.floor((value % 3600) / 60)}分`;
+    }
+    function hubTurnLabel(state) {
+      return ({ running: 'turn実行中', user_waiting: 'user待ち', blocked: 'blockerあり', idle: '停止・未観測' })[state] || '状態不明';
+    }
     function renderHubList(payload, selectedId) {
       const settings = hubStoredSettings();
       const grouped = ROADMAP_MODEL.groupTaskSections(payload.tasks);
@@ -1937,7 +1962,11 @@
         const tasks = grouped[key];
         const body = tasks.length ? tasks.map(task => {
           const freshness = hubFreshnessLabel(task, settings);
-          return `<button class="hub-task" type="button" data-hub-task="${escapeMarkdownHtml(task.id)}" aria-current="${task.id === selectedId}"><strong>${escapeMarkdownHtml(task.title)}</strong><span>${escapeMarkdownHtml(task.explicitState || task.section)}・${freshness}</span><small>${escapeMarkdownHtml(task.updatedAt || '更新時刻なし')}</small></button>`;
+          const activity = hubActivity(task);
+          const action = activity.currentAction || task.summary?.currentAction || '現在作業の記録なし';
+          const tools = Array.isArray(activity.runningTools) ? activity.runningTools.length : 0;
+          const agents = Number(activity.activeSubagentCount || 0);
+          return `<button class="hub-task" type="button" data-hub-task="${escapeMarkdownHtml(task.id)}" aria-current="${task.id === selectedId}"><strong>${escapeMarkdownHtml(task.title)}</strong><span class="hub-live-action">${escapeMarkdownHtml(action)}</span><span>${escapeMarkdownHtml(hubTurnLabel(activity.turnState))}・${freshness}</span><span class="hub-live-meta"><b>tool ${tools}</b><b>agent ${agents}</b><b>${hubDuration(activity.elapsedSeconds)}</b></span><small>${escapeMarkdownHtml(task.updatedAt || '更新時刻なし')}</small></button>`;
         }).join('') : '<p class="hub-empty">該当taskなし</p>';
         if (key === 'recent_completed') return `<details class="hub-section" ${settings.recentCompletedCollapsed ? '' : 'open'}><summary>${label}（${tasks.length}）</summary>${body}</details>`;
         return `<section class="hub-section"><h2>${label}（${tasks.length}）</h2>${body}</section>`;
@@ -1958,21 +1987,39 @@
       const artifacts = Array.isArray(detail.artifacts) ? detail.artifacts : [];
       const artifactMarkdown = artifacts.map(item => `- ${item.name || item.path || 'artifact'}`).join('\n');
       const next = files['40_progress.md'] || summary;
-      const logs = files['05_log.md'] || files['team-journal.md'] || '';
       const approvalLabels = { waiting: '承認待ち', approved: '承認済み', revising: '修正中', unknown: '状態不明' };
+      const activity = hubActivity(task);
+      const runningTools = Array.isArray(activity.runningTools) ? activity.runningTools : [];
+      const agents = Array.isArray(activity.agents) ? activity.agents : [];
+      const timeline = Array.isArray(activity.timeline) ? activity.timeline : [];
+      const toolMarkdown = runningTools.map(tool => `- ${tool.name || 'tool'} — ${tool.startedAt || ''}`).join('\n');
+      const agentMarkdown = agents.map(agent => `- ${agent.path || agent.id || 'agent'} — ${agent.lastKind || 'observed'}`).join('\n');
+      const timelineHtml = timeline.length ? `<ol class="hub-event-list">${timeline.slice(-100).reverse().map(event => `<li><time>${escapeMarkdownHtml(event.at ? new Date(event.at).toLocaleTimeString('ja-JP') : '')}</time><span>${escapeMarkdownHtml(event.kind || 'event')}</span><strong>${escapeMarkdownHtml(event.label || '')}</strong></li>`).join('')}</ol>` : '<p class="hub-empty">直近イベントなし</p>';
       byId('task-detail').innerHTML = `
         <button class="btn hub-back" type="button" id="hub-back">← 一覧へ戻る</button>
         <h1 tabindex="-1" id="hub-detail-heading">${escapeMarkdownHtml(task.title)}</h1>
         <p>${escapeMarkdownHtml(task.explicitState || task.section)}・${escapeMarkdownHtml(hubFreshnessLabel(task, hubStoredSettings()))}</p>
         <button class="btn primary" type="button" id="hub-open-codex">Codexで開く</button>
+        <section class="hub-detail-section" aria-labelledby="hub-live-heading"><h2 id="hub-live-heading">Live状況</h2><div class="hub-live-grid">
+          <div class="hub-live-card"><small>turn</small><strong>${escapeMarkdownHtml(hubTurnLabel(activity.turnState))}</strong></div>
+          <div class="hub-live-card"><small>経過時間</small><strong>${hubDuration(activity.elapsedSeconds)}</strong></div>
+          <div class="hub-live-card"><small>実行中tool</small><strong>${runningTools.length}</strong></div>
+          <div class="hub-live-card"><small>sub-agent稼働数</small><strong>${Number(activity.activeSubagentCount || 0)}</strong></div>
+        </div></section>
+        ${hubMarkdownSection('現在やっていること', activity.currentAction || '')}
+        ${hubMarkdownSection('直近完了', activity.lastCompleted || '')}
+        ${hubMarkdownSection('実行中command / tool', toolMarkdown)}
+        ${hubMarkdownSection('agent一覧', agentMarkdown)}
+        <section class="hub-detail-section"><h2>event timeline</h2>${timelineHtml}</section>
+        ${hubMarkdownSection('blocker', activity.blocker || '')}
+        ${hubMarkdownSection('次の一手', next)}
         ${hubMarkdownSection('概要', summary)}
         ${hubMarkdownSection('設計Plan', plans.designPlan)}
         <section class="hub-detail-section"><h2>承認</h2><p class="hub-status-token">${approvalLabels[plans.approval]}</p></section>
         ${hubMarkdownSection('実装計画', plans.implementationPlan)}
         ${hubMarkdownSection('実装状況', files['40_progress.md'] || '')}
         ${hubMarkdownSection('成果物', artifactMarkdown)}
-        ${hubMarkdownSection('次の一手', next)}
-        ${hubMarkdownSection('ログ / 原文', logs)}
+        ${hubMarkdownSection('検証結果', files['90_verification.md'] || '')}
       `;
       byId('task-hub').classList.add('show-detail');
       byId('hub-back').addEventListener('click', () => {

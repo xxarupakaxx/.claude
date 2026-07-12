@@ -386,6 +386,12 @@ test('task hub shell exposes list detail status settings and responsive behavior
   assert.match(html, /setInterval\(heartbeat, 5000\)/);
   assert.match(html, /response\.status === 409/);
   assert.match(html, /renderWorkflowMarkdown\(markdown\)/);
+  for (const label of ['Live状況', '現在やっていること', '直近完了', '実行中command / tool', 'agent一覧', 'event timeline', 'blocker']) {
+    assert.match(html, new RegExp(label));
+  }
+  assert.match(html, /activeSubagentCount/);
+  assert.match(html, /runningTools/);
+  assert.match(html, /elapsedSeconds/);
 });
 
 test('the selected Plan Canvas information architecture remains in the HTML', () => {

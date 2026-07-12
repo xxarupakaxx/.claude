@@ -27,6 +27,7 @@ class CodexThread:
     status: str
     created_at: int
     updated_at: int
+    session_path: str | None = None
 
 
 @dataclass(frozen=True)
@@ -179,6 +180,144 @@ def _task_to_dict(task: UnifiedTask) -> dict[str, object]:
         "matchCandidates": list(task.match_candidates),
         "summary": task.summary,
         "detail": task.detail,
+    }
+
+
+def _short_text(value: object, limit: int = 180) -> str:
+    text = " ".join(str(value or "").split())
+    return text if len(text) <= limit else text[: limit - 1] + "…"
+
+
+def _tail_json_objects(path: Path, max_bytes: int = 1_000_000) -> list[dict[str, object]]:
+    if path.is_symlink() or path.suffix != ".jsonl" or not path.is_file():
+        return []
+    with path.open("rb") as stream:
+        stream.seek(0, 2)
+        size = stream.tell()
+        stream.seek(max(0, size - max_bytes))
+        if size > max_bytes:
+            stream.readline()
+        raw = stream.read().decode("utf-8", errors="replace")
+    values: list[dict[str, object]] = []
+    for line in raw.splitlines():
+        try:
+            value = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(value, dict):
+            values.append(value)
+    return values
+
+
+def read_session_activity(
+    path: Path | str | None,
+    *,
+    now: datetime | None = None,
+    window_hours: int = 24,
+    max_events: int = 100,
+) -> dict[str, object]:
+    """Build a bounded live view without reconstructing old conversation context."""
+    current_time = now or datetime.now(timezone.utc)
+    cutoff = current_time.timestamp() - window_hours * 3600
+    timeline: list[dict[str, object]] = []
+    pending_tools: dict[str, dict[str, object]] = {}
+    observed_agents: dict[str, dict[str, object]] = {}
+    turn_started_at: float | None = None
+    turn_completed_at: float | None = None
+    completed_duration: int | None = None
+    current_action = ""
+    last_completed = ""
+    blocker = ""
+
+    for record in _tail_json_objects(Path(path)) if path else []:
+        timestamp_text = record.get("timestamp")
+        try:
+            occurred_at = _parse_time(str(timestamp_text)).timestamp()
+        except (TypeError, ValueError):
+            continue
+        if occurred_at < cutoff:
+            continue
+        payload = record.get("payload")
+        if not isinstance(payload, dict):
+            continue
+        event_type = str(payload.get("type", ""))
+        entry: dict[str, object] | None = None
+        if event_type == "task_started":
+            turn_started_at = occurred_at
+            turn_completed_at = None
+            completed_duration = None
+            pending_tools.clear()
+            observed_agents.clear()
+            blocker = ""
+            entry = {"at": str(timestamp_text), "kind": "turn", "label": "turn開始", "status": "running"}
+        elif event_type == "task_complete":
+            turn_completed_at = occurred_at
+            duration = payload.get("duration_ms")
+            completed_duration = int(duration) // 1000 if isinstance(duration, (int, float)) else None
+            last_completed = _short_text(payload.get("last_agent_message")) or "turn完了"
+            pending_tools.clear()
+            entry = {"at": str(timestamp_text), "kind": "turn", "label": last_completed, "status": "complete"}
+        elif event_type in {"function_call", "custom_tool_call"}:
+            call_id = str(payload.get("call_id") or payload.get("id") or "")
+            name = str(payload.get("name") or "tool")
+            namespace = str(payload.get("namespace") or "")
+            display_name = f"{namespace}.{name}" if namespace else name
+            tool = {"id": call_id, "name": display_name, "startedAt": str(timestamp_text)}
+            if call_id:
+                pending_tools[call_id] = tool
+            entry = {"at": str(timestamp_text), "kind": "tool", "label": display_name, "status": "running"}
+        elif event_type in {"function_call_output", "custom_tool_call_output"}:
+            call_id = str(payload.get("call_id") or "")
+            tool = pending_tools.pop(call_id, None)
+            entry = {"at": str(timestamp_text), "kind": "tool", "label": str((tool or {}).get("name", "tool完了")), "status": "complete"}
+        elif event_type == "sub_agent_activity":
+            agent_id = str(payload.get("agent_thread_id") or payload.get("agent_path") or "agent")
+            observed_agents[agent_id] = {
+                "id": agent_id,
+                "path": str(payload.get("agent_path") or ""),
+                "lastKind": str(payload.get("kind") or "observed"),
+            }
+            entry = {"at": str(timestamp_text), "kind": "agent", "label": str(payload.get("agent_path") or agent_id), "status": str(payload.get("kind") or "observed")}
+        elif event_type == "agent_message":
+            message = _short_text(payload.get("message") or payload.get("content"))
+            if message:
+                current_action = message
+                upper = message.upper()
+                if upper.startswith("BLOCKED:"):
+                    blocker = message.split(":", 1)[1].strip()
+                entry = {"at": str(timestamp_text), "kind": "message", "label": message, "status": "info"}
+        elif event_type == "patch_apply_end" and payload.get("success") is False:
+            blocker = _short_text(payload.get("stderr")) or "patch適用エラー"
+            entry = {"at": str(timestamp_text), "kind": "error", "label": blocker, "status": "error"}
+        if entry:
+            timeline.append(entry)
+
+    if blocker:
+        turn_state = "blocked"
+    elif turn_started_at is not None and (turn_completed_at is None or turn_started_at > turn_completed_at):
+        turn_state = "running"
+    elif turn_completed_at is not None:
+        turn_state = "user_waiting"
+    else:
+        turn_state = "idle"
+    if turn_state == "running" and turn_started_at is not None:
+        elapsed_seconds = max(0, int(current_time.timestamp() - turn_started_at))
+    else:
+        elapsed_seconds = completed_duration or 0
+    agents = list(observed_agents.values()) if turn_state in {"running", "blocked"} else []
+    recent = timeline[-max_events:]
+    return {
+        "turnState": turn_state,
+        "currentAction": current_action,
+        "lastCompleted": last_completed,
+        "runningTools": list(pending_tools.values()) if turn_state in {"running", "blocked"} else [],
+        "activeSubagentCount": len(agents),
+        "agents": agents,
+        "lastEvent": recent[-1] if recent else None,
+        "elapsedSeconds": elapsed_seconds,
+        "blocker": blocker or None,
+        "timeline": recent,
+        "retention": {"hours": window_hours, "maxEvents": max_events},
     }
 
 
@@ -479,6 +618,7 @@ class CodexAppServerProvider:
             status=status,
             created_at=int(item.get("createdAt", 0)),
             updated_at=int(item.get("updatedAt", 0)),
+            session_path=str(item.get("path")) if item.get("path") else None,
         )
 
 
@@ -655,11 +795,24 @@ def build_task_index(
         thread_time = datetime.fromtimestamp(thread.updated_at, timezone.utc)
         memory_time = _parse_time(memory.updated_at) if memory is not None else None
         updated_time = max(thread_time, memory_time) if memory_time else thread_time
+        activity = read_session_activity(thread.session_path, now=current_time)
+        last_event = activity.get("lastEvent")
+        if isinstance(last_event, dict) and last_event.get("at"):
+            try:
+                updated_time = max(updated_time, _parse_time(str(last_event["at"])))
+            except ValueError:
+                pass
         age_minutes = max(0.0, (current_time - updated_time).total_seconds() / 60)
         explicit_state = None
         if memory is not None:
             explicit_state = memory.approval_state or memory.task_state
-        section = classify_task(thread.status, explicit_state, age_minutes, 1)
+        activity_state = str(activity.get("turnState") or "idle")
+        if activity_state == "running":
+            section = "running"
+        elif activity_state in {"user_waiting", "blocked"}:
+            section = "waiting"
+        else:
+            section = classify_task(thread.status, explicit_state, age_minutes, 1)
         if section is None:
             archived_count += 1
             continue
@@ -673,6 +826,12 @@ def build_task_index(
         )
         summary = {
             "providerStatus": thread.status,
+            "turnState": activity_state,
+            "currentAction": activity.get("currentAction"),
+            "lastEvent": activity.get("lastEvent"),
+            "elapsedSeconds": activity.get("elapsedSeconds", 0),
+            "activeSubagentCount": activity.get("activeSubagentCount", 0),
+            "runningToolCount": len(activity.get("runningTools", [])),
             **(memory.summary if memory is not None else {}),
         }
         detail = {
@@ -682,6 +841,7 @@ def build_task_index(
                 "cwd": thread.cwd,
                 "status": thread.status,
             },
+            "activity": activity,
             **(memory.detail if memory is not None else {}),
         }
         unified.append(
@@ -689,7 +849,10 @@ def build_task_index(
                 id=thread.id,
                 title=memory.title if memory is not None else thread.title,
                 section=section,
-                explicit_state=explicit_state or thread.status or "unknown",
+                explicit_state=(
+                    activity_state if activity_state != "idle"
+                    else explicit_state or thread.status or "unknown"
+                ),
                 freshness=_freshness(age_minutes),
                 updated_at=updated_time.isoformat(),
                 thread_id=thread.id,

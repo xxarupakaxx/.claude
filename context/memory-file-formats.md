@@ -87,6 +87,8 @@ python3 scripts/generate-roadmap-view.py --hub --memory-root "$MEMORY_DIR/memory
 
 `--memory-root` は複数回指定できる。Hub は loopback 上の OS 割当 port で起動し、Codex app-server の thread と memory task を定期再取得する。起動 URL の fragment にある session key でローカル API を保護し、ブラウザの heartbeat が途絶えると終了する。provider の一時障害時は直近の成功結果を保持して degraded 状態を表示する。
 
+Live Activityはmemory fileへ複製しない。Codex app-serverが返すsession pathのJSONL末尾を一時的に読み、直近24時間・最大100イベントだけをAPI responseへ正規化する。古いcontext、command arguments、tool output全文はsnapshotやmemoryへ保存しない。
+
 ### Live Roadmap Viewer
 
 `roadmap.html` は `scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task>` で生成する。Claude CodeまたはCoworkの横で開きっぱなしにして進捗を見たい場合は次を使う:
