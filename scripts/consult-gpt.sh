@@ -63,7 +63,7 @@ run_codex() {
 }
 
 if [[ -n "$RESUME_ID" ]]; then
-  # resume は元セッションの設定（モデル・サンドボックス）を引き継ぐ
+  # resume ではモデル・サンドボックスを再指定できない（セッション既定で動く）
   run_codex exec resume "$RESUME_ID" --skip-git-repo-check -o "$OUT_FILE" "$PROMPT"
 else
   run_codex exec -m "$MODEL" --sandbox read-only --skip-git-repo-check -o "$OUT_FILE" "${ADVISOR_ROLE}
