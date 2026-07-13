@@ -25,7 +25,7 @@ Claude Code (conductor)
 | パイプライン制御 | `Workflow({script: ...})` | — |
 | 戦略相談・セカンドオピニオン（外部・on-demand） | `consult-gpt`スキル → `scripts/consult-gpt.sh` | gpt-5.5（codex CLI経由） |
 
-通常は model 省略（親セッション継承）。独立3+タスクは Agent() 並列 fan-out。詳細は `rules/model-routing.md`。
+通常は model 省略（親セッション継承）。独立3+タスクは Agent() 並列 fan-out。委任の判断基準は金銭コストではなく価値: 独立した作業幅・隔離された専門知識・独立検証のいずれかがあれば躊躇なく委任し、無いのに同じ文脈を分業させない。詳細は `rules/model-routing.md`。
 
 ## Model / Cost Routing
 
