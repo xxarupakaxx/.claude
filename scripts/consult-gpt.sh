@@ -64,7 +64,8 @@ run_codex() {
 
 if [[ -n "$RESUME_ID" ]]; then
   # resume ではモデル・サンドボックスを再指定できない（セッション既定で動く）
-  run_codex exec resume "$RESUME_ID" --skip-git-repo-check -o "$OUT_FILE" "$PROMPT"
+  # -- はダッシュ始まりプロンプトのオプション誤解釈を防ぐ（codex CLI検証済み）
+  run_codex exec resume "$RESUME_ID" --skip-git-repo-check -o "$OUT_FILE" -- "$PROMPT"
 else
   run_codex exec -m "$MODEL" --sandbox read-only --skip-git-repo-check -o "$OUT_FILE" "${ADVISOR_ROLE}
 
