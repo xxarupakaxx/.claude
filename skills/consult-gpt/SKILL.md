@@ -1,6 +1,7 @@
 ---
 name: consult-gpt
 description: "Claude Code オーケストレーターが、必要な局面だけ GPT(Codex) に単発のセカンドオピニオン相談を投げる Model-invoked スキル。不可逆分岐・案の拮抗・2周連続失敗・taste判断のときに使う。実装の委任には使わない（それは codex:codex-rescue）。「GPTに相談して」「セカンドオピニオンが欲しい」「GPTの意見も聞いて」等の依頼に対応。"
+allowed-tools: Bash, Read
 ---
 
 # /consult-gpt — GPT への単発セカンドオピニオン相談（Board Advisor）
@@ -37,7 +38,8 @@ Board Advisor であり、このスキル経由でのみ相談を受ける。
 ~/.claude/scripts/consult-gpt.sh --resume <session_id> "追い質問"
 ```
 
-- モデルは Codex の `config.toml` 既定（gpt-5.5 / priority）。読み取り専用サンドボックス（`--sandbox read-only`）で実行される。
+- モデルは既定でスクリプトが `gpt-5.5` を明示指定する（`CONSULT_GPT_MODEL` で上書き可。config.toml の既定モデルが CLI 未対応のことがあるため config には任せない）。読み取り専用サンドボックス（`--sandbox read-only`）で実行される。
+- 追い質問（`--resume`）では Board Advisor 役割は再注入されず、モデル・サンドボックスも再指定しない（resume はセッション既定で動く）。
 - 日次上限 8 回の機械ガードあり。超過時は本当に必要かユーザーに確認する。
 - **実行 CWD は相談対象のリポジトリにする**（GPT がその AGENTS.md とコードを読み取り専用で参照できる）。
 
@@ -72,6 +74,8 @@ A案: … / B案: …（自分は A 寄り、確信60%）
 - 相談は Claude 自身の判断の代替ではない: 採否の最終判断と説明責任は conductor（Claude）側に残る。相談結果を鵜呑みにせず、根拠を検証してから採用する。
 
 ## セキュリティ境界
+
+**この節は呼び出し側（Claude）の運用規律であり、スクリプトは技術的に強制しない**（CWD・プロンプト内容の検証は行わない）。
 
 - 既定 CWD は相談対象のリポジトリ。**Vault ルートを CWD にしない**（`Living/`・`Life/` 等の個人機密が読み取り可能になるため）。
 - Vault 内の知識を相談に使う場合も、`automation_read: false` のノートは対象外。ノート本文を相談文に貼らず、必要ならパスだけを渡す。
