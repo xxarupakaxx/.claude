@@ -1,7 +1,7 @@
 # team-run PJ設定 — <プロジェクト名>
 
 > `/team-run` 実行時に team-lead が最初に読む、このPJ固有の設定。
-> グローバルの「動かし方」（`~/.claude/commands/team-run.md`）に対し、
+> グローバルの「動かし方」と終了基準（`~/.claude/context/team-run.md`、入口は `~/.claude/commands/team-run.md`）に対し、
 > ここは「このPJで**何を見て・どう実装し・誰がレビューするか**」を定義する。
 > 不要なセクションは削ってよい。空欄ならグローバル既定で動く。
 

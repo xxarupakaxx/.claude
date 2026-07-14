@@ -21,6 +21,18 @@ Wayfinder は既定では**計画**を行う。
 effort の **Notes** で override し、実行自体を map に含めることもできる。
 その指定がなければ deliverable ではなく decision を作る。
 
+## Delegation と tracker の境界
+
+この skill が map を選んでも、tracker の作成、claim、comment、label、close を自動許可しない。
+それぞれは `../../context/agent-team-routing.md` の External Write Gate を通す。
+
+- **Research ticket** は AFK にできるが、まず local-first で確認する。
+- 外部事実を取りに行く独立 research は、Delegation Gate の Local-first、並列利益、独立証拠、write scope、外部副作用をすべて満たす場合だけ委任する。
+- AFK research の成果は source link と不確実性を含む Markdown asset にし、lead が ticket の決定へ統合する。
+- HITL の grilling、prototype、選好・採否判断を agent が代行しない。
+- tracker の設定がない場合は `setting-up-engineering-skills` を user-invoked の選択肢として提案し、勝手に実行しない。
+- tracker の操作文書がなく、project 設定またはユーザーが明示的に選んだ local-markdown tracker もない場合は、setup proposal を返して停止する。この状態では map、child ticket、claim、comment、label、close、local tracker の新規作成を行わない。
+
 ## 名前で参照する
 
 map と ticket はすべて issue であるため、title という**名前**を持つ。
@@ -41,9 +53,9 @@ map は**索引**であり、情報の保存場所ではない。
 
 **map、child ticket、blocking、frontier query を実際に置く場所と表現方法は tracker ごとに異なる。**
 issue tracker の情報は事前に提供されている必要がある。
-提供されていない場合は `/setting-up-engineering-skills` を実行する。
+提供されていない場合は `/setting-up-engineering-skills` を user-invoked の選択肢として提案する。
 この repo での表現方法は、tracker 文書の「Wayfinding 操作」section を参照する。
-tracker が提供されていない場合は local-markdown tracker を使う。
+tracker が提供されていない場合は、project 設定またはユーザーが明示的に選んだ local-markdown tracker だけを使う。
 
 ### map の body
 
@@ -89,7 +101,7 @@ body には、一つの 100K token agent session で扱える大きさの questi
 各 ticket に `wayfinder:<type>` label を付ける。
 type は `research`、`prototype`、`grilling`、`task` のいずれかである（[Ticket type](#ticket-type) を参照）。
 
-session は作業を始める**前に**、map を進める developer を ticket の assignee に設定して **claim** する。
+session は作業を始める前に、External Write Gate を通したうえで map を進める developer を ticket の assignee に設定して **claim** する。
 これにより、並行する session はその ticket を避ける。
 assignee が claim そのものである。
 open かつ unassigned の ticket は unclaimed である。
@@ -114,7 +126,8 @@ agent が人間側を代行してはならない。
 問いを出す agent が自分で回答した場合、この規則に違反している。
 
 - **Research**（AFK）：documentation、third-party API、knowledge base などの local resource を読む。
-markdown の要約を linked asset として作る。
+local-first で不足し、Delegation Gate を通った独立調査だけを委任できる。
+source link と不確実性を含む Markdown の要約を linked asset として作る。
 現在の working directory 外の知識が必要な場合に使う。
 - **Prototype**（HITL）：反応を得られる安価で粗い具体物を作り、議論の fidelity を高める。
 outline、rough take、stub、`/prototyping-solutions` skill で作る UI または logic code などを使う。
@@ -195,14 +208,15 @@ close 済み ticket は frontier から明確に外れる。
 今回は **breadth-first** で進め、一つの thread を深く追うのではなく全体へ広げ、open decision と現在着手できる最初の step を明らかにする。
 **霧がまったく見つからない場合**、目的地への道はすでに明確で、journey 全体が一つの session に収まる。
 map は不要なので停止し、どのように続けるかユーザーに確認する。
-3. **map を作る**（label は `wayfinder:map`）。
+3. **配置先を確定する。** tracker の操作文書、または project 設定かユーザーが明示的に選んだ local-markdown tracker がなければ、setup proposal を返して停止する。
+4. **map を作る**（label は `wayfinder:map`）。tracker 操作は External Write Gate を通す。
 Destination と Notes を埋め、Decisions-so-far は空にし、霧を **Not yet specified** に描く。
-4. **現在具体化できる ticket を作る。**
+5. **現在具体化できる ticket を作る。**
 map の child issue として作成した後、**二回目の pass** で blocking edge を接続する。
 相互参照には issue id が必要なためである。
 edge によって frontier と blocked に分類する。
 まだ具体化できないものはすべて霧として **Not yet specified** section に残す。
-5. 停止する。
+6. 停止する。
 map の作図が一つの session の作業であり、同じ session で ticket まで解決しない。
 
 ### map を進める
@@ -213,21 +227,22 @@ ticket の指定は任意である。
 
 1. **map** を読み込む。
 すべての ticket body ではなく、低い解像度の view だけを読む。
-2. ticket を選ぶ。
+2. **配置先を確認する。** tracker の操作文書、または project 設定かユーザーが明示的に選んだ local-markdown tracker がなければ、setup proposal を返して停止する。
+3. ticket を選ぶ。
 ユーザーが指定した場合はそれを使う。
 指定がない場合は frontier の先頭を選ぶ。
-作業前に自分を assignee にして **claim** する。
-3. ticket を解決する。
+作業前に External Write Gate を通して自分を assignee にして **claim** する。
+4. ticket を解決する。
 必要に応じて**拡大する**。
 関連する ticket や close 済み ticket の全文は必要なときだけ取得し、`## Notes` block に挙げられた skill を呼び出す。
 迷った場合は `/grilling` と `/modeling-domains` を使う。
-4. 解決結果を記録する。
-回答を **resolution comment** として投稿し、issue を **close** し、context pointer を map の Decisions-so-far に追記する。
-5. 新しく明らかになった ticket を追加する（作成後に edge を接続する）。
+5. 解決結果を記録する。
+External Write Gate を通して回答を **resolution comment** として投稿し、issue を **close** し、context pointer を map の Decisions-so-far に追記する。
+6. 新しく明らかになった ticket を追加する（作成後に edge を接続する）。
 回答によって具体化できるようになった霧を ticket にし、**Not yet specified** から該当部分を削除する。
 情報は新しい ticket だけに置く。
 この ticket または別の ticket が目的地の先にあると判明した場合は、route 上で解決せず**対象外にする**。
-decision によって map の別部分が無効になった場合は、該当 ticket を更新または削除する。
+decision によって map の別部分が無効になった場合は、該当 ticket を更新または close / out-of-scope として扱う。
 
 ユーザーは unblocked ticket を並行して進めることがある。
 他の session も同時に tracker を編集すると想定する。
