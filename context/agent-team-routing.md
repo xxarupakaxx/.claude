@@ -4,6 +4,7 @@ Claude が plugin、skill、`Agent()`、`Workflow` を選ぶための routing SS
 
 - Phase 順序と品質 gate は `context/workflow-rules.md` を優先する。
 - model 選択は `rules/model-routing.md` を優先する。
+- `/team-run` のチーム構成・Review Heat・終了判定は `context/team-run.md` を優先する。
 - project の `AGENTS.md` / `CLAUDE.md` と project 固有設定は、この global routing より優先する。
 - route の入口は `skills/ask-skill-router/SKILL.md` とする。
 
@@ -32,6 +33,20 @@ Plugin が適用されても、それだけで `Agent()` を起動しない。pl
 | 外部副作用 | 外部書き込みがない、または対象と操作が既存 project policy かユーザー承認で許可されている |
 
 同一ファイルの密結合作業、逐次依存、低価値な要約は fan-out しない。reviewer は maker の自己申告ではなく、成果物と fresh な検証証拠を見る。
+
+## Context Boundary
+
+- **Alignment**: `grill-me` / `grilling` は、人間の選好と未決事項を一問ずつ明らかにする。ここでは実装・文書更新を始めない。
+- **Durable artifact**: `grilling-with-docs`、`writing-specifications`、`handing-off-context` は、確認済みの合意だけを保存する。保存先と外部公開は別 gate である。
+- **Fresh implementation context**: route と acceptance が確定した実装単位は、必要な artifact の抽出だけを持って開始する。会話全文や未決の仮説を丸ごと引き継がない。
+
+`mapping-large-projects` は route が霧に包まれた大規模 effort の decision map であり、`team-run` は route と acceptance が既知で、共有状態と独立検証が価値を生む実行協調である。
+
+## Research Ticket Gate
+
+AFK research ticket は facts を集めるためだけに使う。
+local-first の後、Delegation Gate をすべて満たす独立調査だけを `Agent()` または `Workflow` に委任し、source link と不確実性を持つ asset を lead に返す。
+claim、tracker 作成、comment、label、close は External Write Gate を通す。
 
 ## Engineering Lanes
 

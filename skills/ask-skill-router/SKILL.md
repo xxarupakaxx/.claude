@@ -28,6 +28,10 @@ description: "skill / plugin / agent route を選ぶ canonical entrypoint。user
 | 症状 | 推奨 route | 起動権 |
 |---|---|---|
 | 何を作るべきか曖昧で codebase / 状態付き docs がない | `grill-me`、必要なら `brainstorming` | user-invoked |
+| codebase / 状態付き docs を読みながら設計の合意を作る | `grilling-with-docs` | user-invoked |
+| 目的地はあるが、複数 session にまたがる route 自体が霧に包まれている | `mapping-large-projects` | user-invoked |
+| route と acceptance が明確で、小さく閉じる | direct lane / focused discipline | model-invoked または no skill |
+| route と acceptance が明確で、Goal・Team Journal・独立検証を持つ協調が価値を生む | `team-run` または `blueprint` | user-invoked |
 | engineering lifecycle の分岐が必要 | `../../context/agent-team-routing.md` の Engineering Lanes | route ごとに判定 |
 | 独立タスクを複数担当へ割りたい | `team-run`、`orchestrate` | user-invoked |
 | 原因不明の不具合で再現器がない | `diagnosing-bugs` | model-invoked |
@@ -42,6 +46,11 @@ description: "skill / plugin / agent route を選ぶ canonical entrypoint。user
 2. no skill で閉じられなければ、上表で bottleneck を一つ選ぶ。
 3. `../../context/agent-team-routing.md` で具体 route、起動権、Delegation Gate、外部書き込み gate を確認する。
 4. project rule と矛盾する route は採用せず、より小さい route または user confirmation へ戻す。
+
+## Router の保守
+
+shared skill の追加、改名、削除、source pin 更新を行ったら、この表と `../../context/agent-team-routing.md` の入口を再点検する。
+upstream の別名をそのまま増やさず、既存の canonical route と責務境界に収まるかを先に確認する。
 
 ## 出力形式
 

@@ -3,25 +3,25 @@
 > 自律的な開発・レビューループを実現するClaude Code設定群の全体像。
 > このドキュメント単体でシステムの理解・セットアップ・運用が可能。
 
-## 実行モデル（正典）
+## 実行モデル（runtime reference）
 
-**指揮者 = Claude Code。** オーケストレーションは以下の Claude-native 機構に一本化する（Codex spawn_agent は重い実装の委任先として補助的に使う）。
+**指揮者 = Claude lead。** 実行機構ではなく、local-first、Delegation Gate、acceptance、統合判断を lead が所有する。現在の session に capability がある場合だけ、必要な役割へ使う。
 
-| 用途 | 機構 |
-|------|------|
-| パイプライン制御・並列fan-out | **Workflow tool**（`agent()`/`parallel()`/`pipeline()`）※既定 |
-| エージェント間の自律協調（複数ターン） | **Agent Teams**（`/team-run` → `TeamCreate`/`SendMessage`/共有タスクリスト） |
-| 専門レビュー・調査・軽量ワーカー | **Agent(subagent_type / model)** |
-| 重い実装の委任 | `Agent(subagent_type: "codex:codex-rescue")` |
-| 異ベンダー視点のレビュー | `Agent(subagent_type: "cursor:cursor-rescue")` |
+| 用途 | 選び方 |
+|------|--------|
+| ローカル調査・小さく閉じる作業 | lead が逐次実行する |
+| 独立した短命の調査・比較・review | Delegation Gate 後、利用可能な short fan-out capability（例: `Workflow`、`Agent()`）を使う |
+| 複数ターンの共有状態が本質の協調 | `/team-run`。利用可能な Agent Teams は capability の一例であり、必須ではない |
+| 専門レビュー・調査・軽量ワーカー | Delegation Gate 後、session-provided capability で必要な role だけを追加する |
+| 重い実装・異ベンダー視点 | 隔離された専門性と write scope があり、利用可能な capability がある場合だけ委任する |
 
-> **Workflow と Agent Teams の使い分け**: 大半のLoopタスクは Workflow（親が一括投入する並列fan-out、ワーカーは独立・短命）で足りる。エージェント同士が `SendMessage` で往復対話し、共有タスクリストから自律的に仕事を取り、**複数ターンに渡って協調**する必要がある場合のみ Agent Teams（`/team-run`、team-lead = main session）を使う。`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` で有効。`teams/` 配下に実行時状態が生成される（完了後の整理対象）。
+> **fan-out と team-run の使い分け**: 文脈分断より独立検証や並列利益が大きいときだけ fan-out を使う。Goal、Team Journal、Review Heat を共有して複数ターン協調する価値がある場合だけ `/team-run` を使う。`Workflow`、Agent Teams、`Agent()` は利用可能な場合の例であり、feature flag や API 名を仮定しない。capability がなければ lead が同じ acceptance で逐次実行する。
 
 ## 現状ステータス（2026-06-17 時点）
 
 - **配線済み・自律稼働**: `hour-calendar`(毎時) / `morning-kickoff`(09:00) / `jira-spec-poll`(毎時) / `evening-review`(18:00) / `pr-review`(毎時, pr-review-loop経由) / `security-audit`(毎朝) / `slack-to-jira`(毎時) / `generate-diagram-pr`(毎時) / `daily-news`(09:10)
 - **スケジューラの制約（重要）**: これらは Claude アプリ起動中のみ発火する**ベストエフォート**。OSレベルの cron/launchd ではないため「毎時」は保証されない（アプリ未起動時はスキップ、次回起動時に実行）。24/7 が必要なループは launchd 等でCLIをヘッドレス起動する構成が別途必要。
-- **dead/未配線**: `orchestrator` agent は現状どの実行系からも `agentType` 起動されない（このファイルが定義する Conductor パターンの**参照仕様**であり、実際の指揮者役は Workflow が担う）。`implementer`/`ab-judge`/`minutes-classifier` も workflow 内では inline プロンプトで代替している。
+- **dead/未配線**: `orchestrator` agent は現状どの実行系からも `agentType` 起動されない（このファイルが定義する Conductor パターンの**参照仕様**であり、Claude lead が route、統合、検証を担う）。既存の scheduled workflow では Workflow が実行器だが、global default の指揮者ではない。`implementer`/`ab-judge`/`minutes-classifier` も workflow 内では inline プロンプトで代替している。
 
 ## アーキテクチャ概要
 
@@ -232,11 +232,13 @@ Summary ──→ Slack日次サマリー投稿
 |---------|------|
 | `/loop-status` | 全ループの状態表示（スケジュールタスク/ワークフロー/コスト/改善提案） |
 | `/pr-watch [PR]` | PRのCI/レビューを監視し未対応を自動対応。起動時に `/loop 30m /pr-watch <PR>` を自動開始（Esc で停止） |
-| `/team-run "<タスク>"` | Agent Team編成。完了後 Phase 3 で `/pr-watch <PR>` を実行するとループが自動起動しCI/レビュー継続監視 |
+| `/team-run "<タスク>"` | capability を使える場合だけ協調する overlay。PR監視は別 route と必要な承認に従う |
 
 > **`/pr-watch` 監視と `scheduled-tasks/pr-review` の役割差**: `/pr-watch <PR>` は起動時に `/loop 30m /pr-watch <PR>` を自動開始し、**現セッション中**に特定PR1本を30分おき能動監視する（team-run成果のコンテキストを引き継げる／`Esc` で停止）。2回目以降の呼び出しは state の `loop_active: true` により二重起動を防止。一方 `scheduled-tasks/pr-review` は**全 watch_repos** を毎時バッチ巡回（アプリ起動中のベストエフォート）。CI失敗の自動修正（`gh pr checks`→失敗ログ→修正→push）は `/pr-watch` のみが行う。
 
 ## マルチモデルディスパッチ
+
+以下の role は local-first の後、Delegation Gate を通り、現在の session に利用可能な capability がある場合だけ委任する。満たさない場合は Claude lead が同じ acceptance で逐次実行する。
 
 | 用途 | 呼び出し方法 | モデル |
 |------|---------|--------|
@@ -246,7 +248,7 @@ Summary ──→ Slack日次サマリー投稿
 | 重い実装 | `Agent(subagent_type: "codex:codex-rescue")` | gpt-5.x（Codex側で管理） |
 | 専門レビュー | `Agent(subagent_type: "arch-reviewer")` 等 | 継承 |
 | 過去知見検索 | `Agent(subagent_type: "learnings-researcher")` | 継承 |
-| パイプライン制御 | `Workflow({script: ...})` | — |
+| パイプライン制御 | 利用可能な `Workflow` 等の capability。なければ逐次実行 | — |
 
 詳細: `~/.claude/rules/model-routing.md`（Single Source of Truth）
 
@@ -350,7 +352,7 @@ grep "stop-harness-improve" ~/.claude/settings.json
 # ループステータス表示
 # Claude Code内で /loop-status を実行
 
-# 手動ワークフロー実行テスト
+# 手動ワークフロー実行テスト（Workflow が提供される環境だけ）
 # Claude Code内で以下を実行:
 #   Workflow({name: 'morning-kickoff'})
 #   Workflow({name: 'evening-review'})
