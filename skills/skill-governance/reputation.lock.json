@@ -1,0 +1,221 @@
+{
+  "generated_at": "2026-07-15",
+  "policy": {
+    "approval_use": "advisory-only",
+    "popularity_is_approval": false
+  },
+  "schema_version": 1,
+  "snapshots": [
+    {
+      "archived": false,
+      "assessment": "一次仕様の trust anchor。Skill 実装の一括承認には使わない。",
+      "evidence_urls": [
+        "https://github.com/agentskills/agentskills"
+      ],
+      "forks": 1629,
+      "github": "agentskills/agentskills",
+      "head_matches_pin": true,
+      "issues_enabled": true,
+      "license_signal": "Apache-2.0",
+      "observed_at": "2026-07-15",
+      "observed_revision": "38a2ff82958afee88dadf4831509e6f7e9d8ef4e",
+      "open_issues": 29,
+      "security_policy": false,
+      "source_id": "agent-skills-spec",
+      "stars": 23064,
+      "trust_role": "specification"
+    },
+    {
+      "archived": false,
+      "assessment": "公式 curated examples だが、license evidence gap が大きく一括再利用不可。",
+      "evidence_urls": [
+        "https://github.com/openai/plugins"
+      ],
+      "forks": 664,
+      "github": "openai/plugins",
+      "head_matches_pin": true,
+      "issues_enabled": false,
+      "license_signal": "root license absent; per-plugin review required",
+      "observed_at": "2026-07-15",
+      "observed_revision": "11c74d6ba24d3a6d48f54a194cd00ef3beea18f9",
+      "open_issues": 0,
+      "security_policy": false,
+      "source_id": "openai-plugins",
+      "stars": 4583,
+      "trust_role": "vendor-reference"
+    },
+    {
+      "archived": false,
+      "assessment": "公式でも skill ごとの license と critical-use testing が必要。",
+      "evidence_urls": [
+        "https://github.com/anthropics/skills"
+      ],
+      "forks": 19045,
+      "github": "anthropics/skills",
+      "head_matches_pin": true,
+      "issues_enabled": true,
+      "license_signal": "per-skill mixed; some source-available and non-OSS",
+      "observed_at": "2026-07-15",
+      "observed_revision": "9d2f1ae187231d8199c64b5b762e1bdf2244733d",
+      "open_issues": 292,
+      "security_policy": false,
+      "source_id": "anthropic-skills",
+      "stars": 161210,
+      "trust_role": "vendor-reference"
+    },
+    {
+      "archived": false,
+      "assessment": "配布 CLI の参照。install と network surface を trust anchor にしない。",
+      "evidence_urls": [
+        "https://github.com/vercel-labs/skills"
+      ],
+      "forks": 2193,
+      "github": "vercel-labs/skills",
+      "head_matches_pin": true,
+      "issues_enabled": true,
+      "license_signal": "README says MIT; root license file absent",
+      "observed_at": "2026-07-15",
+      "observed_revision": "5527c09adc367612b0bffd9c80e3bc28a6b01b6d",
+      "open_issues": 600,
+      "security_policy": false,
+      "source_id": "vercel-skills-cli",
+      "stars": 26158,
+      "trust_role": "distribution-reference"
+    },
+    {
+      "archived": false,
+      "assessment": "活発で全40件に license evidence があるが、人気は approval ではない。",
+      "evidence_urls": [
+        "https://github.com/mattpocock/skills"
+      ],
+      "forks": 14694,
+      "github": "mattpocock/skills",
+      "head_matches_pin": true,
+      "issues_enabled": true,
+      "license_signal": "MIT",
+      "observed_at": "2026-07-15",
+      "observed_revision": "e9fcdf95b402d360f90f1db8d776d5dd450f9234",
+      "open_issues": 164,
+      "security_policy": false,
+      "source_id": "mattpocock-skills",
+      "stars": 170770,
+      "trust_role": "community-candidate"
+    },
+    {
+      "archived": false,
+      "assessment": "強い採用 signal はあるが、hooks と global process gate を伴い得るため standard path では L2。",
+      "evidence_urls": [
+        "https://github.com/obra/superpowers"
+      ],
+      "forks": 22780,
+      "github": "obra/superpowers",
+      "head_matches_pin": true,
+      "issues_enabled": true,
+      "license_signal": "MIT",
+      "observed_at": "2026-07-15",
+      "observed_revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
+      "open_issues": 154,
+      "security_policy": false,
+      "source_id": "obra-superpowers",
+      "stars": 254846,
+      "trust_role": "methodology-candidate"
+    },
+    {
+      "archived": false,
+      "assessment": "公式 collection でも deploy、network、credential 系を含み、9件すべて license-file gap。",
+      "evidence_urls": [
+        "https://github.com/vercel-labs/agent-skills"
+      ],
+      "forks": 2605,
+      "github": "vercel-labs/agent-skills",
+      "head_matches_pin": true,
+      "issues_enabled": true,
+      "license_signal": "README says MIT; root license file absent",
+      "observed_at": "2026-07-15",
+      "observed_revision": "f8a72b9603728bb92a217a879b7e62e43ad76c81",
+      "open_issues": 59,
+      "security_policy": false,
+      "source_id": "vercel-agent-skills",
+      "stars": 29077,
+      "trust_role": "vendor-candidate"
+    },
+    {
+      "archived": false,
+      "assessment": "保守と security signal は良いが、credential、network、MCP 能力が主で standard path では L2。",
+      "evidence_urls": [
+        "https://github.com/microsoft/azure-skills",
+        "https://github.com/microsoft/azure-skills/security/policy"
+      ],
+      "forks": 207,
+      "github": "microsoft/azure-skills",
+      "head_matches_pin": true,
+      "issues_enabled": true,
+      "license_signal": "MIT",
+      "observed_at": "2026-07-15",
+      "observed_revision": "39464cbe27e2b8b72a50fdb104fdabfdb301ef61",
+      "open_issues": 2,
+      "security_policy": true,
+      "source_id": "microsoft-azure-skills",
+      "stars": 1283,
+      "trust_role": "vendor-candidate"
+    },
+    {
+      "archived": false,
+      "assessment": "license と活動は明確。Hub token や model/dataset 操作は L2 として隔離が必要。",
+      "evidence_urls": [
+        "https://github.com/huggingface/skills"
+      ],
+      "forks": 717,
+      "github": "huggingface/skills",
+      "head_matches_pin": true,
+      "issues_enabled": true,
+      "license_signal": "Apache-2.0",
+      "observed_at": "2026-07-15",
+      "observed_revision": "52d324945107f68d06d561743cf26194bdbf9cf8",
+      "open_issues": 7,
+      "security_policy": false,
+      "source_id": "huggingface-skills",
+      "stars": 10814,
+      "trust_role": "vendor-candidate"
+    },
+    {
+      "archived": false,
+      "assessment": "活発で全24件に license evidence があるが、自己記述と人気を approval にしない。",
+      "evidence_urls": [
+        "https://github.com/addyosmani/agent-skills"
+      ],
+      "forks": 8420,
+      "github": "addyosmani/agent-skills",
+      "head_matches_pin": true,
+      "issues_enabled": true,
+      "license_signal": "MIT",
+      "observed_at": "2026-07-15",
+      "observed_revision": "98967c45a42b88d6b8fb3a88b7ff6273920763d6",
+      "open_issues": 48,
+      "security_policy": false,
+      "source_id": "addyosmani-agent-skills",
+      "stars": 78381,
+      "trust_role": "community-candidate"
+    },
+    {
+      "archived": false,
+      "assessment": "best-effort scanner。false positive/negative と human review 必須の補助 signal としてのみ使う。",
+      "evidence_urls": [
+        "https://github.com/cisco-ai-defense/skill-scanner",
+        "https://github.com/cisco-ai-defense/skill-scanner/security/policy"
+      ],
+      "forks": 290,
+      "github": "cisco-ai-defense/skill-scanner",
+      "head_matches_pin": true,
+      "issues_enabled": true,
+      "license_signal": "Apache-2.0; GitHub SPDX NOASSERTION",
+      "observed_at": "2026-07-15",
+      "observed_revision": "41fec4a9570ba1d195d12dbb0b4d140a35e63068",
+      "open_issues": 9,
+      "security_policy": true,
+      "source_id": "cisco-skill-scanner",
+      "stars": 2354,
+      "trust_role": "optional-security-signal"
+    }
+  ]
+}
