@@ -1,0 +1,731 @@
+schema_version = 1
+generation = 1
+authority = "codex"
+hash_algorithm = "skill-tree-sha256-v1"
+python_min = "3.11"
+quarantine_root = "~/.local/share/skill-governance/quarantine"
+review_root = "~/.local/share/skill-governance/review"
+
+[policy]
+auto_install = false
+auto_update = false
+auto_retire = false
+auto_delete = false
+candidate_code_execution = false
+network_default = "offline"
+promotion_requires_human_approval = true
+
+[coverage_policy]
+scope_bases = [
+  "/Users/yoshiki/ghq/github.com/xxarupakaxx/.codex",
+  "~/.claude",
+  "~/.agents",
+  "/Users/yoshiki/Notes/Vault/.codex",
+  "/Users/yoshiki/Notes/Vault/.claude",
+  "/Users/yoshiki/Notes/Vault/.agents",
+  "/Users/yoshiki/Notes/Vault/.claude-global",
+  "/Users/yoshiki/Notes/Vault/_shared-ai",
+]
+excluded_dir_names = [".git", "__pycache__", "node_modules", ".venv", "venv"]
+
+[coverage_policy.excluded_dir_reasons]
+".git" = "repository metadata; not a Skill runtime surface"
+"__pycache__" = "generated Python bytecode; never authoritative Skill source"
+"node_modules" = "vendored dependency content; counted separately and never promoted as a top-level Skill"
+".venv" = "generated virtual environment; counted separately and never authoritative Skill source"
+"venv" = "generated virtual environment; counted separately and never authoritative Skill source"
+
+[[estate_hash_normalizations]]
+root_id = "codex"
+relative_path = "skill-governance"
+files = ["estate.lock.json", "reputation.lock.json"]
+reason = "break the estate self-hash cycle and keep volatile advisory reputation evidence outside runtime trust-lock churn; Git parity and delivery still verify both files"
+
+[[estate_hash_normalizations]]
+root_id = "claude"
+relative_path = "skill-governance"
+files = ["estate.lock.json", "reputation.lock.json"]
+reason = "break the estate self-hash cycle and keep volatile advisory reputation evidence outside runtime trust-lock churn; Git parity and delivery still verify both files"
+
+[[coverage_symlinks]]
+path = "~/.codex/plugins/cache/openai-bundled/chrome/latest"
+root_id = "codex-plugin-cache"
+expected_target = "/Users/yoshiki/.codex/plugins/cache/openai-bundled/chrome/26.623.81905"
+allow_missing_target = true
+reason = "vendor-managed non-runtime latest pointer; record the stale target but never follow it during governance scans"
+
+[[name_inferences]]
+root_id = "codex"
+relative_path = "analyse"
+inferred_name = "analyse"
+tree_sha256 = "e603afcde552daa69f8bf240875f7fcd5b2177e14def007ee892f15a8b5220a2"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[name_inferences]]
+root_id = "codex"
+relative_path = "analyse-problem"
+inferred_name = "analyse-problem"
+tree_sha256 = "d1b4e3ce494004e59f23b9aa2ac52ee5948155507941a27070adda49542833a3"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[name_inferences]]
+root_id = "codex"
+relative_path = "commit"
+inferred_name = "commit"
+tree_sha256 = "2d39ef4a071c4be136f815ec01ad3c118ee9489d98a7c4d0be04e9b715892bd5"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[name_inferences]]
+root_id = "codex"
+relative_path = "hardgate-disable"
+inferred_name = "hardgate-disable"
+tree_sha256 = "9953bcf2f506cdcf95bcf13e482646e46f4a1e10b242f17ecbf881e4bd3aa47b"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[name_inferences]]
+root_id = "codex"
+relative_path = "plan-do-check-act"
+inferred_name = "plan-do-check-act"
+tree_sha256 = "c01152f94f2406b557823a7886f3b2c7027cae9dd46487795908ca755c98a669"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[name_inferences]]
+root_id = "codex"
+relative_path = "pr"
+inferred_name = "pr"
+tree_sha256 = "c184b0a60f1f7c3039cf62684a475a51fd3a6c6923f6b6d7fb91a20e8540405a"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[name_inferences]]
+root_id = "codex"
+relative_path = "why"
+inferred_name = "why"
+tree_sha256 = "5f34688345f5811943d4678f1af72b1a25fb50e8652be7c583abcfff244179cb"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[name_inferences]]
+root_id = "vault-codex"
+relative_path = "analyse"
+inferred_name = "analyse"
+tree_sha256 = "e603afcde552daa69f8bf240875f7fcd5b2177e14def007ee892f15a8b5220a2"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[name_inferences]]
+root_id = "vault-codex"
+relative_path = "analyse-problem"
+inferred_name = "analyse-problem"
+tree_sha256 = "d1b4e3ce494004e59f23b9aa2ac52ee5948155507941a27070adda49542833a3"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[name_inferences]]
+root_id = "vault-codex"
+relative_path = "commit"
+inferred_name = "commit"
+tree_sha256 = "2d39ef4a071c4be136f815ec01ad3c118ee9489d98a7c4d0be04e9b715892bd5"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[name_inferences]]
+root_id = "vault-codex"
+relative_path = "hardgate-disable"
+inferred_name = "hardgate-disable"
+tree_sha256 = "9953bcf2f506cdcf95bcf13e482646e46f4a1e10b242f17ecbf881e4bd3aa47b"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[name_inferences]]
+root_id = "vault-codex"
+relative_path = "plan-do-check-act"
+inferred_name = "plan-do-check-act"
+tree_sha256 = "c01152f94f2406b557823a7886f3b2c7027cae9dd46487795908ca755c98a669"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[name_inferences]]
+root_id = "vault-codex"
+relative_path = "pr"
+inferred_name = "pr"
+tree_sha256 = "c184b0a60f1f7c3039cf62684a475a51fd3a6c6923f6b6d7fb91a20e8540405a"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[name_inferences]]
+root_id = "vault-codex"
+relative_path = "why"
+inferred_name = "why"
+tree_sha256 = "5f34688345f5811943d4678f1af72b1a25fb50e8652be7c583abcfff244179cb"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+
+[[coverage_exclusions]]
+path = "~/.codex/.tmp"
+reason = "ephemeral download, staging, and incomplete marketplace state; never a runtime trust source"
+
+[[coverage_exclusions]]
+path = "~/.codex/tmp"
+reason = "ephemeral Codex command wrappers; counted as excluded content and never a Skill runtime trust source"
+
+[[coverage_exclusions]]
+path = "~/.codex/backups"
+reason = "historical backup copies; not runtime or promotion targets"
+
+[[coverage_exclusions]]
+path = "~/.claude/backups"
+reason = "historical backup copies; not runtime or promotion targets"
+
+[parity]
+authority_package = "~/.codex/skills/skill-governance"
+replica_package = "~/.claude/skills/skill-governance"
+shared_paths = [
+  "agents/openai.yaml",
+  "catalog.lock.json",
+  "estate.lock.json",
+  "references/baseline-2026-07-15.md",
+  "references/lifecycle.md",
+  "references/source-reputation-2026-07-15.md",
+  "registry.toml",
+  "registry.lock.json",
+  "reputation.lock.json",
+  "scripts/governance.py",
+  "scripts/test_governance.py",
+]
+adapter_paths = ["SKILL.md"]
+shared_repo_paths = [
+  "skills/ask-skill-router/SKILL.md",
+  "skills/skill-stocktake/SKILL.md",
+  "workflows/skill-governance.md",
+]
+
+[[parity.integration_checks]]
+id = "global-instructions"
+codex_path = "AGENTS.md"
+claude_path = "CLAUDE.md"
+start_marker = "<!-- skill-governance-contract:global:start -->"
+end_marker = "<!-- skill-governance-contract:global:end -->"
+sha256 = "1c3bd001af6dba2b2a87a04488d55c0e5c3d0ebe190ddb768534e43f69fc9295"
+
+[[parity.integration_checks]]
+id = "agent-team-routing"
+codex_path = "context/agent-team-routing.md"
+claude_path = "context/agent-team-routing.md"
+start_marker = "<!-- skill-governance-contract:routing:start -->"
+end_marker = "<!-- skill-governance-contract:routing:end -->"
+sha256 = "c1fdf72a038ba189477101dbbf366b8d5902e163e5297cd80fb4d4144bde64d9"
+
+[[parity.integration_checks]]
+id = "workflow-rules"
+codex_path = "context/workflow-rules.md"
+claude_path = "context/workflow-rules.md"
+start_marker = "<!-- skill-governance-contract:workflow:start -->"
+end_marker = "<!-- skill-governance-contract:workflow:end -->"
+sha256 = "bcb3988779b068832f5dc953ed53942edb2bb0dc893fce1985b68e35dbfb4b56"
+
+[delivery]
+branch = "main"
+remote = "origin"
+
+[[delivery.repos]]
+id = "codex"
+path = "/Users/yoshiki/ghq/github.com/xxarupakaxx/.codex"
+remote_url = "ssh://git@github.com/xxarupakaxx/.codex.git"
+required_paths = [
+  "AGENTS.md",
+  "context/agent-team-routing.md",
+  "context/workflow-rules.md",
+  "skills/ask-skill-router/SKILL.md",
+  "skills/skill-governance",
+  "skills/skill-stocktake/SKILL.md",
+  "workflows/skill-governance.md",
+]
+
+[[delivery.repos]]
+id = "claude"
+path = "/Users/yoshiki/.claude"
+remote_url = "ssh://git@github.com/xxarupakaxx/.claude.git"
+required_paths = [
+  "CLAUDE.md",
+  "context/agent-team-routing.md",
+  "context/workflow-rules.md",
+  "skills/ask-skill-router/SKILL.md",
+  "skills/skill-governance",
+  "skills/skill-stocktake/SKILL.md",
+  "workflows/skill-governance.md",
+]
+
+[[holds]]
+id = "vault-gitlink-conflict"
+repo = "/Users/yoshiki/Notes/Vault"
+paths = [".codex", ".claude-global"]
+applies_to_roots = [
+  "vault-codex",
+  "vault-claude",
+  "vault-shared",
+  "vault-codex-scheduled",
+  "vault-codex-claude-compat-scheduled",
+  "vault-claude-global",
+  "vault-claude-global-scheduled",
+  "vault-shared-ai",
+  "vault-codex-mirror",
+  "vault-claude-mirror",
+]
+policy = "block-mutation"
+
+[[roots]]
+id = "codex"
+path = "~/.codex/skills"
+runtimes = ["codex"]
+precedence = 10
+role = "active"
+scan_mode = "recursive"
+collision_scope = "runtime"
+namespace_mode = "none"
+targetable = true
+required = true
+
+[[roots]]
+id = "claude"
+path = "~/.claude/skills"
+runtimes = ["claude"]
+precedence = 10
+role = "active"
+scan_mode = "recursive"
+collision_scope = "runtime"
+namespace_mode = "none"
+targetable = true
+required = true
+
+[[roots]]
+id = "shared"
+path = "~/.agents/skills"
+runtimes = ["codex", "claude"]
+precedence = 20
+role = "shared-active"
+scan_mode = "recursive"
+collision_scope = "runtime"
+namespace_mode = "none"
+targetable = true
+required = true
+
+[[roots]]
+id = "vault-codex"
+path = "/Users/yoshiki/Notes/Vault/.codex/skills"
+runtimes = ["codex"]
+precedence = 5
+role = "project-active"
+scan_mode = "recursive"
+collision_scope = "runtime"
+namespace_mode = "none"
+targetable = false
+required = true
+
+[[roots]]
+id = "vault-claude"
+path = "/Users/yoshiki/Notes/Vault/.claude/skills"
+runtimes = ["claude"]
+precedence = 5
+role = "project-active"
+scan_mode = "recursive"
+collision_scope = "runtime"
+namespace_mode = "none"
+targetable = false
+required = true
+
+[[roots]]
+id = "vault-shared"
+path = "/Users/yoshiki/Notes/Vault/.agents/skills"
+runtimes = ["codex", "claude"]
+precedence = 5
+role = "project-active"
+scan_mode = "recursive"
+collision_scope = "runtime"
+namespace_mode = "none"
+targetable = false
+required = true
+
+[[roots]]
+id = "codex-plugin-cache"
+path = "~/.codex/plugins/cache"
+runtimes = ["codex"]
+precedence = 50
+role = "vendor-managed-cache"
+scan_mode = "recursive"
+collision_scope = "namespaced"
+namespace_mode = "plugin"
+targetable = false
+required = true
+
+[[roots]]
+id = "claude-plugin-cache"
+path = "~/.claude/plugins/cache"
+runtimes = ["claude"]
+precedence = 50
+role = "vendor-managed-cache"
+scan_mode = "recursive"
+collision_scope = "namespaced"
+namespace_mode = "plugin"
+targetable = false
+required = true
+
+[[roots]]
+id = "claude-marketplaces"
+path = "~/.claude/plugins/marketplaces"
+runtimes = ["claude"]
+precedence = 50
+role = "marketplace-source"
+scan_mode = "recursive"
+collision_scope = "namespaced"
+namespace_mode = "plugin"
+targetable = false
+required = true
+
+[[roots]]
+id = "codex-scheduled"
+path = "~/.codex/scheduled-tasks"
+runtimes = ["codex"]
+precedence = 60
+role = "automation-snapshot"
+scan_mode = "recursive"
+collision_scope = "catalog-only"
+namespace_mode = "root"
+targetable = false
+required = true
+
+[[roots]]
+id = "codex-claude-compat-scheduled"
+path = "~/.codex/claude-compat/scheduled-tasks"
+runtimes = ["codex", "claude"]
+precedence = 65
+role = "compatibility-snapshot"
+scan_mode = "recursive"
+collision_scope = "catalog-only"
+namespace_mode = "root"
+targetable = false
+required = true
+
+[[roots]]
+id = "codex-memory-skills"
+path = "~/.codex/memories/skills"
+runtimes = ["codex"]
+precedence = 70
+role = "memory-generated"
+scan_mode = "recursive"
+collision_scope = "catalog-only"
+namespace_mode = "root"
+targetable = false
+required = true
+
+[[roots]]
+id = "vault-codex-scheduled"
+path = "/Users/yoshiki/Notes/Vault/.codex/scheduled-tasks"
+runtimes = ["codex"]
+precedence = 75
+role = "project-automation-snapshot"
+scan_mode = "recursive"
+collision_scope = "catalog-only"
+namespace_mode = "root"
+targetable = false
+required = true
+
+[[roots]]
+id = "vault-codex-claude-compat-scheduled"
+path = "/Users/yoshiki/Notes/Vault/.codex/claude-compat/scheduled-tasks"
+runtimes = ["codex", "claude"]
+precedence = 76
+role = "project-compatibility-snapshot"
+scan_mode = "recursive"
+collision_scope = "catalog-only"
+namespace_mode = "root"
+targetable = false
+required = true
+
+[[roots]]
+id = "vault-claude-global"
+path = "/Users/yoshiki/Notes/Vault/.claude-global/skills"
+runtimes = []
+precedence = 80
+role = "conflicted-gitlink-snapshot"
+scan_mode = "recursive"
+collision_scope = "catalog-only"
+namespace_mode = "root"
+targetable = false
+required = true
+
+[[roots]]
+id = "vault-claude-global-scheduled"
+path = "/Users/yoshiki/Notes/Vault/.claude-global/scheduled-tasks"
+runtimes = []
+precedence = 81
+role = "conflicted-gitlink-automation-snapshot"
+scan_mode = "recursive"
+collision_scope = "catalog-only"
+namespace_mode = "root"
+targetable = false
+required = true
+
+[[roots]]
+id = "vault-shared-ai"
+path = "/Users/yoshiki/Notes/Vault/_shared-ai/skills"
+runtimes = ["codex", "claude"]
+precedence = 85
+role = "shared-policy-library"
+scan_mode = "recursive"
+collision_scope = "catalog-only"
+namespace_mode = "root"
+targetable = false
+required = true
+
+[[roots]]
+id = "claude-scheduled"
+path = "~/.claude/scheduled-tasks"
+runtimes = ["claude"]
+precedence = 60
+role = "automation-snapshot"
+scan_mode = "recursive"
+collision_scope = "catalog-only"
+namespace_mode = "root"
+targetable = false
+required = true
+
+[[roots]]
+id = "vault-codex-mirror"
+path = "/Users/yoshiki/Notes/Vault/_shared-ai/mirrors/codex/skills"
+runtimes = []
+precedence = 90
+role = "mirror-only"
+scan_mode = "recursive"
+collision_scope = "catalog-only"
+namespace_mode = "root"
+targetable = false
+required = true
+
+[[roots]]
+id = "vault-claude-mirror"
+path = "/Users/yoshiki/Notes/Vault/_shared-ai/mirrors/claude/skills"
+runtimes = []
+precedence = 90
+role = "mirror-only"
+scan_mode = "recursive"
+collision_scope = "catalog-only"
+namespace_mode = "root"
+targetable = false
+required = true
+
+[[sources]]
+id = "agent-skills-spec"
+github = "agentskills/agentskills"
+default_branch = "main"
+observed_revision = "38a2ff82958afee88dadf4831509e6f7e9d8ef4e"
+observed_at = "2026-07-15"
+origin = "open-standard"
+mode = "specification"
+update_policy = "notify-only"
+catalog_required = true
+
+[[sources]]
+id = "openai-plugins"
+github = "openai/plugins"
+default_branch = "main"
+observed_revision = "11c74d6ba24d3a6d48f54a194cd00ef3beea18f9"
+observed_at = "2026-07-15"
+origin = "vendor-official"
+mode = "watch"
+update_policy = "notify-only"
+catalog_required = true
+
+[[sources]]
+id = "anthropic-skills"
+github = "anthropics/skills"
+default_branch = "main"
+observed_revision = "9d2f1ae187231d8199c64b5b762e1bdf2244733d"
+observed_at = "2026-07-15"
+origin = "vendor-official"
+mode = "watch"
+update_policy = "notify-only"
+catalog_required = true
+
+[[sources]]
+id = "vercel-skills-cli"
+github = "vercel-labs/skills"
+default_branch = "main"
+observed_revision = "5527c09adc367612b0bffd9c80e3bc28a6b01b6d"
+observed_at = "2026-07-15"
+origin = "vendor-official"
+mode = "distribution-reference"
+update_policy = "notify-only"
+catalog_required = true
+
+[[sources]]
+id = "mattpocock-skills"
+github = "mattpocock/skills"
+default_branch = "main"
+observed_revision = "e9fcdf95b402d360f90f1db8d776d5dd450f9234"
+observed_at = "2026-07-15"
+origin = "community-maintainer"
+mode = "selective-adoption"
+update_policy = "notify-only"
+catalog_required = true
+
+[[sources]]
+id = "obra-superpowers"
+github = "obra/superpowers"
+default_branch = "main"
+observed_revision = "d884ae04edebef577e82ff7c4e143debd0bbec99"
+observed_at = "2026-07-15"
+origin = "community-maintainer"
+mode = "watch"
+update_policy = "notify-only"
+catalog_required = true
+
+[[sources]]
+id = "vercel-agent-skills"
+github = "vercel-labs/agent-skills"
+default_branch = "main"
+observed_revision = "f8a72b9603728bb92a217a879b7e62e43ad76c81"
+observed_at = "2026-07-15"
+origin = "vendor-official"
+mode = "watch"
+update_policy = "notify-only"
+catalog_required = true
+
+[[sources]]
+id = "microsoft-azure-skills"
+github = "microsoft/azure-skills"
+default_branch = "main"
+observed_revision = "39464cbe27e2b8b72a50fdb104fdabfdb301ef61"
+observed_at = "2026-07-15"
+origin = "vendor-official"
+mode = "watch"
+update_policy = "notify-only"
+catalog_required = true
+
+[[sources]]
+id = "huggingface-skills"
+github = "huggingface/skills"
+default_branch = "main"
+observed_revision = "52d324945107f68d06d561743cf26194bdbf9cf8"
+observed_at = "2026-07-15"
+origin = "vendor-official"
+mode = "watch"
+update_policy = "notify-only"
+catalog_required = true
+
+[[sources]]
+id = "addyosmani-agent-skills"
+github = "addyosmani/agent-skills"
+default_branch = "main"
+observed_revision = "98967c45a42b88d6b8fb3a88b7ff6273920763d6"
+observed_at = "2026-07-15"
+origin = "community-maintainer"
+mode = "watch"
+update_policy = "notify-only"
+catalog_required = true
+
+[[sources]]
+id = "cisco-skill-scanner"
+github = "cisco-ai-defense/skill-scanner"
+default_branch = "main"
+observed_revision = "41fec4a9570ba1d195d12dbb0b4d140a35e63068"
+observed_at = "2026-07-15"
+origin = "vendor-security-tool"
+mode = "optional-scanner"
+update_policy = "notify-only"
+catalog_required = true
+
+ [reputation_policy]
+snapshot_document = "references/source-reputation-2026-07-15.md"
+snapshot_data = "reputation.lock.json"
+popularity_is_approval = false
+approval_use = "advisory-only"
+
+[[collections]]
+id = "mattpocock-legacy-2026-07"
+source_id = "mattpocock-skills"
+local_state = "legacy-active"
+review_state = "evidence-gap"
+approval_receipt = ""
+value_receipt = ""
+risk_tier = "unclassified"
+license = "MIT"
+adaptation = "shared-identical"
+content_relation = "localized-adaptation"
+targets = ["codex", "claude"]
+default_revision = "391a2701dd948f94f56a39f7533f8eea9a859c87"
+baseline_at = "2026-07-15"
+evidence_gap = [
+  "per-skill-upstream-tree",
+  "local-adaptation-diff",
+  "security-review-receipt",
+  "value-receipt",
+  "human-approval-receipt",
+]
+skills = [
+  "choosing-skills",
+  "conducting-quality-assurance",
+  "creating-tracer-tickets",
+  "designing-codebases",
+  "designing-workflows",
+  "editing-articles",
+  "generating-setup-wizards",
+  "grilling",
+  "grilling-with-docs",
+  "guarding-git-commands-in-claude-code",
+  "handing-off-context",
+  "handing-off-to-claude",
+  "implementing-work",
+  "improving-codebase-architecture",
+  "managing-obsidian-vaults",
+  "mapping-large-projects",
+  "migrating-to-shoehorn",
+  "modeling-domains",
+  "planning-refactors",
+  "prototyping-solutions",
+  "resolving-merge-conflicts",
+  "reviewing-code",
+  "scaffolding-exercises",
+  "setting-up-engineering-skills",
+  "setting-up-pre-commit-hooks",
+  "setting-up-ts-deep-modules",
+  "teaching-concepts",
+  "triaging-issues",
+  "writing-beats",
+  "writing-fragments",
+  "writing-great-skills",
+  "writing-shape",
+  "writing-specifications",
+]
+
+[collections.revision_overrides]
+grilling = "66898f60e8c744e269f8ce06c2b2b99ce7660d5f"
+mapping-large-projects = "66898f60e8c744e269f8ce06c2b2b99ce7660d5f"
+
+[[route_relations]]
+id = "architecture-improvement"
+members = [
+  "improving-codebase-architecture",
+  "improving-architecture",
+  "software-architecture",
+  "designing-codebases",
+]
+relation = "semantic-overlap-with-distinct-entrypoints"
+routing = [
+  "broad-scoped-survey:improving-codebase-architecture",
+  "selected-module-improvement:improving-architecture",
+  "new-system-boundaries:software-architecture",
+  "deep-module-vocabulary:designing-codebases",
+]
+
+[[local_origins]]
+name = "improving-architecture"
+origin_type = "local-synthesis"
+historical_origin_commit = "e8c145e6949d97f50d8887c5ade613a85a03daeb"
+relationship_to_mattpocock = "semantic-overlap"
+direct_upstream_path = ""
+
+[[update_candidates]]
+id = "mattpocock-improving-codebase-architecture-scope-rule"
+source_id = "mattpocock-skills"
+source_name = "improve-codebase-architecture"
+local_name = "improving-codebase-architecture"
+revision = "e9fcdf95b402d360f90f1db8d776d5dd450f9234"
+state = "update-available"
+targets = ["codex", "claude", "vault-codex"]
+delta = "scope-before-scan / recent-hot-spot YAGNI rule"
+adopted_in_policy = true
+runtime_content_updated = false
+blocked_by_hold = "vault-gitlink-conflict"

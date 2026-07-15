@@ -1,125 +1,117 @@
 ---
 name: skill-stocktake
-description: "全スキルを評価し、keep/improve/retire/mergeを判定する棚卸しスキル。スキル肥大化を防ぎ、品質を維持する。定期的に（月1回程度）実行を推奨。"
+description: "設定済みの全 Skill root と固定 revision の外部 catalog を棚卸しし、keep / improve / retire / merge を提案する。provenance、collision、利用証拠、runtime 露出を区別し、変更は人間承認後に skill-governance へ渡す。"
 ---
 
-# Skill Stocktake — スキル棚卸し
+# Skill Stocktake
 
-## 概要
+## 目的
 
-`~/.claude/skills/`配下の全スキルを自動評価し、以下の判定を行う:
-- **KEEP**: 現状維持（有用で最新）
-- **IMPROVE**: 改善が必要（古い情報、不足あり）
-- **RETIRE**: 引退（使われていない、他に代替あり）
-- **MERGE**: 統合候補（類似スキルが存在）
+`skill-governance` の機械 inventory を土台に、Skill estate 全体の品質と役割分担を見直す。単一の `skills/` directory、人気順、観測できた利用回数だけで判定しない。
+
+判定は提案であり、runtime の変更ではない。
+
+- **KEEP**: 現状維持。
+- **IMPROVE**: 内容、provenance、adapter、routing、eval の補完候補。
+- **RETIRE**: route から外す候補。file 削除とは分ける。
+- **MERGE**: 重複責務の統合候補。
 
 ## トリガー
 
 - 「スキルを棚卸しして」
 - 「使っていないスキルはある？」
 - `/skill-stocktake`
-- 月1回の定期メンテナンス
+- 月1回の read-only maintenance
 
-## 評価基準
+## 原則
 
-各スキルを以下のチェックリストで評価:
+1. configured root を全件列挙し、存在しない root も coverage gap として残す。
+2. candidate catalog と active runtime を混同しない。
+3. `legacy-active`、`deprecated`、`in-progress`、fixture、mirror、plugin namespace を区別する。
+4. 利用履歴がないことと、利用を観測できないことを区別する。0回だけで RETIRE にしない。
+5. 同名でも内容が異なる collision と、別名でも同じ出典・責務を持つ alias を調べる。
+6. KEEP / IMPROVE / RETIRE / MERGE は証拠付きの提案に限定する。変更、移動、削除、promotion は人間承認後に `skill-governance` へ渡す。
 
-### 1. 有用性 (Utility)
-- [ ] 過去30日以内に使用されたか（`~/.claude/skill-usage.jsonl`で定量判定）
-  - **0回**: 未使用 → RETIRE候補の加点材料
-  - **1-5回**: 低頻度 → 要注意
-  - **6回以上**: アクティブ
-- [ ] 他のスキルと重複していないか
-- [ ] 現在のワークフロー（Phase 0-5.5）で参照されているか
+## Step 1: 機械 inventory
 
-### 2. 最新性 (Currency)
-- [ ] 参照しているツール・APIが現在も存在するか
-- [ ] ベストプラクティスが最新か
-- [ ] 依存するMCP/エージェントが有効か
-
-### 3. 品質 (Quality)
-- [ ] YAML frontmatterが正しいか
-- [ ] トリガー条件が明確か
-- [ ] 手順が具体的で再現可能か
-
-### 4. 整合性 (Consistency)
-- [ ] CLAUDE.mdのワークフローと矛盾していないか
-- [ ] 他のスキルとの境界が明確か
-- [ ] 命名規則に従っているか
-
-## 実行プロセス
-
-### Step 1: スキル一覧と使用頻度データの収集
+authority である Codex package を read-only で実行する。
 
 ```bash
-# スキル一覧
-~/.claude/skills/*/SKILL.md を全件読み取り
-
-# 使用頻度データ（過去30日分を集計）
-jq -r 'select(.timestamp >= "YYYY-MM-DDT00:00:00Z") | .skill' ~/.claude/skill-usage.jsonl \
-  | sort | uniq -c | sort -rn
+python3 ~/.codex/skills/skill-governance/scripts/governance.py inventory --json
+python3 ~/.codex/skills/skill-governance/scripts/governance.py catalog --json
+python3 ~/.codex/skills/skill-governance/scripts/governance.py audit --json
+python3 ~/.codex/skills/skill-governance/scripts/governance.py parity --json
+python3 ~/.codex/skills/skill-governance/scripts/governance.py sources --json
 ```
 
-使用頻度データが存在しない（ファイルがない or 空）場合は「データ不足」と記録し、
-従来通り間接的な痕跡ベースで判定する。
+次を確認する。
 
-### Step 2: 並列評価
+- root 別の検出数、missing / skipped path、coverage completeness。
+- logical name と raw name の collision。
+- registry、lock、catalog、authority / replica generation の一致。
+- source revision、全 `SKILL.md` path、fixture / deprecated 等の role。
+- license、provenance、review receipt、value receipt の gap。
 
-各スキルを`explorer`サブエージェントで評価（5並列）:
+## Step 2: 利用と参照の証拠
 
-**評価プロンプト**:
-> このスキルのSKILL.mdを読み、以下を評価してください:
-> 1. 他のスキルと機能が重複していないか（skills/一覧を参照）
-> 2. 参照しているツール・エージェントが存在するか
-> 3. CLAUDE.mdのワークフローと整合しているか
-> 4. **使用頻度**: 過去30日の呼び出し回数は N 回（0回=未使用、1-5=低頻度、6+=アクティブ）
-> 判定: KEEP / IMPROVE / RETIRE / MERGE（理由付き）
+利用履歴は補助証拠として扱う。記録 file が存在しない、runtime ごとに収集範囲が違う、plugin invocation が Skill 名として残らない場合は `unobservable` と記録する。
 
-### Step 3: レポート生成
+次も横断確認する。
+
+- global / project instructions、routing table、workflow、schedule、playbook からの参照。
+- Codex / Claude の `commands/`、`skills/`、`prompts/`、plugin cache、marketplace、project root。
+- 同じ機能が別 artifact 種別または別名で提供されていないか。
+
+schedule、playbook、note から durable に参照されているものは、短期の利用観測が乏しいだけで RETIRE にしない。
+
+## Step 3: cohort review
+
+全件をまず機械分類し、次の cohort を優先して内容を読む。
+
+1. active collision または trigger overlap。
+2. `legacy-active`、provenance / license / receipt 不足。
+3. upstream drift、deprecated、in-progress。
+4. 高権限 script、network、credential、hook、global config を含むもの。
+5. 利用価値または routing が不明な長期未観測 Skill。
+
+sub-agent は Delegation Gate を満たす独立 cohort がある場合だけ使う。固定数の agent を無条件に起動しない。
+
+## Step 4: 判定
+
+各判定には次を付ける。
+
+- logical name、全 evidence path、runtime exposure。
+- source と固定 revision。分からなければ `unknown`。
+- usage evidence の観測範囲と限界。
+- overlap / collision / alias の相手。
+- safety、value、maintenance cost。
+- 提案、owner、再評価日、実行時の approval gate。
+
+`eval-harness` の pass@k は value evidence の一部であり、採用判定そのものではない。
+
+## Step 5: レポートと承認
 
 ```markdown
 # Skill Stocktake Report — YYYY-MM-DD
 
-## Summary
-- Total: N skills
-- KEEP: N
-- IMPROVE: N
-- RETIRE: N
-- MERGE: N
+## Coverage
+- Configured roots: N / N scanned
+- Local entries: N
+- Pinned source paths: N
+- Gaps: N
 
-## Details
+## Decisions
+| Skill / route | State | Proposal | Evidence | Approval needed |
+|---|---|---|---|---|
+| ... | ... | KEEP / IMPROVE / RETIRE / MERGE | ... | ... |
 
-### KEEP
-| スキル | 理由 |
-|--------|------|
-| ... | ... |
-
-### IMPROVE
-| スキル | 改善点 |
-|--------|--------|
-| ... | ... |
-
-### RETIRE候補
-| スキル | 理由 | 代替 |
-|--------|------|------|
-| ... | ... | ... |
-
-### MERGE候補
-| スキルA | スキルB | 統合案 |
-|---------|---------|--------|
-| ... | ... | ... |
+## Blockers
+- active collision
+- unpinned source
+- unknown license
+- authority / replica drift
 ```
 
-### Step 4: ユーザー確認
+変更へ進む場合だけ、対象 diff、rollback、registry generation を示して承認を取る。承認なしで file の変更、削除、promotion、update、retire を行わない。
 
-AskUserQuestionで以下を確認:
-- RETIRE候補の削除承認
-- MERGE候補の統合承認
-- IMPROVE候補の改善着手
-
-**ユーザー承認なしで削除・変更は行わない**
-
-## 注意事項
-
-- `knowledge-management.md`ルールに従い、スキルファイルの直接Editは承認必要
-- レポートは`${MEMORY_DIR}/memory/`配下に保存
+レポートは `${MEMORY_DIR}/memory/` 配下へ保存する。

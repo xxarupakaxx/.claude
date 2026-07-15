@@ -59,12 +59,14 @@ Phase の順序はこのファイルを SSoT とする。一方、各Phaseで **
 | `grilling-with-docs` | Phase 1-2 | codebase と docs に alignment を蓄積する | alignment、spec、ticket 化までは同じ文脈を保ち、個別 ticket 実装は durable artifact から fresh に始める |
 | `prototyping-solutions` | Phase 1-2 | 一つの design question に対する decision evidence | production 実装ではない。branch、issue、commit は project policy と承認に従う |
 | `modeling-domains` / `designing-codebases` | Phase 1-2 | domain vocabulary / deep-module vocabulary | global process、ADR gate、実装許可を所有しない |
+| `software-architecture` | Phase 1-2 | 新規systemの境界、bounded context、DDD判断 | 既存codebaseの改善surveyや選択済みmoduleの局所改善を置き換えない。実装はPhase 3の別gate |
 | `writing-specifications` | Phase 2 | 合意済み会話を test seam を含む spec にする | 再インタビューや無承認の tracker 公開を行わない |
 | `creating-tracer-tickets` | Phase 2-2.5 | 承認済み spec を垂直 slice と blocking edge にする | `deepening-plan`、Blueprint WU、Sprint Contract を置き換えない |
 | `triaging-issues` | Phase 1-2 | raw incoming issue / PR を agent-ready にする | 生成済み tracer ticket を再 triage せず、外部更新は承認を分ける |
 | `implementing-work` | Phase 3 | spec / ticket から実装対象を取得する adapter | global の調査、TDD、品質確認、review、commit / push policyを上書きしない |
 | `reviewing-code` | Phase 4 または read-only review | fixed point から Standards / Spec の二軸を独立確認する | Phase 4 の severity、修正 gate、mandatory review、最終出荷判定を置き換えない |
-| `improving-codebase-architecture` | Phase 1-2 | architecture survey と候補選択 | broad refactor の実装許可ではない |
+| `improving-codebase-architecture` | Phase 1-2 | user scope または recent hot spot に絞った architecture survey と HTML 候補選択 | repo write と broad refactor の実装許可ではない |
+| `improving-architecture` | Phase 1-2 | 選択済みの1〜3 moduleを Deletion Test、Seam、Locality で改善設計 | broad survey ではない。実装は Phase 3 の別 gate |
 | `handing-off-context` | Phase 間 / 次 session の Phase 0 | durable handoff artifact | active Phase の gate を飛ばさず、別 session や外部投稿を自動実行しない |
 
 ### スキル・コマンドの役割
@@ -570,7 +572,11 @@ Phase直結でないユーティリティスキル。**状況が発生したら*
 
 | 状況 | スキル | やること |
 |------|--------|---------|
-| スキルが増えすぎた（月1回目安） | `skill-stocktake` | 全スキルをkeep/improve/retire/merge判定 |
+| Skill estate の定期点検（月1回目安） | `skill-governance` → `skill-stocktake` | configured root と固定 revision catalog を全件 inventory し、keep/improve/retire/mergeを証拠付きで提案 |
+| 外部 Skill の発見、評判、導入、更新、廃止 | `skill-governance` | catalog と runtime を分離し、pin・hash・license・review・value eval・人間承認を通す |
+<!-- skill-governance-contract:workflow:start -->
+外部Skillのruntime変更は、固定revision catalog、全内容hash、安全審査、価値eval、人間承認、Codex・Claude parity、配布証明の順にgateする。自動install、無審査update、自動deleteは行わない。
+<!-- skill-governance-contract:workflow:end -->
 | スキルの品質を数値で評価したい | `eval-harness` | pass@kメトリクスで信頼性測定 |
 | 知見ファイルの整理 | `/cleanup-knowledge` | 30日未参照→アーカイブ候補、同一タグ→統合候補 |
 

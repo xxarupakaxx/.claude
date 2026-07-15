@@ -1,0 +1,6 @@
+interface:
+  display_name: "Skill Governance"
+  short_description: "Inspect and govern third-party Agent Skills safely"
+  default_prompt: "Audit the Agent Skill estate without making changes."
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,636 @@
+{
+  "artifacts": {
+    "mattpocock-legacy-2026-07/choosing-skills": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "choosing-skills",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "e0cf730a5bcb4ff695f33a7e4e1033442425d0c96f57e80c1e8185663e446d8a"
+        },
+        "codex": {
+          "tree_sha256": "e0cf730a5bcb4ff695f33a7e4e1033442425d0c96f57e80c1e8185663e446d8a"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/conducting-quality-assurance": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "conducting-quality-assurance",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "7773e609344360c856fd1bd6b836391a8e85ca38ffe52005a50f98a33e89f050"
+        },
+        "codex": {
+          "tree_sha256": "7773e609344360c856fd1bd6b836391a8e85ca38ffe52005a50f98a33e89f050"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/creating-tracer-tickets": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "creating-tracer-tickets",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "651f7acf96984bd4ce246be4473a781c92727d241ac95c21617ce431e7d5aed1"
+        },
+        "codex": {
+          "tree_sha256": "651f7acf96984bd4ce246be4473a781c92727d241ac95c21617ce431e7d5aed1"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/designing-codebases": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "designing-codebases",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "4dd1890defa213301f8a45245033dd46eb04258bec4405eea5d52726d47c7d08"
+        },
+        "codex": {
+          "tree_sha256": "4dd1890defa213301f8a45245033dd46eb04258bec4405eea5d52726d47c7d08"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/designing-workflows": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "designing-workflows",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "0b23f2b33a6cbb965d032afedeeae76726efffce9e9e356e0f9acf26443fefaf"
+        },
+        "codex": {
+          "tree_sha256": "0b23f2b33a6cbb965d032afedeeae76726efffce9e9e356e0f9acf26443fefaf"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/editing-articles": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "editing-articles",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "368ec6042a31ba72d31a229f276be9f78279835335070dc1e4ae95dae1576a35"
+        },
+        "codex": {
+          "tree_sha256": "368ec6042a31ba72d31a229f276be9f78279835335070dc1e4ae95dae1576a35"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/generating-setup-wizards": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "generating-setup-wizards",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "7b9852b2059f95ccbbb810aa19e5141933db9184d14483feb537529ce64c96e7"
+        },
+        "codex": {
+          "tree_sha256": "7b9852b2059f95ccbbb810aa19e5141933db9184d14483feb537529ce64c96e7"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/grilling": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "grilling",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "66898f60e8c744e269f8ce06c2b2b99ce7660d5f",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "f20f498358b899a408e154456e417e36e8d9fc144be6b39c7679dae0e3878b5f"
+        },
+        "codex": {
+          "tree_sha256": "f20f498358b899a408e154456e417e36e8d9fc144be6b39c7679dae0e3878b5f"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/grilling-with-docs": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "grilling-with-docs",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "f06d7ae8791560388644b689777d98e8cd49ce3878be1af45701e5c2c3dc7082"
+        },
+        "codex": {
+          "tree_sha256": "f06d7ae8791560388644b689777d98e8cd49ce3878be1af45701e5c2c3dc7082"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/guarding-git-commands-in-claude-code": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "guarding-git-commands-in-claude-code",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "2fba405ca18a1e1dee28d68f6860119f3dba9b1a205d128165c2a16058b54450"
+        },
+        "codex": {
+          "tree_sha256": "2fba405ca18a1e1dee28d68f6860119f3dba9b1a205d128165c2a16058b54450"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/handing-off-context": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "handing-off-context",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "ec39ad38e271b121157baf3d2b8ad836762c339ea14c13f390100b311fbc15dd"
+        },
+        "codex": {
+          "tree_sha256": "ec39ad38e271b121157baf3d2b8ad836762c339ea14c13f390100b311fbc15dd"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/handing-off-to-claude": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "handing-off-to-claude",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "2f00dc85ad3255f3cac28f5faf6eaca36674a106342a341877f534d5a3d6cae9"
+        },
+        "codex": {
+          "tree_sha256": "2f00dc85ad3255f3cac28f5faf6eaca36674a106342a341877f534d5a3d6cae9"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/implementing-work": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "implementing-work",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "03d122df35837de324eb51588a492f33b79d724940d7f7e8c4e6d7f4d693f615"
+        },
+        "codex": {
+          "tree_sha256": "03d122df35837de324eb51588a492f33b79d724940d7f7e8c4e6d7f4d693f615"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/improving-codebase-architecture": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "improving-codebase-architecture",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "075ed88fe19e10de12612cada3c6f12d3ff69be10a578f6f5c276f50aa5c8856"
+        },
+        "codex": {
+          "tree_sha256": "075ed88fe19e10de12612cada3c6f12d3ff69be10a578f6f5c276f50aa5c8856"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/managing-obsidian-vaults": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "managing-obsidian-vaults",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "08dbce92f23aa9c042fe05f6a83a08afe278fae856130297f7761c738996f2d0"
+        },
+        "codex": {
+          "tree_sha256": "08dbce92f23aa9c042fe05f6a83a08afe278fae856130297f7761c738996f2d0"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/mapping-large-projects": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "mapping-large-projects",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "66898f60e8c744e269f8ce06c2b2b99ce7660d5f",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "966e87bc95bba15d5e47203da013de03009f3972925271769ce416a19802e97d"
+        },
+        "codex": {
+          "tree_sha256": "966e87bc95bba15d5e47203da013de03009f3972925271769ce416a19802e97d"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/migrating-to-shoehorn": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "migrating-to-shoehorn",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "1ec4811adfeb8543398e94f1784170429328588bbfb7a8f4d9f6d99aaa76126c"
+        },
+        "codex": {
+          "tree_sha256": "1ec4811adfeb8543398e94f1784170429328588bbfb7a8f4d9f6d99aaa76126c"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/modeling-domains": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "modeling-domains",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "656357bbea5776805a9af823d24cb18a0272f361deb0a50beafb744ccbed3709"
+        },
+        "codex": {
+          "tree_sha256": "656357bbea5776805a9af823d24cb18a0272f361deb0a50beafb744ccbed3709"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/planning-refactors": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "planning-refactors",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "3d2c06bd94dfafff148c6897b0bd16f31a3d83597d7b85cfb62d63d971e95f52"
+        },
+        "codex": {
+          "tree_sha256": "3d2c06bd94dfafff148c6897b0bd16f31a3d83597d7b85cfb62d63d971e95f52"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/prototyping-solutions": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "prototyping-solutions",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "7af25ae8f26458933ecc4aa3472fbd8f305a47187a36d6fd279ef10bda1376cc"
+        },
+        "codex": {
+          "tree_sha256": "7af25ae8f26458933ecc4aa3472fbd8f305a47187a36d6fd279ef10bda1376cc"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/resolving-merge-conflicts": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "resolving-merge-conflicts",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "9be30726b8cffcb911cfb862ccfcf0c59ce1b915245ce2ff068ac16f3fcd6f75"
+        },
+        "codex": {
+          "tree_sha256": "9be30726b8cffcb911cfb862ccfcf0c59ce1b915245ce2ff068ac16f3fcd6f75"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/reviewing-code": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "reviewing-code",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "51aa603e7a6bfaab064a79ac6b9becde7c0e4211827517a91f2f68c9a49d02b2"
+        },
+        "codex": {
+          "tree_sha256": "51aa603e7a6bfaab064a79ac6b9becde7c0e4211827517a91f2f68c9a49d02b2"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/scaffolding-exercises": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "scaffolding-exercises",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "ee774375111c85f3a7081ca0ea0edc7e944dbe01a8a63bbd5f20b58212908f94"
+        },
+        "codex": {
+          "tree_sha256": "ee774375111c85f3a7081ca0ea0edc7e944dbe01a8a63bbd5f20b58212908f94"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/setting-up-engineering-skills": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "setting-up-engineering-skills",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "a75f936b752d96d3a504eb0bc2fd0bf7d37ad36b0b3bdfdf66be5e3b9fcfaa92"
+        },
+        "codex": {
+          "tree_sha256": "a75f936b752d96d3a504eb0bc2fd0bf7d37ad36b0b3bdfdf66be5e3b9fcfaa92"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/setting-up-pre-commit-hooks": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "setting-up-pre-commit-hooks",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "455030c11176f9965d5f531efdc80d01e0bd5e89b94ca137f2667b71522f3ec1"
+        },
+        "codex": {
+          "tree_sha256": "455030c11176f9965d5f531efdc80d01e0bd5e89b94ca137f2667b71522f3ec1"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/setting-up-ts-deep-modules": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "setting-up-ts-deep-modules",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "a4f4bcbe269ed7c2095738f63d36f2d9c13168e2e41a2cefa3dd0ca08887a061"
+        },
+        "codex": {
+          "tree_sha256": "a4f4bcbe269ed7c2095738f63d36f2d9c13168e2e41a2cefa3dd0ca08887a061"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/teaching-concepts": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "teaching-concepts",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "a47b2986fa63bb73f9cbd80e5debf81b4ee2f8d5a63cee55733b04aa104365bc"
+        },
+        "codex": {
+          "tree_sha256": "a47b2986fa63bb73f9cbd80e5debf81b4ee2f8d5a63cee55733b04aa104365bc"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/triaging-issues": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "triaging-issues",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "8d29f0f16b63d32a32da133d7fb2b31717fac8112f4ba384af15c5b1f00d30db"
+        },
+        "codex": {
+          "tree_sha256": "8d29f0f16b63d32a32da133d7fb2b31717fac8112f4ba384af15c5b1f00d30db"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/writing-beats": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "writing-beats",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "e6902a55f73749a190cf001a27c8f1df522539f29a5faf447ae732de49264b86"
+        },
+        "codex": {
+          "tree_sha256": "e6902a55f73749a190cf001a27c8f1df522539f29a5faf447ae732de49264b86"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/writing-fragments": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "writing-fragments",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "4a2f786649ca606c72a3421af38cd6d22407b49b1cd2a3d7857f14670d55ecf0"
+        },
+        "codex": {
+          "tree_sha256": "4a2f786649ca606c72a3421af38cd6d22407b49b1cd2a3d7857f14670d55ecf0"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/writing-great-skills": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "writing-great-skills",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "25659fc0617b8f35a74aafb7efb99881560e4bffd3c8ef9a275b06eeb3a88381"
+        },
+        "codex": {
+          "tree_sha256": "25659fc0617b8f35a74aafb7efb99881560e4bffd3c8ef9a275b06eeb3a88381"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/writing-shape": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "writing-shape",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "adc9df40ff176920fada461a016a1b99c524150836864dffa721cfa04832226d"
+        },
+        "codex": {
+          "tree_sha256": "adc9df40ff176920fada461a016a1b99c524150836864dffa721cfa04832226d"
+        }
+      },
+      "value_receipt": null
+    },
+    "mattpocock-legacy-2026-07/writing-specifications": {
+      "approval_receipt": null,
+      "collection_id": "mattpocock-legacy-2026-07",
+      "local_name": "writing-specifications",
+      "local_state": "legacy-active",
+      "promotion_receipt": null,
+      "review_state": "evidence-gap",
+      "source_revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "subject_sha256": "5c7c03a6ba0eb137e573ee2a9d86dedddaaf4a20e8dbae5c9d56cadc60518fef",
+      "targets": {
+        "claude": {
+          "tree_sha256": "aa0eb5c317315c54df60c0b4496005a85b36ab12672ffd0ebc3e329778a28f9d"
+        },
+        "codex": {
+          "tree_sha256": "aa0eb5c317315c54df60c0b4496005a85b36ab12672ffd0ebc3e329778a28f9d"
+        }
+      },
+      "value_receipt": null
+    }
+  },
+  "generated_at": "2026-07-15",
+  "generation": 1,
+  "hash_algorithm": "skill-tree-sha256-v1",
+  "registry_sha256": "cb03e86c76f3194e6bcaea860da367017a20b7390ffc01ca2c1dfe31dd48eb95",
+  "schema_version": 1
+}

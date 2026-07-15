@@ -37,6 +37,7 @@ description: "skill / plugin / agent route を選ぶ canonical entrypoint。user
 | 原因不明の不具合で再現器がない | `diagnosing-bugs` | model-invoked |
 | test seam があり新規ロジックやバグ修正を進める | `tdd` | model-invoked |
 | 外部事実や最新仕様が必要 | `research`、Context7、WebSearch、deepwiki | model-invoked |
+| 外部 Skill の発見、評判、導入、更新、廃止、provenance / collision 確認 | `skill-governance`。棚卸しだけなら `skill-stocktake` | mutation は user-invoked、read-only audit は model-invoked可 |
 | 完了前の証拠が弱い | `verification-loop`、`verify`、適切な review skill | model-invoked |
 | plugin が所有する source / deliverable を扱う | `../../context/agent-team-routing.md` の plugin route | route ごとに判定 |
 
@@ -49,7 +50,7 @@ description: "skill / plugin / agent route を選ぶ canonical entrypoint。user
 
 ## Router の保守
 
-shared skill の追加、改名、削除、source pin 更新を行ったら、この表と `../../context/agent-team-routing.md` の入口を再点検する。
+shared skill の追加、改名、削除、source pin 更新を行ったら、`skill-governance` の registry / lock / parity を先に確認し、この表と `../../context/agent-team-routing.md` の入口を再点検する。
 upstream の別名をそのまま増やさず、既存の canonical route と責務境界に収まるかを先に確認する。
 
 ## 出力形式
