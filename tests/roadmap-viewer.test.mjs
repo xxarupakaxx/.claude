@@ -424,6 +424,38 @@ test('marks holistic failure as the next decision before ordinary missing eviden
   assert.match(result.nextDecision.label, /holistic/);
 });
 
+test('uses the final review verdict instead of historical revision rounds', () => {
+  const result = model.buildModel(model.normalizeSnapshot({
+    generatedAt,
+    files: {
+      'team-journal.md': `## Outcome Trace
+
+| Outcome | Requirement | Implementation | Acceptance | Evidence | State |
+| --- | --- | --- | --- | --- | --- |
+| O-1 shipped | R1 | Task 1 | AC-01 | tests | matched |
+`,
+      '80_review.md': `# Review
+
+最終判定：APPROVE。CRITICAL 0、IMPORTANT 0、MINOR 0。
+
+| Round | 判定 |
+| --- | --- |
+| 1 | NEEDS-REVISION |
+| 2 | APPROVE |
+
+## 修正済みIMPORTANT
+
+1. historical findingを修正した。
+`
+    }
+  }), { nowMs });
+
+  assert.equal(result.traceSummary.failedHolistic, 0);
+  assert.equal(result.traceSummary.matched, 1);
+  assert.equal(result.outcomes[0].state, 'matched');
+  assert.equal(result.reviews.important, 0);
+});
+
 test('falls back safely when Outcome Trace is absent', () => {
   const result = model.buildModel(model.normalizeSnapshot({
     generatedAt,
