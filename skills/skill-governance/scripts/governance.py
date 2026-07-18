@@ -1004,7 +1004,7 @@ def validate_registry(data: dict[str, Any]) -> list[Finding]:
 
     normalization_keys: set[tuple[str, str]] = set()
     allowed_control_files = {"estate.lock.json", "reputation.lock.json"}
-    expected_normalizations = {("codex", "skill-governance"), ("claude", "skill-governance")}
+    expected_normalizations = {("codex", "skill-governance"), ("claude", "skill-governance"), ("vault-codex", "skill-governance")}
     for entry in data.get("estate_hash_normalizations", []):
         root_id = entry.get("root_id") if isinstance(entry, dict) else None
         relative_path = entry.get("relative_path") if isinstance(entry, dict) else None
@@ -1573,6 +1573,8 @@ def planned_estate_lock(
                 governed[(str(target), str(name))] = classification
     records: list[dict[str, Any]] = []
     for record in inventory.get("records", []):
+        if record.get("disabled_by_selector") is True:
+            continue
         root_id = str(record.get("root_id", ""))
         if root_id not in runtime_root_ids:
             continue
@@ -1614,7 +1616,7 @@ def runtime_state_presence_findings(registry: dict[str, Any], inventory: dict[st
     present = {
         (str(record.get("root_id", "")), str(record.get("resolved_name", "")))
         for record in inventory.get("records", [])
-        if isinstance(record, dict)
+        if isinstance(record, dict) and record.get("disabled_by_selector") is not True
     }
     findings: list[Finding] = []
     for collection in registry.get("collections", []):
@@ -2217,6 +2219,124 @@ def estate_hash_normalization_policy(registry: dict[str, Any]) -> dict[tuple[str
     }
 
 
+def _root_for_skill_path(registry: dict[str, Any], skill_file: Path) -> dict[str, Any] | None:
+    for root in registry.get("roots", []):
+        if not isinstance(root, dict) or not isinstance(root.get("path"), str):
+            continue
+        root_path = Path(os.path.realpath(expand_path(root["path"])))
+        try:
+            if _is_relative_to(skill_file, root_path) and skill_file.name == "SKILL.md":
+                return root
+        except OSError:
+            continue
+    return None
+
+
+def _declared_skill_path_root(registry: dict[str, Any], declared_path: Path) -> tuple[dict[str, Any], Path, Path] | None:
+    declared_absolute = declared_path.absolute()
+    declared_real = Path(os.path.realpath(declared_path))
+    for root in registry.get("roots", []):
+        if not isinstance(root, dict) or not isinstance(root.get("path"), str):
+            continue
+        root_declared = expand_path(root["path"]).absolute()
+        root_real = Path(os.path.realpath(root_declared))
+        if not _is_relative_to(declared_real, root_real):
+            continue
+        if _is_relative_to(declared_absolute, root_declared):
+            return root, root_declared, declared_absolute.relative_to(root_declared)
+        if _is_relative_to(declared_absolute, root_real):
+            return root, root_real, declared_absolute.relative_to(root_real)
+    return None
+
+
+def _disabled_skill_component_findings(registry: dict[str, Any], declared_path: Path) -> list[Finding]:
+    root = _declared_skill_path_root(registry, declared_path)
+    if root is None:
+        return []
+    _, root_path, relative = root
+    findings: list[Finding] = []
+    current = root_path
+    parts = relative.parts
+    for index, part in enumerate(parts):
+        current = current / part
+        try:
+            info = current.lstat()
+        except OSError as exc:
+            findings.append(blocker("codex_disabled_skill_missing", str(exc), str(current)))
+            break
+        if stat.S_ISLNK(info.st_mode):
+            findings.append(blocker("codex_disabled_skill_symlink", "Disabled skill path component cannot be a symlink", str(current)))
+            break
+        if index < len(parts) - 1 and not stat.S_ISDIR(info.st_mode):
+            findings.append(blocker("codex_disabled_skill_path", "Disabled skill path component must be a directory", str(current)))
+            break
+    return findings
+
+
+def codex_disabled_skill_paths(registry: dict[str, Any]) -> tuple[set[Path], list[Finding]]:
+    selector = registry.get("codex_selector", {})
+    config_value = selector.get("config_path") if isinstance(selector, dict) else None
+    if not isinstance(config_value, str) or not config_value:
+        return set(), []
+    config_path = expand_path(config_value)
+    raw, read_finding = _read_regular_path(config_path, config_path.parent)
+    if read_finding or raw is None:
+        return set(), [read_finding or blocker("codex_selector_config_unavailable", "Codex selector config is unavailable", str(config_path))]
+    try:
+        config = tomllib.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, tomllib.TOMLDecodeError) as exc:
+        return set(), [blocker("codex_selector_config_invalid", str(exc), str(config_path))]
+    entries = config.get("skills", {}).get("config", []) if isinstance(config.get("skills"), dict) else []
+    if not isinstance(entries, list):
+        return set(), [blocker("codex_selector_config_shape", "skills.config must be an array", str(config_path))]
+    disabled: set[Path] = set()
+    findings: list[Finding] = []
+    for index, entry in enumerate(entries):
+        if not isinstance(entry, dict) or entry.get("enabled") is not False:
+            continue
+        raw_path = entry.get("path")
+        location = f"skills.config:{index}"
+        if not isinstance(raw_path, str) or not raw_path:
+            findings.append(blocker("codex_disabled_skill_path", "Disabled skill config requires an exact SKILL.md path", location))
+            continue
+        declared_path = expand_path(raw_path)
+        if declared_path.name != "SKILL.md":
+            findings.append(blocker("codex_disabled_skill_path", "Disabled skill path must point to SKILL.md", str(declared_path)))
+            continue
+        try:
+            info = declared_path.lstat()
+        except OSError as exc:
+            findings.append(blocker("codex_disabled_skill_missing", str(exc), str(declared_path)))
+            continue
+        if stat.S_ISLNK(info.st_mode):
+            findings.append(blocker("codex_disabled_skill_symlink", "Disabled skill path cannot be a symlink", str(declared_path)))
+            continue
+        if not stat.S_ISREG(info.st_mode):
+            findings.append(blocker("codex_disabled_skill_path", "Disabled skill path must be a regular file", str(declared_path)))
+            continue
+        declared_root = _declared_skill_path_root(registry, declared_path)
+        if declared_root is None:
+            findings.append(blocker("codex_disabled_skill_root", "Disabled skill path is outside every registered root", str(declared_path)))
+            continue
+        component_findings = _disabled_skill_component_findings(registry, declared_path)
+        if component_findings:
+            findings.extend(component_findings)
+            continue
+        path = Path(os.path.realpath(declared_path))
+        if path in disabled:
+            findings.append(blocker("codex_disabled_skill_duplicate", "Duplicate disabled skill path", str(path)))
+            continue
+        root = declared_root[0]
+        if root is None:
+            findings.append(blocker("codex_disabled_skill_root", "Disabled skill path is outside every registered root", str(path)))
+            continue
+        if "codex" not in root.get("runtimes", []):
+            findings.append(blocker("codex_disabled_skill_runtime", "Disabled skill path must belong to a Codex runtime root", str(path)))
+            continue
+        disabled.add(path)
+    return disabled, findings
+
+
 def normalized_estate_tree_hash(tree: TreeResult, normalized_paths: list[str]) -> tuple[str | None, list[Finding]]:
     if not normalized_paths:
         return tree.tree_sha256, []
@@ -2256,6 +2376,8 @@ def inventory_payload(registry: dict[str, Any]) -> dict[str, Any]:
         if isinstance(entry, dict) and "root_id" in entry and "relative_path" in entry
     }
     estate_normalizations = estate_hash_normalization_policy(registry)
+    disabled_skill_paths, disabled_findings = codex_disabled_skill_paths(registry)
+    findings.extend(disabled_findings)
     for root in sorted(registry.get("roots", []), key=lambda item: (item.get("precedence", 999), item.get("id", ""))):
         root_id = root["id"]
         root_path = expand_path(root["path"])
@@ -2270,6 +2392,8 @@ def inventory_payload(registry: dict[str, Any]) -> dict[str, Any]:
         recorded_before = len(records)
         for child in skill_directories:
             relative_skill_path = child.relative_to(root_path).as_posix()
+            skill_file = Path(os.path.realpath(child / "SKILL.md"))
+            disabled_by_selector = skill_file in disabled_skill_paths
             tree = scan_tree(child)
             normalized_paths = estate_normalizations.get((root_id, relative_skill_path), [])
             estate_tree_sha256, normalization_findings = normalized_estate_tree_hash(tree, normalized_paths)
@@ -2290,7 +2414,8 @@ def inventory_payload(registry: dict[str, Any]) -> dict[str, Any]:
                 and NAME_RE.fullmatch(verified_name) is not None
                 and not name_is_ambiguous
             )
-            if root.get("collision_scope") == "runtime" and not strict_name_verified:
+            active_runtime = root.get("collision_scope") == "runtime" and not disabled_by_selector
+            if active_runtime and not strict_name_verified:
                 inference = name_inferences.get((root_id, relative_skill_path))
                 if (
                     isinstance(inference, dict)
@@ -2309,7 +2434,7 @@ def inventory_payload(registry: dict[str, Any]) -> dict[str, Any]:
                         )
                     )
             if (
-                root.get("collision_scope") == "runtime"
+                active_runtime
                 and isinstance(verified_name, str)
                 and NAME_RE.fullmatch(verified_name)
                 and name_resolution == "frontmatter"
@@ -2324,7 +2449,7 @@ def inventory_payload(registry: dict[str, Any]) -> dict[str, Any]:
                 )
             raw_name = str(verified_name or child.name)
             logical_name, record_scope = _logical_name(root, root_path, child, raw_name)
-            if root.get("collision_scope") == "runtime":
+            if active_runtime:
                 for item in tree.findings:
                     if item.severity == "BLOCKING":
                         findings.append(
@@ -2351,6 +2476,7 @@ def inventory_payload(registry: dict[str, Any]) -> dict[str, Any]:
                     "tree_sha256": estate_tree_sha256,
                     "raw_tree_sha256": tree.tree_sha256,
                     "estate_hash_normalizations": normalized_paths,
+                    "disabled_by_selector": disabled_by_selector,
                     "tree_finding_codes": sorted({item.code for item in tree.findings}),
                     "frontmatter_finding_codes": sorted({item.code for item in frontmatter_findings}),
                 }
@@ -3237,6 +3363,8 @@ def estate_collision_findings(registry: dict[str, Any], inventory: dict[str, Any
     roots = registry_roots(registry)
     by_name: dict[str, list[dict[str, Any]]] = {}
     for record in inventory.get("records", []):
+        if record.get("disabled_by_selector") is True:
+            continue
         root = roots.get(record.get("root_id"), {})
         if root.get("collision_scope") != "runtime":
             continue
@@ -3605,13 +3733,25 @@ def audit_holds(registry: dict[str, Any]) -> tuple[list[dict[str, Any]], list[Fi
                 if b"\t" in record
             }
         )
-        if conflicts:
-            findings.append(blocker("active_mutation_hold", f"Unmerged paths block governed mutation: {conflicts}", hold["id"]))
+        dirty_raw, dirty_error = _run_git(repo, ["status", "--porcelain=v1", "-z", "--", *hold["paths"]])
+        if dirty_error or dirty_raw is None:
+            findings.append(blocker("hold_probe_failed", dirty_error or "Hold dirty probe unavailable", hold["id"]))
+            rows.append({"id": hold["id"], "status": "unavailable"})
+            continue
+        dirty = sorted(
+            {
+                record[3:].decode("utf-8", "strict") if len(record) > 3 else record.decode("utf-8", "strict")
+                for record in dirty_raw.split(b"\0")
+                if record
+            }
+        )
+        if conflicts or dirty:
+            findings.append(blocker("active_mutation_hold", f"Unmerged or dirty paths block governed mutation: conflicts={conflicts} dirty={dirty}", hold["id"]))
             status = "active"
         else:
-            findings.append(advisory("stale_hold", "Configured hold has no matching unmerged path", hold["id"]))
+            findings.append(advisory("stale_hold", "Configured hold has no matching unmerged or dirty path", hold["id"]))
             status = "stale"
-        rows.append({"id": hold["id"], "status": status, "conflicts": conflicts, "applies_to_roots": hold["applies_to_roots"]})
+        rows.append({"id": hold["id"], "status": status, "conflicts": conflicts, "dirty": dirty, "applies_to_roots": hold["applies_to_roots"]})
     return rows, findings
 
 

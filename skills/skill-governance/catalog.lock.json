@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-07-15T12:22:20+09:00",
-  "generation": 1,
+  "generated_at": "2026-07-19T00:00:00+09:00",
+  "generation": 2,
   "method": "pinned-github-commit-tree-plus-package-tree-v2",
-  "registry_sha256": "cb03e86c76f3194e6bcaea860da367017a20b7390ffc01ca2c1dfe31dd48eb95",
+  "registry_sha256": "6accd8d8c00d92154de5e0b9354a3cb8b0300b556ebee8786c4546fc5aa7c391",
   "schema_version": 1,
   "sources": {
     "addyosmani-agent-skills": {
@@ -951,13 +951,13 @@
       "tree_truncated": false
     },
     "mattpocock-skills": {
-      "catalog_sha256": "9a18153d2ed12cc457cedd5416686856b065a4b768bf90e9b7483072ce3ec538",
+      "catalog_sha256": "de77021b5b337d74e304fcab623c6313895f0a03e1eb378c6343f0becdd34209",
       "complete": true,
       "github": "mattpocock/skills",
       "mode": "selective-adoption",
-      "name_extracted_count": 40,
-      "revision": "e9fcdf95b402d360f90f1db8d776d5dd450f9234",
-      "skill_count": 40,
+      "name_extracted_count": 41,
+      "revision": "9603c1cc8118d08bc1b3bf34cf714f62178dea3b",
+      "skill_count": 41,
       "skills": [
         {
           "blob_sha": "d056bd183229ca93bd41cf1b8c10c6fd1f30e75f",
@@ -1170,6 +1170,16 @@
           "role": "catalog-surface"
         },
         {
+          "blob_sha": "4dbf90deb9c2bcadb36520b2f885e9d585d3fde7",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "batch-grill-me",
+          "package_tree_sha": "f2c0125db05db4d8f905a9423af308c476e2e4d5",
+          "path": "skills/in-progress/batch-grill-me/SKILL.md",
+          "role": "in-progress-surface"
+        },
+        {
           "blob_sha": "88ce8be28217c9dbcd5f8cef0ead2502bf2e2b1c",
           "license_paths": [
             "LICENSE"
@@ -1177,7 +1187,7 @@
           "name": "claude-handoff",
           "package_tree_sha": "5a245865fed8cc05df59f8a15a31acf6871ba729",
           "path": "skills/in-progress/claude-handoff/SKILL.md",
-          "role": "catalog-surface"
+          "role": "in-progress-surface"
         },
         {
           "blob_sha": "3a8c52c8d0a429905bfe728b91e31b01ab57adaf",
@@ -1187,7 +1197,7 @@
           "name": "loop-me",
           "package_tree_sha": "e487ef6954cbf6f2d96991cf79332c98354df9ef",
           "path": "skills/in-progress/loop-me/SKILL.md",
-          "role": "catalog-surface"
+          "role": "in-progress-surface"
         },
         {
           "blob_sha": "5963b8a39f1818da85bbef74eab8c96cf544181e",
@@ -1197,7 +1207,7 @@
           "name": "setup-ts-deep-modules",
           "package_tree_sha": "706cd1617d53587b0c4e6df5a8c56974f54cacd2",
           "path": "skills/in-progress/setup-ts-deep-modules/SKILL.md",
-          "role": "catalog-surface"
+          "role": "in-progress-surface"
         },
         {
           "blob_sha": "1423375bb23923a754e931f034a9714b8f81dfcc",
@@ -1207,7 +1217,7 @@
           "name": "to-questionnaire",
           "package_tree_sha": "7c4d04fb4d77824d7d98433ee7a8b17dde5efa13",
           "path": "skills/in-progress/to-questionnaire/SKILL.md",
-          "role": "catalog-surface"
+          "role": "in-progress-surface"
         },
         {
           "blob_sha": "a754784080d85f559ee2d4ba6327c68098a02029",
@@ -1217,7 +1227,7 @@
           "name": "wizard",
           "package_tree_sha": "e4dc85309aebecd9759f6c4cb3fdcb7c4f69544c",
           "path": "skills/in-progress/wizard/SKILL.md",
-          "role": "catalog-surface"
+          "role": "in-progress-surface"
         },
         {
           "blob_sha": "1cdb7dec65d1168c8516c3e83af32149226f79e3",
@@ -1227,7 +1237,7 @@
           "name": "writing-beats",
           "package_tree_sha": "545d05c3fdbfdd094dd88900b0ef8c9a823eac90",
           "path": "skills/in-progress/writing-beats/SKILL.md",
-          "role": "catalog-surface"
+          "role": "in-progress-surface"
         },
         {
           "blob_sha": "3d0ea7527ac01405ce94857e8a5e0c4c1e105087",
@@ -1237,7 +1247,7 @@
           "name": "writing-fragments",
           "package_tree_sha": "ce7d2741a30df8a488f6248c84cf954cff98393f",
           "path": "skills/in-progress/writing-fragments/SKILL.md",
-          "role": "catalog-surface"
+          "role": "in-progress-surface"
         },
         {
           "blob_sha": "a9694e345d585e58778a5541f6a35fd4479d6f7f",
@@ -1247,7 +1257,7 @@
           "name": "writing-shape",
           "package_tree_sha": "31af0156520819c15d19358a8e0bd36f82e67ad3",
           "path": "skills/in-progress/writing-shape/SKILL.md",
-          "role": "catalog-surface"
+          "role": "in-progress-surface"
         },
         {
           "blob_sha": "d943c68219d0f47512f10c5018a11fd8358e9bb5",
@@ -1361,7 +1371,7 @@
         }
       ],
       "tree_archive_blob_paths_match": true,
-      "tree_sha": "a180ae588876bfd3dd50e0ea5556dadefca180a8",
+      "tree_sha": "55de38a6ce03adde8b27a9df7b73fb7fc3628a33",
       "tree_truncated": false
     },
     "microsoft-azure-skills": {
@@ -7593,9 +7603,9 @@
     "complete_source_count": 11,
     "cross_source_name_collision_groups": 25,
     "license_evidence_missing_count": 415,
-    "name_extracted_count": 822,
-    "skill_file_count": 826,
+    "name_extracted_count": 823,
+    "skill_file_count": 827,
     "source_count": 11,
-    "unique_extracted_name_count": 756
+    "unique_extracted_name_count": 757
   }
 }

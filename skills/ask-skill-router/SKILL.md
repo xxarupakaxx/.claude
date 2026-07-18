@@ -25,6 +25,10 @@ description: "skill / plugin / agent route を選ぶ canonical entrypoint。user
 
 ## 基本ルーティング
 
+Matt Pocock skill の採否詳細はfixed revisionごとの監査artifactで管理する。
+このrouterは詳細表を複製せず、canonical、optional、compat/reference、retired/rejectedの運用カテゴリだけを見る。
+deprecated、in-progress、promotion不明のskillは、明示された限定用途がない限り shared engineering lane として返さない。
+
 | 症状 | 推奨 route | 起動権 |
 |---|---|---|
 | 何を作るべきか曖昧で codebase / 状態付き docs がない | `grill-me`、必要なら `brainstorming` | user-invoked |
@@ -40,6 +44,12 @@ description: "skill / plugin / agent route を選ぶ canonical entrypoint。user
 | 外部 Skill の発見、評判、導入、更新、廃止、provenance / collision 確認 | `skill-governance`。棚卸しだけなら `skill-stocktake` | mutation は user-invoked、read-only audit は model-invoked可 |
 | 完了前の証拠が弱い | `verification-loop`、`verify`、適切な review skill | model-invoked |
 | plugin が所有する source / deliverable を扱う | `../../context/agent-team-routing.md` の plugin route | route ごとに判定 |
+
+## Matt由来laneの境界
+
+`mapping-large-projects`、`writing-specifications`、`creating-tracer-tickets`、`implementing-work` は条件付きの読み順であり、自動連鎖ではない。
+routeが明確でacceptanceも単一sessionで検証できる場合は、direct lane として `implementing-work` へ進む。
+`teaching-concepts` は安定した設計を教えるための post-stabilization lane であり、通常の実装flowや状態図生成では起動しない。
 
 ## 選択手順
 

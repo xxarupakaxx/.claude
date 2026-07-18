@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-15",
+  "generated_at": "2026-07-19",
   "policy": {
     "approval_use": "advisory-only",
     "popularity_is_approval": false
@@ -84,21 +84,21 @@
     },
     {
       "archived": false,
-      "assessment": "活発で全40件に license evidence があるが、人気は approval ではない。",
+      "assessment": "活発で全41件に license evidence があるが、人気は approval ではない。",
       "evidence_urls": [
         "https://github.com/mattpocock/skills"
       ],
-      "forks": 14694,
+      "forks": 15111,
       "github": "mattpocock/skills",
       "head_matches_pin": true,
       "issues_enabled": true,
       "license_signal": "MIT",
-      "observed_at": "2026-07-15",
-      "observed_revision": "e9fcdf95b402d360f90f1db8d776d5dd450f9234",
-      "open_issues": 164,
+      "observed_at": "2026-07-19",
+      "observed_revision": "9603c1cc8118d08bc1b3bf34cf714f62178dea3b",
+      "open_issues": 192,
       "security_policy": false,
       "source_id": "mattpocock-skills",
-      "stars": 170770,
+      "stars": 176395,
       "trust_role": "community-candidate"
     },
     {

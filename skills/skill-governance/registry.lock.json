@@ -629,8 +629,8 @@
     }
   },
   "generated_at": "2026-07-15",
-  "generation": 1,
+  "generation": 2,
   "hash_algorithm": "skill-tree-sha256-v1",
-  "registry_sha256": "cb03e86c76f3194e6bcaea860da367017a20b7390ffc01ca2c1dfe31dd48eb95",
+  "registry_sha256": "6accd8d8c00d92154de5e0b9354a3cb8b0300b556ebee8786c4546fc5aa7c391",
   "schema_version": 1
 }

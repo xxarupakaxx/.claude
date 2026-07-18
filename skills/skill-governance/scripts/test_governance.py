@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import collections
 import copy
 import importlib.util
 import json
@@ -636,6 +637,177 @@ class RegistryTests(unittest.TestCase):
         paths = [str(root["path"]) for root in self.registry["roots"]]
         self.assertFalse(any("/.tmp/" in path or "/backups/" in path for path in paths))
 
+    def test_shared_agents_roots_match_codex_runtime_model(self) -> None:
+        roots = {root["id"]: root for root in self.registry["roots"]}
+        for root_id in ("shared", "vault-shared"):
+            with self.subTest(root_id=root_id):
+                root = roots[root_id]
+                self.assertEqual(root["runtimes"], ["codex"])
+                self.assertEqual(root["collision_scope"], "runtime")
+                self.assertEqual(root["namespace_mode"], "none")
+
+    def test_codex_disabled_skill_paths_remain_in_inventory_but_not_active_collision(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            winner = base / "winner"
+            disabled_root = base / "disabled"
+            write_skill(winner, "same-name", SAFE_SKILL.replace("safe-skill", "same-name"))
+            disabled = write_skill(disabled_root, "same-name", SAFE_SKILL.replace("safe-skill", "same-name") + "\nDisabled drift.\n")
+            config = base / "config.toml"
+            config.write_text(
+                f'[[skills.config]]\npath = "{disabled / "SKILL.md"}"\nenabled = false\n',
+                encoding="utf-8",
+            )
+            registry = {
+                "codex_selector": {"config_path": str(config)},
+                "roots": [
+                    {"id": "winner", "path": str(winner), "runtimes": ["codex"], "precedence": 5, "role": "project-active", "scan_mode": "recursive", "collision_scope": "runtime", "namespace_mode": "none", "targetable": False, "required": True},
+                    {"id": "disabled", "path": str(disabled_root), "runtimes": ["codex"], "precedence": 5, "role": "project-active", "scan_mode": "recursive", "collision_scope": "runtime", "namespace_mode": "none", "targetable": False, "required": True},
+                ],
+                "collections": [],
+            }
+            inventory = governance.inventory_payload(registry)
+            disabled_records = [record for record in inventory["records"] if record["root_id"] == "disabled"]
+            self.assertEqual(len(disabled_records), 1)
+            self.assertTrue(disabled_records[0]["disabled_by_selector"])
+            self.assertNotIn("active_name_collision", {item.code for item in governance.estate_collision_findings(registry, inventory)})
+
+            enabled_registry = copy.deepcopy(registry)
+            enabled_registry.pop("codex_selector")
+            enabled_inventory = governance.inventory_payload(enabled_registry)
+            self.assertIn("active_name_collision", {item.code for item in governance.estate_collision_findings(enabled_registry, enabled_inventory)})
+
+    def test_codex_disabled_skill_paths_reject_missing_and_root_outside_paths(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            root = base / "runtime"
+            write_skill(root, "safe-skill")
+            outside = write_skill(base / "outside", "outside-skill")
+            missing = root / "missing" / "SKILL.md"
+            config = base / "config.toml"
+            config.write_text(
+                "\n".join(
+                    [
+                        "[[skills.config]]",
+                        f'path = "{missing}"',
+                        "enabled = false",
+                        "[[skills.config]]",
+                        f'path = "{outside / "SKILL.md"}"',
+                        "enabled = false",
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            registry = {
+                "codex_selector": {"config_path": str(config)},
+                "roots": [
+                    {"id": "runtime", "path": str(root), "runtimes": ["codex"], "precedence": 5, "role": "project-active", "scan_mode": "recursive", "collision_scope": "runtime", "namespace_mode": "none", "targetable": False, "required": True},
+                ],
+            }
+            _, findings = governance.codex_disabled_skill_paths(registry)
+            codes = {item.code for item in findings}
+            self.assertIn("codex_disabled_skill_missing", codes)
+            self.assertIn("codex_disabled_skill_root", codes)
+
+    def test_codex_disabled_skill_path_rejects_leaf_symlink_before_realpath(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            root = base / "runtime"
+            skill = write_skill(root, "safe-skill")
+            link_dir = root / "linked-skill"
+            link_dir.mkdir()
+            (link_dir / "SKILL.md").symlink_to(skill / "SKILL.md")
+            config = base / "config.toml"
+            config.write_text(
+                f'[[skills.config]]\npath = "{link_dir / "SKILL.md"}"\nenabled = false\n',
+                encoding="utf-8",
+            )
+            registry = {
+                "codex_selector": {"config_path": str(config)},
+                "roots": [
+                    {"id": "runtime", "path": str(root), "runtimes": ["codex"], "precedence": 5, "role": "project-active", "scan_mode": "recursive", "collision_scope": "runtime", "namespace_mode": "none", "targetable": False, "required": True},
+                ],
+            }
+            _, findings = governance.codex_disabled_skill_paths(registry)
+            self.assertIn("codex_disabled_skill_symlink", {item.code for item in findings})
+
+    def test_codex_disabled_skill_path_rejects_parent_directory_symlink_before_realpath(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            root = base / "runtime"
+            skill = write_skill(root, "safe-skill")
+            link_dir = root / "linked-skill"
+            try:
+                link_dir.symlink_to(skill, target_is_directory=True)
+            except (OSError, NotImplementedError):
+                self.skipTest("symlinks unavailable")
+            config = base / "config.toml"
+            config.write_text(
+                f'[[skills.config]]\npath = "{link_dir / "SKILL.md"}"\nenabled = false\n',
+                encoding="utf-8",
+            )
+            registry = {
+                "codex_selector": {"config_path": str(config)},
+                "roots": [
+                    {"id": "runtime", "path": str(root), "runtimes": ["codex"], "precedence": 5, "role": "project-active", "scan_mode": "recursive", "collision_scope": "runtime", "namespace_mode": "none", "targetable": False, "required": True},
+                ],
+            }
+            _, findings = governance.codex_disabled_skill_paths(registry)
+            self.assertIn("codex_disabled_skill_symlink", {item.code for item in findings})
+
+    def test_codex_disabled_skill_path_rejects_external_alias_into_registered_root(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            root = base / "runtime"
+            skill = write_skill(root, "safe-skill")
+            alias = base / "outside-alias"
+            try:
+                alias.symlink_to(skill, target_is_directory=True)
+            except (OSError, NotImplementedError):
+                self.skipTest("symlinks unavailable")
+            config = base / "config.toml"
+            config.write_text(
+                f'[[skills.config]]\npath = "{alias / "SKILL.md"}"\nenabled = false\n',
+                encoding="utf-8",
+            )
+            registry = {
+                "codex_selector": {"config_path": str(config)},
+                "roots": [
+                    {"id": "runtime", "path": str(root), "runtimes": ["codex"], "precedence": 5, "role": "project-active", "scan_mode": "recursive", "collision_scope": "runtime", "namespace_mode": "none", "targetable": False, "required": True},
+                ],
+            }
+            _, findings = governance.codex_disabled_skill_paths(registry)
+            self.assertIn("codex_disabled_skill_root", {item.code for item in findings})
+
+    def test_catalog_only_roots_do_not_create_active_collisions(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            runtime = base / "runtime"
+            reference = base / "reference"
+            write_skill(runtime, "same-name", SAFE_SKILL.replace("safe-skill", "same-name"))
+            write_skill(reference, "same-name", SAFE_SKILL.replace("safe-skill", "same-name") + "\nReference-only drift.\n")
+            registry = {
+                "roots": [
+                    {
+                        "id": "runtime",
+                        "path": str(runtime),
+                        "runtimes": ["codex"],
+                        "precedence": 10,
+                        "collision_scope": "runtime",
+                    },
+                    {
+                        "id": "reference",
+                        "path": str(reference),
+                        "runtimes": [],
+                        "precedence": 10,
+                        "collision_scope": "catalog-only",
+                    },
+                ]
+            }
+            findings = governance.active_collision_findings(registry, "codex", "same-name")
+        self.assertNotIn("active_name_collision", {item.code for item in findings})
+
     def test_unknown_schema_and_state_fail_closed(self) -> None:
         bad = copy.deepcopy(self.registry)
         bad["schema_version"] = 999
@@ -1236,14 +1408,33 @@ class CatalogTests(unittest.TestCase):
         self.assertFalse(governance.has_blockers(findings))
         self.assertEqual(payload["summary"]["source_count"], 11)
         self.assertEqual(payload["summary"]["complete_source_count"], 11)
-        self.assertEqual(payload["summary"]["skill_file_count"], 826)
-        self.assertEqual(payload["summary"]["name_extracted_count"], 822)
+        self.assertEqual(payload["summary"]["skill_file_count"], 827)
+        self.assertEqual(payload["summary"]["name_extracted_count"], 823)
 
     def test_architecture_skill_is_in_pinned_matt_catalog(self) -> None:
         skills = self.catalog["sources"]["mattpocock-skills"]["skills"]
         matches = [item for item in skills if item["name"] == "improve-codebase-architecture"]
         self.assertEqual(len(matches), 1)
         self.assertEqual(matches[0]["path"], "skills/engineering/improve-codebase-architecture/SKILL.md")
+
+    def test_matt_catalog_is_current_41_skill_revision(self) -> None:
+        source = self.catalog["sources"]["mattpocock-skills"]
+        self.assertEqual(source["revision"], "9603c1cc8118d08bc1b3bf34cf714f62178dea3b")
+        self.assertEqual(source["skill_count"], 41)
+        self.assertEqual(source["name_extracted_count"], 41)
+        self.assertEqual(
+            collections.Counter(item["role"] for item in source["skills"]),
+            {
+                "catalog-surface": 28,
+                "deprecated-surface": 4,
+                "in-progress-surface": 9,
+            },
+        )
+        self.assertEqual(
+            [item["path"] for item in source["skills"] if item["name"] == "batch-grill-me"],
+            ["skills/in-progress/batch-grill-me/SKILL.md"],
+        )
+        self.assertTrue(all(item["license_paths"] == ["LICENSE"] for item in source["skills"]))
 
     def test_missing_required_source_and_truncation_fail_closed(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -1724,11 +1915,11 @@ class AdapterAndSurfaceTests(unittest.TestCase):
 
     def test_hold_detects_active_and_stale_conflict(self) -> None:
         registry = {"holds": [{"id": "hold", "repo": "/tmp/repo", "paths": [".codex"], "applies_to_roots": ["root"]}]}
-        with mock.patch.object(governance, "_run_git", return_value=(b"160000 deadbeef 1\t.codex\0", None)):
+        with mock.patch.object(governance, "_run_git", side_effect=[(b"160000 deadbeef 1\t.codex\0", None), (b"", None)]):
             rows, findings = governance.audit_holds(registry)
         self.assertEqual(rows[0]["status"], "active")
         self.assertIn("active_mutation_hold", {item.code for item in findings})
-        with mock.patch.object(governance, "_run_git", return_value=(b"", None)):
+        with mock.patch.object(governance, "_run_git", side_effect=[(b"", None), (b"", None)]):
             rows, findings = governance.audit_holds(registry)
         self.assertEqual(rows[0]["status"], "stale")
         self.assertIn("stale_hold", {item.code for item in findings})
@@ -1737,6 +1928,15 @@ class AdapterAndSurfaceTests(unittest.TestCase):
             rows, findings = governance.audit_holds(registry)
         self.assertEqual(rows[0]["status"], "unavailable")
         self.assertTrue(governance.has_blockers(findings))
+
+    def test_hold_detects_dirty_and_untracked_paths(self) -> None:
+        registry = {"holds": [{"id": "hold", "repo": "/tmp/repo", "paths": [".codex"], "applies_to_roots": ["root"]}]}
+        for porcelain in (b" M .codex\0", b"?? .codex/new-file\0"):
+            with self.subTest(porcelain=porcelain):
+                with mock.patch.object(governance, "_run_git", side_effect=[(b"", None), (porcelain, None)]):
+                    rows, findings = governance.audit_holds(registry)
+                self.assertEqual(rows[0]["status"], "active")
+                self.assertIn("active_mutation_hold", {item.code for item in findings})
 
     def test_cli_has_no_mutating_commands(self) -> None:
         parser = governance.build_parser()
