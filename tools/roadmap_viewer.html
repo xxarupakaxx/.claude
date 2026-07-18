@@ -1344,7 +1344,7 @@
     function extractReviewCounts(files) {
       const text = `${asText(files['05_log.md'])}\n${asText(files['80_review.md'])}`;
       const counts = { critical: 0, important: 0, minor: 0, hasReview: false };
-      const re = /(?:Severity\s*[:：]\s*)?\b(CRITICAL|IMPORTANT|MINOR)\b\s*(?:\||[:：])?\s*(\d+)\s*(?:件)?/gi;
+      const re = /(?:Severity[ \t]*[:：][ \t]*)?\b(CRITICAL|IMPORTANT|MINOR)\b[ \t]*(?:\||[:：])?[ \t]*(\d+)[ \t]*(?:件)?/gi;
       for (const match of text.matchAll(re)) {
         counts[match[1].toLowerCase()] = Number(match[2]);
         counts.hasReview = true;
@@ -1557,12 +1557,19 @@
     function hasFile(files, name) {
       return Boolean(asText(files[name]).trim());
     }
+    function finalReviewVerdict(reviewText) {
+      const text = asText(reviewText);
+      const explicit = text.match(/最終判定\s*[:：]\s*(APPROVE|NEEDS[- ]REVISION)/i);
+      if (explicit) return explicit[1].toUpperCase().replace(/\s+/g, '-');
+      const verdicts = Array.from(text.matchAll(/\b(APPROVE|NEEDS[- ]REVISION)\b/gi));
+      return verdicts.length ? verdicts.at(-1)[1].toUpperCase().replace(/\s+/g, '-') : '';
+    }
     function holisticFailed(files, reviews) {
       const verification = asText(files['90_verification.md']);
       const reviewText = asText(files['80_review.md']);
       if (/(holistic|全体|総合)[\s\S]{0,80}(fail|failed|失敗|ng)/i.test(verification)) return true;
       if (/(fail|failed|失敗|ng)[\s\S]{0,80}(holistic|全体|総合)/i.test(verification)) return true;
-      return reviews.critical > 0 || reviews.important > 0 || /NEEDS[- ]REVISION/i.test(reviewText);
+      return reviews.critical > 0 || reviews.important > 0 || finalReviewVerdict(reviewText) === 'NEEDS-REVISION';
     }
     function buildArtifactWarnings(files, reviews, explicitTrace) {
       const warnings = [];
