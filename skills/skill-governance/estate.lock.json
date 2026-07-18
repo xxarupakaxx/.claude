@@ -1,6 +1,6 @@
 {
   "generated_at": "2026-07-15",
-  "generation": 1,
+  "generation": 2,
   "hash_algorithm": "skill-tree-sha256-v1",
   "records": [
     {
@@ -1003,7 +1003,7 @@
       "relative_path": ".system/imagegen",
       "resolved_name": "imagegen",
       "root_id": "codex",
-      "tree_sha256": "b6aa5e70e7b0974a4ea8b61a5cd21b3e1308e4518a0620bf18cfeed3b6a9f7c6"
+      "tree_sha256": "f1e217f9ab5ea257ef014451f8349c4484e0c21dea34dcb8855d1b0646f2eb2e"
     },
     {
       "classification": "platform-managed",
@@ -1012,7 +1012,7 @@
       "relative_path": ".system/openai-docs",
       "resolved_name": "openai-docs",
       "root_id": "codex",
-      "tree_sha256": "919c1634c58484f6a3629bf150844c6cb1e21d5adbe9b4da039609a40a1a2516"
+      "tree_sha256": "26b7e683e64cac8f4a1e11fa456cd068e50fdac79e64a2d394afbf4fc1453f6c"
     },
     {
       "classification": "platform-managed",
@@ -1021,7 +1021,7 @@
       "relative_path": ".system/plugin-creator",
       "resolved_name": "plugin-creator",
       "root_id": "codex",
-      "tree_sha256": "f7756e004dff3df68296e4e047203ad37b654b381c0916630ed89df5dbcb144c"
+      "tree_sha256": "dc131e85e7fa44fb2c9eccb29985da7897690570706a6c36fbefb5992d0ff274"
     },
     {
       "classification": "platform-managed",
@@ -1030,7 +1030,7 @@
       "relative_path": ".system/skill-creator",
       "resolved_name": "skill-creator",
       "root_id": "codex",
-      "tree_sha256": "edec0c4ee60849c0fbf81ad668afe48c6d2da0bb14a2f8ebbf306a2fffaf54d3"
+      "tree_sha256": "a0b32416c7d3c68d0c405641c68932d5fae5fb5bd36957b3145e9bc77b6b108f"
     },
     {
       "classification": "platform-managed",
@@ -1039,7 +1039,7 @@
       "relative_path": ".system/skill-installer",
       "resolved_name": "skill-installer",
       "root_id": "codex",
-      "tree_sha256": "4af46b9f0590fdf54db8d6b6e00f38827e899ee3bdea6ecc11538ec77ef746d2"
+      "tree_sha256": "cb2747d69fedc20d29399a6a16e46e5229a335d8184138b438124c1f00e6b37d"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3031,7 +3031,7 @@
       "relative_path": "adversarial-review",
       "resolved_name": "adversarial-review",
       "root_id": "vault-codex",
-      "tree_sha256": "ef2a7f819c0706c34a6ffc841ea629bcd34175936c8b636855e45d97bd3c7046"
+      "tree_sha256": "2b1b962a57bac86d70d5b8833f35d21b51be1d0d888776e336b607013498c61c"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3094,7 +3094,7 @@
       "relative_path": "ask-skill-router",
       "resolved_name": "ask-skill-router",
       "root_id": "vault-codex",
-      "tree_sha256": "77935d84eb15b268a6470fde1da9d2ed56f31859c0c89f6d84fee0dc6d163021"
+      "tree_sha256": "feffbcf279a68d20a243e1e601c37bea3298967f2d9bcf0202840b0768d603f5"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3454,7 +3454,7 @@
       "relative_path": "generate-state-diagram",
       "resolved_name": "generate-state-diagram",
       "root_id": "vault-codex",
-      "tree_sha256": "d5f4a1e51ccb890fbc3c29a0f0015bc8f9da720aaa0158356e87a179562f6dfa"
+      "tree_sha256": "13fca5ec3c57acc3e299dc88827a5a8d110a3c5160502176015c922fc68f237e"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3868,7 +3868,7 @@
       "relative_path": "research",
       "resolved_name": "research",
       "root_id": "vault-codex",
-      "tree_sha256": "7082ce83ec7cbd019a26f6402355e9770ecbf5995157636a18083b88ad690d79"
+      "tree_sha256": "054b00ada963389bd0152ff71523c3585937064c1a2fb24800c902f95447c548"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3971,12 +3971,24 @@
     },
     {
       "classification": "preexisting-unclassified",
+      "hash_normalizations": [
+        "estate.lock.json",
+        "reputation.lock.json"
+      ],
+      "name_resolution": "frontmatter",
+      "relative_path": "skill-governance",
+      "resolved_name": "skill-governance",
+      "root_id": "vault-codex",
+      "tree_sha256": "63362fa5572ba5c04eaf4f9a203c75574a009d4bbf231511770013d6eaba7ea5"
+    },
+    {
+      "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
       "relative_path": "skill-stocktake",
       "resolved_name": "skill-stocktake",
       "root_id": "vault-codex",
-      "tree_sha256": "7d68ca7b988d8bda2815a5f4daf4b8ea24d75f38887bbf454ff935c290737121"
+      "tree_sha256": "9a4c69056d736ef774e0bdb65409250b1dfc750d630c4ec3d927237d6b61dbbd"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4270,33 +4282,6 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
-      "relative_path": "ai-trend-scan",
-      "resolved_name": "ai-trend-scan",
-      "root_id": "vault-shared",
-      "tree_sha256": "e24223a67ec7aacb894bbbb6b0ba6a7dcaf48f96b73030fc90de364ac33047ff"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "capture",
-      "resolved_name": "capture",
-      "root_id": "vault-shared",
-      "tree_sha256": "a2debc6f1cf3211ce22e87a55c56c07b9cdd2b595ec7e65845bbcb8852b2ab9c"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "daily-curator",
-      "resolved_name": "daily-curator",
-      "root_id": "vault-shared",
-      "tree_sha256": "86dba1912bcee7cf83a04fe45c5f108812cd001034ec555b00d766cc2f46bfe6"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
       "relative_path": "daily-journal-curator",
       "resolved_name": "daily-journal-curator",
       "root_id": "vault-shared",
@@ -4342,15 +4327,6 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
-      "relative_path": "japanese-tech-writing",
-      "resolved_name": "japanese-tech-writing",
-      "root_id": "vault-shared",
-      "tree_sha256": "660869c59a2188f913855eb6627f742268eb2545866b271b092a6e0956d09146"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
       "relative_path": "loop-engineering",
       "resolved_name": "loop-engineering",
       "root_id": "vault-shared",
@@ -4360,46 +4336,10 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
-      "relative_path": "one-page-concept-sketch",
-      "resolved_name": "one-page-concept-sketch",
-      "root_id": "vault-shared",
-      "tree_sha256": "539499f8b381f291c9f7386d192935706fdff8fd511ee8c82c533515650a5723"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "payment-domain-scan",
-      "resolved_name": "payment-domain-scan",
-      "root_id": "vault-shared",
-      "tree_sha256": "d7715ca3a3177b6fd9ae639d5d93e2159d383ade0c7555ae3673c557f48240de"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
       "relative_path": "prompting-fable",
       "resolved_name": "prompting-fable",
       "root_id": "vault-shared",
       "tree_sha256": "d83f65173dfe707f45b02ebe599fee1c9f07c3e6d8e499948e91ec6ea0d7994b"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "research",
-      "resolved_name": "research",
-      "root_id": "vault-shared",
-      "tree_sha256": "98ac528f228e6a91ec98216b18d18bda4a6cd970c62db5b1c80fae682d7f6b5a"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "researching-articles",
-      "resolved_name": "researching-articles",
-      "root_id": "vault-shared",
-      "tree_sha256": "5457f37a5d7bb1b72f7f2dbddf3f2a1654f71156b1a65acc7f303a4244a9b3cb"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4429,6 +4369,6 @@
       "tree_sha256": "73323581b29fa6129136b0d3c393c2b485cddb7d1c2622bf185d36d0d9a570fd"
     }
   ],
-  "registry_sha256": "cb03e86c76f3194e6bcaea860da367017a20b7390ffc01ca2c1dfe31dd48eb95",
+  "registry_sha256": "6accd8d8c00d92154de5e0b9354a3cb8b0300b556ebee8786c4546fc5aa7c391",
   "schema_version": 2
 }

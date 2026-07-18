@@ -23,6 +23,7 @@
       --accent-blue: #3568a8;
       --good: #327a50;
       --warn: #996c18;
+      --warn-text: #6f4800;
       --danger: #a4473e;
       --focus: #2f70c9;
       --radius: 8px;
@@ -48,6 +49,7 @@
       --accent-blue: #8db8ef;
       --good: #83c99b;
       --warn: #e0b867;
+      --warn-text: #f0c978;
       --danger: #e18c82;
       --focus: #8bbcff;
       --shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
@@ -249,7 +251,7 @@
     .count-track { height: 5px; margin-top: 6px; overflow: hidden; border-radius: 999px; background: var(--line); }
     .count-fill { width: 0; height: 100%; background: var(--accent); transition: width 220ms ease; }
     .artifact-jump {
-      display: none;
+      display: inline-flex;
       margin-top: 5px;
       padding: 0;
       border: 0;
@@ -261,6 +263,135 @@
       text-decoration: underline;
       text-underline-offset: 2px;
     }
+    .wayfinder {
+      margin-bottom: 12px;
+      padding: 14px 16px;
+    }
+    .wayfinder-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .wayfinder-head h2 { margin: 0; font-size: 18px; line-height: 1.25; }
+    .wayfinder-head .section-meta { text-align: left; overflow-wrap: anywhere; }
+    .wayfinder-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 720;
+      white-space: nowrap;
+    }
+    .wayfinder-grid {
+      display: grid;
+      grid-template-columns: minmax(150px, .65fr) minmax(260px, 1.35fr) minmax(190px, .8fr) minmax(190px, .8fr);
+      gap: 10px;
+    }
+    .wayfinder-cell {
+      min-width: 0;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface-soft);
+    }
+    .wayfinder-cell small { display: block; margin-bottom: 4px; color: var(--muted); font-size: 11px; font-weight: 720; }
+    .wayfinder-cell strong { display: block; overflow-wrap: anywhere; font-size: 14px; line-height: 1.35; }
+    .outcome-trace { margin-bottom: 12px; overflow: hidden; }
+    .trace-summary-bar {
+      padding: 10px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--line);
+    }
+    .trace-token {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 7px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface-soft);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 720;
+      overflow-wrap: anywhere;
+      white-space: normal;
+    }
+    .trace-token.good { color: var(--good); border-color: color-mix(in srgb, var(--good) 35%, var(--line)); }
+    .trace-token.warn { color: var(--warn-text); border-color: color-mix(in srgb, var(--warn-text) 40%, var(--line)); }
+    .trace-token.danger { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 35%, var(--line)); }
+    .artifact-warning-list {
+      padding: 10px 16px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+    .artifact-warning {
+      padding: 4px 7px;
+      border: 1px solid color-mix(in srgb, var(--warn-text) 40%, var(--line));
+      border-radius: 6px;
+      background: color-mix(in srgb, var(--warn-text) 7%, var(--surface));
+      color: var(--warn-text);
+      font-size: 11px;
+      font-weight: 720;
+    }
+    .trace-table {
+      margin: 12px 16px 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .trace-row {
+      display: grid;
+      grid-template-columns: minmax(180px, 1.2fr) minmax(170px, 1fr) minmax(150px, .8fr) minmax(130px, .7fr) minmax(170px, 1fr) minmax(150px, .8fr);
+      gap: 10px;
+      align-items: start;
+      padding: 9px 11px;
+      border-bottom: 1px solid var(--line);
+      font-size: 12px;
+    }
+    .trace-row:last-child { border-bottom: 0; }
+    .trace-row.header { background: var(--surface-soft); color: var(--muted); font-size: 11px; font-weight: 760; }
+    .trace-row:not(.header) > span { min-width: 0; overflow-wrap: anywhere; }
+    .trace-state {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 5px;
+      padding: 2px 7px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-weight: 760;
+    }
+    .trace-state.matched { color: var(--good); border-color: color-mix(in srgb, var(--good) 38%, var(--line)); }
+    .trace-state.missing-spec,
+    .trace-state.missing-implementation,
+    .trace-state.missing-acceptance,
+    .trace-state.missing-evidence { color: var(--warn-text); border-color: color-mix(in srgb, var(--warn-text) 40%, var(--line)); }
+    .trace-state.failed-holistic { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 38%, var(--line)); }
+    .trace-cards { display: none; }
+    .implementation-strip { margin-bottom: 12px; overflow: hidden; }
+    .implementation-body { padding: 12px 16px; }
+    .implementation-items { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .implementation-card {
+      min-width: 0;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .implementation-card small { display: block; margin-bottom: 4px; color: var(--muted); font-size: 11px; font-weight: 720; }
+    .implementation-card strong { display: block; overflow-wrap: anywhere; font-size: 13px; }
+    .evidence-shortcuts { margin-bottom: 12px; overflow: hidden; }
     .workspace { display: grid; grid-template-columns: minmax(0, 1fr) 350px; gap: 12px; align-items: stretch; }
     .plan-canvas { min-width: 0; overflow: hidden; }
     .plan-body { padding: 14px 16px 12px; }
@@ -460,6 +591,11 @@
       color: var(--good) !important;
       font-weight: 700;
     }
+    .artifact-state.missing {
+      border-color: color-mix(in srgb, var(--warn-text) 42%, var(--line));
+      background: color-mix(in srgb, var(--warn-text) 8%, var(--surface));
+      color: var(--warn-text) !important;
+    }
     .utility-disclosure { margin-top: 12px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
     .utility-disclosure > summary {
       min-height: 44px;
@@ -606,9 +742,10 @@
     }
     @media (max-width: 1180px) {
       .shell { display: flex; flex-direction: column; }
-      .now-strip { order: 1; }
-      .artifact-shelf { order: 2; margin: 0 0 12px; }
-      .workspace { order: 3; }
+      .wayfinder { order: 1; }
+      .outcome-trace { order: 2; }
+      .implementation-strip { order: 3; }
+      .evidence-shortcuts { order: 4; }
       .utility-disclosure { order: 4; }
       .artifact-jump { display: inline-flex; }
       .now-strip { grid-template-columns: 64px repeat(6, minmax(118px, 1fr)); overflow: hidden; }
@@ -627,6 +764,18 @@
     @media (max-width: 960px) {
       .header-inner { align-items: flex-start; }
       .last-updated { display: none; }
+      .wayfinder-grid { grid-template-columns: 1fr 1fr; }
+      .trace-table { display: none; }
+      .trace-cards { display: grid; gap: 8px; padding: 10px 12px 12px; }
+      .trace-card {
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+      }
+      .trace-card strong { display: block; margin-bottom: 5px; overflow-wrap: anywhere; }
+      .trace-card span { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+      .implementation-items { grid-template-columns: 1fr; }
       .now-strip { grid-template-columns: 64px repeat(2, minmax(0, 1fr)); row-gap: 8px; }
       .now-label { grid-row: 1 / 4; }
       .now-cell { min-height: 42px; border-left: 1px solid var(--line); }
@@ -644,11 +793,14 @@
       .brand { width: 100%; }
       .brand-copy p { max-width: calc(100vw - 80px); }
       .toolbar { width: 100%; justify-content: flex-start; overflow: hidden; }
-      .toolbar .btn-label { display: none; }
+      .toolbar .btn-label { display: none !important; }
       #export-json .btn-label { display: inline; }
       .toolbar .btn { min-width: 44px; min-height: 44px; }
       .live-badge { min-height: 38px; }
       .shell { padding: 12px; }
+      .wayfinder { padding: 12px; }
+      .wayfinder-head { flex-direction: column; align-items: stretch; }
+      .wayfinder-grid { grid-template-columns: 1fr; }
       .now-strip { padding: 8px; grid-template-columns: 52px 1fr; }
       .now-label { grid-row: 1 / 7; margin-right: 8px; font-size: 15px; }
       .now-cell { min-height: 42px; padding: 3px 10px; border-left: 1px solid var(--line); }
@@ -779,79 +931,68 @@
   </div>
 
   <main class="shell" id="main-content" tabindex="-1">
-    <section class="now-strip" id="now-strip" aria-labelledby="now-heading">
-      <h2 class="visually-hidden" id="now-heading">いまの状態</h2>
-      <div class="now-label" aria-hidden="true">いま</div>
-      <div class="now-cell"><small>現在フェーズ</small><strong id="now-phase">Phase —</strong></div>
-      <div class="now-cell"><small>全体状態</small><strong id="now-status">計画を読み込み中</strong></div>
-      <div class="now-cell">
-        <small>進捗</small>
-        <div class="task-count"><strong id="now-count">0 / 0</strong><span>完了</span></div>
-        <div class="count-track" id="task-progress" role="progressbar" aria-label="固定Taskの完了数" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0">
-          <div class="count-fill" id="task-progress-fill"></div>
+    <section class="panel wayfinder" id="wayfinder" aria-labelledby="wayfinder-heading">
+      <div class="wayfinder-head">
+        <div>
+          <h2 id="wayfinder-heading">Wayfinder</h2>
+          <p class="section-meta" id="plan-meta">Outcome Traceを読み込み中</p>
         </div>
-        <button class="artifact-jump" id="artifact-jump" type="button">成果物 0件</button>
+        <span class="wayfinder-status" id="wayfinder-status" aria-live="polite">状態確認待ち</span>
+        <button class="btn" type="button" id="show-history" aria-controls="utility-disclosure" aria-expanded="false">詳細ログ<img class="icon" data-icon="chevron" alt=""></button>
       </div>
-      <div class="now-cell"><small>次のチェックポイント</small><strong id="now-checkpoint">計画を読み込む</strong></div>
-      <div class="now-cell now-pulse">
-        <span class="icon-wrap"><img class="icon" data-icon="play" alt=""></span>
-        <span><small>アクティブ</small><strong id="now-active">—</strong></span>
-      </div>
-      <div class="now-cell now-pulse">
-        <span class="icon-wrap"><img class="icon" id="now-waiting-icon" data-icon="clock" alt=""></span>
-        <span><small id="now-waiting-label">待ち</small><strong id="now-waiting">—</strong></span>
+      <div class="wayfinder-grid">
+        <div class="wayfinder-cell"><small>現在地</small><strong id="wayfinder-phase">Phase —</strong></div>
+        <div class="wayfinder-cell"><small>次の判断</small><strong id="wayfinder-next-decision">計画を読み込む</strong></div>
+        <div class="wayfinder-cell"><small>未接続</small><strong id="wayfinder-unmatched">0 outcomes</strong></div>
+        <div class="wayfinder-cell"><small>失敗中</small><strong id="wayfinder-failed">なし</strong></div>
       </div>
     </section>
 
-    <div class="workspace">
-      <section class="panel plan-canvas" aria-labelledby="plan-canvas-title">
-        <div class="section-heading">
-          <h2 class="section-title" id="plan-canvas-title">計画キャンバス</h2>
-          <span class="section-meta" id="plan-meta">PhaseとTaskを読み込み中</span>
-        </div>
-        <div class="plan-body">
-          <div class="phase-rail" id="phase-rail" role="list" aria-label="ワークフローのPhase"></div>
-          <div class="task-tree" id="task-tree" role="table" aria-label="実装計画のTask"></div>
-          <div class="next-steps" id="next-steps">
-            <strong>次の3ステップ:</strong><span class="next-step-sequence" id="next-step-sequence">計画を読み込む</span>
-          </div>
-        </div>
-      </section>
+    <section class="panel outcome-trace" id="outcome-trace-summary" aria-labelledby="outcome-trace-title">
+      <div class="section-heading">
+        <h2 class="section-title" id="outcome-trace-title">Outcome Trace Summary</h2>
+        <span class="section-meta" id="outcome-trace-meta">0 outcomes</span>
+      </div>
+      <div class="trace-summary-bar" id="trace-summary-bar" aria-label="Outcome Trace集計"></div>
+      <div class="artifact-warning-list" id="artifact-warnings" aria-label="成果物欠損"></div>
+      <div class="trace-table" id="outcome-trace-table" role="table" aria-label="Outcome Trace"></div>
+      <div class="trace-cards" id="outcome-trace-cards" aria-label="Outcome Trace mobile cards"></div>
+    </section>
 
-      <aside class="panel execution-pulse" id="execution-pulse" aria-labelledby="pulse-title">
-        <div class="section-heading">
-          <h2 class="section-title" id="pulse-title">実行パルス</h2>
-          <span class="section-meta" id="freshness-label">Static</span>
-        </div>
-        <div class="pulse-body">
-          <section class="pulse-summary">
-            <div class="pulse-kicker">アクティブタスク</div>
-            <h3 class="pulse-task" id="pulse-task">稼働中のTaskなし</h3>
-            <div class="pulse-phase"><span id="pulse-phase">Phase —</span><span class="state-chip" id="pulse-state">待ち</span></div>
-            <div class="pulse-metrics">
-              <div class="metric-row"><img class="icon" data-icon="list" alt=""><span>Task進捗</span><strong id="pulse-elapsed">—</strong></div>
-              <div class="metric-row"><img class="icon" data-icon="refresh" alt=""><span>最終更新</span><strong id="pulse-updated">—</strong></div>
-            </div>
-          </section>
-          <section class="pulse-card"><h3>直近の完了</h3><ul class="recent-list" id="recent-completions" role="log" aria-live="off" aria-label="直近の完了"></ul></section>
-          <section class="pulse-card"><h3 id="waiting-title">待ちの理由</h3><p class="waiting-copy" id="waiting-reason">計画を読み込むと表示します。</p></section>
-          <button class="btn history-button" type="button" id="show-history" aria-controls="utility-disclosure" aria-expanded="false">履歴と診断を表示<img class="icon" data-icon="chevron" alt=""></button>
-        </div>
-      </aside>
-    </div>
+    <section class="panel implementation-strip" id="implementation-strip" aria-labelledby="implementation-title">
+      <div class="section-heading">
+        <h2 class="section-title" id="implementation-title">Implementation Strip</h2>
+        <span class="section-meta" id="freshness-label">Static</span>
+      </div>
+      <div class="implementation-body">
+        <div class="phase-rail" id="phase-rail" role="list" aria-label="ワークフローのPhase"></div>
+        <div class="implementation-items" id="implementation-items"></div>
+      </div>
+    </section>
 
-    <section class="panel artifact-shelf" id="artifact-shelf" tabindex="-1" aria-labelledby="artifact-title">
-      <div class="section-heading"><h2 class="section-title" id="artifact-title">成果物シェルフ</h2><span class="section-meta" id="artifact-meta">0件</span></div>
+    <section class="panel evidence-shortcuts" id="evidence-shortcuts" tabindex="-1" aria-labelledby="artifact-title">
+      <div class="section-heading">
+        <h2 class="section-title" id="artifact-title">Spec / Contract / Verification / Review</h2>
+        <span class="section-meta" id="artifact-meta">0件</span>
+      </div>
       <div class="artifact-grid" id="artifact-grid"></div>
+      <div style="padding:0 16px 12px"><button class="artifact-jump" id="artifact-jump" type="button">全成果物を見る</button></div>
     </section>
 
     <details class="utility-disclosure" id="utility-disclosure">
       <summary>
-        <h2 class="utility-title">ユーティリティ（診断・マップ・指標）</h2>
-        <span class="utility-links">手動ファイル読込　/　Markdownプレビュー　/　Review　/　リスク・不明点</span>
+        <h2 class="utility-title">詳細（Task・ログ・診断）</h2>
+        <span class="utility-links">Task一覧　/　手動ファイル読込　/　Markdownプレビュー　/　Review　/　リスク・不明点</span>
         <img class="icon summary-chevron" data-icon="chevron" alt="">
       </summary>
       <div class="utility-content">
+        <section class="utility-card">
+          <h3>Task一覧</h3>
+          <div class="task-tree" id="task-tree" role="table" aria-label="実装計画のTask"></div>
+          <div class="next-steps" id="next-steps">
+            <strong>次の3ステップ:</strong><span class="next-step-sequence" id="next-step-sequence">計画を読み込む</span>
+          </div>
+        </section>
         <section class="utility-card">
           <h3>手動ファイル読込</h3>
           <div class="drop-zone" id="drop-zone" tabindex="0" role="button" aria-label="Roadmapファイルを読み込む"><span>Markdownまたはroadmap JSONをドロップ</span></div>
@@ -1300,6 +1441,231 @@
       if (ageMs > 15 * 60 * 1000) return { state: 'stale', ageMs, label: '更新待ち' };
       return { state: 'fresh', ageMs, label: '最新' };
     }
+    const TRACE_STATES = ['matched', 'missing-spec', 'missing-implementation', 'missing-acceptance', 'missing-evidence', 'failed-holistic'];
+    function stripMarkdown(value) {
+      return asText(value)
+        .replace(/`([^`]+)`/g, '$1')
+        .replace(/\*\*([^*]+)\*\*/g, '$1')
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+        .replace(/\[\[([^\]]+)\]\]/g, '$1')
+        .trim();
+    }
+    function normalizeTraceState(value) {
+      const token = stripMarkdown(value).toLowerCase().replace(/[_\s]+/g, '-');
+      if (TRACE_STATES.includes(token)) return token;
+      if (/holistic|全体|総合/.test(token) && /fail|failed|失敗|ng/.test(token)) return 'failed-holistic';
+      if (/spec|requirement|要求|要件/.test(token) && /missing|未接続|なし|欠損/.test(token)) return 'missing-spec';
+      if (/implementation|実装|plan|task/.test(token) && /missing|未接続|なし|欠損/.test(token)) return 'missing-implementation';
+      if (/acceptance|contract|ac-|合格|受入/.test(token) && /missing|未接続|なし|欠損/.test(token)) return 'missing-acceptance';
+      if (/evidence|verification|review|証拠|検証/.test(token) && /missing|未接続|待ち|なし|欠損/.test(token)) return 'missing-evidence';
+      if (/matched|pass|接続済|完了/.test(token)) return 'matched';
+      return '';
+    }
+    function deriveTraceState(outcome) {
+      if (!stripMarkdown(outcome.requirement)) return 'missing-spec';
+      if (!stripMarkdown(outcome.implementation)) return 'missing-implementation';
+      if (!stripMarkdown(outcome.acceptance)) return 'missing-acceptance';
+      if (!stripMarkdown(outcome.evidence)) return 'missing-evidence';
+      return 'matched';
+    }
+    function stateLabel(state) {
+      return {
+        matched: 'Matched',
+        'missing-spec': 'Spec missing',
+        'missing-implementation': 'Implementation missing',
+        'missing-acceptance': 'Acceptance missing',
+        'missing-evidence': 'Evidence missing',
+        'failed-holistic': 'Holistic failed'
+      }[state] || 'Unknown';
+    }
+    function suggestedFileForState(state) {
+      return {
+        'missing-spec': '00_spec.md',
+        'missing-implementation': '30_plan.md',
+        'missing-acceptance': 'checkpoint.md',
+        'missing-evidence': '90_verification.md',
+        'failed-holistic': '90_verification.md',
+        matched: 'team-journal.md'
+      }[state] || 'team-journal.md';
+    }
+    function markdownSection(markdown, headingPattern) {
+      const text = asText(markdown);
+      const headings = Array.from(text.matchAll(/^(#{1,6})\s+(.+)$/gm));
+      const heading = headings.find(item => headingPattern.test(stripMarkdown(item[2])));
+      if (!heading) return '';
+      const level = heading[1].length;
+      const start = (heading.index || 0) + heading[0].length;
+      const end = headings.find(item => (item.index || 0) > (heading.index || 0) && item[1].length <= level)?.index ?? text.length;
+      return text.slice(start, end);
+    }
+    function parseMarkdownTable(section) {
+      const lines = asText(section).split('\n');
+      for (let index = 0; index < lines.length - 1; index += 1) {
+        if (!/^\s*\|.*\|\s*$/.test(lines[index]) || !/^\s*\|?\s*:?-{3,}:?(?:\s*\|\s*:?-{3,}:?)+\s*\|?\s*$/.test(lines[index + 1])) continue;
+        const headers = splitMarkdownTableRow(lines[index]).map(stripMarkdown);
+        const rows = [];
+        for (let cursor = index + 2; cursor < lines.length && /^\s*\|.*\|\s*$/.test(lines[cursor]); cursor += 1) {
+          rows.push(splitMarkdownTableRow(lines[cursor]));
+        }
+        return { headers, rows };
+      }
+      return null;
+    }
+    function extractExplicitOutcomeTrace(files) {
+      const section = markdownSection(files['team-journal.md'], /^Outcome Trace$/i);
+      const table = parseMarkdownTable(section);
+      if (!table) return null;
+      const indexFor = variants => table.headers.findIndex(header => variants.some(variant => header.toLowerCase() === variant));
+      const columns = {
+        outcome: indexFor(['outcome']),
+        requirement: indexFor(['requirement']),
+        implementation: indexFor(['implementation']),
+        acceptance: indexFor(['acceptance']),
+        evidence: indexFor(['evidence']),
+        state: indexFor(['state'])
+      };
+      if (columns.outcome < 0 || columns.requirement < 0 || columns.implementation < 0 || columns.acceptance < 0 || columns.evidence < 0 || columns.state < 0) return null;
+      const outcomes = table.rows.map((row, index) => {
+        const outcome = {
+          id: `trace-${index + 1}`,
+          outcome: stripMarkdown(row[columns.outcome]),
+          requirement: stripMarkdown(row[columns.requirement]),
+          implementation: stripMarkdown(row[columns.implementation]),
+          acceptance: stripMarkdown(row[columns.acceptance]),
+          evidence: stripMarkdown(row[columns.evidence]),
+          source: 'team-journal.md',
+          explicit: true
+        };
+        const normalized = normalizeTraceState(row[columns.state]);
+        const derived = deriveTraceState(outcome);
+        outcome.state = normalized && !(normalized === 'matched' && derived !== 'matched') ? normalized : derived;
+        outcome.stateLabel = stateLabel(outcome.state);
+        outcome.suggestedFile = suggestedFileForState(outcome.state);
+        return outcome;
+      }).filter(item => item.outcome);
+      return outcomes.length ? outcomes : null;
+    }
+    function extractSpecRequirements(spec) {
+      const section = markdownSection(spec, /^(必須要件|requirements)$/i) || asText(spec);
+      return Array.from(section.matchAll(/^\s*[-*]\s+\[[ xX]\]\s+(.+)$/gm))
+        .map(match => stripMarkdown(match[1]))
+        .filter(Boolean);
+    }
+    function extractAcceptanceIds(checkpoint) {
+      return Array.from(asText(checkpoint).matchAll(/\bAC-\d+\b/g)).map(match => match[0]);
+    }
+    function hasFile(files, name) {
+      return Boolean(asText(files[name]).trim());
+    }
+    function holisticFailed(files, reviews) {
+      const verification = asText(files['90_verification.md']);
+      const reviewText = asText(files['80_review.md']);
+      if (/(holistic|全体|総合)[\s\S]{0,80}(fail|failed|失敗|ng)/i.test(verification)) return true;
+      if (/(fail|failed|失敗|ng)[\s\S]{0,80}(holistic|全体|総合)/i.test(verification)) return true;
+      return reviews.critical > 0 || reviews.important > 0 || /NEEDS[- ]REVISION/i.test(reviewText);
+    }
+    function buildArtifactWarnings(files, reviews, explicitTrace) {
+      const warnings = [];
+      if (!explicitTrace) warnings.push({ kind: 'missing-trace', file: 'team-journal.md', message: 'Outcome Trace未作成または未読取' });
+      for (const [file, message] of [
+        ['checkpoint.md', 'Contract未作成'],
+        ['30_plan.md', 'Implementation plan未作成'],
+        ['90_verification.md', 'Evidence未収集'],
+        ['80_review.md', 'Independent review未実施']
+      ]) {
+        if (!hasFile(files, file)) warnings.push({ kind: 'missing-artifact', file, message });
+      }
+      if (holisticFailed(files, reviews)) warnings.push({ kind: 'failed-holistic', file: '90_verification.md', message: 'holistic checkまたはreviewが失敗中' });
+      return warnings;
+    }
+    function buildFallbackOutcomes(files, reviews) {
+      const requirements = extractSpecRequirements(files['00_spec.md']);
+      const acceptanceIds = extractAcceptanceIds(files['checkpoint.md']);
+      const hasPlan = hasFile(files, '30_plan.md');
+      const hasCheckpoint = hasFile(files, 'checkpoint.md');
+      const hasEvidence = hasFile(files, '90_verification.md') || hasFile(files, '80_review.md');
+      const failed = holisticFailed(files, reviews);
+      if (!requirements.length) {
+        const outcome = {
+          id: 'fallback-missing-spec',
+          outcome: 'Outcome Traceを作成する',
+          requirement: '',
+          implementation: hasPlan ? '30_plan.md' : '',
+          acceptance: hasCheckpoint ? 'checkpoint.md' : '',
+          evidence: hasEvidence ? 'verification/review artifact' : '',
+          source: 'fallback',
+          explicit: false
+        };
+        outcome.state = 'missing-spec';
+        outcome.stateLabel = stateLabel(outcome.state);
+        outcome.suggestedFile = suggestedFileForState(outcome.state);
+        return [outcome];
+      }
+      return requirements.map((requirement, index) => {
+        const outcome = {
+          id: `fallback-${index + 1}`,
+          outcome: `O-${index + 1} ${requirement}`,
+          requirement,
+          implementation: hasPlan ? '30_plan.mdから要接続' : '',
+          acceptance: hasCheckpoint ? acceptanceIds[index] || 'checkpoint.mdから要接続' : '',
+          evidence: hasEvidence ? 'verification/reviewから要接続' : '',
+          source: 'fallback',
+          explicit: false
+        };
+        outcome.state = failed && index === 0
+          ? 'failed-holistic'
+          : !hasPlan
+            ? 'missing-implementation'
+            : !hasCheckpoint
+              ? 'missing-acceptance'
+              : 'missing-evidence';
+        outcome.stateLabel = stateLabel(outcome.state);
+        outcome.suggestedFile = suggestedFileForState(outcome.state);
+        return outcome;
+      });
+    }
+    function buildTraceSummary(outcomes, explicitTrace) {
+      const counts = Object.fromEntries(TRACE_STATES.map(state => [state, 0]));
+      outcomes.forEach(outcome => { counts[outcome.state] = (counts[outcome.state] || 0) + 1; });
+      const missingTotal = outcomes.filter(outcome => outcome.state !== 'matched').length;
+      return {
+        total: outcomes.length,
+        matched: counts.matched,
+        missingSpec: counts['missing-spec'],
+        missingImplementation: counts['missing-implementation'],
+        missingAcceptance: counts['missing-acceptance'],
+        missingEvidence: counts['missing-evidence'],
+        failedHolistic: counts['failed-holistic'],
+        missingTotal,
+        hasExplicitTrace: Boolean(explicitTrace),
+        holisticState: counts['failed-holistic'] ? 'failed' : 'pending',
+        status: missingTotal ? 'attention' : 'matched'
+      };
+    }
+    function buildNextDecision(outcomes, warnings, summary) {
+      const failed = outcomes.find(outcome => outcome.state === 'failed-holistic');
+      if (failed) return { label: `${failed.outcome} -> holistic checkを確認`, file: failed.suggestedFile, state: failed.state };
+      const missing = outcomes.find(outcome => outcome.state !== 'matched');
+      if (missing) return { label: `${missing.outcome} -> ${stateLabel(missing.state)}`, file: missing.suggestedFile, state: missing.state };
+      const warning = warnings[0];
+      if (warning) return { label: warning.message, file: warning.file, state: warning.kind };
+      return { label: summary.total ? 'Outcome Traceは接続済み。検証bundleを確認' : 'Outcome Traceを作成', file: 'team-journal.md', state: 'matched' };
+    }
+    function buildOutcomeTrace(files, reviews) {
+      const explicit = extractExplicitOutcomeTrace(files);
+      let outcomes = explicit || buildFallbackOutcomes(files, reviews);
+      const warnings = buildArtifactWarnings(files, reviews, explicit);
+      if (holisticFailed(files, reviews) && !outcomes.some(outcome => outcome.state === 'failed-holistic')) {
+        outcomes = outcomes.map((outcome, index) => index === 0 ? { ...outcome, state: 'failed-holistic', stateLabel: stateLabel('failed-holistic'), suggestedFile: suggestedFileForState('failed-holistic') } : outcome);
+      }
+      const summary = buildTraceSummary(outcomes, explicit);
+      return {
+        outcomes,
+        traceSummary: summary,
+        artifactWarnings: warnings,
+        nextDecision: buildNextDecision(outcomes, warnings, summary)
+      };
+    }
     function buildModel(snapshotInput, options = {}) {
       const snapshot = normalizeSnapshot(snapshotInput);
       const nowMs = Number.isFinite(options.nowMs) ? options.nowMs : Date.now();
@@ -1314,6 +1680,7 @@
       const completedTasks = tasks.filter(task => task.status === 'complete');
       const activePhase = phases.find(phase => phase.status === 'in-progress') || phases.find(phase => phase.status === 'planned') || phases[phases.length - 1];
       const nextSteps = tasks.filter(task => task.status !== 'complete').slice(0, 3);
+      const trace = buildOutcomeTrace(snapshot.files, reviews);
       const unresolvedDependencies = recordedActiveTask
         ? Array.from(recordedActiveTask.blockedBy.matchAll(/(?:Task|タスク)\s+(\d+(?:\.\d+)?)/gi))
             .map(match => match[1])
@@ -1333,7 +1700,11 @@
       return {
         snapshot, tasks, entries, reviews, risks, phases, freshness, recordedActiveTask,
         activeTask, activePhase, nextSteps, waiting, artifacts: snapshot.artifacts,
-        completedTasks, fixedProgress: { done: completedTasks.length, total: tasks.length }
+        completedTasks, fixedProgress: { done: completedTasks.length, total: tasks.length },
+        outcomes: trace.outcomes,
+        traceSummary: trace.traceSummary,
+        artifactWarnings: trace.artifactWarnings,
+        nextDecision: trace.nextDecision
       };
     }
     function artifactStateFor(artifact, model) {
@@ -1356,7 +1727,8 @@
       checkboxStats, extractTasks, extractLogEntries, extractReviewCounts,
       extractRisks, extractPhaseSignals, buildModel, artifactStateFor,
       renderInlineMarkdown, renderWorkflowMarkdown, groupTaskSections,
-      extractPlanSections, taskHubSettings
+      extractPlanSections, taskHubSettings, extractExplicitOutcomeTrace,
+      buildOutcomeTrace, stateLabel
     };
     /* ROADMAP_MODEL_END */
 
@@ -1518,6 +1890,7 @@
       }
       renderHeader(currentModel);
       renderNowStrip(currentModel);
+      renderOutcomeTrace(currentModel);
       renderPhases(currentModel);
       renderTasks(currentModel);
       renderPulse(currentModel);
@@ -1536,35 +1909,63 @@
       const phase = model.activePhase;
       const active = model.activeTask;
       const progress = model.fixedProgress;
-      byId('now-phase').textContent = phase ? `Phase ${phase.workflowNumber || phase.number} ${phase.workflowLabel || phase.label}` : 'Phase —';
-      byId('now-status').textContent = model.waiting.state === 'complete'
-        ? `完了・${progress.done}/${progress.total}`
-        : active
-          ? `${phase?.label || '実行'}中・${progress.done}/${progress.total}完了・${model.waiting.state === 'active' ? 'ブロッカーなし' : '依存待ち'}`
-          : model.freshness.state === 'stale' ? '更新待ち' : '状態確認待ち';
-      byId('now-count').textContent = `${progress.done} / ${progress.total}`;
-      const progressbar = byId('task-progress');
-      if (progress.total) {
-        progressbar.setAttribute('aria-valuemin', '0');
-        progressbar.setAttribute('aria-valuemax', String(progress.total));
-        progressbar.setAttribute('aria-valuenow', String(progress.done));
-        progressbar.setAttribute('aria-valuetext', `${progress.total}件中${progress.done}件完了`);
-      } else {
-        ['aria-valuemin', 'aria-valuemax', 'aria-valuenow'].forEach(name => progressbar.removeAttribute(name));
-        progressbar.setAttribute('aria-valuetext', '対象Taskなし');
-      }
-      byId('task-progress-fill').style.width = progress.total ? `${Math.round(progress.done / progress.total * 100)}%` : '0%';
-      byId('now-checkpoint').textContent = model.nextSteps[0]?.title || '完了報告を確認';
-      byId('now-active').textContent = active?.title || '稼働中のTaskなし';
-      const noWait = model.waiting.state === 'active' || model.waiting.state === 'complete';
-      byId('now-waiting-label').textContent = model.waiting.state === 'active' ? 'ブロッカー' : '待ち';
-      byId('now-waiting').textContent = noWait ? 'なし' : model.waiting.reason;
-      byId('now-waiting-icon').src = tablerData(noWait ? 'check' : 'clock');
+      const summary = model.traceSummary;
+      byId('wayfinder-phase').textContent = phase ? `Phase ${phase.workflowNumber || phase.number} ${phase.workflowLabel || phase.label}` : 'Phase —';
+      byId('wayfinder-status').textContent = summary.missingTotal
+        ? `未接続 ${summary.missingTotal}/${summary.total}`
+        : summary.total
+          ? 'Outcome Trace matched'
+          : 'Outcome Traceなし';
+      byId('wayfinder-next-decision').textContent = model.nextDecision.label;
+      byId('wayfinder-unmatched').textContent = `${summary.missingTotal} / ${summary.total} outcomes`;
+      byId('wayfinder-failed').textContent = summary.failedHolistic ? `failed holistic ${summary.failedHolistic}` : 'なし';
       byId('artifact-jump').textContent = `全${model.artifacts.length}件を見る`;
-      byId('plan-meta').textContent = `${model.phases.filter(item => item.status === 'complete').length}フェーズ完了 / 全${model.tasks.length}タスク`;
+      byId('plan-meta').textContent = active
+        ? `現在: ${active.title} / Task ${progress.done}/${progress.total}`
+        : model.waiting.state === 'complete'
+          ? `Task完了 ${progress.done}/${progress.total}`
+          : `${model.freshness.label} / Task ${progress.done}/${progress.total}`;
       byId('next-step-sequence').textContent = model.nextSteps.length
         ? model.nextSteps.map((task, index) => `${index + 1} ${task.title}`).join('　→　')
         : '計画内のTaskは完了しています';
+    }
+    function renderOutcomeTrace(model) {
+      const summary = model.traceSummary;
+      byId('outcome-trace-meta').textContent = `${summary.matched}/${summary.total} matched`;
+      const tokens = [
+        ['Matched', summary.matched, 'good'],
+        ['Spec missing', summary.missingSpec, summary.missingSpec ? 'warn' : 'good'],
+        ['Implementation missing', summary.missingImplementation, summary.missingImplementation ? 'warn' : 'good'],
+        ['Acceptance missing', summary.missingAcceptance, summary.missingAcceptance ? 'warn' : 'good'],
+        ['Evidence missing', summary.missingEvidence, summary.missingEvidence ? 'warn' : 'good'],
+        ['Holistic failed', summary.failedHolistic, summary.failedHolistic ? 'danger' : 'good']
+      ];
+      byId('trace-summary-bar').innerHTML = tokens
+        .map(([label, count, tone]) => `<span class="trace-token ${tone}"><strong>${count}</strong>${label}</span>`)
+        .join('');
+      byId('artifact-warnings').innerHTML = model.artifactWarnings.length
+        ? model.artifactWarnings.map(warning => `<button class="artifact-warning" type="button" data-artifact="${escapeHtml(warning.file)}">${escapeHtml(warning.message)} -> ${escapeHtml(warning.file)}</button>`).join('')
+        : '<span class="trace-token good">artifact warnings 0</span>';
+      const header = '<div class="trace-row header" role="row"><span role="columnheader">Outcome</span><span role="columnheader">Requirement</span><span role="columnheader">Implementation</span><span role="columnheader">Acceptance</span><span role="columnheader">Evidence</span><span role="columnheader">State</span></div>';
+      const rows = model.outcomes.map(outcome => `
+        <div class="trace-row" role="row" aria-label="${escapeHtml(outcome.outcome)} は ${escapeHtml(outcome.stateLabel)}">
+          <span role="cell"><strong>${escapeHtml(outcome.outcome)}</strong></span>
+          <span role="cell">${escapeHtml(outcome.requirement || 'Spec missing')}</span>
+          <span role="cell">${escapeHtml(outcome.implementation || 'Implementation missing')}</span>
+          <span role="cell">${escapeHtml(outcome.acceptance || 'Acceptance missing')}</span>
+          <span role="cell">${escapeHtml(outcome.evidence || 'Evidence missing')}</span>
+          <span role="cell"><span class="trace-state ${escapeHtml(outcome.state)}">${escapeHtml(outcome.stateLabel)}</span></span>
+        </div>`);
+      byId('outcome-trace-table').innerHTML = model.outcomes.length ? header + rows.join('') : '<div class="empty">Outcome Traceを読み込めません。</div>';
+      byId('outcome-trace-cards').innerHTML = model.outcomes.length
+        ? model.outcomes.map(outcome => `
+            <article class="trace-card" aria-label="${escapeHtml(outcome.outcome)} は ${escapeHtml(outcome.stateLabel)}">
+              <strong>${escapeHtml(outcome.outcome)}</strong>
+              <span>State: ${escapeHtml(outcome.stateLabel)}</span>
+              <span>Open: ${escapeHtml(outcome.suggestedFile)}</span>
+              <span>${escapeHtml(outcome.evidence || outcome.acceptance || outcome.implementation || outcome.requirement || 'Trace missing')}</span>
+            </article>`).join('')
+        : '<div class="empty">Outcome Traceを読み込めません。</div>';
     }
     function renderPhases(model) {
       const visible = model.phases;
@@ -1616,36 +2017,34 @@
       const active = model.activeTask;
       const recorded = model.recordedActiveTask;
       const phase = model.activePhase;
-      byId('pulse-task').textContent = active?.title || (recorded ? `${recorded.title}（記録のみ）` : '稼働中のTaskなし');
-      byId('pulse-phase').textContent = phase ? `Phase ${phase.workflowNumber || phase.number} ${phase.workflowLabel || phase.label}` : 'Phase —';
-      const state = byId('pulse-state');
-      state.className = `state-chip ${active ? 'in-progress' : model.waiting.state === 'complete' ? 'complete' : ''}`;
-      state.innerHTML = `${iconHtml(active ? 'play' : model.waiting.state === 'complete' ? 'check' : 'clock')}${active ? '進行中' : model.waiting.state === 'complete' ? '完了' : '待ち'}`;
-      const pulseTask = active || recorded;
-      byId('pulse-elapsed').textContent = pulseTask?.total ? `${pulseTask.done}/${pulseTask.total}` : '算定不可';
-      byId('pulse-updated').textContent = model.snapshot.generatedAt ? formatRelative(model.snapshot.generatedAt) : '—';
-      byId('pulse-updated').title = model.snapshot.generatedAt ? formatAbsolute(model.snapshot.generatedAt) : '';
       byId('freshness-label').textContent = model.freshness.label;
       const noWait = model.waiting.state === 'active' || model.waiting.state === 'complete';
-      byId('waiting-title').textContent = model.waiting.state === 'active' ? 'ブロッカー' : '待ちの理由';
-      byId('waiting-reason').textContent = noWait ? 'なし' : model.waiting.reason;
-      const recent = model.completedTasks.slice(-4).reverse();
-      byId('recent-completions').innerHTML = recent.length
-        ? recent.map(task => `<li class="recent-item">${iconHtml('check')}<strong>${escapeHtml(task.title)}</strong><span>完了</span></li>`).join('')
-        : '<li class="empty">完了Taskはまだありません。</li>';
+      const currentLabel = active?.title || (recorded ? `${recorded.title}（記録のみ）` : '稼働中のTaskなし');
+      const nextLabel = model.nextSteps[0]?.title || '完了報告を確認';
+      byId('implementation-items').innerHTML = [
+        ['Current', currentLabel],
+        ['Blocked / Waiting', noWait ? 'なし' : model.waiting.reason],
+        ['Next', nextLabel]
+      ].map(([label, value]) => `<div class="implementation-card"><small>${escapeHtml(label)}</small><strong>${escapeHtml(value)}</strong></div>`).join('');
     }
     function renderArtifacts(model) {
-      const preferred = preferredArtifacts(model);
-      const artifacts = matchMedia('(max-width: 720px)').matches ? preferred.slice(0, 1) : preferred;
-      byId('artifact-meta').textContent = `${artifacts.length}件表示 / 全${model.artifacts.length}件`;
-      byId('artifact-grid').innerHTML = artifacts.length
-        ? artifacts.map(artifact => `
+      const shortcutSpec = [
+        ['00_spec.md', 'Spec'],
+        ['checkpoint.md', 'Contract'],
+        ['90_verification.md', 'Verification'],
+        ['80_review.md', 'Review']
+      ];
+      const byPath = new Map(model.artifacts.map(item => [item.path, item]));
+      const artifacts = shortcutSpec.map(([path, label]) => byPath.get(path)
+        ? { ...byPath.get(path), label, missing: false }
+        : { path, name: path, label, type: '.md', size: 0, modifiedAt: '', missing: true });
+      byId('artifact-meta').textContent = `${artifacts.filter(item => !item.missing).length}/4 ready`;
+      byId('artifact-grid').innerHTML = artifacts.map(artifact => `
             <button class="artifact-card" type="button" data-artifact="${escapeHtml(artifact.path)}" title="${escapeHtml(artifact.path)}">
               <span class="artifact-icon">${iconHtml(artifactIconFor(artifact.path))}</span>
-              <span class="artifact-copy"><strong>${escapeHtml(artifact.label || artifact.name)}</strong><span>${escapeHtml(artifactRelationFor(artifact.path))}・更新 ${escapeHtml(formatRelative(artifact.modifiedAt))}</span><span class="artifact-state">${escapeHtml(artifactStateFor(artifact, model))}</span></span>
+              <span class="artifact-copy"><strong>${escapeHtml(artifact.label || artifact.name)}</strong><span>${escapeHtml(artifact.path)}${artifact.missing ? '・missing' : `・更新 ${escapeHtml(formatRelative(artifact.modifiedAt))}`}</span><span class="artifact-state${artifact.missing ? ' missing' : ''}">${escapeHtml(artifact.missing ? '未作成' : artifactStateFor(artifact, model))}</span></span>
               ${iconHtml('chevron')}
-            </button>`).join('')
-        : '<div class="empty">成果物metadataを生成すると、ここに更新証拠を表示します。</div>';
+            </button>`).join('');
     }
     function renderUtility(model) {
       const review = model.reviews;
@@ -1692,11 +2091,11 @@
       const changedArtifacts = next.artifacts.filter(item => previousArtifacts.get(item.path) !== item.modifiedAt);
       if (changedArtifacts.length) {
         messages.push(`成果物「${changedArtifacts.slice(0, 2).map(item => item.name).join('、')}」が更新されました。`);
-        flash(byId('artifact-shelf'));
+        flash(byId('evidence-shortcuts'));
       }
       if (messages.length) {
         byId('state-announcer').textContent = messages.join(' ');
-        flash(byId('now-strip'));
+        flash(byId('wayfinder'));
       }
     }
     function flash(element) {
@@ -1736,11 +2135,12 @@
       currentModel = next;
       renderHeader(next);
       renderNowStrip(next);
+      renderOutcomeTrace(next);
       renderTasks(next);
       renderPulse(next);
       renderArtifacts(next);
       renderUtility(next);
-      requestAnimationFrame(() => restoreFocusKey(focusKey, focusKey?.type === 'data-artifact' ? 'artifact-shelf' : ''));
+      requestAnimationFrame(() => restoreFocusKey(focusKey, focusKey?.type === 'data-artifact' ? 'evidence-shortcuts' : ''));
       if (previous.freshness.state !== next.freshness.state || previous.activeTask?.number !== next.activeTask?.number || previous.waiting.reason !== next.waiting.reason) {
         announceMeaningfulChange(previous, next);
       }
@@ -1905,7 +2305,7 @@
           if (!currentModel) return;
           const focusKey = captureFocusKey();
           renderArtifacts(currentModel);
-          requestAnimationFrame(() => restoreFocusKey(focusKey, focusKey?.type === 'data-artifact' ? 'artifact-shelf' : ''));
+          requestAnimationFrame(() => restoreFocusKey(focusKey, focusKey?.type === 'data-artifact' ? 'evidence-shortcuts' : ''));
         }, 120);
       });
     }

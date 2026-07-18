@@ -91,6 +91,21 @@ const files = {
 const generatedAt = '2026-07-12T02:59:30.000Z';
 const nowMs = Date.parse('2026-07-12T03:00:00.000Z');
 
+function contrastRatio(foreground, background) {
+  const channel = value => {
+    const normalized = value / 255;
+    return normalized <= 0.03928 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
+  };
+  const luminance = hex => {
+    const value = hex.replace('#', '');
+    const rgb = [0, 2, 4].map(offset => Number.parseInt(value.slice(offset, offset + 2), 16));
+    return 0.2126 * channel(rgb[0]) + 0.7152 * channel(rgb[1]) + 0.0722 * channel(rgb[2]);
+  };
+  const light = Math.max(luminance(foreground), luminance(background));
+  const dark = Math.min(luminance(foreground), luminance(background));
+  return (light + 0.05) / (dark + 0.05);
+}
+
 test('groups tasks into running, waiting and recent completed sections', () => {
   const grouped = model.groupTaskSections([
     { id: '1', section: 'running' },
@@ -337,6 +352,102 @@ test('artifact completion labels require phase evidence instead of file existenc
   assert.equal(model.artifactStateFor(surveyArtifact, completed), '調査済み');
 });
 
+test('parses a complete explicit Outcome Trace from Team Journal first', () => {
+  const result = model.buildModel(model.normalizeSnapshot({
+    generatedAt,
+    files: {
+      '00_spec.md': '- [ ] fallback should not win',
+      'team-journal.md': `# Team Journal
+
+## Outcome Trace
+
+| Outcome | Requirement | Implementation | Acceptance | Evidence | State |
+| --- | --- | --- | --- | --- | --- |
+| O-1 Ship trace-first viewer | 00_spec.md R1 | Task 3-4 | AC-05 | node tests and browser evidence | matched |
+`
+    }
+  }), { nowMs });
+
+  assert.equal(result.traceSummary.hasExplicitTrace, true);
+  assert.equal(result.traceSummary.total, 1);
+  assert.equal(result.traceSummary.matched, 1);
+  assert.equal(result.outcomes[0].outcome, 'O-1 Ship trace-first viewer');
+  assert.equal(result.outcomes[0].state, 'matched');
+});
+
+test('distinguishes every Outcome Trace missing state without weakening task parsing', () => {
+  const result = model.buildModel(model.normalizeSnapshot({
+    generatedAt,
+    files: {
+      'team-journal.md': `## Outcome Trace
+
+| Outcome | Requirement | Implementation | Acceptance | Evidence | State |
+| --- | --- | --- | --- | --- | --- |
+| O-1 |  | Task 1 | AC-01 | tests | missing-spec |
+| O-2 | R2 |  | AC-02 | tests | missing-implementation |
+| O-3 | R3 | Task 3 |  | tests | missing-acceptance |
+| O-4 | R4 | Task 4 | AC-04 |  | missing-evidence |
+`
+    }
+  }), { nowMs });
+
+  assert.deepEqual(Array.from(result.outcomes, outcome => outcome.state), [
+    'missing-spec',
+    'missing-implementation',
+    'missing-acceptance',
+    'missing-evidence'
+  ]);
+  assert.equal(result.traceSummary.missingSpec, 1);
+  assert.equal(result.traceSummary.missingImplementation, 1);
+  assert.equal(result.traceSummary.missingAcceptance, 1);
+  assert.equal(result.traceSummary.missingEvidence, 1);
+});
+
+test('marks holistic failure as the next decision before ordinary missing evidence', () => {
+  const result = model.buildModel(model.normalizeSnapshot({
+    generatedAt,
+    files: {
+      'team-journal.md': `## Outcome Trace
+
+| Outcome | Requirement | Implementation | Acceptance | Evidence | State |
+| --- | --- | --- | --- | --- | --- |
+| O-1 holistic | R1 | Task 5 | AC-10 | browser fixture | failed-holistic |
+| O-2 missing evidence | R2 | Task 4 | AC-06 | pending | missing-evidence |
+`,
+      '90_verification.md': 'Holistic Check: FAIL'
+    }
+  }), { nowMs });
+
+  assert.equal(result.traceSummary.failedHolistic, 1);
+  assert.equal(result.traceSummary.missingTotal, 2);
+  assert.equal(result.nextDecision.state, 'failed-holistic');
+  assert.match(result.nextDecision.label, /holistic/);
+});
+
+test('falls back safely when Outcome Trace is absent', () => {
+  const result = model.buildModel(model.normalizeSnapshot({
+    generatedAt,
+    files: {
+      '00_spec.md': `## 必須要件
+
+- [ ] 第一画面で未接続outcomeを判別できる
+- [ ] 実ブラウザで主要表示を確認する
+`,
+      'checkpoint.md': `| ID | 基準 |
+| --- | --- |
+| AC-05 | 第一画面で判別できる |
+| AC-06 | traceを区別する |
+`
+    }
+  }), { nowMs });
+
+  assert.equal(result.traceSummary.hasExplicitTrace, false);
+  assert.equal(result.outcomes.length, 2);
+  assert.equal(result.outcomes[0].state, 'missing-implementation');
+  assert.ok(result.artifactWarnings.some(warning => warning.kind === 'missing-trace'));
+  assert.ok(result.artifactWarnings.some(warning => warning.file === '30_plan.md'));
+});
+
 test('renders workflow markdown safely without an external parser', () => {
   const rendered = model.renderWorkflowMarkdown(`# 見出し
 
@@ -398,24 +509,37 @@ test('task hub shell exposes list detail status settings and responsive behavior
   assert.match(html, /overscroll-behavior:\s*contain/);
 });
 
-test('the selected Plan Canvas information architecture remains in the HTML', () => {
+test('the trace-first roadmap information architecture remains in the HTML', () => {
   for (const id of [
-    'now-strip',
+    'wayfinder',
+    'outcome-trace-summary',
+    'outcome-trace-table',
+    'outcome-trace-cards',
+    'implementation-strip',
     'phase-rail',
     'task-tree',
     'next-steps',
-    'execution-pulse',
-    'artifact-shelf',
+    'evidence-shortcuts',
     'utility-disclosure'
   ]) {
     assert.match(html, new RegExp(`id=["']${id}["']`), `${id} is required`);
   }
-  assert.match(html, /role="progressbar"/);
   assert.match(html, /aria-live="polite"/);
   assert.match(html, /prefers-reduced-motion/);
   assert.match(html, /Tabler Icons/);
   assert.match(html, /id="phase-rail" role="list"/);
   assert.match(html, /id="task-tree" role="table"/);
+  assert.match(html, /Outcome Trace Summary/);
+  assert.match(html, /次の判断/);
+  assert.match(html, /id="wayfinder-failed"/);
+  assert.match(html, /summary\.failedHolistic \? `failed holistic/);
+  assert.match(html, /Spec \/ Contract \/ Verification \/ Review/);
+  assert.match(html, /aria-label="\$\{escapeHtml\(outcome\.outcome\)\} は \$\{escapeHtml\(outcome\.stateLabel\)\}"/);
+  assert.match(html, /\.trace-cards\s*\{\s*display:\s*none/);
+  assert.match(html, /@media \(max-width: 960px\)[\s\S]*\.trace-table\s*\{\s*display:\s*none/);
+  assert.match(html, /@media \(max-width: 960px\)[\s\S]*\.trace-cards\s*\{\s*display:\s*grid/);
+  assert.match(html, /class="artifact-state\$\{artifact\.missing \? ' missing' : ''\}"/);
+  assert.match(html, /missing-implementation/);
   assert.match(html, /id="open-files" aria-label="Roadmapファイルを開く"/);
   assert.match(html, /id="export-json" aria-label="Roadmap JSONを書き出す"/);
   assert.match(html, /function stopLivePolling\(/);
@@ -427,4 +551,16 @@ test('the selected Plan Canvas information architecture remains in the HTML', ()
   assert.match(html, /id="preview-raw"/);
   assert.doesNotMatch(html, /id="source-preview"[^>]*aria-live/);
   assert.doesNotMatch(html, /function brandData\(/);
+});
+
+test('warning tokens and missing artifacts have accessible contrast contracts', () => {
+  assert.match(html, /--warn-text:\s*#6f4800/);
+  assert.match(html, /\[data-theme="dark"\][\s\S]*--warn-text:\s*#f0c978/);
+  assert.ok(contrastRatio('#6f4800', '#f3f4f0') >= 4.5);
+  assert.ok(contrastRatio('#6f4800', '#ffffff') >= 4.5);
+  assert.ok(contrastRatio('#f0c978', '#242a26') >= 4.5);
+  assert.ok(contrastRatio('#f0c978', '#1c211e') >= 4.5);
+  assert.match(html, /\.trace-token\.warn\s*\{[^}]*color:\s*var\(--warn-text\)/);
+  assert.match(html, /\.artifact-warning\s*\{[^}]*color:\s*var\(--warn-text\)/);
+  assert.match(html, /\.artifact-state\.missing\s*\{[^}]*color:\s*var\(--warn-text\)\s*!important/);
 });

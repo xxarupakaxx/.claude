@@ -1,5 +1,5 @@
 schema_version = 1
-generation = 1
+generation = 2
 authority = "codex"
 hash_algorithm = "skill-tree-sha256-v1"
 python_min = "3.11"
@@ -14,6 +14,9 @@ auto_delete = false
 candidate_code_execution = false
 network_default = "offline"
 promotion_requires_human_approval = true
+
+[codex_selector]
+config_path = "/Users/yoshiki/ghq/github.com/xxarupakaxx/.codex/config.toml"
 
 [coverage_policy]
 scope_bases = [
@@ -46,6 +49,12 @@ root_id = "claude"
 relative_path = "skill-governance"
 files = ["estate.lock.json", "reputation.lock.json"]
 reason = "break the estate self-hash cycle and keep volatile advisory reputation evidence outside runtime trust-lock churn; Git parity and delivery still verify both files"
+
+[[estate_hash_normalizations]]
+root_id = "vault-codex"
+relative_path = "skill-governance"
+files = ["estate.lock.json", "reputation.lock.json"]
+reason = "break the project estate self-hash cycle while the Vault gitlink snapshot remains an inventoried runtime surface"
 
 [[coverage_symlinks]]
 path = "~/.codex/plugins/cache/openai-bundled/chrome/latest"
@@ -293,7 +302,7 @@ required = true
 [[roots]]
 id = "shared"
 path = "~/.agents/skills"
-runtimes = ["codex", "claude"]
+runtimes = ["codex"]
 precedence = 20
 role = "shared-active"
 scan_mode = "recursive"
@@ -329,7 +338,7 @@ required = true
 [[roots]]
 id = "vault-shared"
 path = "/Users/yoshiki/Notes/Vault/.agents/skills"
-runtimes = ["codex", "claude"]
+runtimes = ["codex"]
 precedence = 5
 role = "project-active"
 scan_mode = "recursive"
@@ -554,8 +563,8 @@ catalog_required = true
 id = "mattpocock-skills"
 github = "mattpocock/skills"
 default_branch = "main"
-observed_revision = "e9fcdf95b402d360f90f1db8d776d5dd450f9234"
-observed_at = "2026-07-15"
+observed_revision = "9603c1cc8118d08bc1b3bf34cf714f62178dea3b"
+observed_at = "2026-07-19"
 origin = "community-maintainer"
 mode = "selective-adoption"
 update_policy = "notify-only"
