@@ -48,3 +48,12 @@
 - Playwrightの`iPhone 13`指定は未導入WebKitを要求して失敗したため、Chromiumの390×844 viewportへ切り替えて同じresponsive layoutを確認した。
 - accessibility直接検証でhidden file inputのname欠落を検出し、`aria-label`と回帰テストを追加した。
 - 全41件の再照合で、deprecated名`design-an-interface`の旧local Skillが残る矛盾を検出した。旧sub-agent API前提でもあるため削除し、`brainstorming`と`designing-codebases`へ参照を分離した。
+
+## 2026-07-19 12:24 JST
+
+- Phase 4：独立reviewでstaleな`roadmap-snapshot.json`、retired routingの1件不足、空directoryを検出した。
+- 修正：roadmapを`--json`付きで再生成し、retired 4件のroutingとdirectory absenceを揃えた。
+- 修正：synthetic estate生成時にCodex selector 8件を落としていたため、live `estate-plan`の493件を正本として再生成した。
+- fresh検証：governance audit、parity、catalog、deliveryはすべてPASSした。
+- fresh検証：source、live、origin/mainのHEAD一致とruntime-only file、設定checksumの不変を確認した。
+- Phase 5：security、UI、accessibilityの独立reviewはCRITICAL 0、IMPORTANT 0、MINOR 0でAPPROVEした。
