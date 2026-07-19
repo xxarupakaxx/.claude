@@ -733,7 +733,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "claude",
-      "tree_sha256": "0179ec1a6618fb9a87bebbf4371bc49c79949851d047700cb273e8d0dbb21c53"
+      "tree_sha256": "cd18683b68e14cd0bd5ed0920516ce73807be096ca5762b0e803aa65fe4287a1"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2023,7 +2023,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "codex",
-      "tree_sha256": "c739c461c913db2ed4aa0d6f13d3c8223fc04f126dec00069d7e63263798b7a9"
+      "tree_sha256": "601d539e01019468c37f0b47c0867243306158f8012e0abaef21f3210ac30eb2"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4024,7 +4024,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "vault-codex",
-      "tree_sha256": "c739c461c913db2ed4aa0d6f13d3c8223fc04f126dec00069d7e63263798b7a9"
+      "tree_sha256": "601d539e01019468c37f0b47c0867243306158f8012e0abaef21f3210ac30eb2"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4363,33 +4363,6 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
-      "relative_path": "ai-trend-scan",
-      "resolved_name": "ai-trend-scan",
-      "root_id": "vault-shared",
-      "tree_sha256": "e24223a67ec7aacb894bbbb6b0ba6a7dcaf48f96b73030fc90de364ac33047ff"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "capture",
-      "resolved_name": "capture",
-      "root_id": "vault-shared",
-      "tree_sha256": "a2debc6f1cf3211ce22e87a55c56c07b9cdd2b595ec7e65845bbcb8852b2ab9c"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "daily-curator",
-      "resolved_name": "daily-curator",
-      "root_id": "vault-shared",
-      "tree_sha256": "52636b08f8597c638f4c856799d01968b2d45c7ce2e41888c54335cb53f6ef67"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
       "relative_path": "daily-journal-curator",
       "resolved_name": "daily-journal-curator",
       "root_id": "vault-shared",
@@ -4435,15 +4408,6 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
-      "relative_path": "japanese-tech-writing",
-      "resolved_name": "japanese-tech-writing",
-      "root_id": "vault-shared",
-      "tree_sha256": "660869c59a2188f913855eb6627f742268eb2545866b271b092a6e0956d09146"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
       "relative_path": "loop-engineering",
       "resolved_name": "loop-engineering",
       "root_id": "vault-shared",
@@ -4453,46 +4417,10 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
-      "relative_path": "one-page-concept-sketch",
-      "resolved_name": "one-page-concept-sketch",
-      "root_id": "vault-shared",
-      "tree_sha256": "539499f8b381f291c9f7386d192935706fdff8fd511ee8c82c533515650a5723"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "payment-domain-scan",
-      "resolved_name": "payment-domain-scan",
-      "root_id": "vault-shared",
-      "tree_sha256": "d7715ca3a3177b6fd9ae639d5d93e2159d383ade0c7555ae3673c557f48240de"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
       "relative_path": "prompting-fable",
       "resolved_name": "prompting-fable",
       "root_id": "vault-shared",
       "tree_sha256": "d83f65173dfe707f45b02ebe599fee1c9f07c3e6d8e499948e91ec6ea0d7994b"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "research",
-      "resolved_name": "research",
-      "root_id": "vault-shared",
-      "tree_sha256": "98ac528f228e6a91ec98216b18d18bda4a6cd970c62db5b1c80fae682d7f6b5a"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "researching-articles",
-      "resolved_name": "researching-articles",
-      "root_id": "vault-shared",
-      "tree_sha256": "5457f37a5d7bb1b72f7f2dbddf3f2a1654f71156b1a65acc7f303a4244a9b3cb"
     },
     {
       "classification": "preexisting-unclassified",

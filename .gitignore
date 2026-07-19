@@ -41,7 +41,9 @@
 !/evals/
 !/evals/**
 !/projects/
-!/projects/**
+/projects/*
+!/projects/matt-skill-harness/
+!/projects/matt-skill-harness/**
 # Exclude eval results runtime artifacts
 /evals/reviewer/results/**/raw/
 # Include plugin configuration
