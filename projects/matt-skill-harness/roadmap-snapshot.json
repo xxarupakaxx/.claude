@@ -1,0 +1,216 @@
+{
+  "version": 1,
+  "title": "実装計画",
+  "taskDir": "/Users/yoshiki/Notes/Vault/.codex/projects/matt-skill-harness",
+  "generatedAt": "2026-07-19T02:54:34.721616+00:00",
+  "fingerprint": "188add5c93dfec782603e625121a6dbd2b0a369453f04b4cec775bc8ac97ef90",
+  "files": {
+    "00_spec.md": "# Matt Skill harness の user-scope 統合\n\n## 問題\n\n現在の harness には Matt Skill の規律が複数入っているが、利用者が知っている名前と discovery surface の名前が一致しない。\n\nロードマップは情報を保持しているものの、計画、実装、合格基準、証拠、人間の確認箇所を一続きに読みにくい。\n\n計画を先に固める運用は維持したいが、実行して初めて得られる観察によって計画を修正する経路も必要である。\n\n## Outcomes\n\n- O-1：Matt upstream 41 Skill の採用判断を user-scope の証拠として残す。\n- O-2：`batch-grill-me` と `to-questionnaire` を明示起動専用として導入する。\n- O-3：`wayfinder`、`to-spec`、`to-tickets`、`implement`、`teach` をその名前で発見できるようにする。\n- O-4：置換済み deprecated Skill を runtime から削除する。\n- O-5：計画から証拠までの対応と漏れを、最初の画面で人間が判断できるロードマップにする。\n- O-6：観察、計画変更、再検証を正規の履歴として扱う。\n- O-7：ロードマップの読み方と想定される反論を、teach 用の図解で確認できるようにする。\n- O-8：Codex と Claude の user-scope parity を保ち、live home を安全に更新する。\n\n## Scope\n\n正本は `.codex`、追従側は `.claude-global` とする。\n\nVault にはこの project の成果物を作らず、最終的な submodule pointer だけを更新する。\n\n## Out of scope\n\n- Matt upstream の全 Skill を自動起動対象にすること。\n- in-progress Skill を安定版と表現すること。\n- tracker への issue 作成や外部投稿を無承認で行うこと。\n- 計画変更を無条件に許し、合格基準を弱めること。\n",
+    "30_plan.md": "# 実装計画\n\n## Task 1：採用境界を確定する\n\n- `batch-grill-me` と `to-questionnaire` の package、license、起動権、外部副作用を確認する。\n- 41 Skill inventory の判定を、導入、既存対応、削除、保留に更新する。\n- verify：同じ upstream revision と local adaptation が証拠で結ばれている。\n\n## Task 2：正式名の discovery surface を作る\n\n- `wayfinder`、`to-spec`、`to-tickets`、`implement`、`teach` を user-invoked 入口として追加する。\n- 既存の日本語実装を規律の正本として参照し、同じ model-invoked trigger を重複させない。\n- verify：名前で検索でき、明示起動以外では自動起動しない。\n\n## Task 3：in-progress Skill を隔離導入する\n\n- `batch-grill-me` は複数質問を一度に答えたい場合だけ使う。\n- `to-questionnaire` は local Markdown を作るだけとし、送信や tracker 投稿を行わない。\n- in-progress 状態と代替となる安定 Skill を本文に表示する。\n- verify：representative prompt、非起動 prompt、安全境界のテストが通る。\n\n## Task 4：deprecated Skill を削除する\n\n- `conducting-quality-assurance`、`planning-refactors`、`ubiquitous-language` の参照を置換先へ移す。\n- selector、registry、estate を更新してから Skill directory を削除する。\n- `handing-off-to-claude` は deprecated ではないため、今回の削除対象から外す。共有 routing から外れていることだけ確認する。\n- verify：削除名への active route と runtime path が0件になる。\n\n## Task 5：ロードマップを一画面で判断できる形へ絞る\n\n- first screen を Now、Next human decision、Coverage、Outcome Trace に限定する。\n- Outcome Trace に Human Review と Objections を追加する。\n- tasks、phases、artifacts、logs は details に折りたたむ。\n- Planned、Observed、Revised、Verified を区別する Revision Log を追加する。\n- verify：desktop、tablet、mobile、keyboard、色覚に依存しない状態表示を確認する。\n\n## Task 6：teach 用の図解を作る\n\n- ロードマップの読み方を一枚の状態図と対応表で説明する。\n- 「ファイルがあるだけで完了か」「計画変更は失敗か」などの反論を evidence shortcut と結び付ける。\n- 小テストで漏れと再検証の判断を確認する。\n- verify：lesson と reference が単独で開き、ロードマップから到達できる。\n\n## Task 7：governance 基盤を修正する\n\n- live catalog の人間向け出力が欠損フィールドで落ちないようにする。\n- audit、parity、delivery、roadmap test を fresh に実行する。\n- verify：両 user-scope repo で同じ結果になる。\n\n## Task 8：user-scope を昇格する\n\n- `.codex` を先に commit、push する。\n- `.claude-global` を同じ意味へ同期し、commit、push する。\n- live `~/.codex` と `~/.claude` の runtime-only file を保護して fast-forward する。\n- Vault は submodule pointer だけを commit、push する。\n- verify：exact SHA、clean tracked state、runtime-only file 保持を確認する。\n",
+    "40_progress.md": "# Progress\n\n## Current\n\n- [x] upstream revision と現行skill inventoryを確認した。\n- [x] Goal、Sprint Contract、Outcome Traceを作成した。\n- [x] Skill discoveryとdeprecated削除を実装した。\n- [x] Roadmapとteach lessonを実装した。\n- [ ] 両repoとlive homeを検証する。\n",
+    "80_review.md": "# Review\n\n## Status\n\npending\n\n## Review questions\n\n- CRITICAL：削除対象に未置換の参照が残っていないか。\n- CRITICAL：live syncがruntime-only fileやsecretを上書きしないか。\n- IMPORTANT：正式名entryが同じskillの二重自動起動を作らないか。\n- IMPORTANT：first screenだけで未達と次の人間判断が分かるか。\n- IMPORTANT：計画変更がacceptanceの形骸化に使えないか。\n- MINOR：teach lessonの図とロードマップの用語が一致しているか。\n",
+    "05_log.md": "# 作業ログ\n\n## 2026-07-19 11:33 JST\n\n- Phase 0：user-scope project を `.codex/projects/matt-skill-harness/` に作成した。\n- 過去知見：Matt Skill は薄い routing、Goal Quality Gate、Sprint Contract、Outcome Trace を中心に統合済みだった。\n- 現状差分：実装は存在しても、`wayfinder` など upstream の正式名が discovery surface に出ていなかった。\n- ユーザー所感：計画を重視する一方、実行後の観察と後からの修正を正規の流れにしたい。\n\n## 2026-07-19 11:34 JST\n\n- Phase 1：upstream `main` と監査済み revision が `9603c1cc8118d08bc1b3bf34cf714f62178dea3b` で一致することを確認した。\n- GitHub の現行 README で `wayfinder`、`to-spec`、`to-tickets`、`implement`、`teach` が user-invoked surface であることを確認した。\n- `batch-grill-me` と `to-questionnaire` は `in-progress` の user-invoked Skill である。\n- governance source live check は成功した。\n- governance catalog の人間向け出力は `observed_revision` 欠落で例外になった。基盤修正対象へ追加した。\n- GO/NO-GO：CONDITIONAL GO。\n  - in-progress 2件は明示起動専用、状態表示、外部投稿なしを条件に導入できる。\n  - deprecated は置換先と参照更新を確認してから削除できる。\n  - discovery 名は既存実装の重複起動を避ける薄い入口として追加できる。\n\n## Phase 2: 計画完了\n\n- `30_plan.md`、`checkpoint.md`、`team-journal.md` に計画、合格基準、Outcome Trace を固定した。\n- 実行後に得た観察は Revision Log に記録し、関連する acceptance と evidence を再検証する。\n\n## 2026-07-19 11:48 JST\n\n- Phase 3A：`wayfinder`、`to-spec`、`to-tickets`、`implement`、`teach` のuser-invoked entryを追加した。\n- Phase 3A：`batch-grill-me` と `to-questionnaire` をin-progress表示と安全境界付きで導入した。\n- Phase 3A：`conducting-quality-assurance`、`planning-refactors`、`ubiquitous-language` の参照を置換し、Skill本体を削除した。\n- Phase 3A：41件のinventoryと12件のrouting evalを作成した。\n- Phase 3A：governance catalogの人間向け表示が欠損fieldで落ちる不具合を修正し、unit testを追加した。\n\n## 2026-07-19 11:55 JST\n\n- Phase 3B：first screenをNow、Next human decision、Coverage、Outcome Trace、Observation / Revisionへ絞った。\n- Phase 3B：Outcome TraceへHuman ReviewとObjectionを追加した。\n- Phase 3B：Implementation Stripとevidence shortcutを折りたたみへ移した。\n- Phase 3B：teach lesson、reference、図、二問の小テストをuser-scope projectへ追加した。\n- 直接検証：roadmap Python 10件、Node 27件、governance 98件、Matt harness validatorがPASSした。\n",
+    "checkpoint.md": "# Sprint Contract\n\n| ID | 合格基準 | 検証 |\n| --- | --- | --- |\n| AC-01 | upstream 41 Skill の各行に採用状態と理由がある | inventory validator |\n| AC-02 | `batch-grill-me` と `to-questionnaire` は user-invoked、in-progress 表示、外部送信なし | static test、prompt eval |\n| AC-03 | `wayfinder`、`to-spec`、`to-tickets`、`implement`、`teach` を名前で発見できる | discovery test |\n| AC-04 | 削除対象3 Skillのdirectory、active route、registry entryが0件 | `rg`、governance audit |\n| AC-05 | first screen に Now、Next human decision、Coverage、Outcome Trace だけが主要情報として出る | browser test、visual review |\n| AC-06 | 各 outcome が requirement、implementation、acceptance、evidence、human review、objectionへ接続される | trace parser test |\n| AC-07 | 観察後の変更が Revision Log に残り、再検証対象が示される | revision parser test |\n| AC-08 | lesson と reference が単独で利用でき、図、小テスト、想定反論を含む | browser test、content test |\n| AC-09 | governance unit test、audit、parity、delivery が両repoでPASSする | fresh commands |\n| AC-10 | live user-scope のruntime-only fileを保持し、tracked HEADがorigin/mainと一致する | before/after manifest、exact SHA |\n\n## 変更の再承認条件\n\n- in-progress Skill を model-invoked に変える。\n- local-only output を外部送信へ変える。\n- acceptance を削除または弱める。\n- Vault を成果物の正本へ変える。\n- deprecated 以外の Skill を追加削除する。\n",
+    "team-journal.md": "# Team Journal: matt-skill-harness\n\n## 定位置\n\n- Goal Gate：PASS\n- Lane：user-scope governance と harness implementation\n- Outcome Trace：実装接続済み8、evidence収集中、holistic pending\n- Review Heat：標準。governance、UI、accessibility を直接検証する。\n- 現在の周：1\n\n## Outcome Trace\n\n| Outcome | Requirement | Implementation | Acceptance | Evidence | Human Review | Objection | State |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| O-1 41 Skill の判断を残す | 00_spec.md O-1 | Task 1 / matt-skill-inventory.md | AC-01 | validator PASS、human review待ち | 分類理由を一覧で読めるか | 「既存対応を導入済みと数えていないか」 | missing-evidence |\n| O-2 in-progress 2件を隔離導入する | 00_spec.md O-2 | Task 3 / skills 2件 | AC-02 | static test PASS、prompt review待ち | 起動時に状態と境界が分かるか | 「実験的Skillが勝手に起動しないか」 | missing-evidence |\n| O-3 正式名を発見可能にする | 00_spec.md O-3 | Task 2 / entry 5件 | AC-03 | discovery validator PASS、fresh session待ち | Skill一覧から期待名を見つけられるか | 「別名が二重起動を起こさないか」 | missing-evidence |\n| O-4 deprecatedを削除する | 00_spec.md O-4 | Task 4 / retired 3件 | AC-04 | validator PASS、live audit待ち | 置換先が明記されているか | 「削除で既存参照が壊れないか」 | missing-evidence |\n| O-5 一画面で漏れを判断する | 00_spec.md O-5 | Task 5 / roadmap viewer | AC-05, AC-06 | parser test PASS、browser review待ち | 一分以内に次の確認先を言えるか | 「情報を隠しているだけではないか」 | missing-evidence |\n| O-6 観察後の修正を履歴化する | 00_spec.md O-6 | Task 5 / Revision Log | AC-07 | parser test PASS、browser review待ち | 元計画と変更理由を追えるか | 「後付けで合格基準を変えられないか」 | missing-evidence |\n| O-7 teachで理解可能にする | 00_spec.md O-7 | Task 6 / lesson、reference | AC-08 | content作成済み、browser review待ち | 図と小テストだけで読めるか | 「教材が本体とずれないか」 | missing-evidence |\n| O-8 両surfaceとlive homeを揃える | 00_spec.md O-8 | Task 7, Task 8 | AC-09, AC-10 | paired validator PASS、live sync待ち | live discoveryを再起動後に確認できるか | 「runtime-only fileが消えないか」 | missing-evidence |\n\n## Revision Log\n\n| ID | Observed | Plan change | Revalidate | Status |\n| --- | --- | --- | --- | --- |\n| REV-01 | upstream正式名が local discovery に出ていない | 正式名の薄い user-invoked entryを追加した | AC-03, AC-09 | implemented |\n| REV-02 | catalog live の人間向け表示が欠損fieldで例外になる | 欠損時に安全な表示へfallbackした | AC-09 | verified |\n| REV-03 | 7列のOutcome Traceは横に重く、Revisionまで視線が届きにくい | SpecからEvidenceまでを一つのchainへまとめ、4列へ減らした | AC-05, AC-06 | implemented |\n\n## Decision Log\n\n| 時刻 | 決定 | 理由 |\n| --- | --- | --- |\n| 2026-07-19 11:33 JST | in-progress 2件を再評価する | reject理由は自動起動時の負荷であり、明示起動なら隔離できる |\n| 2026-07-19 11:33 JST | deprecated 3件を削除対象にする | 置換先があり、ユーザーが実削除を承認した |\n| 2026-07-19 11:33 JST | `handing-off-to-claude` は保持する | in-progressだがdeprecatedではなく、今回の削除承認の範囲外である |\n",
+    "90_verification.md": "# Verification\n\n## Status\n\npending\n\n## Evidence to collect\n\n- Skill inventory validator\n- trigger precision and non-trigger fixtures\n- governance unit tests\n- audit, parity, delivery\n- roadmap parser and browser tests\n- desktop, tablet, mobile screenshots\n- keyboard and accessibility checks\n- Codex and Claude exact SHA\n- runtime-only file before and after manifest\n"
+  },
+  "sources": [
+    {
+      "name": "00_spec.md",
+      "path": "/Users/yoshiki/Notes/Vault/.codex/projects/matt-skill-harness/00_spec.md",
+      "size": 1825,
+      "modifiedAt": "2026-07-19T02:35:12.770555+00:00"
+    },
+    {
+      "name": "30_plan.md",
+      "path": "/Users/yoshiki/Notes/Vault/.codex/projects/matt-skill-harness/30_plan.md",
+      "size": 3221,
+      "modifiedAt": "2026-07-19T02:35:12.772442+00:00"
+    },
+    {
+      "name": "40_progress.md",
+      "path": "/Users/yoshiki/Notes/Vault/.codex/projects/matt-skill-harness/40_progress.md",
+      "size": 304,
+      "modifiedAt": "2026-07-19T02:52:31.812099+00:00"
+    },
+    {
+      "name": "80_review.md",
+      "path": "/Users/yoshiki/Notes/Vault/.codex/projects/matt-skill-harness/80_review.md",
+      "size": 529,
+      "modifiedAt": "2026-07-19T02:35:12.774139+00:00"
+    },
+    {
+      "name": "05_log.md",
+      "path": "/Users/yoshiki/Notes/Vault/.codex/projects/matt-skill-harness/05_log.md",
+      "size": 2830,
+      "modifiedAt": "2026-07-19T02:52:31.811581+00:00"
+    },
+    {
+      "name": "checkpoint.md",
+      "path": "/Users/yoshiki/Notes/Vault/.codex/projects/matt-skill-harness/checkpoint.md",
+      "size": 1596,
+      "modifiedAt": "2026-07-19T02:35:12.772911+00:00"
+    },
+    {
+      "name": "team-journal.md",
+      "path": "/Users/yoshiki/Notes/Vault/.codex/projects/matt-skill-harness/team-journal.md",
+      "size": 3574,
+      "modifiedAt": "2026-07-19T02:54:18.359167+00:00"
+    },
+    {
+      "name": "90_verification.md",
+      "path": "/Users/yoshiki/Notes/Vault/.codex/projects/matt-skill-harness/90_verification.md",
+      "size": 367,
+      "modifiedAt": "2026-07-19T02:35:12.774431+00:00"
+    }
+  ],
+  "artifacts": [
+    {
+      "name": "00_spec.md",
+      "path": "00_spec.md",
+      "type": "md",
+      "size": 1825,
+      "modifiedAt": "2026-07-19T02:35:12.770555+00:00"
+    },
+    {
+      "name": "05_log.md",
+      "path": "05_log.md",
+      "type": "md",
+      "size": 2830,
+      "modifiedAt": "2026-07-19T02:52:31.811581+00:00"
+    },
+    {
+      "name": "30_plan.md",
+      "path": "30_plan.md",
+      "type": "md",
+      "size": 3221,
+      "modifiedAt": "2026-07-19T02:35:12.772442+00:00"
+    },
+    {
+      "name": "40_progress.md",
+      "path": "40_progress.md",
+      "type": "md",
+      "size": 304,
+      "modifiedAt": "2026-07-19T02:52:31.812099+00:00"
+    },
+    {
+      "name": "80_review.md",
+      "path": "80_review.md",
+      "type": "md",
+      "size": 529,
+      "modifiedAt": "2026-07-19T02:35:12.774139+00:00"
+    },
+    {
+      "name": "90_verification.md",
+      "path": "90_verification.md",
+      "type": "md",
+      "size": 367,
+      "modifiedAt": "2026-07-19T02:35:12.774431+00:00"
+    },
+    {
+      "name": "MISSION.md",
+      "path": "MISSION.md",
+      "type": "md",
+      "size": 1369,
+      "modifiedAt": "2026-07-19T02:35:12.771219+00:00"
+    },
+    {
+      "name": "NOTES.md",
+      "path": "NOTES.md",
+      "type": "md",
+      "size": 747,
+      "modifiedAt": "2026-07-19T02:35:12.772103+00:00"
+    },
+    {
+      "name": "RESOURCES.md",
+      "path": "RESOURCES.md",
+      "type": "md",
+      "size": 1023,
+      "modifiedAt": "2026-07-19T02:35:12.771857+00:00"
+    },
+    {
+      "name": "roadmap-desktop.png",
+      "path": "artifacts/screenshots/roadmap-desktop.png",
+      "type": "png",
+      "size": 243569,
+      "modifiedAt": "2026-07-19T02:53:05.366673+00:00"
+    },
+    {
+      "name": "roadmap-mobile.png",
+      "path": "artifacts/screenshots/roadmap-mobile.png",
+      "type": "png",
+      "size": 280509,
+      "modifiedAt": "2026-07-19T02:53:21.601099+00:00"
+    },
+    {
+      "name": "teach-lesson.png",
+      "path": "artifacts/screenshots/teach-lesson.png",
+      "type": "png",
+      "size": 287044,
+      "modifiedAt": "2026-07-19T02:53:06.592580+00:00"
+    },
+    {
+      "name": "lesson.css",
+      "path": "assets/lesson.css",
+      "type": "css",
+      "size": 3246,
+      "modifiedAt": "2026-07-19T02:50:59.212083+00:00"
+    },
+    {
+      "name": "lesson.js",
+      "path": "assets/lesson.js",
+      "type": "js",
+      "size": 722,
+      "modifiedAt": "2026-07-19T02:50:59.212361+00:00"
+    },
+    {
+      "name": "checkpoint.md",
+      "path": "checkpoint.md",
+      "type": "md",
+      "size": 1596,
+      "modifiedAt": "2026-07-19T02:35:12.772911+00:00"
+    },
+    {
+      "name": "skill-routing-cases.md",
+      "path": "evals/skill-routing-cases.md",
+      "type": "md",
+      "size": 1445,
+      "modifiedAt": "2026-07-19T02:44:09.771613+00:00"
+    },
+    {
+      "name": "0001-plan-heavy-feedback-sensitive.md",
+      "path": "learning-records/0001-plan-heavy-feedback-sensitive.md",
+      "type": "md",
+      "size": 607,
+      "modifiedAt": "2026-07-19T02:35:12.774823+00:00"
+    },
+    {
+      "name": "0001-reading-the-harness-roadmap.html",
+      "path": "lessons/0001-reading-the-harness-roadmap.html",
+      "type": "html",
+      "size": 6043,
+      "modifiedAt": "2026-07-19T02:50:59.213346+00:00"
+    },
+    {
+      "name": "matt-skill-inventory.md",
+      "path": "matt-skill-inventory.md",
+      "type": "md",
+      "size": 5740,
+      "modifiedAt": "2026-07-19T02:42:26.662555+00:00"
+    },
+    {
+      "name": "roadmap-reading-guide.html",
+      "path": "reference/roadmap-reading-guide.html",
+      "type": "html",
+      "size": 3151,
+      "modifiedAt": "2026-07-19T02:50:59.214120+00:00"
+    },
+    {
+      "name": "team-journal.md",
+      "path": "team-journal.md",
+      "type": "md",
+      "size": 3574,
+      "modifiedAt": "2026-07-19T02:54:18.359167+00:00"
+    }
+  ]
+}
