@@ -4866,7 +4866,9 @@ def emit(payload: dict[str, Any], json_output: bool) -> None:
         print(f"legacy-active: {payload['legacy_active_count']} (integrity baseline only)")
     for item in payload.get("sources", []):
         live = item.get("live_status", "offline")
-        print(f"- {item['id']}: {live} @ {item['observed_revision'][:12]}")
+        source_id = item.get("id") or item.get("source_id") or "unknown"
+        revision = item.get("observed_revision") or item.get("revision") or "unknown"
+        print(f"- {source_id}: {live} @ {revision[:12]}")
     findings = payload.get("findings", [])
     if findings:
         counts: dict[str, int] = {}

@@ -2,7 +2,7 @@
   "generated_at": "2026-07-19T00:00:00+09:00",
   "generation": 2,
   "method": "pinned-github-commit-tree-plus-package-tree-v2",
-  "registry_sha256": "6accd8d8c00d92154de5e0b9354a3cb8b0300b556ebee8786c4546fc5aa7c391",
+  "registry_sha256": "44ce150153e34e60908bd2c765570316e5025349b25038756a376db456d19b8f",
   "schema_version": 1,
   "sources": {
     "addyosmani-agent-skills": {

@@ -665,7 +665,6 @@ evidence_gap = [
 ]
 skills = [
   "choosing-skills",
-  "conducting-quality-assurance",
   "creating-tracer-tickets",
   "designing-codebases",
   "designing-workflows",
@@ -682,7 +681,6 @@ skills = [
   "mapping-large-projects",
   "migrating-to-shoehorn",
   "modeling-domains",
-  "planning-refactors",
   "prototyping-solutions",
   "resolving-merge-conflicts",
   "reviewing-code",
@@ -702,6 +700,34 @@ skills = [
 [collections.revision_overrides]
 grilling = "66898f60e8c744e269f8ce06c2b2b99ce7660d5f"
 mapping-large-projects = "66898f60e8c744e269f8ce06c2b2b99ce7660d5f"
+
+[[collections]]
+id = "mattpocock-user-entry-2026-07"
+source_id = "mattpocock-skills"
+local_state = "legacy-active"
+review_state = "evidence-gap"
+approval_receipt = ""
+value_receipt = ""
+risk_tier = "L1"
+license = "MIT"
+adaptation = "shared-identical"
+content_relation = "localized-adaptation"
+targets = ["codex", "claude"]
+default_revision = "9603c1cc8118d08bc1b3bf34cf714f62178dea3b"
+baseline_at = "2026-07-19"
+evidence_gap = [
+  "formal-safety-receipt",
+  "formal-value-receipt",
+]
+skills = [
+  "batch-grill-me",
+  "implement",
+  "teach",
+  "to-questionnaire",
+  "to-spec",
+  "to-tickets",
+  "wayfinder",
+]
 
 [[route_relations]]
 id = "architecture-improvement"

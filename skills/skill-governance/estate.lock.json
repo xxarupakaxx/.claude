@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-15",
+  "generated_at": "2026-07-19",
   "generation": 2,
   "hash_algorithm": "skill-tree-sha256-v1",
   "records": [
@@ -46,7 +46,7 @@
       "relative_path": "ask-skill-router",
       "resolved_name": "ask-skill-router",
       "root_id": "claude",
-      "tree_sha256": "56cfb9da1b4aef9b614be8d4994457a33a6b474d4e9fd84ad81678324bb89f06"
+      "tree_sha256": "feffbcf279a68d20a243e1e601c37bea3298967f2d9bcf0202840b0768d603f5"
     },
     {
       "classification": "preexisting-unclassified",
@@ -65,6 +65,15 @@
       "resolved_name": "autonomous-loops",
       "root_id": "claude",
       "tree_sha256": "f241dad239ff2b679796d059989b44cf186dc6d7ea35e34de5ab9c7a3675cfc8"
+    },
+    {
+      "classification": "legacy-active",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "batch-grill-me",
+      "resolved_name": "batch-grill-me",
+      "root_id": "claude",
+      "tree_sha256": "a5f384b6da9314db4fb821ad2156f8b4ea62d5f9e106adc00905002ac5b9930a"
     },
     {
       "classification": "preexisting-unclassified",
@@ -137,15 +146,6 @@
       "resolved_name": "compounding-knowledge",
       "root_id": "claude",
       "tree_sha256": "a042e47d9860461a82586a91649475917ccaf10f96d6f404a423362bff2d8635"
-    },
-    {
-      "classification": "legacy-active",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "conducting-quality-assurance",
-      "resolved_name": "conducting-quality-assurance",
-      "root_id": "claude",
-      "tree_sha256": "7773e609344360c856fd1bd6b836391a8e85ca38ffe52005a50f98a33e89f050"
     },
     {
       "classification": "preexisting-unclassified",
@@ -236,15 +236,6 @@
       "resolved_name": "deepening-plan",
       "root_id": "claude",
       "tree_sha256": "050f0ea369e7c83cca729e9f070d2e398c9af0e9bd2847033cb9011bf6da24cb"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "design-an-interface",
-      "resolved_name": "design-an-interface",
-      "root_id": "claude",
-      "tree_sha256": "c64bad6012e24b38bc71ad444ebcfc6a465700101aadd53ecb3160ecc4cf9674"
     },
     {
       "classification": "preexisting-unclassified",
@@ -343,7 +334,7 @@
       "relative_path": "generate-state-diagram",
       "resolved_name": "generate-state-diagram",
       "root_id": "claude",
-      "tree_sha256": "ce143ef0fcfdb8aed1a6ec6b34552f68bb8da7fce914ec11d4b62ea260541b01"
+      "tree_sha256": "e717762236e98992ece06a262b03ce4224dbb1f7132338e59beae789412e9906"
     },
     {
       "classification": "preexisting-unclassified",
@@ -430,6 +421,15 @@
       "classification": "legacy-active",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
+      "relative_path": "implement",
+      "resolved_name": "implement",
+      "root_id": "claude",
+      "tree_sha256": "e790a2b927cba32cb5a278d6aae4764714d21875ec987f7c14e7122a23b5b9ef"
+    },
+    {
+      "classification": "legacy-active",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
       "relative_path": "implementing-work",
       "resolved_name": "implementing-work",
       "root_id": "claude",
@@ -442,7 +442,7 @@
       "relative_path": "improving-architecture",
       "resolved_name": "improving-architecture",
       "root_id": "claude",
-      "tree_sha256": "c470098154f82483507a7677535ccc9c2e040489b32cb6d25a991c1000df32c1"
+      "tree_sha256": "92d56b4c9ed44389ec53aef8d236ea5f416f0c81898a7291656cc956c4a9bc3c"
     },
     {
       "classification": "legacy-active",
@@ -562,15 +562,6 @@
       "tree_sha256": "aef8b6b71b8c696b0de5a2ee87ea62065cfc191ef7aea5f1ac5b7442da39ff9e"
     },
     {
-      "classification": "legacy-active",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "planning-refactors",
-      "resolved_name": "planning-refactors",
-      "root_id": "claude",
-      "tree_sha256": "3d2c06bd94dfafff148c6897b0bd16f31a3d83597d7b85cfb62d63d971e95f52"
-    },
-    {
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
@@ -649,7 +640,7 @@
       "relative_path": "research",
       "resolved_name": "research",
       "root_id": "claude",
-      "tree_sha256": "7082ce83ec7cbd019a26f6402355e9770ecbf5995157636a18083b88ad690d79"
+      "tree_sha256": "054b00ada963389bd0152ff71523c3585937064c1a2fb24800c902f95447c548"
     },
     {
       "classification": "legacy-active",
@@ -742,7 +733,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "claude",
-      "tree_sha256": "9fecef04ea6d0f87d44a7770e803c71e56662b8ab536b44f2a124b134fd483f3"
+      "tree_sha256": "0179ec1a6618fb9a87bebbf4371bc49c79949851d047700cb273e8d0dbb21c53"
     },
     {
       "classification": "preexisting-unclassified",
@@ -760,7 +751,7 @@
       "relative_path": "software-architecture",
       "resolved_name": "software-architecture",
       "root_id": "claude",
-      "tree_sha256": "dac94981de481b65a1c378706c8e7e29a991523662aef977cf444d4a5c64c1bf"
+      "tree_sha256": "ff499d6955da4b9a8b9e23723d21a3039a7d6670adcc330fc08bb83602c4c3ac"
     },
     {
       "classification": "preexisting-unclassified",
@@ -868,7 +859,16 @@
       "relative_path": "tdd",
       "resolved_name": "tdd",
       "root_id": "claude",
-      "tree_sha256": "b29158fa9fd2fbd1f7e20b2b16eb1c45e74bcaa422cb2c1e056d1ade0d51858e"
+      "tree_sha256": "6af2919caa40bc402e50c97c7406d7bc017e404d94187ed49145532824fb64b3"
+    },
+    {
+      "classification": "legacy-active",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "teach",
+      "resolved_name": "teach",
+      "root_id": "claude",
+      "tree_sha256": "19e8d991c6ff5810c529e147db4481c164d79855b11b647f6da380d740b86f99"
     },
     {
       "classification": "legacy-active",
@@ -892,19 +892,37 @@
       "classification": "legacy-active",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
+      "relative_path": "to-questionnaire",
+      "resolved_name": "to-questionnaire",
+      "root_id": "claude",
+      "tree_sha256": "fd57e61b110b29b19fe8987d5dc632a708aea65d9baf6cdac7df6af69c33a1db"
+    },
+    {
+      "classification": "legacy-active",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "to-spec",
+      "resolved_name": "to-spec",
+      "root_id": "claude",
+      "tree_sha256": "9b049a90ca6aeecd976fa81454b2db6716aa42b4d62e61e7818c24d1a1f9248c"
+    },
+    {
+      "classification": "legacy-active",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "to-tickets",
+      "resolved_name": "to-tickets",
+      "root_id": "claude",
+      "tree_sha256": "a02c8000cebaacb55022ad7c958628f2ab61f8bea639be17436472c7f7ba6fec"
+    },
+    {
+      "classification": "legacy-active",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
       "relative_path": "triaging-issues",
       "resolved_name": "triaging-issues",
       "root_id": "claude",
       "tree_sha256": "8d29f0f16b63d32a32da133d7fb2b31717fac8112f4ba384af15c5b1f00d30db"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "ubiquitous-language",
-      "resolved_name": "ubiquitous-language",
-      "root_id": "claude",
-      "tree_sha256": "8c1d3b359aa2f0e88eff0a299fd19a658434ed94da278f357bbffda0d392915e"
     },
     {
       "classification": "preexisting-unclassified",
@@ -941,6 +959,15 @@
       "resolved_name": "visualizing-work",
       "root_id": "claude",
       "tree_sha256": "c7ed1f612e97157819128a55b490ae0b03779df493df23e530294093085a30d7"
+    },
+    {
+      "classification": "legacy-active",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "wayfinder",
+      "resolved_name": "wayfinder",
+      "root_id": "claude",
+      "tree_sha256": "ab11b92aa28bf3fb4e3ff1a1a6d6382afd6b8077f058de3901586b093b553ff1"
     },
     {
       "classification": "legacy-active",
@@ -1048,7 +1075,7 @@
       "relative_path": "adversarial-review",
       "resolved_name": "adversarial-review",
       "root_id": "codex",
-      "tree_sha256": "ef2a7f819c0706c34a6ffc841ea629bcd34175936c8b636855e45d97bd3c7046"
+      "tree_sha256": "2b1b962a57bac86d70d5b8833f35d21b51be1d0d888776e336b607013498c61c"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1066,7 +1093,7 @@
       "relative_path": "ai-trend-scan",
       "resolved_name": "ai-trend-scan",
       "root_id": "codex",
-      "tree_sha256": "06604100fe77e1595ff891ad79e545083bfac2647176801b258407d7fa3259b5"
+      "tree_sha256": "d13ca164e5d0ca679c5febaba752252177476465c16d8e443b822b54cbe8be3f"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1111,7 +1138,7 @@
       "relative_path": "ask-skill-router",
       "resolved_name": "ask-skill-router",
       "root_id": "codex",
-      "tree_sha256": "56cfb9da1b4aef9b614be8d4994457a33a6b474d4e9fd84ad81678324bb89f06"
+      "tree_sha256": "feffbcf279a68d20a243e1e601c37bea3298967f2d9bcf0202840b0768d603f5"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1130,6 +1157,15 @@
       "resolved_name": "autonomous-loops",
       "root_id": "codex",
       "tree_sha256": "c78b34d97dc79d31d0432b0aa5037097c86d5e664997d4c61d91633292a4fcce"
+    },
+    {
+      "classification": "legacy-active",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "batch-grill-me",
+      "resolved_name": "batch-grill-me",
+      "root_id": "codex",
+      "tree_sha256": "a5f384b6da9314db4fb821ad2156f8b4ea62d5f9e106adc00905002ac5b9930a"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1249,15 +1285,6 @@
       "tree_sha256": "00af848b1d6fcc3cfaba58f3ea12d5d833e465e6409db2aebaaa789d4308eb0a"
     },
     {
-      "classification": "legacy-active",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "conducting-quality-assurance",
-      "resolved_name": "conducting-quality-assurance",
-      "root_id": "codex",
-      "tree_sha256": "7773e609344360c856fd1bd6b836391a8e85ca38ffe52005a50f98a33e89f050"
-    },
-    {
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
@@ -1345,7 +1372,7 @@
       "relative_path": "daily-curator",
       "resolved_name": "daily-curator",
       "root_id": "codex",
-      "tree_sha256": "1624710716f354629dc1309a58406e59c7320ee674cd62bd2813b67ea183be47"
+      "tree_sha256": "42a60029d2a5ce51c77e2bfce154da42a64f490ad725a9248334ffd6e34d0e68"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1364,15 +1391,6 @@
       "resolved_name": "deepening-plan",
       "root_id": "codex",
       "tree_sha256": "de5dbf8713a0d933c2a3ba66198d8cb71af9c8b449da77a6073c1eb2691de62d"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "design-an-interface",
-      "resolved_name": "design-an-interface",
-      "root_id": "codex",
-      "tree_sha256": "0748bf13db5eab31acd1d6946a75ab08a17e519ad332165f477e51e51412ff97"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1471,7 +1489,7 @@
       "relative_path": "generate-state-diagram",
       "resolved_name": "generate-state-diagram",
       "root_id": "codex",
-      "tree_sha256": "d5f4a1e51ccb890fbc3c29a0f0015bc8f9da720aaa0158356e87a179562f6dfa"
+      "tree_sha256": "13fca5ec3c57acc3e299dc88827a5a8d110a3c5160502176015c922fc68f237e"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1594,6 +1612,15 @@
       "classification": "legacy-active",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
+      "relative_path": "implement",
+      "resolved_name": "implement",
+      "root_id": "codex",
+      "tree_sha256": "e790a2b927cba32cb5a278d6aae4764714d21875ec987f7c14e7122a23b5b9ef"
+    },
+    {
+      "classification": "legacy-active",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
       "relative_path": "implementing-work",
       "resolved_name": "implementing-work",
       "root_id": "codex",
@@ -1606,7 +1633,7 @@
       "relative_path": "improving-architecture",
       "resolved_name": "improving-architecture",
       "root_id": "codex",
-      "tree_sha256": "c470098154f82483507a7677535ccc9c2e040489b32cb6d25a991c1000df32c1"
+      "tree_sha256": "92d56b4c9ed44389ec53aef8d236ea5f416f0c81898a7291656cc956c4a9bc3c"
     },
     {
       "classification": "legacy-active",
@@ -1759,7 +1786,7 @@
       "relative_path": "one-page-concept-sketch",
       "resolved_name": "one-page-concept-sketch",
       "root_id": "codex",
-      "tree_sha256": "43f336028ef26d0f3697095f2ed887c5243e5ed057db42826419c4f80db43215"
+      "tree_sha256": "1ecafaf2c32ed0b3412e7ecd22c8c5542d188fb100f5c810b697ca6d41eb9285"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1777,7 +1804,7 @@
       "relative_path": "payment-domain-scan",
       "resolved_name": "payment-domain-scan",
       "root_id": "codex",
-      "tree_sha256": "e5ec867db0e76c084022512a91a209234321919d3db2a47d9d5fc61571c97aba"
+      "tree_sha256": "5fca04e69a72d81452d7ba59137056e58f0020a6d8fe5e80103a2ce014895c08"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1787,15 +1814,6 @@
       "resolved_name": "plan-do-check-act",
       "root_id": "codex",
       "tree_sha256": "c01152f94f2406b557823a7886f3b2c7027cae9dd46487795908ca755c98a669"
-    },
-    {
-      "classification": "legacy-active",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "planning-refactors",
-      "resolved_name": "planning-refactors",
-      "root_id": "codex",
-      "tree_sha256": "3d2c06bd94dfafff148c6897b0bd16f31a3d83597d7b85cfb62d63d971e95f52"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1894,7 +1912,7 @@
       "relative_path": "research",
       "resolved_name": "research",
       "root_id": "codex",
-      "tree_sha256": "7082ce83ec7cbd019a26f6402355e9770ecbf5995157636a18083b88ad690d79"
+      "tree_sha256": "054b00ada963389bd0152ff71523c3585937064c1a2fb24800c902f95447c548"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2005,7 +2023,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "codex",
-      "tree_sha256": "a160d0775974e6354e758980214764769079efa42d6129808a5e5cfa30521bed"
+      "tree_sha256": "c739c461c913db2ed4aa0d6f13d3c8223fc04f126dec00069d7e63263798b7a9"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2023,7 +2041,7 @@
       "relative_path": "software-architecture",
       "resolved_name": "software-architecture",
       "root_id": "codex",
-      "tree_sha256": "a94f51ed13e5a73876bde901777a692d5309bfaf5cf0f3a83975902c269ecfd6"
+      "tree_sha256": "b4d5aac70998fe89599ef22b85728b5e81430a8ccec91e7b25fec8d2c2f0928c"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2131,7 +2149,16 @@
       "relative_path": "tdd",
       "resolved_name": "tdd",
       "root_id": "codex",
-      "tree_sha256": "07039a6dfefbf156324a15183e9be4cf5af4671cbfc181dced48106e22dcc1fe"
+      "tree_sha256": "7e15cc7cb7cc85b0fbdb892b2a44f3963460f70dfb58b86ed0c788465c0a7ed9"
+    },
+    {
+      "classification": "legacy-active",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "teach",
+      "resolved_name": "teach",
+      "root_id": "codex",
+      "tree_sha256": "19e8d991c6ff5810c529e147db4481c164d79855b11b647f6da380d740b86f99"
     },
     {
       "classification": "legacy-active",
@@ -2164,19 +2191,37 @@
       "classification": "legacy-active",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
+      "relative_path": "to-questionnaire",
+      "resolved_name": "to-questionnaire",
+      "root_id": "codex",
+      "tree_sha256": "fd57e61b110b29b19fe8987d5dc632a708aea65d9baf6cdac7df6af69c33a1db"
+    },
+    {
+      "classification": "legacy-active",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "to-spec",
+      "resolved_name": "to-spec",
+      "root_id": "codex",
+      "tree_sha256": "9b049a90ca6aeecd976fa81454b2db6716aa42b4d62e61e7818c24d1a1f9248c"
+    },
+    {
+      "classification": "legacy-active",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "to-tickets",
+      "resolved_name": "to-tickets",
+      "root_id": "codex",
+      "tree_sha256": "a02c8000cebaacb55022ad7c958628f2ab61f8bea639be17436472c7f7ba6fec"
+    },
+    {
+      "classification": "legacy-active",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
       "relative_path": "triaging-issues",
       "resolved_name": "triaging-issues",
       "root_id": "codex",
       "tree_sha256": "8d29f0f16b63d32a32da133d7fb2b31717fac8112f4ba384af15c5b1f00d30db"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "ubiquitous-language",
-      "resolved_name": "ubiquitous-language",
-      "root_id": "codex",
-      "tree_sha256": "8c1d3b359aa2f0e88eff0a299fd19a658434ed94da278f357bbffda0d392915e"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2231,6 +2276,15 @@
       "resolved_name": "visualizing-work",
       "root_id": "codex",
       "tree_sha256": "c7ed1f612e97157819128a55b490ae0b03779df493df23e530294093085a30d7"
+    },
+    {
+      "classification": "legacy-active",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "wayfinder",
+      "resolved_name": "wayfinder",
+      "root_id": "codex",
+      "tree_sha256": "ab11b92aa28bf3fb4e3ff1a1a6d6382afd6b8077f058de3901586b093b553ff1"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3118,6 +3172,15 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
+      "relative_path": "batch-grill-me",
+      "resolved_name": "batch-grill-me",
+      "root_id": "vault-codex",
+      "tree_sha256": "a5f384b6da9314db4fb821ad2156f8b4ea62d5f9e106adc00905002ac5b9930a"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
       "relative_path": "blueprint",
       "resolved_name": "blueprint",
       "root_id": "vault-codex",
@@ -3235,15 +3298,6 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
-      "relative_path": "conducting-quality-assurance",
-      "resolved_name": "conducting-quality-assurance",
-      "root_id": "vault-codex",
-      "tree_sha256": "7773e609344360c856fd1bd6b836391a8e85ca38ffe52005a50f98a33e89f050"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
       "relative_path": "config-mirror-sync",
       "resolved_name": "config-mirror-sync",
       "root_id": "vault-codex",
@@ -3347,15 +3401,6 @@
       "resolved_name": "deepening-plan",
       "root_id": "vault-codex",
       "tree_sha256": "de5dbf8713a0d933c2a3ba66198d8cb71af9c8b449da77a6073c1eb2691de62d"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "design-an-interface",
-      "resolved_name": "design-an-interface",
-      "root_id": "vault-codex",
-      "tree_sha256": "0748bf13db5eab31acd1d6946a75ab08a17e519ad332165f477e51e51412ff97"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3568,6 +3613,15 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
+      "relative_path": "implement",
+      "resolved_name": "implement",
+      "root_id": "vault-codex",
+      "tree_sha256": "e790a2b927cba32cb5a278d6aae4764714d21875ec987f7c14e7122a23b5b9ef"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
       "relative_path": "implementing-work",
       "resolved_name": "implementing-work",
       "root_id": "vault-codex",
@@ -3580,7 +3634,7 @@
       "relative_path": "improving-architecture",
       "resolved_name": "improving-architecture",
       "root_id": "vault-codex",
-      "tree_sha256": "c470098154f82483507a7677535ccc9c2e040489b32cb6d25a991c1000df32c1"
+      "tree_sha256": "92d56b4c9ed44389ec53aef8d236ea5f416f0c81898a7291656cc956c4a9bc3c"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3761,15 +3815,6 @@
       "resolved_name": "plan-do-check-act",
       "root_id": "vault-codex",
       "tree_sha256": "c01152f94f2406b557823a7886f3b2c7027cae9dd46487795908ca755c98a669"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "planning-refactors",
-      "resolved_name": "planning-refactors",
-      "root_id": "vault-codex",
-      "tree_sha256": "3d2c06bd94dfafff148c6897b0bd16f31a3d83597d7b85cfb62d63d971e95f52"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3979,7 +4024,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "vault-codex",
-      "tree_sha256": "63362fa5572ba5c04eaf4f9a203c75574a009d4bbf231511770013d6eaba7ea5"
+      "tree_sha256": "c739c461c913db2ed4aa0d6f13d3c8223fc04f126dec00069d7e63263798b7a9"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3997,7 +4042,7 @@
       "relative_path": "software-architecture",
       "resolved_name": "software-architecture",
       "root_id": "vault-codex",
-      "tree_sha256": "a94f51ed13e5a73876bde901777a692d5309bfaf5cf0f3a83975902c269ecfd6"
+      "tree_sha256": "b4d5aac70998fe89599ef22b85728b5e81430a8ccec91e7b25fec8d2c2f0928c"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4105,7 +4150,16 @@
       "relative_path": "tdd",
       "resolved_name": "tdd",
       "root_id": "vault-codex",
-      "tree_sha256": "07039a6dfefbf156324a15183e9be4cf5af4671cbfc181dced48106e22dcc1fe"
+      "tree_sha256": "7e15cc7cb7cc85b0fbdb892b2a44f3963460f70dfb58b86ed0c788465c0a7ed9"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "teach",
+      "resolved_name": "teach",
+      "root_id": "vault-codex",
+      "tree_sha256": "19e8d991c6ff5810c529e147db4481c164d79855b11b647f6da380d740b86f99"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4138,19 +4192,37 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
-      "relative_path": "triaging-issues",
-      "resolved_name": "triaging-issues",
+      "relative_path": "to-questionnaire",
+      "resolved_name": "to-questionnaire",
       "root_id": "vault-codex",
-      "tree_sha256": "8d29f0f16b63d32a32da133d7fb2b31717fac8112f4ba384af15c5b1f00d30db"
+      "tree_sha256": "fd57e61b110b29b19fe8987d5dc632a708aea65d9baf6cdac7df6af69c33a1db"
     },
     {
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
-      "relative_path": "ubiquitous-language",
-      "resolved_name": "ubiquitous-language",
+      "relative_path": "to-spec",
+      "resolved_name": "to-spec",
       "root_id": "vault-codex",
-      "tree_sha256": "8c1d3b359aa2f0e88eff0a299fd19a658434ed94da278f357bbffda0d392915e"
+      "tree_sha256": "9b049a90ca6aeecd976fa81454b2db6716aa42b4d62e61e7818c24d1a1f9248c"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "to-tickets",
+      "resolved_name": "to-tickets",
+      "root_id": "vault-codex",
+      "tree_sha256": "a02c8000cebaacb55022ad7c958628f2ab61f8bea639be17436472c7f7ba6fec"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "triaging-issues",
+      "resolved_name": "triaging-issues",
+      "root_id": "vault-codex",
+      "tree_sha256": "8d29f0f16b63d32a32da133d7fb2b31717fac8112f4ba384af15c5b1f00d30db"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4205,6 +4277,15 @@
       "resolved_name": "visualizing-work",
       "root_id": "vault-codex",
       "tree_sha256": "c7ed1f612e97157819128a55b490ae0b03779df493df23e530294093085a30d7"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "wayfinder",
+      "resolved_name": "wayfinder",
+      "root_id": "vault-codex",
+      "tree_sha256": "ab11b92aa28bf3fb4e3ff1a1a6d6382afd6b8077f058de3901586b093b553ff1"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4282,6 +4363,33 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
+      "relative_path": "ai-trend-scan",
+      "resolved_name": "ai-trend-scan",
+      "root_id": "vault-shared",
+      "tree_sha256": "e24223a67ec7aacb894bbbb6b0ba6a7dcaf48f96b73030fc90de364ac33047ff"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "capture",
+      "resolved_name": "capture",
+      "root_id": "vault-shared",
+      "tree_sha256": "a2debc6f1cf3211ce22e87a55c56c07b9cdd2b595ec7e65845bbcb8852b2ab9c"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "daily-curator",
+      "resolved_name": "daily-curator",
+      "root_id": "vault-shared",
+      "tree_sha256": "52636b08f8597c638f4c856799d01968b2d45c7ce2e41888c54335cb53f6ef67"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
       "relative_path": "daily-journal-curator",
       "resolved_name": "daily-journal-curator",
       "root_id": "vault-shared",
@@ -4327,6 +4435,15 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
+      "relative_path": "japanese-tech-writing",
+      "resolved_name": "japanese-tech-writing",
+      "root_id": "vault-shared",
+      "tree_sha256": "660869c59a2188f913855eb6627f742268eb2545866b271b092a6e0956d09146"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
       "relative_path": "loop-engineering",
       "resolved_name": "loop-engineering",
       "root_id": "vault-shared",
@@ -4336,10 +4453,46 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
+      "relative_path": "one-page-concept-sketch",
+      "resolved_name": "one-page-concept-sketch",
+      "root_id": "vault-shared",
+      "tree_sha256": "539499f8b381f291c9f7386d192935706fdff8fd511ee8c82c533515650a5723"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "payment-domain-scan",
+      "resolved_name": "payment-domain-scan",
+      "root_id": "vault-shared",
+      "tree_sha256": "d7715ca3a3177b6fd9ae639d5d93e2159d383ade0c7555ae3673c557f48240de"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
       "relative_path": "prompting-fable",
       "resolved_name": "prompting-fable",
       "root_id": "vault-shared",
       "tree_sha256": "d83f65173dfe707f45b02ebe599fee1c9f07c3e6d8e499948e91ec6ea0d7994b"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "research",
+      "resolved_name": "research",
+      "root_id": "vault-shared",
+      "tree_sha256": "98ac528f228e6a91ec98216b18d18bda4a6cd970c62db5b1c80fae682d7f6b5a"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "researching-articles",
+      "resolved_name": "researching-articles",
+      "root_id": "vault-shared",
+      "tree_sha256": "5457f37a5d7bb1b72f7f2dbddf3f2a1654f71156b1a65acc7f303a4244a9b3cb"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4369,6 +4522,6 @@
       "tree_sha256": "73323581b29fa6129136b0d3c393c2b485cddb7d1c2622bf185d36d0d9a570fd"
     }
   ],
-  "registry_sha256": "6accd8d8c00d92154de5e0b9354a3cb8b0300b556ebee8786c4546fc5aa7c391",
+  "registry_sha256": "44ce150153e34e60908bd2c765570316e5025349b25038756a376db456d19b8f",
   "schema_version": 2
 }

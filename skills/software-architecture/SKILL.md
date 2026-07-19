@@ -14,7 +14,7 @@ description: Clean Architecture + DDD 観点での重要アーキテクチャ判
 |--------|---------|--------|
 | 新システムのアーキ選定 | ✅ | - |
 | 既存システムの大規模リファクタ方針 | ✅ | improving-architecture と併用 |
-| ドメイン分離 / 集約境界の決定 | ✅ | ubiquitous-language と併用 |
+| ドメイン分離 / 集約境界の決定 | ✅ | modeling-domains と併用 |
 | ライブラリ vs カスタム実装の判断 | ✅ | search-first と併用 |
 | 日常的なネスト深さ・命名・型付け | - | rules/common-coding-style.md |
 | パターン適用 (DIP/Repository等) | - | rules/common-patterns.md |
@@ -37,7 +37,7 @@ description: Clean Architecture + DDD 観点での重要アーキテクチャ判
 - ドメインエンティティをインフラから分離
 - ビジネスロジックをフレームワークから独立
 - ユースケース境界を明確に
-- ユビキタス言語に従う (詳細: `ubiquitous-language` skill)
+- 共有されたドメイン言語に従う（詳細: `modeling-domains` skill）
 
 ### 3. ドメイン固有の命名
 - ❌ 汎用: `utils`, `helpers`, `common`, `shared`
@@ -57,8 +57,8 @@ description: Clean Architecture + DDD 観点での重要アーキテクチャ判
 ## 関連スキル
 
 - `improving-architecture`: 既存コードのアーキテクチャ改善 (Ousterhout Deep Module)
-- `design-an-interface`: インターフェース並列設計
-- `ubiquitous-language`: ドメイン用語の整理
+- `brainstorming`、`designing-codebases`: インターフェース案の比較と境界設計
+- `modeling-domains`: ドメイン用語と境界の整理
 - `creating-adr`: 重要判断の記録
 
 ## 関連ルール

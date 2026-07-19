@@ -1947,5 +1947,32 @@ class AdapterAndSurfaceTests(unittest.TestCase):
         self.assertFalse({"install", "promote", "update", "retire", "delete"} & choices)
 
 
+class HumanOutputTests(unittest.TestCase):
+    def test_emit_accepts_catalog_source_revision_shape(self) -> None:
+        payload = {
+            "command": "catalog",
+            "status": "ok",
+            "sources": [{
+                "source_id": "mattpocock-skills",
+                "revision": "9603c1cc8118d08bc1b3bf34cf714f62178dea3b",
+            }],
+        }
+
+        with mock.patch("builtins.print") as print_mock:
+            governance.emit(payload, False)
+
+        lines = [call.args[0] for call in print_mock.call_args_list]
+        self.assertIn("- mattpocock-skills: offline @ 9603c1cc8118", lines)
+
+    def test_emit_falls_back_when_source_identity_is_incomplete(self) -> None:
+        payload = {"command": "catalog", "status": "ok", "sources": [{}]}
+
+        with mock.patch("builtins.print") as print_mock:
+            governance.emit(payload, False)
+
+        lines = [call.args[0] for call in print_mock.call_args_list]
+        self.assertIn("- unknown: offline @ unknown", lines)
+
+
 if __name__ == "__main__":
     unittest.main()

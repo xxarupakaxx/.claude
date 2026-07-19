@@ -107,5 +107,5 @@ ToDoから次の項目を選び、Phase 2へ戻る。
 ## 関連スキル
 
 - `improving-architecture`: Refactorフェーズの方針提供
-- `design-an-interface`: 公開Interfaceを先に設計してからTDD
+- `brainstorming`、`designing-codebases`: 公開Interfaceの案と境界を確認してからTDD
 - `diagnosing-bugs`: バグ修正TDD（最小再現テスト→修正）

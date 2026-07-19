@@ -36,7 +36,7 @@ it("注文確定時に在庫が引き当てられるべき", async () => {
 
 ### Step 3: 並列で複数案
 
-Interface に確信が持てないなら `design-an-interface` スキルを使い、3+案を並列生成して比較する。
+Interface に確信が持てないなら `brainstorming` で複数案を比較し、`designing-codebases` で境界を評価する。
 
 ## Interface の3原則
 
@@ -168,4 +168,4 @@ const mockX = {
 
 - `~/.claude/rules/architecture-language.md`: Module/Interface/Depth用語
 - `improving-architecture` スキル: Interface改善の体系手順
-- `design-an-interface` スキル: 並列で複数案を生成
+- `brainstorming`、`designing-codebases` スキル: 複数案の比較と境界設計

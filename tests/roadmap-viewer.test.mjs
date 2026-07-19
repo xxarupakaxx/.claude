@@ -375,6 +375,32 @@ test('parses a complete explicit Outcome Trace from Team Journal first', () => {
   assert.equal(result.outcomes[0].state, 'matched');
 });
 
+test('parses human review, objections and revision events without weakening the trace', () => {
+  const result = model.buildModel(model.normalizeSnapshot({
+    generatedAt,
+    files: {
+      'team-journal.md': `## Outcome Trace
+
+| Outcome | Requirement | Implementation | Acceptance | Evidence | Human Review | Objection | State |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| O-1 Clear first screen | R1 | Task 5 | AC-05 | browser test | explain the next check in one minute | details may be hidden | matched |
+
+## Revision Log
+
+| ID | Observed | Plan change | Revalidate | Status |
+| --- | --- | --- | --- | --- |
+| REV-01 | Formal names were missing | add user-invoked entries | AC-03 | planned |
+`
+    }
+  }), { nowMs });
+
+  assert.equal(result.outcomes[0].humanReview, 'explain the next check in one minute');
+  assert.equal(result.outcomes[0].objection, 'details may be hidden');
+  assert.equal(result.revisions.length, 1);
+  assert.equal(result.revisions[0].id, 'REV-01');
+  assert.equal(result.revisions[0].revalidate, 'AC-03');
+});
+
 test('distinguishes every Outcome Trace missing state without weakening task parsing', () => {
   const result = model.buildModel(model.normalizeSnapshot({
     generatedAt,
@@ -547,6 +573,8 @@ test('the trace-first roadmap information architecture remains in the HTML', () 
     'outcome-trace-summary',
     'outcome-trace-table',
     'outcome-trace-cards',
+    'revision-panel',
+    'revision-list',
     'implementation-strip',
     'phase-rail',
     'task-tree',
@@ -562,7 +590,11 @@ test('the trace-first roadmap information architecture remains in the HTML', () 
   assert.match(html, /id="phase-rail" role="list"/);
   assert.match(html, /id="task-tree" role="table"/);
   assert.match(html, /Outcome Trace Summary/);
+  assert.match(html, /Next human decision/);
   assert.match(html, /次の判断/);
+  assert.match(html, /Human check/);
+  assert.match(html, /Observation \/ Revision/);
+  assert.match(html, /class="supporting-disclosure"/);
   assert.match(html, /id="wayfinder-failed"/);
   assert.match(html, /summary\.failedHolistic \? `failed holistic/);
   assert.match(html, /Spec \/ Contract \/ Verification \/ Review/);
@@ -570,9 +602,15 @@ test('the trace-first roadmap information architecture remains in the HTML', () 
   assert.match(html, /\.trace-cards\s*\{\s*display:\s*none/);
   assert.match(html, /@media \(max-width: 960px\)[\s\S]*\.trace-table\s*\{\s*display:\s*none/);
   assert.match(html, /@media \(max-width: 960px\)[\s\S]*\.trace-cards\s*\{\s*display:\s*grid/);
+  assert.match(html, /@media \(max-width: 1180px\)[\s\S]*\.wayfinder\s*\{\s*order:\s*1/);
+  assert.match(html, /@media \(max-width: 1180px\)[\s\S]*\.outcome-trace\s*\{\s*order:\s*2/);
+  assert.match(html, /@media \(max-width: 1180px\)[\s\S]*\.revision-panel\s*\{\s*order:\s*3/);
+  assert.match(html, /@media \(max-width: 1180px\)[\s\S]*\.supporting-disclosure\s*\{\s*order:\s*4/);
+  assert.match(html, /@media \(max-width: 1180px\)[\s\S]*\.utility-disclosure\s*\{\s*order:\s*5/);
   assert.match(html, /class="artifact-state\$\{artifact\.missing \? ' missing' : ''\}"/);
   assert.match(html, /missing-implementation/);
   assert.match(html, /id="open-files" aria-label="Roadmapファイルを開く"/);
+  assert.match(html, /id="file-input"[^>]*aria-label="Roadmapファイルを選択"/);
   assert.match(html, /id="export-json" aria-label="Roadmap JSONを書き出す"/);
   assert.match(html, /function stopLivePolling\(/);
   assert.match(html, /generation !== pollGeneration/);

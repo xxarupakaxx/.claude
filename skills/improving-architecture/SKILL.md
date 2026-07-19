@@ -122,7 +122,7 @@ rg "^import.*from '@/foo/internals'" --count-matches
 
 ### 4.3 並列で複数案を生成
 
-非自明な改善は `design-an-interface` スキルを呼び出し、3+案を並列生成して比較。
+非自明な改善は `brainstorming` で案を比較し、`designing-codebases` で境界とinterfaceを評価する。
 
 ## Phase 5: ADR化（重要判断時のみ）
 
@@ -157,7 +157,7 @@ CLAUDE.mdワークフロー Phase 4と統合:
 
 ## 関連スキル
 
-- `design-an-interface`: 並列で3+案を生成
+- `brainstorming`、`designing-codebases`: 複数案の比較と境界設計
 - `creating-adr`: 重要判断のADR化
 - `refactoring-advisor`（agent）: 局所的なリファクタ提案
 - `software-architecture`: アーキテクチャ全般のガイド
