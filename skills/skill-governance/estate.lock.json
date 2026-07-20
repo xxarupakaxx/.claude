@@ -3244,6 +3244,24 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
+      "relative_path": "animation-vocabulary",
+      "resolved_name": "animation-vocabulary",
+      "root_id": "vault-codex",
+      "tree_sha256": "6f9207f7f270988c213aef0089ac2a96e6effc9dc501867759f4bf889f01c4ca"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "apple-design",
+      "resolved_name": "apple-design",
+      "root_id": "vault-codex",
+      "tree_sha256": "599fbc11047dfa4d8d08501a4020e061bae6353f78179f6f1b25c80921a47274"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
       "relative_path": "article-writing",
       "resolved_name": "article-writing",
       "root_id": "vault-codex",
@@ -3586,6 +3604,15 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
+      "relative_path": "emil-design-eng",
+      "resolved_name": "emil-design-eng",
+      "root_id": "vault-codex",
+      "tree_sha256": "5e997f7b8a94a104430d347cb15628813885241ed03bf7a2db209f83944be259"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
       "relative_path": "eval-harness",
       "resolved_name": "eval-harness",
       "root_id": "vault-codex",
@@ -3599,6 +3626,15 @@
       "resolved_name": "exploring-codebase",
       "root_id": "vault-codex",
       "tree_sha256": "69e49666d0c7b2ed76819713e1bbf42cc6eda77dae4e0e576b2f0c709180579a"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "find-animation-opportunities",
+      "resolved_name": "find-animation-opportunities",
+      "root_id": "vault-codex",
+      "tree_sha256": "4ce2be45c5908f198a38644cf90ddd3663e0daff19de2132695eca765bb9bea6"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3734,6 +3770,15 @@
       "resolved_name": "implementing-work",
       "root_id": "vault-codex",
       "tree_sha256": "03d122df35837de324eb51588a492f33b79d724940d7f7e8c4e6d7f4d693f615"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "improve-animations",
+      "resolved_name": "improve-animations",
+      "root_id": "vault-codex",
+      "tree_sha256": "b3c82d11a6b3753065280516a673a9c043b0599aa039fa27464b010e306d3dad"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4045,6 +4090,15 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
+      "relative_path": "review-animations",
+      "resolved_name": "review-animations",
+      "root_id": "vault-codex",
+      "tree_sha256": "2e2fdfc692b233643fe9c293222c051a2e23964a6e1494ccb10f4970dc21b33f"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
       "relative_path": "reviewing-code",
       "resolved_name": "reviewing-code",
       "root_id": "vault-codex",
@@ -4132,7 +4186,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "vault-codex",
-      "tree_sha256": "e376d88f59c731495918a3c916d03c5d70f7ceeb0b67c92bcb9050d9f1d311e2"
+      "tree_sha256": "0a379a856875374eab7161ec888401d6c8d94eef1fe7fc9bc47140029b0eb2df"
     },
     {
       "classification": "preexisting-unclassified",
