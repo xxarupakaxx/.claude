@@ -1,8 +1,8 @@
 {
   "generated_at": "2026-07-19T00:00:00+09:00",
-  "generation": 2,
+  "generation": 3,
   "method": "pinned-github-commit-tree-plus-package-tree-v2",
-  "registry_sha256": "44ce150153e34e60908bd2c765570316e5025349b25038756a376db456d19b8f",
+  "registry_sha256": "c36a5c0f70350003680e202cc040f663b89b9292452a31f5834d6f6d26214551",
   "schema_version": 1,
   "sources": {
     "addyosmani-agent-skills": {
@@ -674,6 +674,80 @@
       ],
       "tree_archive_blob_paths_match": true,
       "tree_sha": "8187ae5308a2992ba4dfb74b65ac7cb4b8c6e6ec",
+      "tree_truncated": false
+    },
+    "emilkowalski-skills": {
+      "catalog_sha256": "d39dc1f41fd92b90b8d131c2b0c4fae737a999a65ce084f81c20cdad9160f2a6",
+      "complete": true,
+      "github": "emilkowalski/skills",
+      "mode": "selective-adoption",
+      "name_extracted_count": 6,
+      "revision": "6bf24434f7730ad169077756cf9c7cd7bd675fc6",
+      "skill_count": 6,
+      "skills": [
+        {
+          "blob_sha": "cd0af50454bfe33a1e8c4ea24cc0c3c737d0f5e0",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "animation-vocabulary",
+          "package_tree_sha": "e6dc24ca1ff1e70c9677df9a1d2d1c80415cbb3c",
+          "path": "skills/animation-vocabulary/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "66f56807cb503fd482b86c4e0aaee5a080918242",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "apple-design",
+          "package_tree_sha": "e9f5b472dfb28d8cf29f64001b6c01ef94b8168b",
+          "path": "skills/apple-design/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "4911235325272b124f1f298b9040e7f539a03b34",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "emil-design-eng",
+          "package_tree_sha": "0e6f8d7223a0abe73f81e890b3ec76257029a834",
+          "path": "skills/emil-design-eng/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "0ebba8a5a18a84554571863ae939d70d18955bc7",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "find-animation-opportunities",
+          "package_tree_sha": "4edcac8e6465888285b5607c80adb6c0c151f060",
+          "path": "skills/find-animation-opportunities/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "fc724697911974322c896ae205c426092261ea1b",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "improve-animations",
+          "package_tree_sha": "ec57cb65ea60a23af278d305d1425ce4f998f510",
+          "path": "skills/improve-animations/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "b1cd9b130ef1c50922790b3a355c14cdee3cf4b1",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "review-animations",
+          "package_tree_sha": "0012fc43a25cce5df019102ab28bb6a68ad9db3d",
+          "path": "skills/review-animations/SKILL.md",
+          "role": "catalog-surface"
+        }
+      ],
+      "tree_archive_blob_paths_match": true,
+      "tree_sha": "aaec48e2080401badf98921d69a15b3ebee50231",
       "tree_truncated": false
     },
     "huggingface-skills": {
@@ -7600,12 +7674,12 @@
     }
   },
   "summary": {
-    "complete_source_count": 11,
+    "complete_source_count": 12,
     "cross_source_name_collision_groups": 25,
     "license_evidence_missing_count": 415,
-    "name_extracted_count": 823,
-    "skill_file_count": 827,
-    "source_count": 11,
-    "unique_extracted_name_count": 757
+    "name_extracted_count": 829,
+    "skill_file_count": 833,
+    "source_count": 12,
+    "unique_extracted_name_count": 763
   }
 }

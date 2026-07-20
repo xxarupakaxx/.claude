@@ -2700,6 +2700,7 @@ def _tree_artifact_evidence(
     require_source: bool,
     require_license: bool,
     require_identity: bool,
+    allow_candidate_invisible_controls: bool = False,
 ) -> tuple[str | None, list[dict[str, Any]], list[dict[str, str]], list[Finding]]:
     findings = list(tree.findings)
     if not tree.tree_sha256:
@@ -2739,6 +2740,20 @@ def _tree_artifact_evidence(
     ]
     if require_license and not license_records:
         findings.append(blocker("license_evidence_missing", "No captured local license file", tree.root))
+    if not allow_candidate_invisible_controls:
+        for record in tree.files:
+            try:
+                text = record.data.decode("utf-8", "strict")
+            except UnicodeDecodeError:
+                continue
+            if BIDI_OR_ZERO_WIDTH.search(text):
+                findings.append(
+                    blocker(
+                        "target_invisible_control",
+                        "Approved review and runtime targets cannot contain bidi or zero-width control characters",
+                        f"{tree.root}/{record.path}",
+                    )
+                )
     return tree.tree_sha256, [record.public() for record in tree.files], license_records, findings
 
 
@@ -2759,6 +2774,7 @@ def _candidate_tree_evidence(
         require_source=False,
         require_license=False,
         require_identity=True,
+        allow_candidate_invisible_controls=True,
     )
     skill_record = next((record for record in tree.files if record.path == "SKILL.md"), None)
     if skill_record is not None and git_blob_sha1(skill_record.data) != binding.get("blob_sha"):
@@ -3457,7 +3473,7 @@ def audit_frontmatter_receipts(
             continue
         surfaces = {
             "quarantine": (
-                "common",
+                {"common", "claude"},
                 str(upstream_bindings.get(name, {}).get("upstream_name", "")),
                 candidate_manifests.get(name, []),
                 {
@@ -3472,7 +3488,7 @@ def audit_frontmatter_receipts(
             runtimes = set(roots.get(target, {}).get("runtimes", []))
             target_schema = "codex" if runtimes == {"codex"} else "claude" if runtimes == {"claude"} else "common"
             surfaces[target] = (
-                target_schema,
+                {target_schema},
                 name,
                 target_manifests.get(name, {}).get(target, []),
                 {
@@ -3482,7 +3498,7 @@ def audit_frontmatter_receipts(
                     "target_id": target,
                 },
             )
-        for surface, (target_schema, expected_name, manifest, expected_surface) in surfaces.items():
+        for surface, (target_schemas, expected_name, manifest, expected_surface) in surfaces.items():
             reference = by_surface.get(surface)
             receipt, receipt_findings = _load_receipt(reference)
             findings.extend(receipt_findings)
@@ -3492,7 +3508,7 @@ def audit_frontmatter_receipts(
             if (
                 receipt.get("command") != "validate-frontmatter"
                 or receipt.get("status") != "validated"
-                or receipt.get("target") != target_schema
+                or receipt.get("target") not in target_schemas
                 or receipt.get("surface") != expected_surface
                 or receipt.get("validator") != "pyyaml-6.0.2-safe-loader"
                 or receipt.get("skill_sha256") != expected_skill_sha
@@ -4110,7 +4126,13 @@ def inspect_candidate(path: Path, quarantine_root: Path) -> tuple[dict[str, Any]
             findings.append(blocker("non_utf8_content", str(exc), record.path))
             continue
         if BIDI_OR_ZERO_WIDTH.search(text):
-            findings.append(blocker("invisible_control", "Bidi or zero-width control character", record.path))
+            findings.append(
+                advisory(
+                    "candidate_invisible_control",
+                    "Bidi or zero-width control character must be removed from every approved target",
+                    record.path,
+                )
+            )
         for code, pattern, message in DANGEROUS_PATTERNS:
             if pattern.search(text):
                 findings.append(blocker(code, message, record.path))
