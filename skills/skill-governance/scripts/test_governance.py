@@ -444,6 +444,40 @@ class StrictJSONTests(unittest.TestCase):
 
 
 class CandidateInspectionTests(unittest.TestCase):
+    def test_candidate_invisible_control_is_recorded_but_clean_target_is_required(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            quarantine = base / "quarantine"
+            skill = write_quarantined(quarantine)
+            (skill / "SKILL.md").write_text(
+                SAFE_SKILL + "\n\u200b```css\n```\n",
+                encoding="utf-8",
+            )
+            payload, findings = governance.inspect_candidate(skill, quarantine)
+            self.assertFalse(governance.has_blockers(findings))
+            self.assertIn(
+                "candidate_invisible_control",
+                {item.code for item in findings},
+            )
+            self.assertEqual(
+                [item for item in payload["findings"] if item["severity"] == "BLOCKING"],
+                [],
+            )
+
+            tree = governance.scan_tree(skill)
+            _, _, _, target_findings = governance._tree_artifact_evidence(
+                tree,
+                "safe-skill",
+                "a" * 40,
+                require_source=False,
+                require_license=False,
+                require_identity=True,
+            )
+            self.assertIn(
+                "target_invisible_control",
+                {item.code for item in target_findings},
+            )
+
     def test_safe_fixture_is_review_required_not_certified_safe(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             quarantine = Path(temporary) / "quarantine"
@@ -628,6 +662,130 @@ class CandidateInspectionTests(unittest.TestCase):
 
 
 class RegistryTests(unittest.TestCase):
+    def test_quarantine_frontmatter_receipt_accepts_claude_schema_without_relaxing_codex_target(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            package = Path(temporary)
+            skill_sha = "1" * 64
+            upstream = {
+                "review-animations": {
+                    "upstream_name": "review-animations",
+                }
+            }
+            candidate_manifests = {
+                "review-animations": [
+                    {
+                        "path": "SKILL.md",
+                        "size": 10,
+                        "executable": False,
+                        "sha256": skill_sha,
+                    }
+                ]
+            }
+            target_manifests = {
+                "review-animations": {
+                    "codex": [
+                        {
+                            "path": "SKILL.md",
+                            "size": 10,
+                            "executable": False,
+                            "sha256": "2" * 64,
+                        }
+                    ]
+                }
+            }
+            quarantine_receipt = {
+                "command": "validate-frontmatter",
+                "status": "validated",
+                "target": "claude",
+                "surface": {
+                    "kind": "quarantine",
+                    "source_id": "source",
+                    "revision": "a" * 40,
+                    "skill_name": "review-animations",
+                },
+                "validator": "pyyaml-6.0.2-safe-loader",
+                "skill_sha256": skill_sha,
+                "values": {
+                    "name": "review-animations",
+                    "disable-model-invocation": True,
+                },
+                "findings": [],
+            }
+            codex_receipt = {
+                "command": "validate-frontmatter",
+                "status": "validated",
+                "target": "codex",
+                "surface": {
+                    "kind": "review",
+                    "collection_id": "candidate",
+                    "skill_name": "review-animations",
+                    "target_id": "codex",
+                },
+                "validator": "pyyaml-6.0.2-safe-loader",
+                "skill_sha256": "2" * 64,
+                "values": {"name": "review-animations"},
+                "findings": [],
+            }
+            collection = {
+                "id": "candidate",
+                "source_id": "source",
+                "targets": ["codex"],
+                "skills": ["review-animations"],
+                "default_revision": "a" * 40,
+                "frontmatter_receipts": {
+                    "review-animations": {
+                        "quarantine": write_bound_json(
+                            package,
+                            "receipts/frontmatter-quarantine.json",
+                            quarantine_receipt,
+                        ),
+                        "codex": write_bound_json(
+                            package,
+                            "receipts/frontmatter-codex.json",
+                            codex_receipt,
+                        ),
+                    }
+                },
+            }
+            registry = {
+                "roots": [
+                    {
+                        "id": "codex",
+                        "runtimes": ["codex"],
+                    }
+                ]
+            }
+            with mock.patch.object(governance, "BASE_DIR", package):
+                findings = governance.audit_frontmatter_receipts(
+                    registry,
+                    collection,
+                    upstream,
+                    candidate_manifests,
+                    target_manifests,
+                )
+            self.assertFalse(governance.has_blockers(findings))
+
+            claude_target_receipt = dict(codex_receipt, target="claude")
+            collection["frontmatter_receipts"]["review-animations"]["codex"] = (
+                write_bound_json(
+                    package,
+                    "receipts/frontmatter-codex-wrong-schema.json",
+                    claude_target_receipt,
+                )
+            )
+            with mock.patch.object(governance, "BASE_DIR", package):
+                wrong_target_findings = governance.audit_frontmatter_receipts(
+                    registry,
+                    collection,
+                    upstream,
+                    candidate_manifests,
+                    target_manifests,
+                )
+            self.assertIn(
+                "frontmatter_receipt_binding",
+                {item.code for item in wrong_target_findings},
+            )
+
     @classmethod
     def setUpClass(cls) -> None:
         cls.registry, cls.registry_findings = governance.load_registry(governance.DEFAULT_REGISTRY)
@@ -1406,10 +1564,10 @@ class CatalogTests(unittest.TestCase):
             governance.DEFAULT_CATALOG,
         )
         self.assertFalse(governance.has_blockers(findings))
-        self.assertEqual(payload["summary"]["source_count"], 11)
-        self.assertEqual(payload["summary"]["complete_source_count"], 11)
-        self.assertEqual(payload["summary"]["skill_file_count"], 827)
-        self.assertEqual(payload["summary"]["name_extracted_count"], 823)
+        self.assertEqual(payload["summary"]["source_count"], 12)
+        self.assertEqual(payload["summary"]["complete_source_count"], 12)
+        self.assertEqual(payload["summary"]["skill_file_count"], 833)
+        self.assertEqual(payload["summary"]["name_extracted_count"], 829)
 
     def test_architecture_skill_is_in_pinned_matt_catalog(self) -> None:
         skills = self.catalog["sources"]["mattpocock-skills"]["skills"]

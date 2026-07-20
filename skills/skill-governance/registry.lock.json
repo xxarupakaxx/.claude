@@ -1,5 +1,951 @@
 {
   "artifacts": {
+    "emilkowalski-ja-2026-07/animation-vocabulary": {
+      "adaptation_diff": {
+        "path": "adaptations/emilkowalski-ja-2026-07.json",
+        "sha256": "53a67471aa21d1c689b475881e048d760aca559e78a2ffc0f41dcde802469d60"
+      },
+      "approval_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--approval.json",
+        "sha256": "83453b10071e2a8f3f88b0825cd4e325a34bd199bb7b8755d3e20562fdd8fd5e"
+      },
+      "collection_id": "emilkowalski-ja-2026-07",
+      "local_name": "animation-vocabulary",
+      "local_state": "active",
+      "promotion_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--promotion.json",
+        "sha256": "8fd08c80d8e5fcceb11dce8ac938b13de4d537159a9678d3d86007d9dd73a037"
+      },
+      "quarantine": {
+        "license_evidence": [],
+        "manifest": [
+          {
+            "executable": false,
+            "path": "SKILL.md",
+            "sha256": "d718b48fe3c7898804d588f050a2e266d82c9f5ef51da256c8cb8b5951527757",
+            "size": 13128
+          }
+        ],
+        "static_inspection": {
+          "advisory_findings": [],
+          "blocking_findings": [],
+          "candidate_code_execution": false,
+          "files": [
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "d718b48fe3c7898804d588f050a2e266d82c9f5ef51da256c8cb8b5951527757",
+              "size": 13128
+            }
+          ],
+          "full_yaml_pending_codes": [],
+          "tree_sha256": "fee541e582908a88bb2702ef72e99b484610d213717b74ab65b6e5fe4b86f7be"
+        },
+        "tree_sha256": "fee541e582908a88bb2702ef72e99b484610d213717b74ab65b6e5fe4b86f7be"
+      },
+      "review_state": "approved",
+      "review_targets": {
+        "claude": {
+          "license_evidence": [
+            {
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+            }
+          ],
+          "manifest": [
+            {
+              "executable": false,
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+              "size": 1070
+            },
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "b866218a242ec964310795729379039ccd41134fd1db069dec03a84596ffdca8",
+              "size": 15588
+            },
+            {
+              "executable": false,
+              "path": "SOURCE.md",
+              "sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+              "size": 792
+            }
+          ],
+          "tree_sha256": "6f9207f7f270988c213aef0089ac2a96e6effc9dc501867759f4bf889f01c4ca"
+        },
+        "codex": {
+          "license_evidence": [
+            {
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+            }
+          ],
+          "manifest": [
+            {
+              "executable": false,
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+              "size": 1070
+            },
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "b866218a242ec964310795729379039ccd41134fd1db069dec03a84596ffdca8",
+              "size": 15588
+            },
+            {
+              "executable": false,
+              "path": "SOURCE.md",
+              "sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+              "size": 792
+            }
+          ],
+          "tree_sha256": "6f9207f7f270988c213aef0089ac2a96e6effc9dc501867759f4bf889f01c4ca"
+        }
+      },
+      "safety_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--safety.json",
+        "sha256": "e260d6dada29d6d867d04ad7cd4db6519c52be4867b1d4ddd33fa8d425386aa4"
+      },
+      "source_revision": "6bf24434f7730ad169077756cf9c7cd7bd675fc6",
+      "subject_sha256": "266ab43d3980a56181e1997c07f0f47e6a3507513af0c3940874a58e3a598213",
+      "targets": {
+        "claude": {
+          "tree_sha256": "6f9207f7f270988c213aef0089ac2a96e6effc9dc501867759f4bf889f01c4ca"
+        },
+        "codex": {
+          "tree_sha256": "6f9207f7f270988c213aef0089ac2a96e6effc9dc501867759f4bf889f01c4ca"
+        }
+      },
+      "upstream": {
+        "blob_sha": "cd0af50454bfe33a1e8c4ea24cc0c3c737d0f5e0",
+        "catalog_sha256": "d39dc1f41fd92b90b8d131c2b0c4fae737a999a65ce084f81c20cdad9160f2a6",
+        "github": "emilkowalski/skills",
+        "license_paths": [
+          "LICENSE"
+        ],
+        "package_tree_sha": "e6dc24ca1ff1e70c9677df9a1d2d1c80415cbb3c",
+        "path": "skills/animation-vocabulary/SKILL.md",
+        "revision": "6bf24434f7730ad169077756cf9c7cd7bd675fc6",
+        "source_id": "emilkowalski-skills",
+        "tree_sha": "aaec48e2080401badf98921d69a15b3ebee50231",
+        "upstream_name": "animation-vocabulary"
+      },
+      "value_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--value.json",
+        "sha256": "72d0d72d0d93d71cde3e35234d21613232b791461369e0ae61d84e53081489cf"
+      }
+    },
+    "emilkowalski-ja-2026-07/apple-design": {
+      "adaptation_diff": {
+        "path": "adaptations/emilkowalski-ja-2026-07.json",
+        "sha256": "53a67471aa21d1c689b475881e048d760aca559e78a2ffc0f41dcde802469d60"
+      },
+      "approval_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--approval.json",
+        "sha256": "83453b10071e2a8f3f88b0825cd4e325a34bd199bb7b8755d3e20562fdd8fd5e"
+      },
+      "collection_id": "emilkowalski-ja-2026-07",
+      "local_name": "apple-design",
+      "local_state": "active",
+      "promotion_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--promotion.json",
+        "sha256": "8fd08c80d8e5fcceb11dce8ac938b13de4d537159a9678d3d86007d9dd73a037"
+      },
+      "quarantine": {
+        "license_evidence": [],
+        "manifest": [
+          {
+            "executable": false,
+            "path": "SKILL.md",
+            "sha256": "11840b24a11d7f94f39c6aaab074750ae4e4de4ef54ee4b1dd97e16ebd485e61",
+            "size": 22715
+          }
+        ],
+        "static_inspection": {
+          "advisory_findings": [],
+          "blocking_findings": [],
+          "candidate_code_execution": false,
+          "files": [
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "11840b24a11d7f94f39c6aaab074750ae4e4de4ef54ee4b1dd97e16ebd485e61",
+              "size": 22715
+            }
+          ],
+          "full_yaml_pending_codes": [],
+          "tree_sha256": "04b6787efd4ef6b17bbeb6dfe0161a8844d96312bba5e966aa60787cabe2caa7"
+        },
+        "tree_sha256": "04b6787efd4ef6b17bbeb6dfe0161a8844d96312bba5e966aa60787cabe2caa7"
+      },
+      "review_state": "approved",
+      "review_targets": {
+        "claude": {
+          "license_evidence": [
+            {
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+            }
+          ],
+          "manifest": [
+            {
+              "executable": false,
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+              "size": 1070
+            },
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "168a62d48f282e718ab0b70d2e937010b7cab0afcbb36f26456761346bbb7c94",
+              "size": 26722
+            },
+            {
+              "executable": false,
+              "path": "SOURCE.md",
+              "sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+              "size": 792
+            }
+          ],
+          "tree_sha256": "599fbc11047dfa4d8d08501a4020e061bae6353f78179f6f1b25c80921a47274"
+        },
+        "codex": {
+          "license_evidence": [
+            {
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+            }
+          ],
+          "manifest": [
+            {
+              "executable": false,
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+              "size": 1070
+            },
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "168a62d48f282e718ab0b70d2e937010b7cab0afcbb36f26456761346bbb7c94",
+              "size": 26722
+            },
+            {
+              "executable": false,
+              "path": "SOURCE.md",
+              "sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+              "size": 792
+            }
+          ],
+          "tree_sha256": "599fbc11047dfa4d8d08501a4020e061bae6353f78179f6f1b25c80921a47274"
+        }
+      },
+      "safety_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--safety.json",
+        "sha256": "e260d6dada29d6d867d04ad7cd4db6519c52be4867b1d4ddd33fa8d425386aa4"
+      },
+      "source_revision": "6bf24434f7730ad169077756cf9c7cd7bd675fc6",
+      "subject_sha256": "266ab43d3980a56181e1997c07f0f47e6a3507513af0c3940874a58e3a598213",
+      "targets": {
+        "claude": {
+          "tree_sha256": "599fbc11047dfa4d8d08501a4020e061bae6353f78179f6f1b25c80921a47274"
+        },
+        "codex": {
+          "tree_sha256": "599fbc11047dfa4d8d08501a4020e061bae6353f78179f6f1b25c80921a47274"
+        }
+      },
+      "upstream": {
+        "blob_sha": "66f56807cb503fd482b86c4e0aaee5a080918242",
+        "catalog_sha256": "d39dc1f41fd92b90b8d131c2b0c4fae737a999a65ce084f81c20cdad9160f2a6",
+        "github": "emilkowalski/skills",
+        "license_paths": [
+          "LICENSE"
+        ],
+        "package_tree_sha": "e9f5b472dfb28d8cf29f64001b6c01ef94b8168b",
+        "path": "skills/apple-design/SKILL.md",
+        "revision": "6bf24434f7730ad169077756cf9c7cd7bd675fc6",
+        "source_id": "emilkowalski-skills",
+        "tree_sha": "aaec48e2080401badf98921d69a15b3ebee50231",
+        "upstream_name": "apple-design"
+      },
+      "value_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--value.json",
+        "sha256": "72d0d72d0d93d71cde3e35234d21613232b791461369e0ae61d84e53081489cf"
+      }
+    },
+    "emilkowalski-ja-2026-07/emil-design-eng": {
+      "adaptation_diff": {
+        "path": "adaptations/emilkowalski-ja-2026-07.json",
+        "sha256": "53a67471aa21d1c689b475881e048d760aca559e78a2ffc0f41dcde802469d60"
+      },
+      "approval_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--approval.json",
+        "sha256": "83453b10071e2a8f3f88b0825cd4e325a34bd199bb7b8755d3e20562fdd8fd5e"
+      },
+      "collection_id": "emilkowalski-ja-2026-07",
+      "local_name": "emil-design-eng",
+      "local_state": "active",
+      "promotion_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--promotion.json",
+        "sha256": "8fd08c80d8e5fcceb11dce8ac938b13de4d537159a9678d3d86007d9dd73a037"
+      },
+      "quarantine": {
+        "license_evidence": [],
+        "manifest": [
+          {
+            "executable": false,
+            "path": "SKILL.md",
+            "sha256": "433b5a239cda18e0576e4e558532e7e53512e21fafe5b85db4894c28ec399b72",
+            "size": 27335
+          }
+        ],
+        "static_inspection": {
+          "advisory_findings": [
+            {
+              "code": "external_url",
+              "message": "External reference: https://animations.dev/",
+              "path": "SKILL.md",
+              "severity": "ADVISORY"
+            },
+            {
+              "code": "external_url",
+              "message": "External reference: https://easing.dev/",
+              "path": "SKILL.md",
+              "severity": "ADVISORY"
+            },
+            {
+              "code": "external_url",
+              "message": "External reference: https://easings.co/",
+              "path": "SKILL.md",
+              "severity": "ADVISORY"
+            }
+          ],
+          "blocking_findings": [],
+          "candidate_code_execution": false,
+          "files": [
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "433b5a239cda18e0576e4e558532e7e53512e21fafe5b85db4894c28ec399b72",
+              "size": 27335
+            }
+          ],
+          "full_yaml_pending_codes": [],
+          "tree_sha256": "b8bf060aae1fe98e9c95a3b0f105ba894a44cfa5adfeac64e839cafd71f35c93"
+        },
+        "tree_sha256": "b8bf060aae1fe98e9c95a3b0f105ba894a44cfa5adfeac64e839cafd71f35c93"
+      },
+      "review_state": "approved",
+      "review_targets": {
+        "claude": {
+          "license_evidence": [
+            {
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+            }
+          ],
+          "manifest": [
+            {
+              "executable": false,
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+              "size": 1070
+            },
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "03a7551341d8a965c9f85b457f1d11801c6aba8c96875bfe7fb08415195041c3",
+              "size": 31125
+            },
+            {
+              "executable": false,
+              "path": "SOURCE.md",
+              "sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+              "size": 792
+            }
+          ],
+          "tree_sha256": "5e997f7b8a94a104430d347cb15628813885241ed03bf7a2db209f83944be259"
+        },
+        "codex": {
+          "license_evidence": [
+            {
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+            }
+          ],
+          "manifest": [
+            {
+              "executable": false,
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+              "size": 1070
+            },
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "03a7551341d8a965c9f85b457f1d11801c6aba8c96875bfe7fb08415195041c3",
+              "size": 31125
+            },
+            {
+              "executable": false,
+              "path": "SOURCE.md",
+              "sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+              "size": 792
+            }
+          ],
+          "tree_sha256": "5e997f7b8a94a104430d347cb15628813885241ed03bf7a2db209f83944be259"
+        }
+      },
+      "safety_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--safety.json",
+        "sha256": "e260d6dada29d6d867d04ad7cd4db6519c52be4867b1d4ddd33fa8d425386aa4"
+      },
+      "source_revision": "6bf24434f7730ad169077756cf9c7cd7bd675fc6",
+      "subject_sha256": "266ab43d3980a56181e1997c07f0f47e6a3507513af0c3940874a58e3a598213",
+      "targets": {
+        "claude": {
+          "tree_sha256": "5e997f7b8a94a104430d347cb15628813885241ed03bf7a2db209f83944be259"
+        },
+        "codex": {
+          "tree_sha256": "5e997f7b8a94a104430d347cb15628813885241ed03bf7a2db209f83944be259"
+        }
+      },
+      "upstream": {
+        "blob_sha": "4911235325272b124f1f298b9040e7f539a03b34",
+        "catalog_sha256": "d39dc1f41fd92b90b8d131c2b0c4fae737a999a65ce084f81c20cdad9160f2a6",
+        "github": "emilkowalski/skills",
+        "license_paths": [
+          "LICENSE"
+        ],
+        "package_tree_sha": "0e6f8d7223a0abe73f81e890b3ec76257029a834",
+        "path": "skills/emil-design-eng/SKILL.md",
+        "revision": "6bf24434f7730ad169077756cf9c7cd7bd675fc6",
+        "source_id": "emilkowalski-skills",
+        "tree_sha": "aaec48e2080401badf98921d69a15b3ebee50231",
+        "upstream_name": "emil-design-eng"
+      },
+      "value_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--value.json",
+        "sha256": "72d0d72d0d93d71cde3e35234d21613232b791461369e0ae61d84e53081489cf"
+      }
+    },
+    "emilkowalski-ja-2026-07/find-animation-opportunities": {
+      "adaptation_diff": {
+        "path": "adaptations/emilkowalski-ja-2026-07.json",
+        "sha256": "53a67471aa21d1c689b475881e048d760aca559e78a2ffc0f41dcde802469d60"
+      },
+      "approval_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--approval.json",
+        "sha256": "83453b10071e2a8f3f88b0825cd4e325a34bd199bb7b8755d3e20562fdd8fd5e"
+      },
+      "collection_id": "emilkowalski-ja-2026-07",
+      "local_name": "find-animation-opportunities",
+      "local_state": "active",
+      "promotion_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--promotion.json",
+        "sha256": "8fd08c80d8e5fcceb11dce8ac938b13de4d537159a9678d3d86007d9dd73a037"
+      },
+      "quarantine": {
+        "license_evidence": [],
+        "manifest": [
+          {
+            "executable": false,
+            "path": "SKILL.md",
+            "sha256": "3d6533767ebcf4fb73ee7a2d9544a88671d09d50c4bf36c9b824768bca1dd9fb",
+            "size": 9547
+          }
+        ],
+        "static_inspection": {
+          "advisory_findings": [
+            {
+              "code": "external_url",
+              "message": "External reference: https://emilkowal.ski/ui/you-dont-need-animations",
+              "path": "SKILL.md",
+              "severity": "ADVISORY"
+            }
+          ],
+          "blocking_findings": [],
+          "candidate_code_execution": false,
+          "files": [
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "3d6533767ebcf4fb73ee7a2d9544a88671d09d50c4bf36c9b824768bca1dd9fb",
+              "size": 9547
+            }
+          ],
+          "full_yaml_pending_codes": [],
+          "tree_sha256": "5416dd6a126ca91b6f2a2a5aa1aeb3bbb6d86258eb64057506893b0fe2df5bf5"
+        },
+        "tree_sha256": "5416dd6a126ca91b6f2a2a5aa1aeb3bbb6d86258eb64057506893b0fe2df5bf5"
+      },
+      "review_state": "approved",
+      "review_targets": {
+        "claude": {
+          "license_evidence": [
+            {
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+            }
+          ],
+          "manifest": [
+            {
+              "executable": false,
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+              "size": 1070
+            },
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "32c3cba071c95e51029693891654df9f9fa1b860a59acc8aab261777a1972802",
+              "size": 12878
+            },
+            {
+              "executable": false,
+              "path": "SOURCE.md",
+              "sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+              "size": 792
+            }
+          ],
+          "tree_sha256": "4ce2be45c5908f198a38644cf90ddd3663e0daff19de2132695eca765bb9bea6"
+        },
+        "codex": {
+          "license_evidence": [
+            {
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+            }
+          ],
+          "manifest": [
+            {
+              "executable": false,
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+              "size": 1070
+            },
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "32c3cba071c95e51029693891654df9f9fa1b860a59acc8aab261777a1972802",
+              "size": 12878
+            },
+            {
+              "executable": false,
+              "path": "SOURCE.md",
+              "sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+              "size": 792
+            }
+          ],
+          "tree_sha256": "4ce2be45c5908f198a38644cf90ddd3663e0daff19de2132695eca765bb9bea6"
+        }
+      },
+      "safety_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--safety.json",
+        "sha256": "e260d6dada29d6d867d04ad7cd4db6519c52be4867b1d4ddd33fa8d425386aa4"
+      },
+      "source_revision": "6bf24434f7730ad169077756cf9c7cd7bd675fc6",
+      "subject_sha256": "266ab43d3980a56181e1997c07f0f47e6a3507513af0c3940874a58e3a598213",
+      "targets": {
+        "claude": {
+          "tree_sha256": "4ce2be45c5908f198a38644cf90ddd3663e0daff19de2132695eca765bb9bea6"
+        },
+        "codex": {
+          "tree_sha256": "4ce2be45c5908f198a38644cf90ddd3663e0daff19de2132695eca765bb9bea6"
+        }
+      },
+      "upstream": {
+        "blob_sha": "0ebba8a5a18a84554571863ae939d70d18955bc7",
+        "catalog_sha256": "d39dc1f41fd92b90b8d131c2b0c4fae737a999a65ce084f81c20cdad9160f2a6",
+        "github": "emilkowalski/skills",
+        "license_paths": [
+          "LICENSE"
+        ],
+        "package_tree_sha": "4edcac8e6465888285b5607c80adb6c0c151f060",
+        "path": "skills/find-animation-opportunities/SKILL.md",
+        "revision": "6bf24434f7730ad169077756cf9c7cd7bd675fc6",
+        "source_id": "emilkowalski-skills",
+        "tree_sha": "aaec48e2080401badf98921d69a15b3ebee50231",
+        "upstream_name": "find-animation-opportunities"
+      },
+      "value_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--value.json",
+        "sha256": "72d0d72d0d93d71cde3e35234d21613232b791461369e0ae61d84e53081489cf"
+      }
+    },
+    "emilkowalski-ja-2026-07/improve-animations": {
+      "adaptation_diff": {
+        "path": "adaptations/emilkowalski-ja-2026-07.json",
+        "sha256": "53a67471aa21d1c689b475881e048d760aca559e78a2ffc0f41dcde802469d60"
+      },
+      "approval_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--approval.json",
+        "sha256": "83453b10071e2a8f3f88b0825cd4e325a34bd199bb7b8755d3e20562fdd8fd5e"
+      },
+      "collection_id": "emilkowalski-ja-2026-07",
+      "local_name": "improve-animations",
+      "local_state": "active",
+      "promotion_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--promotion.json",
+        "sha256": "8fd08c80d8e5fcceb11dce8ac938b13de4d537159a9678d3d86007d9dd73a037"
+      },
+      "quarantine": {
+        "license_evidence": [],
+        "manifest": [
+          {
+            "executable": false,
+            "path": "AUDIT.md",
+            "sha256": "a05f47b8f1e6cb6cd403704e447cc8e4fdf381466a149939606330301c09d7f9",
+            "size": 7501
+          },
+          {
+            "executable": false,
+            "path": "PLAN-TEMPLATE.md",
+            "sha256": "2ec7a0332f57c4234a38d10b54e4d6b9ed96b2a5e224d8a6e936839698ff5678",
+            "size": 3128
+          },
+          {
+            "executable": false,
+            "path": "SKILL.md",
+            "sha256": "68f17bbc4671593d2f43dba26a679243e2153ba5f26965fb7d59df52842534ff",
+            "size": 7915
+          }
+        ],
+        "static_inspection": {
+          "advisory_findings": [
+            {
+              "code": "external_url",
+              "message": "External reference: https://emilkowal.ski/",
+              "path": "AUDIT.md",
+              "severity": "ADVISORY"
+            },
+            {
+              "code": "candidate_invisible_control",
+              "message": "Bidi or zero-width control character must be removed from every approved target",
+              "path": "PLAN-TEMPLATE.md",
+              "severity": "ADVISORY"
+            }
+          ],
+          "blocking_findings": [],
+          "candidate_code_execution": false,
+          "files": [
+            {
+              "executable": false,
+              "path": "AUDIT.md",
+              "sha256": "a05f47b8f1e6cb6cd403704e447cc8e4fdf381466a149939606330301c09d7f9",
+              "size": 7501
+            },
+            {
+              "executable": false,
+              "path": "PLAN-TEMPLATE.md",
+              "sha256": "2ec7a0332f57c4234a38d10b54e4d6b9ed96b2a5e224d8a6e936839698ff5678",
+              "size": 3128
+            },
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "68f17bbc4671593d2f43dba26a679243e2153ba5f26965fb7d59df52842534ff",
+              "size": 7915
+            }
+          ],
+          "full_yaml_pending_codes": [],
+          "tree_sha256": "38d158af29039fad78288b5a50977fe3346c3ae0cb171a241049cc9809f3d965"
+        },
+        "tree_sha256": "38d158af29039fad78288b5a50977fe3346c3ae0cb171a241049cc9809f3d965"
+      },
+      "review_state": "approved",
+      "review_targets": {
+        "claude": {
+          "license_evidence": [
+            {
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+            }
+          ],
+          "manifest": [
+            {
+              "executable": false,
+              "path": "AUDIT.md",
+              "sha256": "3f1f7b2150c34c14e4a34fb454e7c19c939cdaa50c9a584cc6f902540ecf041f",
+              "size": 8830
+            },
+            {
+              "executable": false,
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+              "size": 1070
+            },
+            {
+              "executable": false,
+              "path": "PLAN-TEMPLATE.md",
+              "sha256": "abafe06d60999aaf9c298fc4fef6f1febed2dcd4a080497ac52f7dc0002553cc",
+              "size": 4132
+            },
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "bc2355ff3e811867e182485219f4d173db6c821fb683e245494b7284b952c74c",
+              "size": 10974
+            },
+            {
+              "executable": false,
+              "path": "SOURCE.md",
+              "sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+              "size": 792
+            }
+          ],
+          "tree_sha256": "b3c82d11a6b3753065280516a673a9c043b0599aa039fa27464b010e306d3dad"
+        },
+        "codex": {
+          "license_evidence": [
+            {
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+            }
+          ],
+          "manifest": [
+            {
+              "executable": false,
+              "path": "AUDIT.md",
+              "sha256": "3f1f7b2150c34c14e4a34fb454e7c19c939cdaa50c9a584cc6f902540ecf041f",
+              "size": 8830
+            },
+            {
+              "executable": false,
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+              "size": 1070
+            },
+            {
+              "executable": false,
+              "path": "PLAN-TEMPLATE.md",
+              "sha256": "abafe06d60999aaf9c298fc4fef6f1febed2dcd4a080497ac52f7dc0002553cc",
+              "size": 4132
+            },
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "bc2355ff3e811867e182485219f4d173db6c821fb683e245494b7284b952c74c",
+              "size": 10974
+            },
+            {
+              "executable": false,
+              "path": "SOURCE.md",
+              "sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+              "size": 792
+            }
+          ],
+          "tree_sha256": "b3c82d11a6b3753065280516a673a9c043b0599aa039fa27464b010e306d3dad"
+        }
+      },
+      "safety_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--safety.json",
+        "sha256": "e260d6dada29d6d867d04ad7cd4db6519c52be4867b1d4ddd33fa8d425386aa4"
+      },
+      "source_revision": "6bf24434f7730ad169077756cf9c7cd7bd675fc6",
+      "subject_sha256": "266ab43d3980a56181e1997c07f0f47e6a3507513af0c3940874a58e3a598213",
+      "targets": {
+        "claude": {
+          "tree_sha256": "b3c82d11a6b3753065280516a673a9c043b0599aa039fa27464b010e306d3dad"
+        },
+        "codex": {
+          "tree_sha256": "b3c82d11a6b3753065280516a673a9c043b0599aa039fa27464b010e306d3dad"
+        }
+      },
+      "upstream": {
+        "blob_sha": "fc724697911974322c896ae205c426092261ea1b",
+        "catalog_sha256": "d39dc1f41fd92b90b8d131c2b0c4fae737a999a65ce084f81c20cdad9160f2a6",
+        "github": "emilkowalski/skills",
+        "license_paths": [
+          "LICENSE"
+        ],
+        "package_tree_sha": "ec57cb65ea60a23af278d305d1425ce4f998f510",
+        "path": "skills/improve-animations/SKILL.md",
+        "revision": "6bf24434f7730ad169077756cf9c7cd7bd675fc6",
+        "source_id": "emilkowalski-skills",
+        "tree_sha": "aaec48e2080401badf98921d69a15b3ebee50231",
+        "upstream_name": "improve-animations"
+      },
+      "value_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--value.json",
+        "sha256": "72d0d72d0d93d71cde3e35234d21613232b791461369e0ae61d84e53081489cf"
+      }
+    },
+    "emilkowalski-ja-2026-07/review-animations": {
+      "adaptation_diff": {
+        "path": "adaptations/emilkowalski-ja-2026-07.json",
+        "sha256": "53a67471aa21d1c689b475881e048d760aca559e78a2ffc0f41dcde802469d60"
+      },
+      "approval_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--approval.json",
+        "sha256": "83453b10071e2a8f3f88b0825cd4e325a34bd199bb7b8755d3e20562fdd8fd5e"
+      },
+      "collection_id": "emilkowalski-ja-2026-07",
+      "local_name": "review-animations",
+      "local_state": "active",
+      "promotion_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--promotion.json",
+        "sha256": "8fd08c80d8e5fcceb11dce8ac938b13de4d537159a9678d3d86007d9dd73a037"
+      },
+      "quarantine": {
+        "license_evidence": [],
+        "manifest": [
+          {
+            "executable": false,
+            "path": "SKILL.md",
+            "sha256": "27c1ec78634a08bcb588229497f4fbc3bcb9db8f8032dcdd275eb844f30fc004",
+            "size": 8120
+          },
+          {
+            "executable": false,
+            "path": "STANDARDS.md",
+            "sha256": "12b1a9dcee667981294ea065651b755910977f676e6300a31614003cde444db9",
+            "size": 9915
+          }
+        ],
+        "static_inspection": {
+          "advisory_findings": [
+            {
+              "code": "external_url",
+              "message": "External reference: https://easing.dev/",
+              "path": "STANDARDS.md",
+              "severity": "ADVISORY"
+            },
+            {
+              "code": "external_url",
+              "message": "External reference: https://easings.co/",
+              "path": "STANDARDS.md",
+              "severity": "ADVISORY"
+            }
+          ],
+          "blocking_findings": [],
+          "candidate_code_execution": false,
+          "files": [
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "27c1ec78634a08bcb588229497f4fbc3bcb9db8f8032dcdd275eb844f30fc004",
+              "size": 8120
+            },
+            {
+              "executable": false,
+              "path": "STANDARDS.md",
+              "sha256": "12b1a9dcee667981294ea065651b755910977f676e6300a31614003cde444db9",
+              "size": 9915
+            }
+          ],
+          "full_yaml_pending_codes": [],
+          "tree_sha256": "122d0ba03a5a15d9185b4f3c9c5316ba895d0211bba35cd61f8c756be12b1215"
+        },
+        "tree_sha256": "122d0ba03a5a15d9185b4f3c9c5316ba895d0211bba35cd61f8c756be12b1215"
+      },
+      "review_state": "approved",
+      "review_targets": {
+        "claude": {
+          "license_evidence": [
+            {
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+            }
+          ],
+          "manifest": [
+            {
+              "executable": false,
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+              "size": 1070
+            },
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "14f1fadf8397570130a20d0f8ceb3bb0695b997fe97fbf6f76facc2406b4843d",
+              "size": 11857
+            },
+            {
+              "executable": false,
+              "path": "SOURCE.md",
+              "sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+              "size": 792
+            },
+            {
+              "executable": false,
+              "path": "STANDARDS.md",
+              "sha256": "b6c14736281fd4789062212fee432d4885bcd13c965259e087275158d95f1561",
+              "size": 12442
+            }
+          ],
+          "tree_sha256": "5a53f0b9757e7b6e0a7aec63acf0f1f18a9a3960c9671eec29e0e70ae8c6ffe1"
+        },
+        "codex": {
+          "license_evidence": [
+            {
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+            }
+          ],
+          "manifest": [
+            {
+              "executable": false,
+              "path": "LICENSE",
+              "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+              "size": 1070
+            },
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "57a53081a047cee05c6a7512e408fe901896ea64eda1b62112a803f9b90f044d",
+              "size": 11826
+            },
+            {
+              "executable": false,
+              "path": "SOURCE.md",
+              "sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+              "size": 792
+            },
+            {
+              "executable": false,
+              "path": "STANDARDS.md",
+              "sha256": "b6c14736281fd4789062212fee432d4885bcd13c965259e087275158d95f1561",
+              "size": 12442
+            }
+          ],
+          "tree_sha256": "2e2fdfc692b233643fe9c293222c051a2e23964a6e1494ccb10f4970dc21b33f"
+        }
+      },
+      "safety_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--safety.json",
+        "sha256": "e260d6dada29d6d867d04ad7cd4db6519c52be4867b1d4ddd33fa8d425386aa4"
+      },
+      "source_revision": "6bf24434f7730ad169077756cf9c7cd7bd675fc6",
+      "subject_sha256": "266ab43d3980a56181e1997c07f0f47e6a3507513af0c3940874a58e3a598213",
+      "targets": {
+        "claude": {
+          "tree_sha256": "5a53f0b9757e7b6e0a7aec63acf0f1f18a9a3960c9671eec29e0e70ae8c6ffe1"
+        },
+        "codex": {
+          "tree_sha256": "2e2fdfc692b233643fe9c293222c051a2e23964a6e1494ccb10f4970dc21b33f"
+        }
+      },
+      "upstream": {
+        "blob_sha": "b1cd9b130ef1c50922790b3a355c14cdee3cf4b1",
+        "catalog_sha256": "d39dc1f41fd92b90b8d131c2b0c4fae737a999a65ce084f81c20cdad9160f2a6",
+        "github": "emilkowalski/skills",
+        "license_paths": [
+          "LICENSE"
+        ],
+        "package_tree_sha": "0012fc43a25cce5df019102ab28bb6a68ad9db3d",
+        "path": "skills/review-animations/SKILL.md",
+        "revision": "6bf24434f7730ad169077756cf9c7cd7bd675fc6",
+        "source_id": "emilkowalski-skills",
+        "tree_sha": "aaec48e2080401badf98921d69a15b3ebee50231",
+        "upstream_name": "review-animations"
+      },
+      "value_receipt": {
+        "path": "receipts/emilkowalski-ja-2026-07--value.json",
+        "sha256": "72d0d72d0d93d71cde3e35234d21613232b791461369e0ae61d84e53081489cf"
+      }
+    },
     "mattpocock-legacy-2026-07/choosing-skills": {
       "approval_receipt": null,
       "collection_id": "mattpocock-legacy-2026-07",
@@ -724,8 +1670,8 @@
     }
   },
   "generated_at": "2026-07-19",
-  "generation": 2,
+  "generation": 3,
   "hash_algorithm": "skill-tree-sha256-v1",
-  "registry_sha256": "44ce150153e34e60908bd2c765570316e5025349b25038756a376db456d19b8f",
+  "registry_sha256": "c36a5c0f70350003680e202cc040f663b89b9292452a31f5834d6f6d26214551",
   "schema_version": 1
 }

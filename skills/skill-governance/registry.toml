@@ -1,5 +1,5 @@
 schema_version = 1
-generation = 2
+generation = 3
 authority = "codex"
 hash_algorithm = "skill-tree-sha256-v1"
 python_min = "3.11"
@@ -764,3 +764,78 @@ delta = "scope-before-scan / recent-hot-spot YAGNI rule"
 adopted_in_policy = true
 runtime_content_updated = false
 blocked_by_hold = "vault-gitlink-conflict"
+
+[[sources]]
+id = "emilkowalski-skills"
+github = "emilkowalski/skills"
+default_branch = "main"
+observed_revision = "6bf24434f7730ad169077756cf9c7cd7bd675fc6"
+observed_at = "2026-07-19"
+origin = "community-maintainer"
+mode = "selective-adoption"
+update_policy = "notify-only"
+catalog_required = true
+
+[[collections]]
+id = "emilkowalski-ja-2026-07"
+source_id = "emilkowalski-skills"
+local_state = "active"
+review_state = "approved"
+risk_tier = "L1"
+license = "MIT"
+adaptation = "platform-adapted"
+content_relation = "localized-adaptation"
+targets = ["codex", "claude"]
+default_revision = "6bf24434f7730ad169077756cf9c7cd7bd675fc6"
+baseline_at = "2026-07-19"
+adaptation_diff = { path = "adaptations/emilkowalski-ja-2026-07.json", sha256 = "53a67471aa21d1c689b475881e048d760aca559e78a2ffc0f41dcde802469d60" }
+safety_receipt = { path = "receipts/emilkowalski-ja-2026-07--safety.json", sha256 = "e260d6dada29d6d867d04ad7cd4db6519c52be4867b1d4ddd33fa8d425386aa4" }
+value_receipt = { path = "receipts/emilkowalski-ja-2026-07--value.json", sha256 = "72d0d72d0d93d71cde3e35234d21613232b791461369e0ae61d84e53081489cf" }
+approval_receipt = { path = "receipts/emilkowalski-ja-2026-07--approval.json", sha256 = "83453b10071e2a8f3f88b0825cd4e325a34bd199bb7b8755d3e20562fdd8fd5e" }
+promotion_receipt = { path = "receipts/emilkowalski-ja-2026-07--promotion.json", sha256 = "8fd08c80d8e5fcceb11dce8ac938b13de4d537159a9678d3d86007d9dd73a037" }
+skills = [
+  "animation-vocabulary",
+  "apple-design",
+  "emil-design-eng",
+  "find-animation-opportunities",
+  "improve-animations",
+  "review-animations",
+]
+
+[collections.upstream_paths]
+"animation-vocabulary" = "skills/animation-vocabulary/SKILL.md"
+"apple-design" = "skills/apple-design/SKILL.md"
+"emil-design-eng" = "skills/emil-design-eng/SKILL.md"
+"find-animation-opportunities" = "skills/find-animation-opportunities/SKILL.md"
+"improve-animations" = "skills/improve-animations/SKILL.md"
+"review-animations" = "skills/review-animations/SKILL.md"
+
+[collections.frontmatter_receipts."animation-vocabulary"]
+quarantine = { path = "receipts/emilkowalski-ja-2026-07--animation-vocabulary--quarantine.json", sha256 = "db80b79c16b3e57038f24ae124512684a0ffa9670fb38ee1605834e5059e2e87" }
+codex = { path = "receipts/emilkowalski-ja-2026-07--animation-vocabulary--codex.json", sha256 = "e7262ccc1de0b0c090df1a695aa20938b0efdb7988a71806ddc8eefa5e60f47d" }
+claude = { path = "receipts/emilkowalski-ja-2026-07--animation-vocabulary--claude.json", sha256 = "ba6acf38a7da49eb10c6779366ea998b9806d9bf3e2d6984925fe2557599cccf" }
+
+[collections.frontmatter_receipts."apple-design"]
+quarantine = { path = "receipts/emilkowalski-ja-2026-07--apple-design--quarantine.json", sha256 = "76384753aa74395eb7a7e606e86d27890bde11699881ad2d6a019182f98c6105" }
+codex = { path = "receipts/emilkowalski-ja-2026-07--apple-design--codex.json", sha256 = "8167fcc27f272da953203fff7864cad89e55e932ed4e824b237b05152785856b" }
+claude = { path = "receipts/emilkowalski-ja-2026-07--apple-design--claude.json", sha256 = "6488920285ae178ef6628aea26d913f68cea1275624d0c6c9b7eff3d46057964" }
+
+[collections.frontmatter_receipts."emil-design-eng"]
+quarantine = { path = "receipts/emilkowalski-ja-2026-07--emil-design-eng--quarantine.json", sha256 = "9dba9a673053a0918c9245e3f00efccd4b52a866d6a0d52c88df2f52fa381a4a" }
+codex = { path = "receipts/emilkowalski-ja-2026-07--emil-design-eng--codex.json", sha256 = "89da78e47b8a859ab0a6d0c8eca43853fb53e04a144b50f7e824dc67d7b7da52" }
+claude = { path = "receipts/emilkowalski-ja-2026-07--emil-design-eng--claude.json", sha256 = "624f56dfc66d55de815e1839adb47f5213d8aaaf53d5d86195715ad7e16a5870" }
+
+[collections.frontmatter_receipts."find-animation-opportunities"]
+quarantine = { path = "receipts/emilkowalski-ja-2026-07--find-animation-opportunities--quarantine.json", sha256 = "2a1b70a264d2622d0dff2f16d46e9f96604e6e0587ddd452a3fcea9126406611" }
+codex = { path = "receipts/emilkowalski-ja-2026-07--find-animation-opportunities--codex.json", sha256 = "2cc52ae1567fc3739ad5021bc9ce8f36475e09674df93d6d44c11a1cf117e674" }
+claude = { path = "receipts/emilkowalski-ja-2026-07--find-animation-opportunities--claude.json", sha256 = "9186cd567c4d998f9b42b9bfd8c64293ab39d7c913cdc6cdcd4ca917fb25a12f" }
+
+[collections.frontmatter_receipts."improve-animations"]
+quarantine = { path = "receipts/emilkowalski-ja-2026-07--improve-animations--quarantine.json", sha256 = "408c8a054f385cabb6a25564bd43f25297d415bb4e1f51b12021cc7bb632099c" }
+codex = { path = "receipts/emilkowalski-ja-2026-07--improve-animations--codex.json", sha256 = "b5229fd007eafc37d36eab8fb684bc7208d2496753ec3698a8a31b718fb10474" }
+claude = { path = "receipts/emilkowalski-ja-2026-07--improve-animations--claude.json", sha256 = "4bdc4fb7744cd3fcee2d9fb0731aa9509e0785c5e8546484ba5008a28dd73e28" }
+
+[collections.frontmatter_receipts."review-animations"]
+quarantine = { path = "receipts/emilkowalski-ja-2026-07--review-animations--quarantine.json", sha256 = "4d87ab1dc35efcd71bdf40878011a0a4d91f21b76047651f1f7ccd542738587c" }
+codex = { path = "receipts/emilkowalski-ja-2026-07--review-animations--codex.json", sha256 = "2475ee58679c6e091412443be91d61f0f3990d79dc7208d8a11fae4f940a9cb7" }
+claude = { path = "receipts/emilkowalski-ja-2026-07--review-animations--claude.json", sha256 = "fd891277a1684f785f43d238704aae4020d8a94bca874339706021055fa50e79" }
