@@ -1,14 +1,10 @@
-# Matt Skill inventory
+# Matt Skill adoption map
 
 固定revision：`9603c1cc8118d08bc1b3bf34cf714f62178dea3b`
 
-判定語の意味は次のとおりです。
+この文書は、固定revisionに含まれる41 Skillの採否判断とuser-scope routeを保持する。
 
-- **keep**：同名のlocal実装を継続する。
-- **adapt**：user-scopeの規律へ適合した別名実装または正式名entryを使う。
-- **replace**：upstream Skillは入れず、既存のlocal設計で置き換える。
-- **adopt**：今回、新たに隔離導入する。
-- **retire**：deprecatedをruntimeから削除し、置換先へ寄せる。
+実装状態の正本はgovernance catalog、registry、runtime routingであり、この文書は判断coverageと理由の確認に使う。
 
 | # | Upstream | Stage | Decision | User-scope route | Reason |
 | ---: | --- | --- | --- | --- | --- |
@@ -54,7 +50,7 @@
 | 40 | `teach` | productivity | adapt | `teach` → `teaching-concepts` | 正式名で発見し、stateful workspaceへ接続する |
 | 41 | `writing-great-skills` | productivity | keep | `writing-great-skills` | triggerとcontext負荷の規律として保持する |
 
-## Summary
+## Decision count
 
 | Decision | Count |
 | --- | ---: |

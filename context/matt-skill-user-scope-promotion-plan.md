@@ -171,4 +171,8 @@ package install、hook、secret、global configを伴う場合は、Skill approv
 
 2026-07-19の実行単位はWave 0、正式名entry、in-progress 2件、deprecated削除、ロードマップ改善を一つのSprint Contractで追跡する。
 
-詳細な対応と証拠は`projects/matt-skill-harness/`を正本とする。
+現在状態の正本はgovernance catalog、registry、runtime routingとする。
+
+41件の採否判断と置換理由は`context/matt-skill-adoption-map.md`で確認する。
+
+検証は`scripts/validate-matt-skill-integration.py`で行い、完了済み実行の詳細証拠はGit履歴を参照する。
