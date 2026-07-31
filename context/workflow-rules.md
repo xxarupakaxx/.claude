@@ -271,7 +271,6 @@ sub-agent による計画検証は、`agent-team-routing.md` の Delegation Gate
 
 **共通ルール:**
 - レビュー対象ファイルのフルパスと計画ファイルのパスを渡す
-- `prd-reviewer`にはPRDファイルのパスも渡す
 - `security-reviewer`にはAPI routeの呼び出し先usecase/entity定義も含める（IDOR検出のため）
 - **IMPORTANT**: レビュー結果は05_log.mdに全件記録すること（MINOR も含む）。ユーザーが確認できる状態にする
 - **IMPORTANT**: 指摘の修正案は実装レベルで具体的に記述すること。「ユーザー判断」に委ねる場合でも技術的修正案を必ず提示
@@ -402,7 +401,6 @@ re_review_priority: high    # 次ラウンドで検出元 reviewer を優先起�
 
 **共通ルール:**
 - 変更対象ファイルのフルパスとレビュー観点を明示
-- `prd-reviewer`にはPRDファイルのパスも渡す
 - `security-reviewer`にはAPI routeの呼び出し先usecase/entity定義も含める（IDOR検出のため）
 - **IMPORTANT**: レビュー結果は05_log.mdに全件記録すること（MINOR も含む）。ユーザーが確認できる状態にする
 - **IMPORTANT**: 指摘の修正案は実装レベルで具体的に記述すること。「ユーザー判断」に委ねる場合でも技術的修正案を必ず提示
@@ -488,10 +486,6 @@ phases: [investigation, planning, quality-check]   # この知見が活きる Ph
 | `arch-reviewer` | アーキテクチャ・依存関係・責務分離 | 実装・構造変更、または Review Heat 2+ |
 | `security-reviewer` | セキュリティ脆弱性・認証認可・IDOR（パラメータレベル認可） | auth/API/data access/env/外部書き込み、または Review Heat 2+ |
 | `perf-reviewer` | パフォーマンス・効率性 | 性能が主目的、性能劣化リスク、または Review Heat 3+ |
-| `prd-reviewer` | PRDとの乖離（未実装・過剰実装・振る舞い・受入条件） | PRDパス指定時 |
-
-**prd-reviewer起動方法**: PRDファイルのパスをプロンプトに含めて起動。PRDが指定されていない場合はスキップ。
-
 ### Tier 2: 変更内容に応じて追加
 
 | トリガー条件 | 追加エージェント |

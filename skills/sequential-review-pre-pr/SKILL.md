@@ -52,7 +52,6 @@ git diff $BASE_BRANCH --stat
 
 Task ツールで以下を **並列起動**（spec compliance 先行）:
 
-- `prd-reviewer` (要件・仕様との乖離検出)
 - `rule-validator` (CLAUDE.md/rules/ への準拠)
 - `arch-reviewer` (アーキテクチャ整合性)
 
