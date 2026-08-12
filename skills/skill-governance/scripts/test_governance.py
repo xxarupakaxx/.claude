@@ -914,7 +914,22 @@ allowed-tools: Read, Write
 Use local evidence only.
 """
         upstream_text = f"# Upstream\n\nhttps://github.com/owner/repo @ `{revision}`\n"
-        with tempfile.TemporaryDirectory(dir=Path(__file__).parent) as temporary:
+        def static_tree(path: Path) -> governance.TreeResult:
+            records = []
+            for filename in sorted(governance.LOCAL_STATIC_ADAPTER_FILES):
+                data = (path / filename).read_bytes()
+                records.append(
+                    governance.FileRecord(
+                        path=filename,
+                        size=len(data),
+                        executable=False,
+                        sha256=governance.sha256_bytes(data),
+                        data=data,
+                    )
+                )
+            return governance.TreeResult(str(path), governance._tree_hash(records, []), records, [])
+
+        with tempfile.TemporaryDirectory() as temporary:
             base = Path(temporary)
             roots = {root_id: base / root_id for root_id in ("codex", "claude")}
             for root in roots.values():
@@ -922,9 +937,7 @@ Use local evidence only.
                 adapter.mkdir(parents=True)
                 (adapter / "SKILL.md").write_text(skill_text, encoding="utf-8")
                 (adapter / "UPSTREAM.md").write_text(upstream_text, encoding="utf-8")
-                (adapter / "SKILL.md").chmod(0o644)
-                (adapter / "UPSTREAM.md").chmod(0o644)
-            hashes = {root_id: governance.scan_tree(root / "diagram-design").tree_sha256 for root_id, root in roots.items()}
+            hashes = {root_id: static_tree(root / "diagram-design").tree_sha256 for root_id, root in roots.items()}
             registry = {
                 "sources": [{"id": "source", "github": "owner/repo", "observed_revision": revision}],
                 "roots": [{"id": root_id, "path": str(root)} for root_id, root in roots.items()],
@@ -938,7 +951,8 @@ Use local evidence only.
                     "runtime_tree_sha256": hashes,
                 }],
             }
-            self.assertFalse(governance.has_blockers(governance.audit_local_static_adapters(registry)))
+            with mock.patch.object(governance, "scan_tree", side_effect=static_tree):
+                self.assertFalse(governance.has_blockers(governance.audit_local_static_adapters(registry)))
 
             malformed = copy.deepcopy(registry)
             malformed["local_origins"][0].pop("source_id")
@@ -948,7 +962,8 @@ Use local evidence only.
                 skill_text + "\n<script>unsafe()</script>\n",
                 encoding="utf-8",
             )
-            codes = {item.code for item in governance.audit_local_static_adapters(registry)}
+            with mock.patch.object(governance, "scan_tree", side_effect=static_tree):
+                codes = {item.code for item in governance.audit_local_static_adapters(registry)}
             self.assertIn("local_static_adapter_tree", codes)
             self.assertIn("local_static_adapter_boundary", codes)
 
