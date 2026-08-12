@@ -795,6 +795,163 @@ class RegistryTests(unittest.TestCase):
         paths = [str(root["path"]) for root in self.registry["roots"]]
         self.assertFalse(any("/.tmp/" in path or "/backups/" in path for path in paths))
 
+    def test_estate_hash_normalization_requires_codex_claude_and_declared_vault_codex(self) -> None:
+        scoped = copy.deepcopy(self.registry)
+        scoped["roots"] = [
+            root
+            for root in scoped["roots"]
+            if root["id"] in {"codex", "claude"}
+        ]
+        scoped["coverage_symlinks"] = []
+        scoped["name_inferences"] = [
+            entry
+            for entry in scoped["name_inferences"]
+            if entry["root_id"] in {"codex", "claude"}
+        ]
+        scoped["estate_hash_normalizations"] = [
+            entry
+            for entry in scoped["estate_hash_normalizations"]
+            if entry["root_id"] in {"codex", "claude"}
+        ]
+        scoped["collections"] = []
+        scoped["holds"] = []
+        scoped["update_candidates"] = []
+        scoped_codes = {item.code for item in governance.validate_registry(scoped)}
+        self.assertNotIn("estate_hash_normalization_roots", scoped_codes)
+        self.assertNotIn("estate_hash_normalization_coverage", scoped_codes)
+
+        missing_codex = copy.deepcopy(scoped)
+        missing_codex["estate_hash_normalizations"] = [
+            entry
+            for entry in missing_codex["estate_hash_normalizations"]
+            if entry["root_id"] != "codex"
+        ]
+        self.assertIn(
+            "estate_hash_normalization_coverage",
+            {item.code for item in governance.validate_registry(missing_codex)},
+        )
+
+        missing_root = copy.deepcopy(scoped)
+        missing_root["roots"] = [root for root in missing_root["roots"] if root["id"] != "claude"]
+        self.assertIn(
+            "estate_hash_normalization_roots",
+            {item.code for item in governance.validate_registry(missing_root)},
+        )
+
+        global_without_vault = copy.deepcopy(self.registry)
+        global_without_vault["estate_hash_normalizations"] = [
+            entry
+            for entry in global_without_vault["estate_hash_normalizations"]
+            if entry["root_id"] != "vault-codex"
+        ]
+        self.assertIn(
+            "estate_hash_normalization_coverage",
+            {item.code for item in governance.validate_registry(global_without_vault)},
+        )
+
+    def test_audit_uses_registry_sibling_sidecars_by_default(self) -> None:
+        registry_path = Path("/tmp/vault/.codex/governance/profiles/vault-wsl/registry.toml")
+        expected_paths = [
+            registry_path.with_name("registry.lock.json"),
+            registry_path.with_name("catalog.lock.json"),
+            registry_path.with_name("estate.lock.json"),
+            registry_path.with_name("reputation.lock.json"),
+        ]
+        with (
+            mock.patch.object(governance, "load_registry", return_value=({}, [])),
+            mock.patch.object(governance, "audit_payload", return_value=({"command": "audit", "status": "ok"}, [])) as audit,
+            mock.patch.object(governance, "emit"),
+        ):
+            self.assertEqual(governance.main(["audit", "--registry", str(registry_path)]), 0)
+        audit.assert_called_once_with(registry_path, *expected_paths)
+
+    def test_registry_environment_requires_vault_root_when_referenced(self) -> None:
+        profile_registry = {"roots": [{"path": "${VAULT_ROOT}/.codex/skills"}]}
+        with mock.patch.dict(os.environ, {}, clear=True):
+            findings = governance.registry_environment_findings(profile_registry)
+        self.assertEqual([item.code for item in findings], ["registry_environment"])
+        with mock.patch.dict(os.environ, {"VAULT_ROOT": "/tmp/vault"}, clear=True):
+            self.assertEqual(governance.registry_environment_findings(profile_registry), [])
+
+    def test_lock_plan_uses_source_date_without_collections(self) -> None:
+        registry = {
+            "generation": 1,
+            "collections": [],
+            "sources": [{"observed_at": "2026-08-09"}],
+            "roots": [],
+            "quarantine_root": "/tmp/quarantine",
+            "review_root": "/tmp/review",
+        }
+        with tempfile.TemporaryDirectory() as temporary:
+            registry_path = Path(temporary) / "registry.toml"
+            registry_path.write_text("schema_version = 1\n", encoding="utf-8")
+            lock, findings = governance.build_lock_plan(registry, registry_path, catalog={})
+        self.assertFalse(governance.has_blockers(findings))
+        self.assertEqual(lock["generated_at"], "2026-08-09")
+
+    def test_estate_plan_uses_source_date_without_collections(self) -> None:
+        registry = {
+            "generation": 1,
+            "collections": [],
+            "sources": [{"observed_at": "2026-08-09"}],
+        }
+        with tempfile.TemporaryDirectory() as temporary:
+            registry_path = Path(temporary) / "registry.toml"
+            registry_path.write_text("schema_version = 1\n", encoding="utf-8")
+            estate = governance.planned_estate_lock(registry, registry_path, {"records": []})
+        self.assertEqual(estate["generated_at"], "2026-08-09")
+
+    def test_local_static_adapter_audit_binds_source_runtime_and_boundary(self) -> None:
+        revision = "a" * 40
+        skill_text = """---
+name: diagram-design
+description: A static local adapter
+allowed-tools: Read, Write
+---
+
+# Diagram Design Adapter
+
+Use local evidence only.
+"""
+        upstream_text = f"# Upstream\n\nhttps://github.com/owner/repo @ `{revision}`\n"
+        with tempfile.TemporaryDirectory(dir=Path(__file__).parent) as temporary:
+            base = Path(temporary)
+            roots = {root_id: base / root_id for root_id in ("codex", "claude")}
+            for root in roots.values():
+                adapter = root / "diagram-design"
+                adapter.mkdir(parents=True)
+                (adapter / "SKILL.md").write_text(skill_text, encoding="utf-8")
+                (adapter / "UPSTREAM.md").write_text(upstream_text, encoding="utf-8")
+                (adapter / "SKILL.md").chmod(0o644)
+                (adapter / "UPSTREAM.md").chmod(0o644)
+            hashes = {root_id: governance.scan_tree(root / "diagram-design").tree_sha256 for root_id, root in roots.items()}
+            registry = {
+                "sources": [{"id": "source", "github": "owner/repo", "observed_revision": revision}],
+                "roots": [{"id": root_id, "path": str(root)} for root_id, root in roots.items()],
+                "local_origins": [{
+                    "name": "diagram-design",
+                    "origin_type": governance.LOCAL_STATIC_ADAPTER_ORIGIN,
+                    "source_id": "source",
+                    "historical_origin_commit": revision,
+                    "direct_upstream_path": "skills/diagram-design/SKILL.md",
+                    "targets": ["codex", "claude"],
+                    "runtime_tree_sha256": hashes,
+                }],
+            }
+            self.assertFalse(governance.has_blockers(governance.audit_local_static_adapters(registry)))
+
+            malformed = copy.deepcopy(registry)
+            malformed["local_origins"][0].pop("source_id")
+            self.assertIn("local_static_adapter_shape", {item.code for item in governance.validate_registry(malformed)})
+
+            (roots["claude"] / "diagram-design" / "SKILL.md").write_text(
+                skill_text + "\n<script>unsafe()</script>\n",
+                encoding="utf-8",
+            )
+            codes = {item.code for item in governance.audit_local_static_adapters(registry)}
+            self.assertIn("local_static_adapter_tree", codes)
+            self.assertIn("local_static_adapter_boundary", codes)
+
     def test_shared_agents_roots_match_codex_runtime_model(self) -> None:
         roots = {root["id"]: root for root in self.registry["roots"]}
         for root_id in ("shared", "vault-shared"):

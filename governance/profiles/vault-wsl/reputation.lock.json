@@ -1,0 +1,30 @@
+{
+  "generated_at": "2026-08-09",
+  "policy": {
+    "approval_use": "advisory-only",
+    "popularity_is_approval": false
+  },
+  "schema_version": 1,
+  "snapshots": [
+    {
+      "archived": false,
+      "assessment": "MIT と固定 tree は確認済みだが、main は pin 後に進行した。network onboarding・remote asset・browser export を含む upstream は L2 とし、人気を approval に使わない。",
+      "evidence_urls": [
+        "https://github.com/cathrynlavery/diagram-design",
+        "https://github.com/cathrynlavery/diagram-design/commit/a157f7616473d966d6f433cf0b4d4f1880603504"
+      ],
+      "forks": 265,
+      "github": "cathrynlavery/diagram-design",
+      "head_matches_pin": false,
+      "issues_enabled": true,
+      "license_signal": "MIT",
+      "observed_at": "2026-08-09",
+      "observed_revision": "a157f7616473d966d6f433cf0b4d4f1880603504",
+      "open_issues": 0,
+      "security_policy": false,
+      "source_id": "cathrynlavery-diagram-design",
+      "stars": 3626,
+      "trust_role": "community-candidate"
+    }
+  ]
+}

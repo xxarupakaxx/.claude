@@ -1,0 +1,42 @@
+{
+  "generated_at": "2026-08-09T00:00:00+09:00",
+  "generation": 1,
+  "method": "pinned-github-commit-tree-plus-package-tree-v2",
+  "registry_sha256": "3df0a218713bc5421ec62fef30b0a440916b2b8a3820ff2ff9a0b3576cb41e39",
+  "schema_version": 1,
+  "sources": {
+    "cathrynlavery-diagram-design": {
+      "catalog_sha256": "6961056d2261775a00ab8a76a6f392d713fb901b2b22dc4eb47ca6c0fcb927b4",
+      "complete": true,
+      "github": "cathrynlavery/diagram-design",
+      "mode": "watch",
+      "name_extracted_count": 1,
+      "revision": "a157f7616473d966d6f433cf0b4d4f1880603504",
+      "skill_count": 1,
+      "skills": [
+        {
+          "blob_sha": "a26faf0a56455a486f7396d37c93028e0e9d0660",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "diagram-design",
+          "package_tree_sha": "c0e9ef1937ac30dd5b46e58d43f19b375c946a4b",
+          "path": "skills/diagram-design/SKILL.md",
+          "role": "catalog-surface"
+        }
+      ],
+      "tree_archive_blob_paths_match": true,
+      "tree_sha": "d842a5eb385d5bf2569458c3705815abc71c72cc",
+      "tree_truncated": false
+    }
+  },
+  "summary": {
+    "complete_source_count": 1,
+    "cross_source_name_collision_groups": 0,
+    "license_evidence_missing_count": 0,
+    "name_extracted_count": 1,
+    "skill_file_count": 1,
+    "source_count": 1,
+    "unique_extracted_name_count": 1
+  }
+}

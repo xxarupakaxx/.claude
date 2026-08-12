@@ -1,0 +1,2454 @@
+{
+  "generated_at": "2026-08-09",
+  "generation": 1,
+  "hash_algorithm": "skill-tree-sha256-v1",
+  "records": [
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "adversarial-review",
+      "resolved_name": "adversarial-review",
+      "root_id": "claude",
+      "tree_sha256": "278c6cbbb8effcea257737f3ef4834182a4935c3e9566c4110af31e49900a1f8"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "agent-memory",
+      "resolved_name": "agent-memory",
+      "root_id": "claude",
+      "tree_sha256": "d0a7a9ff3a90187b71675cb0904a6fcb1834a24ed0f3eafe2836e181efece986"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "alpaca-slack-style",
+      "resolved_name": "alpaca-slack-style",
+      "root_id": "claude",
+      "tree_sha256": "bab61a2a7329644149202ffbb3f1981b916ded5ac4a01d214327d33f4d2df3fb"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "animation-vocabulary",
+      "resolved_name": "animation-vocabulary",
+      "root_id": "claude",
+      "tree_sha256": "6f9207f7f270988c213aef0089ac2a96e6effc9dc501867759f4bf889f01c4ca"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "apple-design",
+      "resolved_name": "apple-design",
+      "root_id": "claude",
+      "tree_sha256": "599fbc11047dfa4d8d08501a4020e061bae6353f78179f6f1b25c80921a47274"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "article-writing",
+      "resolved_name": "article-writing",
+      "root_id": "claude",
+      "tree_sha256": "a10cc3ba449f0bb97c955eaa67a7ce1d0d5f080cb158999f595acccd28fd8bb9"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "ask-skill-router",
+      "resolved_name": "ask-skill-router",
+      "root_id": "claude",
+      "tree_sha256": "feffbcf279a68d20a243e1e601c37bea3298967f2d9bcf0202840b0768d603f5"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "auto-reviewing-pre-pr",
+      "resolved_name": "auto-reviewing-pre-pr",
+      "root_id": "claude",
+      "tree_sha256": "0bff5f0633b74402c21f35a9641cb48325eec1fcca71de1386474fa6656eebd6"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "autonomous-loops",
+      "resolved_name": "autonomous-loops",
+      "root_id": "claude",
+      "tree_sha256": "f241dad239ff2b679796d059989b44cf186dc6d7ea35e34de5ab9c7a3675cfc8"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "batch-grill-me",
+      "resolved_name": "batch-grill-me",
+      "root_id": "claude",
+      "tree_sha256": "a5f384b6da9314db4fb821ad2156f8b4ea62d5f9e106adc00905002ac5b9930a"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "blueprint",
+      "resolved_name": "blueprint",
+      "root_id": "claude",
+      "tree_sha256": "ee4002539368aac8beaaa8b6812ab8a6927046cd640e289096002a950a5247d8"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "brainstorming",
+      "resolved_name": "brainstorming",
+      "root_id": "claude",
+      "tree_sha256": "da2702020606d7b6fb653932bb14cffe0067a14c6b3f7ff902817dcb12d61ac9"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "bulletproof-problem-solving",
+      "resolved_name": "bulletproof-problem-solving",
+      "root_id": "claude",
+      "tree_sha256": "b68a7c5c2a55c5b8f33512a2dcbe5873714d16fe4ec8ad3a23777bdeef79180a"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "caveman",
+      "resolved_name": "caveman",
+      "root_id": "claude",
+      "tree_sha256": "8e49579e05550980066651f6ab2862934f780d36bb0b3150b17343058c83fdb5"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "choosing-skills",
+      "resolved_name": "choosing-skills",
+      "root_id": "claude",
+      "tree_sha256": "e0cf730a5bcb4ff695f33a7e4e1033442425d0c96f57e80c1e8185663e446d8a"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "cleanup-knowledge",
+      "resolved_name": "cleanup-knowledge",
+      "root_id": "claude",
+      "tree_sha256": "0a1ebf70cf316e56749614f9b5a0c844565cb31960600f2a41d25b174ef31af8"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "codebase-review",
+      "resolved_name": "codebase-review",
+      "root_id": "claude",
+      "tree_sha256": "01dc1e6d0ecb51cf98e344bf40086e55e5539b4bf3ccb02bbf40f88d38180957"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "compounding-knowledge",
+      "resolved_name": "compounding-knowledge",
+      "root_id": "claude",
+      "tree_sha256": "a042e47d9860461a82586a91649475917ccaf10f96d6f404a423362bff2d8635"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "consult-gpt",
+      "resolved_name": "consult-gpt",
+      "root_id": "claude",
+      "tree_sha256": "607f2d35ab69ba1b78d682b12c3287466dc50317784f38e04dd6baea8c655009"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "cost-aware-llm",
+      "resolved_name": "cost-aware-llm",
+      "root_id": "claude",
+      "tree_sha256": "b68e26e91c240fb007d7fdbd1eb995189dc760d96c9d35d887b9c2f8f8a173cf"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "create-hook",
+      "resolved_name": "create-hook",
+      "root_id": "claude",
+      "tree_sha256": "349e4f2889e2457e16597b6e618fcdcafcf7b584a16e77ccf9acd2224f352469"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "create-mcp-server",
+      "resolved_name": "create-mcp-server",
+      "root_id": "claude",
+      "tree_sha256": "38fa6a111f4ec65850f08ff92d1fce0e69affd1e695ebf49f272f77c595d31ad"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "create-skill",
+      "resolved_name": "create-skill",
+      "root_id": "claude",
+      "tree_sha256": "730cdd6f7242106a7a3becf193abd6cf96c2816db60ba081980baa80c8280ef5"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "create-subagent",
+      "resolved_name": "create-subagent",
+      "root_id": "claude",
+      "tree_sha256": "48dbd65030cdc51e5a517de0f639fe769c884dc0ee317a4e78a25d34d2963a45"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "creating-adr",
+      "resolved_name": "creating-adr",
+      "root_id": "claude",
+      "tree_sha256": "a5d3b88656e9076445c910c3075294fd79cd42750f73aa3f4a2d30864dd17d47"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "creating-tracer-tickets",
+      "resolved_name": "creating-tracer-tickets",
+      "root_id": "claude",
+      "tree_sha256": "651f7acf96984bd4ce246be4473a781c92727d241ac95c21617ce431e7d5aed1"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "deep-research",
+      "resolved_name": "deep-research",
+      "root_id": "claude",
+      "tree_sha256": "5f981e0d898f801bd6e4e151c1871bceff24dc3ca01149209635ae6e374b0047"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "deepening-plan",
+      "resolved_name": "deepening-plan",
+      "root_id": "claude",
+      "tree_sha256": "050f0ea369e7c83cca729e9f070d2e398c9af0e9bd2847033cb9011bf6da24cb"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "design-eval-loop",
+      "resolved_name": "design-eval-loop",
+      "root_id": "claude",
+      "tree_sha256": "c24522ea352f16710369902702473f9a547f633d4d204d556edbd43b1e59647c"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "design-reviewer",
+      "resolved_name": "design-reviewer",
+      "root_id": "claude",
+      "tree_sha256": "06e338a95f7bd616245c71b37714b9c8c6a8b23377006e832a0305135fab64b1"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "designing-codebases",
+      "resolved_name": "designing-codebases",
+      "root_id": "claude",
+      "tree_sha256": "4dd1890defa213301f8a45245033dd46eb04258bec4405eea5d52726d47c7d08"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "designing-ui-ux",
+      "resolved_name": "designing-ui-ux",
+      "root_id": "claude",
+      "tree_sha256": "e38923c1ef438d42828d90d512624f4c713c41e3e51fa85f3f42752f98b13a86"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "designing-workflows",
+      "resolved_name": "designing-workflows",
+      "root_id": "claude",
+      "tree_sha256": "0b23f2b33a6cbb965d032afedeeae76726efffce9e9e356e0f9acf26443fefaf"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "diagnosing-bugs",
+      "resolved_name": "diagnosing-bugs",
+      "root_id": "claude",
+      "tree_sha256": "742bbde38532e4976c54b246cb1199237c9881d35a1e6bee1930142fcb42c215"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "diagram-design",
+      "resolved_name": "diagram-design",
+      "root_id": "claude",
+      "tree_sha256": "70d409bdbd2c4f5023bedc3caaecdd191f17a7d3de9e2556d8a60530b0b57022"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "documentation",
+      "resolved_name": "documentation",
+      "root_id": "claude",
+      "tree_sha256": "7e5f722e5dac6bb183333f5512b04c6a657f3b64f6925a74e9ab64bf398c5a19"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "editing-articles",
+      "resolved_name": "editing-articles",
+      "root_id": "claude",
+      "tree_sha256": "368ec6042a31ba72d31a229f276be9f78279835335070dc1e4ae95dae1576a35"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "emil-design-eng",
+      "resolved_name": "emil-design-eng",
+      "root_id": "claude",
+      "tree_sha256": "5e997f7b8a94a104430d347cb15628813885241ed03bf7a2db209f83944be259"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "eval-harness",
+      "resolved_name": "eval-harness",
+      "root_id": "claude",
+      "tree_sha256": "279dc743cd6529d0c92c4a33f6c63e3d112eaa2db63c02cb042472315059d6ab"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "exploring-codebase",
+      "resolved_name": "exploring-codebase",
+      "root_id": "claude",
+      "tree_sha256": "90705efb93a64e2c5ae9cbf6406fa1fbdec4c5f83b6ac14b36fce106215ea816"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "find-animation-opportunities",
+      "resolved_name": "find-animation-opportunities",
+      "root_id": "claude",
+      "tree_sha256": "4ce2be45c5908f198a38644cf90ddd3663e0daff19de2132695eca765bb9bea6"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "generate-state-diagram",
+      "resolved_name": "generate-state-diagram",
+      "root_id": "claude",
+      "tree_sha256": "e717762236e98992ece06a262b03ce4224dbb1f7132338e59beae789412e9906"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "generate-state-diagram-3d",
+      "resolved_name": "generate-state-diagram-3d",
+      "root_id": "claude",
+      "tree_sha256": "db5b417d7c8b3da6ecd792de44956f7475c45caf851b1c71da3f0c84c5b6b566"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "generate-verification-guide",
+      "resolved_name": "generate-verification-guide",
+      "root_id": "claude",
+      "tree_sha256": "f021ab158d4b79a3f005385b21709da6b95483ecabc36850b637ebee853cca56"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "generating-setup-wizards",
+      "resolved_name": "generating-setup-wizards",
+      "root_id": "claude",
+      "tree_sha256": "7b9852b2059f95ccbbb810aa19e5141933db9184d14483feb537529ce64c96e7"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "grill-me",
+      "resolved_name": "grill-me",
+      "root_id": "claude",
+      "tree_sha256": "c02e5333587c6ee5fc587d272dd487448bf68dd4d3662b03b72f8f9da3036473"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "grilling",
+      "resolved_name": "grilling",
+      "root_id": "claude",
+      "tree_sha256": "f20f498358b899a408e154456e417e36e8d9fc144be6b39c7679dae0e3878b5f"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "grilling-with-docs",
+      "resolved_name": "grilling-with-docs",
+      "root_id": "claude",
+      "tree_sha256": "f06d7ae8791560388644b689777d98e8cd49ce3878be1af45701e5c2c3dc7082"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "guarding-git-commands-in-claude-code",
+      "resolved_name": "guarding-git-commands-in-claude-code",
+      "root_id": "claude",
+      "tree_sha256": "2fba405ca18a1e1dee28d68f6860119f3dba9b1a205d128165c2a16058b54450"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "handing-off-context",
+      "resolved_name": "handing-off-context",
+      "root_id": "claude",
+      "tree_sha256": "ec39ad38e271b121157baf3d2b8ad836762c339ea14c13f390100b311fbc15dd"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "handing-off-to-claude",
+      "resolved_name": "handing-off-to-claude",
+      "root_id": "claude",
+      "tree_sha256": "2f00dc85ad3255f3cac28f5faf6eaca36674a106342a341877f534d5a3d6cae9"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "implement",
+      "resolved_name": "implement",
+      "root_id": "claude",
+      "tree_sha256": "e790a2b927cba32cb5a278d6aae4764714d21875ec987f7c14e7122a23b5b9ef"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "implementing-work",
+      "resolved_name": "implementing-work",
+      "root_id": "claude",
+      "tree_sha256": "03d122df35837de324eb51588a492f33b79d724940d7f7e8c4e6d7f4d693f615"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "improve-animations",
+      "resolved_name": "improve-animations",
+      "root_id": "claude",
+      "tree_sha256": "b3c82d11a6b3753065280516a673a9c043b0599aa039fa27464b010e306d3dad"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "improving-architecture",
+      "resolved_name": "improving-architecture",
+      "root_id": "claude",
+      "tree_sha256": "92d56b4c9ed44389ec53aef8d236ea5f416f0c81898a7291656cc956c4a9bc3c"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "improving-codebase-architecture",
+      "resolved_name": "improving-codebase-architecture",
+      "root_id": "claude",
+      "tree_sha256": "075ed88fe19e10de12612cada3c6f12d3ff69be10a578f6f5c276f50aa5c8856"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "iterative-retrieval",
+      "resolved_name": "iterative-retrieval",
+      "root_id": "claude",
+      "tree_sha256": "bbf90608324e35df56aa561b43d8add782896fb2de431bb2b2784312a4ca93c7"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "japanese-tech-writing",
+      "resolved_name": "japanese-tech-writing",
+      "root_id": "claude",
+      "tree_sha256": "660869c59a2188f913855eb6627f742268eb2545866b271b092a6e0956d09146"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "kaizen",
+      "resolved_name": "kaizen",
+      "root_id": "claude",
+      "tree_sha256": "5015b94dae6423f0977b27d582310cb236c531e4efe9d474716f784184bf45c1"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "karpathy-examples",
+      "resolved_name": "karpathy-examples",
+      "root_id": "claude",
+      "tree_sha256": "2ede3521e6195960c8563ba6c16bba55388a2552d8474871402fa33a39ce0c16"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "linear-workflow",
+      "resolved_name": "linear-workflow",
+      "root_id": "claude",
+      "tree_sha256": "cd6c39a3ab0e9254763271544374833c9d0791ea4ef7d139387d810d1ae463e6"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "managing-mf-invoicing",
+      "resolved_name": "managing-mf-invoicing",
+      "root_id": "claude",
+      "tree_sha256": "e17c84f435fa3e56f4ea764b41072503904d3e55b175f1b065b65d78ca7ef5c1"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "managing-obsidian-vaults",
+      "resolved_name": "managing-obsidian-vaults",
+      "root_id": "claude",
+      "tree_sha256": "08dbce92f23aa9c042fe05f6a83a08afe278fae856130297f7761c738996f2d0"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "mapping-large-projects",
+      "resolved_name": "mapping-large-projects",
+      "root_id": "claude",
+      "tree_sha256": "966e87bc95bba15d5e47203da013de03009f3972925271769ce416a19802e97d"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "migrating-to-shoehorn",
+      "resolved_name": "migrating-to-shoehorn",
+      "root_id": "claude",
+      "tree_sha256": "1ec4811adfeb8543398e94f1784170429328588bbfb7a8f4d9f6d99aaa76126c"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "modeling-domains",
+      "resolved_name": "modeling-domains",
+      "root_id": "claude",
+      "tree_sha256": "656357bbea5776805a9af823d24cb18a0272f361deb0a50beafb744ccbed3709"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "notion-docs",
+      "resolved_name": "notion-docs",
+      "root_id": "claude",
+      "tree_sha256": "eb2c1355ed7426292268dae2cd099682e4f959f6dd2c3238ec264886fd9af6b1"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "one-page-concept-sketch",
+      "resolved_name": "one-page-concept-sketch",
+      "root_id": "claude",
+      "tree_sha256": "aef8b6b71b8c696b0de5a2ee87ea62065cfc191ef7aea5f1ac5b7442da39ff9e"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "playwright-skill",
+      "resolved_name": "playwright-skill",
+      "root_id": "claude",
+      "tree_sha256": "8b128f518907cae3da38624efc7bd264971daef20d47585d285a2cee08ef9e38"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "pr-review",
+      "resolved_name": "pr-review",
+      "root_id": "claude",
+      "tree_sha256": "dbc78aa60a091b85960dfc7fcada61f7c3100356fc5d5ec71936d4a4bdd0e6f5"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "problem-analysis",
+      "resolved_name": "problem-analysis",
+      "root_id": "claude",
+      "tree_sha256": "e15050599adcc8565ecdd5832986e380b41da719fadefcfb01d0e22b040c4e96"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "project-init",
+      "resolved_name": "project-init",
+      "root_id": "claude",
+      "tree_sha256": "8f9217002c225e1f580546f9270293d707fbbcf7cc415030a6db35513d46933f"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "project-sync",
+      "resolved_name": "project-sync",
+      "root_id": "claude",
+      "tree_sha256": "6099eaf3abaae70013d2b6524b8ef686e956e3ac4fbe0bc0b8c38cded5e5cb5b"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "prompt-engineering",
+      "resolved_name": "prompt-engineering",
+      "root_id": "claude",
+      "tree_sha256": "ca446523d59a988ebd466290bf9d1d1d656111e9216b7b8608288416a9a299b4"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "prompting-fable",
+      "resolved_name": "prompting-fable",
+      "root_id": "claude",
+      "tree_sha256": "984a82036da596e8334d8c2d7657c87b6a84879c634c52fb967e4047b0f665b1"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "prototyping-solutions",
+      "resolved_name": "prototyping-solutions",
+      "root_id": "claude",
+      "tree_sha256": "7af25ae8f26458933ecc4aa3472fbd8f305a47187a36d6fd279ef10bda1376cc"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "research",
+      "resolved_name": "research",
+      "root_id": "claude",
+      "tree_sha256": "054b00ada963389bd0152ff71523c3585937064c1a2fb24800c902f95447c548"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "resolving-merge-conflicts",
+      "resolved_name": "resolving-merge-conflicts",
+      "root_id": "claude",
+      "tree_sha256": "9be30726b8cffcb911cfb862ccfcf0c59ce1b915245ce2ff068ac16f3fcd6f75"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "review-animations",
+      "resolved_name": "review-animations",
+      "root_id": "claude",
+      "tree_sha256": "5a53f0b9757e7b6e0a7aec63acf0f1f18a9a3960c9671eec29e0e70ae8c6ffe1"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "reviewing-code",
+      "resolved_name": "reviewing-code",
+      "root_id": "claude",
+      "tree_sha256": "51aa603e7a6bfaab064a79ac6b9becde7c0e4211827517a91f2f68c9a49d02b2"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "scaffolding-exercises",
+      "resolved_name": "scaffolding-exercises",
+      "root_id": "claude",
+      "tree_sha256": "ee774375111c85f3a7081ca0ea0edc7e944dbe01a8a63bbd5f20b58212908f94"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "search-first",
+      "resolved_name": "search-first",
+      "root_id": "claude",
+      "tree_sha256": "5d26a1d4995e60b0e40a27102df5564471dc5aecc12239424c360567fe88b231"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "sequential-review-pre-pr",
+      "resolved_name": "sequential-review-pre-pr",
+      "root_id": "claude",
+      "tree_sha256": "a00785580ac6e2b74d0fd17203a2ec0e8dce51b536d39f898b3b081b2a0ad3ec"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "setting-up-engineering-skills",
+      "resolved_name": "setting-up-engineering-skills",
+      "root_id": "claude",
+      "tree_sha256": "a75f936b752d96d3a504eb0bc2fd0bf7d37ad36b0b3bdfdf66be5e3b9fcfaa92"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "setting-up-pre-commit-hooks",
+      "resolved_name": "setting-up-pre-commit-hooks",
+      "root_id": "claude",
+      "tree_sha256": "455030c11176f9965d5f531efdc80d01e0bd5e89b94ca137f2667b71522f3ec1"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "setting-up-ts-deep-modules",
+      "resolved_name": "setting-up-ts-deep-modules",
+      "root_id": "claude",
+      "tree_sha256": "a4f4bcbe269ed7c2095738f63d36f2d9c13168e2e41a2cefa3dd0ca08887a061"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "setup-user-config",
+      "resolved_name": "setup-user-config",
+      "root_id": "claude",
+      "tree_sha256": "87e418395330a8a8f92b521d1fb072be71707a6e76a5f7b8209da9a8b057d61a"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [
+        "estate.lock.json",
+        "reputation.lock.json"
+      ],
+      "name_resolution": "frontmatter",
+      "relative_path": "skill-governance",
+      "resolved_name": "skill-governance",
+      "root_id": "claude",
+      "tree_sha256": "b8450a989f8bb503bceddcc9d17ef222a448b347fc497330fd261f842b4941a3"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "skill-stocktake",
+      "resolved_name": "skill-stocktake",
+      "root_id": "claude",
+      "tree_sha256": "9a4c69056d736ef774e0bdb65409250b1dfc750d630c4ec3d927237d6b61dbbd"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "software-architecture",
+      "resolved_name": "software-architecture",
+      "root_id": "claude",
+      "tree_sha256": "ff499d6955da4b9a8b9e23723d21a3039a7d6670adcc330fc08bb83602c4c3ac"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-analyse",
+      "resolved_name": "source-command-analyse",
+      "root_id": "claude",
+      "tree_sha256": "5a27ee574ea0a813f4cf5559cba0902206d3913d50ad16a0e213f029148bc1e2"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-cause-and-effect",
+      "resolved_name": "source-command-cause-and-effect",
+      "root_id": "claude",
+      "tree_sha256": "fcd9ec9d804eae87d1b8e06d4fe7e3abf62c34b8007e3c436e16c08176d0df33"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-checkpoint",
+      "resolved_name": "source-command-checkpoint",
+      "root_id": "claude",
+      "tree_sha256": "e0b2343b479304b288feb29e37121c47e11f8f932b167c5521366d92991a8340"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-lfg",
+      "resolved_name": "source-command-lfg",
+      "root_id": "claude",
+      "tree_sha256": "111f1c983b0f36cff8281f2af8467976bc27503200b49167f0b1c874e6cad761"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-orchestrate",
+      "resolved_name": "source-command-orchestrate",
+      "root_id": "claude",
+      "tree_sha256": "e8ac1f466ba0304f0b3a8fd2775b9cabe4af84b5db3f70d0ea5ee7a47e93c9bd"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-plan-do-check-act",
+      "resolved_name": "source-command-plan-do-check-act",
+      "root_id": "claude",
+      "tree_sha256": "bd471cf747dfffb566263b57af870c0c77b43e6fe4381a2c1e55d1b6fc2f2caf"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-root-cause-tracing",
+      "resolved_name": "source-command-root-cause-tracing",
+      "root_id": "claude",
+      "tree_sha256": "28a1f51da9da3ad042349d688a9d27a1f9a451ff1decbee80f1fc36a56ad3f0c"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-tdd",
+      "resolved_name": "source-command-tdd",
+      "root_id": "claude",
+      "tree_sha256": "c9e1e254ea3bc4625eb70d436f276f7bd479fbca421d0cc97f4850aca7f16291"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-verify",
+      "resolved_name": "source-command-verify",
+      "root_id": "claude",
+      "tree_sha256": "91ab2306a6a874c86dde0f0bb181d83a340fb67105c31c2cae5867d049f76675"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-why",
+      "resolved_name": "source-command-why",
+      "root_id": "claude",
+      "tree_sha256": "92c2edf3470537270433191537008f68a80b0a39d31483733b731026834f2384"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "summarizing-daily-work",
+      "resolved_name": "summarizing-daily-work",
+      "root_id": "claude",
+      "tree_sha256": "17315c57a40311a073369b99c89f532a561220b3da59241b2ae51210f8d8b9b8"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "tdd",
+      "resolved_name": "tdd",
+      "root_id": "claude",
+      "tree_sha256": "6af2919caa40bc402e50c97c7406d7bc017e404d94187ed49145532824fb64b3"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "teach",
+      "resolved_name": "teach",
+      "root_id": "claude",
+      "tree_sha256": "19e8d991c6ff5810c529e147db4481c164d79855b11b647f6da380d740b86f99"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "teaching-concepts",
+      "resolved_name": "teaching-concepts",
+      "root_id": "claude",
+      "tree_sha256": "a47b2986fa63bb73f9cbd80e5debf81b4ee2f8d5a63cee55733b04aa104365bc"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "techdebt",
+      "resolved_name": "techdebt",
+      "root_id": "claude",
+      "tree_sha256": "def233162861fdc60f537d125b5ddea20b3cfba819c496d862cdbe37d18515be"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "to-questionnaire",
+      "resolved_name": "to-questionnaire",
+      "root_id": "claude",
+      "tree_sha256": "fd57e61b110b29b19fe8987d5dc632a708aea65d9baf6cdac7df6af69c33a1db"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "to-spec",
+      "resolved_name": "to-spec",
+      "root_id": "claude",
+      "tree_sha256": "9b049a90ca6aeecd976fa81454b2db6716aa42b4d62e61e7818c24d1a1f9248c"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "to-tickets",
+      "resolved_name": "to-tickets",
+      "root_id": "claude",
+      "tree_sha256": "a02c8000cebaacb55022ad7c958628f2ab61f8bea639be17436472c7f7ba6fec"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "triaging-issues",
+      "resolved_name": "triaging-issues",
+      "root_id": "claude",
+      "tree_sha256": "8d29f0f16b63d32a32da133d7fb2b31717fac8112f4ba384af15c5b1f00d30db"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "update-inst",
+      "resolved_name": "update-inst",
+      "root_id": "claude",
+      "tree_sha256": "765f7467cdd307d11e9b8c0a22bdc5e5dbd21d3d0ccdd5cc5cc563b40ff88959"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "verification-loop",
+      "resolved_name": "verification-loop",
+      "root_id": "claude",
+      "tree_sha256": "75545a688ab47bb80445ff1c1bf43477b286a704d928a7731dacdb118ff01126"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "viewing-plans",
+      "resolved_name": "viewing-plans",
+      "root_id": "claude",
+      "tree_sha256": "a2de3632c4e55d2780d62d8bcf1dd5430769d8a8c7b567479e9afc6f4eeaa077"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "visualizing-work",
+      "resolved_name": "visualizing-work",
+      "root_id": "claude",
+      "tree_sha256": "3a65e5f6939bd780e4cc4fdef8b6903af1711dfd47dff92f8b5b096ae6c24ce1"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "wayfinder",
+      "resolved_name": "wayfinder",
+      "root_id": "claude",
+      "tree_sha256": "ab11b92aa28bf3fb4e3ff1a1a6d6382afd6b8077f058de3901586b093b553ff1"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "writing-beats",
+      "resolved_name": "writing-beats",
+      "root_id": "claude",
+      "tree_sha256": "e6902a55f73749a190cf001a27c8f1df522539f29a5faf447ae732de49264b86"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "writing-fragments",
+      "resolved_name": "writing-fragments",
+      "root_id": "claude",
+      "tree_sha256": "4a2f786649ca606c72a3421af38cd6d22407b49b1cd2a3d7857f14670d55ecf0"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "writing-great-skills",
+      "resolved_name": "writing-great-skills",
+      "root_id": "claude",
+      "tree_sha256": "25659fc0617b8f35a74aafb7efb99881560e4bffd3c8ef9a275b06eeb3a88381"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "writing-shape",
+      "resolved_name": "writing-shape",
+      "root_id": "claude",
+      "tree_sha256": "adc9df40ff176920fada461a016a1b99c524150836864dffa721cfa04832226d"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "writing-specifications",
+      "resolved_name": "writing-specifications",
+      "root_id": "claude",
+      "tree_sha256": "aa0eb5c317315c54df60c0b4496005a85b36ab12672ffd0ebc3e329778a28f9d"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "zoom-out",
+      "resolved_name": "zoom-out",
+      "root_id": "claude",
+      "tree_sha256": "dce15695c4c98b3e8fd266fbab8845dca33a09e7540d2b1f1c626401ae734fa4"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "adversarial-review",
+      "resolved_name": "adversarial-review",
+      "root_id": "codex",
+      "tree_sha256": "2b1b962a57bac86d70d5b8833f35d21b51be1d0d888776e336b607013498c61c"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "agent-memory",
+      "resolved_name": "agent-memory",
+      "root_id": "codex",
+      "tree_sha256": "d0a7a9ff3a90187b71675cb0904a6fcb1834a24ed0f3eafe2836e181efece986"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "ai-trend-scan",
+      "resolved_name": "ai-trend-scan",
+      "root_id": "codex",
+      "tree_sha256": "d13ca164e5d0ca679c5febaba752252177476465c16d8e443b822b54cbe8be3f"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "alpaca-slack-style",
+      "resolved_name": "alpaca-slack-style",
+      "root_id": "codex",
+      "tree_sha256": "bab61a2a7329644149202ffbb3f1981b916ded5ac4a01d214327d33f4d2df3fb"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "hash-bound-directory-inference",
+      "relative_path": "analyse",
+      "resolved_name": "analyse",
+      "root_id": "codex",
+      "tree_sha256": "e603afcde552daa69f8bf240875f7fcd5b2177e14def007ee892f15a8b5220a2"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "hash-bound-directory-inference",
+      "relative_path": "analyse-problem",
+      "resolved_name": "analyse-problem",
+      "root_id": "codex",
+      "tree_sha256": "d1b4e3ce494004e59f23b9aa2ac52ee5948155507941a27070adda49542833a3"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "animation-vocabulary",
+      "resolved_name": "animation-vocabulary",
+      "root_id": "codex",
+      "tree_sha256": "6f9207f7f270988c213aef0089ac2a96e6effc9dc501867759f4bf889f01c4ca"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "apple-design",
+      "resolved_name": "apple-design",
+      "root_id": "codex",
+      "tree_sha256": "599fbc11047dfa4d8d08501a4020e061bae6353f78179f6f1b25c80921a47274"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "article-writing",
+      "resolved_name": "article-writing",
+      "root_id": "codex",
+      "tree_sha256": "a10cc3ba449f0bb97c955eaa67a7ce1d0d5f080cb158999f595acccd28fd8bb9"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "ask-skill-router",
+      "resolved_name": "ask-skill-router",
+      "root_id": "codex",
+      "tree_sha256": "feffbcf279a68d20a243e1e601c37bea3298967f2d9bcf0202840b0768d603f5"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "auto-reviewing-pre-pr",
+      "resolved_name": "auto-reviewing-pre-pr",
+      "root_id": "codex",
+      "tree_sha256": "4c0b8cb9a6a8b5037233ef1d5231dd1b0cf5195c8d88a34e9cb7e047d56f63eb"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "autonomous-loops",
+      "resolved_name": "autonomous-loops",
+      "root_id": "codex",
+      "tree_sha256": "c78b34d97dc79d31d0432b0aa5037097c86d5e664997d4c61d91633292a4fcce"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "batch-grill-me",
+      "resolved_name": "batch-grill-me",
+      "root_id": "codex",
+      "tree_sha256": "a5f384b6da9314db4fb821ad2156f8b4ea62d5f9e106adc00905002ac5b9930a"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "blueprint",
+      "resolved_name": "blueprint",
+      "root_id": "codex",
+      "tree_sha256": "ee4002539368aac8beaaa8b6812ab8a6927046cd640e289096002a950a5247d8"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "brainstorming",
+      "resolved_name": "brainstorming",
+      "root_id": "codex",
+      "tree_sha256": "762649441a727c23b4892ee9d52e45a8aa943e34060003f0ce1c8ba2fdaba707"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "build-fix",
+      "resolved_name": "build-fix",
+      "root_id": "codex",
+      "tree_sha256": "dd60f7a0f7047da911ab09895e2e80ba02f6eaa4b0db30267b2025ebc5bda3e4"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "bulletproof-problem-solving",
+      "resolved_name": "bulletproof-problem-solving",
+      "root_id": "codex",
+      "tree_sha256": "1ac100493982441988156dfa129688d413d25c605821b1ed599519d7bb862654"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "capture",
+      "resolved_name": "capture",
+      "root_id": "codex",
+      "tree_sha256": "d92c66f7b5de70a27c130f9ab96b2e8bc0de4ff24d23d8950c7e87e66c25354a"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "cause-and-effect",
+      "resolved_name": "cause-and-effect",
+      "root_id": "codex",
+      "tree_sha256": "6f5aafeba97ae40538c3e26deda437965c5fa62aa907f331adb85f2862fb2080"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "caveman",
+      "resolved_name": "caveman",
+      "root_id": "codex",
+      "tree_sha256": "8e49579e05550980066651f6ab2862934f780d36bb0b3150b17343058c83fdb5"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "checkpoint",
+      "resolved_name": "checkpoint",
+      "root_id": "codex",
+      "tree_sha256": "eff324251d1636369b4db5c7f010802a8da14f268899c3f5ddac8799c02e8f45"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "choosing-skills",
+      "resolved_name": "choosing-skills",
+      "root_id": "codex",
+      "tree_sha256": "e0cf730a5bcb4ff695f33a7e4e1033442425d0c96f57e80c1e8185663e446d8a"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "cleanup-knowledge",
+      "resolved_name": "cleanup-knowledge",
+      "root_id": "codex",
+      "tree_sha256": "e740f1fbe615d5d0319c61d8c11beb81169f2849704eb2ff04ddec5e409de788"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "codebase-review",
+      "resolved_name": "codebase-review",
+      "root_id": "codex",
+      "tree_sha256": "b7443314172af8c845e29e0f578a065b787c3d98fe6eda76d985230c2897ca5c"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "hash-bound-directory-inference",
+      "relative_path": "commit",
+      "resolved_name": "commit",
+      "root_id": "codex",
+      "tree_sha256": "2d39ef4a071c4be136f815ec01ad3c118ee9489d98a7c4d0be04e9b715892bd5"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "compounding-knowledge",
+      "resolved_name": "compounding-knowledge",
+      "root_id": "codex",
+      "tree_sha256": "00af848b1d6fcc3cfaba58f3ea12d5d833e465e6409db2aebaaa789d4308eb0a"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "config-mirror-sync",
+      "resolved_name": "config-mirror-sync",
+      "root_id": "codex",
+      "tree_sha256": "eda12196dec21dca5a547810e6b391d2edf61bbb308decc6b950be7985f74e10"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "consult-fable",
+      "resolved_name": "consult-fable",
+      "root_id": "codex",
+      "tree_sha256": "6a00fd2096f6a10333211c04642fe0ebcf876d3415f814f9cd5a32d95d2a9768"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "cost-aware-llm",
+      "resolved_name": "cost-aware-llm",
+      "root_id": "codex",
+      "tree_sha256": "170bcb65948a1cd48aaeace01c602373de426955a9104bf50223e078cb512eb1"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "create-hook",
+      "resolved_name": "create-hook",
+      "root_id": "codex",
+      "tree_sha256": "349e4f2889e2457e16597b6e618fcdcafcf7b584a16e77ccf9acd2224f352469"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "create-mcp-server",
+      "resolved_name": "create-mcp-server",
+      "root_id": "codex",
+      "tree_sha256": "1c98647f5101507adccf6745207f63efecd463342df1b4b40d176628652bb927"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "create-skill",
+      "resolved_name": "create-skill",
+      "root_id": "codex",
+      "tree_sha256": "bd800ce8765c5bbc645c7b763d13d4f4277c495f21d06e7c55b24aacc44c3c09"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "create-subagent",
+      "resolved_name": "create-subagent",
+      "root_id": "codex",
+      "tree_sha256": "24dd1fdc5969b561c13cbcba03d7445165f78c44beadb2d50d9f42ed6f799855"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "creating-adr",
+      "resolved_name": "creating-adr",
+      "root_id": "codex",
+      "tree_sha256": "a5d3b88656e9076445c910c3075294fd79cd42750f73aa3f4a2d30864dd17d47"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "creating-tha-ai-president-slides",
+      "resolved_name": "creating-tha-ai-president-slides",
+      "root_id": "codex",
+      "tree_sha256": "606e2feea968e3b3af13fa3b5bd9befcfb1e3429f4bd6c9f99573b7f868471c7"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "creating-tracer-tickets",
+      "resolved_name": "creating-tracer-tickets",
+      "root_id": "codex",
+      "tree_sha256": "651f7acf96984bd4ce246be4473a781c92727d241ac95c21617ce431e7d5aed1"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "daily-curator",
+      "resolved_name": "daily-curator",
+      "root_id": "codex",
+      "tree_sha256": "42a60029d2a5ce51c77e2bfce154da42a64f490ad725a9248334ffd6e34d0e68"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "daily-reflection-nudge",
+      "resolved_name": "daily-reflection-nudge",
+      "root_id": "codex",
+      "tree_sha256": "5907380923d86bce0e4ce33e5b4693afea885c1655b993b66a894ef8c4266a0d"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "deepening-plan",
+      "resolved_name": "deepening-plan",
+      "root_id": "codex",
+      "tree_sha256": "de5dbf8713a0d933c2a3ba66198d8cb71af9c8b449da77a6073c1eb2691de62d"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "design-eval-loop",
+      "resolved_name": "design-eval-loop",
+      "root_id": "codex",
+      "tree_sha256": "c2f9cc9afa95116b9271752c70a3c17751ebed674cc9ad0a0948ddfa43c9c099"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "design-reviewer",
+      "resolved_name": "design-reviewer",
+      "root_id": "codex",
+      "tree_sha256": "68fd7f315550c6da547bfc1de0d4468af826e4569e30dc9e6ada2ee4be3ee2ef"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "designing-codebases",
+      "resolved_name": "designing-codebases",
+      "root_id": "codex",
+      "tree_sha256": "4dd1890defa213301f8a45245033dd46eb04258bec4405eea5d52726d47c7d08"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "designing-ui-ux",
+      "resolved_name": "designing-ui-ux",
+      "root_id": "codex",
+      "tree_sha256": "3c345b57aefa4328daf6887c5dd386103af26d304d5f7c0f8f12ed70401eb976"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "designing-workflows",
+      "resolved_name": "designing-workflows",
+      "root_id": "codex",
+      "tree_sha256": "0b23f2b33a6cbb965d032afedeeae76726efffce9e9e356e0f9acf26443fefaf"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "diagnosing-bugs",
+      "resolved_name": "diagnosing-bugs",
+      "root_id": "codex",
+      "tree_sha256": "944fb99879a7e9b56378d1e66b5f0ecdbea32b504ab0153f9e0396b1f230bd9a"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "diagram-design",
+      "resolved_name": "diagram-design",
+      "root_id": "codex",
+      "tree_sha256": "70d409bdbd2c4f5023bedc3caaecdd191f17a7d3de9e2556d8a60530b0b57022"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "documentation",
+      "resolved_name": "documentation",
+      "root_id": "codex",
+      "tree_sha256": "e8abdbdccda2306b800abc76c11d69b14efd7f9ccf4750d323b46d5eea41ede9"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "editing-articles",
+      "resolved_name": "editing-articles",
+      "root_id": "codex",
+      "tree_sha256": "368ec6042a31ba72d31a229f276be9f78279835335070dc1e4ae95dae1576a35"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "emil-design-eng",
+      "resolved_name": "emil-design-eng",
+      "root_id": "codex",
+      "tree_sha256": "5e997f7b8a94a104430d347cb15628813885241ed03bf7a2db209f83944be259"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "eval-harness",
+      "resolved_name": "eval-harness",
+      "root_id": "codex",
+      "tree_sha256": "3865b1a973f7149d37ff72106046a0065f5e079dd7f021f6491e9bc71e4709e0"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "exploring-codebase",
+      "resolved_name": "exploring-codebase",
+      "root_id": "codex",
+      "tree_sha256": "69e49666d0c7b2ed76819713e1bbf42cc6eda77dae4e0e576b2f0c709180579a"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "find-animation-opportunities",
+      "resolved_name": "find-animation-opportunities",
+      "root_id": "codex",
+      "tree_sha256": "4ce2be45c5908f198a38644cf90ddd3663e0daff19de2132695eca765bb9bea6"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "generate-state-diagram",
+      "resolved_name": "generate-state-diagram",
+      "root_id": "codex",
+      "tree_sha256": "13fca5ec3c57acc3e299dc88827a5a8d110a3c5160502176015c922fc68f237e"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "generate-state-diagram-3d",
+      "resolved_name": "generate-state-diagram-3d",
+      "root_id": "codex",
+      "tree_sha256": "856858ea6e9996beb127a37b2bed01271312494dd111078c6a09a262b51a2d3b"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "generate-verification-guide",
+      "resolved_name": "generate-verification-guide",
+      "root_id": "codex",
+      "tree_sha256": "f021ab158d4b79a3f005385b21709da6b95483ecabc36850b637ebee853cca56"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "generating-setup-wizards",
+      "resolved_name": "generating-setup-wizards",
+      "root_id": "codex",
+      "tree_sha256": "7b9852b2059f95ccbbb810aa19e5141933db9184d14483feb537529ce64c96e7"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "goal-setter",
+      "resolved_name": "goal-setter",
+      "root_id": "codex",
+      "tree_sha256": "3c2b6c9a758062fcf65d788acc9070925a3de9dad78bb46a62152a906e79a1ed"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "graph-engineering",
+      "resolved_name": "graph-engineering",
+      "root_id": "codex",
+      "tree_sha256": "71afd4c193e38fb035540f5854f557cde216a826a8010b271e9833a682105b6e"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "grill-me",
+      "resolved_name": "grill-me",
+      "root_id": "codex",
+      "tree_sha256": "c02e5333587c6ee5fc587d272dd487448bf68dd4d3662b03b72f8f9da3036473"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "grilling",
+      "resolved_name": "grilling",
+      "root_id": "codex",
+      "tree_sha256": "f20f498358b899a408e154456e417e36e8d9fc144be6b39c7679dae0e3878b5f"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "grilling-with-docs",
+      "resolved_name": "grilling-with-docs",
+      "root_id": "codex",
+      "tree_sha256": "f06d7ae8791560388644b689777d98e8cd49ce3878be1af45701e5c2c3dc7082"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "guarding-git-commands-in-claude-code",
+      "resolved_name": "guarding-git-commands-in-claude-code",
+      "root_id": "codex",
+      "tree_sha256": "2fba405ca18a1e1dee28d68f6860119f3dba9b1a205d128165c2a16058b54450"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "handing-off-context",
+      "resolved_name": "handing-off-context",
+      "root_id": "codex",
+      "tree_sha256": "ec39ad38e271b121157baf3d2b8ad836762c339ea14c13f390100b311fbc15dd"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "handing-off-to-claude",
+      "resolved_name": "handing-off-to-claude",
+      "root_id": "codex",
+      "tree_sha256": "2f00dc85ad3255f3cac28f5faf6eaca36674a106342a341877f534d5a3d6cae9"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "hash-bound-directory-inference",
+      "relative_path": "hardgate-disable",
+      "resolved_name": "hardgate-disable",
+      "root_id": "codex",
+      "tree_sha256": "9953bcf2f506cdcf95bcf13e482646e46f4a1e10b242f17ecbf881e4bd3aa47b"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "health-check-runner",
+      "resolved_name": "health-check-runner",
+      "root_id": "codex",
+      "tree_sha256": "c248d988a2e8de20586d906638dfc7c6da71323367dc3d9525a05d5a3369e04e"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "implement",
+      "resolved_name": "implement",
+      "root_id": "codex",
+      "tree_sha256": "e790a2b927cba32cb5a278d6aae4764714d21875ec987f7c14e7122a23b5b9ef"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "implementing-work",
+      "resolved_name": "implementing-work",
+      "root_id": "codex",
+      "tree_sha256": "058ec6f692add48f6754fb39b789f23bd5a08256753464d2fa7d31c1a9e2813a"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "improve-animations",
+      "resolved_name": "improve-animations",
+      "root_id": "codex",
+      "tree_sha256": "b3c82d11a6b3753065280516a673a9c043b0599aa039fa27464b010e306d3dad"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "improving-architecture",
+      "resolved_name": "improving-architecture",
+      "root_id": "codex",
+      "tree_sha256": "92d56b4c9ed44389ec53aef8d236ea5f416f0c81898a7291656cc956c4a9bc3c"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "improving-codebase-architecture",
+      "resolved_name": "improving-codebase-architecture",
+      "root_id": "codex",
+      "tree_sha256": "075ed88fe19e10de12612cada3c6f12d3ff69be10a578f6f5c276f50aa5c8856"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "iterative-retrieval",
+      "resolved_name": "iterative-retrieval",
+      "root_id": "codex",
+      "tree_sha256": "bbf90608324e35df56aa561b43d8add782896fb2de431bb2b2784312a4ca93c7"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "japanese-tech-writing",
+      "resolved_name": "japanese-tech-writing",
+      "root_id": "codex",
+      "tree_sha256": "dfb097a7654ddf8dbb0aba2097045b07921c92059808ba611a71df3b57ae1e9c"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "kaizen",
+      "resolved_name": "kaizen",
+      "root_id": "codex",
+      "tree_sha256": "5015b94dae6423f0977b27d582310cb236c531e4efe9d474716f784184bf45c1"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "karpathy-examples",
+      "resolved_name": "karpathy-examples",
+      "root_id": "codex",
+      "tree_sha256": "ea1faf8116c13398dffe621fc6f0c33299d343e0905a6a17958de9e8d255be08"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "learning-quiz",
+      "resolved_name": "learning-quiz",
+      "root_id": "codex",
+      "tree_sha256": "3e6269f3553f4fcbafa9def2810ce8bb7f8a8f88ca3ad2d5758444a003843afa"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "lfg",
+      "resolved_name": "lfg",
+      "root_id": "codex",
+      "tree_sha256": "704edf5b91f1746b3478920f89c4b6d52322344042963c6ebcf41189e52d3b12"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "linear-workflow",
+      "resolved_name": "linear-workflow",
+      "root_id": "codex",
+      "tree_sha256": "cd6c39a3ab0e9254763271544374833c9d0791ea4ef7d139387d810d1ae463e6"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "loop-status",
+      "resolved_name": "loop-status",
+      "root_id": "codex",
+      "tree_sha256": "9d85a3b3c2efada79089a35529ad294b50081a4f4513c63e7881df7837250940"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "managing-mf-invoicing",
+      "resolved_name": "managing-mf-invoicing",
+      "root_id": "codex",
+      "tree_sha256": "e17c84f435fa3e56f4ea764b41072503904d3e55b175f1b065b65d78ca7ef5c1"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "managing-obsidian-vaults",
+      "resolved_name": "managing-obsidian-vaults",
+      "root_id": "codex",
+      "tree_sha256": "08dbce92f23aa9c042fe05f6a83a08afe278fae856130297f7761c738996f2d0"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "mapping-large-projects",
+      "resolved_name": "mapping-large-projects",
+      "root_id": "codex",
+      "tree_sha256": "966e87bc95bba15d5e47203da013de03009f3972925271769ce416a19802e97d"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "migrating-to-shoehorn",
+      "resolved_name": "migrating-to-shoehorn",
+      "root_id": "codex",
+      "tree_sha256": "1ec4811adfeb8543398e94f1784170429328588bbfb7a8f4d9f6d99aaa76126c"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "moc-gardener",
+      "resolved_name": "moc-gardener",
+      "root_id": "codex",
+      "tree_sha256": "e8e4686f9c58db7108d2ada3d673f52df5b74f8a58ee49be093d191176062e68"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "modeling-domains",
+      "resolved_name": "modeling-domains",
+      "root_id": "codex",
+      "tree_sha256": "656357bbea5776805a9af823d24cb18a0272f361deb0a50beafb744ccbed3709"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "notion-docs",
+      "resolved_name": "notion-docs",
+      "root_id": "codex",
+      "tree_sha256": "eb2c1355ed7426292268dae2cd099682e4f959f6dd2c3238ec264886fd9af6b1"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "one-page-concept-sketch",
+      "resolved_name": "one-page-concept-sketch",
+      "root_id": "codex",
+      "tree_sha256": "1ecafaf2c32ed0b3412e7ecd22c8c5542d188fb100f5c810b697ca6d41eb9285"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "orchestrate",
+      "resolved_name": "orchestrate",
+      "root_id": "codex",
+      "tree_sha256": "59a8b5334af215d1e93e1b86893cdf0515ca83c434022968d337643ca30658c9"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "payment-domain-scan",
+      "resolved_name": "payment-domain-scan",
+      "root_id": "codex",
+      "tree_sha256": "5fca04e69a72d81452d7ba59137056e58f0020a6d8fe5e80103a2ce014895c08"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "hash-bound-directory-inference",
+      "relative_path": "plan-do-check-act",
+      "resolved_name": "plan-do-check-act",
+      "root_id": "codex",
+      "tree_sha256": "c01152f94f2406b557823a7886f3b2c7027cae9dd46487795908ca755c98a669"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "playwright-skill",
+      "resolved_name": "playwright-skill",
+      "root_id": "codex",
+      "tree_sha256": "8b128f518907cae3da38624efc7bd264971daef20d47585d285a2cee08ef9e38"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "hash-bound-directory-inference",
+      "relative_path": "pr",
+      "resolved_name": "pr",
+      "root_id": "codex",
+      "tree_sha256": "4b191b035551e27e8c755ef3140b34a471ad22b7f4849a458050e22d8ef27fd9"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "pr-review",
+      "resolved_name": "pr-review",
+      "root_id": "codex",
+      "tree_sha256": "8d25726c8daf09fd417e9ccd0eda0c9d277f8f07dd458b0d95e8b8c48b9bc22e"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "pr-watch",
+      "resolved_name": "pr-watch",
+      "root_id": "codex",
+      "tree_sha256": "933a23008748ce2d08d07ec71d6fd4e2f59201918d6fe0c7e4b0814c375febfa"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "problem-analysis",
+      "resolved_name": "problem-analysis",
+      "root_id": "codex",
+      "tree_sha256": "e15050599adcc8565ecdd5832986e380b41da719fadefcfb01d0e22b040c4e96"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "project-init",
+      "resolved_name": "project-init",
+      "root_id": "codex",
+      "tree_sha256": "8f9217002c225e1f580546f9270293d707fbbcf7cc415030a6db35513d46933f"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "project-sync",
+      "resolved_name": "project-sync",
+      "root_id": "codex",
+      "tree_sha256": "240269a3431af4203fb631082a738c546c4204bdff50faec064e175648c86dcd"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "prompt-engineering",
+      "resolved_name": "prompt-engineering",
+      "root_id": "codex",
+      "tree_sha256": "62a93e1c8614e9584442adf83bf851af42a7dd4a021d12e67804f75fd4f0a995"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "prompting-fable",
+      "resolved_name": "prompting-fable",
+      "root_id": "codex",
+      "tree_sha256": "d83f65173dfe707f45b02ebe599fee1c9f07c3e6d8e499948e91ec6ea0d7994b"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "prototyping-solutions",
+      "resolved_name": "prototyping-solutions",
+      "root_id": "codex",
+      "tree_sha256": "7af25ae8f26458933ecc4aa3472fbd8f305a47187a36d6fd279ef10bda1376cc"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "research",
+      "resolved_name": "research",
+      "root_id": "codex",
+      "tree_sha256": "054b00ada963389bd0152ff71523c3585937064c1a2fb24800c902f95447c548"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "researching-articles",
+      "resolved_name": "researching-articles",
+      "root_id": "codex",
+      "tree_sha256": "f374428ec3795b1908a36ca98d0fb758dd232ac8a70eb8b1538b15066be55997"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "resolving-merge-conflicts",
+      "resolved_name": "resolving-merge-conflicts",
+      "root_id": "codex",
+      "tree_sha256": "9be30726b8cffcb911cfb862ccfcf0c59ce1b915245ce2ff068ac16f3fcd6f75"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "review-animations",
+      "resolved_name": "review-animations",
+      "root_id": "codex",
+      "tree_sha256": "2e2fdfc692b233643fe9c293222c051a2e23964a6e1494ccb10f4970dc21b33f"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "reviewing-code",
+      "resolved_name": "reviewing-code",
+      "root_id": "codex",
+      "tree_sha256": "3f2b46124cb4439f1fa814b7e23752307afc9a2f8ff085524fc471e5eaf301cb"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "root-cause-tracing",
+      "resolved_name": "root-cause-tracing",
+      "root_id": "codex",
+      "tree_sha256": "d6403efc8bed75b91660410f3e17ec6a09673731035774644ebd2be3ce507a6e"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "scaffolding-exercises",
+      "resolved_name": "scaffolding-exercises",
+      "root_id": "codex",
+      "tree_sha256": "ee774375111c85f3a7081ca0ea0edc7e944dbe01a8a63bbd5f20b58212908f94"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "search-first",
+      "resolved_name": "search-first",
+      "root_id": "codex",
+      "tree_sha256": "33ffc8b50122f0e29a8e3c86ec96565906bb351e6a3511485ce08b40dae1d5d8"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "sequential-review-pre-pr",
+      "resolved_name": "sequential-review-pre-pr",
+      "root_id": "codex",
+      "tree_sha256": "a00785580ac6e2b74d0fd17203a2ec0e8dce51b536d39f898b3b081b2a0ad3ec"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "setting-up-engineering-skills",
+      "resolved_name": "setting-up-engineering-skills",
+      "root_id": "codex",
+      "tree_sha256": "a75f936b752d96d3a504eb0bc2fd0bf7d37ad36b0b3bdfdf66be5e3b9fcfaa92"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "setting-up-pre-commit-hooks",
+      "resolved_name": "setting-up-pre-commit-hooks",
+      "root_id": "codex",
+      "tree_sha256": "455030c11176f9965d5f531efdc80d01e0bd5e89b94ca137f2667b71522f3ec1"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "setting-up-ts-deep-modules",
+      "resolved_name": "setting-up-ts-deep-modules",
+      "root_id": "codex",
+      "tree_sha256": "a4f4bcbe269ed7c2095738f63d36f2d9c13168e2e41a2cefa3dd0ca08887a061"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "setup-user-config",
+      "resolved_name": "setup-user-config",
+      "root_id": "codex",
+      "tree_sha256": "87e418395330a8a8f92b521d1fb072be71707a6e76a5f7b8209da9a8b057d61a"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [
+        "estate.lock.json",
+        "reputation.lock.json"
+      ],
+      "name_resolution": "frontmatter",
+      "relative_path": "skill-governance",
+      "resolved_name": "skill-governance",
+      "root_id": "codex",
+      "tree_sha256": "e18f32bb4bf285c713997d36c562eb8b12a74d41ce087d4f9fa45c2152b7c283"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "skill-stocktake",
+      "resolved_name": "skill-stocktake",
+      "root_id": "codex",
+      "tree_sha256": "9a4c69056d736ef774e0bdb65409250b1dfc750d630c4ec3d927237d6b61dbbd"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "software-architecture",
+      "resolved_name": "software-architecture",
+      "root_id": "codex",
+      "tree_sha256": "b4d5aac70998fe89599ef22b85728b5e81430a8ccec91e7b25fec8d2c2f0928c"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-analyse",
+      "resolved_name": "source-command-analyse",
+      "root_id": "codex",
+      "tree_sha256": "5a27ee574ea0a813f4cf5559cba0902206d3913d50ad16a0e213f029148bc1e2"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-cause-and-effect",
+      "resolved_name": "source-command-cause-and-effect",
+      "root_id": "codex",
+      "tree_sha256": "fcd9ec9d804eae87d1b8e06d4fe7e3abf62c34b8007e3c436e16c08176d0df33"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-checkpoint",
+      "resolved_name": "source-command-checkpoint",
+      "root_id": "codex",
+      "tree_sha256": "489ce22e6508a917b018a355d7d887b88741cabf5e2260ad2ffa2d91df613d30"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-lfg",
+      "resolved_name": "source-command-lfg",
+      "root_id": "codex",
+      "tree_sha256": "111f1c983b0f36cff8281f2af8467976bc27503200b49167f0b1c874e6cad761"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-orchestrate",
+      "resolved_name": "source-command-orchestrate",
+      "root_id": "codex",
+      "tree_sha256": "194323668fe7ffc0f10ad2fcc13ebb341c3f7b1953ac2e3aab1902a810e73ca8"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-plan-do-check-act",
+      "resolved_name": "source-command-plan-do-check-act",
+      "root_id": "codex",
+      "tree_sha256": "bd471cf747dfffb566263b57af870c0c77b43e6fe4381a2c1e55d1b6fc2f2caf"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-root-cause-tracing",
+      "resolved_name": "source-command-root-cause-tracing",
+      "root_id": "codex",
+      "tree_sha256": "28a1f51da9da3ad042349d688a9d27a1f9a451ff1decbee80f1fc36a56ad3f0c"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-tdd",
+      "resolved_name": "source-command-tdd",
+      "root_id": "codex",
+      "tree_sha256": "c9e1e254ea3bc4625eb70d436f276f7bd479fbca421d0cc97f4850aca7f16291"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-verify",
+      "resolved_name": "source-command-verify",
+      "root_id": "codex",
+      "tree_sha256": "91ab2306a6a874c86dde0f0bb181d83a340fb67105c31c2cae5867d049f76675"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "source-command-why",
+      "resolved_name": "source-command-why",
+      "root_id": "codex",
+      "tree_sha256": "92c2edf3470537270433191537008f68a80b0a39d31483733b731026834f2384"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "summarizing-daily-work",
+      "resolved_name": "summarizing-daily-work",
+      "root_id": "codex",
+      "tree_sha256": "ada3b63d82596aeb44f9b0a479efe201a87d7c4c7c8f9af29ae081423404e21e"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "tdd",
+      "resolved_name": "tdd",
+      "root_id": "codex",
+      "tree_sha256": "7e15cc7cb7cc85b0fbdb892b2a44f3963460f70dfb58b86ed0c788465c0a7ed9"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "teach",
+      "resolved_name": "teach",
+      "root_id": "codex",
+      "tree_sha256": "19e8d991c6ff5810c529e147db4481c164d79855b11b647f6da380d740b86f99"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "teaching-concepts",
+      "resolved_name": "teaching-concepts",
+      "root_id": "codex",
+      "tree_sha256": "a47b2986fa63bb73f9cbd80e5debf81b4ee2f8d5a63cee55733b04aa104365bc"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "team-run",
+      "resolved_name": "team-run",
+      "root_id": "codex",
+      "tree_sha256": "894adcc3dc8247fae2208ff1726627de509982c48164b2a648327e2f149c3a79"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "techdebt",
+      "resolved_name": "techdebt",
+      "root_id": "codex",
+      "tree_sha256": "3f8c53f6e3f48bf2433794c9e9be1c47fa246e38226c1cf02766dcf5c14a6238"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "to-questionnaire",
+      "resolved_name": "to-questionnaire",
+      "root_id": "codex",
+      "tree_sha256": "fd57e61b110b29b19fe8987d5dc632a708aea65d9baf6cdac7df6af69c33a1db"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "to-spec",
+      "resolved_name": "to-spec",
+      "root_id": "codex",
+      "tree_sha256": "9b049a90ca6aeecd976fa81454b2db6716aa42b4d62e61e7818c24d1a1f9248c"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "to-tickets",
+      "resolved_name": "to-tickets",
+      "root_id": "codex",
+      "tree_sha256": "a02c8000cebaacb55022ad7c958628f2ab61f8bea639be17436472c7f7ba6fec"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "triaging-issues",
+      "resolved_name": "triaging-issues",
+      "root_id": "codex",
+      "tree_sha256": "8d29f0f16b63d32a32da133d7fb2b31717fac8112f4ba384af15c5b1f00d30db"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "update-inst",
+      "resolved_name": "update-inst",
+      "root_id": "codex",
+      "tree_sha256": "785155a9c8b86ad7a66ef2015ef1f7faa0e25bf1859cef00bcb95a504dcd88eb"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "vault-metadata-migrator",
+      "resolved_name": "vault-metadata-migrator",
+      "root_id": "codex",
+      "tree_sha256": "95936b9db4cfd4620e8e48e4dd856b4b281d82ed1b29d8ff9bbb808e8eca878c"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "verification-loop",
+      "resolved_name": "verification-loop",
+      "root_id": "codex",
+      "tree_sha256": "41debef61d4cf7bad259c50cd426a4d97b965b781d4f2ef1b7ba473a798d4ec4"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "verify",
+      "resolved_name": "verify",
+      "root_id": "codex",
+      "tree_sha256": "68b9eabf277fad6aeaca4ec761560fc2a5da51890be00316a20c03313f4cae60"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "viewing-plans",
+      "resolved_name": "viewing-plans",
+      "root_id": "codex",
+      "tree_sha256": "bff125024d1b45c679d012bd3a4bd75833c8c29034eeea6b9f0fc70e4c869072"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "visualizing-work",
+      "resolved_name": "visualizing-work",
+      "root_id": "codex",
+      "tree_sha256": "3a65e5f6939bd780e4cc4fdef8b6903af1711dfd47dff92f8b5b096ae6c24ce1"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "wayfinder",
+      "resolved_name": "wayfinder",
+      "root_id": "codex",
+      "tree_sha256": "ab11b92aa28bf3fb4e3ff1a1a6d6382afd6b8077f058de3901586b093b553ff1"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "weekly-learning-review",
+      "resolved_name": "weekly-learning-review",
+      "root_id": "codex",
+      "tree_sha256": "4f62e03e82948ca32cb83e807a0f8cdb9332dc1afc9bfb26e6ce547cfc11ec66"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "hash-bound-directory-inference",
+      "relative_path": "why",
+      "resolved_name": "why",
+      "root_id": "codex",
+      "tree_sha256": "5f34688345f5811943d4678f1af72b1a25fb50e8652be7c583abcfff244179cb"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "writing-beats",
+      "resolved_name": "writing-beats",
+      "root_id": "codex",
+      "tree_sha256": "e6902a55f73749a190cf001a27c8f1df522539f29a5faf447ae732de49264b86"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "writing-fragments",
+      "resolved_name": "writing-fragments",
+      "root_id": "codex",
+      "tree_sha256": "4a2f786649ca606c72a3421af38cd6d22407b49b1cd2a3d7857f14670d55ecf0"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "writing-great-skills",
+      "resolved_name": "writing-great-skills",
+      "root_id": "codex",
+      "tree_sha256": "25659fc0617b8f35a74aafb7efb99881560e4bffd3c8ef9a275b06eeb3a88381"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "writing-shape",
+      "resolved_name": "writing-shape",
+      "root_id": "codex",
+      "tree_sha256": "adc9df40ff176920fada461a016a1b99c524150836864dffa721cfa04832226d"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "writing-specifications",
+      "resolved_name": "writing-specifications",
+      "root_id": "codex",
+      "tree_sha256": "aa0eb5c317315c54df60c0b4496005a85b36ab12672ffd0ebc3e329778a28f9d"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "zoom-out",
+      "resolved_name": "zoom-out",
+      "root_id": "codex",
+      "tree_sha256": "dce15695c4c98b3e8fd266fbab8845dca33a09e7540d2b1f1c626401ae734fa4"
+    }
+  ],
+  "registry_sha256": "3df0a218713bc5421ec62fef30b0a440916b2b8a3820ff2ff9a0b3576cb41e39",
+  "schema_version": 2
+}

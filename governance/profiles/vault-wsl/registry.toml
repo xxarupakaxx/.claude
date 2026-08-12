@@ -1,0 +1,223 @@
+schema_version = 1
+generation = 1
+authority = "codex"
+hash_algorithm = "skill-tree-sha256-v1"
+python_min = "3.11"
+quarantine_root = "~/.local/share/skill-governance/quarantine"
+review_root = "~/.local/share/skill-governance/review"
+coverage_exclusions = []
+coverage_symlinks = []
+route_relations = []
+holds = []
+update_candidates = []
+collections = []
+
+[policy]
+auto_install = false
+auto_update = false
+auto_retire = false
+auto_delete = false
+candidate_code_execution = false
+network_default = "offline"
+promotion_requires_human_approval = true
+
+[coverage_policy]
+scope_bases = [
+  "${VAULT_ROOT}/.codex/skills",
+  "${VAULT_ROOT}/.claude-global/skills",
+]
+excluded_dir_names = []
+
+[coverage_policy.excluded_dir_reasons]
+
+[[estate_hash_normalizations]]
+root_id = "codex"
+relative_path = "skill-governance"
+files = ["estate.lock.json", "reputation.lock.json"]
+reason = "break the governed runtime estate self-hash cycle; profile sidecars stay outside the runtime package"
+
+[[estate_hash_normalizations]]
+root_id = "claude"
+relative_path = "skill-governance"
+files = ["estate.lock.json", "reputation.lock.json"]
+reason = "break the governed runtime estate self-hash cycle; profile sidecars stay outside the runtime package"
+
+[[name_inferences]]
+root_id = "codex"
+relative_path = "analyse"
+inferred_name = "analyse"
+tree_sha256 = "e603afcde552daa69f8bf240875f7fcd5b2177e14def007ee892f15a8b5220a2"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[name_inferences]]
+root_id = "codex"
+relative_path = "analyse-problem"
+inferred_name = "analyse-problem"
+tree_sha256 = "d1b4e3ce494004e59f23b9aa2ac52ee5948155507941a27070adda49542833a3"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[name_inferences]]
+root_id = "codex"
+relative_path = "commit"
+inferred_name = "commit"
+tree_sha256 = "2d39ef4a071c4be136f815ec01ad3c118ee9489d98a7c4d0be04e9b715892bd5"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[name_inferences]]
+root_id = "codex"
+relative_path = "hardgate-disable"
+inferred_name = "hardgate-disable"
+tree_sha256 = "9953bcf2f506cdcf95bcf13e482646e46f4a1e10b242f17ecbf881e4bd3aa47b"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[name_inferences]]
+root_id = "codex"
+relative_path = "plan-do-check-act"
+inferred_name = "plan-do-check-act"
+tree_sha256 = "c01152f94f2406b557823a7886f3b2c7027cae9dd46487795908ca755c98a669"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[name_inferences]]
+root_id = "codex"
+relative_path = "pr"
+inferred_name = "pr"
+tree_sha256 = "4b191b035551e27e8c755ef3140b34a471ad22b7f4849a458050e22d8ef27fd9"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[name_inferences]]
+root_id = "codex"
+relative_path = "why"
+inferred_name = "why"
+tree_sha256 = "5f34688345f5811943d4678f1af72b1a25fb50e8652be7c583abcfff244179cb"
+reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
+
+[[roots]]
+id = "codex"
+path = "${VAULT_ROOT}/.codex/skills"
+runtimes = ["codex"]
+precedence = 10
+role = "project-active"
+scan_mode = "recursive"
+collision_scope = "runtime"
+namespace_mode = "none"
+targetable = true
+required = true
+
+[[roots]]
+id = "claude"
+path = "${VAULT_ROOT}/.claude-global/skills"
+runtimes = ["claude"]
+precedence = 10
+role = "project-active"
+scan_mode = "recursive"
+collision_scope = "runtime"
+namespace_mode = "none"
+targetable = true
+required = true
+
+[parity]
+authority_package = "${VAULT_ROOT}/.codex/skills/skill-governance"
+replica_package = "${VAULT_ROOT}/.claude-global/skills/skill-governance"
+shared_paths = [
+  "agents/openai.yaml",
+  "catalog.lock.json",
+  "estate.lock.json",
+  "references/baseline-2026-07-15.md",
+  "references/lifecycle.md",
+  "references/source-reputation-2026-07-15.md",
+  "registry.toml",
+  "registry.lock.json",
+  "reputation.lock.json",
+  "scripts/governance.py",
+  "scripts/test_governance.py",
+]
+adapter_paths = ["SKILL.md"]
+shared_repo_paths = [
+  "governance/profiles/vault-wsl/registry.toml",
+  "governance/profiles/vault-wsl/registry.lock.json",
+  "governance/profiles/vault-wsl/catalog.lock.json",
+  "governance/profiles/vault-wsl/estate.lock.json",
+  "governance/profiles/vault-wsl/reputation.lock.json",
+  "skills/visualizing-work/SKILL.md",
+  "skills/diagram-design/SKILL.md",
+  "skills/diagram-design/UPSTREAM.md",
+]
+
+[[parity.integration_checks]]
+id = "agent-team-routing"
+codex_path = "context/agent-team-routing.md"
+claude_path = "context/agent-team-routing.md"
+start_marker = "<!-- skill-governance-contract:routing:start -->"
+end_marker = "<!-- skill-governance-contract:routing:end -->"
+sha256 = "c1fdf72a038ba189477101dbbf366b8d5902e163e5297cd80fb4d4144bde64d9"
+
+[[parity.integration_checks]]
+id = "workflow-rules"
+codex_path = "context/workflow-rules.md"
+claude_path = "context/workflow-rules.md"
+start_marker = "<!-- skill-governance-contract:workflow:start -->"
+end_marker = "<!-- skill-governance-contract:workflow:end -->"
+sha256 = "bcb3988779b068832f5dc953ed53942edb2bb0dc893fce1985b68e35dbfb4b56"
+
+[delivery]
+branch = "main"
+remote = "origin"
+
+[[delivery.repos]]
+id = "codex"
+path = "${VAULT_ROOT}/.codex"
+remote_url = "https://github.com/xxarupakaxx/.codex.git"
+required_paths = [
+  "skills/skill-governance",
+  "governance/profiles/vault-wsl/registry.toml",
+  "governance/profiles/vault-wsl/registry.lock.json",
+  "governance/profiles/vault-wsl/catalog.lock.json",
+  "governance/profiles/vault-wsl/estate.lock.json",
+  "governance/profiles/vault-wsl/reputation.lock.json",
+  "skills/visualizing-work/SKILL.md",
+  "skills/diagram-design/SKILL.md",
+  "skills/diagram-design/UPSTREAM.md",
+]
+
+[[delivery.repos]]
+id = "claude"
+path = "${VAULT_ROOT}/.claude-global"
+remote_url = "git@github.com:xxarupakaxx/.claude.git"
+required_paths = [
+  "skills/skill-governance",
+  "governance/profiles/vault-wsl/registry.toml",
+  "governance/profiles/vault-wsl/registry.lock.json",
+  "governance/profiles/vault-wsl/catalog.lock.json",
+  "governance/profiles/vault-wsl/estate.lock.json",
+  "governance/profiles/vault-wsl/reputation.lock.json",
+  "skills/visualizing-work/SKILL.md",
+  "skills/diagram-design/SKILL.md",
+  "skills/diagram-design/UPSTREAM.md",
+]
+
+[[sources]]
+id = "cathrynlavery-diagram-design"
+github = "cathrynlavery/diagram-design"
+default_branch = "main"
+observed_revision = "a157f7616473d966d6f433cf0b4d4f1880603504"
+observed_at = "2026-08-09"
+origin = "community-maintainer"
+mode = "watch"
+update_policy = "notify-only"
+catalog_required = true
+
+[reputation_policy]
+snapshot_document = "references/source-reputation-2026-07-15.md"
+snapshot_data = "reputation.lock.json"
+popularity_is_approval = false
+approval_use = "advisory-only"
+
+[[local_origins]]
+name = "diagram-design"
+origin_type = "local-static-adapter"
+source_id = "cathrynlavery-diagram-design"
+historical_origin_commit = "a157f7616473d966d6f433cf0b4d4f1880603504"
+relationship_to_cathrynlavery = "informed-by-reviewed-upstream-design-vocabulary"
+direct_upstream_path = "skills/diagram-design/SKILL.md"
+targets = ["codex", "claude"]
+runtime_tree_sha256 = { codex = "70d409bdbd2c4f5023bedc3caaecdd191f17a7d3de9e2556d8a60530b0b57022", claude = "70d409bdbd2c4f5023bedc3caaecdd191f17a7d3de9e2556d8a60530b0b57022" }

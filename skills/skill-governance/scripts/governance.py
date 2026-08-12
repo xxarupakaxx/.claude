@@ -109,6 +109,8 @@ FULL_YAML_SUPERSEDED_CODES = {
     "frontmatter_nested",
     "frontmatter_unverified",
 }
+LOCAL_STATIC_ADAPTER_ORIGIN = "local-static-adapter"
+LOCAL_STATIC_ADAPTER_FILES = {"SKILL.md", "UPSTREAM.md"}
 
 CANONICAL_OPENAI_ADAPTER = (
     b'interface:\n'
@@ -189,6 +191,33 @@ def has_blockers(findings: Iterable[Finding]) -> bool:
 
 def expand_path(value: str | Path) -> Path:
     return Path(os.path.expandvars(os.path.expanduser(str(value))))
+
+
+def profile_sidecar_path(registry_path: Path, explicit_path: Path | None, filename: str) -> Path:
+    """Choose an explicit sidecar, or the registry's sibling artifact."""
+    return (explicit_path if explicit_path is not None else registry_path.with_name(filename)).absolute()
+
+
+def registry_environment_findings(registry: dict[str, Any]) -> list[Finding]:
+    """Fail clearly when a registry relies on VAULT_ROOT but it is unset."""
+    def has_vault_root_placeholder(value: Any) -> bool:
+        if isinstance(value, str):
+            return "${VAULT_ROOT}" in value or "$VAULT_ROOT" in value
+        if isinstance(value, dict):
+            return any(has_vault_root_placeholder(item) for item in value.values())
+        if isinstance(value, list):
+            return any(has_vault_root_placeholder(item) for item in value)
+        return False
+
+    if has_vault_root_placeholder(registry) and not os.environ.get("VAULT_ROOT"):
+        return [
+            blocker(
+                "registry_environment",
+                "VAULT_ROOT must be set when the registry uses ${VAULT_ROOT}",
+                "VAULT_ROOT",
+            )
+        ]
+    return []
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -1004,7 +1033,19 @@ def validate_registry(data: dict[str, Any]) -> list[Finding]:
 
     normalization_keys: set[tuple[str, str]] = set()
     allowed_control_files = {"estate.lock.json", "reputation.lock.json"}
-    expected_normalizations = {("codex", "skill-governance"), ("claude", "skill-governance"), ("vault-codex", "skill-governance")}
+    required_normalization_roots = {"codex", "claude"}
+    missing_normalization_roots = required_normalization_roots - root_ids
+    if missing_normalization_roots:
+        findings.append(
+            blocker(
+                "estate_hash_normalization_roots",
+                f"Missing required roots: {sorted(missing_normalization_roots)}",
+            )
+        )
+    expected_normalizations = {
+        (root_id, "skill-governance")
+        for root_id in required_normalization_roots | ({"vault-codex"} & root_ids)
+    }
     for entry in data.get("estate_hash_normalizations", []):
         root_id = entry.get("root_id") if isinstance(entry, dict) else None
         relative_path = entry.get("relative_path") if isinstance(entry, dict) else None
@@ -1239,6 +1280,11 @@ def validate_registry(data: dict[str, Any]) -> list[Finding]:
             findings.append(blocker("route_relation_routing", f"Routing must cover every member: {relation_id}"))
 
     local_origin_names: set[str] = set()
+    source_revisions = {
+        source.get("id"): source.get("observed_revision")
+        for source in sources
+        if isinstance(source, dict)
+    }
     for origin in data.get("local_origins", []):
         name = origin.get("name") if isinstance(origin, dict) else None
         if not isinstance(name, str) or not NAME_RE.fullmatch(name):
@@ -1250,6 +1296,27 @@ def validate_registry(data: dict[str, Any]) -> list[Finding]:
         commit = str(origin.get("historical_origin_commit", ""))
         if not SHA_RE.fullmatch(commit):
             findings.append(blocker("local_origin_commit", f"Invalid historical commit: {name}"))
+        if origin.get("origin_type") == LOCAL_STATIC_ADAPTER_ORIGIN:
+            source_id = origin.get("source_id")
+            targets = origin.get("targets")
+            runtime_hashes = origin.get("runtime_tree_sha256")
+            upstream_path = origin.get("direct_upstream_path")
+            if (
+                source_id not in source_ids
+                or not isinstance(targets, list)
+                or not targets
+                or any(target not in root_ids for target in targets)
+                or not isinstance(runtime_hashes, dict)
+                or set(runtime_hashes) != set(targets or [])
+                or any(not re.fullmatch(r"[0-9a-f]{64}", str(digest)) for digest in runtime_hashes.values())
+                or not isinstance(upstream_path, str)
+                or posixpath.basename(upstream_path) != "SKILL.md"
+                or upstream_path.startswith("/")
+                or ".." in Path(upstream_path).parts
+            ):
+                findings.append(blocker("local_static_adapter_shape", f"Invalid static adapter origin: {name}"))
+            elif commit != source_revisions.get(source_id):
+                findings.append(blocker("local_static_adapter_source", f"Static adapter pin differs from source: {name}"))
 
     hold_ids: set[str] = set()
     for hold in data.get("holds", []):
@@ -1605,7 +1672,8 @@ def planned_estate_lock(
         "registry_sha256": sha256_path(registry_path),
         "hash_algorithm": HASH_ALGORITHM,
         "generated_at": max(
-            (str(collection.get("baseline_at", "")) for collection in registry.get("collections", [])),
+            [str(collection.get("baseline_at", "")) for collection in registry.get("collections", [])]
+            or [str(source.get("observed_at", "")) for source in registry.get("sources", []) if isinstance(source, dict)],
             default="",
         ),
         "records": records,
@@ -1637,6 +1705,55 @@ def runtime_state_presence_findings(registry: dict[str, Any], inventory: dict[st
                             f"{key[0]}:{key[1]}",
                         )
                     )
+    return findings
+
+
+def audit_local_static_adapters(registry: dict[str, Any]) -> list[Finding]:
+    findings: list[Finding] = []
+    roots = registry_roots(registry)
+    sources = {
+        source.get("id"): source
+        for source in registry.get("sources", [])
+        if isinstance(source, dict)
+    }
+    for origin in registry.get("local_origins", []):
+        if not isinstance(origin, dict) or origin.get("origin_type") != LOCAL_STATIC_ADAPTER_ORIGIN:
+            continue
+        name = str(origin.get("name", ""))
+        source = sources.get(origin.get("source_id"))
+        target_hashes = origin.get("runtime_tree_sha256", {})
+        for target in origin.get("targets", []):
+            root = roots.get(str(target))
+            expected_hash = target_hashes.get(target) if isinstance(target_hashes, dict) else None
+            if not isinstance(root, dict) or not isinstance(expected_hash, str):
+                findings.append(blocker("local_static_adapter_shape", "Static adapter target is not configured", f"{name}:{target}"))
+                continue
+            tree = scan_tree(expand_path(root["path"]) / name)
+            findings.extend(tree.findings)
+            if tree.tree_sha256 != expected_hash:
+                findings.append(blocker("local_static_adapter_tree", "Static adapter tree differs from its pinned local origin", f"{target}:{name}"))
+            files = {record.path: record for record in tree.files}
+            if set(files) != LOCAL_STATIC_ADAPTER_FILES or any(record.executable for record in files.values()):
+                findings.append(blocker("local_static_adapter_files", "Static adapter may contain only non-executable SKILL.md and UPSTREAM.md", f"{target}:{name}"))
+                continue
+            frontmatter, frontmatter_findings = parse_frontmatter_strict(files["SKILL.md"].data, f"{target}:{name}/SKILL.md")
+            findings.extend(frontmatter_findings)
+            if (
+                set(frontmatter) != {"name", "description", "allowed-tools"}
+                or frontmatter.get("name") != name
+                or not isinstance(frontmatter.get("description"), str)
+                or not frontmatter.get("description")
+                or frontmatter.get("allowed-tools") != "Read, Write"
+            ):
+                findings.append(blocker("local_static_adapter_frontmatter", "Static adapter must expose only Read and Write", f"{target}:{name}/SKILL.md"))
+            skill_text = files["SKILL.md"].data.decode("utf-8", "replace")
+            if re.search(r"https?://|<\s*(?:script|iframe|foreignObject)\b|javascript:", skill_text, re.IGNORECASE):
+                findings.append(blocker("local_static_adapter_boundary", "Static adapter instructions must not contain remote or executable markup", f"{target}:{name}/SKILL.md"))
+            upstream_text = files["UPSTREAM.md"].data.decode("utf-8", "replace")
+            expected_repo = f"https://github.com/{source.get('github', '')}" if isinstance(source, dict) else ""
+            expected_revision = str(origin.get("historical_origin_commit", ""))
+            if not expected_repo or expected_repo not in upstream_text or f"`{expected_revision}`" not in upstream_text:
+                findings.append(blocker("local_static_adapter_provenance", "UPSTREAM.md must bind the configured source and revision", f"{target}:{name}/UPSTREAM.md"))
     return findings
 
 
@@ -3016,12 +3133,17 @@ def build_lock_plan(
                 artifact["safety_receipt"] = collection.get("safety_receipt")
                 artifact["adaptation_diff"] = collection.get("adaptation_diff")
             artifacts[key] = artifact
+    generated_dates = baseline_dates or [
+        str(source.get("observed_at", ""))
+        for source in registry.get("sources", [])
+        if isinstance(source, dict)
+    ]
     lock = {
         "schema_version": LOCK_SCHEMA_VERSION,
         "generation": registry["generation"],
         "registry_sha256": sha256_path(registry_path),
         "hash_algorithm": HASH_ALGORITHM,
-        "generated_at": max(baseline_dates) if baseline_dates else "",
+        "generated_at": max(generated_dates, default=""),
         "artifacts": {key: artifacts[key] for key in sorted(artifacts)},
     }
     return lock, findings
@@ -3841,6 +3963,7 @@ def audit_payload(
     estate_inventory = inventory_payload(registry)
     findings.extend(Finding(**item) for item in estate_inventory.get("findings", []))
     findings.extend(estate_collision_findings(registry, estate_inventory))
+    findings.extend(audit_local_static_adapters(registry))
     estate_lock, estate_lock_findings = load_estate_lock(estate_path)
     findings.extend(estate_lock_findings)
     planned_estate = planned_estate_lock(registry, registry_path, estate_inventory)
@@ -4907,8 +5030,8 @@ def emit(payload: dict[str, Any], json_output: bool) -> None:
 def _common_options(parser: argparse.ArgumentParser, include_lock: bool = True) -> None:
     parser.add_argument("--registry", type=Path, default=DEFAULT_REGISTRY)
     if include_lock:
-        parser.add_argument("--lock", type=Path, default=DEFAULT_LOCK)
-    parser.add_argument("--catalog", type=Path, default=DEFAULT_CATALOG)
+        parser.add_argument("--lock", type=Path, help="Default: sibling of --registry")
+    parser.add_argument("--catalog", type=Path, help="Default: sibling of --registry")
     parser.add_argument("--json", action="store_true", dest="json_output")
 
 
@@ -4926,12 +5049,12 @@ def build_parser() -> argparse.ArgumentParser:
 
     audit = subparsers.add_parser("audit", help="Validate registry, locks, baselines, and collisions")
     _common_options(audit)
-    audit.add_argument("--estate", type=Path, default=DEFAULT_ESTATE)
-    audit.add_argument("--reputation", type=Path, default=DEFAULT_REPUTATION)
+    audit.add_argument("--estate", type=Path, help="Default: sibling of --registry")
+    audit.add_argument("--reputation", type=Path, help="Default: sibling of --registry")
 
     reputation = subparsers.add_parser("reputation", help="Validate the dated advisory source-reputation snapshot")
     reputation.add_argument("--registry", type=Path, default=DEFAULT_REGISTRY)
-    reputation.add_argument("--reputation", type=Path, default=DEFAULT_REPUTATION)
+    reputation.add_argument("--reputation", type=Path, help="Default: sibling of --registry")
     reputation.add_argument("--json", action="store_true", dest="json_output")
 
     inspect = subparsers.add_parser("inspect", help="Statically inspect a quarantined candidate")
@@ -4972,8 +5095,19 @@ def main(argv: list[str] | None = None) -> int:
         print("Python 3.11 or newer is required", file=sys.stderr)
         return 3
     args = build_parser().parse_args(argv)
+    registry_path = args.registry.absolute()
+    args.registry = registry_path
+    for attribute, filename in (
+        ("lock", "registry.lock.json"),
+        ("catalog", "catalog.lock.json"),
+        ("estate", "estate.lock.json"),
+        ("reputation", "reputation.lock.json"),
+    ):
+        if hasattr(args, attribute):
+            setattr(args, attribute, profile_sidecar_path(registry_path, getattr(args, attribute), filename))
     if args.command in {"inspect", "validate-frontmatter"}:
-        registry, findings = load_registry(args.registry.absolute())
+        registry, findings = load_registry(registry_path)
+        findings.extend(registry_environment_findings(registry))
         if has_blockers(findings):
             payload = {"command": args.command, "status": "blocked", "findings": [asdict(item) for item in findings]}
         else:
@@ -4984,8 +5118,8 @@ def main(argv: list[str] | None = None) -> int:
             else:
                 payload, findings = validate_frontmatter_full(args.path, args.target, quarantine_root, review_root)
     else:
-        registry_path = args.registry.absolute()
         registry, findings = load_registry(registry_path)
+        findings.extend(registry_environment_findings(registry))
         if has_blockers(findings):
             payload = {
                 "command": args.command,
