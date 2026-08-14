@@ -316,7 +316,7 @@
       "relative_path": "diagram-design",
       "resolved_name": "diagram-design",
       "root_id": "claude",
-      "tree_sha256": "70d409bdbd2c4f5023bedc3caaecdd191f17a7d3de9e2556d8a60530b0b57022"
+      "tree_sha256": "ead02ce0a714259efaa83f9e926a2bcb35ee9850de0d16ade4e15fa47930d054"
     },
     {
       "classification": "preexisting-unclassified",
@@ -379,7 +379,7 @@
       "relative_path": "generate-state-diagram",
       "resolved_name": "generate-state-diagram",
       "root_id": "claude",
-      "tree_sha256": "e717762236e98992ece06a262b03ce4224dbb1f7132338e59beae789412e9906"
+      "tree_sha256": "05760c919ae4a8773c42642c1aa0b9298766b2ab3b8610f320e6dae8d1440428"
     },
     {
       "classification": "preexisting-unclassified",
@@ -796,7 +796,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "claude",
-      "tree_sha256": "fbdc9cde9ccac5d0f0e17d071ce5113f5d30d022a7d825f663cd35b040450c27"
+      "tree_sha256": "91d0ea41877dcc4d086164efd5a254c0984f5ef251bfdfebef83c4e587d9b35a"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1021,7 +1021,7 @@
       "relative_path": "visualizing-work",
       "resolved_name": "visualizing-work",
       "root_id": "claude",
-      "tree_sha256": "3a65e5f6939bd780e4cc4fdef8b6903af1711dfd47dff92f8b5b096ae6c24ce1"
+      "tree_sha256": "9b6d7e31005e0e8811e5b7cb8b42f01a7993a2a11d16b9f28aea2c34544a4d25"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1498,7 +1498,7 @@
       "relative_path": "diagram-design",
       "resolved_name": "diagram-design",
       "root_id": "codex",
-      "tree_sha256": "70d409bdbd2c4f5023bedc3caaecdd191f17a7d3de9e2556d8a60530b0b57022"
+      "tree_sha256": "ead02ce0a714259efaa83f9e926a2bcb35ee9850de0d16ade4e15fa47930d054"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1561,7 +1561,7 @@
       "relative_path": "generate-state-diagram",
       "resolved_name": "generate-state-diagram",
       "root_id": "codex",
-      "tree_sha256": "13fca5ec3c57acc3e299dc88827a5a8d110a3c5160502176015c922fc68f237e"
+      "tree_sha256": "39fcb370d645d8685535a3961fde16b4b09b432ad59983412e3f675d5038c983"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2113,7 +2113,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "codex",
-      "tree_sha256": "f698f1d956502c269f065e363a1294f9d4a6de018ea08d9abbca6d29c5af730d"
+      "tree_sha256": "71a75fd31f7d5b30c22aed17223b831cb04a79baf5636a4bd0dbf127954a5d8a"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2365,7 +2365,7 @@
       "relative_path": "visualizing-work",
       "resolved_name": "visualizing-work",
       "root_id": "codex",
-      "tree_sha256": "3a65e5f6939bd780e4cc4fdef8b6903af1711dfd47dff92f8b5b096ae6c24ce1"
+      "tree_sha256": "9b6d7e31005e0e8811e5b7cb8b42f01a7993a2a11d16b9f28aea2c34544a4d25"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2449,6 +2449,6 @@
       "tree_sha256": "dce15695c4c98b3e8fd266fbab8845dca33a09e7540d2b1f1c626401ae734fa4"
     }
   ],
-  "registry_sha256": "3df0a218713bc5421ec62fef30b0a440916b2b8a3820ff2ff9a0b3576cb41e39",
+  "registry_sha256": "32e0294ff0776b60e6303be854b3efae01ae772ab739633ecd38e49341800b4b",
   "schema_version": 2
 }

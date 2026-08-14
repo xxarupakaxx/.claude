@@ -197,6 +197,22 @@ mcp__workflow-html-app__view-diagram(
 - Validator PASSしたMermaidコードのみを渡すこと
 - **フォールバックHTMLを直接生成する場合は必ずライトテーマを使用すること**（ダークテーマ禁止）
 
+<!-- state-diagram-editorial-companion:start -->
+### Step 8: 補助説明図を選ぶ（条件付き）
+
+`91_state_diagram.md` と `91_state_diagram.html` を先に完成させる。
+
+すべての実行で、状態図だけでは答えられない別の読者の問いが残るかを評価する。
+
+因果、責務、比較、引き継ぎなどを空間的なグループで短く説明できる場合だけ、`visualizing-work` を経て `diagram-design` を呼び、`92_visual_explanation.md` を作る。
+
+静的 HTML が理解時間を短くする場合だけ `92_visual_explanation.html` も作る。
+
+補助図では状態図、状態遷移図、Mermaid フローを描き直さない。
+
+不要なら `92` は作らず、判断理由を `91_state_diagram.md` に残す。
+<!-- state-diagram-editorial-companion:end -->
+
 ## 出力テンプレート
 
 ```markdown
@@ -241,6 +257,11 @@ mcp__workflow-html-app__view-diagram(
 ## N+3. HTML出力
 同じ内容を `91_state_diagram.html` として保存し、Mermaidコードをコピーできるボタン付きでブラウザ確認できるようにする。
 静的HTMLの場合は、各Mermaid図を拡大・縮小・100%リセットできるズームUIも付ける。
+
+## N+4. 補助説明図の判断
+- 状態図だけでは答えられない読者の問いがあるかを記録する。
+- 生成時は `92_visual_explanation.md` を示し、状態や遷移を重複していないことを確認する。
+- 省略時は、状態図がその問いを十分に答える理由を記録する。
 ```
 
 ## 出力の品質基準（CRITICAL）
@@ -252,6 +273,7 @@ mcp__workflow-html-app__view-diagram(
 - **Mermaid互換**: GitHub/VSCode/Notionでそのままレンダリング可能
 - **Mermaidコピー性**: HTML版では各Mermaid図の生コードをワンクリックでコピー可能
 - **Mermaid可読性**: HTML版では各Mermaid図を図ごとに拡大・縮小・100%リセット可能
+- **補助説明図の非重複**: `92` は別の読者の問いだけを扱い、状態、遷移、Mermaidフローを重複しない
 - **既存機能との区別**: 新規追加と既存機能を明確に区別
 - **エラーケース記載**: 正常系だけでなく失敗時の動作も図に含める
 - **5面構成**: 全体フロー、状態遷移（補足）、データフロー、ドメインモデル、UI操作フローの順で、読み手が「処理」「状態」「データ」「概念」「操作」を段階的に理解できること

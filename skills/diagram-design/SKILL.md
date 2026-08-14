@@ -18,6 +18,7 @@ Use this skill only when all conditions hold:
 - The reader, question, evidence, confidence, and omitted scope are known.
 - Spatial grouping materially helps explain a small comparison, timeline, causal, ownership, or concept view.
 - The output is not a workflow Roadmap, canonical state or flow diagram, layered technical map, timeline replay, or viewer integration.
+- When `generate-state-diagram` calls this adapter, `91_state_diagram.*` is complete and the sidecar answers a distinct reader question.
 
 Otherwise return to `visualizing-work` or use the specialized owner skill.
 
@@ -50,3 +51,4 @@ Create `92_visual_explanation.html` beside it only when static markup makes the 
 - `generate-state-diagram` owns canonical static state and flow artifacts.
 - `generate-state-diagram-3d` owns layered technical maps and timeline replay artifacts.
 - This adapter owns only an optional task-local editorial sidecar.
+- After `generate-state-diagram`, this adapter never redraws canonical states, transitions, or Mermaid flows.

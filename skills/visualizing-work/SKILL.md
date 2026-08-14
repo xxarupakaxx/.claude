@@ -84,7 +84,7 @@ Choose the delivery surface:
 
 - Markdown with a compact visual block
 - static HTML
-- `diagram-design` static editorial sidecar when spatial grouping materially reduces comprehension time and no specialized skill owns the artifact
+- `diagram-design` static editorial sidecar when spatial grouping materially reduces comprehension time and either no specialized skill owns the artifact or `generate-state-diagram` has completed `91_state_diagram.*` and a distinct reader question remains
 - interactive HTML
 - workflow-html-app viewer
 - image or canvas
@@ -121,7 +121,7 @@ If a viewer, browser, or image generator was required but unavailable, save the 
 - Use `viewing-plans` when the task is workflow progress visibility.
 - Use `generate-state-diagram` when the chosen representation is a static state or flow diagram.
 - Use `generate-state-diagram-3d` when the chosen representation is a layered technical map or timeline replay.
-- Use `diagram-design` only after choosing a static editorial HTML sidecar; it creates an optional task-local artifact and never replaces another skill's canonical output.
+- After `generate-state-diagram` completes `91_state_diagram.*`, use `diagram-design` only for a distinct reader question; the sidecar supplements its canonical output and never duplicates state or flow diagrams.
 - Use `generate-verification-guide` when the artifact is a checkable manual verification path.
 - Use `research` or deep-research style investigation when the visual explanation depends on external facts, unfamiliar domains, or design precedents.
 

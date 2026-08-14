@@ -220,4 +220,4 @@ historical_origin_commit = "a157f7616473d966d6f433cf0b4d4f1880603504"
 relationship_to_cathrynlavery = "informed-by-reviewed-upstream-design-vocabulary"
 direct_upstream_path = "skills/diagram-design/SKILL.md"
 targets = ["codex", "claude"]
-runtime_tree_sha256 = { codex = "70d409bdbd2c4f5023bedc3caaecdd191f17a7d3de9e2556d8a60530b0b57022", claude = "70d409bdbd2c4f5023bedc3caaecdd191f17a7d3de9e2556d8a60530b0b57022" }
+runtime_tree_sha256 = { codex = "ead02ce0a714259efaa83f9e926a2bcb35ee9850de0d16ade4e15fa47930d054", claude = "ead02ce0a714259efaa83f9e926a2bcb35ee9850de0d16ade4e15fa47930d054" }

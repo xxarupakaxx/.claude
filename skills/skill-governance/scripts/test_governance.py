@@ -2084,6 +2084,28 @@ class NetworkBoundaryTests(unittest.TestCase):
 
 
 class AdapterAndSurfaceTests(unittest.TestCase):
+    def test_state_diagram_companion_contract_preserves_canonical_owner(self) -> None:
+        skills = Path(__file__).resolve().parents[2]
+        state = (skills / "generate-state-diagram" / "SKILL.md").read_text(encoding="utf-8")
+        contract = state.split("<!-- state-diagram-editorial-companion:start -->", 1)[1].split(
+            "<!-- state-diagram-editorial-companion:end -->", 1
+        )[0]
+        for required in (
+            "`91_state_diagram.md` と `91_state_diagram.html` を先に完成させる。",
+            "`92_visual_explanation.md`",
+            "別の読者の問い",
+            "状態図、状態遷移図、Mermaid フローを描き直さない。",
+        ):
+            self.assertIn(required, contract)
+        visualizing = (skills / "visualizing-work" / "SKILL.md").read_text(encoding="utf-8")
+        self.assertIn(
+            "or `generate-state-diagram` has completed `91_state_diagram.*` and a distinct reader question remains",
+            visualizing,
+        )
+        self.assertNotIn("its canonical artifact is already complete", visualizing)
+        adapter = (skills / "diagram-design" / "SKILL.md").read_text(encoding="utf-8")
+        self.assertIn("never redraws canonical states, transitions, or Mermaid flows", adapter)
+
     def test_platform_invocation_adapters(self) -> None:
         registry, findings = governance.load_registry(governance.DEFAULT_REGISTRY)
         self.assertFalse(governance.has_blockers(findings))
