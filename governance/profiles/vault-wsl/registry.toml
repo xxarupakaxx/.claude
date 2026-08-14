@@ -1,5 +1,5 @@
 schema_version = 1
-generation = 1
+generation = 3
 authority = "codex"
 hash_algorithm = "skill-tree-sha256-v1"
 python_min = "3.11"

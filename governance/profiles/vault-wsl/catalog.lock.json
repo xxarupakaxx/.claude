@@ -1,8 +1,8 @@
 {
   "generated_at": "2026-08-09T00:00:00+09:00",
-  "generation": 1,
+  "generation": 3,
   "method": "pinned-github-commit-tree-plus-package-tree-v2",
-  "registry_sha256": "32e0294ff0776b60e6303be854b3efae01ae772ab739633ecd38e49341800b4b",
+  "registry_sha256": "3fcefdfc915b6699f1097e0f62f1fe2a305aa078348b22d46dbcd240d14aa183",
   "schema_version": 1,
   "sources": {
     "cathrynlavery-diagram-design": {
