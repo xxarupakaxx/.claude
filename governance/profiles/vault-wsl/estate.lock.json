@@ -379,7 +379,7 @@
       "relative_path": "generate-state-diagram",
       "resolved_name": "generate-state-diagram",
       "root_id": "claude",
-      "tree_sha256": "bcaa34deaa975c3d1b9af3257f99ddb81ab027182f94d10078f8a11e135107b4"
+      "tree_sha256": "0c1d701857257bbb41a6a3e2878d1139d01a34fb0b3829706ae27944184bd4ef"
     },
     {
       "classification": "preexisting-unclassified",
@@ -805,7 +805,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "claude",
-      "tree_sha256": "490d73d347d693df0acaa4559f7726ee47dd6f52277b2e9865d69ef11a0f31db"
+      "tree_sha256": "5ca381884c17ecfafd1e6e33681b7759cf75ab9e7b1d4a1703ecab6f56d0321e"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1021,7 +1021,7 @@
       "relative_path": "viewing-plans",
       "resolved_name": "viewing-plans",
       "root_id": "claude",
-      "tree_sha256": "03e8ca1abd2d8ceaba240886321691a0b6a0e62f079f558e0581af2f9e12fb6b"
+      "tree_sha256": "f004b1949bd22e616a8b6d683e0f02d92930be24e0e245104aa381206066d4f8"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1570,7 +1570,7 @@
       "relative_path": "generate-state-diagram",
       "resolved_name": "generate-state-diagram",
       "root_id": "codex",
-      "tree_sha256": "8e803c75d0029fd0d6810468ce2b9e88df0c3b2cb0f2513f0c055b3beb582271"
+      "tree_sha256": "0c1d701857257bbb41a6a3e2878d1139d01a34fb0b3829706ae27944184bd4ef"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2131,7 +2131,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "codex",
-      "tree_sha256": "95d56db58743de01c43a85dc3e8a8aaf349aa0089e7a0eb6b3ffa8715275d9b0"
+      "tree_sha256": "b823a3fac8fff553bf9b328f0f8b88d31c010a31f787bae285dfdaf570e1e6f1"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2374,7 +2374,7 @@
       "relative_path": "viewing-plans",
       "resolved_name": "viewing-plans",
       "root_id": "codex",
-      "tree_sha256": "3262bda754275ba53bd22c30c8e1e4eb76385514721fd7cf357feac95d53b9da"
+      "tree_sha256": "f004b1949bd22e616a8b6d683e0f02d92930be24e0e245104aa381206066d4f8"
     },
     {
       "classification": "preexisting-unclassified",

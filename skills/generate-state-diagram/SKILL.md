@@ -89,6 +89,13 @@ git log <BASE_BRANCH>..HEAD --oneline
 | 条件分岐 | 重要な分岐ロジックがあり、全体フローだけでは読みにくい場合 | stateDiagram-v2 (choice) |
 | シーケンス | 複数システム間の時系列やり取りを厳密に示す必要がある場合 | sequenceDiagram |
 
+<!-- state-diagram-timeline-routing:start -->
+**タイムライン再生が必要な場合**: コミット列、リトライ、キュー、multi-agent workflow、段階的な失敗回復、ユーザーに見える状態変化など、時間的な推移を追わないと理解できない変更では、Mermaidにすべてを詰め込まない。Mermaidは静的overviewに留め、`generate-state-diagram-3d` で time-aware Graph JSON と workflow-html-app の Timeline view を生成する。
+
+**構成パターン（一般論とrepo実装が両方絡む場合）**: 「一般論として起きうる問題」と「このrepoでの実際の実装」を1枚の図に混ぜず、別図に分ける。実害（どのタイミングで何が起きるか）は時系列が重要なため sequenceDiagram で示し、対応案（複数の選択肢とトレードオフ）は分岐図で示す。この分離により読み手が「一般に起きること」と「今回実際に起きたこと」を混同しにくくなる。
+（出典: memories/rollout_summaries/2026-06-26T05-59-50-ZLd9-cache_paginated_bricks_consistency_investigation.md「Task 2 Key steps / Reusable knowledge」）
+<!-- state-diagram-timeline-routing:end -->
+
 **Mermaid 構文ルール**: `references/mermaid-syntax.md` 参照。
 日本語ラベル・state命名・flowchartノードID・classDiagram関連表現の罠を回避する。
 

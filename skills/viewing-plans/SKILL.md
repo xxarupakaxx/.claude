@@ -8,7 +8,17 @@ allowed-tools: Read, mcp__workflow-html-app__view-plan
 
 計画ファイル・ログ・レビュー結果をHTMLビューアに自動表示する。
 
-Roadmap Viewer は「現在地」「稼働中の作業」「成果物」「計画」「更新鮮度」を一つの画面で確認する俯瞰ビューを担当する。`--serve --watch` で起動すると、Claude CodeまたはCoworkの横に置いたブラウザが自動更新される。Plan Viewer / Log Viewer はMarkdownの詳細確認用として使う。
+Roadmap Viewer は、task directory に揃っている記録から、実行計画のbriefと補助のConcept Mapを生成する。
+第一画面はbrief-firstとし、`実施Task`、`仕様`、`実装根拠`、`実行順序`、`事実・判断・未確定`、`成果物`を同じ読み順で表示する。`graph-map.md` のConcept Mapは折りたたみ可能な補助表示へ置き、第一画面の一次情報を置き換えない。
+Markdown全文、手動ファイル読込、JSON操作、KPIカードは第一画面へ並べず、要約から正本を直接開けるようにする。
+`--serve --watch` で起動すると、Codex app の横に置いたブラウザが自動更新される。
+Plan Viewer / Log Viewer は、明示的に文書本文を確認するときだけ使う。
+
+<!-- viewer-codemap-preflight:start -->
+workspace Codemapがある場合は、task Roadmapと別の地図として扱う。`roadmap.html` は現在task、`codemap.html` はcode topologyの正本であり、snapshotやfreshnessを統合しない。コード変更taskでは `context/codemap.md` のpreflightが先に成立していることを確認し、RoadmapとCodemapを並べて開く。
+
+コード変更taskでは編集前に `scripts/generate-codemap.py check --root <workspace-root>` を実行する。freshなら `codemap.html` を実際に開く。freshでなければ `context/codemap.md` に従って `codemap.source.json` を更新し、refresh → check の後に開く。
+<!-- viewer-codemap-preflight:end -->
 
 複数 task を横断して見る場合は Roadmap Task Hub を使う:
 
@@ -30,6 +40,7 @@ Hubの主表示は計画書ではなくLive Sessionとする。Codex app-server�
 2. **横で見たい場合**: `scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --watch` を起動し、表示URLを案内
 3. **Phase 3/4の節目**: `40_progress.md` / `80_review.md` / `05_log.md` 更新後、watch中ならブラウザが自動更新
 4. **Phase 5完了時**: Roadmap Viewerで最終状態を表示し、必要に応じて05_log.mdをlog_viewerで表示
+5. **コード変更task**: workspace Codemapをcheckし、freshなら `codemap.html` も開く。stale / insufficientならコード編集より先にrefreshする
 
 ## 手動トリガー
 
@@ -55,7 +66,8 @@ Hubの主表示は計画書ではなくLive Sessionとする。Codex app-server�
 
 1. 対象メモリディレクトリを特定
 2. `scripts/generate-roadmap-view.py <memory_dir>` を実行して `roadmap.html` を生成
-3. 必要に応じて Read ツールで個別Markdownコンテンツを取得
+3. コード変更taskでは `scripts/generate-codemap.py check --root <workspace-root>` を実行し、`codemap.json` からcaller / impact / guarding test / evidenceを確認
+4. 必要に応じて Read ツールで個別Markdownコンテンツを取得
 
 ### 2. Roadmap Viewer生成
 
@@ -69,7 +81,17 @@ python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task>
 ${MEMORY_DIR}/memory/<task>/roadmap.html
 ```
 
-ユーザーには生成されたHTMLパスを案内する。ブラウザで開けば、タスク全体の現在地、実行パルス、計画、成果物、レビュー、リスクが一画面で見える。
+ユーザーには生成されたHTMLパスを案内する。
+ブラウザで開けば、taskの目的、仕様、実コード上の変更対象、実行順序、確認済み事項、成果物を一つのbriefとして追える。関係を深掘りするときだけConcept Mapを開く。
+
+コード変更taskでCodemapがfreshなら、次も実際にopenする。
+
+```bash
+python3 scripts/generate-codemap.py check --root <workspace-root>
+open <workspace-root>/codemap.html
+```
+
+Codemapがmissing / stale / mismatch / insufficientなら、`context/codemap.md` に従って `codemap.source.json` を更新し、refresh → checkを終えてから開く。パスだけを案内して完了しない。
 
 ライブ更新:
 
@@ -117,15 +139,50 @@ python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --w
 
 ## 機能概要
 
-### Roadmap Viewer（ロードマップビューア）
-- `00_spec.md` / `30_plan.md` / `40_progress.md` / `80_review.md` / `05_log.md` を統合し、`team-journal.md` / `90_verification.md` も存在すれば読み込む
-- 上部の「いま」、計画キャンバス、実行パルス、成果物シェルフを第一画面へ表示する
+### Roadmap Viewer（成果マップビューア）
+- `00_spec.md` / `30_plan.md` / `40_progress.md` / `80_review.md` を第一画面の正本とし、task、spec、approach、flow、claims、artifactsをbriefへ割り当てる
+- 上段は `Phase / 進捗 / 選択中Task` のcompact status barとし、Task選択に同期させる。固定の全体目的をheroとして重複表示せず、全体仕様は仕様cardと `00_spec.md` quick linkから読む
+- `現在` と `次` を明示する。次のTaskがなければ、計画完了か未記録かを区別して表示する
+- `00_spec.md` と `30_plan.md` のquick linkを初期viewportに置き、成果物linkからsource drawerで正本本文を開けるようにする
+- `graph-map.md` があればMermaid flowchartを補助のConcept Mapとして読む。なければ既存sourceからfallback graphを作る
+- `30_plan.md` の各Taskは `目的`、`変更対象`、`実装`、`成果物`、`検証`を持つ。欠落時はViewerが補作せず、`未記録`と表示する
+- 任意の `実装図` にMermaid `flowchart TB` / `TD` / `LR`を記録すると、選択Task detailの `こう実装する` と `現在の実コード` の間へ表示する。対応するのは矩形・判断nodeと、明示的な有向edge・edge labelの限定構文だけとする
+- 任意の `実装根拠` に `repo:<relative-path>#<anchor-or-Lx-Ly>` を1件記録すると、generatorが生成時点の実sourceを最大12行だけ取得する。bare pathや `変更対象` からsource参照を推測しない
+- 第一画面は全Taskのcompact indexと選択Task detailを同時に表示する。全Taskには短い実装方針、選択Taskには `こう実装する`、任意の `実装図`、色付きの `現在の実コード`、変更対象、成果物、検証を表示する
+- Tablet / MobileではTask indexを順序どおりのhorizontal railにし、その直後へ選択Task detailを置く。tablistのorientationと矢印keyも表示方向へ合わせる
+- `こう実装する` は `30_plan.md` の計画、`現在の実コード` はgeneratorが解決した事実として区別する。存在しないafter codeを生成しない
+- `実装図` はplanに明示されたnodeとedgeだけを表示し、実装手順、変更対象、実コードから関係を推測しない。図と同じ関係をテキスト一覧でも読めるようにする
+- source previewの色付けは自己完結lexerで行い、tokenごとにescapeしてからclassを付ける。未対応言語は色なしのescape済み本文へ戻し、コードを欠落させない
+- source previewはcode/automation prefix allowlist内だけを対象とし、個人ノート領域、hidden state、secret file/content、`automation_read: false`、symlink、binary、非UTF-8、1MiB超のfileを拒否する。追加prefixは `--source-allow-prefix` で明示する
+- `事実・判断・未確定`は明示見出しだけから読む。source priorityは次の通り
+  - 事実: `40_progress.md` の実測・検証結果 → `20_survey.md` の現在の事実・確認済み事実 → `00_spec.md` の現在の事実
+  - 判断: `team-journal.md` のDecisions・判断 → `30_plan.md` の採用判断・実装方針・Final implementation supersession → `00_spec.md` の採用判断
+  - 未確定: `team-journal.md` のOpen Questions → `30_plan.md` の未確定・リスク → `20_survey.md` の仮説・未確定 → `00_spec.md` の未確定
+- 同じbucketの項目はsource priority順に統合し、正規化後に完全一致する項目だけを重複排除する。分類を推測しない
+- 明示graphは型付きnodeとpredicate edgeで構成し、`node → 関係語 → node` が単独で意味を持つようにする
+- node表面は短い名詞句に限定し、要求文、ファイルパス、Markdown本文は選択後の詳細へ移す
+- Desktop / Tablet / Mobileのすべてでnodeとedgeを保持する。Mobileはselected pathのpredicateだけを優先表示し、線を消してカード一覧へ戻さない
+- 明示graphがないfallbackでは、Goalを起点にOutcome、Task、Artifact / Evidenceの確実な関係だけを配置する
+- Outcome は本文を並べず、人が識別できる短い意味ラベルへ変換する。原文は選択時の詳細に残す
+- Outcome を省略しない。Desktop は横方向の成果マップ、Mobile は全ノードを保った縦方向のツリーへ変換する
+- 明示された Outcome Trace の Task 参照と evidence file、Task の `blockedBy` だけを edge にする
+- 推測した関連や fallback edge を表示しない
+- node 選択時は要点と1-hopの関連ノードだけを Inspector に表示する。「上流」「下流」を連結した長文として表示しない
+- Goal 選択時はマップ自体が詳細を担うため、重複する Inspector を表示しない
+- Arrow、Home、End、Enter、Escape で node を移動できる
 - 固定Phaseと固定Taskだけを算定可能な進捗として扱い、推測の百分率を表示しない
 - task directory配下の通常ファイルを成果物metadataとして再帰収集する。symlinkは追跡せず、Viewer出力と一時ファイルは除外する
 - 生成済みHTMLにsnapshotを埋め込むため、追加サーバーなしで `file://` 表示できる
 - `--serve --watch` では `roadmap-snapshot.json` をpollingし、source内容または表示対象artifact metadataが変化したときだけ自動更新する
-- 手動で複数Markdown/JSONをドラッグ&ドロップして確認可能
-- 選択したMarkdownは、HTMLをescapeした自己完結の整形プレビューと原文を切り替えて確認できる
+- 単一 task 表示では手動のMarkdown/JSON読込やJSON出力を提供しない
+- Markdown全文は第一画面へ表示しない。source-boundの要約と正本への導線は隠さない
+
+### Codemap Viewer（workspaceコード地図）
+- `codemap.json` と同じpayloadを既存Viewer templateの専用modeで表示する
+- lane別column、node filter、right inspectorでcaller / impact / guarding testを1-hopずつ辿る
+- verified relationは `path:line` evidenceを表示し、unknown relationは破線とreasonを併記する
+- task Roadmapのbrief-first contractや `graph-map.md` routeを置き換えない
+- desktopはgraph + right inspector、狭幅はinspectorを下段、mobileはcolumn canvasをhorizontal scrollで保持する
 
 ### Plan Viewer（計画ビューア）
 - Markdownレンダリング（見出し、リスト、コードブロック）
@@ -165,3 +222,4 @@ Claude Code:
 
 - @context/workflow-rules.md（HTML Viewer Toolsセクション）
 - @context/memory-file-formats.md
+- @context/codemap.md

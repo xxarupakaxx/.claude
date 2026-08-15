@@ -2086,6 +2086,13 @@ class NetworkBoundaryTests(unittest.TestCase):
 class AdapterAndSurfaceTests(unittest.TestCase):
     def test_editorial_companion_contracts_preserve_canonical_owners(self) -> None:
         skills = Path(__file__).resolve().parents[2]
+        shared_skills = (
+            skills.parent.parent / ".codex" / "skills",
+            skills.parent.parent / ".claude-global" / "skills",
+        )
+        for relative_path in ("viewing-plans/SKILL.md", "generate-state-diagram/SKILL.md"):
+            bodies = [(root / relative_path).read_bytes() for root in shared_skills]
+            self.assertEqual(bodies[0], bodies[1], relative_path)
         state = (skills / "generate-state-diagram" / "SKILL.md").read_text(encoding="utf-8")
         contract = state.split("<!-- state-diagram-editorial-companion:start -->", 1)[1].split(
             "<!-- state-diagram-editorial-companion:end -->", 1
