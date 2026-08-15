@@ -79,6 +79,24 @@ python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --w
 
 `--serve` は既定で `127.0.0.1` にbindし、port `0` で空きポートを自動割当する。複数セッションで同時に使う場合は、各セッションの `${MEMORY_DIR}/memory/<task>` を分ける。固定portが必要な時だけ `--port <port>` を指定する。
 
+<!-- roadmap-editorial-companion:start -->
+### 2.5 補助説明図を選ぶ（条件付き）
+
+`roadmap.html` を先に完成させる。
+
+すべての実行で、Roadmap だけでは答えられない別の読者の問いが残るかを評価する。
+
+責務、判断、リスク、引き継ぎなどを空間的なグループで短く説明できる場合だけ、`visualizing-work` を経て `diagram-design` を呼び、`92_visual_explanation.md` を作る。
+
+別の canonical owner が `92_visual_explanation.*` を使用済みなら、`visualizing-work` の命名規則に従い、次に空いている番号の visual explanation path を使う。
+
+静的 HTML が理解時間を短くする場合だけ、選んだ番号に対応する visual explanation HTML も作る。
+
+補助図では Roadmap の task 順序、進捗、Concept Map を描き直さない。
+
+不要なら visual explanation を作らず、判断理由を `05_log.md` に残す。
+<!-- roadmap-editorial-companion:end -->
+
 ### 3. MCP Apps view-plan 呼び出し（詳細確認用）
 
 `mcp__workflow-html-app__view-plan` ツールを呼び出し:

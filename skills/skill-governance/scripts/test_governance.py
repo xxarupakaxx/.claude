@@ -2084,7 +2084,7 @@ class NetworkBoundaryTests(unittest.TestCase):
 
 
 class AdapterAndSurfaceTests(unittest.TestCase):
-    def test_state_diagram_companion_contract_preserves_canonical_owner(self) -> None:
+    def test_editorial_companion_contracts_preserve_canonical_owners(self) -> None:
         skills = Path(__file__).resolve().parents[2]
         state = (skills / "generate-state-diagram" / "SKILL.md").read_text(encoding="utf-8")
         contract = state.split("<!-- state-diagram-editorial-companion:start -->", 1)[1].split(
@@ -2094,17 +2094,36 @@ class AdapterAndSurfaceTests(unittest.TestCase):
             "`91_state_diagram.md` と `91_state_diagram.html` を先に完成させる。",
             "`92_visual_explanation.md`",
             "別の読者の問い",
+            "次に空いている番号の visual explanation path",
             "状態図、状態遷移図、Mermaid フローを描き直さない。",
         ):
             self.assertIn(required, contract)
+        roadmap = (skills / "viewing-plans" / "SKILL.md").read_text(encoding="utf-8")
+        roadmap_contract = roadmap.split("<!-- roadmap-editorial-companion:start -->", 1)[1].split(
+            "<!-- roadmap-editorial-companion:end -->", 1
+        )[0]
+        for required in (
+            "`roadmap.html` を先に完成させる。",
+            "`92_visual_explanation.md`",
+            "別の読者の問い",
+            "次に空いている番号の visual explanation path",
+            "Roadmap の task 順序、進捗、Concept Map を描き直さない。",
+        ):
+            self.assertIn(required, roadmap_contract)
         visualizing = (skills / "visualizing-work" / "SKILL.md").read_text(encoding="utf-8")
         self.assertIn(
-            "or `generate-state-diagram` has completed `91_state_diagram.*` and a distinct reader question remains",
+            "`generate-state-diagram` has completed `91_state_diagram.*` and a distinct reader question remains",
+            visualizing,
+        )
+        self.assertIn(
+            "`viewing-plans` has completed `roadmap.html` and a distinct reader question remains",
             visualizing,
         )
         self.assertNotIn("its canonical artifact is already complete", visualizing)
         adapter = (skills / "diagram-design" / "SKILL.md").read_text(encoding="utf-8")
         self.assertIn("never redraws canonical states, transitions, or Mermaid flows", adapter)
+        self.assertIn("never redraws canonical Roadmap task order, progress, or Concept Map", adapter)
+        self.assertIn("next available numbered visual explanation paths", adapter)
 
     def test_platform_invocation_adapters(self) -> None:
         registry, findings = governance.load_registry(governance.DEFAULT_REGISTRY)

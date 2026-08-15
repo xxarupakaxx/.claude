@@ -84,7 +84,10 @@ Choose the delivery surface:
 
 - Markdown with a compact visual block
 - static HTML
-- `diagram-design` static editorial sidecar when spatial grouping materially reduces comprehension time and either no specialized skill owns the artifact or `generate-state-diagram` has completed `91_state_diagram.*` and a distinct reader question remains
+- `diagram-design` static editorial sidecar when spatial grouping materially reduces comprehension time and one of these conditions holds:
+  - no specialized skill owns the artifact;
+  - `generate-state-diagram` has completed `91_state_diagram.*` and a distinct reader question remains; or
+  - `viewing-plans` has completed `roadmap.html` and a distinct reader question remains
 - interactive HTML
 - workflow-html-app viewer
 - image or canvas
@@ -122,6 +125,7 @@ If a viewer, browser, or image generator was required but unavailable, save the 
 - Use `generate-state-diagram` when the chosen representation is a static state or flow diagram.
 - Use `generate-state-diagram-3d` when the chosen representation is a layered technical map or timeline replay.
 - After `generate-state-diagram` completes `91_state_diagram.*`, use `diagram-design` only for a distinct reader question; the sidecar supplements its canonical output and never duplicates state or flow diagrams.
+- After `viewing-plans` completes `roadmap.html`, use `diagram-design` only for a distinct reader question; the sidecar supplements its canonical output and never duplicates Roadmap task order, progress, or Concept Map.
 - Use `generate-verification-guide` when the artifact is a checkable manual verification path.
 - Use `research` or deep-research style investigation when the visual explanation depends on external facts, unfamiliar domains, or design precedents.
 
@@ -129,9 +133,11 @@ If a viewer, browser, or image generator was required but unavailable, save the 
 
 Save outputs in the active task memory directory when one exists:
 
-- `92_visual_explanation.md`: explanation, visual grammar, sources, and reading guide
-- `92_visual_explanation.html`: optional standalone or interactive artifact
-- `92_visual_data.json`: optional structured data for replay, dashboard, map, or generated view
+- `92_visual_explanation.md`: default explanation, visual grammar, sources, and reading guide
+- `92_visual_explanation.html`: default optional standalone or interactive artifact
+- `92_visual_data.json`: default optional structured data for replay, dashboard, map, or generated view
+
+When another canonical owner already has a distinct visual explanation in the task directory, use the next available numbered visual explanation path instead of overwriting it.
 
 Use different filenames only when the surrounding workflow already has a stronger convention.
 

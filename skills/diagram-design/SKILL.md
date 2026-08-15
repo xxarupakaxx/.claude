@@ -19,12 +19,15 @@ Use this skill only when all conditions hold:
 - Spatial grouping materially helps explain a small comparison, timeline, causal, ownership, or concept view.
 - The output is not a workflow Roadmap, canonical state or flow diagram, layered technical map, timeline replay, or viewer integration.
 - When `generate-state-diagram` calls this adapter, `91_state_diagram.*` is complete and the sidecar answers a distinct reader question.
+- When `viewing-plans` calls this adapter, `roadmap.html` is complete and the sidecar answers a distinct reader question.
 
 Otherwise return to `visualizing-work` or use the specialized owner skill.
 
 ## Required Output
 
 Always create or update the active task's `92_visual_explanation.md` first. Follow the `visualizing-work` artifact contract: explain the visual grammar, sources, confidence, and omissions in readable Markdown.
+
+When a distinct companion already occupies that path, use the next available numbered visual explanation paths instead of overwriting it.
 
 Create `92_visual_explanation.html` beside it only when static markup makes the answer faster to understand. Put the answer in the first visible region, never an onboarding page or style guide.
 
@@ -33,7 +36,7 @@ Create `92_visual_explanation.html` beside it only when static markup makes the 
 - Use only local evidence supplied to the task and a system font stack with inline CSS.
 - Do not use JavaScript, event attributes, iframes, `foreignObject`, any SVG, external stylesheets, images or icons, web fonts, URL onboarding, browser automation, Playwright export, or upstream scripts.
 - Do not create or modify shared style guides, global configuration, plugin caches, or viewer servers.
-- Write only the task-local artifact paths above.
+- Write only the selected task-local visual explanation paths above.
 - Escape evidence-derived text for its exact HTML context. Keep anything unsafe in the Markdown explanation.
 - Use labels, shape, and text in addition to color. Include a visible text summary or link to the Markdown fallback in every HTML artifact.
 
@@ -52,3 +55,4 @@ Create `92_visual_explanation.html` beside it only when static markup makes the 
 - `generate-state-diagram-3d` owns layered technical maps and timeline replay artifacts.
 - This adapter owns only an optional task-local editorial sidecar.
 - After `generate-state-diagram`, this adapter never redraws canonical states, transitions, or Mermaid flows.
+- After `viewing-plans`, this adapter never redraws canonical Roadmap task order, progress, or Concept Map.

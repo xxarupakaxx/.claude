@@ -316,7 +316,7 @@
       "relative_path": "diagram-design",
       "resolved_name": "diagram-design",
       "root_id": "claude",
-      "tree_sha256": "ead02ce0a714259efaa83f9e926a2bcb35ee9850de0d16ade4e15fa47930d054"
+      "tree_sha256": "789f7dbccb719a1a1688dbc918f92c3037926f7005a6372204b28973eb7363dc"
     },
     {
       "classification": "preexisting-unclassified",
@@ -379,7 +379,7 @@
       "relative_path": "generate-state-diagram",
       "resolved_name": "generate-state-diagram",
       "root_id": "claude",
-      "tree_sha256": "05760c919ae4a8773c42642c1aa0b9298766b2ab3b8610f320e6dae8d1440428"
+      "tree_sha256": "bcaa34deaa975c3d1b9af3257f99ddb81ab027182f94d10078f8a11e135107b4"
     },
     {
       "classification": "preexisting-unclassified",
@@ -709,6 +709,15 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
+      "relative_path": "reverse-engineering-specifications",
+      "resolved_name": "reverse-engineering-specifications",
+      "root_id": "claude",
+      "tree_sha256": "da2e2b205bfeb586c5b30c0edbccd7e28dbb3e103737745584309c8566328dfd"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
       "relative_path": "review-animations",
       "resolved_name": "review-animations",
       "root_id": "claude",
@@ -796,7 +805,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "claude",
-      "tree_sha256": "91d0ea41877dcc4d086164efd5a254c0984f5ef251bfdfebef83c4e587d9b35a"
+      "tree_sha256": "490d73d347d693df0acaa4559f7726ee47dd6f52277b2e9865d69ef11a0f31db"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1012,7 +1021,7 @@
       "relative_path": "viewing-plans",
       "resolved_name": "viewing-plans",
       "root_id": "claude",
-      "tree_sha256": "a2de3632c4e55d2780d62d8bcf1dd5430769d8a8c7b567479e9afc6f4eeaa077"
+      "tree_sha256": "03e8ca1abd2d8ceaba240886321691a0b6a0e62f079f558e0581af2f9e12fb6b"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1021,7 +1030,7 @@
       "relative_path": "visualizing-work",
       "resolved_name": "visualizing-work",
       "root_id": "claude",
-      "tree_sha256": "9b6d7e31005e0e8811e5b7cb8b42f01a7993a2a11d16b9f28aea2c34544a4d25"
+      "tree_sha256": "470f32e18dbc8d4f01468d6be7a4b834c01e722b800a1564308d1f716f3bd43a"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1498,7 +1507,7 @@
       "relative_path": "diagram-design",
       "resolved_name": "diagram-design",
       "root_id": "codex",
-      "tree_sha256": "ead02ce0a714259efaa83f9e926a2bcb35ee9850de0d16ade4e15fa47930d054"
+      "tree_sha256": "789f7dbccb719a1a1688dbc918f92c3037926f7005a6372204b28973eb7363dc"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1561,7 +1570,7 @@
       "relative_path": "generate-state-diagram",
       "resolved_name": "generate-state-diagram",
       "root_id": "codex",
-      "tree_sha256": "39fcb370d645d8685535a3961fde16b4b09b432ad59983412e3f675d5038c983"
+      "tree_sha256": "8e803c75d0029fd0d6810468ce2b9e88df0c3b2cb0f2513f0c055b3beb582271"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2017,6 +2026,15 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
+      "relative_path": "reverse-engineering-specifications",
+      "resolved_name": "reverse-engineering-specifications",
+      "root_id": "codex",
+      "tree_sha256": "da2e2b205bfeb586c5b30c0edbccd7e28dbb3e103737745584309c8566328dfd"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
       "relative_path": "review-animations",
       "resolved_name": "review-animations",
       "root_id": "codex",
@@ -2113,7 +2131,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "codex",
-      "tree_sha256": "71a75fd31f7d5b30c22aed17223b831cb04a79baf5636a4bd0dbf127954a5d8a"
+      "tree_sha256": "95d56db58743de01c43a85dc3e8a8aaf349aa0089e7a0eb6b3ffa8715275d9b0"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2356,7 +2374,7 @@
       "relative_path": "viewing-plans",
       "resolved_name": "viewing-plans",
       "root_id": "codex",
-      "tree_sha256": "bff125024d1b45c679d012bd3a4bd75833c8c29034eeea6b9f0fc70e4c869072"
+      "tree_sha256": "3262bda754275ba53bd22c30c8e1e4eb76385514721fd7cf357feac95d53b9da"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2365,7 +2383,7 @@
       "relative_path": "visualizing-work",
       "resolved_name": "visualizing-work",
       "root_id": "codex",
-      "tree_sha256": "9b6d7e31005e0e8811e5b7cb8b42f01a7993a2a11d16b9f28aea2c34544a4d25"
+      "tree_sha256": "470f32e18dbc8d4f01468d6be7a4b834c01e722b800a1564308d1f716f3bd43a"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2449,6 +2467,6 @@
       "tree_sha256": "dce15695c4c98b3e8fd266fbab8845dca33a09e7540d2b1f1c626401ae734fa4"
     }
   ],
-  "registry_sha256": "3fcefdfc915b6699f1097e0f62f1fe2a305aa078348b22d46dbcd240d14aa183",
+  "registry_sha256": "b8dc9fc9dc310ea311887cd82c0e4624ebc0f9ebb82e56729f540efd527e0804",
   "schema_version": 2
 }

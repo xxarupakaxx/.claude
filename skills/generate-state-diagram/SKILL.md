@@ -206,7 +206,9 @@ mcp__workflow-html-app__view-diagram(
 
 因果、責務、比較、引き継ぎなどを空間的なグループで短く説明できる場合だけ、`visualizing-work` を経て `diagram-design` を呼び、`92_visual_explanation.md` を作る。
 
-静的 HTML が理解時間を短くする場合だけ `92_visual_explanation.html` も作る。
+別の canonical owner が `92_visual_explanation.*` を使用済みなら、`visualizing-work` の命名規則に従い、次に空いている番号の visual explanation path を使う。
+
+静的 HTML が理解時間を短くする場合だけ、選んだ番号に対応する visual explanation HTML も作る。
 
 補助図では状態図、状態遷移図、Mermaid フローを描き直さない。
 
