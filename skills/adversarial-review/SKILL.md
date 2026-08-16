@@ -1,6 +1,6 @@
 ---
 name: adversarial-review
-description: 重要判断（アーキテクチャ・セキュリティ・性能クリティカル変更）に対し、Red(攻撃側) → Blue(防御側) → Auditor(審判) の3エージェントで多角検証する。auto-reviewing-pre-pr より高コストなので、ユーザーが明示的に呼び出すか auto-reviewing が ESCALATE した場合のみ起動。「アドバーサリアルレビューして」「Red/Blueで検証」「敵対的レビュー」等の依頼に対応。
+description: 重要判断（アーキテクチャ・セキュリティ・性能クリティカル変更）に対し、Redのfindingを同じBlueへ逐次渡し、全件照合後にAuditorが審判する3エージェントレビュー。通知とdurable queueを分離し、protocol failure時はbatch直列へ戻る。auto-reviewing-pre-pr より高コストなので、ユーザーが明示的に呼び出すか auto-reviewing が ESCALATE した場合のみ起動。「アドバーサリアルレビューして」「Red/Blueで検証」「敵対的レビュー」等の依頼に対応。
 context: current
 ---
 
@@ -8,8 +8,12 @@ context: current
 
 ## 概要
 
-通常レビューでは検出しづらい「reviewer のバイアス」を相互チェックするため、
-Red（悲観派）→ Blue（楽観派）→ Auditor（審判）の順で 3 段レビューを行う。
+通常レビューでは検出しづらい「reviewer のバイアス」を相互チェックする。
+Red（悲観派）がfindingを確定するたびに同じBlue（楽観派）へ渡し、BlueがRed完了前から独立検証する。
+Red EOFとBlue全応答を照合して固定snapshotを作った後、Auditor（審判）が最終判定する。
+
+streamingは待ち時間を減らす最適化であり、正しさの前提ではない。
+`SendMessage` による同一 agent への follow-up や agent thread が部分故障した場合は、保存済みfindingから従来のbatch直列へ降格する。
 
 ## モデル選択（コスト最適化）
 
@@ -43,23 +47,91 @@ Agent Tool では通常 `model` を省略し、親セッションのモデルを
 git diff $BASE_BRANCH > /tmp/adv_diff.patch
 git diff $BASE_BRANCH --name-only > /tmp/adv_files.txt
 mkdir -p ${MEMORY_DIR}/memory/<task>/adv
+touch ${MEMORY_DIR}/memory/<task>/adv/queue.jsonl
 ```
 
 CLAUDE.md と PJ ルールを読み込んで、Phase 2 のプロンプトに含める。
+leadを`queue.jsonl`、`red.jsonl`、`blue.jsonl`の唯一のwriterにする。
+RedとBlueはfinding/responseをleadへ返し、共有queueを直接編集しない。
+レビューcycleごとに`cycle_id`（例: `C01`）を発行し、RedとBlueの起動promptへ渡す。
 
-### Phase 2: Red 起動（直列、最初は Red 単独）
+### Event contract
 
-Task ツールで `red-reviewer` を起動。出力（JSONL）を `${MEMORY_DIR}/memory/<task>/adv/red.jsonl` に保存。
+`adv/queue.jsonl`はappend-onlyのprotocol logであり、1行を1 JSON objectにする。
 
-### Phase 3: Blue 起動
+| event | 必須key | 用途 |
+|---|---|---|
+| `finding` | `cycle_id`, `finding_id`, `payload` | Red findingを保存する |
+| `blue_response` | `cycle_id`, `red_finding_id`, `payload` | Blue responseを保存する |
+| `ack` | `cycle_id`, `red_finding_id`, `stage` | leadがresponseを保存したことを示す |
+| `red_eof` | `cycle_id`, `finding_ids`, `count` | Redの全finding IDを固定する |
+| `reconcile` | `cycle_id`, `red_ids`, `blue_ids`, `missing_blue_ids`, `duplicate_ids`, `status`, `mode` | Auditor前の完全性を証明する |
 
-`red.jsonl` を入力として Task ツールで `blue-reviewer` を起動。
-出力を `${MEMORY_DIR}/memory/<task>/adv/blue.jsonl` に保存。
+例:
 
-### Phase 4: Auditor 起動
+```jsonl
+{"event":"finding","cycle_id":"C01","finding_id":"R001","payload":{"role":"red","finding_id":"R001","file":"src/api/users.ts","line":42,"severity":"CRITICAL","claim":"IDOR可能性","attack_vector":"他人のuserIdを送信","confidence":0.85}}
+{"event":"blue_response","cycle_id":"C01","red_finding_id":"R001","payload":{"role":"blue","red_finding_id":"R001","red_claim_ref":"src/api/users.ts:42","verdict":"AGREE","reason":"スコープ検証なし","counter_evidence":null,"adjusted_severity":"CRITICAL","confidence":0.9}}
+{"event":"ack","cycle_id":"C01","red_finding_id":"R001","stage":"blue_response_persisted"}
+{"event":"red_eof","cycle_id":"C01","finding_ids":["R001"],"count":1}
+{"event":"reconcile","cycle_id":"C01","red_ids":["R001"],"blue_ids":["R001"],"missing_blue_ids":[],"duplicate_ids":[],"status":"pass","mode":"streaming"}
+```
 
-`red.jsonl` と `blue.jsonl` を結合した JSON を入力として Task ツールで `auditor-reviewer` を起動。
-出力を `${MEMORY_DIR}/memory/<task>/adv/audit.jsonl` に保存。
+`cycle_id + finding_id`と`cycle_id + red_finding_id`を重複排除keyにする。
+完全に同じeventの再送は無視してよい。
+内容が異なる同一IDは`duplicate_ids`へ記録し、protocol failureとしてbatchへ降格する。
+agentからの返答は通知専用であり、queueへ保存されていないfinding/responseを処理済みとみなさない。
+`queue.jsonl`をtruncateせず、再開時は対象`cycle_id`の最終eventから未処理IDを復元する。
+
+### Phase 2: Red起動
+
+`Agent(subagent_type: "red-reviewer")` を起動する。
+Redには`cycle_id`、findingごとに返す形式、最後に`red_eof` manifestを返す契約を渡す。
+leadは受信したfindingを検証し、`finding` eventとしてqueueへ保存してからBlueへ渡す。
+
+### Phase 3: Blue逐次検証
+
+最初のfindingをqueueへ保存した時点で `Agent(subagent_type: "blue-reviewer")` を1件だけ起動する。
+後続findingは `SendMessage` で同じBlueへfollow-upとして渡す。
+findingごとにBlueを新規起動しない。
+
+Blue responseを受信したleadは、`blue_response`をqueueへ保存した後に`ack`を追記する。
+Blueがturnを完了していても、`SendMessage` で同じagentを継続できる間はfollow-upで続ける。
+同じagentを継続できない場合はprotocol failureとしてPhase 3.5へ進む。
+
+Redがno-findingで終了した場合はBlueを起動せず、空の`red.jsonl`と`blue.jsonl`、`red_eof`、`reconcile status: pass`を作成してAuditorへ進む。
+
+### Phase 3.5: protocol healthとbatch fallback
+
+次のいずれかをprotocol failureとする。
+
+- RedまたはBlueの起動失敗。
+- finding/responseが進まず、leadがtaskごとに定めて05_log.mdへ記録したwait budgetを超える。
+- queueを読み直せない、またはJSONLとしてparseできない。
+- 同一IDで内容が衝突する。
+- Red EOFのID集合とBlue responseのID集合が一致しない。
+- Blueが`status: incomplete`を返す。
+
+protocol failure時は、保存済みの一意なRed findingから`red.jsonl`を固定し、完成済み`red.jsonl`を入力としてBlueをbatch modeで実行する。
+既存Blueが健全なら `SendMessage` で同じagentを使い、停止している場合だけreplacement Blueを1件起動して理由を05_log.mdへ記録する。
+fallbackはfinding数に応じたfan-outを増やさない。
+
+`SendMessage` による follow-up が最初から使えない場合は、streamingを試さず従来のbatch直列を使う。
+
+### Phase 4: EOF reconciliationとsnapshot固定
+
+Redの`red_eof.finding_ids`と、queueへ保存した全`blue_response.red_finding_id`を集合比較する。
+重複、欠落、余分なIDが0件の場合だけ`reconcile status: pass`をqueueへ追記する。
+queueの一意なfinding/responseから`red.jsonl`と`blue.jsonl`を固定する。
+
+streamingまたはbatch fallbackのどちらでも、Auditor起動前にID集合が一致しなければならない。
+照合に失敗したままAuditorへ進めない。
+
+### Phase 4.5: Auditor起動
+
+固定済み`red.jsonl`と`blue.jsonl`を結合したJSONを入力として `Agent(subagent_type: "auditor-reviewer", model: "opus")` を起動する。
+streaming中のagent応答履歴はAuditor入力に含めない。
+出力を`${MEMORY_DIR}/memory/<task>/adv/audit.jsonl`に保存する。
 
 入力 JSON の組み立て例:
 
@@ -70,7 +142,14 @@ Task ツールで `red-reviewer` を起動。出力（JSONL）を `${MEMORY_DIR}
   "context": {
     "files": ["..."],
     "diff": "...",
-    "pj_rules": "..."
+    "pj_rules": "...",
+    "reconcile": {
+      "cycle_id": "C01",
+      "status": "pass",
+      "mode": "streaming",
+      "red_ids": ["R001"],
+      "blue_ids": ["R001"]
+    }
   }
 }
 ```
@@ -110,8 +189,10 @@ ADOPT の全件修正後、再度 Adversarial Review を回す（最大 2 サイ
 
 ## 並列化の方針
 
-- **Red 単独 → Blue 単独 → Auditor 単独**（直列）
-- 並列化せず、前段の出力を必ず次段に渡す
+- Redのfinding生成とBlueの検証だけをpipeline化する。
+- Blueは1 agentだけを使い、findingごとのfan-outを行わない。
+- AuditorはRed EOFとBlue全応答のbarrier後に単独で起動する。
+- streamingが不健全ならbatch直列へ戻す。
 - ファイル単位で並列化したい場合は、各サイクルで別ファイル群を扱う
 
 ## コスト試算（参考）
@@ -124,6 +205,11 @@ ADOPT の全件修正後、再度 Adversarial Review を回す（最大 2 サイ
 ## 禁止事項
 
 - Red をスキップして Blue から始めること
+- agent応答履歴だけを監査の正本にすること
+- queueへ保存する前にfinding/responseを処理済みとみなすこと
+- Red EOFとBlue response IDの照合前にAuditorを起動すること
+- findingごとにBlue agentを新規起動すること
+- protocol failureを無視して不完全なstreaming結果をAuditorへ渡すこと
 - Auditor の verdict を主観で書き換えること
 - ESCALATE をユーザーに見せずに勝手に判定すること
 - **Phase 5 のサマリーをチャット出力せずに Phase 6（修正）や完了報告へ進むこと**

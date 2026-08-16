@@ -40,7 +40,7 @@ Phase 0 ─→ Phase 1 ─→ Phase 2 ─→ Phase 3 ─→ Phase 4 ─→ Phase
   - **IMPORTANT≥3 or NEEDS_DEEPER_REVIEW=true**: Stage 2（auto-reviewing-pre-pr 相当）に**昇格**
 - 標準: `auto-reviewing-pre-pr` で規模別ラウンド + 収束判定マトリクス (CONVERGED/CONTINUE/ESCALATE/ABORT)
   - **ESCALATE 時**: ユーザー判断で `adversarial-review` に **昇格**可能
-- 深掘り (重要判断): `adversarial-review` で Red(攻撃) → Blue(防御) → Auditor(審判)
+- 深掘り (重要判断): `adversarial-review` で Red findingを同じBlueへ逐次渡し、EOF照合後にAuditor(審判)を起動
   - **adversarial 出力は `adv/*.jsonl` に格納**。issues/ には書き込まない。auto に戻す場合は ADOPT/UPGRADE の指摘を手動で issues/ に転記する必要がある
 
 ### Plugin / Skill / Agent Routing
@@ -79,7 +79,7 @@ Phase の順序はこのファイルを SSoT とする。一方、各Phaseで **
 | **HTML Viewer Tools** | ツール | 計画・ログ・図をインタラクティブHTML化（後述セクション参照） | 2, 5 |
 | `auto-reviewing-pre-pr` | スキル | 規模別ラウンド + 収束判定マトリクス（CRITICAL=0 or MINORのみで合格） | 4 |
 | `sequential-review-pre-pr` | スキル | 2段階レビュー（Stage 1: prd/rule-validator/arch → Stage 2: 全観点）。spec違反時は Stage 2 をスキップしコスト1/5 | 4（軽量〜中規模） |
-| `adversarial-review` | スキル | Red(攻撃) → Blue(防御) → Auditor(審判) の3-agent 直列レビュー。重要判断時のみ起動 | 4（重要判断時） |
+| `adversarial-review` | スキル | RedとBlueを逐次連携し、durable queueのEOF照合後にAuditorが判定する3-agentレビュー。protocol failure時はbatch直列へ戻る | 4（重要判断時） |
 | `compounding-knowledge` | スキル | 知見を構造化して solutions/ に保存。**`phases:` フィールド必須** | 5.5 + 自動トリガー |
 | `exploring-codebase` | スキル | 4並列エージェントでコードベース調査 | 1 |
 | `brainstorming` | スキル | 過去知見を含むアイデア探索 | 計画前 |
@@ -455,7 +455,7 @@ re_review_priority: high    # 次ラウンドで検出元 reviewer を優先起�
 - 厳格レビュー: 規模・重要度に応じて以下から選択
   - **軽量〜中規模・spec先行型**: `sequential-review-pre-pr`（Stage 1: prd/rule-validator/arch → 必要時のみ Stage 2 へ）
   - **標準・並列型**: `auto-reviewing-pre-pr`（規模別ラウンド + 収束判定マトリクス + issues/ frontmatter で Round 間文脈伝播）
-  - **重要判断・敵対的型**: `adversarial-review`（Red/Blue/Auditor 3-agent。多数決禁止、Auditor は Read で独立検証）
+  - **重要判断・敵対的型**: `adversarial-review`（Red findingを同じBlueへ逐次渡し、EOF barrier後にAuditorを起動。多数決禁止、Auditor は Read で独立検証）
   - **ユーザー対話型**: `interrogating-pre-pr`（質問攻め。設計意図の確認が重要な小規模変更向け）
 
 ### Phase 4.5: セッション終了前チェック（推奨）
