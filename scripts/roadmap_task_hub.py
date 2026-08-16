@@ -740,11 +740,13 @@ def classify_task(
     artifact_count: int,
 ) -> Literal["running", "waiting", "recent_completed"] | None:
     del artifact_count
+    if explicit_state == "archived":
+        return None
     if explicit_state == "completed":
         return "recent_completed" if age_minutes <= 24 * 60 else None
     if explicit_state == "waiting":
         return "waiting"
-    if explicit_state == "running":
+    if explicit_state in {"running", "active", "verifying"}:
         return "running" if provider_state == "active" and age_minutes <= 15 else "waiting"
     if provider_state == "active" and age_minutes <= 15:
         return "running"
