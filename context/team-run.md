@@ -28,9 +28,14 @@ Agent Teams や Workflow が使えない、または Gate を通らない場合�
 | Outcome Trace | Goal outcome から evidence までの対応 | `checkpoint.md` / Team Journal |
 | Team Journal | 周回をまたぐ決定、状態、失敗原因 | `${MEMORY_DIR}/memory/YYMMDD_<task>/team-journal.md` |
 | Review Heat | 変更リスクに対する checker / human gate | このファイル + workflow-rules |
+| Live Roadmap（任意） | 現在地を横で見るための補助ビュー | `${MEMORY_DIR}/memory/YYMMDD_<task>/roadmap.html` |
 
 Goal は目的、Sprint Contract は成果物の合格基準、Outcome Trace はその対応である。
-Team Journal は現在地であり、完了証明ではない。
+Team Journal は現在地であり、完了証明ではない。Review Heat は疑い方であり、実装計画ではない。Live Roadmap は見える化であり、正本ログではない。この分離を崩さない。
+
+Team Journal には Goal Gate の状態、選択した lane と省略理由、未対応 Goal outcome 数、holistic check の状態を置く。判定項目と trace schema はここへ複製せず、各 SSoT を参照する。
+
+コード変更では、これらに加えて `rules/complexity-budget.md` のComplexity Budgetを使う。計画時に要素別target / 信頼度 / 根拠、実装時にactual、レビュー時にvariance（`within target` / `justified variance` / `scope drift`）をTeam Journalへ残す。これはハード上限ではなく、要求外の機能・不要な抽象化・計画外の責務追加を止めて再計画するためのソフト予算である。文書のみの変更は `N/A (non-code)` とする。
 
 ## Capability Adapter
 
@@ -71,7 +76,24 @@ lead だけが役割の作成、task の割当、write scope の変更を決め�
 | 3 | 権限、外部書き込み、不可逆操作、重要設計 | independent review と必要な human gate |
 | 4 | security、契約、ESCALATE | `adversarial-review` または auditor を含む判断 |
 
-ファイル数だけで Heat や reviewer 数を決めない。
+ファイル数だけで Heat や reviewer 数を決めない。設定ファイルのみの変更でも、model routing、権限、外部書き込み、レビューゲートを変える場合は Heat 1 以上にする。
+
+### Reviewer Pack Selection
+
+`workflow-rules.md` のレビューアー選択ガイドを一般規則の正とし、team-run では次の候補から必要な観点だけを選ぶ。Heat は固定人数や固定 pack を要求しない。lead はまず direct validation を行い、その結果だけでは不足し、Delegation Gate を通る独立検証に価値がある場合だけ checker を追加する。
+
+| 変更領域 | 最初に選ぶ reviewer |
+|---|---|
+| CLAUDE.md / context / skills / commands | `rule-validator`、`docs-reviewer`、`arch-reviewer` |
+| model / agent routing | `cost-aware-llm`、`technical-evaluator`、`rule-validator`、`cost-monitor` |
+| security / auth / data access | `security-reviewer`、`api-contract-reviewer`、`data-flow-tracer` |
+| tests / validation harness | `test-reviewer`、`code-quality-reviewer` |
+| UI / browser behavior | `ui-ux-reviewer`、`a11y-reviewer`、Playwright smoke |
+| CI / deploy / env vars | `devops-reviewer`、`security-reviewer` |
+
+性能が主目的または性能劣化リスクがある場合は `perf-reviewer` を足す。
+
+`haiku` は reviewer の代替ではなく、commit文案、短い要約、定型整形、重複検出などの前段補助に限る。Review Heat を下げる理由として `haiku` を使わない。
 
 ## Context Boundary
 
@@ -93,6 +115,29 @@ lead への返答は compact summary にし、生の diff や長い log を流�
 3. Team Journal に lane、Gate の判定、選んだ capability、Review Heat、役割と省略理由、Contract の代替検証を記録する。
 4. 依存のない task だけを並列化する。write scope が重なる task は一人の writer に固定する。
 5. fresh な直接検証を先に行い、Review Heat に応じた最小の checker または human gate を実行する。
-6. Goal の Done、Outcome Trace の未対応0、holistic check、CRITICAL=0、修正済みまたは理由とリスクを記録した IMPORTANT、Team Journal の最終状態を確認して終了する。
+6. Exit Gate を満たして終了する。
 
-同じ blocker が3回続く、validation が同じ理由で3回失敗する、または material な scope 変更が必要な場合は、続行せず human escalation または Goal の blocked 判定を検討する。
+## Stop And Escalate
+
+次のいずれかに該当したら、lead は続行ではなく停止・相談・blocked 判定を検討する。
+
+- 同一 CRITICAL が3ラウンド残る。
+- validation が同じ理由で3回失敗する。
+- reviewer 間で出荷可否が割れ、lead が根拠を持って裁けない。
+- 外部書き込み、破壊的操作、認証/課金/個人情報、production 影響に踏み込む。
+- Goal、Phase 2 artifact、Sprint Contract、Review Heat のどれかを material に変更しないと Done に届かない。
+
+## Exit Gate
+
+team-run を完了扱いにするには、少なくとも次を満たす。
+
+- Goal の Done が現在の成果物で満たされている。
+- 最新の Goal が Goal Quality Gate を PASS している。
+- Sprint Contract または代替の検証結果が fresh に確認されている。
+- コード変更では、要素別Complexity Budgetの target / actual / variance / reason が fresh に確認されている。コード変更がなければ `N/A (non-code)` が記録されている。
+- 未対応 Goal outcome が0で、統合成果物の holistic check が PASS している。
+- CRITICAL が0件。
+- IMPORTANT は修正済み、または残す理由とリスクを Team Journal に記録済み。
+- Team Journal に最終状態、検証、レビュー結果、残存リスクが記録されている。
+- Live Roadmap を使っていた場合、最終 `roadmap.html` / `roadmap-snapshot.json` が同じメモリディレクトリ内に残っている。
+- 完了済み sub-agent を整理している。整理手段がない場合は Team Journal に終了状態を残す。
