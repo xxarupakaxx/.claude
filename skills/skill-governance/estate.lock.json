@@ -10,7 +10,7 @@
       "relative_path": "adversarial-review",
       "resolved_name": "adversarial-review",
       "root_id": "claude",
-      "tree_sha256": "278c6cbbb8effcea257737f3ef4834182a4935c3e9566c4110af31e49900a1f8"
+      "tree_sha256": "cbcd4b652226b98f54335c6e4812ab7105b2db5742a30e3134a47491e6eafdf9"
     },
     {
       "classification": "preexisting-unclassified",
@@ -398,6 +398,15 @@
       "resolved_name": "generating-setup-wizards",
       "root_id": "claude",
       "tree_sha256": "7b9852b2059f95ccbbb810aa19e5141933db9184d14483feb537529ce64c96e7"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "goal-setter",
+      "resolved_name": "goal-setter",
+      "root_id": "claude",
+      "tree_sha256": "41f379032942cf02bbd107dc7432e1f32912009916078f2272b47e4d34558338"
     },
     {
       "classification": "preexisting-unclassified",
