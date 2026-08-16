@@ -151,6 +151,7 @@ Phase の順序はこのファイルを SSoT とする。一方、各Phaseで **
 3. 05_log.md初期化、ユーザーの最初の指示を記録
 4. **Blueprint WUのCold-Start Briefがあれば読み込み**（blueprint.mdの該当WUセクション）
 5. `rg` / SQLite / memory index でタスク関連の過去知見を検索し、結果を05_log.mdに記録する。結果が不十分で、独立した探索文脈が必要な場合だけ `learnings-researcher` を起動する
+6. **コード変更時のCodemap preflight**: task memory directoryの `codemap.*` を `context/codemap.md` に従い、workspace rootを検証対象、task memory directoryをartifact出力先としてcheckする。JSONからcaller / impact / guarding test / evidenceを読み、missing、stale、mismatch、または質問に答える関係が不足する場合は、read-only調査で同directoryのmapをrefreshしてfreshになるまでproduction codeを編集しない。code変更後もrefresh/checkする。workspace rootやgit管理対象へcodemap一式を置かない。
 
 ## Phase 1: 調査
 
