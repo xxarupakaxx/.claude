@@ -177,7 +177,7 @@ python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --w
 
 ## 30_plan.md
 
-```markdown
+````markdown
 # 実装計画
 
 ## 概要
@@ -231,7 +231,7 @@ B -->|"生成する"| C
 ## リスク・懸念事項
 | リスク | 影響度 | 対策 |
 |-------|-------|------|
-```
+````
 
 Roadmap Viewerは各Taskの `目的`、`変更対象`、`実装根拠`、`実装`、任意の`実装図`、`成果物`、`検証`をsource-boundで表示する。記載がないfieldをViewer側で推測して埋めない。
 

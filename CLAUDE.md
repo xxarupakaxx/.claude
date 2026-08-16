@@ -112,7 +112,7 @@ Superpowers は強い道具だが既定の process gate ではない。
 | Task Workspace、Codemap preflight、live Roadmap | `context/codemap.md` と `skills/viewing-plans/SKILL.md` |
 | team-run composition / exit gate | `context/team-run.md` と `commands/team-run.md` |
 | 複数loopのgraph統治 | `context/graph-engineering.md` と `skills/graph-engineering/SKILL.md` |
-| model / service tier | `rules/model-routing.md` |
+| model / Cost Ladder | `rules/model-routing.md` |
 | code complexity budget | `rules/complexity-budget.md` |
 | ADR判定 | `rules/adr-criteria.md` |
 | secret管理の詳細（対象path） | `rules/security.md` |
