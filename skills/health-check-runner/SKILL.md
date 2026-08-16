@@ -5,6 +5,8 @@ description: Second Brain ヘルスチェックの点検項目（出典なし、
 
 # /health-check-runner — 月次点検を1コマンドにする
 
+> **スコープ**: このスキルは Obsidian Vault（`~/Notes/Vault`）でのみ有効。Vault 外のプロジェクトでは起動しない（`Daily/`、`Inbox/`、`Claude-note/` が存在せず、参照する絶対ルールと拡張フィールドの定義も Vault の `CLAUDE.md` にしかないため）。Vault 内には project scope の同名スキルがあり、そちらが優先される。
+
 [[Second Brain ヘルスチェック]] は点検項目を定義しているが、手で開いて確認する運用は続かないことが記録から分かっている（初回2026-06のみ）。
 このスキルは機械で測れる項目をスクリプトで測り、人間は結果を読んで判断だけする分担にする。
 **まず `CLAUDE.md` を読み、絶対ルール（追記のみ、新規はInbox配下、Claude-note不可侵）に従うこと。**

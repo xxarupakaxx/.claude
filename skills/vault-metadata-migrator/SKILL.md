@@ -5,6 +5,8 @@ description: 既存の知見ノートへ summary / related / depth（必要な�
 
 # /vault-metadata-migrator — 既存ノートへのメタデータ遡及付与
 
+> **スコープ**: このスキルは Obsidian Vault（`~/Notes/Vault`）でのみ有効。Vault 外のプロジェクトでは起動しない（`Daily/`、`Inbox/`、`Claude-note/` が存在せず、参照する絶対ルールと拡張フィールドの定義も Vault の `CLAUDE.md` にしかないため）。Vault 内には project scope の同名スキルがあり、そちらが優先される。
+
 新規ノートは `templates/` とスキャン系スキルが新スキーマ（CLAUDE.md「セカンドブレイン拡張フィールド」）を埋めるが、過去の蓄積は空のままである。
 このスキルは既存ノートへ `summary` / `related` / `depth` を少しずつ付与し、AIが本文を開かずにVaultを読める状態へ移行する。
 **まず `CLAUDE.md` を読み、絶対ルールと拡張フィールドの定義に従うこと。**

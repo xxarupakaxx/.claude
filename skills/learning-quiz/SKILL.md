@@ -5,15 +5,17 @@ description: payment基礎ノートや簿記3級シリーズなど合格基準�
 
 # /learning-quiz — 読んだつもりを潰す想起クイズ
 
+> **スコープ**: このスキルは Obsidian Vault（`~/Notes/Vault`）でのみ有効。Vault 外のプロジェクトでは起動しない（`Daily/`、`Inbox/`、`Claude-note/` が存在せず、参照する絶対ルールと拡張フィールドの定義も Vault の `CLAUDE.md` にしかないため）。Vault 内には project scope の同名スキルがあり、そちらが優先される。
+
 読み直しより想起（思い出す練習）のほうが記憶に定着する。
 このスキルは、合格基準つきの学習ノートを答え合わせの正本として、本文を見ずに答えるクイズを対話で回す。
 **まず `CLAUDE.md` を読み、絶対ルール（追記のみ、新規はInbox配下、Claude-note不可侵）に従うこと。**
 
-入力: $ARGUMENTS
+入力: スキル起動時にユーザーが添えた指示（以下「起動時の指示」。slash command 経由なら `$ARGUMENTS` がそこに入る）
 
 ## 1. スコープと出題対象の決定
 
-- $ARGUMENTS でスコープ指定（`payment` / `簿記` / 特定ノート名）。無指定なら **payment**。
+- 起動時の指示でスコープ指定（`payment` / `簿記` / 特定ノート名）。無指定なら **payment**。
 - 出題対象ノートの優先順:
   1. 過去クイズで「復習メモ」が残っているノート（`rg "## 復習メモ" Inbox/knowledge/` で検出）。再出題が最優先。
   2. 未出題のノート。過去の出題履歴は `Inbox/automation/quiz/quiz-*.md` の `related` から機械的に把握する。

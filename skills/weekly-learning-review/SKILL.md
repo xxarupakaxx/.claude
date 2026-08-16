@@ -5,15 +5,17 @@ description: 直近1週間のDaily、digest、trend、payment-trend、新規know
 
 # /weekly-learning-review — 今週の学びを1枚に固める
 
+> **スコープ**: このスキルは Obsidian Vault（`~/Notes/Vault`）でのみ有効。Vault 外のプロジェクトでは起動しない（`Daily/`、`Inbox/`、`Claude-note/` が存在せず、参照する絶対ルールと拡張フィールドの定義も Vault の `CLAUDE.md` にしかないため）。Vault 内には project scope の同名スキルがあり、そちらが優先される。
+
 毎朝の自動収集（digest、trend、payment-trend）は「読んで終わり」になりやすい。
 このスキルは週に一度、収集済みの情報を学びとして固め、[[AI-Agent-MOC]] や [[LayerX入社準備-MOC]] のグラフに接続し、メタデータの穴を可視化する。
 **まず `CLAUDE.md` を読み絶対ルールとセカンドブレイン拡張フィールドの定義に従うこと。** 地の文は `japanese-tech-writing` の規範で書く。
 
-入力: $ARGUMENTS
+入力: スキル起動時にユーザーが添えた指示（以下「起動時の指示」。slash command 経由なら `$ARGUMENTS` がそこに入る）
 
 ## 1. 対象週の決定と冪等性
 
-- $ARGUMENTS に週（`2026-W28`）や日付があればその週。なければ**今日を含むISO週**（月曜起点）。
+- 起動時の指示に週（`2026-W28`）や日付があればその週。なければ**今日を含むISO週**（月曜起点）。
 - 出力先: `Inbox/automation/weekly-review/weekly-review-YYYY-Www.md`。
 - 同じ週のノートが既にあれば新規作成せず、各節を**追記**で更新する（週の途中で何度実行してもよい）。
 

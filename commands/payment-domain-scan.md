@@ -4,7 +4,7 @@ description: LayerX入社準備として、Payment、B2B決済、法人カード
 
 # /payment-domain-scan — 毎朝のPaymentドメイン学習
 
-まず `AGENTS.md` と [[10_payment-domain-scan]] を読む。
+まず `CLAUDE.md` と [[10_payment-domain-scan]] を読む。
 Vaultの絶対ルール（リネーム禁止、削除禁止、既存ノートは原則追記、新規はInbox配下、wikilinkはファイル名ベース）を守る。
 このコマンドは、決済領域の知識を増やすだけではなく、ユーザー理解、仮説立案、開発、検証に使える材料を毎日残すために実行する。
 
@@ -12,7 +12,7 @@ Vaultの絶対ルール（リネーム禁止、削除禁止、既存ノートは
 
 - 今日の日付を JST, Asia/Tokyo で確定する。
 - 直近7日の `Inbox/automation/payment-trends/payment-trend-*.md` を確認し、既出URLと継続テーマを把握する。
-- 外部URL取得には network=**Full** が必要。
+- 外部URL取得には network=**Full** が必要（Codex Cloud Routine の設定。Claude Code では該当せず WebFetch/WebSearch をそのまま使う）。
 
 ## 1. 収集
 
@@ -54,9 +54,11 @@ Top 5〜7件を上限にする。
 今日の `Daily/YYYY-MM-DD.md` の `## 💭 メモ` から payment trend ノートへリンクを追記する。
 既に同じリンクがあれば重複させない。
 
-その後、`$one-page-concept-sketch` を実行し、今日のPaymentテーマ、業務フロー、顧客仮説または検証案を一枚に圧縮する。
-成果物は `Inbox/automation/concept-sketches/concept-sketch-YYYY-MM-DD-payment-domain-scan.md` に保存する。形式と品質条件は [[11_one-page-concept-sketch]] に従う。
+`one-page-concept-sketch` スキルは既定では実行しない。
+ユーザーが明示した場合、または別タスクとして十分な時間がある場合だけ実行する。
+実行する場合、成果物は `Inbox/automation/concept-sketches/concept-sketch-YYYY-MM-DD-payment-domain-scan.md` に保存する。形式と品質条件は [[11_one-page-concept-sketch]] に従う。
 payment trend ノートと `Daily/YYYY-MM-DD.md` の `## 💭 メモ` から `[[concept-sketch-YYYY-MM-DD-payment-domain-scan]]` へリンクを追記する。既に同じリンクがあれば重複させない。
+図解が有用だが重い場合は、payment trend ノートの `## 明日の候補` または `Inbox/automation/backlog.md` に後続候補として残す。
 
 ## 4. ガード
 
@@ -65,7 +67,7 @@ payment trend ノートと `Daily/YYYY-MM-DD.md` の `## 💭 メモ` から `[[
 - 機密情報、個人情報、APIキー、内部URLは転記しない。
 - 原文にないことを断定しない。
 - 法制度や規制は日付を明記する。
-- 日本語本文は `.agents/skills/japanese-tech-writing/SKILL.md` の規範に従う。
+- 日本語本文は `skills/japanese-tech-writing/SKILL.md` の規範に従う。
 
 ## 5. 検証と報告
 
@@ -74,6 +76,8 @@ payment trend ノートと `Daily/YYYY-MM-DD.md` の `## 💭 メモ` から `[[
 - 作成したノート、Topテーマ、用語メモ、concept sketchリンク、取得失敗があれば報告する。
 
 ## スケジュール設定
+
+> **注記**: 以下は Codex Cloud Routine 用の設定（`/schedule` コマンド、`service_tier`、network tier）であり、Claude Code には該当する機構がない。Claude Code では手動起動するか、`~/.claude/scheduled-tasks/` の仕組みを使う。取得失敗の原因を network tier に求めない。
 
 - `/schedule daily at 8:45am, run /payment-domain-scan on the obsidian-vault repo`
 - prompt: `/payment-domain-scan`

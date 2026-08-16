@@ -5,6 +5,8 @@ description: knowledgeノート全体のMOC到達性を機械判定し、どのM
 
 # /moc-gardener — MOCの地図を最新に保つ
 
+> **スコープ**: このスキルは Obsidian Vault（`~/Notes/Vault`）でのみ有効。Vault 外のプロジェクトでは起動しない（`Daily/`、`Inbox/`、`Claude-note/` が存在せず、参照する絶対ルールと拡張フィールドの定義も Vault の `CLAUDE.md` にしかないため）。Vault 内には project scope の同名スキルがあり、そちらが優先される。
+
 MOCは作った時点から古び始める。
 このスキルは、知見ノートがテーマの入口（MOC）から辿れる状態を機械的に点検し、接続漏れを繋ぐ。
 **まず `CLAUDE.md` を読み、絶対ルール（追記のみ、新規はInbox配下、Claude-note不可侵）に従うこと。**

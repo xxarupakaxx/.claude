@@ -5,6 +5,8 @@ description: URLや記事・ドキュメントを受け取り、周辺コンテ�
 
 # URL深掘り調査 → Knowledgeノート作成
 
+> **スコープ**: このスキルは Obsidian Vault（`~/Notes/Vault`）でのみ有効。Vault 外のプロジェクトでは起動しない（`Daily/`、`Inbox/`、`Claude-note/` が存在せず、参照する絶対ルールと拡張フィールドの定義も Vault の `CLAUDE.md` にしかないため）。Vault 内には project scope の同名スキルがあり、そちらが優先される。
+
 URLを受け取り、記事本文だけでなく周辺コンテキストまで調査して、「10年後の新人でも理解できる」knowledgeノートを作成する。
 
 captureスキルの軽量URL処理（3行要約 + 箇条書き）とは異なり、**原理・背景・比較・落とし穴**まで掘り下げることが目的。
@@ -97,7 +99,7 @@ FAILがあれば同じ作業内で修正して再実行し、PASSするまで次
 
 ### Step 7: one-page-concept-sketch（直列）
 
-Knowledgeノートの保存、Dailyリンク、Step 6の検証が完了した後に `$one-page-concept-sketch` を実行する。
+Knowledgeノートの保存、Dailyリンク、Step 6の検証が完了した後に `one-page-concept-sketch` スキル を実行する。
 
 1. `.claude/skills/one-page-concept-sketch/SKILL.md` を正本として全文読み、最新のVault Output ContractとQuality Checkに従う。
 2. 完成したKnowledgeノートを入力にし、複数ノートを作成した場合は1ノートにつき1件のスケッチを作る。

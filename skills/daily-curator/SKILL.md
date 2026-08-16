@@ -5,7 +5,9 @@ description: 一日分の写真・Gmail・カレンダー・Slack・Driveを横�
 
 # /daily-curator — Obsidian Vault 日次キュレーター
 
-あなたはこの Obsidian Vault の常駐キュレーター。**まず `AGENTS.md` を読み、絶対ルール（リネーム禁止・削除禁止・既存は追記のみ・新規はInbox配下・wikilinkはファイル名ベース）を厳守すること。** 詳細な役割定義は `Inbox/automation/playbooks/` を参照（[[AI-Bullpen-Vault]]）。
+> **スコープ**: このスキルは Obsidian Vault（`~/Notes/Vault`）でのみ有効。Vault 外のプロジェクトでは起動しない（`Daily/`、`Inbox/`、`Claude-note/` が存在せず、参照する絶対ルールと拡張フィールドの定義も Vault の `CLAUDE.md` にしかないため）。Vault 内には project scope の同名スキルがあり、そちらが優先される。
+
+あなたはこの Obsidian Vault の常駐キュレーター。**まず `CLAUDE.md` を読み、絶対ルール（リネーム禁止・削除禁止・既存は追記のみ・新規はInbox配下・wikilinkはファイル名ベース）を厳守すること。** 詳細な役割定義は `Inbox/automation/playbooks/` を参照（[[AI-Bullpen-Vault]]）。
 
 目的: **すべての情報をObsidianに集約し、AIができる範囲は自動で捌いて整理し、人間が判断すべきものだけをDailyに浮かせて検知させる。**
 
@@ -14,6 +16,7 @@ description: 一日分の写真・Gmail・カレンダー・Slack・Driveを横�
 - **処理ウィンドウ** = 直近の `Inbox/automation/digest/digest-*.md` の日付以降（無ければ過去26時間）。重複起票を避ける。
 - **時間予算**: scheduled/無人実行は通常30分以内にDaily可視化とdigestを残す。45分を超えそうなら広範な再スキャン、画像生成、PNG化、追加調査を止め、`[!]` backlog とdigestの未処理メモに切り替える。
 - **代替優先順位**: 1) 自分が動く必要のあるTODOのDaily/Linear反映、2) digestの短い実行記録、3) backlogの未処理理由、4) concept sketch。前段が残っている間に後段で時間を使い切らない。
+- **コネクタのツール名**: 以下の節に出る `list_events` / `search_threads` / `slack_search_public_and_private` / `list_recent_files` / `read_file_content` は Codex コネクタの短縮名である。Claude Code では `rules/tool-invocation.md` のとおり `mcp__<server>__<tool>` の完全修飾名でしか呼べない。対応する MCP が未接続なら、その節を**スキップして digest に理由を記録する**。「新着なし」と誤記録しない。
 
 ## 1. 写真 → Daily / ノート
 - `attachments/` に処理ウィンドウ内で追加された画像を `git log --since` / mtime で特定。
@@ -65,7 +68,7 @@ description: 一日分の写真・Gmail・カレンダー・Slack・Driveを横�
 - 個人情報・センシティブ情報はdigestに生で書かず要約/匿名化。
 
 ## 7.5 一枚絵
-- digest 作成後に `$one-page-concept-sketch` を実行し、その日の情報の流れ、残った判断点、人間が見るべき箇所を一枚に圧縮する。
+- digest 作成後に `one-page-concept-sketch` スキル を実行し、その日の情報の流れ、残った判断点、人間が見るべき箇所を一枚に圧縮する。
 - 成果物は `Inbox/automation/concept-sketches/concept-sketch-YYYY-MM-DD-daily-curator.md` に保存する。形式と品質条件は [[11_one-page-concept-sketch]] に従う。
 - `Daily/YYYY-MM-DD.md` の `## 💭 メモ` と digest から `[[concept-sketch-YYYY-MM-DD-daily-curator]]` へリンクを追記する。既に同じリンクがあれば重複させない。
 - ただし、digest作成後に残り時間が少ない、またはPNG/画像生成が10分以上詰まる場合は、画像完成を追わない。`## Text Board` だけを持つconcept sketchノート、またはdigest内の「図解代替メモ」に切り替え、Dailyにはそのノートだけをリンクする。
@@ -81,6 +84,8 @@ description: 一日分の写真・Gmail・カレンダー・Slack・Driveを横�
 - 時間切替した場合は、何を省略したか、代替成果物をどこに残したか、次回必要なら何を再開すべきかを1行で報告する。
 
 ## ⏰ スケジュール設定
+
+> **注記**: 以下は Codex Cloud Routine 用の設定（`/schedule` コマンド、`service_tier`、network tier）であり、Claude Code には該当する機構がない。Claude Code では手動起動するか、`~/.claude/scheduled-tasks/` の仕組みを使う。取得失敗の原因を network tier に求めない。
 - **モード: scheduled（無人）**。これが定期実行の本命。
   - prompt: `/daily-curator` ／ repo: `obsidian-vault`
   - cadence: **毎朝 08:00**（必須）。任意で夜 21:00 にもう1回（その日の写真・後で読むの取りこぼし回収）。
