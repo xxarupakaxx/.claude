@@ -5,6 +5,7 @@ Claude が plugin、skill、`Agent()`、`Workflow` を選ぶための routing SS
 - Phase 順序と品質 gate は `context/workflow-rules.md` を優先する。
 - model 選択は `rules/model-routing.md` を優先する。
 - `/team-run` のチーム構成・Review Heat・終了判定は `context/team-run.md` を優先する。
+- `/graph-engineering` の adoption boundary、contract、routing、state authority は `context/graph-engineering.md` を優先する。実行 harness は `team-run` を再利用する。
 - project の `AGENTS.md` / `CLAUDE.md` と project 固有設定は、この global routing より優先する。
 - route の入口は `skills/ask-skill-router/SKILL.md` とする。
 
@@ -41,6 +42,7 @@ Plugin が適用されても、それだけで `Agent()` を起動しない。pl
 - **Fresh implementation context**: route と acceptance が確定した実装単位は、必要な artifact の抽出だけを持って開始する。会話全文や未決の仮説を丸ごと引き継がない。
 
 `mapping-large-projects` は route が霧に包まれた大規模 effort の decision map であり、`team-run` は route と acceptance が既知で、共有状態と独立検証が価値を生む実行協調である。
+複数の独立 loop を auditable edge、typed state、異なる権限で統治する必要がある場合だけ、その上に `graph-engineering` を置く。単一 loop を graph と呼び替えない。
 
 ## Research Ticket Gate
 
@@ -115,10 +117,43 @@ Tracker、triage label、domain doc layout が hard dependency の route で設�
 Route 選択だけでは、次の操作を許可しない。
 
 - issue / PR / comment / label、Slack 等の対人送信、Calendar、Drive、production deploy、secret store の更新。
-- `git commit` / `git push`。明示された project policy またはユーザー承認に従う。
+- `git push` と PR 作成。明示された project policy またはユーザー承認に従う。
+- `git commit` は、実装・修正依頼に対して検証が成功し、project policy に禁止がなければ標準の完了手順として行う。
 - prototype branch や tracker artifact の作成。decision evidence と production artifact を分ける。
 
+権限errorやcontext不一致を、別 principal / company / profile への自動切替で回避しない。読み取り診断も現在の principal を明示し、切替が必要なら停止してユーザー確認を取る。`Agent()`、`Workflow`、plugin へ secret 実値、secret reference、認証済みsession情報を渡さない。
+
 実行前に対象、操作、本文または差分を確定する。`Agent()` や plugin へ委任しても、この gate は緩和されない。
+
+## Intent Routing Table
+
+`.claude` に実体がある route だけを載せる。ここに無い intent は責務境界表と Engineering Lanes で判断する。
+
+| User intent / signal | Primary skill / command route | 組み合わせる agent role | Notes |
+|---|---|---|---|
+| 高価値・複数ターンの協調実行、team-run、複数 role の連携 | `commands/team-run.md` + `context/workflow-rules.md` + `context/team-run.md` | `implementation-planner`、`implementer`、reviewers、`go-nogo-advisor` | Goal、Team Journal、Review Heat、協調のすべてが有用なときだけ使う |
+| 複数loopのfan-out/fan-in、auditable routing、checkpoint、failure isolation、node別権限 | `skills/graph-engineering/SKILL.md` + `context/graph-engineering.md`。実行は `team-run` を再利用 | contract に定義した worker、checker、judge | user-invoked。node を spawn する前に contract を検証する。単一 loop なら使わない |
+| 固定順序の specialist chain、ordered handoff、orchestrate | `commands/orchestrate.md` + `context/workflow-rules.md` | `requirement-parser`、`implementation-planner`、選択した reviewers | 共有状態より順序が重要なときに使う。Goal / Team Journal / Review Heat を跨いで保つなら `team-run` |
+| skill / workflow の選択に迷う、どの route を使うべきか | `skills/ask-skill-router/SKILL.md` | 既定ではなし | 重い flow に載せる前に user-invoked と model-invoked を分類する |
+| 第三者 Skill の発見、評判、provenance、全件 catalog、導入、更新、廃止 | `skills/skill-governance/SKILL.md`。read-only な estate 点検は `skill-stocktake` | 既定ではなし | read-only inventory は model-invoked。promotion / update / retirement / delete / runtime mutation は user-invoked かつ governance gate 必須 |
+| 複数実装・提案の匿名A/B比較 | ローカル artifact + `ab-judge` | `ab-judge` | 作成者情報を隠して `Report A` / `Report B` で独立評価し、attribution は判定後の別 Phase で扱う |
+| UX、UI、product flow、画面監査、デザインを洗練する | `skills/designing-ui-ux/SKILL.md`。同 Skill が `emil-design-eng`、`apple-design`、motion 系を必要な分だけ選ぶ | `ui-ux-reviewer`、`a11y-reviewer`、`implementer` | `designing-ui-ux` を canonical な design orchestrator として扱い、独立評価 gate を残す |
+| library / framework / SDK / cloud service の docs | `context7` | `technical-evaluator`、`implementation-planner` | 変化する API に対してコードを書く前に一次 docs を読む |
+| repository の architecture documentation | `deepwiki` | `architecture-explorer`、`dependency-mapper` | Phase 1 と計画深掘りで有用 |
+| GitHub の repo / PR / issue / CI | `commands/pr.md`、`commands/pr-watch.md`、`skills/pr-review/SKILL.md`、local `git` / `gh` | `code-quality-reviewer`、`test-reviewer`、`security-reviewer` | PR 作成と push は External Write Gate を通す |
+| Slack の読み取り、要約、下書き、返信、投稿 | `skills/alpaca-slack-style/SKILL.md` + 接続済み Slack tool | 告知は `docs-reviewer`、機微な投稿は `go-nogo-advisor` | 送信・投稿・返信は必ずユーザー確認を取る |
+
+## Routing Output
+
+route を選んだ後、lead は次を把握している状態にする。
+
+- primary の skill または command route
+- 実行前に読む focused skill
+- 委任または独立レビューが必要な場合だけ、その agent role
+- 外部操作の前に必要な承認
+- 最終 handoff 前に満たす completion gate
+
+`/team-run` では、これらと `context/team-run.md` の Review Heat を `commands/team-run.md` が定義する Team Journal に記録する。
 
 ## Fallbacks
 
