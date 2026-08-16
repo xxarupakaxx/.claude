@@ -23,10 +23,10 @@ globs: ["**/auth/**", "**/api/**", "**/middleware/**", "**/routes/**"]
 
 ## 機密情報
 
-- APIキー・シークレットをコードにハードコードしない
-- 環境変数を使用し、.envはgitignore
-- ログに機密情報を出力しない
-- エラーメッセージで内部情報を露出しない
+- secret 実値は 1Password の外へ永続化せず、コード・設定・`.env`・ログ・チャット・artifact・memory に書かない
+- CLI への受け渡しは `op://...` secret reference を親processで解決し、reference と解決結果を sub-agent / runner / 外部相談へ渡さない
+- 環境変数が必要な場合は 1Password から実行時だけ注入し、値を file や shell history に残さない
+- エラーメッセージで secret や内部情報を露出しない
 
 ## OWASP Top 10
 
