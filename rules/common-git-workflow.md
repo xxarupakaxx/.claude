@@ -6,6 +6,7 @@
 
 - git-cz形式: `<type>: <日本語の説明>`
 - type: feat, fix, refactor, docs, test, chore, perf, ci
+- 絵文字は使わない。prefix 以外は日本語で書く
 - 1コミット = 1つの論理的な変更
 - こまめにコミット（大きな変更を1コミットにまとめない）
 

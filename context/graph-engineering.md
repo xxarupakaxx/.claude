@@ -13,7 +13,7 @@ prompt → context → harness → loop → graph
 |---|---|---|
 | Prompt | 1 message | 各 skill / prompt |
 | Context | window に残す情報 | handoff artifact / state reference |
-| Harness | 1 pass | Codex runtime、tools、tests、reviewers |
+| Harness | 1 pass | Claude Code runtime、tools、tests、reviewers |
 | Loop | 1 run | `team-run`、Goal、Sprint Contract、Team Journal |
 | Graph | job 全体 | graph contract、node receipt、routing decision |
 

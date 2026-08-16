@@ -16,7 +16,7 @@ user-invoked。ユーザーが Graph Engineering、複数 loop の coordination�
 1. `context/workflow-rules.md`
 2. `context/graph-engineering.md`
 3. `context/agent-team-routing.md`
-4. `skills/team-run/SKILL.md`
+4. `commands/team-run.md`
 5. `context/team-run.md`
 
 project override がある場合は、その後に project の `CLAUDE.md` と `.claude/context/` を重ねる。

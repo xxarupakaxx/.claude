@@ -1,11 +1,11 @@
 ---
 name: config-mirror-sync
-description: "`~/.codex`・`~/.claude`の変更をObsidianボルト（`~/Documents/obsidian-vault`）へ反映する。Markdown抜粋ミラー（`_shared-ai/mirrors/`）とgit submodule（`.codex`/`.claude-global`）の両方が対象。「vaultに同期して」「obsidianに反映して」「ミラー更新して」等の依頼時、またはhome側でコミット・pushした直後にvault側も最新化したい場合に使用。**除外**: PJ内ドキュメント整合はproject-sync、単一ファイルの一時的なコピーは対象外。"
+description: "`~/.codex`・`~/.claude`の変更をObsidianボルト（`~/Notes/Vault`）へ反映する。Markdown抜粋ミラー（`_shared-ai/mirrors/`）とgit submodule（`.codex`/`.claude-global`）の両方が対象。「vaultに同期して」「obsidianに反映して」「ミラー更新して」等の依頼時、またはhome側でコミット・pushした直後にvault側も最新化したい場合に使用。**除外**: PJ内ドキュメント整合はproject-sync、単一ファイルの一時的なコピーは対象外。"
 ---
 
 # Config Mirror Sync — Obsidianボルトへの反映
 
-`~/.codex`・`~/.claude`は正本としてホームディレクトリに残したまま、Obsidianボルト（`~/Documents/obsidian-vault`）側の2種類の参照経路を最新化する。
+`~/.codex`・`~/.claude`は正本としてホームディレクトリに残したまま、Obsidianボルト（`~/Notes/Vault`）側の2種類の参照経路を最新化する。
 
 - **Markdown抜粋ミラー**（`_shared-ai/mirrors/`）: `commands/*.md`・`prompts/*.md`・`context/**/*.md`・`rules/**/*.md`・`skills/*/SKILL.md`だけを人間が読める形でコピーする。同期定義は`_shared-ai/sync-manifest.toml`。
 - **git submodule**（vault直下の`.codex`・`.claude-global`）: 設定ファイルやスクリプトも含めた実体を独立repoとして参照する。
@@ -19,7 +19,7 @@ description: "`~/.codex`・`~/.claude`の変更をObsidianボルト（`~/Documen
 ### 1. 現況確認
 
 ```bash
-VAULT=~/Documents/obsidian-vault
+VAULT=~/Notes/Vault
 git -C ~/.codex rev-parse HEAD   # 対象が.codexの場合。.claudeなら ~/.claude で確認
 git -C "$VAULT" submodule status
 ```

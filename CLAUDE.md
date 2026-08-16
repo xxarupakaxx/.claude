@@ -13,12 +13,12 @@
 - 同等の観測性と安全性がある場合は、MCP サーバーより CLI ツールを先に検討する。
 - Project `CLAUDE.md` と、対象ファイルに最も近い `CLAUDE.md` / `AGENTS.md` の追加制約を適用する。
 - ユーザーの実行依頼は、調査や計画だけを求められた場合を除き、依頼範囲の完了条件まで進める。途中報告だけで終了しない。
-- 軽微で低リスクな曖昧さは合理的な仮定で進める。結果を大きく変える選択、外部公開、不可逆操作、権限・課金・認証変更だけ確認する。確認が必要なときはエスパーせず `AskUserQuestion` で問う。
+- 軽微で低リスクな曖昧さは合理的な仮定で進める。結果を大きく変える選択、外部公開、不可逆操作、権限・課金・認証変更だけ確認する。確認が必要なときはエスパーせず `AskUserQuestion` で問う。複数解釈が成立する場合は黙って選ばず候補を提示し、よりシンプルな道があれば push back する。
 
 ## 実装と検証
 
 - 実装前に仮定、不明点、複数解釈、重要な trade-off を明示する。永続的な仕様判断は既存実装、test、文書、またはユーザー確認を根拠にする。
-- 要求を満たす最小の実装を選び、依頼外の機能、抽象化、設定、将来対応を足さない。
+- 要求を満たす最小の実装を選び、依頼外の機能、抽象化、設定、将来対応を足さない。シニアが見て「複雑すぎる」と言う実装は書き直す。
 - 対象に必要な行だけを変更し、無関係な整形、refactor、削除を行わない。
 - 成功条件を検証可能にし、再現、test、差分確認、task-level workflow check を含めて完了を判定する。
 - 再現 test は観測済みの失敗と既存契約だけを固定し、未確認の出力形式やerror型を新しい期待値にしない。既存 test file へ追加する際に既存 test を削除・上書きしない。
@@ -82,7 +82,7 @@ Skill は「常時強制する工程」ではなく、「必要なときに呼�
 起動権は次の2層に分ける。
 
 - **User-invoked**: `team-run`、`orchestrate`、`grill-me`、`blueprint`、`skill-governance`、`graph-engineering`、PRD化、issue分解、外部Skillの採用・更新・廃止、外部投稿やPR作成など、作業の進路や外部状態を大きく変えるもの。ユーザーの明示、または短い確認を挟んで使う。
-- **Model-invoked**: `research`、`tdd`、`diagnosing-bugs`、`code-review`、`modeling-domains`、`verification-loop`、`consult-gpt` など、現在の作業を小さく安全に進める規律。タスクに合う場合だけ使い、結果を短く報告する。
+- **Model-invoked**: `research`、`tdd`、`diagnosing-bugs`、`reviewing-code`、`modeling-domains`、`verification-loop`、`consult-gpt` など、現在の作業を小さく安全に進める規律。タスクに合う場合だけ使い、結果を短く報告する。
 
 ルーティングに迷うときは `ask-skill-router` を読む。
 原則は、巨大な自動flowに載せる前に、要求の不一致、共有語彙、TDD/feedback loop、設計の泥団子化のどれが実際のボトルネックかを切り分けること。
@@ -99,7 +99,7 @@ Superpowers は強い道具だが既定の process gate ではない。
 - Phase / Stepを持つ作業は、遷移前に所定artifactを保存する。配置とfrontmatterは`context/memory-file-formats.md`に従う。
 - code変更はTask WorkspaceのCodemap gateを編集前後に通す。複数Phaseでは同Workspaceをlive表示し、ユーザーへの案内前に`open "<absolute-path-or-URL>"`で実際に開く。`open`が失敗したら失敗内容と対象pathを報告する。詳細は`context/codemap.md`と`skills/viewing-plans/SKILL.md`に従う。
 - `/clear`後やcontextが空の場合は`.local/HANDOVER.md`と、直近memory directory（`${MEMORY_DIR}/memory/`配下の最新）の`05_log.md`から状態を復元する。
-- freshな直接検証を先に行い、変更リスクに合う最小の独立checkerを選ぶ。severityはCRITICAL / IMPORTANT / MINORの3階級とし、CRITICALは必ず、正しさ・一貫性に関わるIMPORTANT / MINORも原則修正する。純粋なスタイル・好みの指摘だけskipできる。review結果は`05_log.md`へ全件記録し、完了直後にチャットへsummaryを出す。
+- freshな直接検証を先に行い、変更リスクに合う最小の独立checkerを選ぶ。severityはCRITICAL / IMPORTANT / MINORの3階級とし、CRITICALは必ず、正しさ・一貫性に関わるIMPORTANT / MINORも原則修正する。純粋なスタイル・好みの指摘だけskipできる。review結果は`05_log.md`へ全件記録し、完了直後にチャットへsummaryを出す（severity別件数、CRITICAL / IMPORTANT の全件、ESCALATE項目の3点を必ず含める）。
 - code変更では計画時target、実装時actual、レビュー時varianceを記録する。必要な安全性、可読性、testを行数合わせで削らない。
 
 ## 正本map

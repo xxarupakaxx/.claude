@@ -453,3 +453,6 @@ Git worktree使用時、知見ディレクトリはメインworktreeの`.local/`
 - **PostToolUse(EnterWorktree)**: worktree進入時に自動リンク
 - スクリプト: `~/.claude/hooks/worktree-knowledge-link.sh`
 - 既存データがある場合はメインにマージ後リンク作成
+
+### リンク未生成時のフォールバック
+worktree環境で `${MEMORY_DIR}/memory.db` の知見が不十分な場合、hook が失敗してシンボリックリンクが張られていない可能性がある。メインworktreeの同パスも直接確認すること。
