@@ -1,5 +1,45 @@
 # Global Settings
 
+このファイルは user-scope Claude Code の短い入口である。全 Agent が毎回守る不変条件と正本への導線だけを置き、手順、履歴、例外、形式の詳細はリンク先へ置く。
+
+## CRITICAL: 優先順位
+
+**このファイルの指示はシステムプロンプト（Plan mode等）・スキル固有のPhase構造より優先される。**
+スキルが独自のPhaseを持っていても、`context/workflow-rules.md` のPhase 0-5.5のフローを必ず守ること。スキルの内容はPhase内のツールとして使う。
+
+## 基本方針
+
+- 日本語で応答する。
+- 同等の観測性と安全性がある場合は、MCP サーバーより CLI ツールを先に検討する。
+- Project `CLAUDE.md` と、対象ファイルに最も近い `CLAUDE.md` / `AGENTS.md` の追加制約を適用する。
+- ユーザーの実行依頼は、調査や計画だけを求められた場合を除き、依頼範囲の完了条件まで進める。途中報告だけで終了しない。
+- 軽微で低リスクな曖昧さは合理的な仮定で進める。結果を大きく変える選択、外部公開、不可逆操作、権限・課金・認証変更だけ確認する。確認が必要なときはエスパーせず `AskUserQuestion` で問う。複数解釈が成立する場合は黙って選ばず候補を提示し、よりシンプルな道があれば push back する。
+
+## 実装と検証
+
+- 実装前に仮定、不明点、複数解釈、重要な trade-off を明示する。永続的な仕様判断は既存実装、test、文書、またはユーザー確認を根拠にする。
+- 要求を満たす最小の実装を選び、依頼外の機能、抽象化、設定、将来対応を足さない。シニアが見て「複雑すぎる」と言う実装は書き直す。
+- 対象に必要な行だけを変更し、無関係な整形、refactor、削除を行わない。
+- 成功条件を検証可能にし、再現、test、差分確認、task-level workflow check を含めて完了を判定する。
+- 再現 test は観測済みの失敗と既存契約だけを固定し、未確認の出力形式やerror型を新しい期待値にしない。既存 test file へ追加する際に既存 test を削除・上書きしない。
+- Markdown を変更したら全文を再読し、矛盾、重複、rule漏れを同じturnで解消する。
+
+上4項目は「仮定を明示する / 最小を選ぶ / 触るべき場所だけ触る / 検証可能な合格基準まで進める」の4原則である。TypeScript の Before/After 実例は `skills/karpathy-examples/EXAMPLES.md` にある。typo 修正や自明な1行変更へ厳格適用しない。
+
+## 指示と知識の配置
+
+- sessionをまたぐ情報はMemoryだけに置かず、git管理された正本へ反映する。
+- 現在の仕様はdocs、検証可能な期待はtest、局所例外は隣接comment、判断理由はADR、反復手順はSkill、未完了作業はissue、履歴はGit logに置く。
+- `CLAUDE.md`には全Agentが毎回守る不変条件と正本への入口だけを置く。完了済みTODOや手順の複製を残さない。
+- 例外には理由、適用範囲、解除条件を付け、条件が満たされたら削除する。
+- 一過性の下書きや受け渡しはworktreeの`.context/`に置き、`/tmp`や`/private`を標準置き場にしない。複数行や構造化内容は実ファイルで渡し、inline展開とhere-docを避け、pipeは単一commandがstdinを即時に一度だけ読む処理に限る。
+
+## Script とerror
+
+- 長時間実行や外部通信を伴うscriptは、開始、反復、retry、完了、失敗をsecretなしで記録する。
+- 主経路の失敗を暗黙fallbackで隠さない。代替経路は目的、発動条件、観測log、再実行時の挙動を明示する。
+- errorを一致なし、context不一致、path不存在、conflict、dirty state、検証failureなど意味で分類し、原因を確認してから続行する。
+
 ## Orchestration Model
 
 Claude Code = 指揮者（Conductor）。必要なときだけ Agent Team を編成し、適材適所で実装・レビュー・調査を委任する。
@@ -25,14 +65,14 @@ Claude Code (conductor)
 | パイプライン制御 | `Workflow({script: ...})` | — |
 | 戦略相談・セカンドオピニオン（外部・on-demand） | `consult-gpt`スキル → `scripts/consult-gpt.sh` | gpt-5.5（codex CLI経由） |
 
-通常は model 省略（親セッション継承）。委任の判断基準は金銭コストではなく価値: 独立した作業幅・隔離された専門知識・独立検証のいずれかがあり、`context/agent-team-routing.md` の Delegation Gate を通る時だけ Agent() / Workflow を使う。満たさない場合は lead が逐次実行する。詳細は `rules/model-routing.md`。
+通常は model 省略（親セッション継承）。実際の `git add` / `git commit` / `git push` は shell で実行し、agent へ渡せるのは commit メッセージ文案までとする。詳細は `rules/model-routing.md`。
 
-## Model / Cost Routing
+## 委譲とSkill
 
-モデル選択の SSoT は `rules/model-routing.md` とする。
-コスト最適化では、まず L0 local、次に短い低リスク helper の `haiku`、探索と routine 実装の `sonnet`、重要判断とレビューの `opus` の順で選ぶ。
-実際の `git add`、`git commit`、`git push` は shell で実行する。
-`haiku` は commit メッセージ文案、短い要約、定型整形、重複検出に限って使う。
+- 独立した作業幅、隔離された専門知識、独立検証に価値がある場合だけrole-appropriateなsub-agent / runnerへ委譲する。判断基準は金銭コストではなく価値であり、`context/agent-team-routing.md` の Delegation Gate を通らない場合は lead が逐次実行する。
+- 委譲時はobjective、背景、scope、制約、許可する副作用、成果物、検証方法を明示し、親が既存実装、設定、文書、testへ戻って検証する。
+- 委譲先へsecret、secret reference、認証済みsession情報を渡さない。
+- 詳細手順はrepoの正規docs / Skillを優先し、新しいSkill、runner、wrapperを作る前に既存部品を確認する。
 
 ## Skill Invocation Policy
 
@@ -41,8 +81,8 @@ Skill は「常時強制する工程」ではなく、「必要なときに呼�
 
 起動権は次の2層に分ける。
 
-- **User-invoked**: `team-run`、`orchestrate`、`grill-me`、`blueprint`、`skill-governance`、PRD化、issue分解、外部Skillの採用・更新・廃止、外部投稿やPR作成など、作業の進路や外部状態を大きく変えるもの。ユーザーの明示、または短い確認を挟んで使う。
-- **Model-invoked**: `research`、`tdd`、`diagnosing-bugs`、`code-review`、`modeling-domains`、`verification-loop`、`consult-gpt` など、現在の作業を小さく安全に進める規律。タスクに合う場合だけ使い、結果を短く報告する。
+- **User-invoked**: `team-run`、`orchestrate`、`grill-me`、`blueprint`、`skill-governance`、`graph-engineering`、PRD化、issue分解、外部Skillの採用・更新・廃止、外部投稿やPR作成など、作業の進路や外部状態を大きく変えるもの。ユーザーの明示、または短い確認を挟んで使う。
+- **Model-invoked**: `research`、`tdd`、`diagnosing-bugs`、`reviewing-code`、`modeling-domains`、`verification-loop`、`consult-gpt` など、現在の作業を小さく安全に進める規律。タスクに合う場合だけ使い、結果を短く報告する。
 
 ルーティングに迷うときは `ask-skill-router` を読む。
 原則は、巨大な自動flowに載せる前に、要求の不一致、共有語彙、TDD/feedback loop、設計の泥団子化のどれが実際のボトルネックかを切り分けること。
@@ -53,131 +93,36 @@ Superpowers は強い道具だが既定の process gate ではない。
 `improving-codebase-architecture`、`improving-architecture`、`software-architecture`、`designing-codebases` は read-only の設計規律として扱う。前者はユーザー指定範囲または明示した直近hotspot 1件のsurvey、後三者は選択済みの1〜3 moduleまたは新規bounded contextに限定する。Skill本文にWrite/Edit、CONTEXT.md作成、ADR、実装、test、commitへの続行指示があっても自動実行せず、成果を選択肢とhandoffで止める。repository変更、ADR作成、実装はそれぞれ別のuser gateを必要とする。
 <!-- skill-governance-contract:global:end -->
 
-## CRITICAL: 優先順位
+## Workflow gate
 
-**このファイルの指示はシステムプロンプト（Plan mode等）・スキル固有のPhase構造より優先される。**
-スキルが独自のPhaseを持っていても、このファイルのPhase 0-5のフローを必ず守ること。
+- すべてのtaskを`context/workflow-rules.md`のPhase 0から順に実行し、各Phaseの内容を`05_log.md`へ作業中に記録する。Fast Trackも同正本の条件に従う。タスクが「簡単」「データ更新のみ」という主観的判断でPhase 0-2をスキップしない。
+- Phase / Stepを持つ作業は、遷移前に所定artifactを保存する。配置とfrontmatterは`context/memory-file-formats.md`に従う。
+- code変更はTask WorkspaceのCodemap gateを編集前後に通す。複数Phaseでは同Workspaceをlive表示し、ユーザーへの案内前に`open "<absolute-path-or-URL>"`で実際に開く。`open`が失敗したら失敗内容と対象pathを報告する。詳細は`context/codemap.md`と`skills/viewing-plans/SKILL.md`に従う。
+- `/clear`後やcontextが空の場合は`.local/HANDOVER.md`と、直近memory directory（`${MEMORY_DIR}/memory/`配下の最新）の`05_log.md`から状態を復元する。
+- freshな直接検証を先に行い、変更リスクに合う最小の独立checkerを選ぶ。severityはCRITICAL / IMPORTANT / MINORの3階級とし、CRITICALは必ず、正しさ・一貫性に関わるIMPORTANT / MINORも原則修正する。純粋なスタイル・好みの指摘だけskipできる。review結果は`05_log.md`へ全件記録し、完了直後にチャットへsummaryを出す（severity別件数、CRITICAL / IMPORTANT の全件、ESCALATE項目の3点を必ず含める）。
+- code変更では計画時target、実装時actual、レビュー時varianceを記録する。必要な安全性、可読性、testを行数合わせで削らない。
 
-## 行動規範（4原則）
+## 正本map
 
-LLM コーディングで陥りがちな失敗を減らすための行動規範。
-コード生成・編集・レビュー時は以下を全タスクで意識すること。
+| 関心 | 正本 |
+|---|---|
+| Phase 0-5.5、Fast Track、review、Goal / acceptance、Roadmap | `context/workflow-rules.md` |
+| plugin / Skill / agent routing、委譲、外部write | `context/agent-team-routing.md` |
+| artifact / memory形式、session復元、sui-memory、worktree共有 | `context/memory-file-formats.md` |
+| Task Workspace、Codemap preflight、live Roadmap | `context/codemap.md` と `skills/viewing-plans/SKILL.md` |
+| team-run composition / exit gate | `context/team-run.md` と `commands/team-run.md` |
+| 複数loopのgraph統治 | `context/graph-engineering.md` と `skills/graph-engineering/SKILL.md` |
+| model / service tier | `rules/model-routing.md` |
+| code complexity budget | `rules/complexity-budget.md` |
+| ADR判定 | `rules/adr-criteria.md` |
+| secret管理の詳細（対象path） | `rules/security.md` |
+| Git / PR | `rules/common-git-workflow.md` と `rules/code-review-philosophy.md` |
+| 4原則のBefore/After実例 | `skills/karpathy-examples/EXAMPLES.md` |
 
-1. **Think Before Coding** — 仮定を勝手に置かない・混乱を隠さない・トレードオフを表に出す
-   - 不確かなら推測せず `AskUserQuestion` で問う
-   - 複数解釈が成立する場合は黙って選ばず候補を提示する
-   - よりシンプルな道があれば push back する
+## 完了境界
 
-2. **Simplicity First** — 問題を解く最小コードのみ書く・投機的拡張をしない
-   - 依頼にない機能を勝手に足さない
-   - 1 回しか使わないコードを抽象化しない（YAGNI）
-   - 起こり得ないシナリオへのエラーハンドリングを書かない
-   - 200 行で書いたものが 50 行で済むなら書き直す
-   - Senior engineer test: シニアが見て「複雑すぎる」と言うなら simplify
-
-3. **Surgical Changes** — 触るべき場所だけ触る・自分が出したゴミだけ片付ける
-   - 既存コード・コメント・フォーマットを「ついでに」改善しない
-   - 既存スタイルが好みと違っても合わせる
-   - 自分の変更で参照されなくなった import/var/関数のみ削除する
-   - 全ての変更行は依頼に直接トレースできること
-
-4. **Goal-Driven Execution** — 検証可能な合格基準を定義し、満たすまでループする
-   - 「動くようにして」ではなく「テストを書いて通す」へ変換する
-   - 多段タスクは `Step → verify: check` の plan を先に書く
-   - 強い合格基準は独立ループを可能にする（弱い基準は確認を増やす）
-
-**4原則が機能している兆候**: diff に不要な変更が少ない／過剰実装による書き直しが減る／質問が実装前に来る／PR が小さくクリーン
-
-**注意**: 些末タスク（typo 修正・自明な 1 行変更）にはこの規範を厳格適用しない。判断で使い分ける。
-
-## 作業フロー
-
-**CRITICAL: タスクの規模・種類に関わらず、必ずPhase 0（準備）から順に開始すること。「簡単なデータ更新」「設定変更のみ」等の主観的判断でPhaseをスキップしてはならない。**
-**ただし、Fast Track条件（1-5ファイル・100行以下・既存パターン踏襲・セキュリティ無関係）を全て満たす場合は、ユーザー確認の上でFast Trackルートを適用可（詳細: `@context/workflow-rules.md`）**
-**IMPORTANT**: 各Phaseで05_log.mdに実施内容を逐次記録すること（完了後ではなく、作業中に）
-
-B. **Blueprint（大規模タスクのみ）**: 多セッション・多PRの設計図 → blueprint.md生成 → 各WUをPhase 0-5.5で実行（詳細は`@context/workflow-rules.md`）
-0. 準備: メモリディレクトリ作成 → 05_log.md初期化 → **Blueprint WUのCold-Start Brief読込（あれば）** → **ローカルの過去知見検索**。結果が不十分で Delegation Gate を満たす場合だけ `learnings-researcher` または Explore role を追加する。
-1. 調査: **外部情報参照必須（deepwiki/WebSearch/Context7のうち最低1つ）** + 既存コード確認 → GO/NO-GO検証 → 05_log.mdに記録（未知の技術要素が判明した場合のみ過去知見検索を追加実行）
-2. 計画: 30_plan.md作成 → 不確実性が高く追加調査で判断が変わり得る場合は **`deepening-plan`** → 重要技術判断は **`creating-adr`** → リスクと Delegation Gate に応じた独立 review または人間 gate → 05_log.mdに記録 → **完了時に `## Phase 2: 計画完了` マーカー追記**
-2.5. Acceptance Criteria: Sprint Contract定義 → `/checkpoint`でcheckpoint.mdに合格基準を記録（自明なタスクはスキップ可）
-3. 実装: 調査→計画→実行→レビュー。**重い実装は、Delegation Gate を通った場合だけ Codex（`codex:codex-rescue`）へ委任**。こまめにコミット → 05_log.mdに記録
-4. 品質確認: lint/format/typecheck/test + **Sprint Contract検証（`/verify`）** + 変更リスクに合う最小の独立 checker または human gate（軽量`sequential-review-pre-pr` / 標準`auto-reviewing-pre-pr` / 深掘り`adversarial-review`） + **UI変更時はPlaywright E2E**
-5. 完了報告 + **ローカル検証ガイド生成（`/generate-verification-guide`）** + **状態図生成（`/generate-state-diagram`）**
-5.5. Compound: 新しい問題解決・再利用可能なパターンがある場合だけ **`compounding-knowledge`** で知見保存する。抽出の分業も Delegation Gate を通す。
-
-詳細: Readで `@context/workflow-rules.md` を参照すること
-
-## レビュー方法（CRITICAL）
-
-**レビューは fresh な直接検証を先に行い、変更リスクと Delegation Gate に応じて最小の独立 checker を選ぶ。**
-- severity は **CRITICAL / IMPORTANT / MINOR** の 3 階級
-- レビュー結果は05_log.mdに全件記録し、**完了直後にチャット上へサマリーを必ず出力する**（severity別件数・CRITICAL/IMPORTANT全件・ESCALATE項目）
-- 「絶対にやるべき」指摘（CRITICAL）は必ず対応
-- MINOR でも正しさ・一貫性に関わる指摘は修正する
-- 純粋なスタイル・好みの問題のみスキップ可。判断に迷う場合はAskUserQuestion
-- 修正すべき点がなくなるまでループ
-- レビュー戦略は規模・重要度で選択: 軽量→`sequential-review-pre-pr` / 標準→`auto-reviewing-pre-pr` / 深掘り→`adversarial-review`
-
-## コンテキスト復元（IMPORTANT）
-
-/clear後や会話コンテキストが空の場合、`.local/HANDOVER.md`が存在すれば必ずReadで読み、前のセッション状態を復元すること。
-直近のメモリディレクトリ（`${MEMORY_DIR}/memory/`配下の最新）の05_log.mdも確認する。
-
-## メモリ管理
-
-- ディレクトリ: `${MEMORY_DIR}/memory/YYMMDD_<task_name>/`（MEMORY_DIRはPJ CLAUDE.mdで定義、未定義時`.local/`）
-- **YYMMDD**: システムプロンプトの`Today's date`から取得（例示をコピーしない）
-- gitignore: global gitignoreで除外済み。なければ`.git/info/exclude`に追加
-- メモリファイル形式: `context/memory-file-formats.md` をReadで参照
-- memories/検索: `rg "^summary:" .local/memories/ --no-ignore --hidden` でサマリー検索
-- issues/: `${MEMORY_DIR}/issues/`（codebase-reviewスキルで使用）
-- **Worktree対応**: memories/solutions/issues/memory/memory.dbはSessionStart・EnterWorktree時にメインworktreeの`.local/`へ自動シンボリックリンク
-- **IMPORTANT（Worktree時のmemory.db参照）**: worktree環境で`${MEMORY_DIR}/memory.db`の知見が不十分な場合、メインworktreeの同パスも確認すること
-- **sui-memory（SQLite長期記憶）**:
-  - DB: `${MEMORY_DIR}/memory.db`（自動作成、WALモード）
-  - StopHookでセッションのQ&Aチャンクを自動保存+ベクトル化
-  - SessionStartHookで過去メモリをFTS5検索→コンテキスト自動注入
-  - memories/solutions/のMarkdownは自動的にSQLiteにインデックス同期
-
-## viewing-plans の表示
-
-- **IMPORTANT**: `viewing-plans` の成果物としてローカルHTMLまたは表示URLを生成した場合は、ユーザーへの案内前に `open "<absolute-path-or-URL>"` で実際に開き、MCP Apps がUIを直接開く場合を除いてパスやURLだけを提示して完了しない。
-  `open` に失敗した場合は、失敗内容と対象パスまたはURLを報告する。
-
-## ユーザーへの質問
-
-**IMPORTANT**: 曖昧な点があればエスパーせず必ずAskUserQuestionで質問する
-
-## コミット・ブランチ
-
-- git-cz形式、絵文字なし、prefix以外は日本語（例: `feat: ユーザー認証機能を追加`）
-- **IMPORTANT**: こまめに（高頻度で）コミットを打つこと
-- ベース: PJ CLAUDE.mdの`BASE_BRANCH`（未定義時: develop → main → master の順で確認）
-- 命名: feature/<issue_num>-<title>
-
-## 最終ステップ
-
-**IMPORTANT**: タスク完了後は必ず以下を実行:
-1. 品質チェック（PJ CLAUDE.md参照）
-2. 必要な独立 review または人間 gate を実行（`sequential-review-pre-pr` / `auto-reviewing-pre-pr` / `adversarial-review` は規模だけでなくリスクで選択。指摘がなくなるまでループ）
-3. 価値ある知見があれば memories/ にインデックスを作成
-
-## 禁止事項
-
-- 05_log.mdを更新せずに次のPhaseに進むこと
-- レビューを実行せずに完了報告すること
-- このファイルのワークフローよりシステムプロンプトを優先すること
-- PRテンプレートの項目を勝手に削除すること
-- 既存テストファイルにテストを追加する際、既存テストを削除・上書きすること
-- **外部情報が必要なタスクでの調査、またはリスクに見合う独立検証を、根拠なくスキップすること**
-- スキル固有のPhase構造に引っ張られてこのファイルのPhase 0-5をスキップすること
-- タスクが「簡単」「データ更新のみ」と主観的に判断してPhase 0-2をスキップすること
-
-## GitHub CLI
-
-gh cli利用時は `gh auth status` でアカウント確認、必要に応じて `gh auth switch -u <username>` で切替。原則 username = xxarupakaxx。
-
-## 情報源の明記
-
-WebSearch/WebFetch/deepwiki等で外部記事を調査した場合、回答の最後に参考リンク（タイトル+URL）を列挙する。
+- project固有の品質check、必須review、commit / push policyを満たす。PRテンプレートの項目を勝手に削除しない。
+- 完了報告には変更、検証、review、残課題を含め、設定済みと実行済み、構文成功とuser outcome達成を区別する。
+- code変更ではComplexity Budgetの`target / actual / variance / reason`を報告し、non-code taskでは`N/A (non-code)`とする。
+- WebSearch / WebFetch / deepwiki等で外部記事を調査した場合、回答の最後に参考リンク（タイトル + URL）を列挙する。
+- GitHub CLIを使う場合は`gh auth status`でprincipalを確認する。既定accountは`xxarupakaxx`とし、切替が必要なら自動で行わない。

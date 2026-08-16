@@ -14,10 +14,10 @@ Markdown全文、手動ファイル読込、JSON操作、KPIカードは第一�
 `--serve --watch` で起動すると、Codex app の横に置いたブラウザが自動更新される。
 Plan Viewer / Log Viewer は、明示的に文書本文を確認するときだけ使う。
 
-<!-- viewer-codemap-preflight:start -->
-workspace Codemapがある場合は、task Roadmapと別の地図として扱う。`roadmap.html` は現在task、`codemap.html` はcode topologyの正本であり、snapshotやfreshnessを統合しない。コード変更taskでは `context/codemap.md` のpreflightが先に成立していることを確認し、RoadmapとCodemapを並べて開く。
+task memory directoryにCodemapがある場合は、`roadmap.html`のTask WorkspaceへCode Map viewとして統合する。Roadmap generatorはCodemap checkerがfreshと判定したpayloadだけを埋め込む。表示入口は一つだが、コード変更taskでは`context/codemap.md`のpreflightを先に成立させ、Roadmapの更新時刻をCodemap freshnessとして扱わない。
 
-コード変更taskでは編集前に `scripts/generate-codemap.py check --root <workspace-root>` を実行する。freshなら `codemap.html` を実際に開く。freshでなければ `context/codemap.md` に従って `codemap.source.json` を更新し、refresh → check の後に開く。
+<!-- viewer-codemap-preflight:start -->
+コード変更taskでは編集前に `scripts/generate-codemap.py check --root <workspace-root> --artifact-dir ${MEMORY_DIR}/memory/<task>` を実行する。freshならTask Workspaceを再生成して同じ`roadmap.html`を実際に開く。freshでなければ `context/codemap.md` に従ってtask-localな`codemap.source.json`を更新し、refresh → check の後に開く。
 <!-- viewer-codemap-preflight:end -->
 
 複数 task を横断して見る場合は Roadmap Task Hub を使う:
@@ -40,7 +40,7 @@ Hubの主表示は計画書ではなくLive Sessionとする。Codex app-server�
 2. **横で見たい場合**: `scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --watch` を起動し、表示URLを案内
 3. **Phase 3/4の節目**: `40_progress.md` / `80_review.md` / `05_log.md` 更新後、watch中ならブラウザが自動更新
 4. **Phase 5完了時**: Roadmap Viewerで最終状態を表示し、必要に応じて05_log.mdをlog_viewerで表示
-5. **コード変更task**: workspace Codemapをcheckし、freshなら `codemap.html` も開く。stale / insufficientならコード編集より先にrefreshする
+5. **コード変更task**: task memory directoryのCodemapをcheckし、freshならTask WorkspaceのCode Map viewで確認する。stale / insufficientならコード編集より先にrefreshする
 
 ## 手動トリガー
 
@@ -66,7 +66,7 @@ Hubの主表示は計画書ではなくLive Sessionとする。Codex app-server�
 
 1. 対象メモリディレクトリを特定
 2. `scripts/generate-roadmap-view.py <memory_dir>` を実行して `roadmap.html` を生成
-3. コード変更taskでは `scripts/generate-codemap.py check --root <workspace-root>` を実行し、`codemap.json` からcaller / impact / guarding test / evidenceを確認
+3. コード変更taskでは `scripts/generate-codemap.py check --root <workspace-root> --artifact-dir ${MEMORY_DIR}/memory/<task>` を実行し、同task directoryの`codemap.json`からcaller / impact / guarding test / evidenceを確認
 4. 必要に応じて Read ツールで個別Markdownコンテンツを取得
 
 ### 2. Roadmap Viewer生成
@@ -84,14 +84,17 @@ ${MEMORY_DIR}/memory/<task>/roadmap.html
 ユーザーには生成されたHTMLパスを案内する。
 ブラウザで開けば、taskの目的、仕様、実コード上の変更対象、実行順序、確認済み事項、成果物を一つのbriefとして追える。関係を深掘りするときだけConcept Mapを開く。
 
-コード変更taskでCodemapがfreshなら、次も実際にopenする。
+コード変更taskでは、CodemapをcheckしてからTask Workspaceを再生成し、同じ`roadmap.html`を実際にopenする。
 
 ```bash
-python3 scripts/generate-codemap.py check --root <workspace-root>
-open <workspace-root>/codemap.html
+python3 scripts/generate-codemap.py check \
+  --root <workspace-root> \
+  --artifact-dir ${MEMORY_DIR}/memory/<task>
+python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task>
+open ${MEMORY_DIR}/memory/<task>/roadmap.html
 ```
 
-Codemapがmissing / stale / mismatch / insufficientなら、`context/codemap.md` に従って `codemap.source.json` を更新し、refresh → checkを終えてから開く。パスだけを案内して完了しない。
+Codemapがmissing / stale / mismatch / insufficientなら、`context/codemap.md` に従って同task memory directoryの`codemap.source.json`を更新し、refresh → checkを終えてからTask Workspaceを開く。パスだけを案内して完了しない。
 
 ライブ更新:
 
@@ -139,7 +142,7 @@ python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --w
 
 ## 機能概要
 
-### Roadmap Viewer（成果マップビューア）
+### Task Workspace（Roadmap / Code Map）
 - `00_spec.md` / `30_plan.md` / `40_progress.md` / `80_review.md` を第一画面の正本とし、task、spec、approach、flow、claims、artifactsをbriefへ割り当てる
 - 上段は `Phase / 進捗 / 選択中Task` のcompact status barとし、Task選択に同期させる。固定の全体目的をheroとして重複表示せず、全体仕様は仕様cardと `00_spec.md` quick linkから読む
 - `現在` と `次` を明示する。次のTaskがなければ、計画完了か未記録かを区別して表示する
@@ -177,11 +180,11 @@ python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --w
 - 単一 task 表示では手動のMarkdown/JSON読込やJSON出力を提供しない
 - Markdown全文は第一画面へ表示しない。source-boundの要約と正本への導線は隠さない
 
-### Codemap Viewer（workspaceコード地図）
-- `codemap.json` と同じpayloadを既存Viewer templateの専用modeで表示する
+### Code Map view（taskコード地図）
+- freshな`codemap.json` payloadを同じ`roadmap.html`の専用modeで表示する
 - lane別column、node filter、right inspectorでcaller / impact / guarding testを1-hopずつ辿る
 - verified relationは `path:line` evidenceを表示し、unknown relationは破線とreasonを併記する
-- task Roadmapのbrief-first contractや `graph-map.md` routeを置き換えない
+- Plan viewのbrief-first contractや `graph-map.md` routeを置き換えない
 - desktopはgraph + right inspector、狭幅はinspectorを下段、mobileはcolumn canvasをhorizontal scrollで保持する
 
 ### Plan Viewer（計画ビューア）

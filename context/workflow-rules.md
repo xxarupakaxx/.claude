@@ -146,11 +146,13 @@ Phase の順序はこのファイルを SSoT とする。一方、各Phaseで **
 
 ## Phase 0: 準備
 
-1. PJ `AGENTS.md`（互換 `CLAUDE.md` がある場合はその import 内容も含む）の `MEMORY_DIR` 確認（未定義なら `.local/`）
+1. PJ `CLAUDE.md` / `AGENTS.md`（両方あれば対象ファイルに近い方。import 内容も含む）の `MEMORY_DIR` 確認（未定義なら `.local/`）
 2. システムプロンプトの`Today's date`から日付取得 → `${MEMORY_DIR}/memory/YYMMDD_<task_name>/`作成
-3. 05_log.md初期化、ユーザーの最初の指示を記録
-4. **Blueprint WUのCold-Start Briefがあれば読み込み**（blueprint.mdの該当WUセクション）
-5. `rg` / SQLite / memory index でタスク関連の過去知見を検索し、結果を05_log.mdに記録する。結果が不十分で、独立した探索文脈が必要な場合だけ `learnings-researcher` を起動する
+3. **gitignore 確認**: `${MEMORY_DIR}`（既定 `.local/`）と worktree の `.context/` が git の無視対象か確認する。global gitignore で除外済みなら何もしない。除外されていなければ `.git/info/exclude` へ追加してから作業を進める。05_log.md はユーザー指示の全文と調査ログを含むため、誤コミット経路を開いたまま Phase 1 へ進まない
+4. 05_log.md初期化、ユーザーの最初の指示を記録
+5. **Blueprint WUのCold-Start Briefがあれば読み込み**（blueprint.mdの該当WUセクション）
+6. `rg` / SQLite / memory index でタスク関連の過去知見を検索し、結果を05_log.mdに記録する。結果が不十分で、独立した探索文脈が必要な場合だけ `learnings-researcher` を起動する
+7. **コード変更時のCodemap preflight**: task memory directoryの `codemap.*` を `context/codemap.md` に従い、workspace rootを検証対象、task memory directoryをartifact出力先としてcheckする。JSONからcaller / impact / guarding test / evidenceを読み、missing、stale、mismatch、または質問に答える関係が不足する場合は、read-only調査で同directoryのmapをrefreshしてfreshになるまでproduction codeを編集しない。code変更後もrefresh/checkする。workspace rootやgit管理対象へcodemap一式を置かない。
 
 ## Phase 1: 調査
 
@@ -272,7 +274,7 @@ sub-agent による計画検証は、`agent-team-routing.md` の Delegation Gate
 **共通ルール:**
 - レビュー対象ファイルのフルパスと計画ファイルのパスを渡す
 - `security-reviewer`にはAPI routeの呼び出し先usecase/entity定義も含める（IDOR検出のため）
-- **IMPORTANT**: レビュー結果は05_log.mdに全件記録すること（MINOR も含む）。ユーザーが確認できる状態にする
+- **IMPORTANT**: レビュー結果は05_log.mdに全件記録すること（MINOR も含む）。あわせて完了直後にチャットへサマリーを出力し、severity別件数・CRITICAL / IMPORTANT の全件・ESCALATE項目の3点を必ず含める。ユーザーが採否を判断できる状態にしてから次のアクションへ進む
 - **IMPORTANT**: 指摘の修正案は実装レベルで具体的に記述すること。「ユーザー判断」に委ねる場合でも技術的修正案を必ず提示
 - 「絶対にやるべき」指摘は必ず修正
 - MINOR (= non-critical) でも正しさ・一貫性に関わる指摘（バグ、不整合、ハードコード等）は修正する
@@ -281,6 +283,11 @@ sub-agent による計画検証は、`agent-team-routing.md` の Delegation Gate
 ### User Validation Gate
 
 計画の承認をユーザーに確認してからPhase 2.5に進む。
+
+### Phase 2 完了マーカー（必須）
+
+Phase 2 を終えたら 05_log.md へ `## Phase 2: 計画完了` を追記する。
+`hooks/pre-prompt-phase-gate.sh`（`settings.json` の `UserPromptSubmit` に登録済み）がこのマーカーを探し、無い状態で実装着手すると警告を出す。マーカーを書かないと規律を守っていても毎回警告が出て、ゲートが形骸化する。
 
 ## Phase 2.5: Acceptance Criteria定義（Sprint Contract）
 
@@ -344,7 +351,7 @@ Blueprint WUの実行？ → YES → DAGオーケストレーション
 ## Phase 4: 品質確認
 
 ### 自動チェック
-PJ `AGENTS.md` / `context` 記載のコマンドで lint/format/typecheck/test を実行。
+PJ `CLAUDE.md` / `AGENTS.md` / `context` 記載のコマンドで lint/format/typecheck/test を実行。
 
 ### Sprint Contract検証（Phase 2.5でcheckpoint.mdが作成されている場合）
 `/verify`を実行し、Phase 2.5で定義した合格基準に対して自動検証。全基準PASSまで修正→再検証を繰り返す。
@@ -402,7 +409,7 @@ re_review_priority: high    # 次ラウンドで検出元 reviewer を優先起�
 **共通ルール:**
 - 変更対象ファイルのフルパスとレビュー観点を明示
 - `security-reviewer`にはAPI routeの呼び出し先usecase/entity定義も含める（IDOR検出のため）
-- **IMPORTANT**: レビュー結果は05_log.mdに全件記録すること（MINOR も含む）。ユーザーが確認できる状態にする
+- **IMPORTANT**: レビュー結果は05_log.mdに全件記録すること（MINOR も含む）。あわせて完了直後にチャットへサマリーを出力し、severity別件数・CRITICAL / IMPORTANT の全件・ESCALATE項目の3点を必ず含める。ユーザーが採否を判断できる状態にしてから次のアクションへ進む
 - **IMPORTANT**: 指摘の修正案は実装レベルで具体的に記述すること。「ユーザー判断」に委ねる場合でも技術的修正案を必ず提示
 - 「絶対にやるべき」指摘は必ず修正
 - MINOR (= non-critical) でも正しさ・一貫性に関わる指摘（バグ、不整合、ハードコード等）は修正する

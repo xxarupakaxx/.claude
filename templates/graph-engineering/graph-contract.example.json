@@ -1,0 +1,107 @@
+{
+  "version": "1",
+  "name": "research-write-review",
+  "entrypoints": [
+    "research"
+  ],
+  "nodes": {
+    "research": {
+      "kind": "loop",
+      "role": "worker",
+      "authority": "read_only",
+      "reads": [
+        "brief"
+      ],
+      "writes": [
+        "research_notes"
+      ],
+      "side_effect": "none"
+    },
+    "write": {
+      "kind": "loop",
+      "role": "worker",
+      "authority": "artifact_writer",
+      "reads": [
+        "brief",
+        "research_notes",
+        "review_verdict"
+      ],
+      "writes": [
+        "artifact"
+      ],
+      "side_effect": "none"
+    },
+    "review": {
+      "kind": "loop",
+      "role": "checker",
+      "authority": "read_only",
+      "reads": [
+        "artifact"
+      ],
+      "writes": [
+        "review_verdict"
+      ],
+      "side_effect": "none"
+    },
+    "done": {
+      "kind": "function",
+      "role": "worker",
+      "authority": "read_only",
+      "reads": [
+        "artifact",
+        "review_verdict"
+      ],
+      "writes": [],
+      "side_effect": "none"
+    }
+  },
+  "state": {
+    "brief": {
+      "scope": "planning",
+      "writer": "lead",
+      "provenance": "wayfinder"
+    },
+    "research_notes": {
+      "scope": "run",
+      "writer": "research",
+      "provenance": "node-output"
+    },
+    "artifact": {
+      "scope": "artifact",
+      "writer": "write",
+      "provenance": "workspace"
+    },
+    "review_verdict": {
+      "scope": "run",
+      "writer": "review",
+      "provenance": "fresh-check"
+    }
+  },
+  "edges": [
+    {
+      "from": "research",
+      "to": "write",
+      "route": "static"
+    },
+    {
+      "from": "write",
+      "to": "review",
+      "route": "static"
+    },
+    {
+      "from": "review",
+      "to": "write",
+      "route": "deterministic",
+      "condition": "approved == false",
+      "loop": true,
+      "max_iterations": 2,
+      "stop_condition": "approved == true or max_iterations reached"
+    },
+    {
+      "from": "review",
+      "to": "done",
+      "route": "deterministic",
+      "condition": "approved == true"
+    }
+  ]
+}

@@ -33,7 +33,7 @@ symlink にします。
 
 ```
 ~/.claude/
-├── CLAUDE.md              # グローバル設定（ワークフロー、変数）
+├── CLAUDE.md              # グローバル設定（不変条件と正本mapのみ。手順は context/ へ委譲）
 ├── commands/              # ユーザー実行コマンド
 │   ├── commit.md          # /commit
 │   ├── pr.md              # /pr
@@ -338,14 +338,15 @@ DBマイグレーション作成を支援。
 
 ## ワークフロー
 
-CLAUDE.mdで定義された6フェーズワークフロー:
+`context/workflow-rules.md` が Phase 0-5.5 の SSoT。CLAUDE.md は Workflow gate と正本mapで導線だけを持つ。
 
-1. **Phase 0: 準備** - メモリディレクトリ作成、過去タスク検索
-2. **Phase 1: 調査** - deepwiki/WebSearch必須、既存コード確認
-3. **Phase 2: 計画** - agent reviewで検証（指摘なくなるまで）
-4. **Phase 3: 実装** - 調査→計画→実行→レビューの4ステップ
-5. **Phase 4: 品質確認** - lint/format/typecheck/test + agent review
-6. **Phase 5: 完了報告**
+1. **Phase 0: 準備** - メモリディレクトリ作成、gitignore確認、過去知見検索、Codemap preflight
+2. **Phase 1: 調査** - deepwiki/WebSearch/Context7 のいずれか必須、既存コード確認、GO/NO-GO
+3. **Phase 2: 計画** - 30_plan.md 作成、リスクに応じた検証、`## Phase 2: 計画完了` マーカー追記
+4. **Phase 2.5: Acceptance Criteria** - Sprint Contract 定義
+5. **Phase 3: 実装** - 調査→計画→実行→レビュー
+6. **Phase 4: 品質確認** - lint/format/typecheck/test + 独立レビュー
+7. **Phase 5: 完了報告** / **Phase 5.5: Compound**
 
 ## メモリディレクトリ（2層構造）
 
