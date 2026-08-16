@@ -6,6 +6,7 @@ Claude Code から Agent Tool でサブエージェントを起動する際の�
 
 通常は `model` を省略し、親セッションのモデルを継承させる。
 明示的な指定は、Cost Ladder で lane を固定する必要がある場合だけ使う。
+plugin / skill / agent role の選択は `context/agent-team-routing.md` を参照する。このファイルは model 方針に集中する。
 
 ## Dispatch Table（Source of Truth）
 
@@ -30,9 +31,21 @@ Claude Code から Agent Tool でサブエージェントを起動する際の�
 | L2 sonnet | 探索、routine実装、通常ワーカー | コードベース調査、既知パターンの実装、軽量な複数ファイル作業 | 重要設計、CRITICALまたはIMPORTANT、高リスク |
 | L3 opus | 失敗コストが高い判断 | 計画、GO/NO-GO、セキュリティ、専門レビュー | 独立審判または人間判断が必要 |
 
-`haiku` は、短い入力と短い出力で完結し、lead が結果をすぐ検査できる作業に限る。
+### `haiku` を使ってよい条件
+
+- 入力が短く、成果物を lead がすぐ検査できる。
+- 変更を書かない、または書く場合でも単一の低リスク text artifact に閉じる。
+- 失敗時のコストが低く、再実行や lead 修正が容易。
+- 例: git-cz 日本語 commit message 候補、短い調査ログ要約、明確なテンプレートへの整形、重複 URL / 見出しの検出。
+
+### `haiku` を使わない条件
+
+- セキュリティ、認証、課金、データ削除、外部書き込み、GO/NO-GO 判定。
+- 3ファイル以上の実装、未知コードの設計判断、レビューの最終判定。
+- ユーザー要件が曖昧、ソース間に矛盾がある、引用や法務・医療・金融など高リスク根拠が必要。
+- 既存の専門 role で表現できる作業。role 既定を override しない。
+
 不確実性、矛盾、複数ファイル判断、外部副作用が出たら、その round を止めて `sonnet` または `opus` へ昇格する。
-`haiku` を設計者、セキュリティ reviewer、GO/NO-GO 判定者、最終 reviewer の代わりに使わない。
 
 実際の `git add`、`git commit`、`git push` は shell で実行する。
 commit に関して agent へ任せられるのは、メッセージ文案の作成だけである。
@@ -51,12 +64,13 @@ Agent起動時:
 
 ## team-run のモデル割り当て
 
-| teammate | subagent_type | model |
-|----------|--------------|-------|
-| planner  | Plan | **opus** |
-| explorer | Explore | **sonnet** |
-| implementer | implementer | **sonnet** |
-| reviewer | arch-reviewer 等 | **opus** |
+| teammate | subagent_type | model | 責務 |
+|----------|--------------|-------|------|
+| planner  | Plan / `implementation-planner` | **opus** | 分解、依存関係、合格基準案、リスク |
+| plan-reviewer | `arch-reviewer` / `technical-evaluator` | **opus** | YAGNI、依存矛盾、実現可能性のレビュー |
+| explorer | Explore | **sonnet** | 検索ファーストのコードベース調査 |
+| implementer | implementer | **sonnet** | disjoint な write scope 内の実装 |
+| reviewer | arch-reviewer 等 | **opus** | 成果物ベースの独立レビュー |
 
 ## Workflow内のmodel指定
 

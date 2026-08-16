@@ -62,22 +62,27 @@
 | roadmap.html | ブラウザ用ロードマップビュー | Phase 2完了後・実装中に再生成 |
 | roadmap-snapshot.json | live更新用snapshot | `--serve --watch` 利用時に自動更新 |
 
-### task-meta.json（任意）
+### task-meta.json（必須・machine-owned）
 
-Roadmap Task Hub と Codex task を確実に対応付ける場合は、タスクディレクトリ直下に `task-meta.json` を置く。
+Roadmap generatorはタスクディレクトリ直下の`task-meta.json`を作成・更新する。人がPhaseやCodemap状態を複製して管理しない。
 
 ```json
-{"thread_id":"019f...","project_path":"/absolute/path","task_title":"Roadmap Viewer UX","task_state":"running","approval_state":"waiting","updated_at":"2026-07-12T12:00:00+09:00"}
+{"schema_version":1,"task_id":"260816_roadmap-viewer","task_title":"Roadmap Viewer UX","thread_id":"019f...","session_id":"session-...","project_path":"/absolute/path","worktree_path":"/absolute/path","task_state":"active","code_change":true,"created_at":"2026-08-16T12:00:00+09:00","updated_at":"2026-08-16T12:00:00+09:00"}
 ```
 
-- `thread_id`: Codex app-server が返す thread ID。完全一致した場合だけ自動確定する。
+- `schema_version`: manifest schema。現在は`1`。
+- `task_id`: task directoryと対応する安定ID。
+- `thread_id`: Task Hub の provider が返す thread ID。完全一致した場合だけ自動確定する。
+- `session_id`: hook runtimeが返すsession ID。handover復元は完全一致を優先する。
 - `project_path`: task の作業ディレクトリの絶対パス。
+- `worktree_path`: Codemap evidenceを照合するworktree root。
 - `task_title`: Task Hub に表示する明示タイトル。
-- `task_state`: `running`、`waiting`、`completed` のいずれか。
+- `task_state`: `active`、`waiting`、`verifying`、`completed`、`archived` のいずれか。
+- `code_change`: Codemap preflightが必要なtaskか。
 - `approval_state`: 承認待ちなど、明示的に `waiting` と扱う状態。
 - `updated_at`: timezone を含む ISO 8601 の更新日時。
 
-current thread ID を取得できた場合は、その ID を `task-meta.json` の `thread_id` に保存する。`thread_id` の完全一致だけを確定済み対応として扱う。`thread_id` がない場合、path・title・更新時刻による一致は候補表示にだけ使い、自動確定しない。候補を採用するかどうかの承認は Codex 会話を正本とし、承認後に `thread_id` を保存する。JSON が壊れている場合もタスク自体は一覧から消さず、詳細の `metadataError` に読み取りエラーを表示する。
+current thread / session IDを取得できた場合はgeneratorの`--thread-id` / `--session-id`で保存する。完全一致だけを確定済み対応として扱う。IDがない場合、path・title・更新時刻による一致は候補表示にだけ使い、自動確定しない。候補を採用するかどうかの承認は現在の Claude 会話を正本とする。JSONが壊れている場合もtask自体は一覧から消さず、詳細の`metadataError`に読み取りエラーを表示する。PhaseはMarkdown、Codemap freshnessは`codemap.lock`から導出し、manifestへ重複保存しない。
 
 複数 task を一覧する Roadmap Task Hub は次で起動する:
 
@@ -91,7 +96,7 @@ Live Activityはmemory fileへ複製しない。Codex app-serverが返すsession
 
 ### Live Roadmap Viewer
 
-`roadmap.html` は `scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task>` で生成する。Claude CodeまたはCoworkの横で開きっぱなしにして進捗を見たい場合は次を使う:
+`roadmap.html` は `scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task>` で生成する。Plan / ProgressとfreshなCode Mapを切り替えるTask Workspaceである。Claude CodeまたはCoworkの横で開きっぱなしにして進捗を見たい場合は次を使う:
 
 ```bash
 python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --watch
@@ -146,6 +151,15 @@ python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --w
 ## 背景・目的
 [なぜ必要か]
 
+## 現在の事実
+- 確認済みの事実。提案や推測を混ぜない。
+
+## 採用判断
+- このtaskで採用した方針。根拠は別sourceへ接続してよい。
+
+## 未確定
+- 仮説、未決事項、確認が必要な境界。
+
 ## 機能要件
 ### 必須要件
 - [ ] 要件1
@@ -163,7 +177,7 @@ python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --w
 
 ## 30_plan.md
 
-```markdown
+````markdown
 # 実装計画
 
 ## 概要
@@ -172,20 +186,44 @@ python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --w
 ## タスク一覧
 
 ### Task 1: <タスク名>
-**変更対象:** <パス>
 
-#### 1. 調査
-- [ ] 項目
+#### 目的
+[このTaskで何を成立させるか]
 
-#### 2. 計画
-- [ ] 手順
+#### 変更対象
+- `<path/to/file>`
+- `moduleOrFunction`
 
-#### 3. 実行
-- [ ] 実装
-- [ ] コミット: `<メッセージ>`
+#### Complexity Budget（コード変更時）
+| production target | test target | config/migration target | 信頼度 | 根拠 | 超過時の再計画条件 |
+|---:|---:|---:|---|---|---|
+| 20–40 logical diff LOC | 10–20 logical diff LOC | 0 | medium | 既存の`<anchor>` | 上限25%以上 / 計画外の責務追加 |
 
-#### 4. レビュー
-- [ ] 確認項目
+コード変更がない場合は `N/A (non-code)` と記載する。targetはハード上限ではなく、計画外の複雑さを検出するためのソフト目標である。計測方法と例外は `rules/complexity-budget.md` に従う。
+
+#### 実装根拠
+- `repo:<relative-path>#<anchor-or-Lx-Ly>`
+
+#### 実装
+- [ ] 手順1
+- [ ] 手順2
+
+#### 実装図
+```mermaid
+flowchart LR
+A["入力"]
+B["処理"]
+C["成果物"]
+A -->|"変換する"| B
+B -->|"生成する"| C
+```
+
+#### 成果物
+- [このTaskで生まれるfile、document、state]
+
+#### 検証
+- `<実行可能なcommand>`
+- [判断ベースの確認項目]
 
 ## agent reviewの結果
 [agentからの指摘と対応]
@@ -193,7 +231,19 @@ python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --w
 ## リスク・懸念事項
 | リスク | 影響度 | 対策 |
 |-------|-------|------|
-```
+````
+
+Roadmap Viewerは各Taskの `目的`、`変更対象`、`実装根拠`、`実装`、任意の`実装図`、`成果物`、`検証`をsource-boundで表示する。記載がないfieldをViewer側で推測して埋めない。
+
+`実装図` は任意fieldであり、最初のMermaid `flowchart TB` / `TD` / `LR`を選択Taskの実装フローへ使う。矩形・判断nodeと明示edge・edge labelの限定構文だけを扱う。Viewerは実装手順、変更対象、実コードからnodeやedgeを補作しない。図と同じ関係をテキスト一覧でも表示する。
+
+`実装根拠` は任意fieldであり、最初のinline code参照1件だけを実ソース抜粋へ使う。書式は `repo:<source-rootからの相対path>#<anchor>` または `repo:<source-rootからの相対path>#L<開始行>-L<終了行>` とする。bare path、absolute path、`..` を含むpathは解決しない。
+
+generatorは実コードを最大12行・4KiBに制限し、snapshot全体でも32KiBを超えて埋め込まない。既定allowlist外のprefixは `--source-allow-prefix` で明示する。個人ノート領域、hidden state、secret file、`automation_read: false`、symlink、binary、非UTF-8、1MiB超のfile、high-confidenceなsecret contentは本文を表示しない。
+
+Viewerでは `実装` を「こう実装する」という計画、`実装図`をplanに明示した変更フロー、generatorが解決した抜粋を「現在の実コード」という生成時点の事実として分離する。sourceが未記録または拒否された場合、plan中のcodeらしい文字列から補作しない。source previewはtokenごとにescapeしてから色付けし、未対応言語は色なしのescape済み本文へ戻す。
+
+`事実・判断・未確定`のsource priorityは `viewing-plans` を正本とする。既存taskの `team-journal.md` にある `Decisions` と `Open Questions` も有効なsourceとして扱う。
 
 ## 40_progress.md
 
@@ -254,12 +304,12 @@ related:          # 詳細ログへの参照
 
 **`phases` フィールド（推奨 — 強く推奨。`compounding-knowledge` 生成物では必須）**:
 
-`learnings-researcher` の Phase scoring で使用される。CLAUDE.md の Phase 0-5.5 に対応:
+`learnings-researcher` の Phase scoring で使用される。`context/workflow-rules.md` の Phase 0-5.5 に対応:
 
 > 後方互換性のため未指定でも動作するが、未指定時は phase_match_bonus = 0 となり関連度が下がる。
 > `compounding-knowledge` skill で新規作成される memories/solutions では **必須**（SKILL.md L96, L139 参照）。
 
-| phases 値 | CLAUDE.md Phase | 主な参照場面 |
+| phases 値 | workflow Phase | 主な参照場面 |
 |----------|------------------|--------------|
 | `preparation` | Phase 0 | メモリ初期化、過去類似タスク確認 |
 | `investigation` | Phase 1 | 既存実装確認、技術調査 |

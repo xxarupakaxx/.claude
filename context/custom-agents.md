@@ -54,7 +54,7 @@ color: purple             # 任意: 表示色
 
 ## 呼び出し方法
 
-Claude Code の Agent Tool で `subagent_type` に指定:
+まず `rules/model-routing.md` と `context/agent-team-routing.md` を読み、local-first と Delegation Gate を満たすか確認する。満たす場合だけ、role、read / write scope、acceptance を明示して Claude Code の Agent Tool で `subagent_type` に指定する。Gate を通らなければ lead が逐次実行し、同じ検証基準を維持する。
 
 ```
 Agent(subagent_type: "arch-reviewer", prompt: "...")
