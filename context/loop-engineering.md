@@ -15,7 +15,7 @@
 | 専門レビュー・調査・軽量ワーカー | Delegation Gate 後、session-provided capability で必要な role だけを追加する |
 | 重い実装・異ベンダー視点 | 隔離された専門性と write scope があり、利用可能な capability がある場合だけ委任する |
 
-> **fan-out と team-run の使い分け**: 文脈分断より独立検証や並列利益が大きいときだけ fan-out を使う。Goal、Team Journal、Review Heat を共有して複数ターン協調する価値がある場合だけ `/team-run` を使う。`Workflow`、Agent Teams、`Agent()` は利用可能な場合の例であり、feature flag や API 名を仮定しない。capability がなければ lead が同じ acceptance で逐次実行する。
+> **fan-out、team-run、graph-engineering の使い分け**: 文脈分断より独立検証や並列利益が大きいときだけ fan-out を使う。Goal、Team Journal、Review Heat を共有して複数ターン協調する価値がある場合だけ `/team-run` を使う。さらに複数の loop を auditable edge、typed state、異なる authority で統治する必要がある場合だけ `graph-engineering` を重ねる。Graph は loop を置き換えず、接続と実行順を統治する。`Workflow`、Agent Teams、`Agent()` は利用可能な場合の例であり、feature flag や API 名を仮定しない。capability がなければ lead が同じ acceptance で逐次実行する。
 
 ## 現状ステータス（2026-06-17 時点）
 
@@ -233,6 +233,7 @@ Summary ──→ Slack日次サマリー投稿
 | `/loop-status` | 全ループの状態表示（スケジュールタスク/ワークフロー/コスト/改善提案） |
 | `/pr-watch [PR]` | PRのCI/レビューを監視し未対応を自動対応。起動時に `/loop 30m /pr-watch <PR>` を自動開始（Esc で停止） |
 | `/team-run "<タスク>"` | capability を使える場合だけ協調する overlay。PR監視は別 route と必要な承認に従う |
+| `/graph-engineering "<仕事>"` | 複数loopを検証済みcontractで接続する overlay。単一loopには使わない |
 
 > **`/pr-watch` 監視と `scheduled-tasks/pr-review` の役割差**: `/pr-watch <PR>` は起動時に `/loop 30m /pr-watch <PR>` を自動開始し、**現セッション中**に特定PR1本を30分おき能動監視する（team-run成果のコンテキストを引き継げる／`Esc` で停止）。2回目以降の呼び出しは state の `loop_active: true` により二重起動を防止。一方 `scheduled-tasks/pr-review` は**全 watch_repos** を毎時バッチ巡回（アプリ起動中のベストエフォート）。CI失敗の自動修正（`gh pr checks`→失敗ログ→修正→push）は `/pr-watch` のみが行う。
 
@@ -250,7 +251,7 @@ Summary ──→ Slack日次サマリー投稿
 | 過去知見検索 | `Agent(subagent_type: "learnings-researcher")` | 継承 |
 | パイプライン制御 | 利用可能な `Workflow` 等の capability。なければ逐次実行 | — |
 
-詳細: `~/.claude/rules/model-routing.md`（Single Source of Truth）
+詳細: `~/.claude/rules/model-routing.md`（model 選択の Single Source of Truth）。plugin / skill / agent role の選択は `context/agent-team-routing.md` を参照する。
 
 ## ファイル配置
 
