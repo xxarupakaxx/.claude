@@ -26,21 +26,21 @@ metadata:
 - repository: local pathまたはGitHub URL
 - revision: branch、tag、commit SHA。未指定なら現在のHEAD
 - focus: repository全体またはbounded context
-- output root: 未指定ならtask-localな`.context/spec-extraction/<repo-slug>-<short-sha>-<scope-hash>/<timestamp>/`
+- output root: 未指定ならtask-localな`.local/context/spec-extraction/<repo-slug>-<short-sha>-<scope-hash>/<timestamp>/`
 - depth: `quick`、`standard`、`thorough`。既定は`standard`
 
 GitHub URLだけが渡された場合は、公開repositoryならread-only取得してよい。
 private repositoryでは、認証principalを確認し、権限を別principalへの自動切替で回避しない。
-clone先はtask-localな`.context/`とし、対象repository内へ生成物を置かない。
+clone先はtask-localな`.local/context/`とし、対象repository内へ生成物を置かない。
 
 読取開始前にbranch、tag、HEADをfull commit SHAへ解決し、remote取得時もそのSHAへdetached checkoutする。
 local repositoryでは`git status --porcelain`とrecursiveなsubmodule revisionを確認する。
-dirtyなら既定では`.context/`のcleanなdetached worktreeからcommit baselineだけを読む。
+dirtyなら既定では`.local/context/`のcleanなdetached worktreeからcommit baselineだけを読む。
 ユーザーが未commit状態の仕様化を明示した場合だけ、`working_tree: dirty`、変更path、diff digest、untracked file digest、submodule revisionをsource identityへ加える。
 dirtyなsubmoduleの未commit内容はv1の対象外とし、記録済みSHAのclean checkoutだけを読む。必要ならsubmoduleを別repositoryとして仕様化する。
 digest計算時も差分内容やsecret値を成果物、log、chatへ出さない。
 `repo-slug`は英小文字、数字、hyphenだけへ正規化し、scopeは内容の短いhashにする。
-作成前に解決後の絶対pathがtask-localな`.context/spec-extraction/`配下であることを検証する。
+作成前に解決後の絶対pathがtask-localな`.local/context/spec-extraction/`配下であることを検証する。
 timestampはUTCの`YYYYMMDDTHHMMSSmmmZ-<random>`とする。存在時はsuffixを再生成し、directory直下へ4成果物を置いて上書きしない。
 
 ## 証拠モデル
