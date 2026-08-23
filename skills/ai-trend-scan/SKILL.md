@@ -76,8 +76,8 @@ related: ["[[AI-Agent-MOC]]"]
 
 ### ★5 タイトル
 
-**URL**: <URL>  
-**ソース**: HN 740pt / arXiv / GitHub Trending / 公式ブログ 等  
+**URL**: <URL>
+**ソース**: HN 740pt / arXiv / GitHub Trending / 公式ブログ 等
 **採点理由**: （採点根拠を1行）
 
 #### 概要
