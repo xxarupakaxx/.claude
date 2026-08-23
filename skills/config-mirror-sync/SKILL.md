@@ -7,7 +7,7 @@ description: "`~/.codex`・`~/.claude`の変更をObsidianボルト（`~/Notes/V
 
 `~/.codex`・`~/.claude`は正本としてホームディレクトリに残したまま、Obsidianボルト（`~/Notes/Vault`）側の2種類の参照経路を最新化する。
 
-- **Markdown抜粋ミラー**（`_shared-ai/mirrors/`）: rootの`AGENTS.md` / `CLAUDE.md`と、`commands/*.md`、`prompts/*.md`、`context/**/*.md`、`rules/**/*.md`、`skills/*/SKILL.md`だけを人間が読める形でコピーする。同期定義は`_shared-ai/sync-manifest.toml`。
+- **Markdown抜粋ミラー**（`_shared-ai/mirrors/`）: `~/.claude/CLAUDE.md`と、`commands/*.md`、`prompts/*.md`、`context/**/*.md`、`rules/**/*.md`、`skills/*/SKILL.md`だけを人間が読める形でコピーする。Codex用のroot `AGENTS.md`は互換ルールを持つ専用ミラーなので単純コピーしない。同期定義は`_shared-ai/sync-manifest.toml`。
 - **git submodule**（vault直下の`.codex`・`.claude-global`）: 設定ファイルやスクリプトも含めた実体を独立repoとして参照する。
 
 ## 対象の決定
