@@ -33,19 +33,19 @@ git diff $ARGUMENTS
 
 ### 3.5. 状態図の取り込み
 
-`/generate-state-diagram` が生成した `91_state_diagram.md` を検出し、PR本文に埋め込む。
+`/generate-state-diagram` が生成した `91_state_diagram.svg` と `91_state_diagram.md` を検出する。
 
 ```bash
 # MEMORY_DIR は PJ CLAUDE.md 定義（未定義時は .local/）
-# 最新のメモリディレクトリから 91_state_diagram.md を探す
-find "${MEMORY_DIR:-.local}/memory" -maxdepth 3 -name "91_state_diagram.md" 2>/dev/null \
+# 最新のメモリディレクトリから 91_state_diagram.svg を探す
+find "${MEMORY_DIR:-.local}/memory" -maxdepth 3 -name "91_state_diagram.svg" 2>/dev/null \
   | xargs -I{} stat -f "%m %N" {} 2>/dev/null \
   | sort -rn | head -1 | awk '{print $2}'
 ```
 
 判定:
 
-- **ファイルあり** → ファイル内の ` ```mermaid ... ``` ` ブロックを全て抽出し、後述「処理フロー / 状態遷移」セクションに埋め込む（`91_state_diagram.md` は Validator 通過済みなのでそのまま貼ってよい）
+- **ファイルあり** → XMLとしてparseでき、外部resourceとevent handlerを含まないことを確認する。PR本文では `91_state_diagram.md` の関係要約を使う。SVGがrepository内のcommit済みpathにある場合だけMarkdown imageとして埋め込む
 - **ファイルなし**:
   - 変更にワークフロー/状態管理/外部連携/ドメインモデル変更を含む → `AskUserQuestion` で `/generate-state-diagram` を先に実行するか確認
   - UIのみ / テストのみ / 設定・ドキュメントのみ → スキップ（CLAUDE.md `generate-state-diagram` のスキップ条件と一致）
@@ -74,16 +74,10 @@ find "${MEMORY_DIR:-.local}/memory" -maxdepth 3 -name "91_state_diagram.md" 2>/d
 <!-- 91_state_diagram.md が存在する場合のみ以下を追加 -->
 ## 処理フロー / 状態遷移
 
-> 自動生成: `/generate-state-diagram` 出力（Mermaid Validator通過済み）
+> 自動生成: `/generate-state-diagram` のSVG出力
 > 詳細・用語集・ファイル構成マップは `91_state_diagram.md` を参照
 
-​```mermaid
-<block_1 をそのまま貼り付け>
-​```
-
-​```mermaid
-<block_2 をそのまま貼り付け>
-​```
+[SVGがcommit済みの場合は `![処理フロー](<repo-relative-svg-path>)`。それ以外は `91_state_diagram.md` の関係要約を記載]
 <!-- ここまで状態図セクション -->
 
 ## チェックリスト
@@ -95,8 +89,8 @@ find "${MEMORY_DIR:-.local}/memory" -maxdepth 3 -name "91_state_diagram.md" 2>/d
 注意:
 
 - PRテンプレート（`.github/PULL_REQUEST_TEMPLATE.md`）が存在する場合、テンプレートの項目を勝手に削除してはならない（CLAUDE.md 禁止事項）。状態図セクションはテンプレート末尾（チェックリスト前など適切な位置）に追記する形で挿入
-- GitHubはPR本文のMermaidをネイティブレンダリングするため、画像化や外部リンクは不要
-- Validator警告コメント（`<!-- ⚠️ Mermaid Validator FAILED ... -->`）が `91_state_diagram.md` に残っている場合、当該ブロックは貼らずに「※構文エラーのため省略」とだけ記載し、ユーザーに通知
+- SVGはGitHubから取得できるcommit済みpathだけを埋め込む。local memory pathやdata URLは貼らない
+- SVG検証に失敗した場合は図を貼らず、「※SVG検証失敗のため省略」と記載してユーザーに通知する
 
 ### 5. Draft PR作成
 

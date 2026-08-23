@@ -111,11 +111,11 @@ python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --w
 
 すべての実行で、Roadmap だけでは答えられない別の読者の問いが残るかを評価する。
 
-責務、判断、リスク、引き継ぎなどを空間的なグループで短く説明できる場合だけ、`visualizing-work` を経て `diagram-design` を呼び、`92_visual_explanation.md` を作る。
+責務、判断、リスク、引き継ぎなどを空間的なグループで短く説明できる場合だけ、`visualizing-work` を経て `diagram-design` を呼び、`92_visual_explanation.svg` と読解用の `92_visual_explanation.md` を作る。
 
 別の canonical owner が `92_visual_explanation.*` を使用済みなら、`visualizing-work` の命名規則に従い、次に空いている番号の visual explanation path を使う。
 
-静的 HTML が理解時間を短くする場合だけ、選んだ番号に対応する visual explanation HTML も作る。
+静的 HTML が理解時間を短くする場合だけ、正本SVGをinlineで埋め込んだ、同じ番号の visual explanation HTML も作る。
 
 補助図では Roadmap の task 順序、進捗、Concept Map を描き直さない。
 
@@ -147,9 +147,9 @@ python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --w
 - 上段は `Phase / 進捗 / 選択中Task` のcompact status barとし、Task選択に同期させる。固定の全体目的をheroとして重複表示せず、全体仕様は仕様cardと `00_spec.md` quick linkから読む
 - `現在` と `次` を明示する。次のTaskがなければ、計画完了か未記録かを区別して表示する
 - `00_spec.md` と `30_plan.md` のquick linkを初期viewportに置き、成果物linkからsource drawerで正本本文を開けるようにする
-- `graph-map.md` があればMermaid flowchartを補助のConcept Mapとして読む。なければ既存sourceからfallback graphを作る
+- `graph-map.md` があれば `diagram-json` を補助のConcept Mapとして読み、HTMLではSVGとして描画する。なければ既存sourceからfallback graphを作る
 - `30_plan.md` の各Taskは `目的`、`変更対象`、`実装`、`成果物`、`検証`を持つ。欠落時はViewerが補作せず、`未記録`と表示する
-- 任意の `実装図` にMermaid `flowchart TB` / `TD` / `LR`を記録すると、選択Task detailの `こう実装する` と `現在の実コード` の間へ表示する。対応するのは矩形・判断nodeと、明示的な有向edge・edge labelの限定構文だけとする
+- 任意の `実装図` に `diagram-json` を記録すると、選択Task detailの `こう実装する` と `現在の実コード` の間へinline SVGで表示する。対応するのは矩形、判断node、明示的な有向edge、edge labelの限定構文だけとする
 - 任意の `実装根拠` に `repo:<relative-path>#<anchor-or-Lx-Ly>` を1件記録すると、generatorが生成時点の実sourceを最大12行だけ取得する。bare pathや `変更対象` からsource参照を推測しない
 - 第一画面は全Taskのcompact indexと選択Task detailを同時に表示する。全Taskには短い実装方針、選択Taskには `こう実装する`、任意の `実装図`、色付きの `現在の実コード`、変更対象、成果物、検証を表示する
 - Tablet / MobileではTask indexを順序どおりのhorizontal railにし、その直後へ選択Task detailを置く。tablistのorientationと矢印keyも表示方向へ合わせる

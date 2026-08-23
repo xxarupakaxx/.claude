@@ -45,7 +45,7 @@ Phase 0 ─→ Phase 1 ─→ Phase 2 ─→ Phase 3 ─→ Phase 4 ─→ Phase
 
 ### Plugin / Skill / Agent Routing
 
-Phase の順序はこのファイルを SSoT とする。一方、各Phaseで **どの plugin / skill / agent role を選ぶか** は `context/agent-team-routing.md` を参照する。agent role と model の詳細は `rules/model-routing.md` を参照する。
+Phase の順序はこのファイルを SSoT とする。一方、各Phaseで **どの plugin / skill / agent role を選ぶか** は `context/agent-team-routing.md` を参照する。agent role と model/service_tier の詳細は `rules/model-routing.md` を参照する。
 
 ### Engineering skill Phase adapter
 
@@ -147,13 +147,12 @@ route が明確な大規模タスクで、依存DAG、Cold-Start Brief、また�
 
 ## Phase 0: 準備
 
-1. PJ `CLAUDE.md` / `AGENTS.md`（両方あれば対象ファイルに近い方。import 内容も含む）の `MEMORY_DIR` 確認（未定義なら `.local/`）
+1. PJ `AGENTS.md`（互換 `CLAUDE.md` がある場合はその import 内容も含む）の `MEMORY_DIR` 確認（未定義なら `.local/`）
 2. システムプロンプトの`Today's date`から日付取得 → `${MEMORY_DIR}/memory/YYMMDD_<task_name>/`作成
-3. **gitignore 確認**: `${MEMORY_DIR}`（既定 `.local/`）と worktree の `.context/` が git の無視対象か確認する。global gitignore で除外済みなら何もしない。除外されていなければ `.git/info/exclude` へ追加してから作業を進める。05_log.md はユーザー指示の全文と調査ログを含むため、誤コミット経路を開いたまま Phase 1 へ進まない
-4. 05_log.md初期化、ユーザーの最初の指示を記録
-5. **Blueprint WUのCold-Start Briefがあれば読み込み**（blueprint.mdの該当WUセクション）
-6. `rg` / SQLite / memory index でタスク関連の過去知見を検索（memories/ + solutions/ + issues/ を横断）し、結果を05_log.mdに記録する。結果が不十分で、独立した探索文脈の価値が Delegation Gate を上回る場合だけ `learnings-researcher` または explorer role を追加する
-7. **コード変更時のCodemap preflight**: task memory directoryの `codemap.*` を `context/codemap.md` に従い、workspace rootを検証対象、task memory directoryをartifact出力先としてcheckする。JSONからcaller / impact / guarding test / evidenceを読み、missing、stale、mismatch、または質問に答える関係が不足する場合は、read-only調査で同directoryのmapをrefreshしてfreshになるまでproduction codeを編集しない。code変更後もrefresh/checkする。workspace rootやgit管理対象へcodemap一式を置かない。
+3. 05_log.md初期化、ユーザーの最初の指示を記録
+4. **Blueprint WUのCold-Start Briefがあれば読み込み**（blueprint.mdの該当WUセクション）
+5. `rg` / SQLite / memory index でタスク関連の過去知見を検索（memories/ + solutions/ + issues/ を横断）し、結果を05_log.mdに記録する。結果が不十分で、独立した探索文脈の価値が Delegation Gate を上回る場合だけ `learnings-researcher` または explorer role を追加する。
+6. **コード変更時のCodemap preflight**: task memory directoryの `codemap.*` を `context/codemap.md` に従い、workspace rootを検証対象、task memory directoryをartifact出力先としてcheckする。JSONからcaller / impact / guarding test / evidenceを読み、missing、stale、mismatch、または質問に答える関係が不足する場合は、read-only調査で同directoryのmapをrefreshしてfreshになるまでproduction codeを編集しない。code変更後もrefresh/checkする。workspace rootやgit管理対象へcodemap一式を置かない。
 
 ## Phase 1: 調査
 
@@ -270,7 +269,7 @@ lead は合格基準、依存関係、変更境界を直接点検する。
 **review depth の目安:**
 
 | 変更とリスク | 初期 review |
-|---|---|
+|------|-------------|------------|
 | 低リスクの単一文書・設定 | fresh な直接検証。独立 review は必要時だけ |
 | 複数責務または policy / workflow | 対象観点の最小 independent reviewer または human gate |
 | 権限・外部書き込み・不可逆操作・重要設計 | 独立 reviewer を必須にし、必要なら adversarial review |
@@ -289,7 +288,7 @@ Delegation Gate を通る場合だけ、変更リスクに対応する最小の 
 **共通ルール:**
 - レビュー対象ファイルのフルパスと計画ファイルのパスを渡す
 - `security-reviewer`にはAPI routeの呼び出し先usecase/entity定義も含める（IDOR検出のため）
-- **IMPORTANT**: レビュー結果は05_log.mdに全件記録すること（MINOR も含む）。あわせて完了直後にチャットへサマリーを出力し、severity別件数・CRITICAL / IMPORTANT の全件・ESCALATE項目の3点を必ず含める。ユーザーが採否を判断できる状態にしてから次のアクションへ進む
+- **IMPORTANT**: レビュー結果は05_log.mdに全件記録すること（MINOR も含む）。ユーザーが確認できる状態にする
 - **IMPORTANT**: Round 2以降は、再起動した reviewer、再起動しなかった reviewer、各判断理由を05_log.mdに記録する
 - 再起動対象が0名の場合は、fresh な機械チェックを実行し、`reviewer rerun: none` と理由を05_log.mdに記録してそのラウンドを完了する
 - 認証、権限、課金、個人情報、外部書き込み、不可逆操作に関する計画を修正した場合は、`security-reviewer`を再起動する
@@ -305,11 +304,6 @@ Delegation Gate を通る場合だけ、変更リスクに対応する最小の 
 通常のローカル変更では、ユーザーの実行依頼を計画と実装の承認として扱う。計画・Sprint Contract・レビュー結果は進捗共有であり、確認待ちの停止点ではない。ユーザーが明示的に「調査だけ」「計画だけ」「実装前に確認」と指定した場合だけ、そこで停止する。
 
 Phase 2.5でのSprint Contract初回作成は、依頼済みの計画を検証可能に具体化する工程であり、それ自体では確認を要求しない。依頼範囲を実質的に変更する追加・削除・意味変更が生じた場合だけ、実装前にこの Gate を通過する。誤字や意味を変えない参照修正だけなら確認は不要。
-
-### Phase 2 完了マーカー（必須）
-
-Phase 2 を終えたら 05_log.md へ `## Phase 2: 計画完了` を追記する。
-`hooks/pre-prompt-phase-gate.sh`（`settings.json` の `UserPromptSubmit` に登録済み）がこのマーカーを探し、無い状態で実装着手すると警告を出す。マーカーを書かないと規律を守っていても毎回警告が出て、ゲートが形骸化する。
 
 ## Phase 2.5: Acceptance Criteria定義（Sprint Contract）
 
@@ -355,7 +349,7 @@ Goal outcome → spec requirement / direct requirement → ticket / WU / N/A (di
 | レビュー→修正→再レビューの繰り返し | **PRループ** | `autonomous-loops`（パターン2） |
 | Blueprint WUの依存順実行 | **DAGオーケストレーション** | `autonomous-loops`（パターン3）+ `team-run` skill |
 | 固定順序の専門agentチェーン | **順序付きオーケストレーション** | `orchestrate` skill（`/orchestrate` shim から起動可） |
-| 複数ターンで Goal、Team Journal、Review Heat、共有協調が実際に有用 | **Agent Team** | `team-run` skill（`/team-run` shim から起動可） |
+| 複数ターンで Goal、Team Journal、Review Heat、共有協調が実際に有用 | **Codex team-run** | `team-run` skill（`/team-run` shim から起動可） |
 
 **判断フロー:**
 ```
@@ -373,8 +367,8 @@ Goal / Team Journal / Review Heat / 共有協調が有用？ → YES → team-ru
 ### 実行ルール
 
 - 各タスクを「調査→計画→実行→レビュー」で実行
-- **各タスクの調査ステップ**: ローカル検索を先に行う。結果が不十分で Delegation Gate を満たす場合だけ `learnings-researcher` を追加し、類似実装・既知の落とし穴を確認する
-- コード変更では、要素の完了時または新しい層・公開API・抽象化を追加する直前に、`rules/complexity-budget.md` の方法でactualを測る。上限の大幅超過（目安25%以上）または計画外の責務追加は一旦停止し、削減候補・根拠・再計画要否を記録する
+- **各タスクの調査ステップ**: ローカル検索を先に行う。結果が不十分で Delegation Gate を満たす場合だけ `learnings-researcher` を追加し、類似実装・既知の落とし穴を確認する。
+- コード変更では、要素の完了時または新しい層・公開API・抽象化を追加する直前に、`rules/complexity-budget.md` の方法でactualを測る。上限の大幅超過（目安25%以上）または計画外の責務追加は一旦停止し、削減候補・根拠・再計画要否を記録する。
 - **品質チェック（format/lint/typecheck）はコミット前に必ず実行**
 - **コミットはこまめに打つ**（1機能・1修正ごと）
 - 10個以上のタスク: 3-5タスクごとにユーザーに中間報告
@@ -382,7 +376,7 @@ Goal / Team Journal / Review Heat / 共有協調が有用？ → YES → team-ru
 ## Phase 4: 品質確認
 
 ### 自動チェック
-PJ `CLAUDE.md` / `AGENTS.md` / `context` 記載のコマンドで lint/format/typecheck/test を実行。
+PJ `AGENTS.md` / `context` 記載のコマンドで lint/format/typecheck/test を実行。
 
 ### Sprint Contract検証（Phase 2.5でcheckpoint.mdが作成されている場合）
 `/verify`を実行し、Phase 2.5で定義した合格基準に対して自動検証。全基準PASSまで修正→再検証を繰り返す。
@@ -399,9 +393,8 @@ Tier 2レビューアー選択ガイドの「Playwright E2Eスモークテスト
 ### 独立レビュー（リスク制）
 
 fresh な自動チェックを先に行う。
-`agent-team-routing.md` の Delegation Gate と変更リスクに応じて最小の checker を選び、ファイル数だけで reviewer 数やラウンド数を決めない。
+Delegation Gate と変更リスクに応じて最小の checker を選び、ファイル数だけで reviewer 数やラウンド数を決めない。
 権限、外部書き込み、不可逆操作、セキュリティ、重要設計では独立 reviewer または人間 gate を必須にする。
-セキュリティ、性能、PRD の reviewer は、その観点に実際の変更または失敗リスクがある場合だけ起動する。
 
 コード変更では、レビュー入力に計画時の要素別targetと実測actualを含める。reviewerは行数の多寡だけで拒否せず、受入基準に必要か、既存パターンで削減できるか、計画外の責務が混ざっていないかを判定し、`within target` / `justified variance` / `scope drift` を記録する。詳細は `rules/complexity-budget.md` を参照する。
 
@@ -424,15 +417,15 @@ re_review_priority: high    # 次ラウンドで検出元 reviewer を優先起�
 ---
 ```
 
-次ラウンドでは、同一 issue が pending な reviewer と、Round間の変更pathがレビューアー選択ガイドの条件に該当する reviewer だけを再起動する。
-認証、権限、課金、個人情報、外部書き込み、不可逆操作に触れた場合は、`security-reviewer` を再起動する。
+次ラウンドでは、同一 issue が pending な reviewer と、Round間の変更pathがレビューアー選択ガイドの条件に該当する reviewerだけを再起動する。
+認証、権限、課金、個人情報、外部書き込み、不可逆操作に触れた場合は、`security-reviewer`を再起動する。
 再起動した reviewer、再起動しなかった reviewer、各判断理由を05_log.mdに記録する。
 再起動対象が0名の場合は、fresh な機械チェックを実行し、`reviewer rerun: none` と理由を05_log.mdに記録してそのラウンドを完了する。
 同一 issue が 3 ラウンド連続残存すれば ESCALATE（人間判断）。
 
 **ラウンド構造:**
 - **Round 1**: 基本レビュー → 指摘修正
-- **Round 2**: pending な CRITICAL / IMPORTANT を検出した reviewer と、修正pathが観点に入る reviewer だけを再起動
+- **Round 2**: pending な CRITICAL / IMPORTANT を検出した reviewer と、修正pathが観点に入る reviewerだけを再起動
 - **Round 3以降**（中・大規模時）: 未解決 issue の観点と、修正pathが新たに該当したレビューアー選択条件だけを重点確認
 - **最終ラウンドで指摘が残る場合**: 合格するまで追加ラウンドを継続
 - **LLMのみの連続修正は最大3回まで**。以降は必ず静的解析/サブエージェントレビュー/人間確認を挟む
@@ -447,7 +440,7 @@ re_review_priority: high    # 次ラウンドで検出元 reviewer を優先起�
 **共通ルール:**
 - 変更対象ファイルのフルパスとレビュー観点を明示
 - `security-reviewer`にはAPI routeの呼び出し先usecase/entity定義も含める（IDOR検出のため）
-- **IMPORTANT**: レビュー結果は05_log.mdに全件記録すること（MINOR も含む）。あわせて完了直後にチャットへサマリーを出力し、severity別件数・CRITICAL / IMPORTANT の全件・ESCALATE項目の3点を必ず含める。ユーザーが採否を判断できる状態にしてから次のアクションへ進む
+- **IMPORTANT**: レビュー結果は05_log.mdに全件記録すること（MINOR も含む）。ユーザーが確認できる状態にする
 - **IMPORTANT**: 指摘の修正案は実装レベルで具体的に記述すること。「ユーザー判断」に委ねる場合でも技術的修正案を必ず提示
 - 「絶対にやるべき」指摘は必ず修正
 - MINOR (= non-critical) でも正しさ・一貫性に関わる指摘（バグ、不整合、ハードコード等）は修正する
@@ -455,7 +448,7 @@ re_review_priority: high    # 次ラウンドで検出元 reviewer を優先起�
 - 厳格レビュー: 規模・重要度に応じて以下から選択
   - **軽量〜中規模・spec先行型**: `sequential-review-pre-pr`（Stage 1: prd/rule-validator/arch → 必要時のみ Stage 2 へ）
   - **標準・並列型**: `auto-reviewing-pre-pr`（規模別ラウンド + 収束判定マトリクス + issues/ frontmatter で Round 間文脈伝播）
-  - **重要判断・敵対的型**: `adversarial-review`（Red findingを同じBlueへ逐次渡し、EOF barrier後にAuditorを起動。多数決禁止、Auditor は Read で独立検証）
+  - **重要判断・敵対的型**: `adversarial-review`（Red findingを同じBlueへ逐次渡し、EOF barrier後にAuditorを起動。多数決禁止、AuditorはReadで独立検証）
   - **ユーザー対話型**: `interrogating-pre-pr`（質問攻め。設計意図の確認が重要な小規模変更向け）
 
 ### Phase 4.5: セッション終了前チェック（推奨）
@@ -477,7 +470,7 @@ re_review_priority: high    # 次ラウンドで検出元 reviewer を優先起�
    - **スキップ条件**: 設定ファイルのみの変更、テストのみの変更、ドキュメントのみの変更
 8. **状態図・処理フロー図生成**（ワークフロー・状態管理・外部連携を含む場合は必須）
    - `/generate-state-diagram` スキルを実行
-   - lead のローカル探索で不足し、Delegation Gate を通る場合だけ `explorer` でブランチ変更を深掘り → Mermaid図生成 → 用語集・ファイルマップ付与
+   - lead のローカル探索で不足し、Delegation Gate を通る場合だけ `explorer` でブランチ変更を深掘り → SVG図生成 → 用語集・ファイルマップ付与
    - **CRITICAL品質基準**: 10年後の新人がドメイン知識ゼロでも「何が起きているか」「なぜそうなっているか」を完全に理解できる詳細さ
    - 結果をメモリディレクトリの `91_state_diagram.md` に保存
    - **スキップ条件**: UIのみ・テストのみ・設定/ドキュメントのみの変更、単一関数の修正
@@ -570,16 +563,16 @@ UI/フロントエンド変更を含むPhase 4で、コードレビューに加�
 
 ### Adversarial 3-agent（重要判断時、`adversarial-review` skill 経由のみ）
 
-`adversarial-review` skill が起動するときに Tier 1-3 とは別経路で起動される 3 エージェント。直接呼び出しは推奨しない（必ず skill 経由）。Claude では role 既定の model を使う。
+`adversarial-review` skill が起動するときに Tier 1-3 とは別経路で起動される 3 エージェント。直接呼び出しは推奨しない（必ず skill 経由）。Codex では role 既定の model/service_tier を使う。
 
 | エージェント | 呼び出し | 役割 |
 |------------|---------|------|
-| `red-reviewer` | `Agent(subagent_type: "red-reviewer")` | 攻撃側 (Pessimist)。コードの欠陥・脆弱性・設計ミスを最大限あぶり出す。JSONL 出力 |
-| `blue-reviewer` | `Agent(subagent_type: "blue-reviewer")` | 防御側 (Optimist of Skeptic)。Red 各指摘を独立検証し AGREE/PARTIAL/REJECT を付与 |
-| `auditor-reviewer` | `Agent(subagent_type: "auditor-reviewer")` | 審判 (Judge)。Red/Blue 不一致点を優先分析し、Read で独立検証して ADOPT/DOWNGRADE/UPGRADE/REJECT/ESCALATE を最終判定 |
+| `red-reviewer` | session-provided collaboration capability で起動 | 攻撃側 (Pessimist)。コードの欠陥・脆弱性・設計ミスを最大限あぶり出す。JSONL 出力 |
+| `blue-reviewer` | session-provided collaboration capability で起動 | 防御側 (Optimist of Skeptic)。Red 各指摘を独立検証し AGREE/PARTIAL/REJECT を付与 |
+| `auditor-reviewer` | session-provided collaboration capability で起動 | 審判 (Judge)。Red/Blue 不一致点を優先分析し、Read で独立検証して ADOPT/DOWNGRADE/UPGRADE/REJECT/ESCALATE を最終判定 |
 
 **起動条件**: DBスキーマ変更、認証フロー変更、外部 API 契約変更等の重要判断、または `auto-reviewing-pre-pr` が ESCALATE を返した場合。
-**コスト方針**: 既存 role の model を優先。custom/default agent の model 指定は `rules/model-routing.md` に従う。
+**コスト方針**: 既存 role の model/service_tier を優先。custom/default agent のみ `model` と `service_tier` を明示。詳細は `rules/model-routing.md`。
 
 ## 状況別スキルディスパッチ（Cross-Phase）
 
@@ -605,7 +598,7 @@ Phase直結でないユーティリティスキル。**状況が発生したら*
 
 | 状況 | スキル | やること |
 |------|--------|---------|
-| サブエージェントのモデル選択に迷う | `cost-aware-llm`（+ `rules/model-routing.md`） | role 既定で足りるか判断し、custom/default agent の model 指定は SSoT に従う |
+| サブエージェントのモデル選択に迷う | `cost-aware-llm`（+ `rules/model-routing.md`） | role 既定で足りるか判断し、custom/default agent のみ model/service_tier を指定 |
 | エージェントチームの構成に迷う | `context/agent-team-routing.md` + `context/team-run.md` + 必要時 `implementation-planner` | 利用可能な skill / role を確認し、タスクに最適な組み合わせを提案 |
 
 ### メンテナンス（定期）
@@ -623,7 +616,7 @@ Phase直結でないユーティリティスキル。**状況が発生したら*
 ## HTML Viewer Tools
 
 計画ファイル・ログ・レビュー結果をブラウザでインタラクティブに閲覧するためのHTMLビューア。
-Task Workspaceは`roadmap.html`を唯一の人向け入口として生成し、Plan / ProgressとfreshなCode Mapを同じ画面で切り替える。「現在地」「稼働中の作業」「成果物」「計画」「更新鮮度」「caller / impact / guarding test」を確認できる。`--serve --watch`で起動すると、Claude CodeまたはCoworkの横で開いたブラウザが`roadmap-snapshot.json`をpollingし、Roadmap source、artifact metadata、または検証済みCodemap payloadが変化したときだけ自動更新される。Plan Viewer / Log Viewerは個別ファイルの詳細確認に使う。
+Task Workspaceは`roadmap.html`を唯一の人向け入口として生成し、Plan / ProgressとfreshなCode Mapを同じ画面で切り替える。「現在地」「稼働中の作業」「成果物」「計画」「更新鮮度」「caller / impact / guarding test」を確認できる。`--serve --watch`で起動すると、Codex appの横で開いたブラウザが`roadmap-snapshot.json`をpollingし、Roadmap source、artifact metadata、または検証済みCodemap payloadが変化したときだけ自動更新される。Plan Viewer / Log Viewerは個別ファイルの詳細確認に使う。
 
 複数 task を横断して確認する場合は Roadmap Task Hub を起動する:
 
@@ -631,7 +624,7 @@ Task Workspaceは`roadmap.html`を唯一の人向け入口として生成し、P
 python3 scripts/generate-roadmap-view.py --hub --memory-root "$MEMORY_DIR/memory" --open
 ```
 
-`--memory-root` は複数回指定できる。generatorは`task-meta.json`をmachine-owned manifestとして作成し、current thread / session IDを取得できた場合は`--thread-id` / `--session-id`で保存する。完全一致だけを確定済み対応として扱う。path・title・更新時刻による一致は候補表示に留めて自動確定せず、承認は現在の Claude 会話を正本とする。Hub は loopback 限定の session key 付き API を使い、provider を定期再取得し、ブラウザ heartbeat が途絶えると終了する。provider の一時障害中は直近の成功結果を保持して degraded 状態を表示する。
+`--memory-root`は複数回指定できる。generatorは`task-meta.json`をmachine-owned manifestとして作成し、current thread / session IDを取得できた場合は`--thread-id` / `--session-id`で保存する。完全一致だけを確定済み対応として扱う。path・title・更新時刻による一致は候補表示に留めて自動確定せず、承認はCodex会話を正本とする。Hubはloopback限定のsession key付きAPIを使い、providerを定期再取得し、ブラウザheartbeatが途絶えると終了する。providerの一時障害中は直近の成功結果を保持してdegraded状態を表示する。
 
 Task Hubは各sessionの計画全文よりLive Activityを優先する。session JSONLの末尾最大1MBから直近24時間・最大100イベントだけを正規化し、turn実行中、user待ち、未完了tool、sub-agent観測数、最終イベント、経過時間、明示blockerを表示する。command arguments、tool output本文、24時間より古い会話contextは収集しない。選択sessionの下位層で設計Plan、承認、実装計画、成果物、検証結果を表示する。
 
@@ -640,14 +633,14 @@ Task Hubは各sessionの計画全文よりLive Activityを優先する。session
 | ツール名 | MCPツール | 対象ファイル | 主な機能 |
 |---------|----------|------------|---------|
 | Task Workspace | ローカルHTML (`tools/roadmap_viewer.html`) + Roadmap / Codemap generator | task Markdown、`codemap.json` / `codemap.lock` | Plan / Progress、Code Map、preflight状態、live polling |
-| Plan Viewer | `mcp__workflow-html-app__view-plan` | 30_plan.md | Markdownレンダリング、コメント機能、Claudeへのフィードバック送信 |
+| Plan Viewer | `mcp__workflow-html-app__view-plan` | 30_plan.md | Markdownレンダリング、コメント機能、Codexへのフィードバック送信 |
 | Log Viewer | `mcp__workflow-html-app__view-plan` | 05_log.md | Phase検出、タイムライン可視化（予定） |
 
 ### 自動発動条件（ユーザー確認不要）
 
 以下のタイミングで`viewing-plans`スキルが**自動的に**発動：
 
-1. **Phase 2完了時**: 30_plan.md作成後、code変更taskはCodemap checkを通し、`scripts/generate-roadmap-view.py <memory_dir>` でTask Workspaceを生成
+1. **Phase 2完了時**: 30_plan.md作成後、code変更taskはCodemap checkを通し、`scripts/generate-roadmap-view.py <memory_dir>`でTask Workspaceを生成
 2. **横で見たい場合**: `scripts/generate-roadmap-view.py <memory_dir> --serve --watch` を起動し、表示URLを案内
 3. **Phase 3/4更新時**: `40_progress.md` / `80_review.md` / `05_log.md` / `team-journal.md` / `90_verification.md` または成果物metadataの変更後、watch中なら `roadmap-snapshot.json` が更新され、ブラウザが自動再描画
 4. **Phase 5完了時**: 最終 `roadmap.html` を生成し、必要に応じて個別Plan/Log Viewerも表示
@@ -688,7 +681,7 @@ generatorはtask directory配下の通常ファイルを成果物metadataとし�
 ## 禁止事項
 
 - 計画なしで実装開始 / 4ステップ構造の省略
-- Delegation Gate が独立検証を要求する計画で、sub-agent reviewer または人間ゲートを省略すること
+- **計画書のサブエージェントレビューを実行せずに User Validation Gate へ進むこと**（Fast Track 適用時を除く）
 - 外部情報を参照せずに実装方針決定
 - 品質チェック・レビューのスキップ
 - **指摘が残っているのにラウンドを打ち切ること**

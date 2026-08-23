@@ -29,19 +29,31 @@
 理由は重複しやすくMECEが崩れる（価格不満の裏に機能不足がある等）。ライフサイクルの方が
 打ち手と1対1で結びつくため採用。
 
-```mermaid
-mindmap
-  root((中堅顧客の解約))
-    オンボーディング期(導入〜90日)
-      初期設定が完了しない
-      価値実感(Aha)に到達しない
-    定着期(90日〜1年)
-      利用が一部機能に偏る
-      管理者の異動で引き継ぎ断絶
-    更新期(契約更新前後)
-      ROIを説明できず稟議で落ちる
-      競合からの乗り換え提案
-```
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" role="img" aria-labelledby="tree-title tree-desc">
+  <title id="tree-title">中堅顧客の解約ロジックツリー</title>
+  <desc id="tree-desc">解約をオンボーディング期、定着期、更新期に分け、それぞれ二つの原因へ分解する。</desc>
+  <defs><marker id="tree-arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#64748b"/></marker></defs>
+  <g fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#tree-arrow)">
+    <path d="M170 180 H260 V70 H340"/><path d="M170 180 H340"/><path d="M170 180 H260 V290 H340"/>
+  </g>
+  <g fill="#f8fafc" stroke="#475569" stroke-width="2">
+    <rect x="20" y="145" width="150" height="70" rx="12"/>
+    <rect x="340" y="35" width="190" height="70" rx="12"/>
+    <rect x="340" y="145" width="190" height="70" rx="12"/>
+    <rect x="340" y="255" width="190" height="70" rx="12"/>
+  </g>
+  <g fill="#0f172a" font-family="system-ui, sans-serif" font-size="16" text-anchor="middle">
+    <text x="95" y="185">中堅顧客の解約</text>
+    <text x="435" y="76">オンボーディング期</text>
+    <text x="435" y="186">定着期</text>
+    <text x="435" y="296">更新期</text>
+  </g>
+  <g fill="#334155" font-family="system-ui, sans-serif" font-size="14">
+    <text x="570" y="58">初期設定が完了しない</text><text x="570" y="88">価値実感に到達しない</text>
+    <text x="570" y="168">利用が一部機能に偏る</text><text x="570" y="198">管理者異動で引き継ぎ断絶</text>
+    <text x="570" y="278">ROIを説明できない</text><text x="570" y="308">競合からの乗り換え提案</text>
+  </g>
+</svg>
 
 **規律のポイント**: 各枝が「打ち手を打てる単位」になっている。理由で割ると評論で終わるが、
 ライフサイクルで割ると「どの時点に介入するか」が決まる。

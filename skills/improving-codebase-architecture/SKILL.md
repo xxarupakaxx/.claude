@@ -51,11 +51,10 @@ Windows では `%TEMP%` を使います。
 Linux では `xdg-open <path>`、macOS では `open <path>`、Windows では `start <path>` を使います。
 absolute path も伝えます。
 
-report では layout と styling に **Tailwind via CDN** を使います。
-diagram には **Mermaid via CDN** を使います。
-graph、flow、sequence のように構造が graph-shaped なときは Mermaid が向いています。
-一方で、mass diagram、cross-section、collapse animation のような editorial な visual には hand-crafted な CSS や SVG を混ぜます。
-Mermaid だけに頼らず、手で描いた visual も併用します。
+report ではlayoutとstylingに **Tailwind via CDN** を使います。
+diagramは、graph、flow、sequenceを含めて自己完結したinline SVGで描きます。
+mass diagram、cross-section、collapse animationのようなeditorial visualもSVGを正本にします。
+外部のdiagram runtimeへ依存しません。
 各 candidate には **before / after visualisation** を必ず付けます。
 とにかく visual にします。
 

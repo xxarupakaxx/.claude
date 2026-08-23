@@ -57,7 +57,7 @@ Check:
 
 Check:
 
-- If Mermaid fails, the explanation still has text, table, or HTML fallback.
+- The standalone SVG is valid, and the explanation still has an equivalent text or table fallback.
 - If HTML cannot be opened, Markdown still explains the artifact.
 - If generated imagery is unavailable, the source description is enough to recreate it.
 - If an MCP viewer is unavailable, saved files remain useful.

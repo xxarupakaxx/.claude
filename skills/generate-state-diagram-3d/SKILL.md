@@ -1,128 +1,81 @@
 ---
 name: generate-state-diagram-3d
-description: Generate a workflow-html-app MCP-backed 2.5D state diagram from branch changes. Use when the user asks for 3D/2.5D state diagrams, layered diagrams, graphJson output, workflow-html-app diagram viewer output, or a more inspectable alternative to flat Mermaid diagrams.
-allowed-tools: Read, Bash, Glob, Grep, Write, mcp__workflow-html-app__view-diagram
+description: branch変更からlayer付きSVG状態図とtime-aware Graph JSONを生成する。2.5Dまたはtimeline表示が必要な図に使う。
+allowed-tools: Read, Bash, Glob, Grep, Write
 ---
 
-# Generate State Diagram 3D
+# 2.5D状態図とtimelineの生成
 
-## Overview
+## 境界
 
-Create a 2.5D layered state diagram for branch changes. This skill is separate from `generate-state-diagram`: the base skill owns Mermaid/Markdown diagrams, while this skill owns Graph JSON and the workflow-html-app 2.5D viewer path.
+このSkillは、layer、ownership、retry、queue、commit列、段階的なfailure recoveryを平面図だけでは追いにくい場合に使う。
 
-## Hard Requirement
+静的なoverviewもlayer図もSVGを正本とし、Mermaidを生成しない。
+Mermaid入力を必須にするviewer経路は使わない。
 
-Use `workflow-html-app MCP` for the interactive 2.5D view.
+小さな変更や静的SVGだけで十分な変更では `generate-state-diagram` を使う。
 
-Call `mcp__workflow-html-app__view-diagram` with all three fields:
+## 成果物
 
-```text
-mermaidCode: "<main Mermaid diagram>"
-title: "<diagram title>"
-graphJson: "<91_state_diagram_graph.json as a string>"
+- `91_state_diagram_3d.svg`：layer付きoverviewの正本。
+- `91_state_diagram_3d.json`：node、edge、layer、timeline eventの機械可読データ。
+- `91_state_diagram_3d.md`：説明、SVG参照、用語集、file map。
+- `91_state_diagram_3d.html`：inline SVGとtimeline操作を含む自己完結HTML。
+
+既存の `91_state_diagram.svg` を明示的な依頼なしに上書きしない。
+
+## Graph JSON
+
+JSONは最低限次を持つ。
+
+```json
+{
+  "schemaVersion": 1,
+  "title": "Diagram title",
+  "nodes": [],
+  "edges": [],
+  "layers": [],
+  "timeline": {
+    "events": []
+  }
+}
 ```
 
-Do not treat hand-written static 3D HTML as the normal path. If `mcp__workflow-html-app__view-diagram` is unavailable, save the Markdown and Graph JSON artifacts, then report that interactive 2.5D display is blocked by the missing workflow-html-app MCP. Generate a static fallback only when the user explicitly asks for file-only output or fallback HTML.
+nodeは安定した `id`、短い `label`、`layer`、状態または種別を持つ。
+edgeは既知nodeだけを結び、関係labelを持つ。
+timeline eventは時刻または順序、対象node、変化、根拠を持つ。
+repositoryから確定できない関係を事実として補作しない。
 
-## Outputs
+## 手順
 
-Save these files in the task memory directory:
+1. branch差分、commit列、関連sourceを読む。
+2. 読者が追うべき時間軸とlayerを決める。
+3. Graph JSONを作る。
+4. 同じnodeとedgeからlayer付きSVGを生成する。
+5. HTMLへSVGをinlineで埋め込み、timeline eventの選択で対象nodeをhighlightする。
+6. MarkdownへSVG参照、関係一覧、用語集、file map、再生方法を書く。
+7. JSON、SVG、Markdown、HTMLのnode IDとedge IDが一致することを検証する。
 
-- `91_state_diagram_3d.md`: explanation, main Mermaid diagram, usage notes, glossary, and file map
-- `91_state_diagram_graph.json`: Graph JSON consumed by workflow-html-app
-- `91_state_diagram_3d.html`: optional fallback only when MCP display is unavailable or user asks for a standalone file
+## SVG表現
 
-Do not overwrite `91_state_diagram.md` unless the user explicitly asks to replace the base Mermaid diagram output.
+- layerは背景bandまたはgroupで分離する。
+- depthは位置、scale、opacityのうち必要最小限で表す。
+- edgeは前後関係が読めるarrowとlabelを持つ。
+- `role="img"`、`title`、`desc`、`viewBox`を必須にする。
+- 外部resource、外部script、`foreignObject`、event handler属性を入れない。
+- static SVGだけを開いても全体像が理解できるようにする。
 
-## Workflow
+## Timeline HTML
 
-### Step 1: Inspect Branch Changes
+HTMLは自己完結させる。
+Graph JSONをscript dataとして埋め込む場合は `application/json` を使い、`</script` をescapeする。
+timeline controlはstep移動、reset、現在eventの説明を持つ。
+JavaScriptはSVGのclassまたは属性だけを切り替え、nodeやedgeを推測で追加しない。
 
-Run:
+## 検証
 
-```bash
-git diff <BASE_BRANCH>...HEAD --stat
-git log <BASE_BRANCH>..HEAD --oneline
-```
-
-Identify:
-
-- workflow or orchestration layers
-- stateful entities and status columns
-- UI interactions and URL/client state
-- API, Server Action, usecase, domain, and persistence boundaries
-- external systems, queues, webhooks, cron, retry, and failure paths
-
-### Step 2: Decide Layers
-
-Use these layer names exactly where possible:
-
-```text
-UI / API / Domain / DB / External / Queue / Ops / Test / Unknown
-```
-
-Map the axes as:
-
-| Axis | Meaning |
-|------|---------|
-| X | process order from trigger to final result |
-| Y | parallel branches or same-step alternatives |
-| Z | technical layer boundary |
-
-### Step 3: Create Mermaid Context
-
-Create a compact main Mermaid diagram to act as the 2D reference in the viewer. Use `stateDiagram-v2` for lifecycle/state-heavy flows and `flowchart LR` for data-heavy flows.
-
-Read `references/mermaid-syntax.md` before writing Mermaid if the diagram contains Japanese labels, special characters, nested state blocks, or class/entity relationships.
-
-Validate Mermaid using `references/validator-loop.md` when a Mermaid validator MCP is available. If validation is unavailable, keep syntax conservative and mention that live validation was not available.
-
-### Step 4: Create Graph JSON
-
-Read `references/graph-json-schema.md` before building `91_state_diagram_graph.json`.
-
-Graph JSON rules:
-
-- Every node must have `id`, `label`, `layer`, and `why`.
-- `why` must explain why the step exists, not just what it does.
-- `files` should use repository-relative paths.
-- `order` should be stable and roughly monotonic along the main path.
-- Every edge must reference existing node IDs.
-- Use `type: "async"` for queue/event/background work and `type: "error"` for failure paths.
-
-### Step 5: Save Files
-
-Save `91_state_diagram_3d.md` with:
-
-- purpose and branch
-- main Mermaid diagram
-- short explanation of how to read the 2.5D view
-- glossary
-- file map
-- Graph JSON file path
-- workflow-html-app MCP invocation summary
-
-Save `91_state_diagram_graph.json` as strict JSON with no comments.
-
-### Step 6: Display With MCP
-
-Call:
-
-```text
-mcp__workflow-html-app__view-diagram(
-  mermaidCode: "<main Mermaid diagram>",
-  title: "<feature name> 2.5D state diagram",
-  graphJson: "<contents of 91_state_diagram_graph.json>"
-)
-```
-
-This call is required for normal completion. The final report must say whether the MCP viewer was displayed.
-
-## Quality Bar
-
-- Mermaid remains readable as a flat fallback.
-- Graph JSON opens in workflow-html-app without breaking Mermaid display.
-- Layer placement helps comprehension; do not create arbitrary decorative 3D.
-- The reader can click a node and understand why it exists, what files implement it, and what it connects to.
-- Failure and retry paths are represented when they affect state or user-visible behavior.
-- If Graph JSON is invalid or the MCP is unavailable, do not claim the 2.5D view was delivered.
+- JSON schema、node参照、edge参照、timeline参照が整合する。
+- SVGをXML parserでparseできる。
+- HTML内の図はinline SVGであり、Mermaid sourceとruntimeを含まない。
+- static SVGとtimeline初期状態の内容が一致する。
+- timeline parseに失敗した場合もstatic SVGを残し、失敗を別に報告する。

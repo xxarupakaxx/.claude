@@ -1,11 +1,9 @@
 # HTML レポートの形式
 
 architectural review は、OS の temp directory に置く単一の self-contained HTML file として描画します。
-Tailwind も Mermaid も CDN から読みます。
-graph-shaped な diagram には Mermaid が安定して向いています。
-一方で、mass diagram や cross-section のような editorial な visual は hand-built な div や inline SVG が向いています。
-両方を混ぜて使います。
-Mermaid だけに寄りかかると、見た目がすぐ generic になります。
+TailwindはCDNから読みます。
+diagramはgraph、sequence、mass diagram、cross-sectionを含めてinline SVGで描きます。
+外部のdiagram runtimeは使いません。
 
 ## 雛形
 
@@ -16,10 +14,6 @@ Mermaid だけに寄りかかると、見た目がすぐ generic になります
     <meta charset="utf-8" />
     <title>Architecture review — {{repo name}}</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script type="module">
-      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-      mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose" });
-    </script>
     <style>
       /* small custom layer for things Tailwind doesn't cover cleanly:
          dashed seam lines, hand-drawn-feeling arrow heads, etc. */
@@ -87,33 +81,27 @@ candidate に合う pattern を選びます。
 すべての diagram を同じ見た目にしてはいけません。
 variation 自体が point の一部です。
 
-### Mermaid のグラフ
+### SVGのgraph
 
-dependency や call flow のように、「X が Y を呼び、Y が Z を呼び、そこで混乱が起きている」という構造を見せたいときは Mermaid の `flowchart` または `graph` を使います。
+dependencyやcall flowのように、「XがYを呼び、YがZを呼ぶ」という構造はinline SVGのnodeとedgeで描きます。
 周囲は Tailwind の card で包み、diagram だけが唐突に浮かないようにします。
-classDef を使って leakage edge を red にし、deep module を dark にします。
-「before は往復 6 回、after は 1 回」のようなケースには sequence diagram も向いています。
+leakage edgeをred、deep moduleをdarkにします。
+「beforeは往復6回、afterは1回」のようなcaseは、横方向のsequence SVGにします。
 
 ```html
 <div class="rounded-lg border border-slate-200 bg-white p-4">
-  <pre class="mermaid">
-    flowchart LR
-      A[OrderHandler] --> B[OrderValidator]
-      B --> C[OrderRepo]
-      C -.leak.-> D[PricingClient]
-      classDef leak stroke:#dc2626,stroke-width:2px;
-      class C,D leak
-  </pre>
+  <svg viewBox="0 0 720 180" role="img" aria-labelledby="graph-title graph-desc">
+    <title id="graph-title">Order call flow</title>
+    <desc id="graph-desc">OrderHandlerからOrderValidatorとOrderRepoを経てPricingClientへ漏れる依存関係。</desc>
+    <!-- rect、path、textでnodeとedgeを描く -->
+  </svg>
 </div>
 ```
 
 ### 手組みの箱と矢印
 
-Mermaid の layout がこちらの意図とぶつかるときは、手で box と arrow を組みます。
-module は border 付きの `<div>` で置きます。
-arrow は relative container の上に absolute で重ねた inline SVG の `<line>` や `<path>` で描きます。
+moduleはSVGの `<rect>`、arrowは `<line>` または `<path>` で描きます。
 after 側を、太い border を持つ一つの deep module として見せ、その内部を faded にしたいときは、この方法が向いています。
-Mermaid では重みが出ません。
 
 ### 断面図
 
@@ -148,8 +136,8 @@ after では、同じ tree を一つの box に collapse し、internal call は
   before / after が無理なく左右に収まるためです。
 - diagram 内の module label には `text-xs uppercase tracking-wider` を使います。
   UI のラベルではなく schematic として読ませるためです。
-- script は Tailwind CDN と Mermaid ESM import だけにします。
-  report はそれ以外は static に保ちます。
+- scriptはTailwind CDNだけにします。
+  reportとdiagramはstaticに保ちます。
   app code や独自 interactivity は入れません。
 
 ## 最優先候補セクション

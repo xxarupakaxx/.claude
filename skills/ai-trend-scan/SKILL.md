@@ -5,15 +5,13 @@ description: AI企業の公式記事と技術コミュニティ(HN/arXiv/GitHub 
 
 # /ai-trend-scan — 毎朝のAIトレンド収集
 
-> **スコープ**: このスキルは Obsidian Vault（`~/Notes/Vault`）でのみ有効。Vault 外のプロジェクトでは起動しない（`Daily/`、`Inbox/`、`Claude-note/` が存在せず、参照する絶対ルールと拡張フィールドの定義も Vault の `CLAUDE.md` にしかないため）。Vault 内には project scope の同名スキルがあり、そちらが優先される。
-
-AI企業の公式記事と技術コミュニティを横断し、**あなたの関心プロファイルで採点した「今日のTop」をURL全件フェッチ＆要約して一つのノートに収録**するキュレーター。「見よう見ようと思って忘れる」を、毎朝オフラインで読める完結ノートとして Vault に自動生成する形で解決する。**まず `CLAUDE.md` を読み、絶対ルール（リネーム禁止・削除禁止・既存は追記のみ・新規はInbox配下・wikilinkはファイル名ベース）を厳守すること。** 詳細手順は [[08_trend-scan]]（[[AI-Bullpen-Vault]]）。
+AI企業の公式記事と技術コミュニティを横断し、**あなたの関心プロファイルで採点した「今日のTop」をURL全件フェッチ＆要約して一つのノートに収録**するキュレーター。「見よう見ようと思って忘れる」を、毎朝オフラインで読める完結ノートとして Vault に自動生成する形で解決する。**まず `AGENTS.md` を読み、絶対ルール（リネーム禁止・削除禁止・既存は追記のみ・新規はInbox配下・wikilinkはファイル名ベース）を厳守すること。** 詳細手順は [[08_trend-scan]]（[[AI-Bullpen-Vault]]）。
 
 ## 0. 準備
 - 今日の日付（JST, Asia/Tokyo）を確定。
 - **関心プロファイル** [[_profile]] を読む（採点の基準と件数上限）。
 - **処理ウィンドウ** = 直近 `Inbox/automation/trends/trend-*.md` の日付以降（無ければ過去26時間＝24h＋実行stagger 2h）。既出URLは直近7日分を seen として再掲しない。
-- ⚠️ 外部URL取得には network=**Full** が必要（[[SCHEDULER-SETUP]]）。これは Codex Cloud Routine の設定であり、Claude Code では該当しない（WebFetch/WebSearch をそのまま使う）。
+- ⚠️ 外部URL取得には network=**Full** が必要（[[SCHEDULER-SETUP]]）。
 - **時間予算**: scheduled/無人実行は通常30分以内にtrendノートとDailyリンクを残す。45分を超えそうなら、全件フェッチ、追加検索、PNG生成を止め、採用済み6〜8件程度でノート化する。取得できないソースは失敗メモに回し、次回へ送る。
 
 ## 1. 収集（[[08_trend-scan]] のソース表）
@@ -94,7 +92,7 @@ related: ["[[AI-Agent-MOC]]"]
 （関心プロファイルとの接点・実用価値を1〜3文）
 
 #### 図（任意）
-技術的なアーキテクチャ・処理フロー・比較を持つ記事は、Mermaidで図を補完すると読みやすくなる（` ```mermaid ` コードブロック）。
+技術的なarchitecture、処理flow、比較を持つ記事は、自己完結したSVGで図を補完すると読みやすくなる。Mermaidは新規生成しない。
 
 ---
 
@@ -111,8 +109,8 @@ related: ["[[AI-Agent-MOC]]"]
 ```
 
 - 今日の `Daily/YYYY-MM-DD.md` の `## 💭 メモ` から trend ノートへリンクを**追記**（当日Dailyが無ければ作成）。
-- frontmatterの `summary` / `depth` / `as_of` / `related` は `CLAUDE.md` と互換 `CLAUDE.md` の「セカンドブレイン拡張フィールド」の定義に従う。深掘りに発展した話題は [[AI-Agent-MOC]] の該当クラスタへ接続する。
-- その後、`one-page-concept-sketch` スキル を実行し、今日のAIトレンドの構造、主要な流れ、実務上の判断点を一枚に圧縮する。
+- frontmatterの `summary` / `depth` / `as_of` / `related` は `AGENTS.md` と互換 `CLAUDE.md` の「セカンドブレイン拡張フィールド」の定義に従う。深掘りに発展した話題は [[AI-Agent-MOC]] の該当クラスタへ接続する。
+- その後、`$one-page-concept-sketch` を実行し、今日のAIトレンドの構造、主要な流れ、実務上の判断点を一枚に圧縮する。
 - 成果物は `Inbox/automation/concept-sketches/concept-sketch-YYYY-MM-DD-ai-trend-scan.md` に保存する。形式と品質条件は [[11_one-page-concept-sketch]] に従う。
 - trend ノートと `Daily/YYYY-MM-DD.md` の `## 💭 メモ` から `[[concept-sketch-YYYY-MM-DD-ai-trend-scan]]` へリンクを追記する。既に同じリンクがあれば重複させない。
 - 残り時間が少ない、または図解のPNG化が10分以上詰まる場合は、`## Text Board` だけのconcept sketchノート、またはtrendノート内の「図解代替メモ」に切り替える。trendノートの完成を図解より優先する。
@@ -126,8 +124,6 @@ related: ["[[AI-Agent-MOC]]"]
 - 一覧化した件数 / Top3のタイトル / フェッチ成功N件・失敗N件 / trendノートリンク / concept sketchリンク。
 
 ## ⏰ スケジュール設定
-
-> **注記**: 以下は Codex Cloud Routine 用の設定（`/schedule` コマンド、`service_tier`、network tier）であり、Claude Code には該当する機構がない。Claude Code では手動起動するか、`~/.claude/scheduled-tasks/` の仕組みを使う。取得失敗の原因を network tier に求めない。
 - **モード: scheduled（無人）**。毎朝、daily-curator と被らない時刻に。
   - `/schedule daily at 8:30am, run /ai-trend-scan on the obsidian-vault repo`
   - prompt: `/ai-trend-scan` ／ repo: `obsidian-vault` ／ connectors: **不要**（外部Webのみ）／ network: 外部URL取得のため **Full**（可能なら Custom で必要ドメインに最小化）／ model: `gpt-5.5` / service_tier: `priority`

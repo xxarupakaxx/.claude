@@ -1,7 +1,7 @@
 ---
 name: visualizing-work
 description: Transforms complex work, code behavior, plans, incidents, research findings, or agent activity into a human-readable visual explanation. Use when the user asks to make processing easier to understand, visualize what is happening, show progress or causality visually, create an explainer, make an HTML view, or choose a better representation without assuming a fixed format.
-allowed-tools: Read, Bash, Glob, Grep, Write, mcp__workflow-html-app__view-plan, mcp__workflow-html-app__view-diagram
+allowed-tools: Read, Bash, Glob, Grep, Write, mcp__workflow-html-app__view-plan
 ---
 
 # Visualizing Work
@@ -28,7 +28,7 @@ Do not use this skill for decorative graphics, marketing visuals, or a diagram r
 ## Core Rule
 
 Start from the human comprehension task.
-Do not start from Mermaid, graph JSON, HTML, a timeline, or any other output format.
+Do not start from an output format. Choose the reader's question first, then use SVG for any generated diagram.
 
 The first decision is:
 
@@ -134,6 +134,7 @@ If a viewer, browser, or image generator was required but unavailable, save the 
 Save outputs in the active task memory directory when one exists:
 
 - `92_visual_explanation.md`: default explanation, visual grammar, sources, and reading guide
+- `92_visual_explanation.svg`: canonical static editorial visual
 - `92_visual_explanation.html`: default optional standalone or interactive artifact
 - `92_visual_data.json`: default optional structured data for replay, dashboard, map, or generated view
 
@@ -147,4 +148,4 @@ Use different filenames only when the surrounding workflow already has a stronge
 - The overview is understandable before opening details.
 - The reader can trace claims back to evidence.
 - The representation reduces cognitive load rather than adding spectacle.
-- The result is usable even when Mermaid, graph rendering, animation, or MCP display is unavailable.
+- The result is usable as a standalone SVG without a graph runtime, animation, or MCP display.

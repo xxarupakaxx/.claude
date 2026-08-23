@@ -2094,15 +2094,12 @@ class AdapterAndSurfaceTests(unittest.TestCase):
             bodies = [(root / relative_path).read_bytes() for root in shared_skills]
             self.assertEqual(bodies[0], bodies[1], relative_path)
         state = (skills / "generate-state-diagram" / "SKILL.md").read_text(encoding="utf-8")
-        contract = state.split("<!-- state-diagram-editorial-companion:start -->", 1)[1].split(
-            "<!-- state-diagram-editorial-companion:end -->", 1
-        )[0]
+        contract = state
         for required in (
-            "`91_state_diagram.md` と `91_state_diagram.html` を先に完成させる。",
+            "`91_state_diagram.svg`：図の正本。",
             "`92_visual_explanation.md`",
-            "別の読者の問い",
-            "次に空いている番号の visual explanation path",
-            "状態図、状態遷移図、Mermaid フローを描き直さない。",
+            "別の問い",
+            "補助図もSVGで生成",
         ):
             self.assertIn(required, contract)
         roadmap = (skills / "viewing-plans" / "SKILL.md").read_text(encoding="utf-8")
@@ -2128,7 +2125,7 @@ class AdapterAndSurfaceTests(unittest.TestCase):
         )
         self.assertNotIn("its canonical artifact is already complete", visualizing)
         adapter = (skills / "diagram-design" / "SKILL.md").read_text(encoding="utf-8")
-        self.assertIn("never redraws canonical states, transitions, or Mermaid flows", adapter)
+        self.assertIn("never redraws canonical states, transitions, or SVG flows", adapter)
         self.assertIn("never redraws canonical Roadmap task order, progress, or Concept Map", adapter)
         self.assertIn("next available numbered visual explanation paths", adapter)
 

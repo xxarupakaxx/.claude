@@ -14,7 +14,7 @@ This is a locally authored, static-only adapter informed by the recorded upstrea
 
 Use this skill only when all conditions hold:
 
-- `visualizing-work` selected a static editorial HTML sidecar after choosing the representation.
+- `visualizing-work` selected a static editorial SVG sidecar after choosing the representation.
 - The reader, question, evidence, confidence, and omitted scope are known.
 - Spatial grouping materially helps explain a small comparison, timeline, causal, ownership, or concept view.
 - The output is not a workflow Roadmap, canonical state or flow diagram, layered technical map, timeline replay, or viewer integration.
@@ -29,12 +29,14 @@ Always create or update the active task's `92_visual_explanation.md` first. Foll
 
 When a distinct companion already occupies that path, use the next available numbered visual explanation paths instead of overwriting it.
 
-Create `92_visual_explanation.html` beside it only when static markup makes the answer faster to understand. Put the answer in the first visible region, never an onboarding page or style guide.
+Create `92_visual_explanation.svg` as the visual source of truth.
+Create `92_visual_explanation.html` beside it only when inline SVG and surrounding text make the answer faster to understand. Put the answer in the first visible region, never an onboarding page or style guide.
 
 ## Static-Safety Boundary
 
 - Use only local evidence supplied to the task and a system font stack with inline CSS.
-- Do not use JavaScript, event attributes, iframes, `foreignObject`, any SVG, external stylesheets, images or icons, web fonts, URL onboarding, browser automation, Playwright export, or upstream scripts.
+- Do not use JavaScript, event attributes, iframes, `foreignObject`, external stylesheets, external images or icons, web fonts, URL onboarding, browser automation, Playwright export, or upstream scripts.
+- Keep SVG self-contained with `viewBox`, `title`, `desc`, and XML-escaped evidence text.
 - Do not create or modify shared style guides, global configuration, plugin caches, or viewer servers.
 - Write only the selected task-local visual explanation paths above.
 - Escape evidence-derived text for its exact HTML context. Keep anything unsafe in the Markdown explanation.
@@ -44,8 +46,8 @@ Create `92_visual_explanation.html` beside it only when static markup makes the 
 
 1. Read the `visualizing-work` artifact contract.
 2. Write the Markdown artifact contract and evidence summary.
-3. Produce one stable overview and at most one supporting view.
-4. Add static HTML only when it reduces comprehension time.
+3. Produce one stable SVG overview and at most one supporting SVG view.
+4. Add static HTML with the same inline SVG only when it reduces comprehension time.
 5. Check the first viewport, text fallback, visual grammar, and source traceability before completion.
 
 ## Ownership Boundary
@@ -54,5 +56,5 @@ Create `92_visual_explanation.html` beside it only when static markup makes the 
 - `generate-state-diagram` owns canonical static state and flow artifacts.
 - `generate-state-diagram-3d` owns layered technical maps and timeline replay artifacts.
 - This adapter owns only an optional task-local editorial sidecar.
-- After `generate-state-diagram`, this adapter never redraws canonical states, transitions, or Mermaid flows.
+- After `generate-state-diagram`, this adapter never redraws canonical states, transitions, or SVG flows.
 - After `viewing-plans`, this adapter never redraws canonical Roadmap task order, progress, or Concept Map.

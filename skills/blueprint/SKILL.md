@@ -31,19 +31,15 @@ description: "1行の目的から多セッション・多PRの実装計画を生
 
 各Work Unitの依存関係を分析し、DAG（有向非巡回グラフ）を構築:
 
-```markdown
+````markdown
 ## Dependency Graph
 
-```mermaid
-graph TD
-    A[WU-1: DB Schema] --> B[WU-2: API Layer]
-    A --> C[WU-3: Domain Logic]
-    B --> D[WU-4: Frontend]
-    C --> D
-    B --> E[WU-5: Integration Tests]
-    D --> F[WU-6: E2E Tests]
+```diagram-json
+{"direction":"TB","nodes":[{"id":"A","label":"WU-1: DB Schema"},{"id":"B","label":"WU-2: API Layer"},{"id":"C","label":"WU-3: Domain Logic"},{"id":"D","label":"WU-4: Frontend"},{"id":"E","label":"WU-5: Integration Tests"},{"id":"F","label":"WU-6: E2E Tests"}],"edges":[{"from":"A","to":"B"},{"from":"A","to":"C"},{"from":"B","to":"D"},{"from":"C","to":"D"},{"from":"B","to":"E"},{"from":"D","to":"F"}]}
 ```
-```
+
+同じ関係から `blueprint.svg` を生成し、MarkdownではSVGを正本として参照する。
+````
 
 ### Phase 3: Cold-Start Brief生成
 
@@ -86,7 +82,7 @@ graph TD
 [1段落の概要]
 
 ## Dependency Graph
-[Mermaid図]
+[SVG図への参照]
 
 ## Work Units
 ### WU-1: [タイトル]

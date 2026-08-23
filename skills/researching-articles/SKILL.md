@@ -5,8 +5,6 @@ description: URLや記事・ドキュメントを受け取り、周辺コンテ�
 
 # URL深掘り調査 → Knowledgeノート作成
 
-> **スコープ**: このスキルは Obsidian Vault（`~/Notes/Vault`）でのみ有効。Vault 外のプロジェクトでは起動しない（`Daily/`、`Inbox/`、`Claude-note/` が存在せず、参照する絶対ルールと拡張フィールドの定義も Vault の `CLAUDE.md` にしかないため）。Vault 内には project scope の同名スキルがあり、そちらが優先される。
-
 URLを受け取り、記事本文だけでなく周辺コンテキストまで調査して、「10年後の新人でも理解できる」knowledgeノートを作成する。
 
 captureスキルの軽量URL処理（3行要約 + 箇条書き）とは異なり、**原理・背景・比較・落とし穴**まで掘り下げることが目的。
@@ -77,14 +75,14 @@ related: ["[[関連ノートやMOC]]"]
 本文の構成は `references/note-structure.md` を参照。
 フィールド定義は CLAUDE.md「セカンドブレイン拡張フィールド」に従う。AI/エージェント系のノートは [[AI-Agent-MOC]] の該当クラスタに1行追記して双方向にする。
 
-**図の活用（Mermaid）**：技術的な仕組み・処理フロー・アーキテクチャ・比較は、テキストだけより図にした方が理解しやすい場合に積極的にMermaidで図示する。ObsidianはMermaidをネイティブでレンダリングする（` ```mermaid ` コードブロックで埋め込む）。
+**図の活用（SVG）**：技術的な仕組み、処理flow、architecture、比較は、図にした方が理解しやすい場合に自己完結したSVGで図示する。SVGは `attachments/` に保存し、Obsidianの本文から埋め込む。Mermaidは新規生成しない。
 
-| 用途 | Mermaid種別 |
+| 用途 | SVG表現 |
 |------|-----------|
-| 処理フロー・パイプライン | `flowchart LR` / `flowchart TD` |
-| コンポーネント間のやり取り | `sequenceDiagram` |
-| 状態遷移 | `stateDiagram-v2` |
-| アーキテクチャ・構成要素の関係 | `graph LR` |
+| 処理flow、pipeline | label付きnodeと有向edge |
+| component間のやり取り | 左から右へ進むsequence |
+| 状態遷移 | 状態node、開始と終了、条件付きedge |
+| architecture、構成要素の関係 | system groupと関係edge |
 
 ### Step 5: デイリーへのリンク追記
 
@@ -99,9 +97,9 @@ FAILがあれば同じ作業内で修正して再実行し、PASSするまで次
 
 ### Step 7: one-page-concept-sketch（直列）
 
-Knowledgeノートの保存、Dailyリンク、Step 6の検証が完了した後に `one-page-concept-sketch` スキル を実行する。
+Knowledgeノートの保存、Dailyリンク、Step 6の検証が完了した後に `$one-page-concept-sketch` を実行する。
 
-1. `.claude/skills/one-page-concept-sketch/SKILL.md` を正本として全文読み、最新のVault Output ContractとQuality Checkに従う。
+1. `.codex/skills/one-page-concept-sketch/SKILL.md` を正本として全文読み、最新のVault Output ContractとQuality Checkに従う。
 2. 完成したKnowledgeノートを入力にし、複数ノートを作成した場合は1ノートにつき1件のスケッチを作る。
 3. source-based summaryとしてExact Board modeを既定にし、lane名は `researching-articles` とする。ImagegenまたはDualはユーザーが明示した場合だけ使う。
 4. Source Coverageには元URL、周辺調査の根拠、中心主張、仕組み、制限を引き継ぐ。スケッチ段階で新しい事実を推測して追加しない。
@@ -117,7 +115,7 @@ Knowledgeノートの保存、Dailyリンク、Step 6の検証が完了した後
 - [ ] 他技術と何が違うかを書いているか
 - [ ] 既知の制限・落とし穴を書いているか
 - [ ] LLMっぽい空虚な表現（「重要なのは」「掘り下げる」）を使っていないか（japanese-tech-writing規範）
-- [ ] フロー・アーキテクチャ・比較など図にした方が分かりやすい箇所にMermaidを使っているか
+- [ ] flow、architecture、比較など図にした方が分かりやすい箇所にSVGを使っているか
 - [ ] 作成したKnowledgeノートごとにconcept sketchが1件あり、source noteとDailyから辿れるか
 - [ ] Exact Boardだけで主題、中心主張、仕組み、次の判断、望ましい終点、重要な制限を説明できるか
 - [ ] 埋め込んだ画像wikilinkが実在するPNGへ解決するか

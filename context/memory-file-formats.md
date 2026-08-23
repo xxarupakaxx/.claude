@@ -3,7 +3,7 @@
 ## .local/ 全体構成
 
 ```
-.local/                          # MEMORY_DIR（PJ CLAUDE.mdで定義、デフォルト: .local/）
+.local/                          # MEMORY_DIR（PJ AGENTS.mdで定義、デフォルト: .local/）
 ├── memory/                      # タスクごとの詳細ログ
 │   ├── YYMMDD_auth-feature/     # YYMMDDは実際の日付（例: 260112 = 2026/01/12）
 │   │   ├── 05_log.md
@@ -41,7 +41,7 @@
 ## メモリディレクトリ構成
 
 場所: `${MEMORY_DIR}/memory/YYMMDD_<task_name>/`
-- MEMORY_DIRはPJ CLAUDE.mdで定義（デフォルト: `.local/`）
+- MEMORY_DIRはPJ `AGENTS.md` で定義（デフォルト: `.local/`）
 - **YYMMDD**: システムプロンプトの`Today's date`から取得した実際の日付（年2桁+月2桁+日2桁）
 - task_nameはタスクを識別する短い名前（例: `auth-feature`, `bug-fix-123`）
 - **IMPORTANT**: 例示の日付をコピーせず、必ずシステムプロンプトの日付を使用すること
@@ -72,7 +72,7 @@ Roadmap generatorはタスクディレクトリ直下の`task-meta.json`を作�
 
 - `schema_version`: manifest schema。現在は`1`。
 - `task_id`: task directoryと対応する安定ID。
-- `thread_id`: Task Hub の provider が返す thread ID。完全一致した場合だけ自動確定する。
+- `thread_id`: Codex app-server が返す thread ID。完全一致した場合だけ自動確定する。
 - `session_id`: hook runtimeが返すsession ID。handover復元は完全一致を優先する。
 - `project_path`: task の作業ディレクトリの絶対パス。
 - `worktree_path`: Codemap evidenceを照合するworktree root。
@@ -82,7 +82,15 @@ Roadmap generatorはタスクディレクトリ直下の`task-meta.json`を作�
 - `approval_state`: 承認待ちなど、明示的に `waiting` と扱う状態。
 - `updated_at`: timezone を含む ISO 8601 の更新日時。
 
-current thread / session IDを取得できた場合はgeneratorの`--thread-id` / `--session-id`で保存する。完全一致だけを確定済み対応として扱う。IDがない場合、path・title・更新時刻による一致は候補表示にだけ使い、自動確定しない。候補を採用するかどうかの承認は現在の Claude 会話を正本とする。JSONが壊れている場合もtask自体は一覧から消さず、詳細の`metadataError`に読み取りエラーを表示する。PhaseはMarkdown、Codemap freshnessは`codemap.lock`から導出し、manifestへ重複保存しない。
+current thread / session IDを取得できた場合はgeneratorの`--thread-id` / `--session-id`で保存する。完全一致だけを確定済み対応として扱う。IDがない場合、path・title・更新時刻による一致は候補表示にだけ使い、自動確定しない。JSONが壊れている場合もtask自体は一覧から消さず、詳細の`metadataError`に読み取りエラーを表示する。PhaseはMarkdown、Codemap freshnessは`codemap.lock`から導出し、manifestへ重複保存しない。
+
+### Session handover / runtime
+
+- session handover: `${MEMORY_DIR}/handovers/<session-id>.md`
+- compatibility pointer: `${MEMORY_DIR}/HANDOVER.md`
+- writer lock等の一時状態: `${MEMORY_DIR}/runtime/locks/`
+
+復元はsession ID、次にthread IDの完全一致を使う。一致しない場合、active / waiting / verifying taskが1件だけならfallbackできる。複数候補から更新時刻やdirectory名だけで自動選択しない。worktree間では`memory/`と長期知識を共有するが、`handovers/`と`runtime/`は共有しない。
 
 複数 task を一覧する Roadmap Task Hub は次で起動する:
 
@@ -90,13 +98,13 @@ current thread / session IDを取得できた場合はgeneratorの`--thread-id` 
 python3 scripts/generate-roadmap-view.py --hub --memory-root "$MEMORY_DIR/memory" --open
 ```
 
-`--memory-root` は複数回指定できる。Hub は loopback 上の OS 割当 port で起動し、Codex app-server の thread と memory task を定期再取得する。起動 URL の fragment にある session key でローカル API を保護し、ブラウザの heartbeat が途絶えると終了する。provider の一時障害時は直近の成功結果を保持して degraded 状態を表示する。
-
 Live Activityはmemory fileへ複製しない。Codex app-serverが返すsession pathのJSONL末尾を一時的に読み、直近24時間・最大100イベントだけをAPI responseへ正規化する。古いcontext、command arguments、tool output全文はsnapshotやmemoryへ保存しない。
+
+`--memory-root` は複数回指定できる。Hub は loopback 上の OS 割当 port で起動し、Codex app-server の thread と memory task を定期再取得する。起動 URL の fragment にある session key でローカル API を保護し、ブラウザの heartbeat が途絶えると終了する。provider の一時障害時は直近の成功結果を保持して degraded 状態を表示する。
 
 ### Live Roadmap Viewer
 
-`roadmap.html` は `scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task>` で生成する。Plan / ProgressとfreshなCode Mapを切り替えるTask Workspaceである。Claude CodeまたはCoworkの横で開きっぱなしにして進捗を見たい場合は次を使う:
+`roadmap.html` は `scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task>` で生成する。Plan / ProgressとfreshなCode Mapを切り替えるTask Workspaceである。Codex app の横で開きっぱなしにして進捗を見たい場合は次を使う:
 
 ```bash
 python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --watch
@@ -177,7 +185,7 @@ python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --w
 
 ## 30_plan.md
 
-````markdown
+```markdown
 # 実装計画
 
 ## 概要
@@ -209,13 +217,8 @@ python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --w
 - [ ] 手順2
 
 #### 実装図
-```mermaid
-flowchart LR
-A["入力"]
-B["処理"]
-C["成果物"]
-A -->|"変換する"| B
-B -->|"生成する"| C
+```diagram-json
+{"direction":"LR","nodes":[{"id":"A","label":"入力"},{"id":"B","label":"処理"},{"id":"C","label":"成果物"}],"edges":[{"from":"A","to":"B","label":"変換する"},{"from":"B","to":"C","label":"生成する"}]}
 ```
 
 #### 成果物
@@ -231,11 +234,11 @@ B -->|"生成する"| C
 ## リスク・懸念事項
 | リスク | 影響度 | 対策 |
 |-------|-------|------|
-````
+```
 
 Roadmap Viewerは各Taskの `目的`、`変更対象`、`実装根拠`、`実装`、任意の`実装図`、`成果物`、`検証`をsource-boundで表示する。記載がないfieldをViewer側で推測して埋めない。
 
-`実装図` は任意fieldであり、最初のMermaid `flowchart TB` / `TD` / `LR`を選択Taskの実装フローへ使う。矩形・判断nodeと明示edge・edge labelの限定構文だけを扱う。Viewerは実装手順、変更対象、実コードからnodeやedgeを補作しない。図と同じ関係をテキスト一覧でも表示する。
+`実装図` は任意fieldであり、最初の `diagram-json` ブロックを選択Taskの実装フローへ使う。`direction`、`nodes`、`edges`の明示値だけを読み、Roadmap HTMLでは自己完結したinline SVGとして描画する。対応する形は矩形と判断node、関係は有向edgeとedge labelに限定する。Viewerは実装手順、変更対象、実コードからnodeやedgeを補作しない。図と同じ関係をテキスト一覧でも表示する。
 
 `実装根拠` は任意fieldであり、最初のinline code参照1件だけを実ソース抜粋へ使う。書式は `repo:<source-rootからの相対path>#<anchor>` または `repo:<source-rootからの相対path>#L<開始行>-L<終了行>` とする。bare path、absolute path、`..` を含むpathは解決しない。
 
@@ -495,7 +498,9 @@ Git worktree使用時、知見ディレクトリはメインworktreeの`.local/`
 ### ローカル維持
 | ファイル | 理由 |
 |---|---|
-| `HANDOVER.md` | セッション固有の復元情報 |
+| `handovers/` | session ID別の復元情報 |
+| `HANDOVER.md` | 互換用の直近handover pointer |
+| `runtime/` | worktree-localな一時lock・state |
 | `plans/` | worktree固有の計画 |
 
 ### 仕組み
@@ -503,6 +508,3 @@ Git worktree使用時、知見ディレクトリはメインworktreeの`.local/`
 - **PostToolUse(EnterWorktree)**: worktree進入時に自動リンク
 - スクリプト: `~/.claude/hooks/worktree-knowledge-link.sh`
 - 既存データがある場合はメインにマージ後リンク作成
-
-### リンク未生成時のフォールバック
-worktree環境で `${MEMORY_DIR}/memory.db` の知見が不十分な場合、hook が失敗してシンボリックリンクが張られていない可能性がある。メインworktreeの同パスも直接確認すること。

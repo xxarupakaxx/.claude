@@ -511,45 +511,17 @@
     .implementation-diagram-heading span { color: var(--faint); font-size: 10px; }
     .implementation-diagram-flow {
       margin-top: 12px;
-      display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(112px, 1fr) minmax(54px, auto);
-      align-items: center;
-      gap: 8px;
       overflow-x: auto;
       overscroll-behavior-x: contain;
     }
     .implementation-diagram-flow[hidden],
     .implementation-diagram-relations[hidden] { display: none; }
-    .implementation-diagram-rank { min-width: 112px; display: grid; gap: 7px; }
-    .implementation-diagram-node {
-      min-height: 58px;
-      padding: 10px;
-      display: grid;
-      place-items: center;
-      border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--line));
-      border-radius: var(--radius);
-      background: var(--surface-accent);
-      color: var(--ink);
-      font-size: 11px;
-      font-weight: 720;
-      line-height: 1.35;
-      text-align: center;
-    }
-    .implementation-diagram-node.decision {
-      border-style: dashed;
-      background: color-mix(in srgb, var(--warn) 7%, var(--surface));
-    }
-    .implementation-diagram-bridge {
-      min-width: 54px;
-      display: grid;
-      justify-items: center;
-      gap: 3px;
-      color: var(--accent-strong);
-      text-align: center;
-    }
-    .implementation-diagram-bridge::after { content: "→"; font-size: 20px; line-height: 1; }
-    .implementation-diagram-bridge span { max-width: 88px; color: var(--muted); font-size: 9px; line-height: 1.25; }
+    .implementation-diagram-svg { min-width: 520px; width: 100%; height: auto; display: block; }
+    .implementation-diagram-svg .diagram-node { fill: var(--surface-accent); stroke: var(--accent); stroke-width: 1.5; }
+    .implementation-diagram-svg .diagram-node.decision { fill: color-mix(in srgb, var(--warn) 7%, var(--surface)); stroke: var(--warn); stroke-dasharray: 5 4; }
+    .implementation-diagram-svg .diagram-edge { fill: none; stroke: var(--accent-strong); stroke-width: 1.7; marker-end: url(#implementation-arrow); }
+    .implementation-diagram-svg text { fill: var(--ink); font-family: var(--font-sans); font-size: 12px; text-anchor: middle; }
+    .implementation-diagram-svg .diagram-edge-label { fill: var(--muted); font-size: 10px; paint-order: stroke; stroke: var(--surface); stroke-width: 5px; stroke-linejoin: round; }
     .implementation-diagram-relations {
       margin: 10px 0 0;
       padding: 9px 10px 9px 26px;
@@ -783,9 +755,7 @@
         grid-template-columns: 1fr;
         overflow-x: visible;
       }
-      .implementation-diagram-bridge { min-width: 0; transform: none; }
-      .implementation-diagram-bridge::after { content: "↓"; }
-      .implementation-diagram-bridge span { font-size: 10px; }
+      .implementation-diagram-svg { min-width: 420px; }
       .brief-source-heading { display: grid; }
       .brief-source-anchor { max-width: 100%; }
       .brief-artifact-grid { grid-template-columns: 1fr; }
@@ -3166,7 +3136,7 @@
         const purpose = summarize(markdownSection(body, /^(目的|Purpose)$/i));
         const targetItems = compactSectionItems(markdownSection(body, /^(変更対象|Target)$/i));
         const implementationItems = compactSectionItems(markdownSection(body, /^(実装|Implementation)$/i));
-        const implementationDiagram = parseMermaidGraphMap(markdownSection(body, /^(実装図|Implementation Diagram)$/i));
+        const implementationDiagram = parseSvgDiagramSpec(markdownSection(body, /^(実装図|Implementation Diagram)$/i));
         const outputItems = compactSectionItems(markdownSection(body, /^(成果物|Outputs?|Deliverables?)$/i));
         const verificationItems = compactSectionItems(markdownSection(body, /^(検証|Verification|Verify)$/i));
         const target = body.match(/\*\*(?:変更対象|target)\s*[:：]\*\*\s*(.+)/i)?.[1]?.trim()
@@ -3940,20 +3910,18 @@
       if (/team-journal/i.test(path)) return '稼働記録';
       return artifact.state || '生成済み';
     }
-    function firstMermaidFlowchart(markdown) {
-      for (const match of asText(markdown).matchAll(/```mermaid\s*([\s\S]*?)```/gi)) {
-        const body = match[1].trim();
-        if (/^flowchart\s+(?:TB|TD|LR)\b/im.test(body)) return body;
-      }
-      return '';
+    function firstDiagramJson(markdown) {
+      const match = asText(markdown).match(/```diagram-json\s*([\s\S]*?)```/i);
+      if (!match) return null;
+      try { return JSON.parse(match[1]); }
+      catch { return null; }
     }
-    function unquoteMermaidLabel(value) {
-      return stripMarkdown(asText(value).trim().replace(/^["'`]+|["'`]+$/g, ''));
-    }
-    function parseMermaidGraphMap(markdown) {
-      const source = firstMermaidFlowchart(markdown);
-      if (!source) return null;
-      const direction = source.match(/^flowchart\s+(TB|TD|LR)\b/im)?.[1]?.toUpperCase() || 'TB';
+    function parseSvgDiagramSpec(markdown) {
+      const source = firstDiagramJson(markdown);
+      if (!source || !Array.isArray(source.nodes) || !Array.isArray(source.edges)) return null;
+      const direction = ['TB', 'TD', 'LR'].includes(asText(source.direction).toUpperCase())
+        ? asText(source.direction).toUpperCase()
+        : 'TB';
       const nodes = new Map();
       const edges = [];
       const ensureNode = (id, label = '', shape = '') => {
@@ -3962,34 +3930,19 @@
         const existing = nodes.get(cleanId) || {};
         const next = {
           id: cleanId,
-          label: label || existing.label || cleanId,
+          label: stripMarkdown(asText(label || existing.label || cleanId)),
           shape: shape || existing.shape || 'implicit'
         };
         nodes.set(cleanId, next);
         return next;
       };
-      const lines = source.split('\n')
-        .map(line => line.replace(/%%.*$/, '').trim())
-        .filter(line => line && !/^flowchart\s+/i.test(line));
-      for (const line of lines) {
-        const nodeMatch = line.match(/^([A-Za-z][\w-]*)\s*(\[\s*(?:"([^"]+)"|'([^']+)'|`([^`]+)`|([^\]]+))\s*\]|\{\s*(?:"([^"]+)"|'([^']+)'|`([^`]+)`|([^}]+))\s*\})\s*$/);
-        if (nodeMatch) {
-          const label = nodeMatch[3] || nodeMatch[4] || nodeMatch[5] || nodeMatch[6] || nodeMatch[7] || nodeMatch[8] || nodeMatch[9] || nodeMatch[10] || nodeMatch[1];
-          ensureNode(nodeMatch[1], unquoteMermaidLabel(label), nodeMatch[2].trim().startsWith('{') ? 'decision' : 'rect');
-          continue;
-        }
-        let edgeMatch = line.match(/^([A-Za-z][\w-]*)\s*-->\s*\|\s*([^|]+?)\s*\|\s*([A-Za-z][\w-]*)\s*$/);
-        if (!edgeMatch) edgeMatch = line.match(/^([A-Za-z][\w-]*)\s*--\s*["'`]([^"'`]+)["'`]\s*-->\s*([A-Za-z][\w-]*)\s*$/);
-        if (!edgeMatch) edgeMatch = line.match(/^([A-Za-z][\w-]*)\s*-->\s*([A-Za-z][\w-]*)\s*$/);
-        if (edgeMatch) {
-          const from = edgeMatch[1];
-          const predicate = edgeMatch.length === 4 ? unquoteMermaidLabel(edgeMatch[2]) : 'つながる';
-          const to = edgeMatch.length === 4 ? edgeMatch[3] : edgeMatch[2];
-          ensureNode(from);
-          ensureNode(to);
-          edges.push({ from, to, predicate });
-        }
-      }
+      source.nodes.forEach(node => ensureNode(node?.id, node?.label || node?.title, node?.shape));
+      source.edges.forEach(edge => {
+        const from = asText(edge?.from).trim();
+        const to = asText(edge?.to).trim();
+        if (!nodes.has(from) || !nodes.has(to)) return;
+        edges.push({ from, to, predicate: stripMarkdown(asText(edge?.label || edge?.predicate || 'つながる')) });
+      });
       if (!nodes.size || !edges.length) return null;
       const indegree = new Map(Array.from(nodes.keys(), id => [id, 0]));
       edges.forEach(edge => indegree.set(edge.to, (indegree.get(edge.to) || 0) + 1));
@@ -4149,7 +4102,7 @@
     }
     function buildTreeViewModel(model) {
       if (model.snapshot.kind === 'codemap') return buildCodemapViewModel(model.snapshot);
-      const explicitGraph = parseMermaidGraphMap(model.snapshot.files['graph-map.md']);
+      const explicitGraph = parseSvgDiagramSpec(model.snapshot.files['graph-map.md']);
       if (explicitGraph) {
         const nodeById = new Map(explicitGraph.nodes.map(node => [node.id, node]));
         const roots = explicitGraph.nodes.filter(node => !explicitGraph.edges.some(edge => edge.to === node.id));
@@ -4417,7 +4370,7 @@
       extractRisks, extractPhaseSignals, buildModel, artifactStateFor,
       renderInlineMarkdown, renderWorkflowMarkdown, groupTaskSections,
       extractPlanSections, taskHubSettings, extractExplicitOutcomeTrace,
-      extractRevisionLog, buildOutcomeTrace, stateLabel, parseMermaidGraphMap,
+      extractRevisionLog, buildOutcomeTrace, stateLabel, parseSvgDiagramSpec,
       codemapEvidenceLabel, buildCodemapViewModel, buildTreeViewModel, buildExecutionBrief, highlightSourceCode
     };
     /* ROADMAP_MODEL_END */
@@ -4996,6 +4949,13 @@
         return;
       }
       const labels = new Map(diagram.nodes.map(node => [node.id, node.title]));
+      const horizontal = diagram.direction === 'LR';
+      const nodeWidth = 150;
+      const nodeHeight = 64;
+      const rankGap = 104;
+      const siblingGap = 26;
+      const padding = 34;
+      const positions = new Map();
       const ranks = new Map();
       diagram.nodes.forEach(node => {
         const rank = Number.isFinite(node.rank) ? node.rank : 0;
@@ -5003,26 +4963,49 @@
         ranks.get(rank).push(node);
       });
       const orderedRanks = Array.from(ranks.entries()).sort(([left], [right]) => left - right);
-      flow.dataset.direction = diagram.direction || 'TB';
-      flow.innerHTML = orderedRanks.map(([rank, nodes], index) => {
-        const nodeHtml = `<div class="implementation-diagram-rank">${nodes
-          .sort((left, right) => (left.order || 0) - (right.order || 0))
-          .map(node => `<div class="implementation-diagram-node${node.shape === 'decision' ? ' decision' : ''}" data-diagram-node="${escapeHtml(node.id)}">${escapeHtml(node.title)}</div>`)
-          .join('')}</div>`;
-        if (index === orderedRanks.length - 1) return nodeHtml;
-        const nextRank = orderedRanks[index + 1][0];
-        const predicates = diagram.edges
-          .filter(edge => {
-            const from = diagram.nodes.find(node => node.id === edge.from);
-            const to = diagram.nodes.find(node => node.id === edge.to);
-            return from?.rank === rank && to?.rank === nextRank;
-          })
-          .map(edge => edge.predicate)
-          .filter((value, predicateIndex, values) => value && values.indexOf(value) === predicateIndex);
-        return `${nodeHtml}<div class="implementation-diagram-bridge" aria-hidden="true">${predicates
-          .map(predicate => `<span>${escapeHtml(predicate)}</span>`)
-          .join('')}</div>`;
+      const maxSiblings = Math.max(...orderedRanks.map(([, nodes]) => nodes.length), 1);
+      const width = horizontal
+        ? padding * 2 + orderedRanks.length * nodeWidth + Math.max(0, orderedRanks.length - 1) * rankGap
+        : padding * 2 + maxSiblings * nodeWidth + Math.max(0, maxSiblings - 1) * siblingGap;
+      const height = horizontal
+        ? padding * 2 + maxSiblings * nodeHeight + Math.max(0, maxSiblings - 1) * siblingGap
+        : padding * 2 + orderedRanks.length * nodeHeight + Math.max(0, orderedRanks.length - 1) * rankGap;
+      orderedRanks.forEach(([, nodes], rankIndex) => {
+        nodes.sort((left, right) => (left.order || 0) - (right.order || 0)).forEach((node, nodeIndex) => {
+          const groupSpan = nodes.length * (horizontal ? nodeHeight : nodeWidth) + Math.max(0, nodes.length - 1) * siblingGap;
+          const x = horizontal
+            ? padding + rankIndex * (nodeWidth + rankGap)
+            : (width - groupSpan) / 2 + nodeIndex * (nodeWidth + siblingGap);
+          const y = horizontal
+            ? (height - groupSpan) / 2 + nodeIndex * (nodeHeight + siblingGap)
+            : padding + rankIndex * (nodeHeight + rankGap);
+          positions.set(node.id, { x, y });
+        });
+      });
+      const edgeMarkup = diagram.edges.map(edge => {
+        const from = positions.get(edge.from);
+        const to = positions.get(edge.to);
+        if (!from || !to) return '';
+        const x1 = horizontal ? from.x + nodeWidth : from.x + nodeWidth / 2;
+        const y1 = horizontal ? from.y + nodeHeight / 2 : from.y + nodeHeight;
+        const x2 = horizontal ? to.x : to.x + nodeWidth / 2;
+        const y2 = horizontal ? to.y + nodeHeight / 2 : to.y;
+        const mx = (x1 + x2) / 2;
+        const my = (y1 + y2) / 2;
+        const path = horizontal
+          ? `M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`
+          : `M ${x1} ${y1} C ${x1} ${my}, ${x2} ${my}, ${x2} ${y2}`;
+        return `<g><path class="diagram-edge" d="${path}"/><text class="diagram-edge-label" x="${mx}" y="${my - 7}">${escapeHtml(edge.predicate)}</text></g>`;
       }).join('');
+      const nodeMarkup = diagram.nodes.map(node => {
+        const point = positions.get(node.id);
+        if (!point) return '';
+        const shape = node.shape === 'decision'
+          ? `<polygon class="diagram-node decision" points="${point.x + nodeWidth / 2},${point.y} ${point.x + nodeWidth},${point.y + nodeHeight / 2} ${point.x + nodeWidth / 2},${point.y + nodeHeight} ${point.x},${point.y + nodeHeight / 2}"/>`
+          : `<rect class="diagram-node" x="${point.x}" y="${point.y}" width="${nodeWidth}" height="${nodeHeight}" rx="10"/>`;
+        return `<g data-diagram-node="${escapeHtml(node.id)}">${shape}<text x="${point.x + nodeWidth / 2}" y="${point.y + nodeHeight / 2 + 4}">${escapeHtml(node.title)}</text></g>`;
+      }).join('');
+      flow.innerHTML = `<svg class="implementation-diagram-svg" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="implementation-svg-title implementation-svg-desc"><title id="implementation-svg-title">実装フロー</title><desc id="implementation-svg-desc">planに明示されたnodeと関係をSVGで表示します。</desc><defs><marker id="implementation-arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="currentColor"/></marker></defs>${edgeMarkup}${nodeMarkup}</svg>`;
       flow.hidden = false;
       relations.innerHTML = diagram.edges.map(edge => `<li>${escapeHtml(labels.get(edge.from) || edge.from)} → ${escapeHtml(edge.predicate)} → ${escapeHtml(labels.get(edge.to) || edge.to)}</li>`).join('');
       relations.hidden = false;
@@ -5169,7 +5152,7 @@
       const active = model.activeTask;
       const progress = model.fixedProgress;
       const summary = model.traceSummary;
-      const explicitGraph = parseMermaidGraphMap(model.snapshot.files['graph-map.md']);
+      const explicitGraph = parseSvgDiagramSpec(model.snapshot.files['graph-map.md']);
       byId('wayfinder-phase').textContent = phase ? `Phase ${phase.workflowNumber || phase.number} ${phase.workflowLabel || phase.label}` : 'Phase —';
       byId('wayfinder-status').textContent = explicitGraph
         ? `関係 ${explicitGraph.edges.length}件`
