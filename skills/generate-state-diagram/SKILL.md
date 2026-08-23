@@ -137,7 +137,7 @@ HTMLの図と `.svg` fileが同じnode、edge、labelを持つことを確認す
 ## 補助説明図
 
 状態図だけでは答えられない別の問いが残る場合だけ、`visualizing-work` を経て `diagram-design` を使う。
-補助図もSVGで生成し、状態、遷移、処理flowを重複させない。
+補助図もSVGで生成し、`92_visual_explanation.svg` と読解用の `92_visual_explanation.md` を作る。状態、遷移、処理flowを重複させない。
 不要なら判断理由を `91_state_diagram.md` に残す。
 
 ## 自己確認
