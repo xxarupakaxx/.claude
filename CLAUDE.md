@@ -33,7 +33,7 @@
 - 現在の仕様はdocs、検証可能な期待はtest、局所例外は隣接comment、判断理由はADR、反復手順はSkill、未完了作業はissue、履歴はGit logに置く。
 - `CLAUDE.md`には全Agentが毎回守る不変条件と正本への入口だけを置く。完了済みTODOや手順の複製を残さない。
 - 例外には理由、適用範囲、解除条件を付け、条件が満たされたら削除する。
-- 一過性の下書きや受け渡しはworktreeの`.context/`に置き、`/tmp`や`/private`を標準置き場にしない。複数行や構造化内容は実ファイルで渡し、inline展開とhere-docを避け、pipeは単一commandがstdinを即時に一度だけ読む処理に限る。
+- 一過性の下書きや受け渡しはworktreeの`.local/context/`に置き、`.context/`、`/tmp`、`/private`を標準置き場にしない。task workflowの記録は`${MEMORY_DIR:-.local}/memory/`に置く。複数行や構造化内容は実ファイルで渡し、inline展開とhere-docを避け、pipeは単一commandがstdinを即時に一度だけ読む処理に限る。
 
 ## Script とerror
 
