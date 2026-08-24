@@ -1,407 +1,215 @@
 ---
 name: designing-ui-ux
 description: |
-  プロダクショングレードのUI/UXを設計・実装し、専門デザインSkillを統括する入口。
-  ダッシュボード、管理画面、LP、Webアプリケーション等のUI構築時に使用。
-  UIを洗練する依頼ではEmilのクラフト、Appleの物理的interaction、モーション探索・監査・レビューを必要なものだけ選び、実装後の独立評価へ接続する。
-  Linear/Notion/Stripe/Vercel品質を再現し、AIっぽい平凡なデザインを回避。
-  デザインメモリでセッション横断の一貫性を保証。WCAG 2.1 AA準拠。
-  使用タイミング: (1) UIコンポーネント構築、(2) デザイン改善・リデザイン、(3) ダッシュボード・管理画面設計。
-  「UIを作って」「デザインを改善して」「もっと洗練して」「プロダクトらしい手触りにして」「ダッシュボードを設計して」「レスポンシブ対応して」「アクセシビリティを改善して」等の依頼に対応。
-  対象: UI source（.tsx, .jsx, .html, .vue, .svelte, .swift等）、styles、design tokens、prototype。
+  利用者の主要タスク、情報構造、状態、視覚システムを一つの設計へまとめ、Web・モバイル・デスクトップのUIを設計、実装、監査する。
+  「UIを作って」「画面をリデザインして」「もっと洗練して」「UXを改善して」「ダッシュボードを設計して」「アクセシビリティやレスポンシブを直して」など、UI source（.tsx、.jsx、.html、.vue、.svelte、.swift等）、styles、design tokens、prototypeを扱う依頼で使用する。
+  新規画面、既存UIの改善、デザイン監査、デザインシステム策定に対応し、専門デザインSkillと実画面の品質確認を必要な範囲だけ組み合わせる。
 ---
 
-# UI/UX Design Skill
+# UI/UXを設計する
 
-プロダクション品質のUIを設計・実装するための統合スキル。
-AIの「distributional convergence」（Inter + 紫グラデーション + 最小限アニメーション = "AI slop"）を克服し、コンテキスト駆動の独自デザインを生成する。
+UIを、利用者が目的を達成するための操作系として設計する。
+視覚的な個性は、主要タスク、情報、状態、ブランドの判断を固定した後に与える。
 
----
+## 既存workflowとの関係
 
-## Phase 0: デザインメモリ
+- Phase 0-5.5、承認、記録、レビュー、commitとpushは `@context/workflow-rules.md` に従う。
+- このSkillはUI/UXの設計規律を追加する。write scopeや外部操作の権限は広げない。
+- 既存のdesign system、component library、brand guideline、platform conventionを、このSkillの既定値より優先する。
+- 既存UIの改善では機能範囲を拡張しない。確認済みの課題と受入基準だけを対象にする。
 
-セッション開始時、PJルートの `.interface-design/system.md` を確認する。
+## 最初に依頼を分類する
 
-- **存在する場合**: 読み込み、確立済みの Direction / Tokens / Patterns を適用。新パターンは追記提案。
-- **存在しない場合**: Phase 1-2 で基盤確立後、保存を提案。
+| Mode | 依頼 | 完了条件 |
+|---|---|---|
+| `advise` | UX相談、方向性、比較 | 根拠、推奨案、リスク、次の判断を提示 |
+| `audit` | 既存画面の評価 | 証拠付きfindingと優先順位を提示。依頼がなければ変更しない |
+| `design` | 新規画面、flow、design system | design briefと実装可能な仕様を作成 |
+| `implement` | UI作成、改善、リデザイン | 実装し、実画面または代替証拠で検証 |
 
-### system.md フォーマット
+監査依頼を実装依頼へ読み替えない。
+実装依頼では、設計だけで終了しない。
 
-`Direction`（Personality / Foundation / Depth Strategy）、`Tokens`（Spacing / Colors / Radius / Typography）、`Patterns`（Component: measurements）、`Decisions`（日付: what and why）の4セクション構成。
+## Design routeを選ぶ
 
----
+依頼の目的を「誰の、どの仕事を、どの条件で成功させるか」の一文にする。
+次に主レンズを1つ、補助レンズを最大2つ選び、選んだSkillだけを全文読む。
 
-## Phase 0.5: 専門デザインSkillのルーティング
+| 必要な判断 | Skill |
+|---|---|
+| UI全体のクラフト、状態、知覚品質 | `../emil-design-eng/SKILL.md` |
+| gesture、drag、sheet、連続操作、interrupt可能なtransition | `../apple-design/SKILL.md` |
+| 動きを加える候補の探索 | `../find-animation-opportunities/SKILL.md` |
+| 既存motionの監査 | `../improve-animations/SKILL.md` |
+| 実装済みmotionの最終確認 | `../review-animations/SKILL.md` |
+| motion用語の回答 | `../animation-vocabulary/SKILL.md` |
 
-このSkillをデザイン作業の単一入口として扱う。ユーザーに個別Skillの選択を要求せず、依頼、現行UI、変更範囲から必要な専門Skillだけを選ぶ。
+一般的な新規UIと洗練依頼では `emil-design-eng` を主レンズにする。
+motionに関係しない依頼ではApple系とanimation系Skillを起動しない。
 
-### ルーティング契約
-
-1. ユーザーの目的を「誰の、どの体験を、どう良くするか」の一文にする。
-2. 下表から主レンズを1つ、補助レンズを最大2つ選ぶ。
-3. 選んだSkillの`SKILL.md`を全文読み、選ばなかったSkillは読み込まない。
-4. 選択結果を作業ログまたは進捗報告へ短く残してから設計する。
-5. 専門Skillは品質判断を補強するだけで、write scope、承認、project ruleを拡張しない。
+記録形式は次のとおり。
 
 ```md
 Design route:
 - Primary: <skill>
 - Supporting: <skill or none>
-- Mode: advise-only / implement / review
-- Why: <選択理由を1文>
+- Mode: advise / audit / design / implement
+- Why: <今回必要な判断>
 ```
 
-### 選択マトリクス
+競合は `project ruleとplatform semantics > accessibility > ユーザー要件 > 既存挙動とdesign system > design brief > 専門Skillのheuristics` の順で解決する。
 
-| 状況 | 選ぶSkill | 役割 |
-|---|---|---|
-| UI全体の洗練、コンポーネントの磨き込み、ソフトウェアの手触り | `../emil-design-eng/SKILL.md` | 既定のクラフトレンズ。細部、状態、速度、知覚品質を判断する |
-| Appleらしい自然さ、gesture、drag / swipe / sheet、spring、interrupt可能なtransition | `../apple-design/SKILL.md` | 物理的interactionが本当に必要な場合だけ追加する |
-| 動きが足りない箇所を探したい | `../find-animation-opportunities/SKILL.md` | read-only探索。動かさない判断も含めて候補を絞る |
-| 既存animationが重い、遅い、不自然、統一されていない | `../improve-animations/SKILL.md` | read-only監査と優先順位付き計画を作る |
-| 実装済みmotion差分を厳しく確認する | `../review-animations/SKILL.md` | motion専用の最終レビュー。実装や一般レビューには使わない |
-| ユーザーが効果名や正確なmotion用語を知りたい | `../animation-vocabulary/SKILL.md` | 用語回答だけに使い、設計・実装flowへ連鎖させない |
+## 設計を進める
 
-### 既定ルート
+### 1. 現状を観察する
 
-- 新規UIまたは一般的な「洗練して」: `emil-design-eng`を主レンズにする。
-- gestureや物理的な連続操作が重要: `emil-design-eng` + `apple-design`にする。
-- 新しいmotion候補を探す: `emil-design-eng` + `find-animation-opportunities`にする。
-- 既存motionを直す: `emil-design-eng` + `improve-animations`で監査し、実装後に`review-animations`で確認する。
-- motionと無関係な変更: Apple / animation系Skillを起動しない。
-- 「Apple風」は見た目の模倣ではなく、feedback、spatial consistency、interruptibility、抑制として適用する。
+新規UIでは、利用者、主要タスク、利用状況、成功、失敗コスト、必要な情報を確認する。
+既存UIでは、画面、主要経路、実データの形、design tokens、component、breakpoint、既知の問題を先に読む。
+実画面を起動できる場合は、コードだけで外観を推測しない。
 
-### 実行境界
+不足情報が結果を大きく変えないなら仮定を明示して進める。
+主要タスク、対象platform、ブランド制約のいずれかが不明で、選択により成果物が別物になる場合だけ確認する。
+未確認のplatform仕様、component API、適合基準を推測で補わない。
+一次情報を確認できなければ、安全な共通原則へ範囲を狭め、未確認事項を明示する。
 
-- `find-animation-opportunities`と`improve-animations`はread-onlyである。監査だけの依頼なら提案で止める。
-- 実装まで依頼されている場合、read-only Skillの出力をこの親Skillの実装計画へ戻し、承認済みwrite scope内だけ変更する。
-- `review-animations`はmotion差分がある場合だけ実装後に使う。Claudeで明示起動専用として登録されている場合、その境界を維持する。
-- 複数Skillの判断が競合した場合、`project design system > ユーザー指定 > accessibilityと既存挙動 > このSkillの方向性 > 専門Skillのheuristics`の順で解決する。
-- materialなUI変更はPhase 6の`ui-ux-reviewer`評価へ渡し、実ブラウザを起動できる場合はPlaywrightの証拠も添える。
+### 2. Design briefを固定する
 
----
+`references/design-brief.md` を読み、次を短く記録する。
 
-## Phase 1: Planner（製品仕様の展開）
+- primary userとjob
+- successとfailure
+- primary pathとcritical edge cases
+- information priority
+- emotional quality
+- existing constraints
+- signatureとanti-signature
 
-**短いプロンプト（1-4文）を完全な製品仕様書に展開する。**
+style名、色、fontを先に決めない。
 
-記事 "Harness Design for Long-Running Apps" の知見: Plannerが初期段階で技術的詳細を定義しようとして誤りを犯すと、その誤りが下流の実装にまで波及する。生成すべき成果物を限定し、作業を進める中でその道筋を自ら見つけ出させる方が賢明。
+### 3. Task flowと状態を設計する
 
-### 入力
+happy pathだけでなく、empty、loading、partial、error、permission、offline、long content、destructive action、successを必要な範囲で定義する。
+各画面について、利用者が「現在地」「可能な操作」「結果」「復旧方法」を理解できるか確認する。
 
-ユーザーからの短いプロンプト（1-4文）。例:
-- 「プロジェクト管理ツールを作って」
-- 「飲食店の予約管理ダッシュボード」
-- 「開発者向けのAPIモニタリング画面」
+不可逆操作は、警告の強さを操作の損失と復旧可能性に合わせる。
+入力エラーは問題の位置、原因、直し方を同じ場所で伝える。
 
-**既に詳細な仕様がある場合**: このフェーズをスキップしてPhase 2へ。
+### 4. 情報とcontentを設計する
 
-**既存UIの洗練・監査・リデザインの場合**: 製品スコープを勝手に展開しない。現行の画面、挙動、design system、変更要求を仕様として扱い、Phase 2へ進む。
+主要タスクに必要な情報を上位へ置き、補助情報は段階的に開示する。
+画面の階層は、size、weight、contrast、space、positionの組合せで作る。
+色だけ、iconだけ、hoverだけで意味を伝えない。
 
-### 展開ルール
+ラベルは利用者の語彙で書く。
+CTAは動作と結果を表し、曖昧な「続ける」「OK」を避ける。
 
-1. **スコープは野心的に**: 機能を絞らず、プロダクトとして成立する範囲まで広げる
-2. **製品コンテキストに集中**: 「何を作るか」「誰が使うか」「なぜ必要か」を深掘りする
-3. **技術的詳細に踏み込まない**: 実装方法・DB設計・API設計は後続Phaseに委ねる。Plannerが定義するのは「何が必要か」であり「どう作るか」ではない
-4. **AI機能の機会を探す**: プロダクトにAI/自動化を組み込める箇所を提案する
+#### 情報量とcomponent数を制限する
 
-### 出力: 製品仕様書
+情報を整理するためにcomponentを増やし続けない。
+初期画面では、利用者が最初に答える問いを一つに決め、その問いへ関係しない情報を閉じる。
 
-```markdown
-# {プロダクト名}
+既定の構成は次の範囲に収める。
 
-## ビジョン
-{1-2文。このプロダクトが存在する理由}
+- 常時表示する主要surfaceは一つ。
+- orientationは一つのcompact barへまとめる。
+- primary actionは一つ。secondary actionは二つまで。
+- 補助情報、provenance、filter、全文、設定は選択時のdrawer、popover、detailsへ送る。
+- 同じ状態をcard、badge、graph、summaryで重複表示しない。
+- 同じ軸のnavigationに、tabs、sidebar、stepper、breadcrumbを重ねない。
 
-## ターゲットユーザー
-- ペルソナ: {誰が、どんな状況で使うか}
-- 主な課題: {解決する問題}
+componentを追加する前に「このcomponentだけが答える利用者の問い」を一文で書く。
+既存componentと同じ問いへ答えるなら、追加せず統合する。
 
-## コア機能
-1. {機能名}: {機能の説明。ユーザーストーリー形式推奨}
-2. ...
+情報量が多い画面は、重要情報を小さくするのではなく、表示の深さを分ける。
 
-## 画面一覧
-- {画面名}: {目的と主要な要素}
-- ...
+1. **Focus**：今判断する対象とprimary action。
+2. **Context**：判断に必要な差、制約、状態。
+3. **Evidence**：根拠、履歴、全文。要求されたときだけ開く。
 
-## AI/自動化の機会
-- {どこにAIを組み込めるか、なぜ有効か}
+熟練者向け画面でも、情報密度と同時表示量を混同しない。
+高密度とは、必要な情報へ短く到達できることであり、すべてを常時表示することではない。
 
-## 感情的な仕事
-- {このプロダクトがユーザーに提供すべき感情: 信頼/効率/喜び/安心 等}
-```
+### 5. Visual directionを比較して収束させる
 
-### ユーザー確認
+既存design systemが方向性を決めていない場合だけ、briefを満たす異なる2案を作る。
+各案について、layout logic、type、color、depth、shape、motion、signature、riskを比較し、一案へ収束する。
 
-仕様書を提示し、AskUserQuestionで承認を得てからPhase 2へ進む。
-ユーザーが機能を追加・削除・変更した場合は仕様書を更新。
+流行のstyle catalogは候補探索にだけ使う。
+業界名や「高級」「モダン」だけを根拠にpaletteやfontを決めない。
 
----
+### 6. Design system contractを作る
 
-## Phase 2: デザイン方向性の決定（必須）
+実装前に次を固定する。
 
-**コードを書く前に、必ずデザイン方向性を決定する。デフォルトに頼らない。**
+- semantic colorsとcontrast
+- type rolesとnumeric treatment
+- spacing rhythmとlayout constraints
+- radius、border、surface、elevation
+- component anatomyとstate matrix
+- motion purposeとreduced-motion behavior
+- responsive transformation
+- icon、illustration、chartの規則
 
-### コンテキスト分析（4つの問い）
+具体的な判断は、必要な参照文書だけを読む。
 
-1. **プロダクトの目的は？** ファイナンスとクリエイティブでは必要なエネルギーが異なる
-2. **ユーザーは誰か？** パワーユーザー＝情報密度、カジュアル＝ガイダンス
-3. **感情的な仕事は？** 信頼？効率？喜び？集中？
-4. **何が記憶に残るか？** すべてのプロダクトに独自性を出すチャンスがある
+### 7. 実装する
 
-### デザインパーソナリティ
+既存componentとtokenを再利用し、意味のない新variantを増やさない。
+native semanticsとplatform componentを優先する。
+custom controlは、必要な意味や挙動を既存要素で表せず、keyboard、focus、screen reader、pointerの契約を実装、検証できる場合だけ作る。
 
-| 方向性 | 美学 | 参考 |
-|--------|------|------|
-| **Precision & Density** | タイトな間隔、モノクロ、情報優先 | Linear, Raycast |
-| **Warmth & Approachability** | 広い余白、柔らかい影、フレンドリー | Notion, Coda |
-| **Sophistication & Trust** | クールな色調、レイヤード深度 | Stripe, Mercury |
-| **Boldness & Clarity** | 高コントラスト、大胆な余白 | Vercel |
-| **Utility & Function** | ミュートなパレット、機能的密度 | GitHub |
-| **Data & Analysis** | チャート最適化、数字第一 | アナリティクス、BI |
-
-**1つを選ぶか、2つをブレンドする。しかし、プロダクトに合った方向性にコミットする。**
-
-### トーンの選択（大胆なアプローチ）
-
-以下から選択またはインスパイア:
-Brutally Minimal / Maximalist Chaos / Retro-Futuristic / Organic-Natural / Luxury-Refined / Playful-Toy / Editorial-Magazine / Brutalist-Raw / Art Deco-Geometric / Soft-Pastel / Industrial-Utilitarian
-
-### 実装複雑さのマッチング（IMPORTANT）
-
-**ビジョンと実装の密度を一致させる。** トーンを決めたら、それに見合うコードの「重さ」を選択する:
-
-| ビジョン | 実装の方向性 |
-|---------|------------|
-| **マキシマリスト** | 凝ったアニメーション、多層エフェクト、グラデーションメッシュ、ノイズテクスチャ、ジオメトリックパターン。コード量が増えるのは正しい |
-| **ミニマリスト/洗練** | 抑制と精密さ。スペーシング・タイポグラフィ・微妙なディテールに集中。コードは少なく、1pxの調整に時間をかける |
-| **ブルータリスト/ロウ** | 意図的な荒さ。生のHTML感、システムフォント、高コントラスト。装飾を排除すること自体がデザイン判断 |
-
-**マキシマリストに凝り足りないのも、ミニマリストに盛りすぎるのも失敗。** ビジョンへの全力コミットが品質を生む
-
----
-
-## Phase 3: デザイン基盤
-
-### カラー
-
-| タイプ | 特徴 | 用途 |
-|--------|------|------|
-| **Warm** | クリーム、ウォームグレー | 親しみやすい、人間的 |
-| **Cool** | スレート、ブルーグレー | プロフェッショナル、信頼性 |
-| **Pure** | トゥルーグレー、黒/白 | ミニマル、大胆、技術的 |
-| **Tinted** | 微妙なカラーキャスト | 独自性、ブランド |
-
--> セマンティックカラー・アクセント・業界別パレットは `references/color-palettes.md` を参照
-
-### タイポグラフィ
-
-| タイプ | フォント | トーン |
-|--------|----------|--------|
-| **System** | -apple-system, BlinkMacSystemFont | 速い、ネイティブ |
-| **Geometric Sans** | Geist, Inter, Satoshi | モダン、クリーン |
-| **Humanist Sans** | SF Pro, Plus Jakarta Sans | 暖かい、親しみやすい |
-| **Mono** | JetBrains Mono, Fira Code | 技術、開発者 |
-| **Editorial** | Playfair Display, Fraunces | 出版物、ラグジュアリー |
-
--> スケール・ペアリング・ウェイト詳細は `references/typography-detail.md` を参照
-
-### 深度 & エレベーション
-
-**1つのアプローチを選び、コミットする:**
-
-- **A: Borders-only** -- クリーン、技術的（Linear, Raycast）
-- **B: Single Shadow** -- ソフトリフト、親しみやすい
-- **C: Layered Shadows** -- プレミアム、立体感（Stripe, Mercury）
-- **D: Surface Color Shifts** -- 影なしで色相による階層
-
--> CSS実装詳細は `references/style-catalog.md` を参照
-
----
-
-## Phase 4: コアクラフト原則
-
-以下の原則を守る（CSS実装詳細は `references/craft-principles.md` を参照）:
-
-1. **4pxグリッドシステム** -- すべてのスペーシングを4の倍数に
-2. **対称パディング** -- TLBRは一致。非対称パディング禁止
-3. **ボーダーラジアス一貫性** -- Sharp / Soft / Minimal から1つ選択、混在させない
-4. **コントラスト階層** -- primary / secondary / muted / faint の4レベル
-5. **データ表示** -- 数値にはモノスペース + tabular-nums
-
-### 空間構成と意図的なルール破り
-
-上記のグリッド・対称性は**基盤**であり、**制約**ではない。ビジョンが要求する場合、意図的に壊すことは正当なデザイン判断:
-
-- **非対称レイアウト**: ヒーローセクション、LP、エディトリアルでは左右非対称が効果的
-- **オーバーラップ**: 要素の重なりで奥行きと動きを表現
-- **対角線フロー**: 水平・垂直に縛られない視線誘導
-- **グリッドブレイク**: 1つの要素だけグリッドから飛び出すことで注目を集める
-- **余白の極端な使い方**: 贅沢なネガティブスペース OR 制御された高密度
-
-**判断基準**: 「ルールを知らずに壊す」のはミス、「ルールを知った上で壊す」のはデザイン。グリッドの上に乗せた後、意図的に動かす
-
-### 背景・テクスチャ・雰囲気
-
-ソリッドカラーをデフォルトにしない。コンテキストに合った深みを加える:
-
-- グラデーションメッシュ / ノイズテクスチャ / ジオメトリックパターン
-- レイヤード透過 / ドラマチックなシャドウ / グレインオーバー���イ
-- **ただし装飾のための装飾は禁止** — すべてのビジュアル要素はビジョンと整合する理由が必要
-
--> UIスタイルカタログ（Glass, Neu, Clay, Bento等）は `references/style-catalog.md` を参照
--> モーション & アニメーションは `references/animation.md` を参照
-
----
-
-## Phase 5: コンポーネント設計
-
-カード・コントロール・ナビゲーション・アイコンの設計原則。
-表面処理は一貫させ、内部構造は内容に合わせる。ネイティブフォーム要素よりカスタムコンポーネント。
-
--> 詳細は `references/components.md` を参照
-
----
-
-## Phase 6: 評価（Generate → Evaluate）
-
-**生成と評価を分離し、独立した評価者による外部フィードバックで品質を担保する。**
-
-記事 "Harness Design for Long-Running Apps" の知見: Opus 4.6の能力向上により、スプリント単位の反復評価は不要に。**デフォルトは単一パス評価**。モデルの能力境界付近のタスクのみ、評価が実質的な価値を持つ。
-
-### 評価構造
-
-```
-生成（Phase 2-5の実装結果）
-  ↓
-単一パス評価（ui-ux-reviewer サブエージェント）
-  ↓ スコア + フィードバック
-判定
-  ├─ PASS (≥25/35) → Phase 7へ
-  ├─ FAIL (<18) → フィードバックを適用して1回修正 → 再評価（最大1回）
-  └─ ユーザー指示で反復モード → 最大3回イテレーション
-```
-
-### 評価の実行
-
-1. **`ui-ux-reviewer`をサブエージェントとして起動**（評価ループモード）
-   - 対象ファイルのフルパスを渡す
-   - `.interface-design/system.md`があればパスも渡す
-   - `playwright-skill`でスクリーンショット取得済みならその画像パスも渡す
-2. **スコアリング結果を確認**: 4基準の加重合計（/35）
-3. **PASSならそのまま通過** — 不要なイテレーションは行わない
-4. **FAILの場合のみ**フィードバックを適用して1回修正:
-   - **Keep**: 触らない（良い部分を壊さない）
-   - **Fix**: 指示に従い修正（ファイル・行番号・具体値が指定されている）
-   - **Consider**: 余裕があれば対応
-
-### 反復モード（ユーザー指示時 or `design-eval-loop`スキル使用時）
-
-ユーザーが「ループして」「反復で改善して」と指示した場合、または`design-eval-loop`スキルを使用する場合のみ:
-
-| 設定 | 値 |
-|------|-----|
-| 最大イテレーション | **3回** |
-| PASS閾値 | **25/35** |
-| 早期終了 | スコア30以上 or Fixが0件 |
-
-### Playwright連携（dev serverが起動可能な場合）
-
-評価の精度を高めるため、可能であれば`playwright-skill`で実際のUIを確認する:
-
-1. dev serverを起動
-2. 変更した画面のスクリーンショットを取得
-3. スクリーンショットを`ui-ux-reviewer`に渡す（画像パスをプロンプトに含める）
-4. レスポンシブ確認: 3ビューポート（375px, 768px, 1440px）でキャプチャ
-
-**Playwright連携はオプション**: dev serverが起動できない場合やコンポーネント単体の場合はコードレビューのみで評価
-
-### 自己チェック（評価ループ前のプリフライト）
-
-サブエージェントに渡す前に、生成者側で最低限のチェックを通す:
-
-- **Swap Test**: ブランド名を置き換えても気づかれないなら固有の「署名」を加える
-- **Squint Test**: 半目で視覚的階層が読み取れるか
-- **Signature Test**: 記憶に残る独自要素があるか
-- **Token Test**: デザイントークンがシステムに従っているか
-
-プリフライトで明らかな問題があれば、サブエージェント起動前に修正する（無駄なイテレーションを避ける）
-
----
-
-## Phase 7: アクセシビリティ（WCAG 2.1 AA準拠）
-
-**アクセシビリティは非交渉的要件。**
-
-- **色コントラスト**: 通常テキスト 4.5:1、大テキスト 3:1、UI要素 3:1
-- **キーボード操作**: Tab / Shift+Tab / Enter / Escape / Arrow で全操作可能
-- **フォーカス表示**: `:focus-visible` で明確なアウトライン（2px以上）
-- **Touch target**: モバイルで最小 44x44px
-- **スクリーンリーダー**: 意味のある `aria-label`、ランドマーク、見出し階層
-- **減モーション対応**: `prefers-reduced-motion` メディアクエリ
-
--> 詳細なWCAGガイドラインは `references/accessibility.md` を参照
-
----
-
-## Phase 8: レスポンシブ設計
-
-**Mobile-first アプローチを採用する。**
-
-1. **モバイルファースト**: `min-width` メディアクエリで拡張
-2. **Fluid Typography**: `clamp()` で滑らかなスケーリング
-3. **レイアウト適応**: Grid / Flexbox で画面サイズに応じた構造変更
-4. **タッチ最適化**: ボタン・リンクの十分なサイズとスペーシング
-
--> 詳細なブレークポイントパターンは `references/responsive.md` を参照
-
----
-
-## 複数案提示（大規模変更時）
-
-| プラン | アプローチ | リスク |
-|--------|-----------|--------|
-| **A: Progressive** | 既存デザインの段階的改善。最小変更、低リスク | 低 |
-| **B: Radical** | フレームワークを壊す大胆な再設計。野心的 | 中 |
-| **C: Ideal** | リソース制約なしの理想形。長期ビジョン | 高 |
-
-各プランにモックアップまたは詳細説明を添え、ユーザーに選択を委ねる。
-
----
-
-## アンチパターン
-
-### 絶対にやらない
-
-- ドラマチックなドロップシャドウ / 小要素に大ラジアス（16px+） / 非対称パディング
-- 色付き背景上の純白カード / 装飾用太ボーダー（2px+） / 過剰スペーシング（48px+）
-- スプリング・バウンシーアニメーション / **ビジョンと無関係な**装飾グラデーション / 複数アクセントカラー
-- **紫グラデーション + 白背景（AIっぽい）** / **Inter, Arial, Robotoデフォルト依存**
-- **汎用 `#3B82F6` ブルー、teal-coral コンボ** / **Glassmorphism濫用、テンプレート的レイアウト**
-
-### 常に自問する
-
-デフォルトに逃げていないか？ / コンテキストとユーザーに合っているか？ / 深度戦略は一貫して意図的か？ / すべてがグリッド上にあるか？ / 何が記憶に残るか？
-
----
-
-## 実装チェックリスト
-
-**前**: system.md確認 / 方向性決定 / カラー選択 / タイポグラフィ決定 / 深度戦略選択
-**中**: 4pxグリッド / 対称パディング / ラジアス一貫 / 意味のみの色使用 / データにモノスペース / WCAG AA
-**後**: 評価ループPASS (≥25/35) / レスポンシブ / ダークモード / キーボード / ナビコンテキスト / system.md保存提案
-
----
-
-## Context7 Library IDs
-
-React(`/facebook/react`), Next.js(`/vercel/next.js`), Tailwind(`/tailwindlabs/tailwindcss`), shadcn/ui(`/shadcn-ui/ui`), Radix(`/radix-ui/primitives`), Framer Motion(`/framer/motion`)
-
----
-
-## 出典
-
-frontend-design(Anthropic), claude-design-skill(Dammyjay93), ui-ux-pro-max-skill(nextlevelbuilder), interface-design(Dammyjay93), bencium-claude-design-skill(bencium), Codex-designer-skill(joeseesun), v0 System Prompt(Vercel)
-
-**Remember: Claude Code is capable of extraordinary creative work.**
+視覚変更と同時に、loading、empty、error、disabled、focus、selected、pressedを実装する。
+interactionを伴う装飾は、操作可能に見えるなら実際に操作可能にする。
+
+## 品質ゲート
+
+`references/quality-gates.md` を読み、変更リスクに合う証拠を集める。
+
+1. **Task**：主要タスクを開始、理解、完了、復旧できる。
+2. **Structure**：階層、現在地、主要action、状態が一目で区別できる。
+3. **System**：token、component、content、motionが一貫する。
+4. **Accessibility**：WCAG 2.2 AA、keyboard、focus、semantics、contrast、zoom、reduced motionを確認する。
+5. **Responsive**：contentが縮小されるだけでなく、優先度に応じてreflowする。
+6. **Evidence**：可能なら実ブラウザで主要flowと375、768、1440pxを確認する。
+
+materialなUI変更は `ui-ux-reviewer` と `a11y-reviewer` の対象になる。
+project ruleが専門Agentレビューを明示時だけに制限する場合は、freshな直接検証を優先する。
+motion差分がある場合だけ `review-animations` を追加する。
+
+## 失敗を避ける
+
+- style名、palette、component libraryから設計を始める
+- 機能をcardへ均等に並べて情報設計を済ませる
+- placeholder copy、似た長さの架空データ、happy pathだけで完成扱いにする
+- generic gradient、glass、bento、巨大heroを文脈なしで選ぶ
+- contrast不足をfont weight、shadow、brand colorで正当化する
+- desktopを縮めただけのmobile layoutを作る
+- animationで遅さや状態不明を隠す
+- screenshotの美しさをtask successの代替にする
+- brand名を交換しても成立する画面を、署名のあるデザインとみなす
+- 情報を失いたくないという理由で、card、panel、badge、tabを初期画面へ足し続ける
+- 同じ事実をsummary、route、status card、inspectorで重複表示する
+
+## デザインメモリ
+
+projectに `.interface-design/system.md` があれば、確立済みのDirection、Tokens、Patterns、Decisionsを読む。
+なければmaterialな設計判断が確定した後に作成を提案する。
+現在の仕様はprojectのdesign systemを正本とし、このSkillへ個別projectの値を埋め込まない。
+
+## 必要時に読む参照
+
+| 判断 | 参照 |
+|---|---|
+| brief、flow、state、情報優先度 | `references/design-brief.md` |
+| color | `references/color-palettes.md` |
+| typography | `references/typography-detail.md` |
+| layout、density、surface | `references/craft-principles.md`、`references/style-catalog.md` |
+| component、form、navigation、chart | `references/components.md` |
+| responsive | `references/responsive.md` |
+| motion | `references/animation.md` |
+| accessibility | `references/accessibility.md` |
+| 検証とfinding | `references/quality-gates.md` |
+| 外部知見と採用境界 | `references/provenance.md` |
+
+参照は今回の判断に必要なものだけ読む。
+参照文書から別の参照文書へ連鎖させない。

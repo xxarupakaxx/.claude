@@ -1,207 +1,58 @@
-# レスポンシブ設計詳細
+# Responsive contract
 
-## ブレークポイントシステム
+## Breakpointより変化の条件を決める
 
-```css
-/* Mobile First: min-widthで拡張 */
-/* Base: 0-639px (モバイル) */
-@media (min-width: 640px)  { /* sm: モバイル横 */ }
-@media (min-width: 768px)  { /* md: タブレット */ }
-@media (min-width: 1024px) { /* lg: デスクトップ */ }
-@media (min-width: 1280px) { /* xl: ワイド */ }
-@media (min-width: 1536px) { /* 2xl: ウルトラワイド */ }
-```
+breakpointはdevice名ではなく、contentとinteractionが破綻する幅に置く。
+projectの既存breakpointがある場合は、それを優先する。
 
-## Tailwind ブレークポイント対応
+component内部の変化はcontainer query、page全体のnavigationやshellはviewport queryを使い分ける。
 
-```css
-/* Tailwindのデフォルト */
-sm: 640px
-md: 768px
-lg: 1024px
-xl: 1280px
-2xl: 1536px
-```
+## 各領域の変換規則を記録する
 
----
+| Region | Wide | Medium | Narrow | 優先して残すもの |
+|---|---|---|---|---|
+| Navigation |  |  |  |  |
+| Header actions |  |  |  |  |
+| Main content |  |  |  |  |
+| Secondary panel |  |  |  |  |
+| Data surface |  |  |  |  |
 
-## レイアウトパターン
+hide、stack、wrap、collapse、scroll、summarize、moveのどれを使うか明示する。
+「mobileでは非表示」だけでは、機能が失われていないか判断できない。
 
-### サイドバー + メインコンテンツ
+## Contentを縮めずreflowする
 
-```css
-/* モバイル: サイドバー非表示 */
-.layout {
-  display: grid;
-  grid-template-columns: 1fr;
-}
+- primary actionとcritical statusを先に残す。
+- secondary actionはoverflow menuへ移せるが、発見可能性を確認する。
+- two-pane layoutは、masterとdetailの戻り方を定義する。
+- toolbarはwrap、priority overflow、mode切替を使い分ける。
+- long labelをtruncationする場合はfull valueへ到達できるようにする。
 
-/* デスクトップ: サイドバー表示 */
-@media (min-width: 1024px) {
-  .layout {
-    grid-template-columns: 240px 1fr;
-  }
-}
-```
+## Tableとchartを問いに合わせて変換する
 
-### カードグリッド
+tableを一律にcardへ変換しない。
+column比較が仕事なら横scroll、column priority、sticky key column、detail viewを使う。
+行単位の閲覧が仕事ならstacked listへ変換できる。
 
-```css
-.card-grid {
-  display: grid;
-  gap: 16px;
-  grid-template-columns: 1fr; /* モバイル: 1列 */
-}
+chartはaxis、legend、tooltip、annotationが狭幅で読めるか確認する。
+情報を減らす場合は、失われる問いを明示する。
 
-@media (min-width: 640px) {
-  .card-grid {
-    grid-template-columns: repeat(2, 1fr); /* タブレット: 2列 */
-  }
-}
+## Input methodを幅と分けて扱う
 
-@media (min-width: 1024px) {
-  .card-grid {
-    grid-template-columns: repeat(3, 1fr); /* デスクトップ: 3列 */
-  }
-}
-```
+狭い画面が必ずtouchとは限らず、広い画面が必ずmouseとも限らない。
+`hover`、`pointer`、keyboard、touchをviewportとは別に確認する。
 
-### Bento Grid（レスポンシブ）
+hoverにだけactionや説明を置かない。
+touch targetを視覚的なicon sizeだけで判断せず、実際のhit areaを確認する。
 
-```css
-.bento-grid {
-  display: grid;
-  gap: 16px;
-  grid-template-columns: 1fr; /* モバイル */
-}
+## 証拠viewportを選ぶ
 
-@media (min-width: 768px) {
-  .bento-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .bento-large {
-    grid-column: span 2;
-  }
-}
+既定は375px、768px、1440pxとする。
+次を追加する価値がある場合は、境界幅も確認する。
 
-@media (min-width: 1024px) {
-  .bento-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  .bento-large {
-    grid-column: span 2;
-    grid-row: span 2;
-  }
-}
-```
+- navigationが切り替わる直前と直後
+- tableがoverflowを始める幅
+- dialogがsheetへ変わる幅
+- long contentでwrapが変わる幅
 
----
-
-## Fluid Typography
-
-```css
-/* clamp(最小値, 推奨値, 最大値) */
-h1 { font-size: clamp(1.75rem, 1.5rem + 2vw, 3rem); }
-h2 { font-size: clamp(1.25rem, 1rem + 1.5vw, 2.25rem); }
-h3 { font-size: clamp(1.125rem, 1rem + 0.5vw, 1.5rem); }
-body { font-size: clamp(0.875rem, 0.8rem + 0.35vw, 1rem); }
-```
-
----
-
-## Container Queries（モダン）
-
-```css
-/* コンテナ定義 */
-.card-container {
-  container-type: inline-size;
-  container-name: card;
-}
-
-/* コンテナサイズに応じたスタイル */
-@container card (min-width: 400px) {
-  .card-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-}
-```
-
----
-
-## タッチ最適化
-
-```css
-/* タッチデバイスでのホバー無効化 */
-@media (hover: none) {
-  .card:hover {
-    transform: none;
-    box-shadow: var(--shadow); /* ホバーエフェクトなし */
-  }
-}
-
-/* タッチターゲット最小サイズ */
-.touch-target {
-  min-height: 44px;
-  min-width: 44px;
-}
-
-/* タッチターゲット間のスペース */
-.nav-item + .nav-item {
-  margin-top: 8px;
-}
-```
-
----
-
-## テーブルのレスポンシブ対応
-
-### 横スクロール方式
-```css
-.table-wrapper {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-```
-
-### カード変換方式（モバイル）
-```css
-@media (max-width: 767px) {
-  table, thead, tbody, th, td, tr {
-    display: block;
-  }
-  thead { display: none; }
-  td {
-    position: relative;
-    padding-left: 50%;
-  }
-  td::before {
-    content: attr(data-label);
-    position: absolute;
-    left: 12px;
-    font-weight: 600;
-  }
-}
-```
-
----
-
-## 画像のレスポンシブ対応
-
-```css
-img {
-  max-width: 100%;
-  height: auto;
-}
-```
-
-```html
-<!-- srcset + sizes で最適な画像を配信 -->
-<img
-  srcset="image-400.webp 400w, image-800.webp 800w, image-1200.webp 1200w"
-  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-  src="image-800.webp"
-  alt="説明文"
-  loading="lazy"
-/>
-```
+横overflow、content clipping、focus visibility、safe area、on-screen keyboardを主要flowで確認する。

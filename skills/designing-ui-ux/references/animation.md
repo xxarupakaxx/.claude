@@ -1,84 +1,75 @@
-# モーション & アニメーション
+# Motion contract
 
-## 基本原則
+## Motionに仕事を与える
+
+motionは次のいずれかを担う場合だけ使う。
+
+- actionへのfeedback
+- objectの連続性と移動先の説明
+- hierarchyまたはstate changeの説明
+- gestureと結果の直接的な接続
+- attentionの短い誘導
+
+装飾、遅さの隠蔽、操作可能に見せるためだけのmotionは追加しない。
+
+## 時間より知覚を設計する
+
+小さなfeedbackは短く、大きなspatial transitionは距離が理解できる長さにする。
+固定の150ms、200ms、300msをすべてへ当てはめない。
+
+次を一つのmotion token setとして定義する。
 
 ```css
-/* 標準イージング */
---ease-out: cubic-bezier(0.25, 1, 0.5, 1);
---ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-
-/* デュレーション */
---duration-fast: 150ms;   /* マイクロインタラクション */
---duration-normal: 200ms; /* 通常のトランジション */
---duration-slow: 300ms;   /* 大きなトランジション */
-```
-
-## 推奨パターン
-
-### ホバー状態
-```css
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-layered);
-  transition: all var(--duration-fast) var(--ease-out);
-}
-```
-
-### ページロードのスタッガード表示
-```css
-.fade-in-stagger {
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeIn var(--duration-normal) var(--ease-out) forwards;
-}
-.fade-in-stagger:nth-child(1) { animation-delay: 0ms; }
-.fade-in-stagger:nth-child(2) { animation-delay: 50ms; }
-.fade-in-stagger:nth-child(3) { animation-delay: 100ms; }
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+:root {
+  --motion-instant: 100ms;
+  --motion-fast: 160ms;
+  --motion-base: 220ms;
+  --ease-enter: cubic-bezier(.2, .8, .2, 1);
+  --ease-exit: cubic-bezier(.4, 0, 1, 1);
 }
 ```
 
-### ボタンフィードバック
-```css
-.button:active {
-  transform: scale(0.97);
-  transition: transform var(--duration-fast) var(--ease-out);
-}
-```
+値は開始点にすぎない。
+距離、頻度、入力方法、platform conventionを実画面で確認して調整する。
 
-### ローディングスピナー
-```css
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-.spinner {
-  animation: spin 1s linear infinite;
-}
-```
+## Interactionをinterrupt可能にする
 
-## 減モーション対応
+- repeated actionをanimation完了まで待たせない。
+- gestureで動かすobjectは指やpointerに追従させる。
+- openとcloseでspatial logicを一致させる。
+- exitはenterより短くして、次の操作を待たせない。
+- layout animationでcontentのreading positionを不用意に動かさない。
+
+`transition: all` は、意図しないpropertyまで補間するため使わない。
+transformとopacityは有用だが、semantics、focus、hit targetの変化を代替しない。
+
+## Reduced motionを別の体験として設計する
 
 ```css
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  .spatial-transition {
+    transform: none;
+    transition-property: opacity;
+  }
+
+  .ambient-loop {
+    animation: none;
   }
 }
 ```
 
-## 禁止事項
+parallax、zoom、large translation、animated blur、反復motionを減らす。
+状態変化は即時表示、fade、静的なhighlightなどで残す。
 
-- エンタープライズUIでのスプリング / バウンシーエフェクト
-- 300msを超えるトランジション（ユーザーの待ち時間増加）
-- 意味のないアニメーション（装飾目的のみ）
-- ページ内の過剰なアニメーション同時実行
+## 実画面で確認する
+
+- 連打、途中取消、戻る操作でstateが壊れない。
+- low-end deviceでinput responseを遅らせない。
+- loading animationが実際のprogressと誤認されない。
+- focusがanimation後の意味のある位置にある。
+- reduced motionでも同じtaskを完了できる。
+
+AppleのHuman Interface Guidelinesは、motionを目的に結び付け、任意にし、短く正確にし、取消可能にすることを勧めている。
+
+- Motion: https://developer.apple.com/design/human-interface-guidelines/motion
+- Accessibility: https://developer.apple.com/design/human-interface-guidelines/accessibility

@@ -1,89 +1,59 @@
-# 業界別カラーパレット
+# Color system
 
-## SaaS
-```
-Primary: #4F46E5 (Indigo)
-Accent:  #10B981 (Emerald)
-```
+## 業界名からpaletteを決めない
 
-## Fintech
-```
-Primary: #0F172A (Slate)
-Accent:  #22C55E (Green)
-```
+fintech、healthcare、developer toolといった分類だけでは、brand、利用環境、情報密度、文化圏、既存資産を決められない。
+固定の業界別paletteは候補探索に使えても、採用根拠にはしない。
 
-## Healthcare
-```
-Primary: #0EA5E9 (Sky)
-Accent:  #14B8A6 (Teal)
-```
-
-## E-commerce
-```
-Primary: #7C3AED (Violet)
-Accent:  #F59E0B (Amber)
-```
-
-## Creative
-```
-Primary: #EC4899 (Pink)
-Accent:  #8B5CF6 (Purple)
-```
-
-## Developer Tools
-```
-Primary: #18181B (Zinc)
-Accent:  #3B82F6 (Blue)
-```
-
----
-
-## ライト vs ダーク
-
-- **Dark Mode** — 技術的、集中、プレミアム感
-- **Light Mode** — オープン、親しみやすい、クリーン
-
-## セマンティックカラー（ダークモード調整）
+## Semantic roleから組み立てる
 
 ```css
-/* Light Mode */
---color-success: #22c55e;
---color-warning: #f59e0b;
---color-error: #ef4444;
-
-/* Dark Mode（彩度を下げ、明度を上げる） */
---color-success: #4ade80;
---color-warning: #fbbf24;
---color-error: #f87171;
+:root {
+  --bg-canvas: ...;
+  --bg-surface: ...;
+  --bg-elevated: ...;
+  --text-primary: ...;
+  --text-secondary: ...;
+  --text-disabled: ...;
+  --border-default: ...;
+  --border-strong: ...;
+  --action-primary: ...;
+  --action-primary-hover: ...;
+  --focus-ring: ...;
+  --status-info: ...;
+  --status-success: ...;
+  --status-warning: ...;
+  --status-danger: ...;
+}
 ```
 
-## 避けるべきカラーパターン
+raw color scaleとsemantic tokenを分ける。
+componentは`blue-600`ではなく`action-primary`を参照する。
 
-- 汎用 `#3B82F6` ブルーのデフォルト依存
-- 紫グラデーション + 白背景（AIっぽい）
-- Teal-Coral コンボ（過度に使用済み）
-- 無意味な装飾グラデーション
+## Accentは役割を限定する
 
----
+accentは、primary action、selection、link、focus、brand momentのどこへ使うかを決める。
+複数の強いaccentを使う場合は、それぞれの意味が重ならないことを確認する。
 
-## セマンティックカラー（基本定義）
+status colorをbrand accentへ寄せすぎると、success、warning、dangerの識別が弱くなる。
+色だけでstateを表さず、label、icon、shape、positionを組み合わせる。
 
-色は意味のためだけに使用。グレーで構造を構築し、色はステータス・アクション・エラー・成功のみ:
+## Lightとdarkを別々に調整する
 
-```css
---color-success: #22c55e;
---color-warning: #f59e0b;
---color-error: #ef4444;
---color-info: #3b82f6;
-```
+dark modeはlight paletteの反転ではない。
+surface間の差、text contrast、saturated colorのglow、border、image、chartを再調整する。
 
-## アクセントカラー選択
+dark surface上の高彩度色は、面積が大きいほど視覚的に強くなる。
+status backgroundとtextを別tokenにし、組合せごとにcontrastを測る。
 
-1つだけ選ぶ:
+## Paletteを選ぶ手順
 
-| カラー | 印象 |
-|--------|------|
-| Blue | 信頼 |
-| Green | 成長 |
-| Orange | エネルギー |
-| Violet | 創造性 |
+1. 既存brand colorと利用禁止色を確認する。
+2. canvas、surface、text、borderのneutral systemを先に作る。
+3. primary actionとfocusの色を決める。
+4. status colorsを意味ごとに決める。
+5. light、dark、高contrastで確認する。
+6. 実データ、disabled、selection、chartを並べて衝突を確認する。
+
+generic blue、purple gradient、tealとcoralの組合せ自体を禁止しない。
+Briefやbrandに根拠がなく、既製templateの印象だけを持ち込む使い方を避ける。

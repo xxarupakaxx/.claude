@@ -1,119 +1,74 @@
-# UIスタイルカタログ
+# Visual direction catalog
 
-## 深度戦略（CSS実装）
+## Catalogは会話の語彙として使う
 
-### Option A: Borders-only（フラット）
-```css
---border: rgba(0, 0, 0, 0.08);
---border-subtle: rgba(0, 0, 0, 0.05);
-border: 0.5px solid var(--border);
-```
-→ クリーン、技術的、密度重視（Linear, Raycast）
+style名は、完成形を自動で決めるpresetではない。
+Briefを満たす方向を比較するための語彙として使う。
 
-### Option B: Single Shadow（シンプル）
-```css
---shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-```
-→ ソフトリフト、親しみやすい
+| Axis | 一方 | もう一方 | 判断材料 |
+|---|---|---|---|
+| Density | compact | spacious | 頻度、比較量、習熟度 |
+| Contrast | quiet | bold | attention、brand、利用環境 |
+| Geometry | sharp | soft | precision、approachability、platform |
+| Surface | flat | layered | hierarchy、overlay、object model |
+| Typography | utilitarian | expressive | content量、brand、localization |
+| Composition | systematic | editorial | repetition、story、scan pattern |
+| Motion | restrained | expressive | task frequency、spatial model、comfort |
 
-### Option C: Layered Shadows（リッチ）
-```css
---shadow-layered:
-  0 0 0 0.5px rgba(0, 0, 0, 0.05),
-  0 1px 2px rgba(0, 0, 0, 0.04),
-  0 2px 4px rgba(0, 0, 0, 0.03),
-  0 4px 8px rgba(0, 0, 0, 0.02);
-```
-→ プレミアム、立体感（Stripe, Mercury）
+各axisを同じ側へ揃える必要はない。
+たとえばcompactなdata UIでも、重要な結果だけexpressive typographyを使える。
 
-### Option D: Surface Color Shifts
-```css
---surface-0: #ffffff;
---surface-1: #f8fafc;
---surface-2: #f1f5f9;
-```
-→ 影なしで色相による階層
+## 代表的な方向性を分解する
 
----
+### Precision
 
-## ビジュアルスタイル
+- 高い情報密度
+- 明確なalignmentとborder
+- 小さなcontrast差
+- 短く直接的なmotion
 
-### Glassmorphism
-```css
-.glass-card {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 16px;
-}
-```
-**注意: 控えめに使用。メインUIには不向き。**
+developer tool、operations、analysisに合う場合がある。
+小さいtextとtargetを正当化しない。
 
-### Neumorphism
-```css
-.neu-card {
-  background: #e0e5ec;
-  box-shadow:
-    8px 8px 16px #a3b1c6,
-    -8px -8px 16px #ffffff;
-  border-radius: 20px;
-}
-```
+### Warm utility
 
-### Claymorphism
-```css
-.clay-card {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  border-radius: 24px;
-  box-shadow:
-    inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-    8px 8px 16px rgba(0, 0, 0, 0.1);
-}
-```
+- 読みやすいtype
+- 穏やかなsurface contrast
+- 十分なspace
+- 明快なguidance
 
-### Bento Grid
-```css
-.bento-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-}
-.bento-card-large {
-  grid-column: span 2;
-  grid-row: span 2;
-}
-```
+初回利用や共同作業に合う場合がある。
+大きなradiusとshadowを自動的に選ぶ意味ではない。
 
-### Dark Mode Premium
-```css
-.dark-premium {
-  background: #0a0a0a;
-  color: #fafafa;
-  --accent: #3b82f6;
-  --border: rgba(255, 255, 255, 0.08);
-}
-```
+### Editorial
 
----
+- 強いtype hierarchy
+- asymmetric composition
+- contentの順序を作る余白
+- imageとcaptionの関係
 
-## ダークモード考慮事項
+storyやcurationに合う場合がある。
+task密度が高いcontrol surfaceへそのまま適用しない。
 
-### 影より境界線
-ダーク背景では影が見えにくい。境界線で定義:
-```css
-.dark-mode .card {
-  background: #1a1a1a;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: none;
-}
-```
+### Immersive
 
-### サイドバー設計
-メインコンテンツと同じ背景、微妙なボーダーで分離:
-```css
-.sidebar {
-  background: var(--surface-0);
-  border-right: 1px solid var(--border);
-  width: 240px;
-}
-```
+- edge-to-edge media
+- spatial layer
+- controlled motion
+- chromeの抑制
+
+media、map、creation toolに合う場合がある。
+navigation、focus、reduced motionを失わないようにする。
+
+## 流行styleを使う条件
+
+glass、bento、brutalism、neumorphism、clay、gradient meshなどは、Briefとinteractionに役割がある場合だけ使う。
+
+- glassは背景との関係を残す一時surfaceに限定する。
+- bentoは異なるsizeの情報優先度を表す場合に使う。
+- brutalismはbrandとcontentに合う場合に使い、accessibility違反を作風と呼ばない。
+- neumorphismはboundaryとstate contrastを失いやすいため、interactive controlの主表現にしない。
+- gradientはdepth、brand、focusの役割を持つ場合に使う。
+
+styleを選んだ後、使わない表現も一つ以上決める。
+このanti-signatureが、複数styleの無秩序な混在を防ぐ。

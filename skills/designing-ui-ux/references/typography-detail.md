@@ -1,83 +1,77 @@
-# タイポグラフィ詳細
+# Typography system
 
-## 推奨フォントペアリング
+## Font名より役割を決める
+
+type systemには、少なくとも次のroleを置く。
+
+- displayまたはpage title
+- section heading
+- body
+- label
+- supporting text
+- action
+- numericまたはcode
+
+roleごとにfont family、size、weight、line height、letter spacing、case、colorを定義する。
+同じvisual treatmentを異なる意味へ使わない。
+
+## Fontを選ぶ条件
+
+- brand voice
+- 長文とUI labelの可読性
+- 日本語を含む必要文字
+- variable fontと必要weight
+- numeral、currency、codeの扱い
+- loading strategyとfallback metric
+- license
+
+「SaaSだからInter」「高級だからserif」といった分類だけで決めない。
+既存brand fontがある場合は、代替する前に可読性、性能、glyph coverageの問題を示す。
+
+## Scaleは情報階層から作る
+
+固定のtype scaleを先に置かず、page title、section、body、dense dataの差を決める。
+sizeだけでなく、weight、line height、space、colorを組み合わせる。
 
 ```css
-/* Modern SaaS */
---font-display: 'Geist', sans-serif;
---font-body: 'Inter', sans-serif;
-
-/* Premium Product */
---font-display: 'Fraunces', serif;
---font-body: 'Plus Jakarta Sans', sans-serif;
-
-/* Developer Tool */
---font-display: 'JetBrains Mono', monospace;
---font-body: 'Inter', sans-serif;
-
-/* Editorial */
---font-display: 'Playfair Display', serif;
---font-body: 'Source Serif Pro', serif;
+:root {
+  --text-caption: 0.75rem;
+  --text-label: 0.8125rem;
+  --text-body: 0.9375rem;
+  --text-title: clamp(1.75rem, 1.35rem + 1.5vw, 2.75rem);
+}
 ```
 
-## タイポグラフィ階層
+例の値は出発点であり、projectのbase sizeと利用環境に合わせる。
+小さいlabelをuppercaseとwide trackingへ機械的に変換しない。日本語、長いlabel、screen magnificationで読みづらくなる場合がある。
+
+## Measureとline heightを確認する
+
+長文は読みやすいline lengthへ制限し、UI copyはcontrol幅に合わせてwrapまたは短縮する。
+見出しはtight、本文はcomfortableを既定にできるが、fontのx-heightと日本語glyphで実画面確認する。
+
+textをvertical centerへ置くときは、line boxではなくoptical alignmentも確認する。
+
+## 数値とcodeを分ける
+
+比較する数値にはtabular figuresを使う。
 
 ```css
-/* ウェイトと詳細 */
-.headline {
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-.body {
-  font-weight: 400;
-  letter-spacing: 0;
-}
-
-.label {
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  font-size: var(--text-xs);
-}
-
-/* データ用モノスペース */
-.data-value {
-  font-family: 'JetBrains Mono', monospace;
+.metric,
+.table-number {
   font-variant-numeric: tabular-nums;
 }
 ```
 
-## Fluid Typography（レスポンシブ）
+数値へmonospace fontを使う必要はない。
+tabular figuresを持つ本文fontなら、brandと可読性を保ったままcolumnを揃えられる。
 
-```css
-/* clamp(min, preferred, max) */
---text-fluid-sm: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
---text-fluid-base: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
---text-fluid-lg: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
---text-fluid-xl: clamp(1.25rem, 1rem + 1vw, 1.75rem);
---text-fluid-2xl: clamp(1.5rem, 1.2rem + 1.5vw, 2.25rem);
---text-fluid-3xl: clamp(2rem, 1.5rem + 2.5vw, 3rem);
-```
+code、identifier、shortcutにはmono roleを用意し、本文全体へ広げない。
 
-## 行間（line-height）
+## Localizationと極端値で確認する
 
-```css
-/* 見出し — タイトに */
---leading-tight: 1.15;
---leading-snug: 1.25;
-
-/* 本文 — 読みやすく */
---leading-normal: 1.5;
---leading-relaxed: 1.625;
-```
-
----
-
-## タイポグラフィスケール（基本定義）
-
-```css
---text-xs: 11px;  --text-sm: 12px;  --text-base: 14px;
---text-lg: 16px;  --text-xl: 18px;  --text-2xl: 24px;
---text-3xl: 32px; --text-4xl: 48px;
-```
+- 日本語とLatinのbaseline、weight、line heightが揃う。
+- Germanなど長いlabel、CJKの改行、RTLのmirroringを対象範囲に応じて確認する。
+- currency、percentage、negative value、large numberが崩れない。
+- fallback fontへ切り替わってもlayout shiftとclippingが起きにくい。
+- 200% text resizeでactionと情報が失われない。
