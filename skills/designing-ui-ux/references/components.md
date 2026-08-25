@@ -31,6 +31,9 @@ component libraryの部品を使えることと、その画面に必要なこと
 alwaysが増えたら、文字や余白を縮める前にselectionまたはon-demandへ移す。
 同じ状態を複数のcomponentで表している場合は、正本となる一つを残して統合する。
 
+全体の順序、範囲、現在位置が主要タスクに必要な画面では、compact overviewをalwaysにできる。
+Overviewには詳細、指標、primary actionを持たせず、主要surfaceと視覚的に競合させない。
+
 ## Native-firstでcontrolを選ぶ
 
 button、link、input、select、textarea、details、dialog、tableなど、必要な意味と挙動を持つnative elementを優先する。

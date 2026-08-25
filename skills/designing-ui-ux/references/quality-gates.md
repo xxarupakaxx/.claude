@@ -55,6 +55,8 @@ findingは「見た目が悪い」で終えない。
 - tabs、sidebar、stepper、breadcrumbが同じ移動軸で競合していない。
 - 補助情報、provenance、全文、filter、設定が段階的に開示される。
 - 情報量が多いとき、fontとtargetを縮めず、Focus、Context、Evidenceへ深さを分けている。
+- 全体の順序、範囲、現在位置が主要タスクに必要なら、drawerを開かず把握できる。
+- Overviewが詳細やactionを持ち、主要surfaceと競合していない。
 
 画面をぼかしたときに同じ強さの矩形が多数残る場合は、component数、surface階層、常時表示の必要性を再検討する。
 

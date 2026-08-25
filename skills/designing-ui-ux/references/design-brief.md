@@ -27,6 +27,7 @@ Briefは見た目の注文書ではない。
 
 ## Attention budget
 - First question:
+- Global orientation needed now:
 - Primary surface:
 - Primary action:
 - Always visible:
@@ -93,6 +94,7 @@ cardやtabは情報構造を解決する道具であり、分類そのもので�
 - primary actionを一つにする。
 - Orientation、Decision、Actionのうち、現在のstepに不要な層を閉じる。
 - 同じ状態を複数のcomponentで再掲しない。
+- 全体の順序、範囲、現在位置が判断に必要なら、詳細を持たないcompact overviewを残す。
 
 component inventoryを次の表で確認する。
 
@@ -102,6 +104,7 @@ component inventoryを次の表で確認する。
 
 `User question`を書けないcomponentは、装飾か重複である可能性が高い。
 別componentと同じ問いへ答える場合は統合を優先する。
+OverviewとFocusがそれぞれ「全体のどこか」「いま何をするか」という異なる問いへ答える場合は、Overviewを補助情報として隠さない。
 
 ## 方向性は同じBriefから比較する
 
