@@ -33,6 +33,8 @@ alwaysが増えたら、文字や余白を縮める前にselectionまたはon-de
 
 全体の順序、範囲、現在位置が主要タスクに必要な画面では、compact overviewをalwaysにできる。
 Overviewには詳細、指標、primary actionを持たせず、主要surfaceと視覚的に競合させない。
+企画書、設計書、判断記録、成果物は、Taskとの関係を理解するためのnodeとしてOverviewへ置ける。
+文書本文は同じdetail surfaceへ開き、文書ごとに新しいpanelを増やさない。
 
 ## Native-firstでcontrolを選ぶ
 

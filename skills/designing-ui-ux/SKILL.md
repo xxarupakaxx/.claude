@@ -133,6 +133,9 @@ componentを追加する前に「このcomponentだけが答える利用者の�
 詳細を持たないcompact overviewを常時表示し、Focusとは別の問いに答えさせる。
 Overviewは「全体のどこにいるか」、Focusは「いま何を完了させるか」を扱う。
 両者を同格のsurfaceにせず、Overviewを低いnavigationまたはmapとして構成する。
+全体像をTask一覧だけに縮めない。
+企画書、設計書、判断記録、成果物が作業の前提や結果になる場合は、それらとTaskの関係をOverviewへ含める。
+Overviewには文書本文を置かず、種類、状態、正本、どのTaskを支えるかだけを示す。
 
 ### 5. Visual directionを比較して収束させる
 
