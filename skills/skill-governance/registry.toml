@@ -59,7 +59,7 @@ reason = "break the project estate self-hash cycle while the Vault gitlink snaps
 [[coverage_symlinks]]
 path = "~/.codex/plugins/cache/openai-bundled/chrome/latest"
 root_id = "codex-plugin-cache"
-expected_target = "/Users/yoshiki/.codex/plugins/cache/openai-bundled/chrome/26.623.81905"
+expected_target = "/Users/yoshiki/.codex/plugins/cache/openai-bundled/chrome/26.810.52044"
 allow_missing_target = true
 reason = "vendor-managed non-runtime latest pointer; record the stale target but never follow it during governance scans"
 
@@ -81,7 +81,7 @@ reason = "legacy command-format SKILL.md omits name; exact tree hash binds the d
 root_id = "codex"
 relative_path = "commit"
 inferred_name = "commit"
-tree_sha256 = "2d39ef4a071c4be136f815ec01ad3c118ee9489d98a7c4d0be04e9b715892bd5"
+tree_sha256 = "c503c2ca63408917f133201384217c4a3214299e2d9968adcf82972adbf6d59e"
 reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
 
 [[name_inferences]]
@@ -177,6 +177,38 @@ reason = "historical backup copies; not runtime or promotion targets"
 [[coverage_exclusions]]
 path = "~/.claude/backups"
 reason = "historical backup copies; not runtime or promotion targets"
+
+[[coverage_exclusions]]
+path = "~/.codex/.claude/worktrees"
+reason = "ephemeral Claude worktrees inside the Codex repository; not active Skill roots"
+
+[[coverage_exclusions]]
+path = "/Users/yoshiki/ghq/github.com/xxarupakaxx/.codex/.claude/worktrees"
+reason = "canonical target of the Codex home symlink; ephemeral Claude worktrees"
+
+[[coverage_exclusions]]
+path = "~/.codex/worktrees"
+reason = "ephemeral Codex worktrees; each worktree owns its own transient project context"
+
+[[coverage_exclusions]]
+path = "/Users/yoshiki/ghq/github.com/xxarupakaxx/.codex/worktrees"
+reason = "canonical target of the Codex home symlink; transient task worktrees and dependencies"
+
+[[coverage_exclusions]]
+path = "~/.codex/runtimes"
+reason = "managed language runtimes and virtual environments; not Skill runtime roots"
+
+[[coverage_exclusions]]
+path = "/Users/yoshiki/ghq/github.com/xxarupakaxx/.codex/runtimes"
+reason = "canonical target of the Codex home symlink; managed language runtimes"
+
+[[coverage_exclusions]]
+path = "~/.claude/.claude/worktrees"
+reason = "ephemeral Claude worktrees; not the active user-scope Skill root"
+
+[[coverage_exclusions]]
+path = "/Users/yoshiki/Notes/Vault/.claude/worktrees"
+reason = "ephemeral project worktrees; not the current Vault runtime root"
 
 [parity]
 authority_package = "~/.codex/skills/skill-governance"
@@ -339,7 +371,7 @@ required = true
 id = "vault-shared"
 path = "/Users/yoshiki/Notes/Vault/.agents/skills"
 runtimes = ["codex"]
-precedence = 5
+precedence = 6
 role = "project-active"
 scan_mode = "recursive"
 collision_scope = "runtime"
@@ -839,3 +871,41 @@ claude = { path = "receipts/emilkowalski-ja-2026-07--improve-animations--claude.
 quarantine = { path = "receipts/emilkowalski-ja-2026-07--review-animations--quarantine.json", sha256 = "4d87ab1dc35efcd71bdf40878011a0a4d91f21b76047651f1f7ccd542738587c" }
 codex = { path = "receipts/emilkowalski-ja-2026-07--review-animations--codex.json", sha256 = "2475ee58679c6e091412443be91d61f0f3990d79dc7208d8a11fae4f940a9cb7" }
 claude = { path = "receipts/emilkowalski-ja-2026-07--review-animations--claude.json", sha256 = "fd891277a1684f785f43d238704aae4020d8a94bca874339706021055fa50e79" }
+
+[[sources]]
+id = "mathbullet-skills"
+github = "mathbullet/skills"
+default_branch = "main"
+observed_revision = "fe96c626b39abba47fad2d4a4ef738e8a27602b1"
+observed_at = "2026-08-26"
+origin = "community-maintainer"
+mode = "selective-adoption"
+update_policy = "notify-only"
+catalog_required = true
+
+[[collections]]
+id = "mathbullet-html-2026-08"
+source_id = "mathbullet-skills"
+local_state = "active"
+review_state = "approved"
+risk_tier = "L0"
+license = "MIT"
+adaptation = "platform-adapted"
+content_relation = "reviewed-local-adaptation"
+targets = ["codex", "claude"]
+default_revision = "fe96c626b39abba47fad2d4a4ef738e8a27602b1"
+baseline_at = "2026-08-26"
+adaptation_diff = { path = "adaptations/mathbullet-html-2026-08.json", sha256 = "f820b0915a8951ed05add1d5f6d8002f021eb61f89718a11bd4e456a4c800e8c" }
+safety_receipt = { path = "receipts/mathbullet-html-2026-08--safety.json", sha256 = "7dfd76bf5550f874da6a2cfc36e7e42e941c8bb5331a93bc50d8b03c5a262c50" }
+value_receipt = { path = "receipts/mathbullet-html-2026-08--value.json", sha256 = "bed132578dbcf48d42ef110e969a48beaab532230856772fdc34ae0abef5e53f" }
+approval_receipt = { path = "receipts/mathbullet-html-2026-08--approval.json", sha256 = "bb49ef97c3a656923e1e6d3d8de9e69a133214cf8a175cb2b2ebed07b13a7867" }
+promotion_receipt = { path = "receipts/mathbullet-html-2026-08--promotion.json", sha256 = "fcba02794e0b419615bd5a932292f64f430c648cdba9ef711876cc6509118fbb" }
+skills = ["creating-html-documents"]
+
+[collections.upstream_paths]
+"creating-html-documents" = "plugins/html/skills/html/SKILL.md"
+
+[collections.frontmatter_receipts."creating-html-documents"]
+quarantine = { path = "receipts/mathbullet-html-2026-08--creating-html-documents--quarantine.json", sha256 = "66ead319d9b696236ba5c9d333c35ab2af73ed30b1ae26fbb9e3129132c12d12" }
+codex = { path = "receipts/mathbullet-html-2026-08--creating-html-documents--codex.json", sha256 = "bb29e6d9f728b61f3010ecc051304158814e79e962a02ca4571e67f90239bda4" }
+claude = { path = "receipts/mathbullet-html-2026-08--creating-html-documents--claude.json", sha256 = "8c4450441cf32c7283244382953a0a9fcf7ad188ba3f3c7c81a7c901fa5a4691" }

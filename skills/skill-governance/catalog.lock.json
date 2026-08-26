@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-07-19T00:00:00+09:00",
+  "generated_at": "2026-08-26T00:00:00+09:00",
   "generation": 3,
   "method": "pinned-github-commit-tree-plus-package-tree-v2",
-  "registry_sha256": "c36a5c0f70350003680e202cc040f663b89b9292452a31f5834d6f6d26214551",
+  "registry_sha256": "5285d2a2d205150e43e5685d4570a9415b8701294c517172d2381c6e01827f87",
   "schema_version": 1,
   "sources": {
     "addyosmani-agent-skills": {
@@ -7671,15 +7671,99 @@
       "tree_archive_blob_paths_match": true,
       "tree_sha": "d3fb223748a9d674ec4e2c01dfd40f9a20ccc6a0",
       "tree_truncated": false
+    },
+    "mathbullet-skills": {
+      "catalog_sha256": "e15a4cbd89575cfa4f5b4a0f3a0762630d71a24b1a0b64cab58a8517708f17ab",
+      "complete": true,
+      "github": "mathbullet/skills",
+      "mode": "selective-adoption",
+      "name_extracted_count": 7,
+      "revision": "fe96c626b39abba47fad2d4a4ef738e8a27602b1",
+      "skill_count": 7,
+      "skills": [
+        {
+          "blob_sha": "2ef1b7de77003cb747af7b4d0c789ba1a98afd1d",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "documenting-with-sources",
+          "package_tree_sha": "b46d894536be88e2b274bc3a46a817e155b3a685",
+          "path": "plugins/documenting-with-sources/skills/documenting-with-sources/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "3090a2242d646c971871ce7450d4d5d318d1a8d8",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "explain",
+          "package_tree_sha": "c84440e139f54479c8bf942450bbc0e52955974c",
+          "path": "plugins/explain/skills/explain/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "b47e4185ca36e8c7617d7ec33b946f666a7af373",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "html",
+          "package_tree_sha": "2d881a0a611f610d977c1c09892dd27806d118d9",
+          "path": "plugins/html/skills/html/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "27bc9383af231f70be862f8a0dd28e19bee86e56",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "ja-text-communication",
+          "package_tree_sha": "03f226b6470f91d0f0a2a7b43d4acecd260dd8ff",
+          "path": "plugins/ja-text-communication/skills/ja-text-communication/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "a4567de4baeadd601261661b3b2239a7314c264d",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "paper-details",
+          "package_tree_sha": "603a554aa9ee471baff1b5264b399c6a7ff60a88",
+          "path": "plugins/paper-details/skills/paper-details/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "075242d683b78b5d3280910d875776d07caf8953",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "survey",
+          "package_tree_sha": "b56c676a7f777dbfe7d48161ee49b3ebd272ba4b",
+          "path": "plugins/survey/skills/survey/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "8d90fd177af310a59de01f424253c852a5dc3c55",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "writing-quotation",
+          "package_tree_sha": "e83e8ec4bdf82d991d6d1c88b973abc177aae907",
+          "path": "plugins/writing-quotation/skills/writing-quotation/SKILL.md",
+          "role": "catalog-surface"
+        }
+      ],
+      "tree_archive_blob_paths_match": true,
+      "tree_sha": "3c725d1f90c240cfb3839e4e75b31d8fbc34c204",
+      "tree_truncated": false
     }
   },
   "summary": {
-    "complete_source_count": 12,
+    "complete_source_count": 13,
     "cross_source_name_collision_groups": 25,
     "license_evidence_missing_count": 415,
-    "name_extracted_count": 829,
-    "skill_file_count": 833,
-    "source_count": 12,
-    "unique_extracted_name_count": 763
+    "name_extracted_count": 836,
+    "skill_file_count": 840,
+    "source_count": 13,
+    "unique_extracted_name_count": 770
   }
 }

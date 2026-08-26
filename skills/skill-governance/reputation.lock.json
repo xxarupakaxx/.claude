@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-19",
+  "generated_at": "2026-08-26",
   "policy": {
     "approval_use": "advisory-only",
     "popularity_is_approval": false
@@ -121,6 +121,26 @@
       "source_id": "huggingface-skills",
       "stars": 10814,
       "trust_role": "vendor-candidate"
+    },
+    {
+      "archived": false,
+      "assessment": "HTML文書Skillの限定候補。人気は承認根拠にせず、固定tree、local adaptation、安全審査、両user scope target検証を必須とする。",
+      "evidence_urls": [
+        "https://github.com/mathbullet/skills",
+        "https://github.com/mathbullet/skills/commit/fe96c626b39abba47fad2d4a4ef738e8a27602b1"
+      ],
+      "forks": 4,
+      "github": "mathbullet/skills",
+      "head_matches_pin": true,
+      "issues_enabled": true,
+      "license_signal": "MIT",
+      "observed_at": "2026-08-26",
+      "observed_revision": "fe96c626b39abba47fad2d4a4ef738e8a27602b1",
+      "open_issues": 1,
+      "security_policy": false,
+      "source_id": "mathbullet-skills",
+      "stars": 95,
+      "trust_role": "community-candidate"
     },
     {
       "archived": false,

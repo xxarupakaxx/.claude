@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "kind": "promotion",
+  "collection_id": "mathbullet-html-2026-08",
+  "generation": 3,
+  "subject_sha256": "33b6ce1cd01ef649c78984a6d07c92e33c8b8d160558145c6f96db0facb76fdc",
+  "approval_receipt_sha256": "bb49ef97c3a656923e1e6d3d8de9e69a133214cf8a175cb2b2ebed07b13a7867",
+  "quarantine": {
+    "creating-html-documents": "3978d3fc868b0f81d5e59c5b4f7f400c176436a190374acdf95a444b8eb44442"
+  },
+  "approved_targets": {
+    "creating-html-documents": {
+      "codex": "cd517650584aadbe2438e35876f5d559f73dd59d505a6ab1304a0108d67f2bc5",
+      "claude": "cd517650584aadbe2438e35876f5d559f73dd59d505a6ab1304a0108d67f2bc5"
+    }
+  },
+  "runtime_targets": {
+    "creating-html-documents": {
+      "codex": "cd517650584aadbe2438e35876f5d559f73dd59d505a6ab1304a0108d67f2bc5",
+      "claude": "cd517650584aadbe2438e35876f5d559f73dd59d505a6ab1304a0108d67f2bc5"
+    }
+  },
+  "date": "2026-08-26",
+  "decision": "promoted"
+}

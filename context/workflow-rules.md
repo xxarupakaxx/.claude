@@ -58,6 +58,7 @@ Phase の順序はこのファイルを SSoT とする。一方、各Phaseで **
 | `blueprint` | Phase 0 の前 | route 既知の大規模作業を WU と依存へ分ける | fog-of-war の探索には使わず、各 WU の Phase 0-5.5 は省略しない |
 | `grilling-with-docs` | Phase 1-2 | codebase と docs に alignment を蓄積する | spec / ticket route を選ぶ場合は alignment から ticket 化まで同じ文脈を保ち、個別 ticket 実装は durable artifact から fresh に始める |
 | `prototyping-solutions` | Phase 1-2 | 一つの design question に対する decision evidence | production 実装ではない。branch、issue、commit は project policy と承認に従う |
+| `designing-ui-ux` | Phase 1-4 | product context、design direction、UI基盤、実装後の独立評価 | 新しいUI/UX判断を含む場合はPhase 2のUI/UX Design Approval Gateを通し、承認前にproduction UIを実装しない |
 | `modeling-domains` / `designing-codebases` | Phase 1-2 | domain vocabulary / deep-module vocabulary | global process、ADR gate、実装許可を所有しない |
 | `software-architecture` | Phase 1-2 | 新規systemの境界、bounded context、DDD判断 | 既存codebaseの改善surveyや選択済みmoduleの局所改善を置き換えない。実装はPhase 3の別gate |
 | `writing-specifications` | Phase 2 | 合意済み会話を test seam を含む spec にする | material な未決事項を spec の形で埋めず、再インタビューや無承認の tracker 公開を行わない |
@@ -297,11 +298,23 @@ Delegation Gate を通る場合だけ、変更リスクに対応する最小の 
 - MINOR (= non-critical) でも正しさ・一貫性に関わる指摘（バグ、不整合、ハードコード等）は修正する
 - 純粋なスタイル・好みの問題のみスキップ可。判断に迷う場合はユーザーに確認する
 
+### UI/UX Design Approval Gate
+
+UI、UX、product flow、画面構成、visual direction、component patternについて新しいデザイン判断が必要なタスクは、`designing-ui-ux`を使い、次の順序で進める。このGateはFast Trackでも省略しない。
+
+1. PJルートの`.interface-design/system.md`を確認する。仕様が短く、対象ユーザー、解決する課題、主要画面が確定していない場合は、先に製品仕様案を提示して承認を得る。
+2. production UIを編集する前に、意味の異なるデザイン方向性を提示する。小規模変更は2案以上、大規模変更は原則としてProgressive / Radical / Idealの3案とする。
+3. 各案には、personality / tone、主要なlayout・color・typography・depth、記憶に残る要素、実装密度、主なtrade-offとriskを含める。推奨案と理由は示すが、ユーザーの代わりに選ばない。文章だけでは差を判断しにくい場合は、比較用mockupまたは具体的な画面説明を添える。
+4. ユーザーが選んだ案と承認内容を`05_log.md`および計画artifactへ記録してから、Phase 2.5とproduction実装へ進む。比較用mockupは提案artifactであり、production実装の承認とは扱わない。
+5. 承認後にlayout、visual direction、interaction model、主要component patternをmaterialに変える場合は、変更案を提示して再承認を得る。
+
+ユーザーが具体的なデザイン仕様または既存design systemをすでに承認しており、その内容を新しい判断なしに忠実に実装する場合は再承認を求めない。視覚・layout・interactionを変えないbehavior-onlyのUI bug修正も対象外とする。適用対象か判断できない場合は、このGateを適用する。
+
 ### User Validation Gate
 
 ユーザー確認は、外部への送信・公開、不可逆な削除や上書き、権限・課金・認証の変更、依頼範囲を実質的に変える選択、または安全に発見できない重要情報がある場合だけ必要とする。
 
-通常のローカル変更では、ユーザーの実行依頼を計画と実装の承認として扱う。計画・Sprint Contract・レビュー結果は進捗共有であり、確認待ちの停止点ではない。ユーザーが明示的に「調査だけ」「計画だけ」「実装前に確認」と指定した場合だけ、そこで停止する。
+通常のローカル変更では、ユーザーの実行依頼を計画と実装の承認として扱う。計画・Sprint Contract・レビュー結果は進捗共有であり、確認待ちの停止点ではない。ユーザーが明示的に「調査だけ」「計画だけ」「実装前に確認」と指定した場合、またはUI/UX Design Approval Gateが発火した場合だけ、そこで停止する。
 
 Phase 2.5でのSprint Contract初回作成は、依頼済みの計画を検証可能に具体化する工程であり、それ自体では確認を要求しない。依頼範囲を実質的に変更する追加・削除・意味変更が生じた場合だけ、実装前にこの Gate を通過する。誤字や意味を変えない参照修正だけなら確認は不要。
 

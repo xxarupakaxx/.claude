@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "collection_id": "mathbullet-html-2026-08",
+  "method": "main-agent deterministic routing review plus user-visible document acceptance",
+  "positives": [
+    {
+      "prompt": "実装ロードマップをHTML計画書にして",
+      "expected": "creating-html-documents",
+      "result": "pass"
+    },
+    {
+      "prompt": "技術解説を図表付きHTMLでまとめて",
+      "expected": "creating-html-documents",
+      "result": "pass"
+    },
+    {
+      "prompt": "コード変更レビューを読みやすいHTMLにして",
+      "expected": "creating-html-documents",
+      "result": "pass"
+    },
+    {
+      "prompt": "出典付き調査報告をHTML化して",
+      "expected": "creating-html-documents",
+      "result": "pass"
+    },
+    {
+      "prompt": "計画書をRoadmap表示と同じ内容でHTML出力して",
+      "expected": "creating-html-documents",
+      "result": "pass"
+    },
+    {
+      "prompt": "印刷にも耐える日本語の長文HTMLを作って",
+      "expected": "creating-html-documents",
+      "result": "pass"
+    }
+  ],
+  "negatives": [
+    {
+      "prompt": "Pythonのテストだけ直して",
+      "expected": "no-route",
+      "result": "pass"
+    },
+    {
+      "prompt": "画像を一枚生成して",
+      "expected": "no-route",
+      "result": "pass"
+    },
+    {
+      "prompt": "CSVを集計して",
+      "expected": "no-route",
+      "result": "pass"
+    },
+    {
+      "prompt": "Gitの競合を解消して",
+      "expected": "no-route",
+      "result": "pass"
+    },
+    {
+      "prompt": "会議を予約して",
+      "expected": "no-route",
+      "result": "pass"
+    },
+    {
+      "prompt": "Markdownノートへ一文追記して",
+      "expected": "no-route",
+      "result": "pass"
+    }
+  ],
+  "observed_user_outcome": {
+    "initial_feedback": "計画書として言えるか分からず、GitHub上の出力方式を参考に改善してほしい",
+    "accepted_feedback": "いいね。",
+    "limitation": "評価はこのtaskの代表例と決定的routing reviewであり、長期の利用統計ではない"
+  },
+  "result": {
+    "trial_count": 12,
+    "passed": 12,
+    "false_positive": 0,
+    "false_negative": 0
+  }
+}

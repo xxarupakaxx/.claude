@@ -22,6 +22,24 @@ fi
 pct=$(echo "$input" | jq -r '.context_window.used_percentage // 0' | cut -d. -f1)
 model=$(echo "$input" | jq -r '.model.display_name // .model.id // "?"')
 
+metrics_dir="${XDG_CACHE_HOME:-$HOME/.cache}/sketchybar"
+metrics_file="$metrics_dir/claude_metrics.json"
+mkdir -p "$metrics_dir"
+metrics_temp="$(mktemp "$metrics_dir/claude_metrics.XXXXXX")"
+printf '%s' "$input" | jq \
+  --argjson context "$pct" \
+  --argjson updated "$(date +%s)" \
+  '{
+    context: $context,
+    five_hour_used: (.rate_limits.five_hour.used_percentage // null),
+    five_hour_reset: (.rate_limits.five_hour.resets_at // null),
+    seven_day_used: (.rate_limits.seven_day.used_percentage // null),
+    seven_day_reset: (.rate_limits.seven_day.resets_at // null),
+    updated: $updated
+  }' > "$metrics_temp"
+mv "$metrics_temp" "$metrics_file"
+/opt/homebrew/bin/sketchybar --trigger claude_status_changed >/dev/null 2>&1 || true
+
 if [ "$pct" -ge 90 ]; then
   pct_color='\033[31m'
 elif [ "$pct" -ge 70 ]; then

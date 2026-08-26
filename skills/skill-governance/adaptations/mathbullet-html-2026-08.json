@@ -1,0 +1,33 @@
+{
+  "collection_id": "mathbullet-html-2026-08",
+  "content_relation": "reviewed-local-adaptation",
+  "source_commit": "fe96c626b39abba47fad2d4a4ef738e8a27602b1",
+  "source_path": "plugins/html/skills/html",
+  "local_name": "creating-html-documents",
+  "targets": [
+    "codex",
+    "claude"
+  ],
+  "preserved_capabilities": [
+    "Japanese long-form HTML composition",
+    "figures, tables, code diffs, glossary rails, and print layout",
+    "single-document editorial presentation"
+  ],
+  "added_contracts": [
+    "decision-plan, technical-explainer, change-review, and research-report document types",
+    "Roadmap and viewing-plans responsibility boundary for multi-phase work",
+    "offline-by-default delivery with CSP and system fonts",
+    "responsive, accessibility, print, and evidence validation gates"
+  ],
+  "removed_default_capabilities": [
+    "remote Google Fonts",
+    "MathJax and syntax-highlighting CDNs",
+    "clipboard JavaScript",
+    "executable PDF rendering shell",
+    "automatic publication or git delivery"
+  ],
+  "platform_adaptation": {
+    "codex": "Common Agent Skill frontmatter and body.",
+    "claude": "Byte-identical common Skill; no Claude-only automatic invocation key is required for this user-requested document capability."
+  }
+}

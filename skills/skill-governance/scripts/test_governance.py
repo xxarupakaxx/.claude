@@ -1736,10 +1736,10 @@ class CatalogTests(unittest.TestCase):
             governance.DEFAULT_CATALOG,
         )
         self.assertFalse(governance.has_blockers(findings))
-        self.assertEqual(payload["summary"]["source_count"], 12)
-        self.assertEqual(payload["summary"]["complete_source_count"], 12)
-        self.assertEqual(payload["summary"]["skill_file_count"], 833)
-        self.assertEqual(payload["summary"]["name_extracted_count"], 829)
+        self.assertEqual(payload["summary"]["source_count"], 13)
+        self.assertEqual(payload["summary"]["complete_source_count"], 13)
+        self.assertEqual(payload["summary"]["skill_file_count"], 840)
+        self.assertEqual(payload["summary"]["name_extracted_count"], 836)
 
     def test_architecture_skill_is_in_pinned_matt_catalog(self) -> None:
         skills = self.catalog["sources"]["mattpocock-skills"]["skills"]
@@ -1955,6 +1955,24 @@ class EstateCoverageTests(unittest.TestCase):
             self.assertFalse(skills)
             self.assertIn("discovery_symlink_unreviewed", {item.code for item in findings})
 
+    def test_excluded_surface_scan_truncates_once_without_blocking(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            for name in ("one", "two", "three", "four"):
+                (root / name).mkdir()
+            skills, findings = governance.discover_skill_directories(
+                root,
+                "recursive",
+                directory_limit=2,
+                limit_is_blocking=False,
+            )
+            self.assertFalse(skills)
+            self.assertFalse(governance.has_blockers(findings))
+            self.assertEqual(
+                [item.code for item in findings],
+                ["discovery_excluded_scan_truncated"],
+            )
+
     def test_excluded_node_modules_skills_are_counted_with_reason(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             base = Path(temporary)
@@ -2086,9 +2104,12 @@ class NetworkBoundaryTests(unittest.TestCase):
 class AdapterAndSurfaceTests(unittest.TestCase):
     def test_editorial_companion_contracts_preserve_canonical_owners(self) -> None:
         skills = Path(__file__).resolve().parents[2]
-        shared_skills = (
-            skills.parent.parent / ".codex" / "skills",
-            skills.parent.parent / ".claude-global" / "skills",
+        registry, findings = governance.load_registry(governance.DEFAULT_REGISTRY)
+        self.assertFalse(governance.has_blockers(findings))
+        roots = governance.registry_roots(registry)
+        shared_skills = tuple(
+            governance.expand_path(roots[root_id]["path"])
+            for root_id in ("codex", "claude")
         )
         for relative_path in ("viewing-plans/SKILL.md", "generate-state-diagram/SKILL.md"):
             bodies = [(root / relative_path).read_bytes() for root in shared_skills]
