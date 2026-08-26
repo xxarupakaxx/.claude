@@ -137,7 +137,7 @@ Route 選択だけでは、次の操作を許可しない。
 | skill / workflow の選択に迷う、どの route を使うべきか | `skills/ask-skill-router/SKILL.md` | 既定ではなし | 重い flow に載せる前に user-invoked と model-invoked を分類する |
 | 第三者 Skill の発見、評判、provenance、全件 catalog、導入、更新、廃止 | `skills/skill-governance/SKILL.md`。read-only な estate 点検は `skill-stocktake` | 既定ではなし | read-only inventory は model-invoked。promotion / update / retirement / delete / runtime mutation は user-invoked かつ governance gate 必須 |
 | 複数実装・提案の匿名A/B比較 | ローカル artifact + `ab-judge` | `ab-judge` | 作成者情報を隠して `Report A` / `Report B` で独立評価し、attribution は判定後の別 Phase で扱う |
-| UX、UI、product flow、画面監査、デザインを洗練する | `skills/designing-ui-ux/SKILL.md`。同 Skill が `emil-design-eng`、`apple-design`、motion 系を必要な分だけ選ぶ | `ui-ux-reviewer`、`a11y-reviewer`、`implementer` | `designing-ui-ux` を canonical な design orchestrator として扱い、独立評価 gate を残す |
+| UX、UI、product flow、画面監査、デザインを洗練する | `skills/designing-ui-ux/SKILL.md`。同 Skill が `emil-design-eng`、`apple-design`、motion 系を必要な分だけ選ぶ | `ui-ux-reviewer`、`a11y-reviewer`、`implementer` | `designing-ui-ux`をcanonicalなdesign orchestratorとして扱う。新しいデザイン判断を含む場合は、`workflow-rules.md`のUI/UX Design Approval Gateに従って複数案を提示し、ユーザー承認前にproduction UIを実装しない。実装後は同Skillの独立評価gateを保つ |
 | library / framework / SDK / cloud service の docs | `context7` | `technical-evaluator`、`implementation-planner` | 変化する API に対してコードを書く前に一次 docs を読む |
 | repository の architecture documentation | `deepwiki` | `architecture-explorer`、`dependency-mapper` | Phase 1 と計画深掘りで有用 |
 | GitHub の repo / PR / issue / CI | `commands/pr.md`、`commands/pr-watch.md`、`skills/pr-review/SKILL.md`、local `git` / `gh` | `code-quality-reviewer`、`test-reviewer`、`security-reviewer` | PR 作成と push は External Write Gate を通す |
