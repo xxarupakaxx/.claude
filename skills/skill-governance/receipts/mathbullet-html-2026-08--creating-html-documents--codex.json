@@ -1,0 +1,19 @@
+{
+  "command": "validate-frontmatter",
+  "findings": [],
+  "frontmatter_sha256": "d7e28464145ebe1ec4024a57ad41cf2cc126ea958b5659515dbb6c8db0739559",
+  "skill_sha256": "8800de96faae158fc98f18fb80ea36364d8628c49e75deffccc7a42a07fc494d",
+  "status": "validated",
+  "surface": {
+    "collection_id": "mathbullet-html-2026-08",
+    "kind": "review",
+    "skill_name": "creating-html-documents",
+    "target_id": "codex"
+  },
+  "target": "codex",
+  "validator": "pyyaml-6.0.2-safe-loader",
+  "values": {
+    "description": "日本語の計画書、技術解説、調査報告、変更レビュー、長文資料を、読みやすく自己完結したHTML文書として作成・編集する。ユーザーがHTML、視覚的な計画書、ブラウザで読む報告書、図・表・コード差分を含む説明資料、印刷可能な単一HTMLを求めたときに使う。複数Phaseの作業ではviewing-plansとRoadmapを併用し、進捗ビューと完成文書を分離する。",
+    "name": "creating-html-documents"
+  }
+}

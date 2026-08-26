@@ -1,0 +1,23 @@
+{
+  "skill_name": "creating-html-documents",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "この技術導入案を、採否、実装Wave、受入条件、リスクが分かる自己完結HTML計画書にして。Roadmapとは役割を分けてください。",
+      "expected_output": "decision-plan型の単一HTML。冒頭で判断可能で、Waveに入口と出口があり、375/768/1440pxと印刷を検証する。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "このシステムの仕組みを、用語欄、構成図、処理フロー、制約を含む日本語HTML解説にしてください。外部CDNは使わないで。",
+      "expected_output": "technical-explainer型の自己完結HTML。本文とrail、accessibleなinline SVG、制約、sourceを持つ。",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "この変更差分をレビュー用HTMLにまとめて。変更理由を先に説明し、before/after、コード差分、影響範囲、検証結果を読めるようにして。",
+      "expected_output": "change-review型の自己完結HTML。理由の直後にdiffがあり、影響、rollback、evidenceを区別できる。",
+      "files": []
+    }
+  ]
+}

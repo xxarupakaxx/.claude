@@ -2073,6 +2073,8 @@ def discover_skill_directories(
     symlink_records: list[dict[str, Any]] | None = None,
     excluded_skill_records: list[dict[str, str]] | None = None,
     record_only_symlinks: bool = False,
+    directory_limit: int | None = None,
+    limit_is_blocking: bool = True,
 ) -> tuple[list[Path], list[Finding]]:
     findings: list[Finding] = []
     relative_skills: list[str] = []
@@ -2090,6 +2092,8 @@ def discover_skill_directories(
             finding = advisory("root_missing", finding.message, finding.path)
         return [], [finding]
     directory_count = 0
+    directory_limit_exceeded = False
+    effective_directory_limit = directory_limit or MAX_DIRECTORIES * 8
 
     def skipped(relative: str) -> bool:
         return any(relative == prefix or relative.startswith(prefix + "/") for prefix in skip_prefixes)
@@ -2101,11 +2105,16 @@ def discover_skill_directories(
         included: bool = True,
         exclusion_name: str = "",
     ) -> None:
-        nonlocal directory_count
+        nonlocal directory_count, directory_limit_exceeded
+        if directory_limit_exceeded:
+            return
         directory_count += 1
         relative_directory = "/".join(parts)
-        if directory_count > MAX_DIRECTORIES * 8:
-            findings.append(blocker("discovery_too_many_directories", "Discovery directory limit exceeded", relative_directory))
+        if directory_count > effective_directory_limit:
+            directory_limit_exceeded = True
+            finding_factory = blocker if limit_is_blocking else advisory
+            finding_code = "discovery_too_many_directories" if limit_is_blocking else "discovery_excluded_scan_truncated"
+            findings.append(finding_factory(finding_code, "Discovery directory limit exceeded", relative_directory))
             return
         if depth > MAX_DEPTH * 2:
             findings.append(blocker("discovery_too_deep", "Discovery depth limit exceeded", relative_directory))
@@ -2222,6 +2231,8 @@ def coverage_probe(registry: dict[str, Any]) -> tuple[dict[str, Any], list[Findi
             symlink_policy=symlink_policy,
             symlink_records=symlink_records,
             record_only_symlinks=True,
+            directory_limit=MAX_DIRECTORIES,
+            limit_is_blocking=False,
         )
         findings.extend(excluded_findings)
         exclusion_rows.append(
@@ -2229,6 +2240,7 @@ def coverage_probe(registry: dict[str, Any]) -> tuple[dict[str, Any], list[Findi
                 "path": str(path),
                 "reason": exclusion.get("reason"),
                 "excluded_skill_count": len(skills),
+                "scan_complete": not any(item.code == "discovery_excluded_scan_truncated" for item in excluded_findings),
             }
         )
 

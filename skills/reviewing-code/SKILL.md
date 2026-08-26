@@ -105,9 +105,12 @@ Codex では `multi_agent_v1.spawn_agent` または現在利用できる agent o
 - 完全な diff command と commit 一覧。
 - 手順 3 で見つけた standards source file 一覧。
 - 手順 3 の smell baseline 全文。
+- コード変更なら、`30_plan.md` / Team Journal のComplexity Budget（要素別target）と、差分から測ったactual / variance。
 - 次の brief。
 
 `Report — per file/hunk where relevant — (a) every place the diff violates a documented standard: cite the standard (file + the rule); and (b) any baseline smell you spot: name it and quote the hunk. Distinguish hard violations from judgement calls — documented-standard breaches can be hard, but baseline smells are always judgement calls, and a documented repo standard overrides the baseline. Skip anything tooling enforces. Under 400 words.`
+
+Complexity Budgetの超過は、行数だけで拒否せず、受入基準との対応、不要な責務・抽象化、正当な例外を分けて報告する。
 
 sub-agent は smell baseline へ他経路からアクセスできないため、全文をそのまま貼ります。
 

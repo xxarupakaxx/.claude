@@ -23,9 +23,15 @@ codebase 全体の seam は少ないほどよく、理想は一つである。
 
 これらの seam がユーザーの期待に合っているか確認する。
 
-3. 次の template で仕様書を書き、プロジェクトの issue tracker に公開する。
-`ready-for-agent` triage label を付ける。
-追加の triage は不要である。
+3. 次のtemplateでApproved PRD draftをローカルartifactとして書く。
+`artifact_id / source_hash / objective / scope / out_of_scope / acceptance_ids / review_status: draft`を付ける。
+
+4. 別contextの`prd-reviewer`へread-only reviewを依頼する。
+`pass`後だけApproved PRDとして扱う。
+
+5. issue trackerへの公開と`ready-for-agent` labelは別のexternal writeである。
+対象と内容について人間承認がある場合だけ実行する。
+未承認ならローカルApproved PRDを成果物として終了する。
 
 <spec-template>
 

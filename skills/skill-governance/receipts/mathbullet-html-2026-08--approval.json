@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "kind": "approval",
+  "collection_id": "mathbullet-html-2026-08",
+  "generation": 3,
+  "subject_sha256": "33b6ce1cd01ef649c78984a6d07c92e33c8b8d160558145c6f96db0facb76fdc",
+  "safety_receipt_sha256": "7dfd76bf5550f874da6a2cfc36e7e42e941c8bb5331a93bc50d8b03c5a262c50",
+  "value_receipt_sha256": "bed132578dbcf48d42ef110e969a48beaab532230856772fdc34ae0abef5e53f",
+  "approval_request_sha256": "ba5c263f92b182bd8a75862a6d6ae1561dbbb02547ced93f8914527e8f2a42f4",
+  "approval_message": "いいね。OKすすめて。未コミットはpushし、実導入まで進める。",
+  "approver": {
+    "type": "human",
+    "name": "yoshiki"
+  },
+  "date": "2026-08-26",
+  "decision": "approved"
+}

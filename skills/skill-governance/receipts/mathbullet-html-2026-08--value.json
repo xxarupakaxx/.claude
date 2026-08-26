@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kind": "value",
+  "collection_id": "mathbullet-html-2026-08",
+  "generation": 3,
+  "subject_sha256": "33b6ce1cd01ef649c78984a6d07c92e33c8b8d160558145c6f96db0facb76fdc",
+  "representative_prompts": [
+    "実装ロードマップをHTML計画書にして",
+    "技術解説を図表付きHTMLでまとめて",
+    "コード変更レビューを読みやすいHTMLにして",
+    "出典付き調査報告をHTML化して",
+    "計画書をRoadmap表示と同じ内容でHTML出力して",
+    "印刷にも耐える日本語の長文HTMLを作って",
+    "Pythonのテストだけ直して",
+    "画像を一枚生成して",
+    "CSVを集計して",
+    "Gitの競合を解消して",
+    "会議を予約して",
+    "Markdownノートへ一文追記して"
+  ],
+  "baseline": {
+    "state": "汎用HTML作成手順のみで、計画書・技術解説・変更レビュー・調査報告の文書型とRoadmap責務境界が未統合",
+    "limitation": "ユーザー評価では計画書としての構造とGitHub Skill由来の出力方式が十分に見えなかった"
+  },
+  "candidate": {
+    "state": "4文書型、Roadmap/viewing-plans連携、オフライン安全性、レスポンシブ・印刷・アクセシビリティ検証を一つのSkillへ統合",
+    "evaluation": {
+      "path": "receipts/mathbullet-html-2026-08--value-evaluation.json",
+      "sha256": "fd4e00fcc12ad50c32dd91e693fb94f1a834f4fac0a76a972ffb16c82863583f"
+    },
+    "result": {
+      "trial_count": 12,
+      "passed": 12,
+      "positive_routes": 6,
+      "negative_routes": 6,
+      "false_positive": 0,
+      "false_negative": 0
+    },
+    "user_acceptance": "改善後の実表示に対してユーザーが「いいね。」と明示"
+  },
+  "trial_count": 12,
+  "pass_at_1": 1.0,
+  "trigger_precision": 1.0,
+  "trigger_recall": 1.0,
+  "outcome_rubric": {
+    "pass": "HTML成果物の依頼だけがSkillへrouteされ、文書型・Roadmap責務・検証gateが選べる",
+    "fail": "非HTML依頼への誤発火、HTML依頼の見逃し、Roadmapとの二重管理、または安全gateの欠落"
+  },
+  "reviewer": {
+    "type": "main-agent-deterministic-review",
+    "evidence": {
+      "path": "receipts/mathbullet-html-2026-08--value-evaluation.json",
+      "sha256": "fd4e00fcc12ad50c32dd91e693fb94f1a834f4fac0a76a972ffb16c82863583f"
+    },
+    "limitation": "長期利用統計ではなく、このtaskの実表示承認と12件の決定的routing評価"
+  },
+  "date": "2026-08-26",
+  "decision": "pass"
+}
