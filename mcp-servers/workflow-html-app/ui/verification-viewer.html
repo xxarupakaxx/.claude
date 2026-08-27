@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self';
+             script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+             style-src 'self' 'unsafe-inline';
+             img-src 'self' data:;
+             connect-src 'self';">
+  <title>Verification Guide Viewer</title>
+  <style>
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #1a1a2e;
+      --border-color: #e0e0e0;
+      --header-bg: #f8f9fa;
+      --link-color: #0066cc;
+      --code-bg: #f5f5f5;
+      --table-header-bg: #f0f0f0;
+      --checkbox-checked: #22c55e;
+      --progress-bg: #e5e5e5;
+      --progress-fill: #22c55e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background: var(--header-bg);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header h1 {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .progress-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .progress-bar {
+      width: 120px;
+      height: 8px;
+      background: var(--progress-bg);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--progress-fill);
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      font-size: 0.875rem;
+      color: #666;
+    }
+
+    .content {
+      padding: 24px 0;
+    }
+
+    /* Markdown styles */
+    .content h1 { font-size: 1.75rem; margin: 1.5em 0 0.75em; border-bottom: 2px solid var(--border-color); padding-bottom: 0.3em; }
+    .content h2 { font-size: 1.5rem; margin: 1.25em 0 0.5em; border-bottom: 1px solid var(--border-color); padding-bottom: 0.25em; }
+    .content h3 { font-size: 1.25rem; margin: 1em 0 0.5em; }
+    .content h4 { font-size: 1.1rem; margin: 1em 0 0.5em; }
+
+    .content p { margin: 0.75em 0; }
+
+    .content ul, .content ol {
+      margin: 0.75em 0;
+      padding-left: 2em;
+    }
+
+    .content li {
+      margin: 0.4em 0;
+    }
+
+    /* Checklist styles */
+    .content li.task-list-item {
+      list-style: none;
+      margin-left: -1.5em;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .content li.task-list-item input[type="checkbox"] {
+      margin-top: 0.3em;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: var(--checkbox-checked);
+    }
+
+    .content li.task-list-item.checked {
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+
+    .content a {
+      color: var(--link-color);
+      text-decoration: none;
+    }
+
+    .content a:hover {
+      text-decoration: underline;
+    }
+
+    .content code {
+      font-family: 'SF Mono', Monaco, Consolas, monospace;
+      font-size: 0.9em;
+      background: var(--code-bg);
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+    }
+
+    .content pre {
+      background: var(--code-bg);
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 1em 0;
+    }
+
+    .content pre code {
+      background: none;
+      padding: 0;
+    }
+
+    .content blockquote {
+      border-left: 4px solid var(--border-color);
+      padding-left: 16px;
+      margin: 1em 0;
+      color: #666;
+    }
+
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1em 0;
+    }
+
+    .content th, .content td {
+      border: 1px solid var(--border-color);
+      padding: 8px 12px;
+      text-align: left;
+    }
+
+    .content th {
+      background: var(--table-header-bg);
+      font-weight: 600;
+    }
+
+    .content hr {
+      border: none;
+      border-top: 1px solid var(--border-color);
+      margin: 2em 0;
+    }
+
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+      color: #666;
+    }
+
+    .error {
+      color: #dc2626;
+      padding: 16px;
+      background: #fef2f2;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Verification Guide</h1>
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+      <span class="progress-text" id="progressText">0/0</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="content" id="content">
+      <div class="loading">Loading verification guide...</div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { marked } from 'https://cdn.jsdelivr.net/npm/marked@15.0.0/lib/marked.esm.js';
+    import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.2.5/dist/purify.es.mjs';
+
+    // Configure marked for GFM (GitHub Flavored Markdown) with task lists
+    marked.setOptions({
+      gfm: true,
+      breaks: true
+    });
+
+    // Trusted origins for postMessage
+    const TRUSTED_ORIGINS = [
+      'https://claude.ai',
+      'https://www.claude.ai',
+      'vscode-webview://',
+      'file://'
+    ];
+
+    function isTrustedOrigin(origin) {
+      if (!origin) return false;
+      return TRUSTED_ORIGINS.some(trusted => {
+        if (trusted.endsWith('://')) {
+          return origin.startsWith(trusted);
+        }
+        return origin === trusted;
+      });
+    }
+
+    // MCP App client
+    class MCPAppClient {
+      constructor() {
+        this.connected = false;
+        this.onContentReceived = null;
+        this.parentOrigin = null;
+
+        window.addEventListener('message', (event) => this.handleMessage(event));
+
+        // Notify parent we're ready
+        this.sendToParent({
+          type: 'app-ready',
+          name: 'Verification Guide Viewer',
+          version: '1.0.0'
+        });
+      }
+
+      handleMessage(event) {
+        if (!isTrustedOrigin(event.origin) && event.origin !== '') {
+          console.warn(`Rejected message from untrusted origin: ${event.origin}`);
+          return;
+        }
+
+        const data = event.data;
+
+        if (data.type === 'connected') {
+          this.connected = true;
+          this.parentOrigin = event.origin;
+        } else if (data.type === 'tool-result') {
+          const textContent = data.content.find(c => c.type === 'text');
+          if (textContent && this.onContentReceived) {
+            this.onContentReceived(textContent.text);
+          }
+        }
+      }
+
+      sendToParent(message) {
+        if (window.parent !== window) {
+          window.parent.postMessage(message, this.parentOrigin || '*');
+        }
+      }
+    }
+
+    // Initialize
+    const app = new MCPAppClient();
+    const contentEl = document.getElementById('content');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function updateProgress() {
+      const checkboxes = contentEl.querySelectorAll('input[type="checkbox"]');
+      const total = checkboxes.length;
+      const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+
+      progressText.textContent = `${checked}/${total}`;
+      progressFill.style.width = total > 0 ? `${(checked / total) * 100}%` : '0%';
+    }
+
+    function setupCheckboxes() {
+      const checkboxes = contentEl.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(checkbox => {
+        const li = checkbox.closest('li');
+        if (li) {
+          li.classList.add('task-list-item');
+          if (checkbox.checked) {
+            li.classList.add('checked');
+          }
+        }
+
+        checkbox.addEventListener('change', (e) => {
+          const li = e.target.closest('li');
+          if (li) {
+            li.classList.toggle('checked', e.target.checked);
+          }
+          updateProgress();
+        });
+      });
+
+      updateProgress();
+    }
+
+    function renderContent(markdown) {
+      try {
+        const rawHtml = marked.parse(markdown);
+        const sanitizedHtml = DOMPurify.sanitize(rawHtml, {
+          ALLOWED_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'br', 'hr',
+                         'ul', 'ol', 'li', 'a', 'strong', 'em', 'code', 'pre',
+                         'blockquote', 'table', 'thead', 'tbody', 'tr', 'th', 'td',
+                         'img', 'span', 'div', 'input'],
+          ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id', 'type', 'checked', 'disabled'],
+          ALLOW_DATA_ATTR: false,
+        });
+        contentEl.innerHTML = sanitizedHtml;
+        setupCheckboxes();
+      } catch (error) {
+        contentEl.innerHTML = `<div class="error">Failed to render content: ${escapeHtml(error.message)}</div>`;
+      }
+    }
+
+    // Handle content from MCP
+    app.onContentReceived = (markdown) => {
+      renderContent(markdown);
+    };
+
+    // Standalone mode for testing
+    if (window.parent === window) {
+      const demoContent = `# Verification Guide
+
+## Prerequisites
+- [ ] Development server is running
+- [x] Database is connected
+
+## Test Cases
+
+### 1. User Authentication
+- [ ] Login with valid credentials
+- [ ] Login with invalid password shows error
+- [ ] Logout clears session
+
+### 2. Data Display
+| Page | Status |
+|------|--------|
+| Dashboard | Pending |
+| Settings | Verified |
+
+## Notes
+> Remember to check the console for errors
+
+\`\`\`bash
+npm run test
+\`\`\`
+`;
+      setTimeout(() => renderContent(demoContent), 500);
+    }
+  </script>
+</body>
+</html>

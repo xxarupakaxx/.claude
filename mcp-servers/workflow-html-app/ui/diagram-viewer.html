@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';">
+  <title>Diagram Viewer - MCP App</title>
+  <style>
+    :root {
+      --bg: #101418;
+      --surface: #171d23;
+      --surface-2: #202832;
+      --text: #eef2f6;
+      --text-muted: #9aa8b5;
+      --accent: #4f7cff;
+      --accent-active: #2d5bd1;
+      --accent-hover: #6f95ff;
+      --border: #33404d;
+      --success: #40c980;
+      --danger: #ff6b6b;
+      --warning: #f2b84b;
+      --node-ui: #5aa9ff;
+      --node-api: #7ccf90;
+      --node-domain: #f2b84b;
+      --node-db: #d28cff;
+      --node-external: #ff8a7a;
+      --node-queue: #4fd1c5;
+      --node-ops: #f78fb3;
+      --node-test: #a3e635;
+      --node-unknown: #98a2ad;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      gap: 12px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      min-height: 44px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      flex-shrink: 0;
+    }
+
+    h1 {
+      font-size: 1.1rem;
+      font-weight: 650;
+      line-height: 1.2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .status {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .status.connected {
+      color: var(--success);
+    }
+
+    .controls,
+    .view-switch {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .controls button,
+    .view-switch button {
+      min-height: 30px;
+      padding: 5px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface-2);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .controls button:hover,
+    .view-switch button:hover {
+      border-color: var(--accent);
+    }
+
+    .view-switch button.active {
+      background: var(--accent-active);
+      border-color: var(--accent-active);
+      color: white;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .view-switch[hidden],
+    .graph-only[hidden],
+    #graph-sidebar[hidden],
+    #node-details[hidden] {
+      display: none;
+    }
+
+    .zoom-info {
+      min-width: 48px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-align: center;
+    }
+
+    .workspace {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .workspace.graph-mode {
+      grid-template-columns: 220px minmax(0, 1fr) 280px;
+    }
+
+    #diagram-container,
+    #graph-sidebar,
+    #node-details {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      min-height: 0;
+    }
+
+    #diagram-container {
+      overflow: hidden;
+      position: relative;
+    }
+
+    #diagram-wrapper {
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    #diagram {
+      transform-origin: center center;
+      transition: transform 0.1s ease-out;
+    }
+
+    #diagram svg {
+      max-width: none !important;
+      height: auto !important;
+    }
+
+    #graph-view {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: stretch;
+      justify-content: stretch;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+        var(--surface);
+      background-size: 40px 40px;
+      overflow: hidden;
+    }
+
+    #graph-view.hidden,
+    #diagram-wrapper.hidden {
+      display: none;
+    }
+
+    #graph-stage {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      perspective: 1400px;
+      overflow: hidden;
+      cursor: grab;
+    }
+
+    #graph-stage.dragging {
+      cursor: grabbing;
+    }
+
+    #graph-stage:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -4px;
+    }
+
+    #graph-space {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 1200px;
+      height: 760px;
+      transform-style: preserve-3d;
+      transform-origin: 0 0;
+      transition: transform 0.08s linear;
+    }
+
+    .layer-plane {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: var(--layer-width);
+      height: var(--layer-height);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.045);
+      transform: translate3d(calc(var(--layer-width) / -2), calc(var(--layer-height) / -2), var(--z));
+      transform-style: preserve-3d;
+      pointer-events: none;
+    }
+
+    .layer-plane span {
+      position: absolute;
+      left: 12px;
+      top: 10px;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .graph-node {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 156px;
+      min-height: 62px;
+      padding: 9px 10px;
+      border: 1px solid rgba(255,255,255,0.24);
+      border-left: 4px solid var(--node-unknown);
+      border-radius: 8px;
+      background: rgba(16,20,24,0.94);
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      transform: translate3d(var(--x), var(--y), var(--z));
+      transform-style: preserve-3d;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.26);
+      transition: opacity 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .graph-node:hover,
+    .graph-node.selected {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(79,124,255,0.28), 0 12px 28px rgba(0,0,0,0.34);
+    }
+
+    .graph-node.hidden-by-layer,
+    .edge-line.hidden-by-layer,
+    .edge-label.hidden-by-layer,
+    .layer-plane.hidden-by-layer {
+      opacity: 0.08;
+      pointer-events: none;
+    }
+
+    .graph-node .node-title {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 650;
+      line-height: 1.25;
+    }
+
+    .graph-node .node-meta {
+      display: block;
+      margin-top: 5px;
+      color: var(--text-muted);
+      font-size: 0.68rem;
+      line-height: 1.25;
+    }
+
+    .graph-node.layer-ui { border-left-color: var(--node-ui); }
+    .graph-node.layer-api { border-left-color: var(--node-api); }
+    .graph-node.layer-domain { border-left-color: var(--node-domain); }
+    .graph-node.layer-db { border-left-color: var(--node-db); }
+    .graph-node.layer-external { border-left-color: var(--node-external); }
+    .graph-node.layer-queue { border-left-color: var(--node-queue); }
+    .graph-node.layer-ops { border-left-color: var(--node-ops); }
+    .graph-node.layer-test { border-left-color: var(--node-test); }
+
+    .graph-node.timeline-future,
+    .edge-line.timeline-future,
+    .edge-label.timeline-future {
+      opacity: 0.22;
+    }
+
+    .graph-node.timeline-past,
+    .edge-line.timeline-past,
+    .edge-label.timeline-past {
+      opacity: 0.5;
+    }
+
+    .graph-node.timeline-active {
+      opacity: 1;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(79,124,255,0.36), 0 14px 32px rgba(0,0,0,0.34);
+    }
+
+    .graph-node.timeline-changed {
+      outline: 2px solid var(--warning);
+      outline-offset: 2px;
+    }
+
+    .edge-line.timeline-active {
+      opacity: 1;
+      height: 3px;
+      background: var(--accent);
+    }
+
+    .edge-line.timeline-active::after {
+      border-left-color: var(--accent);
+    }
+
+    .edge-label.timeline-active {
+      opacity: 1;
+      color: var(--text);
+      border-color: var(--accent);
+    }
+
+    .edge-line {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(238,242,246,0.22), rgba(238,242,246,0.74));
+      transform-origin: 0 50%;
+      pointer-events: none;
+    }
+
+    .edge-line::after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: -4px;
+      width: 0;
+      height: 0;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-left: 8px solid rgba(238,242,246,0.74);
+    }
+
+    .edge-line.edge-async {
+      background-image: repeating-linear-gradient(90deg, rgba(238,242,246,0.72) 0 8px, transparent 8px 14px);
+    }
+
+    .edge-line.edge-error {
+      background: var(--danger);
+    }
+
+    .edge-label {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      max-width: 140px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(16,20,24,0.9);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.66rem;
+      line-height: 1.2;
+      transform: translate3d(var(--x), var(--y), var(--z));
+      pointer-events: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #timeline-panel {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(16,20,24,0.94);
+      box-shadow: 0 12px 34px rgba(0,0,0,0.3);
+      z-index: 20;
+    }
+
+    #timeline-panel[hidden] {
+      display: none;
+    }
+
+    .timeline-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .timeline-controls button,
+    .timeline-controls select {
+      min-height: 36px;
+      padding: 5px 9px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface-2);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .timeline-controls button:hover,
+    .timeline-controls select:hover {
+      border-color: var(--accent);
+    }
+
+    #timeline-slider {
+      flex: 1 1 220px;
+      min-width: 160px;
+      accent-color: var(--accent);
+    }
+
+    #timeline-caption {
+      flex: 1 1 180px;
+      font-size: 0.78rem;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .timeline-readout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(120px, auto);
+      gap: 10px;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      line-height: 1.4;
+    }
+
+    .timeline-readout strong {
+      color: var(--text);
+      font-weight: 650;
+    }
+
+    #timeline-counters {
+      display: flex;
+      gap: 6px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .counter-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 7px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .timeline-legend {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+    }
+
+    .timeline-legend span {
+      white-space: nowrap;
+    }
+
+    #graph-sidebar,
+    #node-details {
+      padding: 14px;
+      overflow: auto;
+    }
+
+    #graph-sidebar h2,
+    #node-details h2 {
+      font-size: 0.86rem;
+      margin-bottom: 10px;
+    }
+
+    .layer-filter {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: var(--text);
+      font-size: 0.8rem;
+    }
+
+    .layer-filter input {
+      accent-color: var(--accent);
+    }
+
+    .help-text {
+      margin-top: 12px;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      line-height: 1.45;
+    }
+
+    #node-details .empty {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    .detail-section {
+      margin-top: 14px;
+    }
+
+    .detail-section h3 {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .detail-section p,
+    .detail-section li {
+      font-size: 0.82rem;
+      line-height: 1.45;
+      color: var(--text);
+    }
+
+    .detail-section ul {
+      list-style: none;
+      display: grid;
+      gap: 4px;
+    }
+
+    .loading,
+    .error {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-muted);
+    }
+
+    .error {
+      color: var(--danger);
+    }
+
+    #code-panel {
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    #code-panel.collapsed {
+      display: none;
+    }
+
+    #mermaid-code {
+      max-height: 210px;
+      overflow: auto;
+      padding: 14px;
+      background: #0b0f14;
+      color: #d8e2ec;
+      font-family: "SF Mono", Monaco, Consolas, monospace;
+      font-size: 0.78rem;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    @media (max-width: 980px) {
+      body {
+        overflow: auto;
+      }
+
+      .container {
+        min-height: 100vh;
+      }
+
+      .workspace.graph-mode {
+        grid-template-columns: 1fr;
+      }
+
+      .workspace.timeline-mode #graph-sidebar {
+        display: none;
+      }
+
+      .workspace.timeline-mode #diagram-container {
+        min-height: 560px;
+      }
+
+      .timeline-controls button,
+      .timeline-controls select,
+      .controls button,
+      .view-switch button {
+        min-height: 44px;
+      }
+
+      #graph-sidebar,
+      #node-details {
+        max-height: 180px;
+      }
+
+      .timeline-readout {
+        grid-template-columns: 1fr;
+      }
+
+      #timeline-caption,
+      #timeline-counters {
+        justify-content: flex-start;
+        white-space: normal;
+      }
+
+      header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .header-controls {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #diagram,
+      #graph-space,
+      .graph-node,
+      .edge-line,
+      .edge-label {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 id="title">Diagram Viewer</h1>
+      <div class="header-controls">
+        <span id="status" class="status">Waiting for diagram...</span>
+        <div class="view-switch" id="view-switch" hidden>
+          <button id="view-mermaid" type="button" class="active">Mermaid</button>
+          <button id="view-graph" type="button">2.5D</button>
+          <button id="view-timeline" type="button" hidden>Timeline</button>
+        </div>
+        <div class="controls">
+          <button id="zoom-in" type="button">+</button>
+          <span class="zoom-info" id="zoom-level">100%</span>
+          <button id="zoom-out" type="button">-</button>
+          <button id="zoom-reset" type="button">Reset</button>
+          <button id="code-toggle" type="button">Code</button>
+          <button id="copy-code" type="button">Copy</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="workspace" id="workspace">
+      <aside id="graph-sidebar" hidden>
+        <h2>Layers</h2>
+        <div id="layer-filters"></div>
+        <p class="help-text">Drag the 2.5D view to rotate it. X shows process order, Z shows the technical layer.</p>
+      </aside>
+
+      <div id="diagram-container">
+        <div id="diagram-wrapper">
+          <div id="diagram">
+            <div class="loading">Mermaid diagram will appear here</div>
+          </div>
+        </div>
+        <div id="graph-view" class="hidden">
+          <div id="graph-stage" tabindex="0" aria-label="2.5D graph view. Drag or use arrow keys to rotate.">
+            <div id="graph-space"></div>
+          </div>
+        </div>
+        <div id="timeline-panel" hidden>
+          <div id="timeline-live" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+          <div class="timeline-controls">
+            <button id="timeline-play" type="button">Play</button>
+            <button id="timeline-replay" type="button">Replay</button>
+            <button id="timeline-prev" type="button">Prev</button>
+            <button id="timeline-next" type="button">Next</button>
+            <button id="timeline-prev-event" type="button">Prev event</button>
+            <button id="timeline-next-event" type="button">Next event</button>
+            <select id="timeline-speed" aria-label="Playback speed">
+              <option value="0.5">0.5x</option>
+              <option value="1" selected>1x</option>
+              <option value="1.5">1.5x</option>
+              <option value="2">2x</option>
+            </select>
+            <input id="timeline-slider" type="range" min="0" max="0" step="1" value="0" aria-label="Timeline scrubber">
+            <span id="timeline-caption">No timeline step</span>
+          </div>
+          <div class="timeline-readout">
+            <p id="timeline-summary"><strong>Summary</strong>: -</p>
+            <p id="timeline-diff"><strong>Delta</strong>: -</p>
+            <div id="timeline-counters" aria-label="Timeline counters"></div>
+          </div>
+          <div class="timeline-legend" aria-label="Timeline visual legend">
+            <span>Active: highlighted border</span>
+            <span>Changed: outline</span>
+            <span>Future/past: dimmed</span>
+          </div>
+        </div>
+      </div>
+
+      <aside id="node-details" hidden>
+        <h2>Node Details</h2>
+        <p class="empty">Select a node to inspect why it exists, which files it touches, and how it connects to the flow.</p>
+      </aside>
+    </div>
+
+    <div id="code-panel" class="collapsed">
+      <pre id="mermaid-code"></pre>
+    </div>
+  </div>
+
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'dark',
+      securityLevel: 'strict',
+      flowchart: {
+        useMaxWidth: false,
+        htmlLabels: true,
+      },
+      sequence: {
+        useMaxWidth: false,
+      },
+      state: {
+        useMaxWidth: false,
+      },
+    });
+
+    const TRUSTED_ORIGINS = [
+      'https://claude.ai',
+      'https://www.claude.ai',
+      'vscode-webview://',
+      'file://'
+    ];
+
+    function isTrustedOrigin(origin) {
+      if (!origin) return false;
+      return TRUSTED_ORIGINS.some(trusted => {
+        if (trusted.endsWith('://')) {
+          return origin.startsWith(trusted);
+        }
+        return origin === trusted;
+      });
+    }
+
+    class MCPAppClient {
+      constructor() {
+        this.connected = false;
+        this.pendingMessages = [];
+        this.onContentReceived = null;
+        this.parentOrigin = null;
+
+        window.addEventListener('message', (event) => this.handleMessage(event));
+        this.sendToParent({ type: 'app-ready', name: 'Diagram Viewer', version: '1.1.0' });
+      }
+
+      handleMessage(event) {
+        if (!isTrustedOrigin(event.origin) && event.origin !== '') {
+          console.warn(`Rejected message from untrusted origin: ${event.origin}`);
+          return;
+        }
+
+        const data = event.data;
+        if (!data || typeof data !== 'object') return;
+
+        if (data.type === 'connected' && event.origin) {
+          this.parentOrigin = event.origin;
+        }
+
+        switch (data.type) {
+          case 'tool-result':
+            if (data.content && this.onContentReceived) {
+              const textContent = data.content.find(c => c.type === 'text');
+              if (textContent) {
+                this.onContentReceived(textContent.text);
+              }
+            }
+            break;
+
+          case 'connected':
+            this.connected = true;
+            this.updateStatus(true);
+            this.pendingMessages.forEach(msg => this.sendToParent(msg));
+            this.pendingMessages = [];
+            break;
+        }
+      }
+
+      sendToParent(message) {
+        if (window.parent !== window) {
+          const targetOrigin = this.parentOrigin || '*';
+          window.parent.postMessage(message, targetOrigin);
+        }
+      }
+
+      updateStatus(connected, message) {
+        const statusEl = document.getElementById('status');
+        statusEl.textContent = message || (connected ? 'Connected' : 'Disconnected');
+        statusEl.classList.toggle('connected', connected);
+      }
+    }
+
+    const app = new MCPAppClient();
+    const workspaceEl = document.getElementById('workspace');
+    const diagramWrapperEl = document.getElementById('diagram-wrapper');
+    const diagramEl = document.getElementById('diagram');
+    const graphViewEl = document.getElementById('graph-view');
+    const graphStageEl = document.getElementById('graph-stage');
+    const graphSpaceEl = document.getElementById('graph-space');
+    const titleEl = document.getElementById('title');
+    const codePanel = document.getElementById('code-panel');
+    const mermaidCodeEl = document.getElementById('mermaid-code');
+    const zoomLevelEl = document.getElementById('zoom-level');
+    const viewSwitchEl = document.getElementById('view-switch');
+    const viewMermaidEl = document.getElementById('view-mermaid');
+    const viewGraphEl = document.getElementById('view-graph');
+    const viewTimelineEl = document.getElementById('view-timeline');
+    const layerFiltersEl = document.getElementById('layer-filters');
+    const graphSidebarEl = document.getElementById('graph-sidebar');
+    const nodeDetailsEl = document.getElementById('node-details');
+    const timelinePanelEl = document.getElementById('timeline-panel');
+    const timelinePlayEl = document.getElementById('timeline-play');
+    const timelineReplayEl = document.getElementById('timeline-replay');
+    const timelinePrevEl = document.getElementById('timeline-prev');
+    const timelineNextEl = document.getElementById('timeline-next');
+    const timelinePrevEventEl = document.getElementById('timeline-prev-event');
+    const timelineNextEventEl = document.getElementById('timeline-next-event');
+    const timelineSpeedEl = document.getElementById('timeline-speed');
+    const timelineSliderEl = document.getElementById('timeline-slider');
+    const timelineCaptionEl = document.getElementById('timeline-caption');
+    const timelineSummaryEl = document.getElementById('timeline-summary');
+    const timelineDiffEl = document.getElementById('timeline-diff');
+    const timelineCountersEl = document.getElementById('timeline-counters');
+    const timelineLiveEl = document.getElementById('timeline-live');
+
+    const LAYER_ORDER = ['UI', 'API', 'Domain', 'DB', 'External', 'Queue', 'Ops', 'Test', 'Unknown'];
+    const LAYER_CLASS = {
+      UI: 'layer-ui',
+      API: 'layer-api',
+      Domain: 'layer-domain',
+      DB: 'layer-db',
+      External: 'layer-external',
+      Queue: 'layer-queue',
+      Ops: 'layer-ops',
+      Test: 'layer-test',
+    };
+    const TIMELINE_EVENT_TYPES = new Set(['normal', 'trigger', 'decision', 'error', 'fix', 'review', 'apply']);
+
+    let currentZoom = 1;
+    let currentView = 'mermaid';
+    let currentMermaidCode = '';
+    let currentGraphJson = '';
+    let currentGraph = null;
+    let hiddenLayers = new Set();
+    let selectedNodeId = null;
+    let camera = { rotateX: 58, rotateZ: -28 };
+    let dragState = null;
+    let currentStepIndex = 0;
+    let timelinePlaying = false;
+    let timelineFrame = null;
+    let timelineLastTick = 0;
+    let playbackSpeed = 1;
+    let currentTimelineRanges = { nodeRanges: new Map(), edgeRanges: new Map() };
+    let hasReceivedExternalContent = false;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function setText(el, text) {
+      el.textContent = text == null || text === '' ? '-' : String(text);
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+
+    function normalizeLayer(layer) {
+      const text = String(layer || 'Unknown');
+      return LAYER_ORDER.includes(text) ? text : 'Unknown';
+    }
+
+    function optionalNumber(value) {
+      const number = Number(value);
+      return Number.isFinite(number) ? number : null;
+    }
+
+    function toStringArray(value) {
+      return Array.isArray(value) ? value.map(String) : [];
+    }
+
+    function deriveEdgeId(edge) {
+      const from = String(edge.from);
+      const to = String(edge.to);
+      const label = String(edge.label || '');
+      const type = String(edge.type || 'sync');
+      return edge.id ? String(edge.id) : `${from}->${to}:${label}:${type}`;
+    }
+
+    function filterKnownIds(ids, knownIds) {
+      return toStringArray(ids).filter(id => knownIds.has(id));
+    }
+
+    function normalizeTimeline(rawTimeline, nodes, edges) {
+      if (!rawTimeline) return { timeline: null, error: '' };
+      if (!Array.isArray(rawTimeline.steps)) {
+        return { timeline: null, error: 'timeline.steps must be an array' };
+      }
+      const nodeIds = new Set(nodes.map(node => node.id));
+      const edgeIds = new Set(edges.map(edge => edge.id));
+      const steps = rawTimeline.steps
+        .map((step, index) => {
+          if (!step || typeof step !== 'object') return null;
+          const at = optionalNumber(step.at) ?? index;
+          const eventType = String(step.eventType || 'normal');
+          return {
+            id: String(step.id || `step_${index}`),
+            at,
+            label: String(step.label || `Step ${index + 1}`),
+            timestamp: String(step.timestamp || ''),
+            summary: String(step.summary || ''),
+            eventType: TIMELINE_EVENT_TYPES.has(eventType) ? eventType : 'normal',
+            activeNodes: filterKnownIds(step.activeNodes, nodeIds),
+            activeEdges: filterKnownIds(step.activeEdges, edgeIds),
+            changedNodes: filterKnownIds(step.changedNodes, nodeIds),
+            changedEdges: filterKnownIds(step.changedEdges, edgeIds),
+            counters: step.counters && typeof step.counters === 'object' && !Array.isArray(step.counters)
+              ? Object.fromEntries(Object.entries(step.counters).map(([key, value]) => [String(key), String(value)]))
+              : {},
+            annotations: toStringArray(step.annotations),
+          };
+        })
+        .filter(Boolean)
+        .sort((a, b) => a.at - b.at);
+
+      if (steps.length === 0) {
+        return { timeline: null, error: 'timeline has no valid steps' };
+      }
+      return {
+        timeline: {
+          unit: String(rawTimeline.unit || 'step'),
+          steps,
+        },
+        error: '',
+      };
+    }
+
+    function normalizeGraph(rawGraph) {
+      const graph = typeof rawGraph === 'string' ? JSON.parse(rawGraph) : rawGraph;
+      if (!graph || !Array.isArray(graph.nodes)) {
+        throw new Error('graphJson must include a nodes array');
+      }
+      const nodes = graph.nodes.map((node, index) => {
+        if (!node || !node.id) {
+          throw new Error(`graphJson node at index ${index} is missing id`);
+        }
+        return {
+          id: String(node.id),
+          label: String(node.label || node.id),
+          layer: normalizeLayer(node.layer),
+          kind: String(node.kind || 'step'),
+          why: String(node.why || ''),
+          files: Array.isArray(node.files) ? node.files.map(String) : [],
+          order: Number.isFinite(Number(node.order)) ? Number(node.order) : null,
+        };
+      });
+      const nodeIds = new Set(nodes.map(node => node.id));
+      const edges = Array.isArray(graph.edges) ? graph.edges
+        .filter(edge => edge && nodeIds.has(String(edge.from)) && nodeIds.has(String(edge.to)))
+        .map(edge => ({
+          id: deriveEdgeId(edge),
+          from: String(edge.from),
+          to: String(edge.to),
+          label: String(edge.label || ''),
+          type: String(edge.type || 'sync'),
+        })) : [];
+      const timelineResult = normalizeTimeline(graph.timeline, nodes, edges);
+      return { nodes, edges, timeline: timelineResult.timeline, timelineError: timelineResult.error };
+    }
+
+    function computeNodeDepths(nodes, edges) {
+      const incoming = new Map(nodes.map(node => [node.id, 0]));
+      const outgoing = new Map(nodes.map(node => [node.id, []]));
+      edges.forEach(edge => {
+        incoming.set(edge.to, (incoming.get(edge.to) || 0) + 1);
+        outgoing.get(edge.from)?.push(edge.to);
+      });
+      const queue = nodes.filter(node => incoming.get(node.id) === 0).map(node => node.id);
+      const depth = new Map(nodes.map((node, index) => [node.id, node.order ?? index]));
+      while (queue.length > 0) {
+        const id = queue.shift();
+        const baseDepth = depth.get(id) || 0;
+        outgoing.get(id)?.forEach(nextId => {
+          depth.set(nextId, Math.max(depth.get(nextId) || 0, baseDepth + 1));
+          incoming.set(nextId, (incoming.get(nextId) || 0) - 1);
+          if (incoming.get(nextId) === 0) queue.push(nextId);
+        });
+      }
+      return depth;
+    }
+
+    function computeLayout(graph) {
+      const depths = computeNodeDepths(graph.nodes, graph.edges);
+      const layers = [...new Set(graph.nodes.map(node => node.layer))]
+        .sort((a, b) => LAYER_ORDER.indexOf(a) - LAYER_ORDER.indexOf(b));
+      const layerCenter = (layers.length - 1) / 2;
+      const grouped = new Map();
+      graph.nodes.forEach(node => {
+        const key = `${node.layer}:${depths.get(node.id) || 0}`;
+        const group = grouped.get(key) || [];
+        group.push(node.id);
+        grouped.set(key, group);
+      });
+      const maxDepth = Math.max(1, ...Array.from(depths.values()));
+      const positions = new Map();
+      graph.nodes.forEach((node, index) => {
+        const depth = depths.get(node.id) || index;
+        const sameSlot = grouped.get(`${node.layer}:${depth}`) || [];
+        const slotIndex = sameSlot.indexOf(node.id);
+        const layerIndex = layers.indexOf(node.layer);
+        positions.set(node.id, {
+          x: (depth - maxDepth / 2) * 210,
+          y: (slotIndex - (sameSlot.length - 1) / 2) * 120,
+          z: (layerIndex - layerCenter) * 170,
+        });
+      });
+      return { positions, layers };
+    }
+
+    function updateZoom() {
+      zoomLevelEl.textContent = `${Math.round(currentZoom * 100)}%`;
+      if (currentView === 'graph' || currentView === 'timeline') {
+        updateGraphTransform();
+      } else {
+        diagramEl.style.transform = `scale(${currentZoom})`;
+      }
+    }
+
+    function updateGraphTransform() {
+      graphSpaceEl.style.transform = [
+        'translate3d(-50%, -50%, 0)',
+        `scale(${currentZoom})`,
+        `rotateX(${camera.rotateX}deg)`,
+        `rotateZ(${camera.rotateZ}deg)`
+      ].join(' ');
+    }
+
+    function showView(view) {
+      if (view === 'timeline' && currentGraph?.timeline) {
+        currentView = 'timeline';
+      } else if (view === 'graph' && currentGraph) {
+        currentView = 'graph';
+      } else {
+        currentView = 'mermaid';
+      }
+      const isGraphLike = currentView === 'graph' || currentView === 'timeline';
+      const isTimeline = currentView === 'timeline';
+      viewMermaidEl.classList.toggle('active', currentView === 'mermaid');
+      viewGraphEl.classList.toggle('active', currentView === 'graph');
+      viewTimelineEl.classList.toggle('active', isTimeline);
+      viewMermaidEl.setAttribute('aria-pressed', String(currentView === 'mermaid'));
+      viewGraphEl.setAttribute('aria-pressed', String(currentView === 'graph'));
+      viewTimelineEl.setAttribute('aria-pressed', String(isTimeline));
+      workspaceEl.classList.toggle('graph-mode', isGraphLike);
+      workspaceEl.classList.toggle('timeline-mode', isTimeline);
+      diagramWrapperEl.classList.toggle('hidden', isGraphLike);
+      graphViewEl.classList.toggle('hidden', !isGraphLike);
+      graphSidebarEl.hidden = !isGraphLike;
+      nodeDetailsEl.hidden = !isGraphLike;
+      timelinePanelEl.hidden = !isTimeline;
+      if (!isTimeline) {
+        setTimelinePlaying(false);
+      }
+      mermaidCodeEl.textContent = isGraphLike ? currentGraphJson : currentMermaidCode;
+      if (isTimeline) {
+        applyTimelineStep(currentStepIndex);
+      } else {
+        clearTimelineClasses();
+        renderNodeDetails(selectedNodeId ? currentGraph?.nodes.find(item => item.id === selectedNodeId) : null);
+      }
+      updateZoom();
+    }
+
+    document.getElementById('zoom-in').addEventListener('click', () => {
+      currentZoom = Math.min(currentZoom + 0.2, 3);
+      updateZoom();
+    });
+
+    document.getElementById('zoom-out').addEventListener('click', () => {
+      currentZoom = Math.max(currentZoom - 0.2, 0.3);
+      updateZoom();
+    });
+
+    document.getElementById('zoom-reset').addEventListener('click', () => {
+      currentZoom = 1;
+      camera = { rotateX: 58, rotateZ: -28 };
+      updateZoom();
+    });
+
+    document.getElementById('code-toggle').addEventListener('click', () => {
+      codePanel.classList.toggle('collapsed');
+    });
+
+    document.getElementById('copy-code').addEventListener('click', () => {
+      if (currentView === 'graph' || currentView === 'timeline') {
+        copyGraphJson();
+      } else {
+        copyText(currentMermaidCode);
+      }
+    });
+
+    viewMermaidEl.addEventListener('click', () => showView('mermaid'));
+    viewGraphEl.addEventListener('click', () => showView('graph'));
+    viewTimelineEl.addEventListener('click', () => showView('timeline'));
+    timelinePlayEl.addEventListener('click', () => setTimelinePlaying(!timelinePlaying));
+    timelineReplayEl.addEventListener('click', () => {
+      applyTimelineStep(0);
+      setTimelinePlaying(true);
+    });
+    timelinePrevEl.addEventListener('click', () => applyTimelineStep(currentStepIndex - 1));
+    timelineNextEl.addEventListener('click', () => applyTimelineStep(currentStepIndex + 1));
+    timelinePrevEventEl.addEventListener('click', () => jumpToEvent(-1));
+    timelineNextEventEl.addEventListener('click', () => jumpToEvent(1));
+    timelineSliderEl.addEventListener('input', () => applyTimelineStep(Number(timelineSliderEl.value)));
+    timelineSpeedEl.addEventListener('change', () => {
+      playbackSpeed = Number(timelineSpeedEl.value) || 1;
+    });
+
+    async function renderDiagram(mermaidCode) {
+      try {
+        currentMermaidCode = mermaidCode;
+        if (currentView === 'mermaid') {
+          mermaidCodeEl.textContent = mermaidCode;
+        }
+        const id = `mermaid-${Date.now()}`;
+        const { svg } = await mermaid.render(id, mermaidCode);
+        diagramEl.innerHTML = svg;
+        app.updateStatus(true);
+      } catch (error) {
+        diagramEl.innerHTML = `<div class="error">
+          <h3>Render Error</h3>
+          <p>${escapeHtml(error.message)}</p>
+        </div>`;
+        console.error('Mermaid render error:', error);
+      }
+    }
+
+    function renderLayerFilters(layers) {
+      layerFiltersEl.innerHTML = '';
+      layers.forEach(layer => {
+        const id = `layer-${layer.toLowerCase()}`;
+        const label = document.createElement('label');
+        label.className = 'layer-filter';
+
+        const span = document.createElement('span');
+        setText(span, layer);
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = id;
+        checkbox.checked = !hiddenLayers.has(layer);
+        checkbox.addEventListener('change', () => {
+          if (checkbox.checked) {
+            hiddenLayers.delete(layer);
+          } else {
+            hiddenLayers.add(layer);
+          }
+          applyLayerVisibility();
+        });
+
+        label.append(span, checkbox);
+        layerFiltersEl.append(label);
+      });
+    }
+
+    function renderGraph3d(graph) {
+      currentGraph = graph;
+      hiddenLayers = new Set();
+      selectedNodeId = null;
+      graphSpaceEl.innerHTML = '';
+      const { positions, layers } = computeLayout(graph);
+      const layerWidth = 1040;
+      const layerHeight = Math.max(460, graph.nodes.length * 52);
+
+      layers.forEach(layer => {
+        const layerIndex = layers.indexOf(layer);
+        const layerCenter = (layers.length - 1) / 2;
+        const plane = document.createElement('div');
+        plane.className = 'layer-plane';
+        plane.dataset.layer = layer;
+        plane.style.setProperty('--layer-width', `${layerWidth}px`);
+        plane.style.setProperty('--layer-height', `${layerHeight}px`);
+        plane.style.setProperty('--z', `${(layerIndex - layerCenter) * 170}px`);
+        const text = document.createElement('span');
+        setText(text, layer);
+        plane.append(text);
+        graphSpaceEl.append(plane);
+      });
+
+      graph.edges.forEach(edge => {
+        const from = positions.get(edge.from);
+        const to = positions.get(edge.to);
+        if (!from || !to) return;
+        const dx = to.x - from.x;
+        const dy = to.y - from.y;
+        const distance = Math.max(24, Math.hypot(dx, dy));
+        const angle = Math.atan2(dy, dx);
+        const edgeLine = document.createElement('div');
+        edgeLine.className = `edge-line edge-${edge.type}`;
+        edgeLine.dataset.edgeId = edge.id;
+        edgeLine.dataset.from = edge.from;
+        edgeLine.dataset.to = edge.to;
+        edgeLine.style.width = `${distance}px`;
+        edgeLine.style.transform = `translate3d(${from.x}px, ${from.y}px, ${(from.z + to.z) / 2}px) rotateZ(${angle}rad)`;
+        graphSpaceEl.append(edgeLine);
+
+        if (edge.label) {
+          const edgeLabel = document.createElement('div');
+          edgeLabel.className = 'edge-label';
+          edgeLabel.dataset.edgeId = edge.id;
+          edgeLabel.dataset.from = edge.from;
+          edgeLabel.dataset.to = edge.to;
+          edgeLabel.style.setProperty('--x', `${from.x + dx / 2}px`);
+          edgeLabel.style.setProperty('--y', `${from.y + dy / 2 - 18}px`);
+          edgeLabel.style.setProperty('--z', `${(from.z + to.z) / 2}px`);
+          setText(edgeLabel, edge.label);
+          graphSpaceEl.append(edgeLabel);
+        }
+      });
+
+      graph.nodes.forEach(node => {
+        const position = positions.get(node.id);
+        const nodeEl = document.createElement('button');
+        nodeEl.type = 'button';
+        nodeEl.className = `graph-node ${LAYER_CLASS[node.layer] || ''}`;
+        nodeEl.dataset.id = node.id;
+        nodeEl.dataset.layer = node.layer;
+        nodeEl.style.setProperty('--x', `${position.x}px`);
+        nodeEl.style.setProperty('--y', `${position.y}px`);
+        nodeEl.style.setProperty('--z', `${position.z}px`);
+
+        const title = document.createElement('span');
+        title.className = 'node-title';
+        setText(title, node.label);
+
+        const meta = document.createElement('span');
+        meta.className = 'node-meta';
+        setText(meta, `${node.layer} / ${node.kind}`);
+
+        nodeEl.append(title, meta);
+        nodeEl.addEventListener('click', () => selectNode(node.id));
+        graphSpaceEl.append(nodeEl);
+      });
+
+      renderLayerFilters(layers);
+      renderTimelineControls();
+      renderNodeDetails(null);
+      updateGraphTransform();
+      applyLayerVisibility();
+      viewSwitchEl.hidden = false;
+      viewTimelineEl.hidden = !graph.timeline;
+      if (graph.timelineError) {
+        app.updateStatus(true, 'Timeline invalid; static graph shown');
+      }
+    }
+
+    function renderTimelineControls() {
+      setTimelinePlaying(false);
+      currentStepIndex = 0;
+      playbackSpeed = Number(timelineSpeedEl.value) || 1;
+      if (!currentGraph?.timeline) {
+        currentTimelineRanges = { nodeRanges: new Map(), edgeRanges: new Map() };
+        timelinePanelEl.hidden = true;
+        timelineSliderEl.max = '0';
+        timelineSliderEl.value = '0';
+        clearTimelineReadout();
+        clearTimelineClasses();
+        return;
+      }
+
+      currentTimelineRanges = computeTimelineRanges(currentGraph);
+      const maxIndex = Math.max(0, currentGraph.timeline.steps.length - 1);
+      timelineSliderEl.max = String(maxIndex);
+      timelineSliderEl.value = '0';
+      applyTimelineStep(0);
+    }
+
+    function clearTimelineReadout() {
+      timelineCaptionEl.textContent = 'No timeline step';
+      timelineSummaryEl.textContent = 'Summary: -';
+      timelineDiffEl.textContent = 'Delta: -';
+      timelineCountersEl.innerHTML = '';
+      timelineLiveEl.textContent = '';
+    }
+
+    function clearTimelineClasses() {
+      graphSpaceEl.querySelectorAll('.graph-node, .edge-line, .edge-label').forEach(el => {
+        el.classList.remove('timeline-active', 'timeline-past', 'timeline-future', 'timeline-changed');
+      });
+    }
+
+    function getTimelineStep(index = currentStepIndex) {
+      return currentGraph?.timeline?.steps[index] || null;
+    }
+
+    function computeTimelineRanges(graph) {
+      const nodeRanges = new Map();
+      const edgeRanges = new Map();
+      if (!graph?.timeline) return { nodeRanges, edgeRanges };
+
+      function addRange(map, id, at) {
+        const range = map.get(id) || { start: at, end: at };
+        range.start = Math.min(range.start, at);
+        range.end = Math.max(range.end, at);
+        map.set(id, range);
+      }
+
+      graph.timeline.steps.forEach(step => {
+        [...step.activeNodes, ...step.changedNodes].forEach(id => addRange(nodeRanges, id, step.at));
+        [...step.activeEdges, ...step.changedEdges].forEach(id => addRange(edgeRanges, id, step.at));
+      });
+
+      graph.nodes.forEach((node, index) => {
+        if (!nodeRanges.has(node.id)) {
+          const fallback = node.order ?? index;
+          nodeRanges.set(node.id, { start: fallback, end: fallback });
+        }
+      });
+
+      graph.edges.forEach(edge => {
+        if (!edgeRanges.has(edge.id)) {
+          const fromRange = nodeRanges.get(edge.from);
+          const toRange = nodeRanges.get(edge.to);
+          edgeRanges.set(edge.id, {
+            start: Math.min(fromRange?.start ?? 0, toRange?.start ?? 0),
+            end: Math.max(fromRange?.end ?? 0, toRange?.end ?? 0),
+          });
+        }
+      });
+
+      return { nodeRanges, edgeRanges };
+    }
+
+    function applyTimelineStep(index) {
+      const timeline = currentGraph?.timeline;
+      if (!timeline) {
+        clearTimelineReadout();
+        clearTimelineClasses();
+        return;
+      }
+
+      currentStepIndex = clamp(index, 0, timeline.steps.length - 1);
+      const step = getTimelineStep();
+      timelineSliderEl.value = String(currentStepIndex);
+      const timestamp = step.timestamp ? `${step.timestamp} · ` : '';
+      timelineCaptionEl.textContent = `${currentStepIndex + 1}/${timeline.steps.length} · ${timestamp}${step.label}`;
+      timelineSummaryEl.textContent = `Summary: ${step.summary || 'No summary provided.'}`;
+      timelineDiffEl.textContent = `Delta: ${buildTimelineDelta(step)}`;
+      timelineSliderEl.setAttribute('aria-valuetext', `${timestamp}${step.label}`);
+      timelineLiveEl.textContent = `${timestamp}${step.label}. ${step.summary || ''}`;
+      renderTimelineCounters(step.counters);
+      applyTimelineClasses(step);
+      renderNodeDetails(selectedNodeId ? currentGraph.nodes.find(item => item.id === selectedNodeId) : null);
+    }
+
+    function buildTimelineDelta(step) {
+      const nodeLabels = step.changedNodes
+        .map(id => currentGraph.nodes.find(node => node.id === id)?.label || id);
+      const edgeLabels = step.changedEdges
+        .map(id => currentGraph.edges.find(edge => edge.id === id)?.label || id);
+      const items = [...nodeLabels, ...edgeLabels].filter(Boolean);
+      if (items.length > 0) return items.join(', ');
+      if (step.annotations.length > 0) return step.annotations[0];
+      return 'No explicit delta.';
+    }
+
+    function renderTimelineCounters(counters) {
+      timelineCountersEl.innerHTML = '';
+      const entries = Object.entries(counters || {});
+      if (entries.length === 0) {
+        const empty = document.createElement('span');
+        empty.className = 'counter-pill';
+        setText(empty, 'no counters');
+        timelineCountersEl.append(empty);
+        return;
+      }
+      entries.forEach(([key, value]) => {
+        const pill = document.createElement('span');
+        pill.className = 'counter-pill';
+        setText(pill, `${key}: ${value}`);
+        timelineCountersEl.append(pill);
+      });
+    }
+
+    function applyTimelineClasses(step) {
+      clearTimelineClasses();
+      const activeNodes = new Set(step.activeNodes);
+      const activeEdges = new Set(step.activeEdges);
+      const changedNodes = new Set(step.changedNodes);
+      const changedEdges = new Set(step.changedEdges);
+      const nodeById = new Map(currentGraph.nodes.map(node => [node.id, node]));
+      const edgeById = new Map(currentGraph.edges.map(edge => [edge.id, edge]));
+
+      graphSpaceEl.querySelectorAll('.graph-node').forEach(nodeEl => {
+        const node = nodeById.get(nodeEl.dataset.id);
+        if (!node) return;
+        const range = currentTimelineRanges.nodeRanges.get(node.id) || { start: node.order ?? 0, end: node.order ?? 0 };
+        const isActive = activeNodes.has(node.id);
+        nodeEl.classList.toggle('timeline-active', isActive);
+        nodeEl.classList.toggle('timeline-changed', changedNodes.has(node.id));
+        nodeEl.classList.toggle('timeline-future', !isActive && step.at < range.start);
+        nodeEl.classList.toggle('timeline-past', !isActive && step.at > range.end);
+      });
+
+      graphSpaceEl.querySelectorAll('[data-edge-id]').forEach(edgeEl => {
+        const edge = edgeById.get(edgeEl.dataset.edgeId);
+        if (!edge) return;
+        const range = currentTimelineRanges.edgeRanges.get(edge.id) || { start: 0, end: 0 };
+        const isActive = activeEdges.has(edge.id);
+        edgeEl.classList.toggle('timeline-active', isActive);
+        edgeEl.classList.toggle('timeline-changed', changedEdges.has(edge.id));
+        edgeEl.classList.toggle('timeline-future', !isActive && step.at < range.start);
+        edgeEl.classList.toggle('timeline-past', !isActive && step.at > range.end);
+      });
+    }
+
+    function setTimelinePlaying(playing) {
+      timelinePlaying = Boolean(playing && currentGraph?.timeline && !prefersReducedMotion);
+      timelinePlayEl.textContent = timelinePlaying ? 'Pause' : 'Play';
+      timelinePlayEl.setAttribute('aria-pressed', String(timelinePlaying));
+      if (timelineFrame) {
+        cancelAnimationFrame(timelineFrame);
+        timelineFrame = null;
+      }
+      timelineLastTick = 0;
+      if (timelinePlaying) {
+        timelineFrame = requestAnimationFrame(tickTimeline);
+      }
+    }
+
+    function tickTimeline(timestamp) {
+      if (!timelinePlaying) return;
+      if (!timelineLastTick) timelineLastTick = timestamp;
+      const stepMs = 1200 / playbackSpeed;
+      if (timestamp - timelineLastTick >= stepMs) {
+        timelineLastTick = timestamp;
+        if (currentStepIndex >= currentGraph.timeline.steps.length - 1) {
+          setTimelinePlaying(false);
+          return;
+        }
+        applyTimelineStep(currentStepIndex + 1);
+      }
+      timelineFrame = requestAnimationFrame(tickTimeline);
+    }
+
+    function jumpToEvent(direction) {
+      const steps = currentGraph?.timeline?.steps || [];
+      const start = currentStepIndex + direction;
+      for (let index = start; index >= 0 && index < steps.length; index += direction) {
+        if (steps[index].eventType !== 'normal') {
+          applyTimelineStep(index);
+          return;
+        }
+      }
+    }
+
+    function applyLayerVisibility() {
+      const nodeLayer = new Map((currentGraph?.nodes || []).map(node => [node.id, node.layer]));
+      graphSpaceEl.querySelectorAll('[data-layer]').forEach(el => {
+        el.classList.toggle('hidden-by-layer', hiddenLayers.has(el.dataset.layer));
+      });
+      graphSpaceEl.querySelectorAll('[data-from][data-to]').forEach(el => {
+        const fromLayer = nodeLayer.get(el.dataset.from);
+        const toLayer = nodeLayer.get(el.dataset.to);
+        el.classList.toggle('hidden-by-layer', hiddenLayers.has(fromLayer) || hiddenLayers.has(toLayer));
+      });
+    }
+
+    function selectNode(nodeId) {
+      selectedNodeId = nodeId;
+      graphSpaceEl.querySelectorAll('.graph-node').forEach(nodeEl => {
+        nodeEl.classList.toggle('selected', nodeEl.dataset.id === nodeId);
+      });
+      const node = currentGraph.nodes.find(item => item.id === nodeId);
+      renderNodeDetails(node);
+    }
+
+    function renderNodeDetails(node) {
+      nodeDetailsEl.innerHTML = '';
+      const title = document.createElement('h2');
+      setText(title, node ? node.label : currentView === 'timeline' ? 'Timeline Details' : 'Node Details');
+      nodeDetailsEl.append(title);
+
+      if (currentView === 'timeline' && currentGraph?.timeline) {
+        const step = getTimelineStep();
+        if (step) {
+          addDetailSection('Current Step', `${step.timestamp ? `${step.timestamp} / ` : ''}${step.label}`);
+          addDetailSection('Step Summary', step.summary || 'No summary provided.');
+          addDetailSection('Delta', buildTimelineDelta(step));
+          if (step.annotations.length > 0) {
+            addListSection('Annotations', step.annotations);
+          }
+        }
+      }
+
+      if (!node) {
+        const empty = document.createElement('p');
+        empty.className = 'empty';
+        setText(empty, 'Select a node to inspect why it exists, which files it touches, and how it connects to the flow.');
+        nodeDetailsEl.append(empty);
+        return;
+      }
+
+      addDetailSection('Layer', `${node.layer} / ${node.kind}`);
+      addDetailSection('Why', node.why || 'No rationale provided.');
+
+      const relatedEdges = currentGraph.edges.filter(edge => edge.from === node.id || edge.to === node.id);
+      addListSection('Connections', relatedEdges.map(edge => {
+        const direction = edge.from === node.id ? 'to' : 'from';
+        const otherId = edge.from === node.id ? edge.to : edge.from;
+        const other = currentGraph.nodes.find(item => item.id === otherId);
+        return `${direction} ${other?.label || otherId}${edge.label ? `: ${edge.label}` : ''}`;
+      }));
+
+      addListSection('Files', node.files.length > 0 ? node.files : ['No files provided.']);
+    }
+
+    function addDetailSection(label, value) {
+      const section = document.createElement('section');
+      section.className = 'detail-section';
+      const heading = document.createElement('h3');
+      setText(heading, label);
+      const body = document.createElement('p');
+      setText(body, value);
+      section.append(heading, body);
+      nodeDetailsEl.append(section);
+    }
+
+    function addListSection(label, items) {
+      const section = document.createElement('section');
+      section.className = 'detail-section';
+      const heading = document.createElement('h3');
+      setText(heading, label);
+      const list = document.createElement('ul');
+      items.forEach(item => {
+        const li = document.createElement('li');
+        setText(li, item);
+        list.append(li);
+      });
+      section.append(heading, list);
+      nodeDetailsEl.append(section);
+    }
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        app.updateStatus(true, 'Copied');
+      } catch {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-9999px';
+        document.body.append(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        textarea.remove();
+        app.updateStatus(true, 'Copied');
+      }
+    }
+
+    function copyGraphJson() {
+      return copyText(currentGraphJson);
+    }
+
+    graphStageEl.addEventListener('pointerdown', (event) => {
+      if (event.target.closest('.graph-node')) return;
+      dragState = {
+        pointerId: event.pointerId,
+        x: event.clientX,
+        y: event.clientY,
+        rotateX: camera.rotateX,
+        rotateZ: camera.rotateZ,
+      };
+      graphStageEl.classList.add('dragging');
+      graphStageEl.setPointerCapture(event.pointerId);
+    });
+
+    graphStageEl.addEventListener('pointermove', (event) => {
+      if (!dragState || dragState.pointerId !== event.pointerId) return;
+      const dx = event.clientX - dragState.x;
+      const dy = event.clientY - dragState.y;
+      camera.rotateZ = dragState.rotateZ + dx * 0.18;
+      camera.rotateX = clamp(dragState.rotateX - dy * 0.14, 18, 78);
+      updateGraphTransform();
+    });
+
+    function endGraphDrag(event) {
+      if (!dragState || dragState.pointerId !== event.pointerId) return;
+      dragState = null;
+      graphStageEl.classList.remove('dragging');
+      if (graphStageEl.hasPointerCapture(event.pointerId)) {
+        graphStageEl.releasePointerCapture(event.pointerId);
+      }
+    }
+
+    graphStageEl.addEventListener('pointerup', endGraphDrag);
+    graphStageEl.addEventListener('pointercancel', endGraphDrag);
+
+    graphStageEl.addEventListener('wheel', (event) => {
+      if (currentView !== 'graph' && currentView !== 'timeline') return;
+      event.preventDefault();
+      currentZoom = clamp(currentZoom - event.deltaY * 0.001, 0.3, 3);
+      updateZoom();
+    }, { passive: false });
+
+    graphStageEl.addEventListener('keydown', (event) => {
+      if (currentView !== 'graph' && currentView !== 'timeline') return;
+      const keyActions = {
+        ArrowLeft: () => { camera.rotateZ -= 8; },
+        ArrowRight: () => { camera.rotateZ += 8; },
+        ArrowUp: () => { camera.rotateX = clamp(camera.rotateX + 6, 18, 78); },
+        ArrowDown: () => { camera.rotateX = clamp(camera.rotateX - 6, 18, 78); },
+      };
+      const action = keyActions[event.key];
+      if (!action) return;
+      event.preventDefault();
+      action();
+      updateGraphTransform();
+    });
+
+    app.onContentReceived = async (jsonText) => {
+      try {
+        hasReceivedExternalContent = true;
+        const data = JSON.parse(jsonText);
+        if (data.title) {
+          titleEl.textContent = data.title;
+        }
+
+        currentGraphJson = '';
+        currentGraph = null;
+        viewSwitchEl.hidden = true;
+        viewTimelineEl.hidden = true;
+        timelinePanelEl.hidden = true;
+        setTimelinePlaying(false);
+        clearTimelineReadout();
+        clearTimelineClasses();
+
+        if (data.mermaidCode) {
+          await renderDiagram(data.mermaidCode);
+        }
+
+        if (data.graphJson) {
+          try {
+            currentGraphJson = data.graphJson;
+            currentGraph = normalizeGraph(data.graphJson);
+            renderGraph3d(currentGraph);
+          } catch (graphError) {
+            console.error('Graph JSON parse error:', graphError);
+            app.updateStatus(true, 'Graph JSON invalid; Mermaid shown');
+          }
+        }
+
+        showView(currentGraph ? 'graph' : 'mermaid');
+      } catch (error) {
+        console.error('Failed to parse content:', error);
+        diagramEl.innerHTML = `<div class="error">
+          <h3>Parse Error</h3>
+          <p>${escapeHtml(error.message || 'Failed to parse diagram data')}</p>
+        </div>`;
+        showView('mermaid');
+      }
+    };
+
+    if (window.parent === window) {
+      document.getElementById('status').textContent = 'Standalone Mode';
+
+      const demoMermaid = `stateDiagram-v2
+    [*] --> Request
+    Request --> API : Submit
+    API --> Domain : Validate
+    Domain --> DB : Save
+    Domain --> External : Notify
+    DB --> [*] : Persisted`;
+
+      const demoGraph = {
+        nodes: [
+          { id: 'ui', label: 'Submit form', layer: 'UI', kind: 'trigger', why: 'User intent starts the workflow.', files: ['app/page.tsx'], order: 0 },
+          { id: 'api', label: 'Server action', layer: 'API', kind: 'command', why: 'The boundary validates input before domain logic.', files: ['app/actions.ts'], order: 1 },
+          { id: 'domain', label: 'Apply business rule', layer: 'Domain', kind: 'decision', why: 'Business invariants stay outside the UI.', files: ['domain/rules.ts'], order: 2 },
+          { id: 'db', label: 'Persist result', layer: 'DB', kind: 'write', why: 'The final state must be queryable later.', files: ['db/schema.ts'], order: 3 },
+          { id: 'external', label: 'Send notification', layer: 'External', kind: 'integration', why: 'Downstream systems need the event.', files: ['lib/notify.ts'], order: 3 }
+        ],
+        edges: [
+          { id: 'ui_api', from: 'ui', to: 'api', label: 'submit', type: 'sync' },
+          { id: 'api_domain', from: 'api', to: 'domain', label: 'validated input', type: 'sync' },
+          { id: 'domain_db', from: 'domain', to: 'db', label: 'state change', type: 'sync' },
+          { id: 'domain_external', from: 'domain', to: 'external', label: 'event', type: 'async' }
+        ],
+        timeline: {
+          unit: 'phase',
+          steps: [
+            { id: 'step_0', at: 0, label: 'User submits', timestamp: 'phase 1', summary: 'The UI captures user intent and starts the workflow.', eventType: 'trigger', activeNodes: ['ui'], changedNodes: ['ui'], counters: { commits: 1, errors: 0 }, annotations: ['Nothing has crossed the API boundary yet.'] },
+            { id: 'step_1', at: 1, label: 'Input crosses boundary', timestamp: 'phase 2', summary: 'The server action validates the request before domain logic runs.', eventType: 'review', activeNodes: ['api'], activeEdges: ['ui_api'], changedNodes: ['api'], changedEdges: ['ui_api'], counters: { commits: 2, errors: 0 } },
+            { id: 'step_2', at: 2, label: 'Rule decision', timestamp: 'phase 3', summary: 'Domain rules decide which state changes are allowed.', eventType: 'decision', activeNodes: ['domain'], activeEdges: ['api_domain'], changedNodes: ['domain'], changedEdges: ['api_domain'], counters: { commits: 3, errors: 1 }, annotations: ['This is the point to inspect when a business invariant fails.'] },
+            { id: 'step_3', at: 3, label: 'State is saved', timestamp: 'phase 4', summary: 'The accepted result is persisted so later screens can query it.', eventType: 'apply', activeNodes: ['db'], activeEdges: ['domain_db'], changedNodes: ['db'], changedEdges: ['domain_db'], counters: { commits: 4, errors: 0, fixes: 1 } },
+            { id: 'step_4', at: 4, label: 'Notification leaves', timestamp: 'phase 5', summary: 'A downstream notification is sent after the durable state exists.', eventType: 'apply', activeNodes: ['external'], activeEdges: ['domain_external'], changedNodes: ['external'], changedEdges: ['domain_external'], counters: { commits: 5, errors: 0, fixes: 1 } }
+          ]
+        }
+      };
+
+      setTimeout(() => {
+        if (hasReceivedExternalContent) return;
+        hasReceivedExternalContent = true;
+        titleEl.textContent = 'Demo 2.5D State Diagram';
+        app.onContentReceived(JSON.stringify({
+          mermaidCode: demoMermaid,
+          title: 'Demo 2.5D State Diagram',
+          graphJson: JSON.stringify(demoGraph, null, 2)
+        }));
+      }, 500);
+    }
+  </script>
+</body>
+</html>

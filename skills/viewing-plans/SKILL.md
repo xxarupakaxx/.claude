@@ -1,7 +1,7 @@
 ---
 name: viewing-plans
 description: 計画・ログ・ロードマップをHTMLビューアで表示するスキル。Roadmap適格性ゲートを通過したタスクでは、Phase 2完了後（30_plan.md作成後）にRoadmap Viewerを優先表示する。短い保守作業は05_log.mdだけで追跡する。「計画を見せて」「HTMLで確認」等の依頼にも対応。
-allowed-tools: Read, mcp__workflow-html-app__view-plan
+allowed-tools: Read, mcp__workflow-html-app__view-plan, mcp__workflow-html-app__view-log
 ---
 
 # Viewing Plans (HTML Viewer版)
@@ -12,9 +12,9 @@ Roadmap Viewer は、task directory に揃っている記録から、実行計�
 第一画面はbrief-firstとし、`実施Task`、`仕様`、`実装根拠`、`実行順序`、`事実・判断・未確定`、`成果物`を同じ読み順で表示する。`graph-map.md` のConcept Mapは折りたたみ可能な補助表示へ置き、第一画面の一次情報を置き換えない。
 Markdown全文、手動ファイル読込、JSON操作、KPIカードは第一画面へ並べず、要約から正本を直接開けるようにする。
 `--serve --watch` で起動すると、Codex app の横に置いたブラウザが自動更新される。
-Plan Viewer / Log Viewer は、明示的に文書本文を確認するときだけ使う。
+Plan Viewer / Log Viewer は個別本文を確認する補助画面であり、Roadmap適格taskではPhase 2とPhase 5の所定の節目に自動表示する。
 
-task memory directoryにCodemapがある場合は、`roadmap.html`のTask WorkspaceへCode Map viewとして統合する。Roadmap generatorはCodemap checkerがfreshと判定したpayloadだけを埋め込む。表示入口は一つだが、コード変更taskでは`context/codemap.md`のpreflightを先に成立させ、Roadmapの更新時刻をCodemap freshnessとして扱わない。
+task memory directoryにCodemapがある場合は、`roadmap.html`のTask WorkspaceへCode Map viewとして統合する。Roadmap generatorはCodemap checkerがfreshと判定したpayloadだけを埋め込む。RoadmapとCode Mapの俯瞰入口はTask Workspaceへ統合したまま、Plan / Logの個別本文は各MCP Viewerで開く。コード変更taskでは`context/codemap.md`のpreflightを先に成立させ、Roadmapの更新時刻をCodemap freshnessとして扱わない。
 
 ## Roadmap適格性ゲート
 
@@ -52,16 +52,18 @@ Hubの主表示は計画書ではなくLive Sessionとする。Codex app-server�
 
 Roadmap適格性ゲートが`explicit-roadmap`または`roadmap`を返した場合だけ、以下のタイミングで**自動的に**発動する（ユーザー確認不要）：
 
-1. **Phase 2完了時**: `${MEMORY_DIR}/memory/<task>/roadmap.html` を生成し、Roadmap Viewerで表示
+1. **Phase 2完了時**: `${MEMORY_DIR}/memory/<task>/roadmap.html` を生成・表示し、`30_plan.md`を`mcp__workflow-html-app__view-plan`でPlan Viewerへ表示
 2. **横で見たい場合**: `scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --watch` を起動し、表示URLを案内
 3. **Phase 3/4の節目**: `40_progress.md` / `80_review.md` / `05_log.md` 更新後、watch中ならブラウザが自動更新
-4. **Phase 5完了時**: Roadmap Viewerで最終状態を表示し、必要に応じて05_log.mdをlog_viewerで表示
+4. **Phase 5完了時**: Roadmap Viewerで最終状態を表示し、`05_log.md`を`mcp__workflow-html-app__view-log`でLog Viewerへ表示
 5. **コード変更task**: task memory directoryのCodemapをcheckし、freshならTask WorkspaceのCode Map viewで確認する。stale / insufficientならコード編集より先にrefreshする
+
+Plan / LogのMCP toolが利用できない場合は個別Viewerを表示済みと扱わず、runtime登録またはsession再起動が必要なblockerとして`05_log.md`と完了報告へ記録する。
 
 ## 手動トリガー
 
 - 「計画をビューアで見たい」「HTMLで確認したい」
-- 「ログをタイムラインで見たい」
+- 「ログをビューアで見たい」
 - 「ロードマップを見たい」「roadmap.htmlを出して」
 - `/viewing-plans` 実行時
 
@@ -140,7 +142,7 @@ python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --w
 不要なら visual explanation を作らず、判断理由を `05_log.md` に残す。
 <!-- roadmap-editorial-companion:end -->
 
-### 3. MCP Apps view-plan 呼び出し（詳細確認用）
+### 3. MCP Apps Plan / Log Viewer呼び出し
 
 `mcp__workflow-html-app__view-plan` ツールを呼び出し:
 
@@ -150,6 +152,8 @@ python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --w
 ```
 
 ツールは自動的にHTML UIリソースを返し、クライアントがビューアを表示する。
+
+Phase 5では同じ入力形式で`mcp__workflow-html-app__view-log`へ`05_log.md`本文を渡す。PlanとLogは別resource URIで開き、安全なMarkdown描画実装を共有する。
 
 ### 4. HTMLビューア表示
 
@@ -212,9 +216,10 @@ python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --w
 - DOMPurifyによるXSS対策
 - コメント追加・Claude Codeへのフィードバック送信
 
-### Log Viewer（ログビューア）※予定
-- Phase自動検出・タイムライン表示
-- サマリー統計（完了Phase数、所要時間等）
+### Log Viewer（ログビューア）
+- `view-log`専用toolと`ui://log-viewer/` resourceでPlanとは別画面として開く
+- 05_log.mdの見出しをoutlineへ表示し、チェック項目の進捗を集計する
+- DOMPurify、origin検証、コメント送信経路はPlan Viewerと共有する
 
 ## セキュリティ
 
@@ -230,7 +235,7 @@ python3 scripts/generate-roadmap-view.py ${MEMORY_DIR}/memory/<task> --serve --w
 2. Claude Codeが30_plan.mdの作成を完了
 3. `scripts/generate-roadmap-view.py <memory_dir>` を実行
 4. `roadmap.html` のパスをユーザーに提示
-5. 必要に応じて mcp__workflow-html-app__view-plan に30_plan.md content を渡す
+5. mcp__workflow-html-app__view-plan に30_plan.md content を渡す
 ```
 
 ```

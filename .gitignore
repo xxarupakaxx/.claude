@@ -14,6 +14,11 @@
 !/skills/
 !/skills/**
 /skills/investigating-gcp-observability/
+!/mcp-servers/
+!/mcp-servers/workflow-html-app/
+!/mcp-servers/workflow-html-app/**
+/mcp-servers/workflow-html-app/node_modules/
+/mcp-servers/workflow-html-app/dist/
 !/agents/
 !/agents/**
 !/config/

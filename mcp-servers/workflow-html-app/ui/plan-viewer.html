@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';">
+  <title>Plan Viewer - MCP App</title>
+  <style>
+    :root {
+      --bg: #1a1a2e;
+      --surface: #16213e;
+      --text: #eee;
+      --text-muted: #888;
+      --accent: #0f4c75;
+      --accent-hover: #3282b8;
+      --border: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    .status {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .status.connected {
+      color: #4caf50;
+    }
+
+    #content {
+      background: var(--surface);
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    #content h1, #content h2, #content h3 {
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+    }
+
+    #content h1:first-child, #content h2:first-child {
+      margin-top: 0;
+    }
+
+    #content p {
+      margin-bottom: 1em;
+    }
+
+    #content ul, #content ol {
+      margin-left: 1.5em;
+      margin-bottom: 1em;
+    }
+
+    #content code {
+      background: rgba(255,255,255,0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'SF Mono', Monaco, monospace;
+    }
+
+    #content pre {
+      background: #0d1117;
+      padding: 15px;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin-bottom: 1em;
+    }
+
+    #content pre code {
+      background: none;
+      padding: 0;
+    }
+
+    .comment-section {
+      background: var(--surface);
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .comment-section h3 {
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+
+    .comment-form {
+      display: flex;
+      gap: 10px;
+    }
+
+    .comment-form textarea {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: inherit;
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    .comment-form button {
+      padding: 10px 20px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .comment-form button:hover {
+      background: var(--accent-hover);
+    }
+
+    .comment-form button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    #comments-list {
+      margin-top: 15px;
+    }
+
+    .comment {
+      background: var(--bg);
+      padding: 10px 15px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .comment-time {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 id="viewer-title">Document Viewer</h1>
+      <span id="status" class="status">Waiting for content...</span>
+    </header>
+
+    <div id="content">
+      <div class="loading">Markdown content will appear here</div>
+    </div>
+
+    <div class="comment-section">
+      <h3 id="review-heading">Send Document Comment to Claude</h3>
+      <div class="comment-form">
+        <textarea id="comment-input" placeholder="Enter your comment about this document..."></textarea>
+        <button id="send-btn" disabled>Send</button>
+      </div>
+      <div id="comments-list"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { marked } from 'marked';
+    import DOMPurify from 'dompurify';
+
+    const DEFAULT_DOCUMENT_KIND = {
+      appName: 'Document Viewer',
+      title: 'Document Viewer',
+      reviewHeading: 'Send Document Comment to Claude',
+      placeholder: 'Enter your comment about this document...',
+      commentPrefix: 'Document Comment',
+    };
+    let activeDocumentKind = DEFAULT_DOCUMENT_KIND;
+
+    function detectDocumentKind(markdown) {
+      const firstHeading = markdown.match(/^#\s+(.+)$/m)?.[1]?.trim() || '';
+      if (/(?:作業ログ|ログ|log)/i.test(firstHeading)) {
+        return {
+          ...DEFAULT_DOCUMENT_KIND,
+          appName: 'Log Viewer', title: 'Log Viewer',
+          reviewHeading: 'Send Log Comment to Claude',
+          placeholder: 'Enter your comment about this log...', commentPrefix: 'Log Comment',
+        };
+      }
+      if (/(?:実装計画|計画|plan)/i.test(firstHeading)) {
+        return {
+          ...DEFAULT_DOCUMENT_KIND,
+          appName: 'Plan Viewer', title: 'Plan Viewer',
+          reviewHeading: 'Send Plan Comment to Claude',
+          placeholder: 'Enter your comment about this plan...', commentPrefix: 'Plan Comment',
+        };
+      }
+      return DEFAULT_DOCUMENT_KIND;
+    }
+
+    function applyDocumentKind(markdown) {
+      activeDocumentKind = detectDocumentKind(markdown);
+      document.title = `${activeDocumentKind.appName} - MCP App`;
+      document.getElementById('viewer-title').textContent = activeDocumentKind.title;
+      document.getElementById('review-heading').textContent = activeDocumentKind.reviewHeading;
+      document.getElementById('comment-input').placeholder = activeDocumentKind.placeholder;
+    }
+
+    // 信頼するオリジンのホワイトリスト
+    const TRUSTED_ORIGINS = [
+      'https://claude.ai',
+      'https://www.claude.ai',
+      'vscode-webview://',
+      'file://'
+    ];
+
+    // オリジン検証関数
+    function isTrustedOrigin(origin) {
+      if (!origin) return false;
+      return TRUSTED_ORIGINS.some(trusted => {
+        if (trusted.endsWith('://')) {
+          return origin.startsWith(trusted);
+        }
+        return origin === trusted;
+      });
+    }
+
+    // MCP App client for bidirectional communication
+    class MCPAppClient {
+      constructor() {
+        this.connected = false;
+        this.pendingMessages = [];
+        this.onContentReceived = null;
+        this.parentOrigin = null;
+
+        // Listen for messages from parent (Claude host)
+        window.addEventListener('message', (event) => this.handleMessage(event));
+
+        // Notify parent that we're ready
+        this.sendToParent({ type: 'app-ready', name: 'Document Viewer', version: '1.0.0' });
+      }
+
+      handleMessage(event) {
+        // オリジン検証（CRITICAL: セキュリティ対策）
+        if (!isTrustedOrigin(event.origin) && event.origin !== '') {
+          console.warn(`Rejected message from untrusted origin: ${event.origin}`);
+          return;
+        }
+
+        const data = event.data;
+        if (!data || typeof data !== 'object') return;
+
+        // 接続時に親オリジンを記録
+        if (data.type === 'connected' && event.origin) {
+          this.parentOrigin = event.origin;
+        }
+
+        switch (data.type) {
+          case 'tool-result':
+            // Received content from MCP server via host
+            if (data.content && this.onContentReceived) {
+              const textContent = data.content.find(c => c.type === 'text');
+              if (textContent) {
+                this.onContentReceived(textContent.text);
+              }
+            }
+            break;
+
+          case 'connected':
+            this.connected = true;
+            this.updateStatus(true);
+            // Send any pending messages
+            this.pendingMessages.forEach(msg => this.sendToParent(msg));
+            this.pendingMessages = [];
+            break;
+        }
+      }
+
+      sendToParent(message) {
+        if (window.parent !== window) {
+          // 親オリジンが判明している場合はそれを使用、そうでなければ'*'
+          // （初回接続時のみワイルドカード許容）
+          const targetOrigin = this.parentOrigin || '*';
+          window.parent.postMessage(message, targetOrigin);
+        }
+      }
+
+      async sendComment(comment) {
+        const message = {
+          type: 'user-message',
+          role: 'user',
+          content: [{
+            type: 'text',
+            text: `[${activeDocumentKind.commentPrefix}]\n${comment}`
+          }]
+        };
+
+        if (this.connected) {
+          this.sendToParent(message);
+        } else {
+          this.pendingMessages.push(message);
+        }
+      }
+
+      updateStatus(connected) {
+        const statusEl = document.getElementById('status');
+        if (connected) {
+          statusEl.textContent = 'Connected';
+          statusEl.classList.add('connected');
+          document.getElementById('send-btn').disabled = false;
+        } else {
+          statusEl.textContent = 'Disconnected';
+          statusEl.classList.remove('connected');
+        }
+      }
+    }
+
+    // Initialize
+    const app = new MCPAppClient();
+    const contentEl = document.getElementById('content');
+    const commentInput = document.getElementById('comment-input');
+    const sendBtn = document.getElementById('send-btn');
+    const commentsList = document.getElementById('comments-list');
+
+    // Local comments storage
+    const comments = [];
+
+    // Handle content from MCP server
+    // CRITICAL: DOMPurifyでサニタイズしてXSSを防止
+    app.onContentReceived = (markdown) => {
+      applyDocumentKind(markdown);
+      const rawHtml = marked.parse(markdown);
+      const sanitizedHtml = DOMPurify.sanitize(rawHtml, {
+        ALLOWED_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'br', 'hr',
+                       'ul', 'ol', 'li', 'a', 'strong', 'em', 'code', 'pre',
+                       'blockquote', 'table', 'thead', 'tbody', 'tr', 'th', 'td',
+                       'img', 'span', 'div'],
+        ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id'],
+        ALLOW_DATA_ATTR: false,
+        ADD_ATTR: ['target'],
+      });
+      contentEl.innerHTML = sanitizedHtml;
+      app.updateStatus(true);
+    };
+
+    // Escape HTML to prevent XSS in comments
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Send comment
+    sendBtn.addEventListener('click', async () => {
+      const comment = commentInput.value.trim();
+      if (!comment) return;
+
+      // Add to local list
+      const now = new Date().toLocaleTimeString();
+      comments.push({ text: comment, time: now });
+
+      // Update UI
+      const commentEl = document.createElement('div');
+      commentEl.className = 'comment';
+      commentEl.innerHTML = `
+        <div>${escapeHtml(comment)}</div>
+        <div class="comment-time">${now}</div>
+      `;
+      commentsList.appendChild(commentEl);
+
+      // Send to Claude
+      await app.sendComment(comment);
+
+      // Clear input
+      commentInput.value = '';
+    });
+
+    // Enable send button when there's input
+    commentInput.addEventListener('input', () => {
+      sendBtn.disabled = !commentInput.value.trim();
+    });
+
+    // Demo: simulate receiving content (for standalone testing)
+    if (window.parent === window) {
+      // Running standalone (not in iframe)
+      document.getElementById('status').textContent = 'Standalone Mode';
+      sendBtn.disabled = false;
+
+      // Show demo content
+      const demoMarkdown = `# Demo Plan
+
+## Overview
+This is a demo of the Plan Viewer MCP App.
+
+## Tasks
+- [ ] Task 1
+- [ ] Task 2
+- [x] Task 3 (completed)
+
+## Notes
+When running inside Claude, this viewer receives Markdown from the MCP server and displays it here.`;
+
+      const rawHtml = marked.parse(demoMarkdown);
+      const sanitizedHtml = DOMPurify.sanitize(rawHtml);
+      contentEl.innerHTML = sanitizedHtml;
+      applyDocumentKind(demoMarkdown);
+    }
+  </script>
+</body>
+</html>

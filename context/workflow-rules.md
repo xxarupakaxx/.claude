@@ -629,7 +629,7 @@ Phase直結でないユーティリティスキル。**状況が発生したら*
 ## HTML Viewer Tools
 
 計画ファイル・ログ・レビュー結果をブラウザでインタラクティブに閲覧するためのHTMLビューア。
-Task Workspaceは`roadmap.html`を唯一の人向け入口として生成し、Plan / ProgressとfreshなCode Mapを同じ画面で切り替える。「現在地」「稼働中の作業」「成果物」「計画」「更新鮮度」「caller / impact / guarding test」を確認できる。`--serve --watch`で起動すると、Codex appの横で開いたブラウザが`roadmap-snapshot.json`をpollingし、Roadmap source、artifact metadata、または検証済みCodemap payloadが変化したときだけ自動更新される。Plan Viewer / Log Viewerは個別ファイルの詳細確認に使う。
+Task Workspaceは`roadmap.html`を俯瞰の主入口として生成し、Plan / ProgressとfreshなCode Mapを同じ画面で切り替える。「現在地」「稼働中の作業」「成果物」「計画」「更新鮮度」「caller / impact / guarding test」を確認できる。`--serve --watch`で起動すると、Codex appの横で開いたブラウザが`roadmap-snapshot.json`をpollingし、Roadmap source、artifact metadata、または検証済みCodemap payloadが変化したときだけ自動更新される。Plan Viewer / Log Viewerは個別ファイルの本文確認に使う。
 
 複数 task を横断して確認する場合は Roadmap Task Hub を起動する:
 
@@ -647,16 +647,18 @@ Task Hubは各sessionの計画全文よりLive Activityを優先する。session
 |---------|----------|------------|---------|
 | Task Workspace | ローカルHTML (`tools/roadmap_viewer.html`) + Roadmap / Codemap generator | task Markdown、`codemap.json` / `codemap.lock` | Plan / Progress、Code Map、preflight状態、live polling |
 | Plan Viewer | `mcp__workflow-html-app__view-plan` | 30_plan.md | Markdownレンダリング、コメント機能、Codexへのフィードバック送信 |
-| Log Viewer | `mcp__workflow-html-app__view-plan` | 05_log.md | Phase検出、タイムライン可視化（予定） |
+| Log Viewer | `mcp__workflow-html-app__view-log` | 05_log.md | 見出しoutline、進捗集計、コメント機能 |
 
 ### 自動発動条件（ユーザー確認不要）
 
 以下のタイミングで`viewing-plans`スキルが**自動的に**発動：
 
-1. **Phase 2完了時**: 30_plan.md作成後、code変更taskはCodemap checkを通し、`scripts/generate-roadmap-view.py <memory_dir>`でTask Workspaceを生成
+1. **Phase 2完了時**: 30_plan.md作成後、code変更taskはCodemap checkを通し、`scripts/generate-roadmap-view.py <memory_dir>`でTask Workspaceを生成・表示してから、`mcp__workflow-html-app__view-plan`でPlan Viewerを表示
 2. **横で見たい場合**: `scripts/generate-roadmap-view.py <memory_dir> --serve --watch` を起動し、表示URLを案内
 3. **Phase 3/4更新時**: `40_progress.md` / `80_review.md` / `05_log.md` / `team-journal.md` / `90_verification.md` または成果物metadataの変更後、watch中なら `roadmap-snapshot.json` が更新され、ブラウザが自動再描画
-4. **Phase 5完了時**: 最終 `roadmap.html` を生成し、必要に応じて個別Plan/Log Viewerも表示
+4. **Phase 5完了時**: 最終 `roadmap.html` を生成・表示し、`mcp__workflow-html-app__view-log`で05_log.mdをLog Viewerへ表示
+
+Plan / LogのMCP toolが利用できない場合は個別Viewerを表示済みと扱わず、runtime登録またはsession再起動が必要なblockerとして`05_log.md`と完了報告へ記録する。
 
 ### 使用方法（自動）
 
@@ -664,7 +666,7 @@ Task Hubは各sessionの計画全文よりLive Activityを優先する。session
 1. メモリディレクトリ（${MEMORY_DIR}/memory/<task>）を特定
 2. python3 scripts/generate-roadmap-view.py <memory_dir> を実行
 3. 生成された <memory_dir>/roadmap.html をユーザーに提示
-4. 詳細確認が必要なら Read で30_plan.md / 05_log.mdを読み込み、MCP Apps viewerへ渡す
+4. Phase 2で30_plan.mdを`view-plan`へ、Phase 5で05_log.mdを`view-log`へ渡す
 ```
 
 ライブ表示:
@@ -682,7 +684,7 @@ generatorはtask directory配下の通常ファイルを成果物metadataとし�
 以下のフレーズでも発動可能：
 - 「計画をビューアで見たい」「HTMLで確認したい」
 - 「ロードマップを見たい」「roadmap.htmlを出して」
-- 「ログをタイムラインで見たい」
+- 「ログをビューアで見たい」
 - `/viewing-plans` 実行
 
 ### セキュリティ
