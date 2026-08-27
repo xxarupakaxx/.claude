@@ -55,6 +55,10 @@
     .label { display: block; margin-bottom: 6px; color: var(--muted); font-family: var(--mono); font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
     .decision-copy strong { display: block; color: var(--ink); font-size: 1.16rem; line-height: 1.55; }
     .status strong { color: var(--warning); font-family: var(--mono); font-size: .9rem; }
+    .orientation-grid { display: grid; grid-template-columns: repeat(5, minmax(130px, 1fr)); gap: 1px; margin: 18px 0 24px; border: 1px solid var(--strong-rule); background: var(--strong-rule); }
+    .orientation-item { min-width: 0; padding: 14px 15px; background: var(--surface); }
+    .orientation-item strong { display: block; color: var(--ink); font-size: .85rem; line-height: 1.55; }
+    .orientation-item span { display: block; margin-top: 5px; color: var(--body); font-size: .78rem; line-height: 1.65; }
     .comparison { width: 100%; margin: 18px 0; border-collapse: collapse; background: var(--surface); font-size: .86rem; line-height: 1.65; }
     .comparison th, .comparison td { padding: 11px 13px; border: 1px solid var(--rule); text-align: left; vertical-align: top; }
     .comparison th { color: var(--ink); border-bottom-color: var(--strong-rule); }
@@ -64,8 +68,11 @@
     .wave h3, .wave p { margin-top: 0; }
     .gate { color: var(--muted); font-family: var(--mono); font-size: .72rem; }
     figure { margin: 26px 0; }
-    .figure-frame { padding: 22px; border: 1.5px solid var(--strong-rule); border-radius: var(--radius); background: var(--surface); overflow: hidden; }
+    .figure-frame { padding: 22px; border: 1.5px solid var(--strong-rule); border-radius: var(--radius); background: var(--surface); overflow-x: auto; overflow-y: hidden; }
     figure svg { display: block; width: 100%; height: auto; }
+    .overview-figure { min-width: 680px; }
+    .overview-figure text { fill: var(--ink); font-family: var(--sans); font-size: 20px; }
+    .overview-figure .small { fill: var(--muted); font-size: 16px; }
     figcaption { margin-top: 9px; color: var(--muted); font-family: var(--mono); font-size: .76rem; line-height: 1.6; }
     .diff { margin: 18px 0 26px; padding: 10px 0; overflow-x: auto; border: 1.5px solid var(--strong-rule); border-radius: var(--radius); background: var(--surface); font-size: .82rem; line-height: 1.65; }
     .diff code { display: block; min-width: max-content; }
@@ -89,6 +96,9 @@
       .reading-layout { grid-template-columns: minmax(0, 1fr); gap: 48px; }
       .rail { position: static; max-height: none; overflow: visible; padding: 28px 0 0; border-left: 0; border-top: 2px solid var(--strong-rule); }
     }
+    @media (max-width: 1040px) {
+      .orientation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
     @media (max-width: 560px) {
       body { font-size: 15px; line-height: 1.85; }
       .page { padding: 22px 16px 44px; }
@@ -97,8 +107,9 @@
       h2 { padding-left: 10px; border-left-width: 6px; font-size: 1.24rem; }
       .decision-band, .wave { grid-template-columns: minmax(0, 1fr); }
       .status { border-left: 0; border-top: 1px solid var(--strong-rule); }
+      .orientation-grid { grid-template-columns: minmax(0, 1fr); }
       .comparison { display: block; overflow-x: auto; }
-      .figure-frame { padding: 12px; overflow-x: auto; }
+      .figure-frame { padding: 12px; }
       .term { grid-template-columns: minmax(0, 1fr); gap: 4px; }
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; } }
@@ -129,10 +140,59 @@
           <div class="decision-copy"><span class="label">{{DECISION_LABEL}}</span><strong>{{DECISION}}</strong></div>
           <div class="status"><span class="label">{{STATUS_LABEL}}</span><strong>{{STATUS}}</strong><p>{{STATUS_DETAIL}}</p></div>
         </div>
+        <!-- orientation triggerに該当しない単純文書では、このsectionごと削る。 -->
+        <section class="wide" aria-labelledby="orientation-title">
+          <h2 id="orientation-title">{{ORIENTATION_TITLE}}</h2>
+          <p>{{ORIENTATION_LEDE}}</p>
+          <div class="orientation-grid" aria-label="背景、failure、scope、目標状態、全体内の位置">
+            <div class="orientation-item"><strong>背景</strong><span>{{BACKGROUND_CONTEXT}}</span></div>
+            <div class="orientation-item"><strong>without-this failure</strong><span>{{WITHOUT_THIS_FAILURE}}</span></div>
+            <div class="orientation-item"><strong>対象scope</strong><span>{{TARGET_SCOPE}}</span></div>
+            <div class="orientation-item"><strong>目標状態</strong><span>{{TARGET_STATE}}</span></div>
+            <div class="orientation-item"><strong>全体内の位置</strong><span>{{SYSTEM_POSITION}}</span></div>
+          </div>
+          <figure class="wide">
+            <div class="figure-frame">
+              <svg class="overview-figure" role="img" aria-labelledby="overview-title overview-desc" viewBox="0 0 920 320" xmlns="http://www.w3.org/2000/svg">
+                <title id="overview-title">{{OVERVIEW_SVG_TITLE}}</title>
+                <desc id="overview-desc">{{OVERVIEW_SVG_DESC}}</desc>
+                <defs>
+                  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#242522"></path>
+                  </marker>
+                  <marker id="failure-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#9a3a30"></path>
+                  </marker>
+                </defs>
+                <rect x="24" y="36" width="180" height="92" rx="8" fill="#fff" stroke="#242522" stroke-width="2"></rect>
+                <text x="48" y="72">1. {{OVERVIEW_NODE_ONE}}</text>
+                <text class="small" x="48" y="100">{{OVERVIEW_NODE_ONE_NOTE}}</text>
+                <rect x="276" y="36" width="180" height="92" rx="8" fill="#fff" stroke="#242522" stroke-width="2"></rect>
+                <text x="300" y="72">2. {{OVERVIEW_NODE_TWO}}</text>
+                <text class="small" x="300" y="100">{{OVERVIEW_NODE_TWO_NOTE}}</text>
+                <rect x="528" y="36" width="180" height="92" rx="8" fill="#fff" stroke="#242522" stroke-width="2"></rect>
+                <text x="552" y="72">3. {{OVERVIEW_NODE_THREE}}</text>
+                <text class="small" x="552" y="100">{{OVERVIEW_NODE_THREE_NOTE}}</text>
+                <rect x="276" y="188" width="180" height="82" rx="8" fill="#f2f1ec" stroke="#242522" stroke-width="2"></rect>
+                <text x="300" y="222">S. {{TARGET_BOUNDARY}}</text>
+                <text class="small" x="300" y="248">{{TARGET_BOUNDARY_NOTE}}</text>
+                <rect x="692" y="188" width="180" height="82" rx="8" fill="#fff" stroke="#9a3a30" stroke-width="2"></rect>
+                <text x="716" y="222">F. {{FAILURE_DESTINATION}}</text>
+                <text class="small" x="716" y="248">{{FAILURE_DESTINATION_NOTE}}</text>
+                <path d="M204 82 H276" fill="none" stroke="#242522" stroke-width="2.5" marker-end="url(#arrow)"></path>
+                <path d="M456 82 H528" fill="none" stroke="#242522" stroke-width="2.5" marker-end="url(#arrow)"></path>
+                <path d="M366 128 V188" fill="none" stroke="#242522" stroke-width="2.5" marker-end="url(#arrow)"></path>
+                <path d="M456 228 H692" fill="none" stroke="#9a3a30" stroke-width="2.5" stroke-dasharray="8 7" marker-end="url(#failure-arrow)"></path>
+              </svg>
+            </div>
+            <!-- Detail sliceは1、2、3、S、Fのlabelを再利用し、このoverviewを描き直さない。 -->
+            <figcaption>{{OVERVIEW_CAPTION}}</figcaption>
+          </figure>
+        </section>
         <section aria-labelledby="section-one">
           <h2 id="section-one">{{SECTION_ONE_TITLE}}</h2>
           <p>{{SECTION_ONE_LEDE}}</p>
-          <!-- 問いに合うcomparison、wave、figure、diff、tableの一つを置く。 -->
+          <!-- Detail slice: overviewの番号や名称に接続するcomparison、wave、figure、diff、tableの一つを置く。 -->
         </section>
         <section aria-labelledby="section-two">
           <h2 id="section-two">{{SECTION_TWO_TITLE}}</h2>

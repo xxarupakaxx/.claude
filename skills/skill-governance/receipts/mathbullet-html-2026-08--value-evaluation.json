@@ -1,36 +1,46 @@
 {
   "schema_version": 1,
   "collection_id": "mathbullet-html-2026-08",
-  "method": "main-agent deterministic routing review plus user-visible document acceptance",
+  "method": "main-agent deterministic routing review plus candidate fixture review, user feedback, and local manifest checks",
   "positives": [
     {
       "prompt": "実装ロードマップをHTML計画書にして",
-      "expected": "creating-html-documents",
+      "expected": "creating-html-documents decision-plan with overview-first gate when the roadmap has 3+ interacting stages",
       "result": "pass"
     },
     {
       "prompt": "技術解説を図表付きHTMLでまとめて",
-      "expected": "creating-html-documents",
+      "expected": "creating-html-documents technical-explainer with orientation and connected overview/detail when system interactions require it",
       "result": "pass"
     },
     {
       "prompt": "コード変更レビューを読みやすいHTMLにして",
-      "expected": "creating-html-documents",
+      "expected": "creating-html-documents change-review with before/after, impact, validation, and overview-connected detail slices",
       "result": "pass"
     },
     {
       "prompt": "出典付き調査報告をHTML化して",
-      "expected": "creating-html-documents",
+      "expected": "creating-html-documents research-report with source/evidence separation and overview-first when multiple sources and decision axes interact",
       "result": "pass"
     },
     {
       "prompt": "計画書をRoadmap表示と同じ内容でHTML出力して",
-      "expected": "creating-html-documents",
+      "expected": "creating-html-documents with Roadmap/viewing-plans responsibility boundary",
       "result": "pass"
     },
     {
       "prompt": "印刷にも耐える日本語の長文HTMLを作って",
-      "expected": "creating-html-documents",
+      "expected": "creating-html-documents with responsive, accessibility, print, and evidence validation gates",
+      "result": "pass"
+    },
+    {
+      "prompt": "認証middleware、Bot一覧API、Dashboard表示の3箇所にまたがる変更差分をレビュー用HTMLにまとめて。認証境界がない場合にどこへfailureが伝播するかも示してください。",
+      "expected": "complex-overview: orientation includes without-this failure, accessible overview SVG shows middleware/API/Dashboard/validation/failure propagation, and detail slices reuse overview labels",
+      "result": "pass"
+    },
+    {
+      "prompt": "2ファイルだけの表記ゆれ修正を、確認用の短いHTMLにしてください。変更内容と確認結果だけ分かればよく、図はいりません。",
+      "expected": "simple-overview-opt-out: no forced overview SVG; conclusion, scope, and evidence remain present",
       "result": "pass"
     },
     {
@@ -78,12 +88,31 @@
   ],
   "observed_user_outcome": {
     "initial_feedback": "計画書として言えるか分からず、GitHub上の出力方式を参考に改善してほしい",
+    "overview_feedback": "複雑なworkflow / architecture / lifecycle / failure pathの文書では最初に全体像がないと読者が現在地と影響を誤るため、orientation、without-this failure、overview SVG、connected detailを契約化する修正を要求",
     "accepted_feedback": "htmlさ、実行したら、ブラウザに強制的に開くようにできる？ .codexのね。 .claudeの方も修正してpushしておいて",
-    "limitation": "評価はこのtaskの代表例、local openerの実動作、決定的routing reviewであり、長期の利用統計ではない"
+    "governance_repair_approval": "OK対応して",
+    "limitation": "評価はこのtaskの代表例、candidate eval fixture、local manifest/frontmatter checks、決定的routing reviewであり、長期の利用統計ではない"
+  },
+  "case_coverage": {
+    "complex_overview": {
+      "source": "creating-html-documents/evals/evals.json ids 1, 2, 3, and 5",
+      "decision": "pass",
+      "evidence": "overview-first gate, orientation, without-this failure, accessible overview SVG, and connected detail slices are present in SKILL.md, references/document-system.md, references/validation.md, and eval fixtures"
+    },
+    "simple_overview_opt_out": {
+      "source": "creating-html-documents/evals/evals.json id 4",
+      "decision": "pass",
+      "evidence": "simple two-file notation cleanup case explicitly avoids forced overview SVG while retaining conclusion, scope, and evidence"
+    },
+    "browser_open_opt_out": {
+      "source": "representative prompt review",
+      "decision": "pass",
+      "evidence": "post-validation opener is default, and explicit user opt-out suppresses opener while preserving generated file reporting"
+    }
   },
   "result": {
-    "trial_count": 14,
-    "passed": 14,
+    "trial_count": 16,
+    "passed": 16,
     "false_positive": 0,
     "false_negative": 0
   }

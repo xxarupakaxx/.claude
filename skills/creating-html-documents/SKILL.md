@@ -24,20 +24,46 @@ HTMLを書く前に次を一行ずつ確定する。
 
 詳細は `references/document-system.md` を読む。
 
-- `decision-plan`: 採用判断、現状と目標、比較根拠、実装Wave、受入条件、risk、rollback。
-- `technical-explainer`: 結論、用語、構造、処理flow、制約、例、検証方法。
-- `change-review`: 変更理由、before / after、重要差分、影響範囲、risk、検証。
-- `research-report`: 結論、scope、方法、発見、限界、含意、推奨、source。
+- `decision-plan`: 採用判断、Overview-first gate該当時のorientation / overview、現状と目標、比較根拠、実装Wave、受入条件、risk、rollback。
+- `technical-explainer`: 結論、Overview-first gate該当時のorientation / overview、用語、処理flow、制約、例、検証方法。
+- `change-review`: 変更理由、Overview-first gate該当時のorientation / overview、before / after、重要差分、影響範囲、risk、検証。
+- `research-report`: 結論、Overview-first gate該当時のorientation / overview、scope、方法、発見、限界、含意、推奨、source。
 
 文書型は固定templateではない。各章に一つの問いを与え、その問いに合うvisual patternを一つ選ぶ。
+
+## Orientationとoverviewを置く
+
+workflow、architecture、lifecycle、before / after、dependency、failure pathなどを説明し、3つ以上の相互作用するactor、component、stage、state、責務、dependencyが関係する文書では、中心主張の直後にorientationとaccessibleなinline SVG overviewを置く。欠如時failureが複数箇所へ伝播する場合も同じ扱いにする。単にfileやevidenceが3件あるだけでは発火しない。
+
+orientationは長い背景説明ではない。次の5点を短く並べ、読者が「なぜ読むか」と「全体のどこを見ているか」を先に掴めるようにする。
+
+1. 背景: この文書が必要になった状況。
+2. without-this failure: この理解や変更がない場合に何が壊れるか。
+3. 対象scope: どの境界、期間、system、file、機能を扱うか。
+4. 目標状態: 読後または変更後に成立しているべき状態。
+5. 全体内の位置: 対象が周辺actor、上流、下流、検証、運用のどこに接続するか。
+
+overviewからdetailへ降りるzoom levelを固定する。
+
+- Level 0: headerまたはdecision bandで中心主張を言い切る。
+- Level 1: orientationで背景、without-this failure、scope、目標状態、全体内の位置を示す。
+- Level 2: overview SVGで全体のactor / component / stage、主要flow、対象境界、failureの伝播先を一枚で示す。
+- Level 3: detail sliceでoverview上の番号や名称を再利用し、一つのsubflow、before / after、failure path、diffだけを詳述する。
+- Level 4: evidenceでtest、source、制約、残余riskを示す。
+
+detail図はoverviewと同じ名称、番号、境界名で接続する。overviewの情報を別図として再描画しない。detailで同じ情報を繰り返すだけなら、図を増やさず、該当番号への文章、table、diff、evidenceにする。
+
+単一事実、単純な一操作、短い値比較、2要素だけのbefore / afterにはoverview SVGを強制しない。その場合も結論先行、scope、evidenceは保つ。
 
 ## Visual patternを選ぶ
 
 | 読者の問い | 主な表現 |
 |---|---|
 | 何を採用するか | decision band、比較matrix |
+| 全体のどこを見るか | orientation、overview SVG |
 | 何が変わるか | before / after、diff |
 | どう動くか | inline SVGのflow、sequence |
+| ないと何が壊れるか | failure path、impact map |
 | どの順で進めるか | entry / work / exitを持つWave |
 | 合格したか | acceptance matrix、evidence table |
 | 正確な値は何か | table。必要時だけchartを添える |
@@ -50,14 +76,16 @@ cardを先に並べない。同じ状態をbadge、card、summary、diagramで�
 1. `assets/editorial-document.html` を基礎にする。既存HTMLの編集ではfilenameを変えない。
 2. 文書型に応じて章を選び、不要なplaceholderとcomponentを削る。
 3. 中心主張と現在地を最初のviewportに置く。背景説明から始めない。
-4. 本文をprimary surfaceにする。wideでは約68–76字幅、補助railは250–310pxを目安にする。
-5. 図はinline SVGを正本にし、`title`、`desc`、captionを付ける。Mermaid runtimeを新規導入しない。
-6. codeはescapeし、言語classまたは明示labelを付ける。変更は理由の直後にdiffとして置く。
-7. 表は見出しcellへ`scope`を付け、狭幅では局所scrollまたは意味順を保つstackへ変える。
-8. 出典は主張の近くに置き、末尾のsource listへ接続する。sourceの内容と会話上の推測を混ぜない。
-9. `references/validation.md` のgateを通す。
-10. 検証合格後、ユーザーが自動表示を不要と明示していなければ、生成fileの絶対pathをhostのplatform openerで開く。macOSでは`/usr/bin/open "<absolute-path>"`、Linux desktopでは`xdg-open "<absolute-path>"`、Windows PowerShellでは`Start-Process "<absolute-path>"`を使う。
-11. browser表示の成否、生成fileの絶対path、文書型、検証結果、残る制約を報告する。openerがない、非対話環境である、または起動に失敗した場合は、黙って成功扱いせず理由と絶対pathを示す。
+4. orientation triggerに該当する文書では、中心主張を含むheaderまたはdecision bandの直後にorientationとoverview SVGを置く。
+5. overviewの番号、名称、境界を決めてからdetail sliceを書く。detail側で同じ番号や名称を使い、対応しない詳細図を作らない。
+6. 本文をprimary surfaceにする。wideでは約68–76字幅、補助railは250–310pxを目安にする。
+7. 図はinline SVGを正本にし、`role="img"`、`title`、`desc`、captionを付ける。Mermaid runtimeを新規導入しない。
+8. codeはescapeし、言語classまたは明示labelを付ける。変更系文書では、diffをoverviewに対応するdetail slice内に置き、そのsliceの変更理由の直後に示す。
+9. 表は見出しcellへ`scope`を付け、狭幅では局所scrollまたは意味順を保つstackへ変える。
+10. 出典は主張の近くに置き、末尾のsource listへ接続する。sourceの内容と会話上の推測を混ぜない。
+11. `references/validation.md` のgateを通す。
+12. 検証合格後、ユーザーが自動表示を不要と明示していなければ、生成fileの絶対pathをhostのplatform openerで開く。macOSでは`/usr/bin/open "<absolute-path>"`、Linux desktopでは`xdg-open "<absolute-path>"`、Windows PowerShellでは`Start-Process "<absolute-path>"`を使う。
+13. browser表示の成否、生成fileの絶対path、文書型、検証結果、残る制約を報告する。openerがない、非対話環境である、または起動に失敗した場合は、黙って成功扱いせず理由と絶対pathを示す。
 
 ## 自己完結を既定にする
 
@@ -93,6 +121,8 @@ cardを先に並べない。同じ状態をbadge、card、summary、diagramで�
 - print previewで本文、図、表、railの読み順が壊れない。
 - 外部resourceは依頼で許可されたものだけ。既定は0。
 - 制作過程やpromptの痕跡が本文に残らない。
+- orientation triggerに該当する文書では、中心主張直後のorientation、accessible overview SVG、対応するdetail slice、evidenceが同じ名称や番号で接続している。
+- triggerに該当しない単純文書では、図を省いた理由が文書構造上自然で、結論、scope、根拠が不足していない。
 - 明示的なopt-outがない限り検証済みfileをbrowserで開き、起動できない環境では失敗理由と絶対pathを報告する。
 
 見た目の好みだけで合格にしない。中心主張の理解、根拠到達、responsive、印刷、安全性を同じrubricで確認する。

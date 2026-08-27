@@ -14,3 +14,7 @@ This package is a reviewed local adaptation, not an unchanged mirror. It retains
 The adaptation adds document-type selection, decision-first composition, Roadmap responsibility boundaries, offline-by-default delivery, CSP, responsive and accessibility gates, and evaluation fixtures.
 
 The default path removes remote fonts, CDN syntax highlighting, MathJax, clipboard JavaScript, and the executable PDF rendering shell. Those capabilities are not included in this reviewed tree.
+
+## Local refinements
+
+- `2026-08-27`: Added the overview-first refinement for complex Japanese HTML documents. Workflow, architecture, lifecycle, before/after, dependency, and failure-propagation documents now require a short orientation after the central claim, an accessible inline SVG overview when 3+ interacting elements are involved, detail slices that reuse the overview labels, and matching validation/template/eval coverage. This is a local candidate refinement only; it does not promote to the active runtime or any replica by itself.

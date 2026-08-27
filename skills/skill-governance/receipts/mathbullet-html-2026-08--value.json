@@ -3,7 +3,7 @@
   "kind": "value",
   "collection_id": "mathbullet-html-2026-08",
   "generation": 3,
-  "subject_sha256": "743078cc87b776f9823c83ae2eeb7809abb42c220c8cf93e9771270c0ddab56f",
+  "subject_sha256": "82bcd7946ec96a17b6f601605accd675bab7a1d6abb18fc7e85711826e2eadd9",
   "representative_prompts": [
     "実装ロードマップをHTML計画書にして",
     "技術解説を図表付きHTMLでまとめて",
@@ -13,6 +13,8 @@
     "印刷にも耐える日本語の長文HTMLを作って",
     "レビューをHTMLにして、完成したらブラウザで開いて",
     "HTMLは作るがブラウザを開かないで",
+    "認証middleware、Bot一覧API、Dashboard表示にまたがる変更とfailure propagationをoverview-first HTMLで説明して",
+    "2ファイルだけの表記ゆれ修正を図なしの短いHTMLにして",
     "Pythonのテストだけ直して",
     "画像を一枚生成して",
     "CSVを集計して",
@@ -25,22 +27,22 @@
     "limitation": "ユーザー評価では計画書としての構造とGitHub Skill由来の出力方式が十分に見えなかった"
   },
   "candidate": {
-    "state": "4文書型、Roadmap/viewing-plans連携、オフライン安全性、レスポンシブ・印刷・アクセシビリティ検証、検証後のlocal browser表示を一つのSkillへ統合",
+    "state": "4文書型、Roadmap/viewing-plans連携、オフライン安全性、レスポンシブ・印刷・アクセシビリティ検証、検証後のlocal browser表示に加え、複雑な説明のorientation・without-this failure・overview SVG・connected detailと単純文書の図省略を一つのSkillへ統合",
     "evaluation": {
       "path": "receipts/mathbullet-html-2026-08--value-evaluation.json",
-      "sha256": "fe735ddb87f7f02a83c0e54753d0afdd52e493aba859aceca8c6a969bc58955b"
+      "sha256": "4f28c210f87070305894eee02afc17e4d861bdec95170269f71cf0626ab594f3"
     },
     "result": {
-      "trial_count": 14,
-      "passed": 14,
-      "positive_routes": 8,
+      "trial_count": 16,
+      "passed": 16,
+      "positive_routes": 10,
       "negative_routes": 6,
       "false_positive": 0,
       "false_negative": 0
     },
-    "user_acceptance": "local browserの自動表示をCodex / Claude双方へ反映してpushするようユーザーが明示"
+    "user_acceptance": "overview-first改善を深く検討して修正し、ガバナンスBLOCKINGへ対応した上でmainへマージするようユーザーが明示"
   },
-  "trial_count": 14,
+  "trial_count": 16,
   "pass_at_1": 1.0,
   "trigger_precision": 1.0,
   "trigger_recall": 1.0,
@@ -52,10 +54,10 @@
     "type": "main-agent-deterministic-review",
     "evidence": {
       "path": "receipts/mathbullet-html-2026-08--value-evaluation.json",
-      "sha256": "fe735ddb87f7f02a83c0e54753d0afdd52e493aba859aceca8c6a969bc58955b"
+      "sha256": "4f28c210f87070305894eee02afc17e4d861bdec95170269f71cf0626ab594f3"
     },
-    "limitation": "長期利用統計ではなく、このtaskのlocal opener実動作と14件の決定的評価"
+    "limitation": "長期利用統計ではなく、このtaskのlocal opener実動作、16件の決定的評価、candidate fixture、独立docs review"
   },
-  "date": "2026-08-27",
+  "date": "2026-08-28",
   "decision": "pass"
 }

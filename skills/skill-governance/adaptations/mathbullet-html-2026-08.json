@@ -16,6 +16,11 @@
   "added_contracts": [
     "decision-plan, technical-explainer, change-review, and research-report document types",
     "Roadmap and viewing-plans responsibility boundary for multi-phase work",
+    "overview-first gate for workflow, architecture, lifecycle, before/after, dependency, and failure-propagation documents with 3+ interacting elements",
+    "orientation block immediately after the central claim, covering background, without-this failure, scope, target state, and system position",
+    "accessible inline SVG overview before connected detail slices for complex documents",
+    "detail slices must reuse overview labels, numbers, and boundary names instead of redrawing the same whole-system view",
+    "simple single-fact, single-operation, short comparison, and two-element before/after documents explicitly opt out of forced overview diagrams while preserving conclusion, scope, and evidence",
     "offline-by-default delivery with CSP and system fonts",
     "responsive, accessibility, print, and evidence validation gates",
     "post-validation local browser display through the host platform opener unless the user opts out"

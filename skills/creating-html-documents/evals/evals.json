@@ -4,19 +4,31 @@
     {
       "id": 1,
       "prompt": "この技術導入案を、採否、実装Wave、受入条件、リスクが分かる自己完結HTML計画書にして。Roadmapとは役割を分けてください。",
-      "expected_output": "decision-plan型の単一HTML。冒頭で判断可能で、Waveに入口と出口があり、375/768/1440pxと印刷を検証する。",
+      "expected_output": "decision-plan型の単一HTML。冒頭で判断可能で、中心主張直後にorientationとaccessibleなoverview SVGがあり、overviewの番号や名称に接続するWave、受入条件、risk、evidenceを持つ。375/768/1440pxと印刷を検証する。",
       "files": []
     },
     {
       "id": 2,
       "prompt": "このシステムの仕組みを、用語欄、構成図、処理フロー、制約を含む日本語HTML解説にしてください。外部CDNは使わないで。",
-      "expected_output": "technical-explainer型の自己完結HTML。本文とrail、accessibleなinline SVG、制約、sourceを持つ。",
+      "expected_output": "technical-explainer型の自己完結HTML。結論直後に背景、without-this failure、scope、目標状態、全体内の位置を持つorientationを置き、accessibleなoverview SVGから処理flowのdetail sliceへ接続する。外部CDNは0件。",
       "files": []
     },
     {
       "id": 3,
-      "prompt": "この変更差分をレビュー用HTMLにまとめて。変更理由を先に説明し、before/after、コード差分、影響範囲、検証結果を読めるようにして。",
-      "expected_output": "change-review型の自己完結HTML。理由の直後にdiffがあり、影響、rollback、evidenceを区別できる。",
+      "prompt": "認証middleware、Bot一覧API、Dashboard表示の3箇所にまたがる変更差分をレビュー用HTMLにまとめて。変更理由を先に説明し、before/after、コード差分、影響範囲、検証結果を読めるようにして。認証境界がない場合にどこへfailureが伝播するかも示してください。",
+      "expected_output": "change-review型の自己完結HTML。中心主張直後にorientationがあり、背景、without-this failure、scope、目標状態、全体内の位置を含む。認証middleware、API、Dashboard、検証、failure伝播先をaccessibleなoverview SVGで示し、detail sliceはoverviewと同じ番号や名称でbefore/after、diff、impact、rollback、evidenceへ接続する。",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "2ファイルだけの表記ゆれ修正を、確認用の短いHTMLにしてください。変更内容と確認結果だけ分かればよく、図はいりません。",
+      "expected_output": "単純な確認HTML。結論、scope、根拠を示すが、orientation triggerに該当しないためoverview SVGを強制しない。",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "複数の調査source、判断軸、関係者が絡む市場調査を、推奨判断まで読める日本語HTMLレポートにしてください。sourceごとの主張、判断軸のつながり、誤判断した場合の影響も示してください。",
+      "expected_output": "research-report型の自己完結HTML。結論直後にorientationを置き、背景、without-this failure、scope、目標状態、全体内の位置を含む。複数source、判断軸、関係者の関係をaccessibleなoverview SVGで示し、detail sliceはoverviewと同じ番号や名称で主要発見、比較、反例、evidenceへ接続する。",
       "files": []
     }
   ]
