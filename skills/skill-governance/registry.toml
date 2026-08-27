@@ -130,7 +130,7 @@ reason = "legacy command-format SKILL.md omits name; exact tree hash binds the d
 root_id = "vault-codex"
 relative_path = "commit"
 inferred_name = "commit"
-tree_sha256 = "2d39ef4a071c4be136f815ec01ad3c118ee9489d98a7c4d0be04e9b715892bd5"
+tree_sha256 = "c503c2ca63408917f133201384217c4a3214299e2d9968adcf82972adbf6d59e"
 reason = "legacy command-format SKILL.md omits name; exact tree hash binds the directory-name inference for collision checks"
 
 [[name_inferences]]

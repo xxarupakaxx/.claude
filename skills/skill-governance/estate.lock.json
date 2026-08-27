@@ -1165,7 +1165,7 @@
       "relative_path": "viewing-plans",
       "resolved_name": "viewing-plans",
       "root_id": "claude",
-      "tree_sha256": "8a9e89ec350dc1829ecb1650990a25f54cd7cba9f6a93b991f002fddc5529c80"
+      "tree_sha256": "b7c2230b94a0d9d0f1f9ee396462b9c6a5d9b9ed7726fa42ac0078fe945d23ae"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2635,7 +2635,7 @@
       "relative_path": "viewing-plans",
       "resolved_name": "viewing-plans",
       "root_id": "codex",
-      "tree_sha256": "8a9e89ec350dc1829ecb1650990a25f54cd7cba9f6a93b991f002fddc5529c80"
+      "tree_sha256": "efe1fc2d58aee78faec472d1a68244a14b917b1fd1382cf2d5fbbcaa2eb34d9b"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3697,7 +3697,7 @@
       "relative_path": "commit",
       "resolved_name": "commit",
       "root_id": "vault-codex",
-      "tree_sha256": "2d39ef4a071c4be136f815ec01ad3c118ee9489d98a7c4d0be04e9b715892bd5"
+      "tree_sha256": "c503c2ca63408917f133201384217c4a3214299e2d9968adcf82972adbf6d59e"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3769,7 +3769,7 @@
       "relative_path": "create-subagent",
       "resolved_name": "create-subagent",
       "root_id": "vault-codex",
-      "tree_sha256": "24dd1fdc5969b561c13cbcba03d7445165f78c44beadb2d50d9f42ed6f799855"
+      "tree_sha256": "0aed638a482cd278773c2a274133d762e8addc25b4f66d25816f25fdf0f6ce36"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3779,6 +3779,15 @@
       "resolved_name": "creating-adr",
       "root_id": "vault-codex",
       "tree_sha256": "a5d3b88656e9076445c910c3075294fd79cd42750f73aa3f4a2d30864dd17d47"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "creating-html-documents",
+      "resolved_name": "creating-html-documents",
+      "root_id": "vault-codex",
+      "tree_sha256": "a243f4a148333ac99a15241ae47cc35c7f69349d28b15408eaf3a4bf50cd8855"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4075,7 +4084,7 @@
       "relative_path": "hatch-pet",
       "resolved_name": "hatch-pet",
       "root_id": "vault-codex",
-      "tree_sha256": "bf298a80daa774ff03db82e9ad9aa98820811c807c0e4b2179ef90ef17f4b421"
+      "tree_sha256": "f36056d853571b358f1c1a00cbb169f930969a9b92e5db1e0fbe5f7276acbae6"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4327,7 +4336,7 @@
       "relative_path": "pr",
       "resolved_name": "pr",
       "root_id": "vault-codex",
-      "tree_sha256": "4b6b5be67db0b3e8a826bf64b8478bee1105c3c72577e74cf685e843dbea9bb7"
+      "tree_sha256": "b4c59c9901fa73116767447318e4546c693a09bee51a4e6446eae30925742b16"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4555,7 +4564,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "vault-codex",
-      "tree_sha256": "b9f401114aee42c9c414b25ef9b41cfcbd5d03da3e93ad1dc8e4cf9abacebd29"
+      "tree_sha256": "f21438a4d620ff0700cd9a6e40b9e937834c91aba4f21b62e4223b32b0b8f571"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4708,7 +4717,7 @@
       "relative_path": "team-run",
       "resolved_name": "team-run",
       "root_id": "vault-codex",
-      "tree_sha256": "9581eff0f7f286c7d4f8fb14c23ef1104260170c89f3d2f9538bb5ea63b5f743"
+      "tree_sha256": "8a9adffde4fe6b6f296865b11d5d63a958ef1ee6b1c689f88ad7ccfdea252b12"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4798,7 +4807,7 @@
       "relative_path": "viewing-plans",
       "resolved_name": "viewing-plans",
       "root_id": "vault-codex",
-      "tree_sha256": "8a9e89ec350dc1829ecb1650990a25f54cd7cba9f6a93b991f002fddc5529c80"
+      "tree_sha256": "efe1fc2d58aee78faec472d1a68244a14b917b1fd1382cf2d5fbbcaa2eb34d9b"
     },
     {
       "classification": "preexisting-unclassified",
@@ -5062,6 +5071,6 @@
       "tree_sha256": "73323581b29fa6129136b0d3c393c2b485cddb7d1c2622bf185d36d0d9a570fd"
     }
   ],
-  "registry_sha256": "ed4ceed3189d09f39ad74ac52835e2ae4151f1f15e4c38e978484eff0b499185",
+  "registry_sha256": "7943e2363baed95d0c8eeb0422e23a5e38736999fd986c131a0af6c82c3422a6",
   "schema_version": 2
 }
