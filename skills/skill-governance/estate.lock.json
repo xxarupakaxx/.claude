@@ -262,7 +262,7 @@
       "relative_path": "creating-html-documents",
       "resolved_name": "creating-html-documents",
       "root_id": "claude",
-      "tree_sha256": "a243f4a148333ac99a15241ae47cc35c7f69349d28b15408eaf3a4bf50cd8855"
+      "tree_sha256": "0f784ea5a62c52fdfd0450c6d0856112adc7ea0e286cb40c07dee69468a7a0b0"
     },
     {
       "classification": "legacy-active",
@@ -940,7 +940,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "claude",
-      "tree_sha256": "2165727055f3a500eadb45deba156d388d1fe5db9f8755d1b38cfc01897636e9"
+      "tree_sha256": "2b14c8c27d09fee9b8da810f96cf5eae1b412a31b0a880ca2acf1e4febb781cc"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1165,7 +1165,7 @@
       "relative_path": "viewing-plans",
       "resolved_name": "viewing-plans",
       "root_id": "claude",
-      "tree_sha256": "b7c2230b94a0d9d0f1f9ee396462b9c6a5d9b9ed7726fa42ac0078fe945d23ae"
+      "tree_sha256": "efe1fc2d58aee78faec472d1a68244a14b917b1fd1382cf2d5fbbcaa2eb34d9b"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1615,7 +1615,7 @@
       "relative_path": "creating-html-documents",
       "resolved_name": "creating-html-documents",
       "root_id": "codex",
-      "tree_sha256": "a243f4a148333ac99a15241ae47cc35c7f69349d28b15408eaf3a4bf50cd8855"
+      "tree_sha256": "0f784ea5a62c52fdfd0450c6d0856112adc7ea0e286cb40c07dee69468a7a0b0"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2392,7 +2392,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "codex",
-      "tree_sha256": "f57181414f6c252890af53dcb9e46a91f1b7a5eb53ef9c19ddf0d353129dcee0"
+      "tree_sha256": "5a14e793e5cf5f928b9bae6f4cfdecea78c0087018e8487279da37585a1e51a4"
     },
     {
       "classification": "preexisting-unclassified",
@@ -5071,6 +5071,6 @@
       "tree_sha256": "73323581b29fa6129136b0d3c393c2b485cddb7d1c2622bf185d36d0d9a570fd"
     }
   ],
-  "registry_sha256": "7943e2363baed95d0c8eeb0422e23a5e38736999fd986c131a0af6c82c3422a6",
+  "registry_sha256": "694e74958273525a346ea1947b81e6871798388460ae97f812dadc347075d95d",
   "schema_version": 2
 }

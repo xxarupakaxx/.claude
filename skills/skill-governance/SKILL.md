@@ -1,6 +1,7 @@
 ---
 name: skill-governance
 description: Third-party Agent Skill の発見、評判調査、隔離監査、価値評価、採用、更新、廃止候補化を安全に管理する。外部 Skill を入れたい、skills.sh や GitHub の候補を比較したい、既存 Skill の provenance や drift を確認したいときに使う。通常の採用済み Skill の利用先選択には使わない。
+disable-model-invocation: true
 ---
 
 # Skill Governance
