@@ -940,7 +940,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "claude",
-      "tree_sha256": "ce4dae6961fd06578002b7344ddada010d8034eba0f5d7cfbf6bc7ebf774d6f6"
+      "tree_sha256": "2165727055f3a500eadb45deba156d388d1fe5db9f8755d1b38cfc01897636e9"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2392,7 +2392,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "codex",
-      "tree_sha256": "f21438a4d620ff0700cd9a6e40b9e937834c91aba4f21b62e4223b32b0b8f571"
+      "tree_sha256": "f57181414f6c252890af53dcb9e46a91f1b7a5eb53ef9c19ddf0d353129dcee0"
     },
     {
       "classification": "preexisting-unclassified",
