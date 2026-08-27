@@ -56,7 +56,8 @@ cardを先に並べない。同じ状態をbadge、card、summary、diagramで�
 7. 表は見出しcellへ`scope`を付け、狭幅では局所scrollまたは意味順を保つstackへ変える。
 8. 出典は主張の近くに置き、末尾のsource listへ接続する。sourceの内容と会話上の推測を混ぜない。
 9. `references/validation.md` のgateを通す。
-10. 生成fileの絶対path、文書型、検証結果、残る制約を報告する。
+10. 検証合格後、ユーザーが自動表示を不要と明示していなければ、生成fileの絶対pathをhostのplatform openerで開く。macOSでは`/usr/bin/open "<absolute-path>"`、Linux desktopでは`xdg-open "<absolute-path>"`、Windows PowerShellでは`Start-Process "<absolute-path>"`を使う。
+11. browser表示の成否、生成fileの絶対path、文書型、検証結果、残る制約を報告する。openerがない、非対話環境である、または起動に失敗した場合は、黙って成功扱いせず理由と絶対pathを示す。
 
 ## 自己完結を既定にする
 
@@ -66,6 +67,7 @@ cardを先に並べない。同じ状態をbadge、card、summary、diagramで�
 - remote font、CDN、analytics、remote image、外部runtimeを既定では読み込まない。
 - scriptは内容に不可欠なinteractionがある場合だけ追加する。static文書はscript 0を優先する。
 - CSPを付ける。static単一fileの既定は `default-src 'none'; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'` とする。
+- HTML自身へbrowser起動用のscript、redirect、shellを埋め込まない。browserを開く責務は、検証後にhost側のplatform openerが担う。
 - clipboard、PDF shell、公開script、git commit / pushはHTML生成と別能力である。明示依頼と個別gateなしに実行しない。
 
 ## 視覚言語
@@ -91,5 +93,6 @@ cardを先に並べない。同じ状態をbadge、card、summary、diagramで�
 - print previewで本文、図、表、railの読み順が壊れない。
 - 外部resourceは依頼で許可されたものだけ。既定は0。
 - 制作過程やpromptの痕跡が本文に残らない。
+- 明示的なopt-outがない限り検証済みfileをbrowserで開き、起動できない環境では失敗理由と絶対pathを報告する。
 
 見た目の好みだけで合格にしない。中心主張の理解、根拠到達、responsive、印刷、安全性を同じrubricで確認する。

@@ -3,7 +3,7 @@
   "kind": "safety",
   "collection_id": "mathbullet-html-2026-08",
   "generation": 3,
-  "subject_sha256": "33b6ce1cd01ef649c78984a6d07c92e33c8b8d160558145c6f96db0facb76fdc",
+  "subject_sha256": "743078cc87b776f9823c83ae2eeb7809abb42c220c8cf93e9771270c0ddab56f",
   "upstream": {
     "creating-html-documents": {
       "blob_sha": "b47e4185ca36e8c7617d7ec33b946f666a7af373",
@@ -22,8 +22,8 @@
   },
   "targets": {
     "creating-html-documents": {
-      "codex": "cd517650584aadbe2438e35876f5d559f73dd59d505a6ab1304a0108d67f2bc5",
-      "claude": "cd517650584aadbe2438e35876f5d559f73dd59d505a6ab1304a0108d67f2bc5"
+      "codex": "a243f4a148333ac99a15241ae47cc35c7f69349d28b15408eaf3a4bf50cd8855",
+      "claude": "a243f4a148333ac99a15241ae47cc35c7f69349d28b15408eaf3a4bf50cd8855"
     }
   },
   "quarantine": {
@@ -75,8 +75,8 @@
         {
           "executable": false,
           "path": "SKILL.md",
-          "sha256": "8800de96faae158fc98f18fb80ea36364d8628c49e75deffccc7a42a07fc494d",
-          "size": 5948
+          "sha256": "dcfd479d30e69e2301d3a6986e1094df696c53a98731bc3a47b2afc41915c04f",
+          "size": 6745
         },
         {
           "executable": false,
@@ -119,8 +119,8 @@
         {
           "executable": false,
           "path": "SKILL.md",
-          "sha256": "8800de96faae158fc98f18fb80ea36364d8628c49e75deffccc7a42a07fc494d",
-          "size": 5948
+          "sha256": "dcfd479d30e69e2301d3a6986e1094df696c53a98731bc3a47b2afc41915c04f",
+          "size": 6745
         },
         {
           "executable": false,
@@ -362,21 +362,25 @@
     "decision": "pass",
     "upstream_risks": "候補に外部CDN、clipboard JavaScript、実行可能なPDF shellがある",
     "containment": "runtime targetでは外部CDN、JavaScript、実行shellを除去し、CSP・offline・system fontを既定化",
-    "functional_review": "4文書型とRoadmap/viewing-plans責務境界を追加。375/768/1440px、print、静的CSP、外部resource 0、script 0を検証",
+    "functional_review": "4文書型とRoadmap/viewing-plans責務境界に加え、検証後のlocal browser表示と明示opt-outを追加。既存成果物でmacOS openerの実動作を確認",
+    "opener_safety": "platform openerへ検証済みlocal HTMLの絶対pathだけを渡す。HTML内script、redirect、local server、network公開は追加しない",
     "target_parity": "CodexとClaudeのruntime targetはbyte-identical"
   },
   "adaptation_diff": {
     "path": "adaptations/mathbullet-html-2026-08.json",
-    "sha256": "f820b0915a8951ed05add1d5f6d8002f021eb61f89718a11bd4e456a4c800e8c"
+    "sha256": "e5f2f8a57edd70d6e046f20ba368d726be33d91865a8883c0bbae836ffc816b8"
   },
   "capabilities": [
     "日本語長文HTML文書の作成",
     "decision-plan・technical-explainer・change-review・research-reportの文書型",
     "Roadmap/viewing-plansと整合した計画書表示",
     "図表・コード差分・用語rail・印刷layout",
-    "offline・responsive・accessibility・evidence検証"
+    "offline・responsive・accessibility・evidence検証",
+    "検証済みlocal HTMLのplatform openerによる既定browser表示と明示opt-out"
   ],
-  "dependencies": [],
+  "dependencies": [
+    "host platform opener（macOS open、Linux xdg-open、Windows Start-Process。利用不能時は失敗理由とpathを報告）"
+  ],
   "external_urls": [
     "https://github.com/mathbullet/skills/tree/fe96c626b39abba47fad2d4a4ef738e8a27602b1/plugins/html/skills/html",
     "https://github.com/mathbullet/skills"
@@ -385,7 +389,7 @@
     "type": "main-agent-source-and-runtime-review",
     "note": "multi-agent委譲を行わず、固定commit・quarantine・両runtime target・実表示を直接照合"
   },
-  "date": "2026-08-26",
-  "next_review_date": "2026-11-26",
+  "date": "2026-08-27",
+  "next_review_date": "2026-11-27",
   "decision": "pass"
 }

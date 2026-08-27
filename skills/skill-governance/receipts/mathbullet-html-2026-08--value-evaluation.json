@@ -32,6 +32,16 @@
       "prompt": "印刷にも耐える日本語の長文HTMLを作って",
       "expected": "creating-html-documents",
       "result": "pass"
+    },
+    {
+      "prompt": "レビューをHTMLにして、完成したらブラウザで開いて",
+      "expected": "creating-html-documents and post-validation browser display",
+      "result": "pass"
+    },
+    {
+      "prompt": "HTMLは作るがブラウザを開かないで",
+      "expected": "creating-html-documents with opener opt-out",
+      "result": "pass"
     }
   ],
   "negatives": [
@@ -68,12 +78,12 @@
   ],
   "observed_user_outcome": {
     "initial_feedback": "計画書として言えるか分からず、GitHub上の出力方式を参考に改善してほしい",
-    "accepted_feedback": "いいね。",
-    "limitation": "評価はこのtaskの代表例と決定的routing reviewであり、長期の利用統計ではない"
+    "accepted_feedback": "htmlさ、実行したら、ブラウザに強制的に開くようにできる？ .codexのね。 .claudeの方も修正してpushしておいて",
+    "limitation": "評価はこのtaskの代表例、local openerの実動作、決定的routing reviewであり、長期の利用統計ではない"
   },
   "result": {
-    "trial_count": 12,
-    "passed": 12,
+    "trial_count": 14,
+    "passed": 14,
     "false_positive": 0,
     "false_negative": 0
   }

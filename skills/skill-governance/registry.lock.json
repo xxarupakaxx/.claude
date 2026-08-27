@@ -949,18 +949,18 @@
     "mathbullet-html-2026-08/creating-html-documents": {
       "adaptation_diff": {
         "path": "adaptations/mathbullet-html-2026-08.json",
-        "sha256": "f820b0915a8951ed05add1d5f6d8002f021eb61f89718a11bd4e456a4c800e8c"
+        "sha256": "e5f2f8a57edd70d6e046f20ba368d726be33d91865a8883c0bbae836ffc816b8"
       },
       "approval_receipt": {
         "path": "receipts/mathbullet-html-2026-08--approval.json",
-        "sha256": "bb49ef97c3a656923e1e6d3d8de9e69a133214cf8a175cb2b2ebed07b13a7867"
+        "sha256": "2d4eb696b680a3b74522134a65d5a56e54b4631986b0adcefe99703a3314c4ee"
       },
       "collection_id": "mathbullet-html-2026-08",
       "local_name": "creating-html-documents",
       "local_state": "active",
       "promotion_receipt": {
         "path": "receipts/mathbullet-html-2026-08--promotion.json",
-        "sha256": "fcba02794e0b419615bd5a932292f64f430c648cdba9ef711876cc6509118fbb"
+        "sha256": "71113a801cb3bc2267c6132c09e2e79a0531aa7786a1dcd978a4872c82333202"
       },
       "quarantine": {
         "license_evidence": [],
@@ -1177,8 +1177,8 @@
             {
               "executable": false,
               "path": "SKILL.md",
-              "sha256": "8800de96faae158fc98f18fb80ea36364d8628c49e75deffccc7a42a07fc494d",
-              "size": 5948
+              "sha256": "dcfd479d30e69e2301d3a6986e1094df696c53a98731bc3a47b2afc41915c04f",
+              "size": 6745
             },
             {
               "executable": false,
@@ -1211,7 +1211,7 @@
               "size": 2184
             }
           ],
-          "tree_sha256": "cd517650584aadbe2438e35876f5d559f73dd59d505a6ab1304a0108d67f2bc5"
+          "tree_sha256": "a243f4a148333ac99a15241ae47cc35c7f69349d28b15408eaf3a4bf50cd8855"
         },
         "codex": {
           "license_evidence": [
@@ -1230,8 +1230,8 @@
             {
               "executable": false,
               "path": "SKILL.md",
-              "sha256": "8800de96faae158fc98f18fb80ea36364d8628c49e75deffccc7a42a07fc494d",
-              "size": 5948
+              "sha256": "dcfd479d30e69e2301d3a6986e1094df696c53a98731bc3a47b2afc41915c04f",
+              "size": 6745
             },
             {
               "executable": false,
@@ -1264,21 +1264,21 @@
               "size": 2184
             }
           ],
-          "tree_sha256": "cd517650584aadbe2438e35876f5d559f73dd59d505a6ab1304a0108d67f2bc5"
+          "tree_sha256": "a243f4a148333ac99a15241ae47cc35c7f69349d28b15408eaf3a4bf50cd8855"
         }
       },
       "safety_receipt": {
         "path": "receipts/mathbullet-html-2026-08--safety.json",
-        "sha256": "7dfd76bf5550f874da6a2cfc36e7e42e941c8bb5331a93bc50d8b03c5a262c50"
+        "sha256": "0d59bd45981ca36fb0be7a27317f41308eb9a9e7d362633d16c15ecc928933d7"
       },
       "source_revision": "fe96c626b39abba47fad2d4a4ef738e8a27602b1",
-      "subject_sha256": "33b6ce1cd01ef649c78984a6d07c92e33c8b8d160558145c6f96db0facb76fdc",
+      "subject_sha256": "743078cc87b776f9823c83ae2eeb7809abb42c220c8cf93e9771270c0ddab56f",
       "targets": {
         "claude": {
-          "tree_sha256": "cd517650584aadbe2438e35876f5d559f73dd59d505a6ab1304a0108d67f2bc5"
+          "tree_sha256": "a243f4a148333ac99a15241ae47cc35c7f69349d28b15408eaf3a4bf50cd8855"
         },
         "codex": {
-          "tree_sha256": "cd517650584aadbe2438e35876f5d559f73dd59d505a6ab1304a0108d67f2bc5"
+          "tree_sha256": "a243f4a148333ac99a15241ae47cc35c7f69349d28b15408eaf3a4bf50cd8855"
         }
       },
       "upstream": {
@@ -1297,7 +1297,7 @@
       },
       "value_receipt": {
         "path": "receipts/mathbullet-html-2026-08--value.json",
-        "sha256": "bed132578dbcf48d42ef110e969a48beaab532230856772fdc34ae0abef5e53f"
+        "sha256": "8d7c7e90760c5c5de995eeb9397d274972e4124b019170b265822e7ebd33bbda"
       }
     },
     "mattpocock-legacy-2026-07/choosing-skills": {
@@ -2026,6 +2026,6 @@
   "generated_at": "2026-08-26",
   "generation": 3,
   "hash_algorithm": "skill-tree-sha256-v1",
-  "registry_sha256": "5285d2a2d205150e43e5685d4570a9415b8701294c517172d2381c6e01827f87",
+  "registry_sha256": "ed4ceed3189d09f39ad74ac52835e2ae4151f1f15e4c38e978484eff0b499185",
   "schema_version": 1
 }

@@ -2,7 +2,7 @@
   "command": "validate-frontmatter",
   "findings": [],
   "frontmatter_sha256": "d7e28464145ebe1ec4024a57ad41cf2cc126ea958b5659515dbb6c8db0739559",
-  "skill_sha256": "8800de96faae158fc98f18fb80ea36364d8628c49e75deffccc7a42a07fc494d",
+  "skill_sha256": "dcfd479d30e69e2301d3a6986e1094df696c53a98731bc3a47b2afc41915c04f",
   "status": "validated",
   "surface": {
     "collection_id": "mathbullet-html-2026-08",

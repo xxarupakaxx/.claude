@@ -895,11 +895,11 @@ content_relation = "reviewed-local-adaptation"
 targets = ["codex", "claude"]
 default_revision = "fe96c626b39abba47fad2d4a4ef738e8a27602b1"
 baseline_at = "2026-08-26"
-adaptation_diff = { path = "adaptations/mathbullet-html-2026-08.json", sha256 = "f820b0915a8951ed05add1d5f6d8002f021eb61f89718a11bd4e456a4c800e8c" }
-safety_receipt = { path = "receipts/mathbullet-html-2026-08--safety.json", sha256 = "7dfd76bf5550f874da6a2cfc36e7e42e941c8bb5331a93bc50d8b03c5a262c50" }
-value_receipt = { path = "receipts/mathbullet-html-2026-08--value.json", sha256 = "bed132578dbcf48d42ef110e969a48beaab532230856772fdc34ae0abef5e53f" }
-approval_receipt = { path = "receipts/mathbullet-html-2026-08--approval.json", sha256 = "bb49ef97c3a656923e1e6d3d8de9e69a133214cf8a175cb2b2ebed07b13a7867" }
-promotion_receipt = { path = "receipts/mathbullet-html-2026-08--promotion.json", sha256 = "fcba02794e0b419615bd5a932292f64f430c648cdba9ef711876cc6509118fbb" }
+adaptation_diff = { path = "adaptations/mathbullet-html-2026-08.json", sha256 = "e5f2f8a57edd70d6e046f20ba368d726be33d91865a8883c0bbae836ffc816b8" }
+safety_receipt = { path = "receipts/mathbullet-html-2026-08--safety.json", sha256 = "0d59bd45981ca36fb0be7a27317f41308eb9a9e7d362633d16c15ecc928933d7" }
+value_receipt = { path = "receipts/mathbullet-html-2026-08--value.json", sha256 = "8d7c7e90760c5c5de995eeb9397d274972e4124b019170b265822e7ebd33bbda" }
+approval_receipt = { path = "receipts/mathbullet-html-2026-08--approval.json", sha256 = "2d4eb696b680a3b74522134a65d5a56e54b4631986b0adcefe99703a3314c4ee" }
+promotion_receipt = { path = "receipts/mathbullet-html-2026-08--promotion.json", sha256 = "71113a801cb3bc2267c6132c09e2e79a0531aa7786a1dcd978a4872c82333202" }
 skills = ["creating-html-documents"]
 
 [collections.upstream_paths]
@@ -907,5 +907,5 @@ skills = ["creating-html-documents"]
 
 [collections.frontmatter_receipts."creating-html-documents"]
 quarantine = { path = "receipts/mathbullet-html-2026-08--creating-html-documents--quarantine.json", sha256 = "66ead319d9b696236ba5c9d333c35ab2af73ed30b1ae26fbb9e3129132c12d12" }
-codex = { path = "receipts/mathbullet-html-2026-08--creating-html-documents--codex.json", sha256 = "bb29e6d9f728b61f3010ecc051304158814e79e962a02ca4571e67f90239bda4" }
-claude = { path = "receipts/mathbullet-html-2026-08--creating-html-documents--claude.json", sha256 = "8c4450441cf32c7283244382953a0a9fcf7ad188ba3f3c7c81a7c901fa5a4691" }
+codex = { path = "receipts/mathbullet-html-2026-08--creating-html-documents--codex.json", sha256 = "56d56e7e54af219890005c62d1f4140cf5fb1ae09de3eddee2e71484bf2ba983" }
+claude = { path = "receipts/mathbullet-html-2026-08--creating-html-documents--claude.json", sha256 = "628cf721d931a92a37cbda8826203077345e7b8a46dafe304bd58e0ee3c2cfda" }

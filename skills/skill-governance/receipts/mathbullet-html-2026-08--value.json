@@ -3,7 +3,7 @@
   "kind": "value",
   "collection_id": "mathbullet-html-2026-08",
   "generation": 3,
-  "subject_sha256": "33b6ce1cd01ef649c78984a6d07c92e33c8b8d160558145c6f96db0facb76fdc",
+  "subject_sha256": "743078cc87b776f9823c83ae2eeb7809abb42c220c8cf93e9771270c0ddab56f",
   "representative_prompts": [
     "実装ロードマップをHTML計画書にして",
     "技術解説を図表付きHTMLでまとめて",
@@ -11,6 +11,8 @@
     "出典付き調査報告をHTML化して",
     "計画書をRoadmap表示と同じ内容でHTML出力して",
     "印刷にも耐える日本語の長文HTMLを作って",
+    "レビューをHTMLにして、完成したらブラウザで開いて",
+    "HTMLは作るがブラウザを開かないで",
     "Pythonのテストだけ直して",
     "画像を一枚生成して",
     "CSVを集計して",
@@ -23,22 +25,22 @@
     "limitation": "ユーザー評価では計画書としての構造とGitHub Skill由来の出力方式が十分に見えなかった"
   },
   "candidate": {
-    "state": "4文書型、Roadmap/viewing-plans連携、オフライン安全性、レスポンシブ・印刷・アクセシビリティ検証を一つのSkillへ統合",
+    "state": "4文書型、Roadmap/viewing-plans連携、オフライン安全性、レスポンシブ・印刷・アクセシビリティ検証、検証後のlocal browser表示を一つのSkillへ統合",
     "evaluation": {
       "path": "receipts/mathbullet-html-2026-08--value-evaluation.json",
-      "sha256": "fd4e00fcc12ad50c32dd91e693fb94f1a834f4fac0a76a972ffb16c82863583f"
+      "sha256": "fe735ddb87f7f02a83c0e54753d0afdd52e493aba859aceca8c6a969bc58955b"
     },
     "result": {
-      "trial_count": 12,
-      "passed": 12,
-      "positive_routes": 6,
+      "trial_count": 14,
+      "passed": 14,
+      "positive_routes": 8,
       "negative_routes": 6,
       "false_positive": 0,
       "false_negative": 0
     },
-    "user_acceptance": "改善後の実表示に対してユーザーが「いいね。」と明示"
+    "user_acceptance": "local browserの自動表示をCodex / Claude双方へ反映してpushするようユーザーが明示"
   },
-  "trial_count": 12,
+  "trial_count": 14,
   "pass_at_1": 1.0,
   "trigger_precision": 1.0,
   "trigger_recall": 1.0,
@@ -50,10 +52,10 @@
     "type": "main-agent-deterministic-review",
     "evidence": {
       "path": "receipts/mathbullet-html-2026-08--value-evaluation.json",
-      "sha256": "fd4e00fcc12ad50c32dd91e693fb94f1a834f4fac0a76a972ffb16c82863583f"
+      "sha256": "fe735ddb87f7f02a83c0e54753d0afdd52e493aba859aceca8c6a969bc58955b"
     },
-    "limitation": "長期利用統計ではなく、このtaskの実表示承認と12件の決定的routing評価"
+    "limitation": "長期利用統計ではなく、このtaskのlocal opener実動作と14件の決定的評価"
   },
-  "date": "2026-08-26",
+  "date": "2026-08-27",
   "decision": "pass"
 }

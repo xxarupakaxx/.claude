@@ -3,23 +3,23 @@
   "kind": "promotion",
   "collection_id": "mathbullet-html-2026-08",
   "generation": 3,
-  "subject_sha256": "33b6ce1cd01ef649c78984a6d07c92e33c8b8d160558145c6f96db0facb76fdc",
-  "approval_receipt_sha256": "bb49ef97c3a656923e1e6d3d8de9e69a133214cf8a175cb2b2ebed07b13a7867",
+  "subject_sha256": "743078cc87b776f9823c83ae2eeb7809abb42c220c8cf93e9771270c0ddab56f",
+  "approval_receipt_sha256": "2d4eb696b680a3b74522134a65d5a56e54b4631986b0adcefe99703a3314c4ee",
   "quarantine": {
     "creating-html-documents": "3978d3fc868b0f81d5e59c5b4f7f400c176436a190374acdf95a444b8eb44442"
   },
   "approved_targets": {
     "creating-html-documents": {
-      "codex": "cd517650584aadbe2438e35876f5d559f73dd59d505a6ab1304a0108d67f2bc5",
-      "claude": "cd517650584aadbe2438e35876f5d559f73dd59d505a6ab1304a0108d67f2bc5"
+      "codex": "a243f4a148333ac99a15241ae47cc35c7f69349d28b15408eaf3a4bf50cd8855",
+      "claude": "a243f4a148333ac99a15241ae47cc35c7f69349d28b15408eaf3a4bf50cd8855"
     }
   },
   "runtime_targets": {
     "creating-html-documents": {
-      "codex": "cd517650584aadbe2438e35876f5d559f73dd59d505a6ab1304a0108d67f2bc5",
-      "claude": "cd517650584aadbe2438e35876f5d559f73dd59d505a6ab1304a0108d67f2bc5"
+      "codex": "a243f4a148333ac99a15241ae47cc35c7f69349d28b15408eaf3a4bf50cd8855",
+      "claude": "a243f4a148333ac99a15241ae47cc35c7f69349d28b15408eaf3a4bf50cd8855"
     }
   },
-  "date": "2026-08-26",
+  "date": "2026-08-27",
   "decision": "promoted"
 }

@@ -3,15 +3,15 @@
   "kind": "approval",
   "collection_id": "mathbullet-html-2026-08",
   "generation": 3,
-  "subject_sha256": "33b6ce1cd01ef649c78984a6d07c92e33c8b8d160558145c6f96db0facb76fdc",
-  "safety_receipt_sha256": "7dfd76bf5550f874da6a2cfc36e7e42e941c8bb5331a93bc50d8b03c5a262c50",
-  "value_receipt_sha256": "bed132578dbcf48d42ef110e969a48beaab532230856772fdc34ae0abef5e53f",
-  "approval_request_sha256": "ba5c263f92b182bd8a75862a6d6ae1561dbbb02547ced93f8914527e8f2a42f4",
-  "approval_message": "いいね。OKすすめて。未コミットはpushし、実導入まで進める。",
+  "subject_sha256": "743078cc87b776f9823c83ae2eeb7809abb42c220c8cf93e9771270c0ddab56f",
+  "safety_receipt_sha256": "0d59bd45981ca36fb0be7a27317f41308eb9a9e7d362633d16c15ecc928933d7",
+  "value_receipt_sha256": "8d7c7e90760c5c5de995eeb9397d274972e4124b019170b265822e7ebd33bbda",
+  "approval_request_sha256": "dcaa97be20b6fd67006c91c23b1d5466c39874c78bb4ba6bb0671cf2d224e12b",
+  "approval_message": ".codexのね。 .claudeの方も修正してpushしておいて",
   "approver": {
     "type": "human",
     "name": "yoshiki"
   },
-  "date": "2026-08-26",
+  "date": "2026-08-27",
   "decision": "approved"
 }

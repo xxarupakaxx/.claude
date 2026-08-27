@@ -17,7 +17,8 @@
     "decision-plan, technical-explainer, change-review, and research-report document types",
     "Roadmap and viewing-plans responsibility boundary for multi-phase work",
     "offline-by-default delivery with CSP and system fonts",
-    "responsive, accessibility, print, and evidence validation gates"
+    "responsive, accessibility, print, and evidence validation gates",
+    "post-validation local browser display through the host platform opener unless the user opts out"
   ],
   "removed_default_capabilities": [
     "remote Google Fonts",
