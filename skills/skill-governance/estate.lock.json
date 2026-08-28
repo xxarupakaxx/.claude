@@ -709,6 +709,15 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
+      "relative_path": "natural-japanese",
+      "resolved_name": "natural-japanese",
+      "root_id": "claude",
+      "tree_sha256": "499df114b301804f1bf74abfb5ee26909718159343327cfa24f8a7d99b4454fb"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
       "relative_path": "notion-docs",
       "resolved_name": "notion-docs",
       "root_id": "claude",
@@ -868,6 +877,15 @@
       "tree_sha256": "3f2b46124cb4439f1fa814b7e23752307afc9a2f8ff085524fc471e5eaf301cb"
     },
     {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "sanitizing-artifacts",
+      "resolved_name": "sanitizing-artifacts",
+      "root_id": "claude",
+      "tree_sha256": "a7735a9595a2d473788b481d07ca38f9883bb891e214c1aff6ca77c0409cb0fa"
+    },
+    {
       "classification": "legacy-active",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
@@ -940,7 +958,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "claude",
-      "tree_sha256": "2b14c8c27d09fee9b8da810f96cf5eae1b412a31b0a880ca2acf1e4febb781cc"
+      "tree_sha256": "1d462f9ae79303d784523231e41add28880055026f3b5cc5ae3ff8d3dfd9874d"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1291,7 +1309,7 @@
       "relative_path": ".system/skill-creator",
       "resolved_name": "skill-creator",
       "root_id": "codex",
-      "tree_sha256": "c9ae3b321fdea4c79e795049446ca1278e5ba1beb72c33eb3257c2527870de97"
+      "tree_sha256": "26c9c122b1b090ddff340f4e4368f044c858c49cda791f8b29971db5c2421e6d"
     },
     {
       "classification": "platform-managed",
@@ -1300,7 +1318,7 @@
       "relative_path": ".system/skill-installer",
       "resolved_name": "skill-installer",
       "root_id": "codex",
-      "tree_sha256": "1ded8f823a306d446d25e864c0b6c28fdd37290958329238f7845cb3608506ca"
+      "tree_sha256": "1b781ce7ab3774b60613d28f12f9615d01aef9741ac22ce2ed05c2f5284d1831"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1912,7 +1930,7 @@
       "relative_path": "hatch-pet",
       "resolved_name": "hatch-pet",
       "root_id": "codex",
-      "tree_sha256": "6e9e5636011139a9b2e34d26e00ca5f933c5f3a3704fc6bffe1215adb65c218f"
+      "tree_sha256": "f36056d853571b358f1c1a00cbb169f930969a9b92e5db1e0fbe5f7276acbae6"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2101,7 +2119,7 @@
       "relative_path": "natural-japanese",
       "resolved_name": "natural-japanese",
       "root_id": "codex",
-      "tree_sha256": "548be62bfd5c2d567e3ba366a9c2b292d473edc0c575a8791f30f6e19416a434"
+      "tree_sha256": "499df114b301804f1bf74abfb5ee26909718159343327cfa24f8a7d99b4454fb"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2392,7 +2410,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "codex",
-      "tree_sha256": "5a14e793e5cf5f928b9bae6f4cfdecea78c0087018e8487279da37585a1e51a4"
+      "tree_sha256": "d1426cd0950d530b7b0338f07715fff90df3e237f78cb3b284db1e8fd008ba31"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4273,7 +4291,7 @@
       "relative_path": "natural-japanese",
       "resolved_name": "natural-japanese",
       "root_id": "vault-codex",
-      "tree_sha256": "d2f8298b6bf236afc4c0554d255a383e68644ac0509a025c9916eb1cdc3f326d"
+      "tree_sha256": "499df114b301804f1bf74abfb5ee26909718159343327cfa24f8a7d99b4454fb"
     },
     {
       "classification": "preexisting-unclassified",

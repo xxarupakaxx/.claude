@@ -74,6 +74,20 @@ class TreeHashTests(unittest.TestCase):
             with_exec = governance.scan_tree(skill).tree_sha256
             self.assertNotEqual(without_exec, with_exec)
 
+    def test_runtime_tree_hash_can_exclude_generated_python_cache(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            skill = write_skill(Path(temporary), "safe-skill")
+            excluded = frozenset({"__pycache__"})
+            baseline = governance.scan_tree(skill, excluded_directory_names=excluded).tree_sha256
+            cache = skill / "scripts" / "__pycache__"
+            cache.mkdir(parents=True)
+            (cache / "helper.cpython-313.pyc").write_bytes(b"generated cache")
+            self.assertEqual(
+                baseline,
+                governance.scan_tree(skill, excluded_directory_names=excluded).tree_sha256,
+            )
+            self.assertNotEqual(baseline, governance.scan_tree(skill).tree_sha256)
+
     def test_git_tree_sha_matches_git_write_tree(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             skill = write_skill(Path(temporary), "safe-skill")

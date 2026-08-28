@@ -451,7 +451,12 @@ def _tree_hash(records: list[FileRecord], findings: list[Finding]) -> str | None
     return digest.hexdigest()
 
 
-def _scan_tree_fd(root_fd: int, display_root: str) -> TreeResult:
+def _scan_tree_fd(
+    root_fd: int,
+    display_root: str,
+    *,
+    excluded_directory_names: frozenset[str] = frozenset(),
+) -> TreeResult:
     findings: list[Finding] = []
     records: list[FileRecord] = []
     total_bytes = 0
@@ -495,6 +500,8 @@ def _scan_tree_fd(root_fd: int, display_root: str) -> TreeResult:
                 findings.append(blocker("symlink", "Symlinks are not followed or accepted", relative))
                 continue
             if stat.S_ISDIR(mode):
+                if entry.name in excluded_directory_names:
+                    continue
                 if entry.name == ".git":
                     findings.append(blocker("embedded_git", "Embedded .git directory is not accepted", relative))
                     continue
@@ -573,13 +580,13 @@ def _scan_tree_fd(root_fd: int, display_root: str) -> TreeResult:
     return TreeResult(display_root, _tree_hash(records, findings), records, findings)
 
 
-def scan_tree(root: Path) -> TreeResult:
+def scan_tree(root: Path, *, excluded_directory_names: frozenset[str] = frozenset()) -> TreeResult:
     root = root.absolute()
     root_fd, _, finding = _open_root_directory(root)
     if finding or root_fd is None:
         return TreeResult(str(root), None, [], [finding or blocker("root_unavailable", "Root unavailable", str(root))])
     try:
-        return _scan_tree_fd(root_fd, str(root))
+        return _scan_tree_fd(root_fd, str(root), excluded_directory_names=excluded_directory_names)
     finally:
         os.close(root_fd)
 
@@ -2523,7 +2530,7 @@ def inventory_payload(registry: dict[str, Any]) -> dict[str, Any]:
             relative_skill_path = child.relative_to(root_path).as_posix()
             skill_file = Path(os.path.realpath(child / "SKILL.md"))
             disabled_by_selector = skill_file in disabled_skill_paths
-            tree = scan_tree(child)
+            tree = scan_tree(child, excluded_directory_names=frozenset({"__pycache__"}))
             normalized_paths = estate_normalizations.get((root_id, relative_skill_path), [])
             estate_tree_sha256, normalization_findings = normalized_estate_tree_hash(tree, normalized_paths)
             findings.extend(normalization_findings)
