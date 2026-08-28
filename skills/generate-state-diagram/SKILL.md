@@ -1,6 +1,6 @@
 ---
 name: generate-state-diagram
-description: ブランチの変更内容からSVGの状態図、処理フロー図、データフロー図、ドメインモデル図を生成する。Markdown参照と自己完結HTMLにも対応。
+description: ブランチや既存systemから、trigger、guard、状態変化、side effect、failure、recovery、source根拠まで追跡できるSVG状態図・処理フロー図を生成する。「状態図生成」「処理フロー図」「全体像だけでなく詳細も知りたい」等の依頼に使う。必要時だけdesktop向け自己完結HTMLも作る。
 triggers:
   - "状態図生成"
   - "state diagram"
@@ -18,27 +18,29 @@ allowed-tools: Read, Bash, Glob, Grep, Write
 
 新しく生成する図はSVGを正本とし、Mermaidを生成しない。
 
-標準成果物は次の3ファイルとする。
+標準成果物は次の2ファイルとする。
 
 - `91_state_diagram.svg`：図の正本。
-- `91_state_diagram.md`：説明、用語集、ファイルマップ、SVG参照を含む文書。
-- `91_state_diagram.html`：同じSVGをinlineで埋め込む自己完結HTML。
+- `91_state_diagram.md`：詳細ledger、用語、source map、SVG参照を含む読解の正本。
 
 Markdownでは `![状態図](91_state_diagram.svg)` のようにSVGを参照する。
-HTML内の図は `<svg>` を直接埋め込み、外部描画ライブラリや実行時変換へ依存しない。
-ユーザーが明示的に不要と言わない限り、3ファイルをすべて生成する。
+`91_state_diagram.html` は、ユーザーがHTMLまたはbrowser表示を求めた場合、あるいは図と詳細ledgerを同じ画面で読む必要がある場合だけ作る。HTML内の図は `<svg>` を直接埋め込み、外部描画libraryや実行時変換へ依存しない。
+
+PDF、PNG、mobile版、印刷版は標準成果物に含めない。明示依頼がある場合だけ別gateで作る。
 
 ## 品質基準
 
-図は、ドメイン知識のない新人が処理の入口、状態変化、失敗時の残存物、次に読むファイルを判断できる内容にする。
+図は、domain知識のない新人が「何が起点で、どの条件で分岐し、何を変更し、失敗時に何が残り、どう復旧し、どのsourceを読めば確認できるか」を判断できる内容にする。
 
 - 読み手が達成したい目的から始める。
-- overview、補足図、詳細説明の順に段階的に開示する。
+- overviewは詳細への索引として使い、説明の代わりにしない。
 - 同じ情報を複数の図へ重複させない。
 - 図中の用語は用語集と一致させる。
-- WHATだけでなく、重要な判断のWHYを短い注記で示す。
+- WHATだけでなく、trigger、guard、effect、WHYを示す。
 - 正常系と失敗系を区別する。
 - 新規追加と既存機能を区別する。
+- sourceで確認できない関係は推測で埋めず、`未確認` と理由を示す。
+- 「処理する」「連携する」「更新する」だけのnodeやedgeを作らない。主体、対象、条件、結果を具体化する。
 
 ## 実行タイミング
 
@@ -54,85 +56,107 @@ HTML内の図は `<svg>` を直接埋め込み、外部描画ライブラリや�
 
 ## 手順
 
-### 1. 変更内容を把握する
+### 1. sourceと問いを固定する
 
 ```bash
 git diff <BASE_BRANCH>...HEAD --stat
 git log <BASE_BRANCH>..HEAD --oneline
 ```
 
-ワークフロー層、状態を持つentity、外部連携、UI状態、条件分岐、error handling、domain entity、entity間の関係を確認する。
+branch差分だけでなく、caller、callee、data model、test、設定、運用入口まで読む。読者が図を見て答えたい問いを1〜3件に絞る。
 
-### 2. 図の構成を決める
+### 2. evidence inventoryを作る
 
-標準構成は次の5面とする。
-該当しない図は省略理由を短く書く。
+描画前に、次をcompactな作業表へ抽出する。該当しないfieldは `N/A`、sourceで確認できないものは `未確認` とする。
+
+| 対象 | 必須情報 |
+|---|---|
+| actor / component | 責務、入力、出力、所有するstate、source anchor |
+| state | 意味、invariant、保存場所、開始条件、終了条件 |
+| transition | trigger、guard、before、after、effect、side effect、failure、recovery、source anchor |
+| data / interface | fieldまたはpayload、producer、consumer、validation、永続化 |
+| external boundary | 呼び出し先、timeout、retry、idempotency、partial failure |
+
+source anchorは可能な限り `path:line`、symbol、test名で示す。抽出表に根拠がないedgeは描かない。
+
+### 3. 図の構成を決める
+
+標準は、一つのcore diagramと詳細ledgerである。図面数を増やして情報量を水増ししない。追加面は、core diagramとledgerでは別の読者の問いに答えられない場合だけ作る。
 
 | 順序 | 図 | 使用条件 | SVG表現 |
 |---|---|---|---|
-| 1 | 全体フロー | 常時 | 状態nodeと遷移edge |
+| 1 | core flow | 常時 | 入口、主要state、分岐、終了、失敗と復旧 |
 | 2 | 状態遷移 | status、run、job、retry、失敗状態がある | 状態node、開始と終了、条件付きedge |
 | 3 | データフロー | DB、API、file、queue間でデータが動く | system group、data store、label付きedge |
 | 4 | ドメインモデル | entity、aggregate、関連tableがある | entity card、cardinality付きedge |
 | 5 | UI操作フロー | ユーザー操作や画面遷移がある | UI node、action、保存、再表示のedge |
 
 複数system間の厳密な時系列が必要な場合は、左から右へ進むsequence形式のSVGを使う。
-時間的な推移を再生する必要がある場合は `generate-state-diagram-3d` を使い、静的overviewはSVGのまま維持する。
+時間的な推移を再生する必要がある場合は `generate-state-diagram-3d` を使い、静的core diagramはSVGのまま維持する。
 
-### 3. SVGを生成する
+### 4. SVGを生成する
 
 SVGには次を含める。
 
 - `xmlns="http://www.w3.org/2000/svg"` と明示的な `viewBox`。
 - `role="img"`、`<title>`、`<desc>`。
 - 矢印用の `<marker>` と、意味が読めるedge label。
+- edge labelには、可能な範囲で `trigger [guard] / effect` を短く示す。
 - node、edge、labelを識別できるclassまたは `data-*` 属性。
 - 背景に依存しない十分なcontrast。
 - 拡大時にも文字と線が崩れないvector要素。
 
 外部script、外部font、外部画像、`foreignObject`、event handler属性を埋め込まない。
 文字列と属性値をXMLとしてescapeする。
-図と同じ関係をMarkdownの一覧またはtableでも残す。
+図と同じ関係をMarkdownの遷移ledgerでも残す。SVGだけで詳細を完結させようとして文字を詰め込まない。
 
 複数面が必要な場合は、一つのSVG内で `<g aria-label="...">` ごとに分ける。
 一枚が過密になる場合は `91_state_diagram_2.svg` のように分割し、MarkdownとHTMLからすべて参照する。
 
-### 4. 説明を追加する
+### 5. 詳細ledgerを書く
 
 `91_state_diagram.md` に次を記録する。
 
 - system概要と対象branch。
 - 各SVGへの参照。
-- 状態とedgeの関係一覧。
+- actor / componentの責務と入出力。
+- 状態の意味、invariant、保存場所。
+- 全遷移のtrigger、guard、before / after、effect、side effect、source anchor。
+- failure / recovery matrix。失敗時の残存物、retry可否、idempotency、手動復旧を含む。
+- data / interface contract。producer、consumer、validation、永続化を含む。
 - 用語集。
-- 変更fileの論理groupと役割。
-- 重要なbusiness logic。
-- 自己確認の問い。
+- 変更fileまたは主要sourceの論理groupと役割。
+- business ruleと、そのruleが必要な理由。
+- 読者への含意。監視点、変更時の注意、最初に読むsourceを具体化する。
 - 省略した図と理由。
 
-### 5. HTMLを生成する
+単なる見出し一覧や図の言い換えにしない。重要な項目には具体例または代表caseを一つ以上付け、境界条件がある場合は反例も示す。
 
-`91_state_diagram.html` はlight themeの自己完結HTMLとする。
+### 6. 必要な場合だけHTMLを生成する
+
+`91_state_diagram.html` はdesktop向けlight themeの自己完結HTMLとする。
 
 - SVGをinlineで埋め込む。
-- 各図に拡大、縮小、100% resetを置く。
-- 拡大時は図container内で縦横scrollできるようにする。
-- 各図に「SVGをコピー」buttonを置き、その図の `outerHTML` をcopyする。
-- copy成功と失敗を短いstatus textで示す。
-- 複数図の操作は、それぞれ自分の図だけを対象にする。
+- 図と詳細ledgerを同じ名称とsource anchorで接続する。
+- 図containerはdesktop幅で必要な場合だけ縦横scrollを許可する。
+- static HTMLを既定とし、zoom control、copy button、client-side filterなどのJavaScriptを自動追加しない。browser標準のzoomで読む。
+- 1440x900を既定確認幅とする。mobile responsive、print stylesheet、PDF exportは明示依頼がない限り作らない。
 
 SVGをHTMLへ変換した別表現を正本にしない。
 HTMLの図と `.svg` fileが同じnode、edge、labelを持つことを確認する。
 
-### 6. 検証する
+### 7. 検証する
 
 - XML parserで各SVGをparseできる。
 - `viewBox`、`title`、`desc`、主要node、主要edgeが存在する。
 - SVG内に外部resourceとevent handlerがない。
 - MarkdownのSVG参照先が存在する。
-- HTML内にinline `<svg>` があり、Mermaid runtimeまたはMermaid sourceがない。
-- browserで開き、desktopとmobile幅でlabelの切れ、重なり、overflowを確認する。
-- 図とテキスト関係一覧が一致する。
+- evidence inventoryの確認済み遷移がSVGとledgerに存在し、未確認事項が確認済みとして描かれていない。
+- 各遷移にtrigger、guard、effect、source anchorのいずれかが欠ける場合、欠落理由が明示されている。
+- failure / recovery、data / interface、読者への含意が対象scopeに応じて記載されている。
+- HTMLを作った場合、inline `<svg>` があり、Mermaid runtimeまたはMermaid sourceがない。
+- HTMLを作った場合、1440x900でlabelの切れ、重なり、意図しないoverflowを確認する。
+- 図、遷移ledger、source anchorが一致する。
 
 ## 補助説明図
 
@@ -143,6 +167,8 @@ HTMLの図と `.svg` fileが同じnode、edge、labelを持つことを確認す
 ## 自己確認
 
 - 処理の入口は何か。
-- 状態はどこで、どの条件で変わるか。
-- 失敗時に何が保存されるか。
-- 詳細を追うときに最初に開くfileはどれか。
+- 各edgeは何をtriggerに、どのguardを通り、何を変えるか。
+- 失敗時に何が残り、retryや手動復旧はどう行うか。
+- dataは誰が作り、誰が検証し、どこへ保存するか。
+- その仕組みが読者の実装・運用判断へどう影響するか。
+- 詳細を追うときに最初に開くsourceとtestはどれか。
