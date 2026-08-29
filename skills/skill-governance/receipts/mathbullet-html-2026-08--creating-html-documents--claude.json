@@ -1,8 +1,8 @@
 {
   "command": "validate-frontmatter",
   "findings": [],
-  "frontmatter_sha256": "d7e28464145ebe1ec4024a57ad41cf2cc126ea958b5659515dbb6c8db0739559",
-  "skill_sha256": "45ad7df500cf28332f7b92b78ffaa8eb9cfa470dd8b9c6d99750c0bdb1034a81",
+  "frontmatter_sha256": "1276276fc3ec24b6e74906497390d9b2f85d3a2f044cb9e5d50aa3c30e404b86",
+  "skill_sha256": "71f3584552ee7715f74c09286e8eb00e187e2b4731e5833c0127bd65be45e393",
   "status": "validated",
   "surface": {
     "collection_id": "mathbullet-html-2026-08",
@@ -13,7 +13,7 @@
   "target": "claude",
   "validator": "pyyaml-6.0.2-safe-loader",
   "values": {
-    "description": "日本語の計画書、技術解説、調査報告、変更レビュー、長文資料を、読みやすく自己完結したHTML文書として作成・編集する。ユーザーがHTML、視覚的な計画書、ブラウザで読む報告書、図・表・コード差分を含む説明資料、印刷可能な単一HTMLを求めたときに使う。複数Phaseの作業ではviewing-plansとRoadmapを併用し、進捗ビューと完成文書を分離する。",
+    "description": "日本語の計画書、技術解説、調査報告、変更レビュー、長文資料を、具体的な根拠・仕組み・境界・含意まで読めるdesktop向け自己完結HTMLとして作成・編集する。ユーザーがHTML、ブラウザで読む報告書、図・表・コード差分を含む説明資料を求めたときに使う。mobile、印刷、PDFは明示依頼時だけ扱う。",
     "name": "creating-html-documents"
   }
 }

@@ -953,14 +953,14 @@
       },
       "approval_receipt": {
         "path": "receipts/mathbullet-html-2026-08--approval.json",
-        "sha256": "53e42b3cb05b0726abadc758e06d61ffeac7bc77c3139c93a3982263e054807b"
+        "sha256": "2e379d70e54e28d4c5da3782bea99c45d4bce740185b3afb422bdd8236ffd53a"
       },
       "collection_id": "mathbullet-html-2026-08",
       "local_name": "creating-html-documents",
       "local_state": "active",
       "promotion_receipt": {
         "path": "receipts/mathbullet-html-2026-08--promotion.json",
-        "sha256": "6b2234f297f67598cb974a14bf26023ac1e4c540c36b8395318c4df2405ef407"
+        "sha256": "32290802db87d969a4872660fd69a040b62827bdc70826da2d7d5e5cb5d4f5b5"
       },
       "quarantine": {
         "license_evidence": [],
@@ -1177,14 +1177,14 @@
             {
               "executable": false,
               "path": "SKILL.md",
-              "sha256": "45ad7df500cf28332f7b92b78ffaa8eb9cfa470dd8b9c6d99750c0bdb1034a81",
-              "size": 9966
+              "sha256": "71f3584552ee7715f74c09286e8eb00e187e2b4731e5833c0127bd65be45e393",
+              "size": 11486
             },
             {
               "executable": false,
               "path": "SOURCE.md",
-              "sha256": "8d4481cc6ed9d081f84e61d3b28d703d3d2584695d8ab9f5d0841e0b2d20a2f7",
-              "size": 1494
+              "sha256": "5d2175d4d06007881276d885ad0bd8ff849c58f5d1bbd9cd6630f8996c68cf38",
+              "size": 1866
             },
             {
               "executable": false,
@@ -1195,23 +1195,23 @@
             {
               "executable": false,
               "path": "evals/evals.json",
-              "sha256": "fc0787c10c821b1e8177d50e28495e3abeae0799a55f61388e28559a230092b4",
-              "size": 3037
+              "sha256": "d82d3e86d7036c520d59b64883d0dbddf46a8394c7753e86d2f010907624da48",
+              "size": 2785
             },
             {
               "executable": false,
               "path": "references/document-system.md",
-              "sha256": "e44c5a2dfa5c01a23725dc6de0bd3acb2ff91bee81d3167b2ac37fe8fdd56546",
-              "size": 5529
+              "sha256": "23ce4010010eb76524a3dfccdb52c370f08554c15a86db14838a513416083649",
+              "size": 6313
             },
             {
               "executable": false,
               "path": "references/validation.md",
-              "sha256": "ad85a5ab80d60352141edbff756fd705db717f0a026bb4e4c4483aad6351362b",
-              "size": 3774
+              "sha256": "4b0897f0e00ab16f5bf3dd377bd60c64f20ea5aaad85ba037a66a2c1a7e38101",
+              "size": 4230
             }
           ],
-          "tree_sha256": "0f784ea5a62c52fdfd0450c6d0856112adc7ea0e286cb40c07dee69468a7a0b0"
+          "tree_sha256": "9d3710dd748af2331d6cce5ca860da64630b53ffe6a0a39955cd49939c637108"
         },
         "codex": {
           "license_evidence": [
@@ -1230,14 +1230,14 @@
             {
               "executable": false,
               "path": "SKILL.md",
-              "sha256": "45ad7df500cf28332f7b92b78ffaa8eb9cfa470dd8b9c6d99750c0bdb1034a81",
-              "size": 9966
+              "sha256": "71f3584552ee7715f74c09286e8eb00e187e2b4731e5833c0127bd65be45e393",
+              "size": 11486
             },
             {
               "executable": false,
               "path": "SOURCE.md",
-              "sha256": "8d4481cc6ed9d081f84e61d3b28d703d3d2584695d8ab9f5d0841e0b2d20a2f7",
-              "size": 1494
+              "sha256": "5d2175d4d06007881276d885ad0bd8ff849c58f5d1bbd9cd6630f8996c68cf38",
+              "size": 1866
             },
             {
               "executable": false,
@@ -1248,37 +1248,37 @@
             {
               "executable": false,
               "path": "evals/evals.json",
-              "sha256": "fc0787c10c821b1e8177d50e28495e3abeae0799a55f61388e28559a230092b4",
-              "size": 3037
+              "sha256": "d82d3e86d7036c520d59b64883d0dbddf46a8394c7753e86d2f010907624da48",
+              "size": 2785
             },
             {
               "executable": false,
               "path": "references/document-system.md",
-              "sha256": "e44c5a2dfa5c01a23725dc6de0bd3acb2ff91bee81d3167b2ac37fe8fdd56546",
-              "size": 5529
+              "sha256": "23ce4010010eb76524a3dfccdb52c370f08554c15a86db14838a513416083649",
+              "size": 6313
             },
             {
               "executable": false,
               "path": "references/validation.md",
-              "sha256": "ad85a5ab80d60352141edbff756fd705db717f0a026bb4e4c4483aad6351362b",
-              "size": 3774
+              "sha256": "4b0897f0e00ab16f5bf3dd377bd60c64f20ea5aaad85ba037a66a2c1a7e38101",
+              "size": 4230
             }
           ],
-          "tree_sha256": "0f784ea5a62c52fdfd0450c6d0856112adc7ea0e286cb40c07dee69468a7a0b0"
+          "tree_sha256": "9d3710dd748af2331d6cce5ca860da64630b53ffe6a0a39955cd49939c637108"
         }
       },
       "safety_receipt": {
         "path": "receipts/mathbullet-html-2026-08--safety.json",
-        "sha256": "b1b09761fb63970a42249807e87c1b5cad8b7c49d286638c586ab5cac8434c92"
+        "sha256": "88a21e90e2c1b90a6670dbdcad7672c40581133d8833b283dfd635e3d145fed2"
       },
       "source_revision": "fe96c626b39abba47fad2d4a4ef738e8a27602b1",
-      "subject_sha256": "82bcd7946ec96a17b6f601605accd675bab7a1d6abb18fc7e85711826e2eadd9",
+      "subject_sha256": "1b31be80058ff8fccc4c4b29c5470ef36f4d698708f1ae9494d92e1fa17971a8",
       "targets": {
         "claude": {
-          "tree_sha256": "0f784ea5a62c52fdfd0450c6d0856112adc7ea0e286cb40c07dee69468a7a0b0"
+          "tree_sha256": "9d3710dd748af2331d6cce5ca860da64630b53ffe6a0a39955cd49939c637108"
         },
         "codex": {
-          "tree_sha256": "0f784ea5a62c52fdfd0450c6d0856112adc7ea0e286cb40c07dee69468a7a0b0"
+          "tree_sha256": "9d3710dd748af2331d6cce5ca860da64630b53ffe6a0a39955cd49939c637108"
         }
       },
       "upstream": {
@@ -1297,7 +1297,7 @@
       },
       "value_receipt": {
         "path": "receipts/mathbullet-html-2026-08--value.json",
-        "sha256": "42ee80dd7b9e25d7d76cb1c94175ea89f256f9e2f31065176c6d831227019ee6"
+        "sha256": "41737df7842c84567eda87d9fd82b245729f110b8f32247604a409526e315cb6"
       }
     },
     "mattpocock-legacy-2026-07/choosing-skills": {
@@ -2026,6 +2026,6 @@
   "generated_at": "2026-08-26",
   "generation": 3,
   "hash_algorithm": "skill-tree-sha256-v1",
-  "registry_sha256": "694e74958273525a346ea1947b81e6871798388460ae97f812dadc347075d95d",
+  "registry_sha256": "fbac4ecb87a49250f3c38841efcfce6bbe1a9dc27fb0bda84631dafed63bd90d",
   "schema_version": 1
 }

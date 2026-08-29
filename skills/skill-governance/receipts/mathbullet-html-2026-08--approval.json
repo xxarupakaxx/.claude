@@ -3,15 +3,15 @@
   "kind": "approval",
   "collection_id": "mathbullet-html-2026-08",
   "generation": 3,
-  "subject_sha256": "82bcd7946ec96a17b6f601605accd675bab7a1d6abb18fc7e85711826e2eadd9",
-  "safety_receipt_sha256": "b1b09761fb63970a42249807e87c1b5cad8b7c49d286638c586ab5cac8434c92",
-  "value_receipt_sha256": "42ee80dd7b9e25d7d76cb1c94175ea89f256f9e2f31065176c6d831227019ee6",
-  "approval_request_sha256": "9954a1421eb1741e47ce5f77c2a4f887972eb38869d947fd878eedc923389774",
-  "approval_message": "OK対応して",
+  "subject_sha256": "1b31be80058ff8fccc4c4b29c5470ef36f4d698708f1ae9494d92e1fa17971a8",
+  "safety_receipt_sha256": "88a21e90e2c1b90a6670dbdcad7672c40581133d8833b283dfd635e3d145fed2",
+  "value_receipt_sha256": "41737df7842c84567eda87d9fd82b245729f110b8f32247604a409526e315cb6",
+  "approval_request_sha256": "0dff9c22444294d7fdf07f405c2811876bff03ecf38962ce4d88f4b259444f57",
+  "approval_message": "お願いします。",
   "approver": {
     "type": "human",
     "name": "yoshiki"
   },
-  "date": "2026-08-28",
+  "date": "2026-08-29",
   "decision": "approved"
 }

@@ -1,10 +1,16 @@
 # HTML文書system
 
-## Overview-first gate
+## Content-first gate
+
+最初にsource inventoryとclaim ledgerを作り、本文へ残す具体性を確保する。主要主張は、具体的な事実、成立mechanismまたは因果、source anchor、読者への含意へ接続する。materialな境界条件、反例、failureがある場合は併記する。
+
+overview、見出し、一般論はdetailの代わりにならない。sectionを増やすより、読者が次の判断やsource確認へ進める具体情報を優先する。
+
+## Overview gate
 
 workflow、architecture、lifecycle、before / after、dependency、failure pathなど、3つ以上の相互作用するactor、component、stage、state、責務、dependencyの関係を理解しないと判断できない文書では、中心主張の直後にorientationとaccessibleなinline SVG overviewを置く。欠如時failureが複数の下流へ伝播する場合も必須にする。単にfileやevidenceが3件あるだけでは発火しない。
 
-orientationは背景、without-this failure、対象scope、目標状態、全体内の位置を短く示す。overview SVGは全体のactor / component / stage、主要flow、対象境界、failureの伝播先を一枚で示す。detail sliceはoverviewの番号、名称、境界を再利用し、一つのsubflow、before / after、failure path、diffへzoomする。overviewの再描画や同じ情報の重複表示はしない。
+orientationは背景、without-this failure、対象scope、目標状態、全体内の位置を短く示す。overview SVGは全体のactor / component / stage、主要flow、対象境界、failureの伝播先を一枚で示す。detail sliceはoverviewの番号、名称、境界を再利用し、claim ledgerの具体的なsubflow、before / after、failure path、diff、evidenceへzoomする。overviewだけで説明を完了せず、再描画や同じ情報の重複表示もしない。
 
 単一事実、単純な一操作、短い値比較、2要素だけのbefore / afterには図を強制しない。図を省く場合も結論、scope、根拠の位置は崩さない。
 
@@ -35,10 +41,10 @@ Task一覧だけを計画書と呼ばない。誰が何をするかだけでな�
 2. Overview-first gate該当時のorientation: 背景、without-this failure、scope、目標状態、全体内の位置。
 3. Overview-first gate該当時のoverview SVG: 全体構造と主要flow。
 4. 読者が先に必要とする最小用語。
-5. Overview-first gate該当時のdetail slice: 入力から出力までのflow、重要なinterface、data。
-6. 制約とfailure mode。
-7. 具体例。
-8. 検証方法とsource。
+5. Overview gate該当時のdetail slice: input、branch条件、data contract、state / side effect、output。
+6. failure mode、検知、retryまたはrecovery。
+7. 具体例とmaterialな境界・反例。
+8. 読者への含意、検証方法、source。
 
 定義を用語集へ隔離しすぎない。初出の近くでも短く説明し、railは参照用にする。
 
@@ -50,8 +56,8 @@ Task一覧だけを計画書と呼ばない。誰が何をするかだけでな�
 2. Overview-first gate該当時のorientation: 背景、without-this failure、scope、目標状態、全体内の位置。
 3. Overview-first gate該当時のoverview SVG: 変更対象、上流、下流、検証、rollback point。
 4. before / afterの要約。
-5. Overview-first gate該当時のdetail slice: overview上の番号に対応する変更箇所ごとの説明とdiff。
-6. data / API / UIへの影響。
+5. Overview gate該当時のdetail slice: file / symbol、before / after、変更理由、関連diff。
+6. caller、data / API / UI、downstreamへの影響。
 7. migration、compatibility、rollback。
 8. test evidence。
 9. 残るrisk。
@@ -67,9 +73,9 @@ diffだけを並べず、読者が先に理由と影響を理解できるよう�
 3. Overview-first gate該当時のoverview SVG: 複数source、actor、判断軸の関係。必要ならevidence mapとして描く。
 4. scope、母集団、方法。
 5. 主要発見。
-6. Overview-first gate該当時のdetail slice: 比較、代表case、反例。
+6. Overview gate該当時のdetail slice: sourceごとの主張、evidence quality、比較、代表case、反例。
 7. 限界と誤読しやすい点。
-8. 含意と推奨。
+8. 調査結果から直接導ける含意と推奨。
 9. source list。
 
 事実、推論、提案を構造で区別する。数字は意味まで翻訳し、読者に再計算させない。
@@ -86,7 +92,7 @@ diffだけを並べず、読者が先に理由と影響を理解できるよう�
 
 ### Detail slice
 
-overviewの番号、名称、境界を再利用し、一つのsubflow、before / after、failure path、diffだけを詳述する。overviewと同じ全体図を描き直さない。
+overviewの番号、名称、境界を再利用し、一つのsubflow、before / after、failure path、diffを詳述する。具体的な対象、条件、結果、source anchor、読者への含意を持たせ、overviewと同じ全体図を描き直さない。
 
 ### Decision band
 

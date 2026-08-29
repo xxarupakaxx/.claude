@@ -3,7 +3,7 @@
   "kind": "safety",
   "collection_id": "mathbullet-html-2026-08",
   "generation": 3,
-  "subject_sha256": "82bcd7946ec96a17b6f601605accd675bab7a1d6abb18fc7e85711826e2eadd9",
+  "subject_sha256": "1b31be80058ff8fccc4c4b29c5470ef36f4d698708f1ae9494d92e1fa17971a8",
   "upstream": {
     "creating-html-documents": {
       "blob_sha": "b47e4185ca36e8c7617d7ec33b946f666a7af373",
@@ -22,8 +22,8 @@
   },
   "targets": {
     "creating-html-documents": {
-      "claude": "0f784ea5a62c52fdfd0450c6d0856112adc7ea0e286cb40c07dee69468a7a0b0",
-      "codex": "0f784ea5a62c52fdfd0450c6d0856112adc7ea0e286cb40c07dee69468a7a0b0"
+      "claude": "9d3710dd748af2331d6cce5ca860da64630b53ffe6a0a39955cd49939c637108",
+      "codex": "9d3710dd748af2331d6cce5ca860da64630b53ffe6a0a39955cd49939c637108"
     }
   },
   "quarantine": {
@@ -75,14 +75,14 @@
         {
           "executable": false,
           "path": "SKILL.md",
-          "sha256": "45ad7df500cf28332f7b92b78ffaa8eb9cfa470dd8b9c6d99750c0bdb1034a81",
-          "size": 9966
+          "sha256": "71f3584552ee7715f74c09286e8eb00e187e2b4731e5833c0127bd65be45e393",
+          "size": 11486
         },
         {
           "executable": false,
           "path": "SOURCE.md",
-          "sha256": "8d4481cc6ed9d081f84e61d3b28d703d3d2584695d8ab9f5d0841e0b2d20a2f7",
-          "size": 1494
+          "sha256": "5d2175d4d06007881276d885ad0bd8ff849c58f5d1bbd9cd6630f8996c68cf38",
+          "size": 1866
         },
         {
           "executable": false,
@@ -93,20 +93,20 @@
         {
           "executable": false,
           "path": "evals/evals.json",
-          "sha256": "fc0787c10c821b1e8177d50e28495e3abeae0799a55f61388e28559a230092b4",
-          "size": 3037
+          "sha256": "d82d3e86d7036c520d59b64883d0dbddf46a8394c7753e86d2f010907624da48",
+          "size": 2785
         },
         {
           "executable": false,
           "path": "references/document-system.md",
-          "sha256": "e44c5a2dfa5c01a23725dc6de0bd3acb2ff91bee81d3167b2ac37fe8fdd56546",
-          "size": 5529
+          "sha256": "23ce4010010eb76524a3dfccdb52c370f08554c15a86db14838a513416083649",
+          "size": 6313
         },
         {
           "executable": false,
           "path": "references/validation.md",
-          "sha256": "ad85a5ab80d60352141edbff756fd705db717f0a026bb4e4c4483aad6351362b",
-          "size": 3774
+          "sha256": "4b0897f0e00ab16f5bf3dd377bd60c64f20ea5aaad85ba037a66a2c1a7e38101",
+          "size": 4230
         }
       ],
       "codex": [
@@ -119,14 +119,14 @@
         {
           "executable": false,
           "path": "SKILL.md",
-          "sha256": "45ad7df500cf28332f7b92b78ffaa8eb9cfa470dd8b9c6d99750c0bdb1034a81",
-          "size": 9966
+          "sha256": "71f3584552ee7715f74c09286e8eb00e187e2b4731e5833c0127bd65be45e393",
+          "size": 11486
         },
         {
           "executable": false,
           "path": "SOURCE.md",
-          "sha256": "8d4481cc6ed9d081f84e61d3b28d703d3d2584695d8ab9f5d0841e0b2d20a2f7",
-          "size": 1494
+          "sha256": "5d2175d4d06007881276d885ad0bd8ff849c58f5d1bbd9cd6630f8996c68cf38",
+          "size": 1866
         },
         {
           "executable": false,
@@ -137,20 +137,20 @@
         {
           "executable": false,
           "path": "evals/evals.json",
-          "sha256": "fc0787c10c821b1e8177d50e28495e3abeae0799a55f61388e28559a230092b4",
-          "size": 3037
+          "sha256": "d82d3e86d7036c520d59b64883d0dbddf46a8394c7753e86d2f010907624da48",
+          "size": 2785
         },
         {
           "executable": false,
           "path": "references/document-system.md",
-          "sha256": "e44c5a2dfa5c01a23725dc6de0bd3acb2ff91bee81d3167b2ac37fe8fdd56546",
-          "size": 5529
+          "sha256": "23ce4010010eb76524a3dfccdb52c370f08554c15a86db14838a513416083649",
+          "size": 6313
         },
         {
           "executable": false,
           "path": "references/validation.md",
-          "sha256": "ad85a5ab80d60352141edbff756fd705db717f0a026bb4e4c4483aad6351362b",
-          "size": 3774
+          "sha256": "4b0897f0e00ab16f5bf3dd377bd60c64f20ea5aaad85ba037a66a2c1a7e38101",
+          "size": 4230
         }
       ]
     }
@@ -362,9 +362,10 @@
     "decision": "pass",
     "upstream_risks": "候補に外部CDN、clipboard JavaScript、実行可能なPDF shellがある",
     "containment": "runtime targetでは外部CDN、JavaScript、実行shellを除去し、CSP・offline・system fontを既定化",
-    "functional_review": "4文書型とRoadmap/viewing-plans責務境界に加え、検証後のlocal browser表示と明示opt-outを追加。既存成果物でmacOS openerの実動作を確認",
+    "functional_review": "4文書型とRoadmap/viewing-plans責務境界、検証後のlocal browser表示、detail budget、coverage/loss ledger、minimum sufficient artifactを統合。desktop-first既定により、スマホ最適化・PDF・装飾を要求時だけ実行する",
     "opener_safety": "platform openerへ検証済みlocal HTMLの絶対pathだけを渡す。HTML内script、redirect、local server、network公開は追加しない",
-    "target_parity": "CodexとClaudeのruntime targetはbyte-identical"
+    "target_parity": "CodexとClaudeのruntime targetはbyte-identical",
+    "cost_review": "目次的な表面要約を避け、主張・根拠・制約・失敗経路を優先抽出する一方、responsive、PDF、装飾、重複説明は要求がなければ生成しない"
   },
   "adaptation_diff": {
     "path": "adaptations/mathbullet-html-2026-08.json",
@@ -375,7 +376,8 @@
     "decision-plan・technical-explainer・change-review・research-reportの文書型",
     "Roadmap/viewing-plansと整合した計画書表示",
     "図表・コード差分・用語rail・印刷layout",
-    "offline・responsive・accessibility・evidence検証",
+    "offline・desktop-first・accessibility・evidence検証",
+    "detail budget、coverage/loss ledger、minimum sufficient artifactによる情報密度と生成量の制御",
     "検証済みlocal HTMLのplatform openerによる既定browser表示と明示opt-out"
   ],
   "dependencies": [
@@ -389,7 +391,7 @@
     "type": "main-agent-source-runtime-and-independent-docs-review",
     "note": "fixed upstream/quarantine、Codex/Claude candidate、canonical review targets、375/768/1440 browser checks、独立docs review Round 2 PASSを直接照合"
   },
-  "date": "2026-08-28",
-  "next_review_date": "2026-11-28",
+  "date": "2026-08-29",
+  "next_review_date": "2026-11-29",
   "decision": "pass"
 }

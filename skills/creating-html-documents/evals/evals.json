@@ -4,19 +4,19 @@
     {
       "id": 1,
       "prompt": "この技術導入案を、採否、実装Wave、受入条件、リスクが分かる自己完結HTML計画書にして。Roadmapとは役割を分けてください。",
-      "expected_output": "decision-plan型の単一HTML。冒頭で判断可能で、中心主張直後にorientationとaccessibleなoverview SVGがあり、overviewの番号や名称に接続するWave、受入条件、risk、evidenceを持つ。375/768/1440pxと印刷を検証する。",
+      "expected_output": "decision-plan型の単一HTML。冒頭で判断可能で、overviewは採用判断、選択肢の成立mechanism、trade-off、Waveのentry/exit、failure、rollback、evidenceへ接続する。1440x900だけを既定検証し、mobile、印刷、PDFは生成しない。",
       "files": []
     },
     {
       "id": 2,
       "prompt": "このシステムの仕組みを、用語欄、構成図、処理フロー、制約を含む日本語HTML解説にしてください。外部CDNは使わないで。",
-      "expected_output": "technical-explainer型の自己完結HTML。結論直後に背景、without-this failure、scope、目標状態、全体内の位置を持つorientationを置き、accessibleなoverview SVGから処理flowのdetail sliceへ接続する。外部CDNは0件。",
+      "expected_output": "technical-explainer型の自己完結HTML。overviewだけで終わらず、input、具体的な処理、branch条件、data contract、state/side effect、failure/recovery、source anchor、読者への含意を追える。外部CDNは0件。",
       "files": []
     },
     {
       "id": 3,
       "prompt": "認証middleware、Bot一覧API、Dashboard表示の3箇所にまたがる変更差分をレビュー用HTMLにまとめて。変更理由を先に説明し、before/after、コード差分、影響範囲、検証結果を読めるようにして。認証境界がない場合にどこへfailureが伝播するかも示してください。",
-      "expected_output": "change-review型の自己完結HTML。中心主張直後にorientationがあり、背景、without-this failure、scope、目標状態、全体内の位置を含む。認証middleware、API、Dashboard、検証、failure伝播先をaccessibleなoverview SVGで示し、detail sliceはoverviewと同じ番号や名称でbefore/after、diff、impact、rollback、evidenceへ接続する。",
+      "expected_output": "change-review型の自己完結HTML。認証middleware、API、Dashboardをoverviewで索引化し、各detailでfile/symbol、before/after、変更理由、caller/downstream impact、failure伝播、rollback、test evidence、source anchorを示す。",
       "files": []
     },
     {
@@ -28,7 +28,7 @@
     {
       "id": 5,
       "prompt": "複数の調査source、判断軸、関係者が絡む市場調査を、推奨判断まで読める日本語HTMLレポートにしてください。sourceごとの主張、判断軸のつながり、誤判断した場合の影響も示してください。",
-      "expected_output": "research-report型の自己完結HTML。結論直後にorientationを置き、背景、without-this failure、scope、目標状態、全体内の位置を含む。複数source、判断軸、関係者の関係をaccessibleなoverview SVGで示し、detail sliceはoverviewと同じ番号や名称で主要発見、比較、反例、evidenceへ接続する。",
+      "expected_output": "research-report型の自己完結HTML。複数source、判断軸、関係者をoverviewで索引化し、sourceごとの主張、evidence quality、比較、代表case、反例・限界、誤判断時の影響、実務上の含意へ降りる。",
       "files": []
     }
   ]

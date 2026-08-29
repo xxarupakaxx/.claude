@@ -3,7 +3,7 @@
   "kind": "value",
   "collection_id": "mathbullet-html-2026-08",
   "generation": 3,
-  "subject_sha256": "82bcd7946ec96a17b6f601605accd675bab7a1d6abb18fc7e85711826e2eadd9",
+  "subject_sha256": "1b31be80058ff8fccc4c4b29c5470ef36f4d698708f1ae9494d92e1fa17971a8",
   "representative_prompts": [
     "実装ロードマップをHTML計画書にして",
     "技術解説を図表付きHTMLでまとめて",
@@ -24,10 +24,10 @@
   ],
   "baseline": {
     "state": "汎用HTML作成手順のみで、計画書・技術解説・変更レビュー・調査報告の文書型とRoadmap責務境界が未統合",
-    "limitation": "ユーザー評価では計画書としての構造とGitHub Skill由来の出力方式が十分に見えなかった"
+    "limitation": "ユーザー評価では目次を読むような表面要約になり、全体像の先にある具体的な処理・根拠・失敗経路が不足した。responsiveやPDFなど不要な生成もtoken効率を下げていた"
   },
   "candidate": {
-    "state": "4文書型、Roadmap/viewing-plans連携、オフライン安全性、レスポンシブ・印刷・アクセシビリティ検証、検証後のlocal browser表示に加え、複雑な説明のorientation・without-this failure・overview SVG・connected detailと単純文書の図省略を一つのSkillへ統合",
+    "state": "4文書型、Roadmap/viewing-plans連携、オフライン安全性、検証後のlocal browser表示に加え、detail budget、coverage/loss ledger、minimum sufficient artifact、desktop-first既定を統合。主張・根拠・制約・failure propagationを厚く抽出し、responsive・PDF・装飾は明示要求時だけ生成する",
     "evaluation": {
       "path": "receipts/mathbullet-html-2026-08--value-evaluation.json",
       "sha256": "4f28c210f87070305894eee02afc17e4d861bdec95170269f71cf0626ab594f3"
@@ -40,7 +40,7 @@
       "false_positive": 0,
       "false_negative": 0
     },
-    "user_acceptance": "overview-first改善を深く検討して修正し、ガバナンスBLOCKINGへ対応した上でmainへマージするようユーザーが明示"
+    "user_acceptance": "情報量を増やしつつ無駄な生成tokenを抑える改善と、ガバナンス基準線の修復についてユーザーが『お願いします。』と明示"
   },
   "trial_count": 16,
   "pass_at_1": 1.0,
@@ -56,8 +56,8 @@
       "path": "receipts/mathbullet-html-2026-08--value-evaluation.json",
       "sha256": "4f28c210f87070305894eee02afc17e4d861bdec95170269f71cf0626ab594f3"
     },
-    "limitation": "長期利用統計ではなく、このtaskのlocal opener実動作、16件の決定的評価、candidate fixture、独立docs review"
+    "limitation": "長期利用統計ではなく、このtaskのlocal opener実動作、16件の決定的route評価、candidate fixture、独立docs review。具体的な情報保持率は次の隔離candidateで追加評価する"
   },
-  "date": "2026-08-28",
+  "date": "2026-08-29",
   "decision": "pass"
 }
