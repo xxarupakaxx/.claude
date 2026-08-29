@@ -27,10 +27,8 @@ metrics_file="$metrics_dir/claude_metrics.json"
 mkdir -p "$metrics_dir"
 metrics_temp="$(mktemp "$metrics_dir/claude_metrics.XXXXXX")"
 printf '%s' "$input" | jq \
-  --argjson context "$pct" \
   --argjson updated "$(date +%s)" \
   '{
-    context: $context,
     five_hour_used: (.rate_limits.five_hour.used_percentage // null),
     five_hour_reset: (.rate_limits.five_hour.resets_at // null),
     seven_day_used: (.rate_limits.seven_day.used_percentage // null),
