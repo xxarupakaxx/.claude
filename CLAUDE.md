@@ -25,6 +25,7 @@
 - 成功条件を検証可能にし、再現、test、差分確認、task-level workflow check を含めて完了を判定する。
 - 再現 test は観測済みの失敗と既存契約だけを固定し、未確認の出力形式やerror型を新しい期待値にしない。既存 test file へ追加する際に既存 test を削除・上書きしない。
 - Markdown を変更したら全文を再読し、矛盾、重複、rule漏れを同じturnで解消する。
+- 文書・仕様書・ガイド・レポート・画面文言などの成果物を作成・修正したら、最終確認で `skills/sanitizing-artifacts/SKILL.md` を必ず適用する。
 
 上4項目は「仮定を明示する / 最小を選ぶ / 触るべき場所だけ触る / 検証可能な合格基準まで進める」の4原則である。TypeScript の Before/After 実例は `skills/karpathy-examples/EXAMPLES.md` にある。typo 修正や自明な1行変更へ厳格適用しない。
 
@@ -78,7 +79,7 @@ Claude Code (conductor)
 
 ## Skill Invocation Policy
 
-Skill は「常時強制する工程」ではなく、「必要なときに呼び出す小さな規律」として扱う。
+必須の適用条件があるSkillはその条件に従い、それ以外はタスクに応じて選ぶ。
 重い harness / Superpowers 風の flow は、ユーザーが明示したとき、または高価値で複数ターンの実装に必要なときだけ使う。
 
 起動権は次の2層に分ける。
