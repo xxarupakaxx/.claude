@@ -1,163 +1,75 @@
 # Agent Team Routing
 
-Claude が plugin、skill、`Agent()`、`Workflow` を選ぶための routing SSoT。
+ClaudeがSkill、plugin、Agent()、Workflowを選ぶroutingの正本である。Phaseの順序は context/workflow-rules.md、条件付きgateは context/workflow-details.md、artifact形式は context/memory-file-formats.md、modelは rules/model-routing.md、Team Runは context/team-run.md を参照する。projectのAGENTS.md / CLAUDE.mdは追加制約として優先する。
 
-- Phase 順序と品質 gate は `context/workflow-rules.md` を優先する。
-- model 選択は `rules/model-routing.md` を優先する。
-- `/team-run` のチーム構成・Review Heat・終了判定は `context/team-run.md` を優先する。
-- `/graph-engineering` の adoption boundary、contract、routing、state authority は `context/graph-engineering.md` を優先する。実行 harness は `team-run` を再利用する。
-- project の `AGENTS.md` / `CLAUDE.md` と project 固有設定は、この global routing より優先する。
-- route の入口は `skills/ask-skill-router/SKILL.md` とする。
+## 責務境界と既定
 
-## 責務境界
+Claude leadは要件、route、統合、一次資料確認、fresh検証、最終判断、commit / push、外部writeを保持する。Pluginはsourceとdomain preflight、Skillは現在Phaseのdiscipline、Agent()は境界を切った作業、Workflowは依存が明確なpipelineを担当する。pluginがあることだけを理由にAgent()を起動しない。
 
-| 構成要素 | 所有する責務 | 所有しない責務 |
-|---|---|---|
-| Plugin | 接続済み source、domain workflow、plugin 固有 preflight | global Phase、delegation の要否、外部書き込みの包括承認 |
-| Skill | 現在の Phase 内で使う focused discipline | Phase 0-5.5 全体、project の review / commit policy |
-| `Agent()` | 境界を切った調査、実装、独立 review | lead の最終判断、暗黙の権限拡張 |
-| `Workflow` | 依存が明確な fan-out、pipeline、結果集約 | 曖昧な仕様判断、外部副作用の承認 |
-| Claude lead | route 選択、統合、検証、ユーザーへの説明 | project rule を越えた自律的な権限拡張 |
-
-Plugin が適用されても、それだけで `Agent()` を起動しない。plugin router がある場合は focused skill より先に読み、その preflight と completion gate を守る。
+local Read / Grep / Glob / Bashを先に行い、最小routeを選ぶ。大きなflow、固定全員review、件数合わせのAgent()は既定にしない。user-invokedのSkill / commandは明示要求または既存の承認済み依頼が対象のときだけ起動し、通常のroute選択で自動起動しない。ユーザーが指定したSkillはSKILL.mdを全文確認する。第三者Skillの発見・評判・導入・更新・廃止は skill-governance を入口にし、自動promotionや無審査updateを行わない。
 
 ## Delegation Gate
 
-`Agent()` へ委任する前に、次の条件をすべて確認する。満たさない条件があれば Claude lead が逐次実行する。
+Agent()、Workflow、reviewerを起動する前に全条件を評価する。
 
-| 条件 | PASS の基準 |
+| 条件 | PASS |
 |---|---|
-| Local-first | `Read` / `Grep` / `Glob` / `Bash` または小さな `Workflow` だけでは不足する |
-| 並列利益 | 独立作業の速度・専門性の利益が、委任と統合のコストを上回る |
-| 独立証拠 | objective、acceptance、成果物または checker を lead から独立して定義できる |
-| Write scope | maker ごとの write scope が disjoint、または同じ対象の writer が一人に固定される |
-| 外部副作用 | 外部書き込みがない、または対象と操作が既存 project policy かユーザー承認で許可されている |
+| Local-first | leadがscopeと既存patternを確認し、一操作では閉じない |
+| 並列利益 | 速度、専門性、隔離、または独立証拠の利益が統合コストを上回る |
+| 独立証拠 | objective、acceptance、成果物またはcheckerを独立に定義できる |
+| Write scope | writerごとのowned_pathsがdisjoint、または対象ごとにwriterを一人に固定できる |
+| 外部副作用 | 外部writeがない、または対象・操作・承認が確定している |
 
-同一ファイルの密結合作業、逐次依存、低価値な要約は fan-out しない。reviewer は maker の自己申告ではなく、成果物と fresh な検証証拠を見る。
+同一fileの密結合作業、逐次依存、低価値要約はleadが行う。Gateを満たす非自明な実装だけをAgent()へ渡し、capability不在ならleadが逐次実行して理由を記録する。makerはEvidence Bundle draft、checkerはreview sectionを担当し、makerが最終判定を兼ねない。
 
-## Context Boundary
+### Delegation Decision
 
-- **Alignment**: `grill-me` / `grilling` は、人間の選好と未決事項を一問ずつ明らかにする。ここでは実装・文書更新を始めない。
-- **Durable artifact**: `grilling-with-docs`、`writing-specifications`、`handing-off-context` は、確認済みの合意だけを保存する。保存先と外部公開は別 gate である。
-- **Fresh implementation context**: route と acceptance が確定した実装単位は、必要な artifact の抽出だけを持って開始する。会話全文や未決の仮説を丸ごと引き継がない。
+route、実装単位、acceptance、write scopeを決めた直後、対象成果物の最初のwriteより前に05_log.mdへDecisionを保存する。decision_unit、gate、passed_conditions、failed_conditions、local_first_evidence、reason、write_scope、acceptance、lead_retainsを含める。material change後はsupersedesを付けて再評価する。
 
-`mapping-large-projects` は route が霧に包まれた大規模 effort の decision map であり、`team-run` は route と acceptance が既知で、共有状態と独立検証が価値を生む実行協調である。
-複数の独立 loop を auditable edge、typed state、異なる権限で統治する必要がある場合だけ、その上に `graph-engineering` を置く。単一 loop を graph と呼び替えない。
+Work Packetには objective、scope、out_of_scope、owned_paths、acceptance_ids、constraints、capability_class、safety_decision_id、side_effects_requested、external_write_targets、approval_required、approval_evidence、dry_run_required、baseline、reality_contract、verification、dependencies、handoff_requirements、reviewer_focus、journey_scenarios、negative_paths、completion_targetを含め、該当しない現実条件はN/A: <理由>とする。
 
-## Research Ticket Gate
+## Context BoundaryとJIT brief
 
-AFK research ticket は facts を集めるためだけに使う。
-local-first の後、Delegation Gate をすべて満たす独立調査だけを `Agent()` または `Workflow` に委任し、source link と不確実性を持つ asset を lead に返す。
-claim、tracker 作成、comment、label、close は External Write Gate を通す。
+grilling / alignmentは未決事項の確認だけを行い、ここで実装・外部投稿を始めない。spec / handoffは確認済みの合意だけを保存する。実装Agent()へは会話全文でなく、目的、次の未完了Task、対象、依存、検証、決定、不明点、source refsから成るJIT briefだけを渡す。secret、認証済みsession、全tool outputを渡さない。
 
-## Engineering Lanes
+task-contextは`~/.codex/scripts/task-context.py`を明示root・指定task付きで呼び、引数・出力schemaはcontext helperの実装とtestを正本とする。このroutingで新schemaを捏造せず、list / brief helperはread-onlyに限定する。
 
-ここに載せるのは shared route として採用した promoted skill と既存の canonical flow だけである。
+## Route選択
 
-Matt Pocock skill の全件判定はfixed revisionごとの監査artifactで管理する。
-このroutingには41件の詳細を複製せず、運用カテゴリと入口だけを置く。
-
-- **canonical**：`ask-skill-router`、`grilling`、`grilling-with-docs`、`wayfinder`、`to-spec`、`to-tickets`、`implement`、`tdd`、`diagnosing-bugs`、`reviewing-code`、`modeling-domains`、`designing-codebases`、`handing-off-context`。
-- **implementation name**：`wayfinder`、`to-spec`、`to-tickets`、`implement`、`teach` は discovery 用の user-invoked entry であり、実行規律はそれぞれ `mapping-large-projects`、`writing-specifications`、`creating-tracer-tickets`、`implementing-work`、`teaching-concepts` を読む。
-- **optional**：`prototyping-solutions`、`improving-codebase-architecture`、`setting-up-engineering-skills`、writing 系、setup 系、niche migration 系。明示依頼または対象repo条件がそろう場合だけ使う。
-- **compat/reference**：`choosing-skills` などの旧名やClaude専用補助。入口は既存canonical routeへ寄せる。
-- **in-progress/user-invoked**：`batch-grill-me` と `to-questionnaire` は明示起動時だけ使い、安定版の既定経路として推奨しない。
-- **retired**：deprecatedな `design-an-interface`、`conducting-quality-assurance`、`planning-refactors`、`ubiquitous-language` はruntimeから削除済み。置換先は `brainstorming` と `designing-codebases`、`triaging-issues` と `diagnosing-bugs`、architecture surveyと`to-spec`と`to-tickets`、`modeling-domains`。
-
-`teach`（実装規律は`teaching-concepts`）は post-stabilization の教育laneである。
-通常の設計、実装、状態図生成では、読者に教えるための原則だけを使い、teaching workspace は明示された教育タスクでだけ作る。
-
-### Engineering Flow Shape
-
-これは route の条件分岐であり、Phase 順序の第二の正本ではない。
-
-- route が見えない巨大案件だけ `mapping-large-projects` を situational on-ramp として使い、判断がそろった後に `writing-specifications` または直接 `implementing-work` へ渡す。
-- route が明確で、単一 session に収まり direct requirement と acceptance criterion で検証できる作業は、spec と ticket を省略して `implementing-work` へ進める。この分岐を `direct lane` と呼ぶ。
-- 複数 session に分ける作業は durable spec または handoff artifact を残し、実行単位をtracker化する場合だけ `creating-tracer-tickets` を使う。各実装単位は durable artifact から fresh context で始める。
-- route が明確な大規模作業を WU と依存へ分ける場合は `blueprint` を使い、fog-of-war の探索と混同しない。
-
-これらの skill は user-invoked である。
-ある route の完了は次 route の提案条件を満たすだけで、後続 skill の自動実行、tracker 公開、commit、push を許可しない。
-
-| 条件付きlane | 使う条件 | 次の判断 |
+| 状況 | route | 境界 |
 |---|---|---|
-| `mapping-large-projects` → `writing-specifications` | 目的地はあるがrouteが不明で、decision map後も durable spec が必要 | 未決事項が残るなら alignment に戻す |
-| `writing-specifications` → `creating-tracer-tickets` | 承認済みspecを複数の垂直sliceへ分ける必要がある | tracker公開は別承認 |
-| `creating-tracer-tickets` → `implementing-work` | ticket単位で acceptance と frontier が明確 | fresh context だけを渡して実装する |
-| direct requirement → `implementing-work` | 単一sessionで検証でき、specやticketが過剰 | `tdd`、`diagnosing-bugs`、reviewを必要な分だけ重ねる |
+| 既知の小さな実装 | direct lane / implement | acceptanceとfresh検証で閉じる |
+| routeが未知の大規模作業 | wayfinder / mapping-large-projects | decision map後にspecまたは実装へ渡す |
+| 合意済み要件をspecへ残す | to-spec / writing-specifications | tracker公開は別gate |
+| Approved specをsliceへ分ける | to-tickets / creating-tracer-tickets | writerとblocking edgeを固定する |
+| 依存DAGやCold-Start Briefが必要 | blueprint | 各WUのPhase 0–5.5を省略しない |
+| 複数turnのGoal・Team Journal・Review Heatが有効 | team-run | user-invoked overlay |
+| 固定順の専門chainが必要 | orchestrate | 外部副作用は別gate |
+| UI/UXの新しい判断 | designing-ui-ux | UI/HTML gateを先に通す |
+| 固定点からの差分レビュー | reviewing-code | Phase 4の判定を置き換えない |
 
-| Signal | Primary route | 起動権 | 境界 |
-|---|---|---|---|
-| 要件が曖昧で codebase または状態付き docs がある | `grilling-with-docs` | user-invoked | 同じ文脈で alignment を進める。codebase がない場合は `grill-me`。次 route は規模と不確実性で選ぶ |
-| 目的地はあるが route がまだ分からない巨大案件 | `mapping-large-projects` | user-invoked | decision map を作る situational on-ramp。route が明確なら spec または直接実装を提案し、tracker 書き込みは別 gate とする |
-| route が明確な大規模作業で、依存DAG、Cold-Start Brief、または複数PRの設計図が必要 | `blueprint` | user-invoked | WU と依存を設計する。通常の複数session分割や未知routeの探索には使わない |
-| 会話だけでは決められない一つの design question | `prototyping-solutions` | model-invoked | decision evidence を作る。production 実装ではなく、branch / issue / commit は別 gate |
-| material な未決事項がない会話を durable spec にする | `writing-specifications` | user-invoked | tracker 公開は別承認。未決事項が残る場合は synthesis で埋めず、alignment route へ戻す |
-| 承認済み spec を垂直 slice と blocking edge にする | `creating-tracer-tickets` | user-invoked | 粒度と依存の承認後に公開する。`blueprint` や `deepening-plan` を置き換えない |
-| spec / ticket または direct requirement を実装する | `implementing-work` | user-invoked | unblocked frontier と検証可能な acceptance criterion を前提とする。品質確認と commit / push は global policy に従う |
-| 外部から届いた raw issue / PR を agent-ready にする | `triaging-issues` | user-invoked | 生成済み tracer ticket を再 triage しない。comment / label 更新は別承認 |
-| 固定点からの差分を Standards / Spec の二軸で見る | `reviewing-code` | model-invoked | read-only review discipline。Phase 4 の mandatory review と出荷判定を置き換えない |
-| domain vocabulary を問い直す | `modeling-domains` | model-invoked | glossary / decision vocabulary。process flow の代替にしない |
-| module shape、interface、seam を設計する | `designing-codebases` | model-invoked | deep-module vocabulary。実装や broad refactor の許可ではない |
-| 新規systemの境界、bounded context、DDD判断を設計する | `software-architecture` | model-invoked | greenfield / major redesignのsystem boundary。既存codebaseの改善surveyや選択済みmoduleの局所改善ではない |
-| architecture の deepening opportunity を scoped survey する | `improving-codebase-architecture` | user-invoked | ユーザー指定範囲または recent git hot spot に絞って HTML 候補を提示する。選択後の設計・実装は別 route |
-| 選択済みの1〜3 module または一つの関心事を段階的に改善する | `improving-architecture` | model-invoked | Deletion Test、Seam、Locality で改善案を作る。実装、ADR、broad survey は別 gate |
-| session / agent 間へ durable context を渡す | `handing-off-context` | user-invoked | handoff artifact を作る。別 session の起動や外部投稿は行わない |
+canonical入口は `wayfinder`、`to-spec`、`to-tickets`、`implement`、`teach`で、実行規律は対応する実装Skillへ委譲する。`batch-grill-me` と `to-questionnaire` は明示起動時だけのin-progress入口である。retired skill nameを既定routeへ戻さない。
 
-第三者 Skill の発見、評判、provenance、全件 catalog、導入、更新、廃止は `skill-governance` を入口にする。read-only inventory は model-invoked でよいが、promotion、update、retirement、delete、runtime mutation は user-invoked とし、governance gate を通す。
+### Delivery lifecycle routing
 
-<!-- skill-governance-contract:routing:start -->
-第三者Skillは `skill-governance` で候補catalogとactive runtimeを分離する。read-only inventoryだけをmodel-invokedとし、promotion、update、retirement、delete、runtime mutationはuser-invokedかつ人間承認を必須にする。
-<!-- skill-governance-contract:routing:end -->
+Workflow routeとLocal / Fast / Standard / Heavy / Judgmentのcapability classは別軸である。fast-track、prd-flow、multi-packet-flowのWork Packet条件はmemory形式とworkflowを正本とする。必要model不在はROUTING_BLOCKED、承認なしの外部writeやruntime policy変更はWAITING_HUMANで停止する。completion_targetとcompletion_stateはmemory形式に従う。
 
-Tracker、triage label、domain doc layout が hard dependency の route で設定が欠ける場合だけ、`setting-up-engineering-skills` を **user-invoked の提案**として返す。提案しただけでは実行しない。
+## Skill、HTML、共通sync
 
-## External Write Gate
+調査不足ならresearch / iterative-retrieval、実装ならimplement / tdd / diagnosing-bugs、検証ならverification-loop / reviewing-codeを必要な分だけ読む。team-runは複数turnの共有状態と独立検証が実効的な場合だけ、graph-engineeringは複数loop・typed state・異なるauthorityが必要な場合だけ使う。
 
-Route 選択だけでは、次の操作を許可しない。
+HTMLを生成・更新・配布する場合は context/html-artifact-contract.md と config/html-surfaces.jsonを確認し、登録済みproducerだけを使う。Roadmapは30_plan.mdを入力に`~/.codex/scripts/sync-roadmap.py`が検査・生成・atomic publishし、HTMLを手編集しない。図の正本はSVGで、MarkdownへMermaidを生成しない。
 
-- issue / PR / comment / label、Slack 等の対人送信、Calendar、Drive、production deploy、secret store の更新。
-- `git push` と PR 作成。明示された project policy またはユーザー承認に従う。
-- `git commit` は、実装・修正依頼に対して検証が成功し、project policy に禁止がなければ標準の完了手順として行う。
-- prototype branch や tracker artifact の作成。decision evidence と production artifact を分ける。
+ClaudeのRoadmap同期は ~/.codex の共有CLIを明示入口にする。phase 2、3、4、5で同じTASK、run、rootを使い、--dry-runはread-onlyとする。CLI不存在、引数不正、sync失敗時は旧generatorや別CLIへfallbackしない。完了表示はsync PASSとfresh検証の後だけにする。
 
-権限errorやcontext不一致を、別 principal / company / profile への自動切替で回避しない。読み取り診断も現在の principal を明示し、切替が必要なら停止してユーザー確認を取る。`Agent()`、`Workflow`、plugin へ secret 実値、secret reference、認証済みsession情報を渡さない。
+## 改善候補とExternal Write Gate
 
-実行前に対象、操作、本文または差分を確定する。`Agent()` や plugin へ委任しても、この gate は緩和されない。
+失敗や改善案は候補→trial（回帰検査と外部feedback）→adoptの順に扱う。adoptにはowner、承認、rollback、review dateを付け、外部feedbackなしの自動policy promotionやSkill / hook / contextの自動更新をしない。measured tokens、measured bytes、proxy（行数、呼び出し数、概算token）は別記録にする。
 
-## Intent Routing Table
+issue、PR、comment、label、Slack、Calendar、Drive、deploy、secret store、public share、git pushは対象・差分・principal・承認証跡を確定してからleadが行う。commitも検証成功後にproject policyへ従う。Agent() / Workflowへsecret、secret reference、認証済みsessionを渡さず、権限errorやcontext不一致を別principalへ自動切替しない。既存の承認済み依頼の範囲は、通常routeより優先して維持する。
 
-`.claude` に実体がある route だけを載せる。ここに無い intent は責務境界表と Engineering Lanes で判断する。
+文案作成を委譲する場合は`~/.codex/scripts/draft_delivery_message.py`経由のtoolなしFast workerを、ephemeral・read-only sandbox・user config無効・shell / browser / apps / multi-agent無効で起動する。Fast workerは文案とclaim_referencesだけを返し、Git/GitHub tool、approval、commit、push、PR作成を持たない。leadがtrusted snapshotとEvidenceを検証してからexternal writeを行う。小さな定型文はlocal templateを優先する。
 
-| User intent / signal | Primary skill / command route | 組み合わせる agent role | Notes |
-|---|---|---|---|
-| 高価値・複数ターンの協調実行、team-run、複数 role の連携 | `commands/team-run.md` + `context/workflow-rules.md` + `context/team-run.md` | `implementation-planner`、`implementer`、reviewers、`go-nogo-advisor` | Goal、Team Journal、Review Heat、協調のすべてが有用なときだけ使う |
-| 複数loopのfan-out/fan-in、auditable routing、checkpoint、failure isolation、node別権限 | `skills/graph-engineering/SKILL.md` + `context/graph-engineering.md`。実行は `team-run` を再利用 | contract に定義した worker、checker、judge | user-invoked。node を spawn する前に contract を検証する。単一 loop なら使わない |
-| 固定順序の specialist chain、ordered handoff、orchestrate | `commands/orchestrate.md` + `context/workflow-rules.md` | `requirement-parser`、`implementation-planner`、選択した reviewers | 共有状態より順序が重要なときに使う。Goal / Team Journal / Review Heat を跨いで保つなら `team-run` |
-| skill / workflow の選択に迷う、どの route を使うべきか | `skills/ask-skill-router/SKILL.md` | 既定ではなし | 重い flow に載せる前に user-invoked と model-invoked を分類する |
-| 第三者 Skill の発見、評判、provenance、全件 catalog、導入、更新、廃止 | `skills/skill-governance/SKILL.md`。read-only な estate 点検は `skill-stocktake` | 既定ではなし | read-only inventory は model-invoked。promotion / update / retirement / delete / runtime mutation は user-invoked かつ governance gate 必須 |
-| 複数実装・提案の匿名A/B比較 | ローカル artifact + `ab-judge` | `ab-judge` | 作成者情報を隠して `Report A` / `Report B` で独立評価し、attribution は判定後の別 Phase で扱う |
-| UX、UI、product flow、画面監査、デザインを洗練する | `skills/designing-ui-ux/SKILL.md`。同 Skill が `emil-design-eng`、`apple-design`、motion 系を必要な分だけ選ぶ | `ui-ux-reviewer`、`a11y-reviewer`、`implementer` | `designing-ui-ux`をcanonicalなdesign orchestratorとして扱う。新しいデザイン判断を含む場合は、`workflow-rules.md`のUI/UX Design Approval Gateに従って複数案を提示し、ユーザー承認前にproduction UIを実装しない。実装後は同Skillの独立評価gateを保つ |
-| library / framework / SDK / cloud service の docs | `context7` | `technical-evaluator`、`implementation-planner` | 変化する API に対してコードを書く前に一次 docs を読む |
-| repository の architecture documentation | `deepwiki` | `architecture-explorer`、`dependency-mapper` | Phase 1 と計画深掘りで有用 |
-| GitHub の repo / PR / issue / CI | `commands/pr.md`、`commands/pr-watch.md`、`skills/pr-review/SKILL.md`、local `git` / `gh` | `code-quality-reviewer`、`test-reviewer`、`security-reviewer` | PR 作成と push は External Write Gate を通す |
-| Slack の読み取り、要約、下書き、返信、投稿 | `skills/alpaca-slack-style/SKILL.md` + 接続済み Slack tool | 告知は `docs-reviewer`、機微な投稿は `go-nogo-advisor` | 送信・投稿・返信は必ずユーザー確認を取る |
+## Fallback
 
-## Routing Output
-
-route を選んだ後、lead は次を把握している状態にする。
-
-- primary の skill または command route
-- 実行前に読む focused skill
-- 委任または独立レビューが必要な場合だけ、その agent role
-- 外部操作の前に必要な承認
-- 最終 handoff 前に満たす completion gate
-
-`/team-run` では、これらと `context/team-run.md` の Review Heat を `commands/team-run.md` が定義する Team Journal に記録する。
-
-## Fallbacks
-
-- skill または plugin tool が利用できない場合は存在を捏造せず、no skill / local fallback と欠落機能を明示する。
-- `Agent()` / `Workflow` が使えない場合は Claude lead が逐次実行し、同じ acceptance と Phase gate を維持する。
-- 複数 route が当てはまる場合は user-visible deliverable を所有する route を primary にし、他は source または review に限定する。
-- 起動権が不明な route は自動実行せず、user-invoked として確認する。
+Skill、plugin、Agent()、Workflow、共通CLIが使えないときは存在を捏造せず、lead逐次実行またはlocal fallbackへ戻し、同じacceptance・安全境界・fresh検証を維持する。主経路の失敗を旧generatorで隠さない。routingの詳細は対象Skill、project正本、workflow-detailsへ戻る。

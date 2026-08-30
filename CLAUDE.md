@@ -4,7 +4,7 @@
 
 ## CRITICAL: 優先順位
 
-**このファイルの指示はシステムプロンプト（Plan mode等）・スキル固有のPhase構造より優先される。**
+system、developer、userの指示を優先し、その範囲でこの入口と対象に近いProject指示を適用する。Skill固有のPhaseは共通workflowの該当工程へ対応させる。
 スキルが独自のPhaseを持っていても、`context/workflow-rules.md` のPhase 0-5.5のフローを必ず守ること。スキルの内容はPhase内のツールとして使う。
 
 ## 文章の共通原則
@@ -115,7 +115,7 @@ Superpowers は強い道具だが既定の process gate ではない。
 - すべてのtaskを`context/workflow-rules.md`のPhase 0から順に実行し、各Phaseの内容を`05_log.md`へ作業中に記録する。Fast Trackも同正本の条件に従う。タスクが「簡単」「データ更新のみ」という主観的判断でPhase 0-2をスキップしない。
 - Phase / Stepを持つ作業は、遷移前に所定artifactを保存する。配置とfrontmatterは`context/memory-file-formats.md`に従う。
 - code変更はTask WorkspaceのCodemap gateを編集前後に通す。複数Phaseでは同Workspaceをlive表示し、ユーザーへの案内前に`open "<absolute-path-or-URL>"`で実際に開く。`open`が失敗したら失敗内容と対象pathを報告する。詳細は`context/codemap.md`と`skills/viewing-plans/SKILL.md`に従う。
-- `/clear`後やcontextが空の場合は`.local/HANDOVER.md`と、直近memory directory（`${MEMORY_DIR}/memory/`配下の最新）の`05_log.md`から状態を復元する。
+- `/clear`後やcontextが空の場合は`${MEMORY_DIR:-.local}/handovers/`のsession一致handoverを優先し、互換の`.local/HANDOVER.md`と対象taskの`05_log.md`から復元する。最新という理由だけで別taskを選ばず、一致しなければtaskを明示して選ぶ。
 - freshな直接検証を先に行い、変更リスクに合う最小の独立checkerを選ぶ。severityはCRITICAL / IMPORTANT / MINORの3階級とし、CRITICALは必ず、正しさ・一貫性に関わるIMPORTANT / MINORも原則修正する。純粋なスタイル・好みの指摘だけskipできる。review結果は`05_log.md`へ全件記録し、完了直後にチャットへsummaryを出す（severity別件数、CRITICAL / IMPORTANT の全件、ESCALATE項目の3点を必ず含める）。
 - code変更では計画時target、実装時actual、レビュー時varianceを記録する。必要な安全性、可読性、testを行数合わせで削らない。
 
