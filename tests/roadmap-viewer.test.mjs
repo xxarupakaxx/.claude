@@ -1407,20 +1407,25 @@ test('implementation workspaceは選択Taskの実装図と同値な関係一覧�
   assert.match(renderDiagramSource, /escapeHtml\(edge\.predicate\)/);
 });
 
-test('viewing-plansのauthoring contractはbrief-firstの6項目とTask実行契約を要求すべき', () => {
-  for (const label of ['実施Task', '仕様', '実装根拠', '実行順序', '事実・判断・未確定', '成果物']) {
-    assert.match(viewingPlansSkill, new RegExp(label));
+test('viewing-plans documents the shared HTML authority and safe legacy boundary', () => {
+  assert.match(viewingPlansSkill, /30_plan\.html.*正本/s);
+  assert.match(viewingPlansSkill, /HTMLがあれば唯一の入力/);
+  assert.match(viewingPlansSkill, /不正.*旧MDで隠さない/);
+  assert.match(viewingPlansSkill, /HTMLがない既存taskだけ30_plan\.mdをlegacy/);
+  assert.match(viewingPlansSkill, /~\/\.codex\/scripts\/sync-roadmap\.py/);
+  assert.match(viewingPlansSkill, /source preview.*allowlist/s);
+  assert.match(viewingPlansSkill, /secret.*symlink.*binary/s);
+
+  assert.match(memoryFileFormats, /data-plan-schema="2"/);
+  assert.match(memoryFileFormats, /data-task-id="1"/);
+  for (const field of ['purpose', 'targets', 'implementation', 'outputs', 'verification', 'acceptance']) {
+    assert.ok(memoryFileFormats.includes(`data-field="${field}"`), `HTML sample requires ${field}`);
   }
-  for (const contract of ['compact status bar', '固定の全体目的をheroとして重複表示せず', '`現在` と `次`', 'quick link', 'source drawer']) {
-    assert.match(viewingPlansSkill, new RegExp(contract));
-  }
-  for (const heading of ['#### 目的', '#### 変更対象', '#### 実装根拠', '#### 実装', '#### 実装図', '#### 成果物', '#### 検証']) {
-    assert.match(memoryFileFormats, new RegExp(heading));
-  }
-  assert.match(memoryFileFormats, /repo:<relative-path>#<anchor-or-Lx-Ly>/);
-  assert.match(viewingPlansSkill, /現在の実コード/);
-  assert.match(viewingPlansSkill, /存在しないafter codeを生成しない/);
-  assert.match(viewingPlansSkill, /実装図.*関係を推測しない/s);
+  assert.match(memoryFileFormats, /data-source-ref="task:30_plan\.html"/);
+  assert.match(memoryFileFormats, /data-acceptance-id="A1"/);
+  assert.match(memoryFileFormats, /HTML形式では進捗もHTMLが所有/);
+  assert.match(memoryFileFormats, /不正HTMLをvalidなMDで隠さない/);
+  assert.match(memoryFileFormats, /実行script・event handler・外部resource・本文の隠蔽を許可しない/);
 });
 
 test('the tree-first roadmap information architecture remains in the HTML', () => {
