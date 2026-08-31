@@ -1,0 +1,57 @@
+{
+  "schema": "diagram-design-trigger-eval-v1",
+  "status": "PASS",
+  "mode": "deterministic-fixture",
+  "claim": "fixture cue coverage only; no model pass@1 or production precision/recall",
+  "results": [
+    {
+      "id": "dependency-positive",
+      "expected": "dependency",
+      "actual": "dependency",
+      "status": "PASS"
+    },
+    {
+      "id": "process-positive",
+      "expected": "process",
+      "actual": "process",
+      "status": "PASS"
+    },
+    {
+      "id": "architecture-positive",
+      "expected": "architecture",
+      "actual": "architecture",
+      "status": "PASS"
+    },
+    {
+      "id": "comparison-positive",
+      "expected": "comparison",
+      "actual": "comparison",
+      "status": "PASS"
+    },
+    {
+      "id": "table-negative",
+      "expected": null,
+      "actual": null,
+      "status": "PASS"
+    },
+    {
+      "id": "roadmap-negative",
+      "expected": null,
+      "actual": null,
+      "status": "PASS"
+    },
+    {
+      "id": "canonical-negative",
+      "expected": null,
+      "actual": null,
+      "status": "PASS"
+    },
+    {
+      "id": "decoration-negative",
+      "expected": null,
+      "actual": null,
+      "status": "PASS"
+    }
+  ],
+  "failure_count": 0
+}

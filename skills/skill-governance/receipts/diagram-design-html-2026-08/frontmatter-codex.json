@@ -1,0 +1,23 @@
+{
+  "command": "validate-frontmatter",
+  "findings": [],
+  "frontmatter_sha256": "c487dd1417f0465790737ff6cadb9a9de36201df14822fe5e3a892f0cf5b7afc",
+  "skill_sha256": "9e885b3b82b6c390e43a1813726724c3578abdc125e11bbcaeb625dc13f8e46c",
+  "status": "validated",
+  "surface": {
+    "collection_id": "diagram-design-html-2026-08",
+    "kind": "review",
+    "skill_name": "diagram-design",
+    "target_id": "codex"
+  },
+  "target": "codex",
+  "validator": "pyyaml-6.0.2-safe-loader",
+  "values": {
+    "description": "Create source-backed static dependency, processing, architecture, or comparison diagrams for plan documents as self-contained HTML/SVG when spatial relationships add information beyond prose or a table; do not own roadmap progress, task order, or canonical state diagrams.",
+    "license": "MIT",
+    "metadata": {
+      "version": "2.6-adapted.1"
+    },
+    "name": "diagram-design"
+  }
+}

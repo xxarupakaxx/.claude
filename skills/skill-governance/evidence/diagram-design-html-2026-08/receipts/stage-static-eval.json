@@ -1,0 +1,92 @@
+{
+  "schema": "diagram-design-static-eval-v1",
+  "status": "PASS",
+  "candidate_execution": false,
+  "stage": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design",
+  "targets": {
+    "codex": [
+      "ADAPTATION.md",
+      "LICENSE",
+      "SKILL.md",
+      "SOURCE",
+      "SOURCE.md",
+      "UPSTREAM.md",
+      "examples/architecture.html",
+      "examples/architecture.svg",
+      "examples/comparison.html",
+      "examples/comparison.svg",
+      "examples/dependency-before.html",
+      "examples/dependency-before.svg",
+      "examples/dependency-candidate.html",
+      "examples/dependency-candidate.svg",
+      "examples/process.html",
+      "examples/process.svg",
+      "references/output-contract.md",
+      "references/quality-gate.md",
+      "references/selection.md",
+      "references/type-architecture.md",
+      "references/type-comparison.md",
+      "references/type-dependency.md",
+      "references/type-process.md",
+      "references/visual-rules.md"
+    ],
+    "claude": [
+      "ADAPTATION.md",
+      "LICENSE",
+      "SKILL.md",
+      "SOURCE",
+      "SOURCE.md",
+      "UPSTREAM.md",
+      "examples/architecture.html",
+      "examples/architecture.svg",
+      "examples/comparison.html",
+      "examples/comparison.svg",
+      "examples/dependency-before.html",
+      "examples/dependency-before.svg",
+      "examples/dependency-candidate.html",
+      "examples/dependency-candidate.svg",
+      "examples/process.html",
+      "examples/process.svg",
+      "references/output-contract.md",
+      "references/quality-gate.md",
+      "references/selection.md",
+      "references/type-architecture.md",
+      "references/type-comparison.md",
+      "references/type-dependency.md",
+      "references/type-process.md",
+      "references/visual-rules.md"
+    ]
+  },
+  "target_manifest_hashes": {
+    "codex": "b5dfd2630e7940cb7f402c6e937b0dfb7a693e5a27665e26adfb1dcdc7f633f2",
+    "claude": "b5dfd2630e7940cb7f402c6e937b0dfb7a693e5a27665e26adfb1dcdc7f633f2"
+  },
+  "results": [
+    {
+      "check": "target-files",
+      "status": "PASS",
+      "detail": "codex: 24 files"
+    },
+    {
+      "check": "target-files",
+      "status": "PASS",
+      "detail": "claude: 24 files"
+    },
+    {
+      "check": "target-parity-paths",
+      "status": "PASS",
+      "detail": "codex and claude file lists are identical"
+    },
+    {
+      "check": "target-parity-bytes",
+      "status": "PASS",
+      "detail": "all target bytes match"
+    },
+    {
+      "check": "source-binding",
+      "status": "PASS",
+      "detail": "latest commit, tree, manifest, and review status are bound"
+    }
+  ],
+  "failure_count": 0
+}

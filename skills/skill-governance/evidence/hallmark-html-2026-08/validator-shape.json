@@ -1,0 +1,46 @@
+{
+  "baseline_registry": {
+    "not_modified": true,
+    "path": "/Users/yoshiki/.local/share/skill-governance/proposals/emilkowalski-ja-2026-07/skill-governance/registry.toml",
+    "sha256": "c36a5c0f70350003680e202cc040f663b89b9292452a31f5834d6f6d26214551"
+  },
+  "candidate_adaptation": "platform-adapted",
+  "candidate_adaptation_diff": {
+    "path": "adaptations/hallmark-reference-hygiene-ledger.json",
+    "sha256": "cc9876d48062bd060503fefd1215fbd7a3c6fb214e8efc06db31d795f186070a"
+  },
+  "candidate_collection_id": "hallmark-html-2026-08",
+  "candidate_has_approval_lineage_receipts": false,
+  "candidate_local_state": "reviewed",
+  "candidate_review_state": "evidence-pending",
+  "candidate_risk_tier": "unclassified",
+  "candidate_source_id": "hallmark",
+  "candidate_targets": [
+    "codex",
+    "claude"
+  ],
+  "findings": [],
+  "generation": 3,
+  "mode": "in-memory-read-only-draft-shape",
+  "note": "This draft shape is not a registry update, catalog lock, safety receipt, value receipt, approval receipt, promotion receipt, or activation. Empty shape findings do not waive raw blockers.",
+  "raw_source_blockers": {
+    "blocking_count": 16,
+    "codes": {
+      "broken_relative_reference": 3,
+      "markdown_path_escape": 13
+    },
+    "frontmatter": "BLOCKED at 64 KiB adapter guard",
+    "status": "BLOCKED"
+  },
+  "schema": "governance-registry-shape-check-v1",
+  "shape_only": true,
+  "source_shape": "source.json",
+  "status": "PASS",
+  "validation": {
+    "findings": [],
+    "mode": "validate_registry on an in-memory merge of the baseline registry plus this source/collection stanza",
+    "registry_written": false,
+    "status": "PASS",
+    "validator_source": "/Users/yoshiki/.codex/skills/skill-governance/scripts/governance.py"
+  }
+}

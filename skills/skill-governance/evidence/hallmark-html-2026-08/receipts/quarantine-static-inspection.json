@@ -1,0 +1,280 @@
+{
+  "candidate_execution": false,
+  "canonical_skill_subtree": {
+    "bytes": 689673,
+    "file_count": 107,
+    "inspection": {
+      "blocking_classification": {
+        "promotion_effect": "The classification does not waive any blocker. Before promotion, apply a source-bound diff or an explicit subset exclusion, then rerun candidate inspect and verify that no directory-only or candidate-root-escaping links remain.",
+        "reference_examples": {
+          "items": [
+            {
+              "occurrences": 1,
+              "path": "SKILL.md",
+              "remediation": "Keep it in repository-snapshot only, or replace the directory-escaping link with an inert, reviewed source citation. Do not add it to runtime context.",
+              "runtime_requirement": "human-only; SKILL.md explicitly says do not auto-load",
+              "snapshot_target": "docs/recipes.md",
+              "target": "../../docs/recipes.md"
+            },
+            {
+              "occurrences": 1,
+              "path": "SKILL.md",
+              "remediation": "Load from the preserved snapshot only for that review, or replace the link with a source citation; do not make it an automatic dependency.",
+              "runtime_requirement": "human-only; required only for an explicitly requested study review",
+              "snapshot_target": "docs/study-examples.md",
+              "target": "../../docs/study-examples.md"
+            },
+            {
+              "occurrences": 1,
+              "path": "references/hero-enrichment.md",
+              "remediation": "Keep the example in repository-snapshot and omit it from the candidate subset, or cite it without a candidate-root escape after a source-bound adaptation.",
+              "runtime_requirement": "worked visual example only; not required for the current plan document",
+              "snapshot_target": "site/_tests/05-tracejam-saas/",
+              "target": "../../../site/_tests/05-tracejam-saas/"
+            },
+            {
+              "occurrences": 1,
+              "path": "references/hero-enrichment.md",
+              "remediation": "Keep the example in repository-snapshot and omit it from the candidate subset, or cite it without a candidate-root escape after a source-bound adaptation.",
+              "runtime_requirement": "worked visual example only; not required for the current plan document",
+              "snapshot_target": "site/_tests/03-maple-bakery/",
+              "target": "../../../site/_tests/03-maple-bakery/"
+            },
+            {
+              "occurrences": 2,
+              "path": "references/themes/cobalt.md",
+              "remediation": "Do not import the demo HTML/JS or its credential-shaped sample. Keep it snapshot-only, or approve a static, minimal visual excerpt with separate review.",
+              "runtime_requirement": "canonical visual example only; not required unless the cobalt theme is explicitly selected",
+              "snapshot_target": "site/examples/cobalt-01/",
+              "target": "../../../../site/examples/cobalt-01/"
+            }
+          ],
+          "meaning": "These links point to human-only or visual example material that exists in the preserved upstream package. They are useful for a reviewer or a selected study, but they are not required to run the minimal Hallmark visual-review subset for this HTML plan."
+        },
+        "required_file_target_missing": {
+          "items": [
+            {
+              "directory_exists": true,
+              "line": 350,
+              "path": "SKILL.md",
+              "remediation": "Replace the broad link with one or more explicit reviewed Markdown files, or retain plain path text without a link. Do not invent an index file in the source-preserving copy.",
+              "runtime_requirement": "the surrounding instructions are required, but the directory itself is not a loadable file target",
+              "target": "references/"
+            },
+            {
+              "directory_exists": true,
+              "line": 213,
+              "path": "references/verbs/redesign.md",
+              "remediation": "Name the concrete references used by the redesign branch (for example design-md.md and structure.md) or remove the directory link; keep loading selective.",
+              "runtime_requirement": "the redesign verb needs selected references, not a directory URL",
+              "target": "../"
+            },
+            {
+              "directory_exists": true,
+              "line": 258,
+              "path": "references/verbs/redesign.md",
+              "remediation": "Resolve the dynamic genre branch to an allowlisted concrete file after the genre is chosen, or express the directory as plain text; do not auto-load all genre files.",
+              "runtime_requirement": "only the explicitly chosen genre file is needed",
+              "target": "../genres/"
+            }
+          ],
+          "meaning": "The referenced directories exist in the candidate, but the governance checker indexes files, so a directory-only Markdown target is not a captured target. No upstream content file was proved absent; the link contract is underspecified at file granularity."
+        },
+        "source_site_material": {
+          "items": [
+            {
+              "occurrences": 1,
+              "path": "SKILL.md",
+              "remediation": "If a theme requires these values, approve a source-bound, minimal token extract or keep the theme lookup out of scope; do not remote-load site CSS. Otherwise replace the link with a reviewed inert source citation.",
+              "runtime_requirement": "needed only for the upstream catalog axis/token lookup; not needed by the current self-contained HTML plan subset",
+              "snapshot_target": "site/css/tokens.css",
+              "target": "../../site/css/tokens.css"
+            },
+            {
+              "occurrences": 2,
+              "path": "references/custom-theme.md",
+              "remediation": "Keep the custom-theme branch out of the initial context, or capture only the reviewed token data under a source-bound adaptation; never add the site file implicitly.",
+              "runtime_requirement": "needed by the optional custom/catalog diversification branch, not by visual review alone",
+              "snapshot_target": "site/css/tokens.css",
+              "target": "../../../site/css/tokens.css"
+            },
+            {
+              "occurrences": 1,
+              "path": "references/themes/carnival.md",
+              "remediation": "Exclude this theme from the initial subset or approve a minimal, hash-pinned token extract with a diff and license record.",
+              "runtime_requirement": "needed only when selecting the upstream carnival theme",
+              "snapshot_target": "site/css/tokens.css",
+              "target": "../../../../site/css/tokens.css"
+            },
+            {
+              "occurrences": 1,
+              "path": "references/themes/cobalt.md",
+              "remediation": "Exclude this theme from the initial subset or approve a minimal, hash-pinned token extract with a diff and license record.",
+              "runtime_requirement": "needed only when selecting the upstream cobalt theme",
+              "snapshot_target": "site/css/tokens.css",
+              "target": "../../../../site/css/tokens.css"
+            },
+            {
+              "occurrences": 1,
+              "path": "references/themes/hum.md",
+              "remediation": "Exclude this theme from the initial subset or approve a minimal, hash-pinned token extract with a diff and license record.",
+              "runtime_requirement": "needed only when selecting the upstream hum theme",
+              "snapshot_target": "site/css/tokens.css",
+              "target": "../../../../site/css/tokens.css"
+            },
+            {
+              "occurrences": 1,
+              "path": "references/themes/lumen.md",
+              "remediation": "Exclude this theme from the initial subset or approve a minimal, hash-pinned token extract with a diff and license record.",
+              "runtime_requirement": "needed only when selecting the upstream lumen theme",
+              "snapshot_target": "site/css/tokens.css",
+              "target": "../../../../site/css/tokens.css"
+            }
+          ],
+          "meaning": "These links resolve to files in the preserved upstream package's site/ tree. They carry theme tokens or palette/font data that the upstream docs cite, but they are outside the intentionally isolated Markdown-only candidate."
+        },
+        "summary": {
+          "reference_examples": 6,
+          "required_file_target_missing": 3,
+          "source_site_material": 7
+        }
+      },
+      "blocking_code_counts": {
+        "broken_relative_reference": 3,
+        "markdown_path_escape": 13
+      },
+      "command": "governance.py inspect --json <quarantine>/hallmark/<sha>/hallmark",
+      "exit_code": 2,
+      "interpretation": "The canonical Skill root now satisfies the quarantine path and contains only the upstream skills/hallmark subtree. The remaining blockers are relative links in upstream documentation that point outside this intentionally isolated Skill subtree; this is not a clean safety approval. The full package is preserved separately at repository_snapshot_path.",
+      "status": "blocked",
+      "summary": {
+        "advisory": 74,
+        "blocking": 16,
+        "files": 107
+      }
+    },
+    "interpretation": "canonical raw Skill remains BLOCKED by 16 relative-reference findings; the adaptation ledger does not waive them.",
+    "path": "/Users/yoshiki/.local/share/skill-governance/quarantine/hallmark/13ac0ec7e148655948100b6396439e481361d690/hallmark"
+  },
+  "canonical_validator": {
+    "blocking_codes": {
+      "broken_relative_reference": 3,
+      "markdown_path_escape": 13
+    },
+    "blocking_count": 16,
+    "candidate_execution": false,
+    "exit_code": 2,
+    "path": "/Users/yoshiki/.codex/skills/skill-governance/scripts/governance.py",
+    "status": "blocked",
+    "summary": {
+      "advisory": 74,
+      "blocking": 16,
+      "files": 107
+    },
+    "tree_sha256": "cccc3c7c88ec944333f132f0565c5089029c86aa37cdb8ebf2a8a705fe5d15fe"
+  },
+  "execution_boundary": {
+    "credentials_supplied": false,
+    "external_loads_not_run": true,
+    "hooks_not_executed": true,
+    "npm_or_npx_not_run": true,
+    "package_install_not_run": true,
+    "runtime_mutation": false,
+    "scripts_not_executed": true,
+    "site_server_not_run": true
+  },
+  "filesystem": {
+    "binary_assets": 41,
+    "executable_files": 0,
+    "submodules": 0,
+    "symlinks": 0,
+    "tracked_env_or_key_files": 0,
+    "tracked_files_all_regular_mode_100644": true
+  },
+  "package_snapshot": {
+    "bytes": 17787446,
+    "contains_git_metadata": true,
+    "file_count": 286,
+    "inspection": {
+      "command": "governance.py inspect --json <quarantine>/hallmark/<sha>/repository-snapshot",
+      "exit_code": 2,
+      "finding_code_counts": {
+        "binary_file": 41,
+        "broken_relative_reference": 36,
+        "code_present": 13,
+        "credential_path": 4,
+        "download_and_execute": 1,
+        "embedded_git": 1,
+        "external_url": 232,
+        "hidden_path": 6,
+        "markdown_path_escape": 9,
+        "skill_file_missing": 1
+      },
+      "interpretation": "The repository snapshot is deliberately a complete package, not a candidate Skill root. Inspect therefore reports package-level .git, binary, demo-code, and reference signals and the absence of a root SKILL.md. Keep this result separate from the canonical 107-file Skill subtree inspection.",
+      "status": "blocked",
+      "summary": {
+        "advisory": 251,
+        "blocking": 93,
+        "files": 286
+      }
+    },
+    "interpretation": "snapshot-only: embedded .git, binaries, demo code, external references and package-level signals are not the canonical runtime candidate.",
+    "path": "/Users/yoshiki/.local/share/skill-governance/quarantine/hallmark/13ac0ec7e148655948100b6396439e481361d690/repository-snapshot"
+  },
+  "revision": "13ac0ec7e148655948100b6396439e481361d690",
+  "schema": "hallmark-quarantine-static-inspection-receipt-v1",
+  "scope": "read-only complete package inventory plus canonical Skill subtree security scan",
+  "source_id": "hallmark",
+  "source_preservation": true,
+  "status": "BLOCKED_RAW_SOURCE_AND_REVIEW_REQUIRED",
+  "whole_package_pattern_scan": {
+    "credential_terms": {
+      "files": 3,
+      "occurrences": 7
+    },
+    "external_css_import": {
+      "files": 9,
+      "occurrences": 18
+    },
+    "external_http_url": {
+      "files": 61,
+      "occurrences": 249
+    },
+    "fetch_or_xhr_or_websocket": {
+      "files": 4,
+      "occurrences": 12
+    },
+    "hook_terms": {
+      "files": 1,
+      "occurrences": 2
+    },
+    "install_terms": {
+      "files": 25,
+      "occurrences": 156
+    },
+    "package_cli_terms_npm_npx_pnpm_yarn_bun": {
+      "files": 9,
+      "occurrences": 22
+    },
+    "process_env": {
+      "files": 1,
+      "occurrences": 1
+    },
+    "process_exec_terms": {
+      "files": 13,
+      "occurrences": 19
+    },
+    "script_src": {
+      "files": 14,
+      "occurrences": 19
+    },
+    "shell_download_terms_curl_or_wget": {
+      "files": 3,
+      "occurrences": 4
+    },
+    "upload_or_telemetry_terms": {
+      "files": 7,
+      "occurrences": 11
+    }
+  }
+}

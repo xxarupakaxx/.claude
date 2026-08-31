@@ -1,0 +1,9 @@
+{
+  "schema": "proposal-helper-receipt-v1",
+  "helper": "/Users/yoshiki/.local/share/skill-governance/proposals/html-design-active-2026-08/prepare-proposal.py",
+  "helper_sha256": "1eac3502e9ad0eb5c3ccadf6fd3cd7e479ddf6af9f6c1bc470de259bc0109d38",
+  "manifest_binding": "proposal-manifest excludes itself and includes this helper receipt; no self-referential digest",
+  "generated_at": "2026-08-31",
+  "candidate_code_executed": false,
+  "active_mutation": false
+}

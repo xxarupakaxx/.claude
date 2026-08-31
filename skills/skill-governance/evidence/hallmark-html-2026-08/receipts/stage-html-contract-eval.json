@@ -1,0 +1,78 @@
+{
+  "candidate_execution": false,
+  "collection_id": "hallmark-html-2026-08",
+  "evaluation": {
+    "assertions": {
+      "control_document_has_required_meta": true,
+      "data_attribute_alone_is_not_sufficient": true,
+      "original_first_pass_failure_preserved": true,
+      "uses_registered_common_checker": true
+    },
+    "candidate_execution": false,
+    "control_document_contract": {
+      "bytes": 48381,
+      "contract_status": "PASS",
+      "data_artifact_kind": [
+        "html-document"
+      ],
+      "finding_codes": [],
+      "issues": [],
+      "meta_artifact_kind": [
+        "html-document"
+      ],
+      "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-plan-redesign/plan-document.html",
+      "sha256": "2d0eadced998f9b40a1b437a25f61fe29929f42fff726e94562d6980fa866aa2"
+    },
+    "fixture_result": "PASS",
+    "limitations": [
+      "このfixtureは共通checkerがdata属性だけを拒否することを検査する。candidate.htmlを修正してPASSへ変えるものではない。",
+      "producerの実行、browser起動、runtime・registry・lockの変更は行っていない。"
+    ],
+    "observed_candidate_contract": {
+      "bytes": 10293,
+      "contract_status": "FAIL",
+      "data_artifact_kind": [
+        "html-document"
+      ],
+      "finding_codes": [
+        "artifact-kind-missing"
+      ],
+      "issues": [
+        {
+          "code": "artifact-kind-missing",
+          "message": "meta name=\"artifact-kind\" is required.",
+          "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-value-generated/candidate.html",
+          "severity": "error"
+        }
+      ],
+      "meta_artifact_kind": [],
+      "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-value-generated/candidate.html",
+      "sha256": "26015e94c971ca66c36001fad079d47e9e62ca29f08291a1ef3c18c66db6b6c3"
+    },
+    "original_trial_unchanged": true,
+    "registered_contract": {
+      "checker": "/Users/yoshiki/.codex/scripts/html_artifact_contract.py",
+      "expected_artifact_kind": "html-document",
+      "manifest": "/Users/yoshiki/.codex/config/html-surfaces.json",
+      "producer_owner": "creating-html-documents",
+      "required_markers": [
+        "html[data-artifact-kind=html-document]",
+        "meta[name=artifact-kind][content=html-document]"
+      ],
+      "route": "html",
+      "static_profile": "strict-self-contained"
+    },
+    "runtime_mutation": false,
+    "schema": "hallmark-html-artifact-contract-fixture-v1",
+    "status": "PASS"
+  },
+  "interpretation": "The shared checker fixture PASS means data-only output was rejected correctly. The original candidate remains FAIL with artifact-kind-missing and was not repaired.",
+  "kind": "html-contract",
+  "runtime_mutation": false,
+  "schema": "hallmark-stage-html-contract-evidence-v1",
+  "source_evidence": {
+    "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-eval-html-contract.json",
+    "sha256": "6bf7a9bbe17d9707772cfba97a03da7e886fb51f4db84ae685f025e5be3f3e94"
+  },
+  "stage": "review"
+}

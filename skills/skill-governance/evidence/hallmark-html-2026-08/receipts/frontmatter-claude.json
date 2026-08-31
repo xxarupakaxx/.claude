@@ -1,0 +1,28 @@
+{
+  "candidate_execution": false,
+  "command": "validate-frontmatter",
+  "exit_code": 0,
+  "findings": [],
+  "frontmatter_raw": "---\nname: hallmark\ndescription: |\n  明示指定されたHTML文書の視覚クラフトを補助する。余白、文字組み、テーマ、構成、状態を具体化し、本文・Before / After・依存図・検証を追える出力へ整える。\n---\n",
+  "frontmatter_sha256": "344b147ded6f9c6d6fe95f46099a29c2853713c8704ccf0e36fb9d9c714f3a9f",
+  "schema": "hallmark-frontmatter-stage-receipt-v1",
+  "skill_sha256": "9a6fb66d6c5a843c7dcc70f984f6202665e1c2c0b0c552d23bfec4cd4ade05e8",
+  "source_evidence": {
+    "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-eval-static.json",
+    "sha256": "f95569bea0bc14c4854845085b243a60f30d4ddfb44f7def7f05c215e0da7a6e"
+  },
+  "status": "validated",
+  "stderr": "WARN `--no-project` was provided, but no project was found",
+  "surface": {
+    "collection_id": "hallmark-html-2026-08",
+    "kind": "review",
+    "skill_name": "hallmark",
+    "target_id": "claude"
+  },
+  "target": "claude",
+  "validator": "pyyaml-6.0.2-safe-loader",
+  "values": {
+    "description": "明示指定されたHTML文書の視覚クラフトを補助する。余白、文字組み、テーマ、構成、状態を具体化し、本文・Before / After・依存図・検証を追える出力へ整える。",
+    "name": "hallmark"
+  }
+}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="artifact-kind" content="html-diagram">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'none'; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Architecture: plan to evidence</title>
+<style>
+:root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", system-ui, sans-serif; color: #252321; background: #f6f4ef; }
+body { max-width: 840px; margin: 0 auto; padding: 24px; background: #f6f4ef; }
+h1 { font-size: 22px; margin: 0 0 8px; }
+.note { color: #697079; font-size: 14px; margin: 0 0 16px; }
+svg { display: block; width: 100%; height: auto; }
+.fallback { border-top: 1px solid #d4d0c8; margin-top: 16px; padding-top: 12px; font-size: 14px; }
+.fallback code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+</style>
+</head>
+<body>
+<main>
+<h1>Architecture: plan to evidence</h1>
+<p class="note">静的 fixture。SVG が図の正本で、下の要約は図を読めない場合の fallback です。</p>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" role="img" aria-labelledby="architecture-title architecture-desc">
+  <title id="architecture-title">Architecture: plan to evidence</title>
+  <desc id="architecture-desc">A three zone architecture diagram showing a plan entering a local renderer and producing evidence.</desc>
+  <style>
+    .paper{fill:#f6f4ef}.ink{fill:#252321}.muted{fill:#697079}.soft{fill:#8c9298}.rule{stroke:#bdb8ae}.zone{fill:#f0eee8;stroke:#aaa49a;stroke-width:1;stroke-dasharray:6 4}.node{fill:#fff;stroke:#252321;stroke-width:1.2}.focus{fill:#fff3eb;stroke:#b9532b;stroke-width:1.6}.text{font:600 15px -apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic','Noto Sans JP',system-ui,sans-serif}.mono{font:12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.edge{fill:none;stroke:#697079;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}.focusedge{fill:none;stroke:#b9532b;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.source{font:12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  </style>
+  <defs><marker id="architecture-arrow" viewBox="0 0 8 6" refX="7" refY="3" markerWidth="8" markerHeight="6" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#697079"/></marker><marker id="architecture-focus-arrow" viewBox="0 0 8 6" refX="7" refY="3" markerWidth="8" markerHeight="6" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#b9532b"/></marker></defs>
+  <rect class="paper" x="0" y="0" width="760" height="420"/>
+  <text class="text ink" x="40" y="36">Architecture / zone と主経路</text>
+  <g data-zones="true"><rect class="zone" x="40" y="68" width="190" height="240" rx="8"/><rect class="zone" x="278" y="68" width="204" height="240" rx="8"/><rect class="zone" x="530" y="68" width="190" height="240" rx="8"/><text class="mono muted" x="56" y="91">作成</text><text class="mono muted" x="294" y="91">生成</text><text class="mono muted" x="546" y="91">確認</text></g>
+  <g data-edges="true"><path class="focusedge" data-from="plan" data-to="renderer" data-source="demo:architecture#L1" marker-end="url(#architecture-focus-arrow)" d="M202,170 H248 Q256,170 256,178 V178 H318"/><path class="edge" data-from="renderer" data-to="evidence" data-source="demo:architecture#L2" marker-end="url(#architecture-arrow)" d="M442,178 H502 Q510,178 510,186 V186 H568"/><path class="edge" data-from="plan" data-to="evidence" data-source="demo:architecture#L3" marker-end="url(#architecture-arrow)" d="M135,222 V276 H600 V222"/></g>
+  <g data-nodes="true"><g data-node-id="plan" data-zone="authoring" data-source="demo:architecture#L1"><rect class="node" x="70" y="144" width="132" height="52" rx="6"/><text class="text ink" x="136" y="175" text-anchor="middle">計画書</text></g><g data-node-id="renderer" data-zone="runtime" data-source="demo:architecture#L2"><rect class="focus" x="318" y="152" width="124" height="52" rx="6"/><text class="text ink" x="380" y="183" text-anchor="middle">renderer</text></g><g data-node-id="evidence" data-zone="evidence" data-source="demo:architecture#L3"><rect class="node" x="568" y="160" width="132" height="52" rx="6"/><text class="text ink" x="634" y="191" text-anchor="middle">検証結果</text></g></g>
+  <text class="source muted" x="40" y="350">主経路: 計画書 → renderer → 検証結果</text><text class="source muted" x="40" y="374">デモデータ。実 runtime の完了状態ではない。</text>
+</svg>
+
+<section class="fallback" aria-label="テキスト fallback">
+<strong>source</strong>: <code>demo fixture</code>（実プロジェクトの事実、効果、採用状態を示さない）<br>
+<strong>読み方</strong>: 関係・順序・境界・Before / After の対応を文字でも確認できます。
+</section>
+</main>
+</body>
+</html>

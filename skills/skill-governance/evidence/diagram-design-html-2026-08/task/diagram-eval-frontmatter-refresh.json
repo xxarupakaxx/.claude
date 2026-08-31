@@ -1,0 +1,88 @@
+{
+  "schema": "diagram-design-frontmatter-refresh-v1",
+  "status": "PASS",
+  "validator": "PyYAML 6.0.2 SafeLoader via uv --offline",
+  "candidate_execution": false,
+  "results": {
+    "codex": {
+      "payload": {
+        "command": "validate-frontmatter",
+        "status": "validated",
+        "target": "codex",
+        "surface": {
+          "kind": "review",
+          "collection_id": "diagram-design-html-2026-08",
+          "skill_name": "diagram-design",
+          "target_id": "codex"
+        },
+        "validator": "pyyaml-6.0.2-safe-loader",
+        "skill_sha256": "9e885b3b82b6c390e43a1813726724c3578abdc125e11bbcaeb625dc13f8e46c",
+        "frontmatter_sha256": "c487dd1417f0465790737ff6cadb9a9de36201df14822fe5e3a892f0cf5b7afc",
+        "values": {
+          "name": "diagram-design",
+          "description": "Create source-backed static dependency, processing, architecture, or comparison diagrams for plan documents as self-contained HTML/SVG when spatial relationships add information beyond prose or a table; do not own roadmap progress, task order, or canonical state diagrams.",
+          "license": "MIT",
+          "metadata": {
+            "version": "2.6-adapted.1"
+          }
+        },
+        "findings": []
+      },
+      "finding_count": 0
+    },
+    "claude": {
+      "payload": {
+        "command": "validate-frontmatter",
+        "status": "validated",
+        "target": "claude",
+        "surface": {
+          "kind": "review",
+          "collection_id": "diagram-design-html-2026-08",
+          "skill_name": "diagram-design",
+          "target_id": "claude"
+        },
+        "validator": "pyyaml-6.0.2-safe-loader",
+        "skill_sha256": "9e885b3b82b6c390e43a1813726724c3578abdc125e11bbcaeb625dc13f8e46c",
+        "frontmatter_sha256": "c487dd1417f0465790737ff6cadb9a9de36201df14822fe5e3a892f0cf5b7afc",
+        "values": {
+          "name": "diagram-design",
+          "description": "Create source-backed static dependency, processing, architecture, or comparison diagrams for plan documents as self-contained HTML/SVG when spatial relationships add information beyond prose or a table; do not own roadmap progress, task order, or canonical state diagrams.",
+          "license": "MIT",
+          "metadata": {
+            "version": "2.6-adapted.1"
+          }
+        },
+        "findings": []
+      },
+      "finding_count": 0
+    },
+    "quarantine": {
+      "payload": {
+        "command": "validate-frontmatter",
+        "status": "validated",
+        "target": "common",
+        "surface": {
+          "kind": "quarantine",
+          "source_id": "diagram-design",
+          "revision": "b52a33bfeef85d43995193ee52c13b485154b7b4",
+          "skill_name": "diagram-design"
+        },
+        "validator": "pyyaml-6.0.2-safe-loader",
+        "skill_sha256": "6d6988acf7794344c54b26f22f4245e420e4a8e0a41b65547f8c1797339cda8d",
+        "frontmatter_sha256": "5d44fb4ac58ee753597fba4df9291b5d537c132bdadb28bf525836290784b6ca",
+        "values": {
+          "name": "diagram-design",
+          "description": "Create branded architecture, IT current-state, flowchart, sequence, state machine, ER/data model, timeline, swimlane, quadrant, radar/spider, polar chart (polar/radial lollipop), loop/flywheel, nested, tree, org chart, layer stack, Venn, pyramid/funnel, treemap, bar, line, Gantt and scatter charts, high-level, process, medallion, data flow, DP integration, DP security matrix, Sankey, fishbone, Wardley map, kanban, user journey, deployment, dependency graph, UML class, story map, or database schema diagrams as standalone HTML/SVG/PNG. Redraw .drawio/.drawio.png/.drawio.svg or Mermaid .mmd sources at a chosen size/detail; onboard brand tokens from a website; add semantic patterns, callouts, accessible motion, or sketchy/hand-drawn styling.",
+          "license": "MIT",
+          "metadata": {
+            "version": "2.6"
+          }
+        },
+        "findings": []
+      },
+      "finding_count": 0
+    }
+  },
+  "failure_surfaces": [],
+  "scope_note": "Fresh full YAML validation after the HTML contract metadata update; SKILL.md bytes and frontmatter are unchanged, and quarantine was read-only."
+}

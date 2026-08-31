@@ -1,0 +1,85 @@
+{
+  "adaptation": "platform-adapted",
+  "adopted": [
+    "明示された視覚クラフト補助に限定した日本語 route 入口。designing-ui-ux が product UI の情報設計、task flow、usability、accessibility の primary を保持する。",
+    "plan-document の初期表示、本文、根拠、Before / After、実装単位、依存図、検証、source ledger。",
+    "640/768/1024/1440px の横比較、375px の縦積み、gap 32px 以上、panel padding 24px 以上。",
+    "4pt spacing、15–17px 本文、長い日本語/path の折返し、semantic token、focus-visible、reduced motion。",
+    "inline SVG、CSP、local/system font、外部 load 0、script 0を優先する自己完結HTML。",
+    "creating-html-documents producer と shared html_artifact_contract への引き渡し。data と meta の artifact-kind 両方を必須にする。",
+    "theme catalog から一つを選び、必要な reference だけ読む。selected は pressed と分ける。"
+  ],
+  "excluded": [
+    "公式 package 全286 file、site/demo、binary asset、gallery、全themeの常時投入。",
+    "candidate script、hook、npm/npx、package setup、site server、browser automation、external font/CDN/analytics/live fetch。",
+    "route、業務logic、data、auth、権限、registry、lock、global/profile設定の変更。",
+    "raw source の16件を規則緩和・finding除外・原典改変で解消すること。"
+  ],
+  "execution": {
+    "candidate_code_execution": false,
+    "candidate_scripts_executed": false,
+    "external_network_in_adaptation": false,
+    "lock_mutation": false,
+    "registry_mutation": false,
+    "runtime_mutation": false
+  },
+  "generation": 3,
+  "kind": "adaptation-diff",
+  "license": "MIT",
+  "local_review_document": {
+    "path": "../hallmark-adaptation.md",
+    "sha256": "28c3a2868ea7811fa98e3366eeb19c431851ab8ac0dcde89165e93fd5e3bcf5b"
+  },
+  "output_contract": {
+    "artifact_kind": "html-document",
+    "checker": "/Users/yoshiki/.codex/scripts/html_artifact_contract.py",
+    "evidence": "receipts/stage-html-contract-eval.json",
+    "hallmark_boundary": "Hallmark supplies selected visual craft guidance and hands output to the registered producer/checker; it does not duplicate either.",
+    "registered_producer": "creating-html-documents",
+    "registered_surface_manifest": "/Users/yoshiki/.codex/config/html-surfaces.json",
+    "required_markers": [
+      "html[data-artifact-kind=\"html-document\"]",
+      "meta[name=\"artifact-kind\"][content=\"html-document\"]"
+    ],
+    "route": "html",
+    "static_profile": "strict-self-contained"
+  },
+  "pending": {
+    "human_approval": true,
+    "promotion": true,
+    "prototype_revision_binding": true,
+    "registry_lock_binding": true,
+    "value_evaluation": true
+  },
+  "reference_hygiene_ledger": {
+    "path": "adaptations/hallmark-reference-hygiene-ledger.json",
+    "raw_finding_count": 16,
+    "raw_status": "BLOCKED",
+    "sha256": "cc9876d48062bd060503fefd1215fbd7a3c6fb214e8efc06db31d795f186070a"
+  },
+  "reference_resolution": {
+    "directory_only": 3,
+    "evidence": "receipts/reference-hygiene-evidence.json",
+    "ledger_status": "candidate-resolved-for-adapted-target",
+    "raw_source_status": "BLOCKED_PENDING",
+    "reference_examples": 6,
+    "source_site_material": 7
+  },
+  "review_stage": "/Users/yoshiki/.local/share/skill-governance/review/hallmark-html-2026-08/hallmark",
+  "schema_version": 1,
+  "source_id": "hallmark",
+  "source_manifest_reference": "manifests/upstream-file-manifest.json",
+  "source_revision": "13ac0ec7e148655948100b6396439e481361d690",
+  "status": "draft",
+  "target_manifest_reference": "manifests/stage-targets.json",
+  "target_tree_sha256": {
+    "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+    "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+  },
+  "targets": [
+    "codex",
+    "claude"
+  ],
+  "upstream_package_tree_sha": "747c924c4767b4d5fa6f1c59985c87a21c918334",
+  "upstream_path": "skills/hallmark/SKILL.md"
+}

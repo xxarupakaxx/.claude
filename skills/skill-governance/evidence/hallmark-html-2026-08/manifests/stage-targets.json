@@ -1,0 +1,375 @@
+{
+  "collection_id": "hallmark-html-2026-08",
+  "manifest_self_inclusion": false,
+  "review_root": "/Users/yoshiki/.local/share/skill-governance/review/hallmark-html-2026-08/hallmark/{codex,claude}",
+  "schema": "binding-draft-target-manifest-v1",
+  "source_id": "hallmark",
+  "source_revision": "13ac0ec7e148655948100b6396439e481361d690",
+  "source_skill_bytes": 67460,
+  "source_skill_sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577",
+  "target_manifest_sha256": "fbe03dd7017158938a6563cb3c742b169f1b7aa9b533e7db71928fd19621f166",
+  "target_parity": {
+    "all_bytes_equal": true,
+    "all_modes_equal": true,
+    "runtime_installation": false,
+    "skill_body_equal": true,
+    "tree_sha_equal": true
+  },
+  "target_tree_sha256": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+  "targets": {
+    "claude": {
+      "files": [
+        {
+          "mode": "0644",
+          "path": "LICENSE",
+          "sha256": "06088a8b94598626f27612dea42300154bf7be967c85d9d3eee4490cb056af7d",
+          "size": 1078
+        },
+        {
+          "mode": "0644",
+          "path": "SKILL.md",
+          "sha256": "9a6fb66d6c5a843c7dcc70f984f6202665e1c2c0b0c552d23bfec4cd4ade05e8",
+          "size": 5994
+        },
+        {
+          "mode": "0644",
+          "path": "SOURCE.md",
+          "sha256": "f48db53c256b7f885538bf0673d5ba945adabb1c4cdd77507c423675dde5fb43",
+          "size": 5272
+        },
+        {
+          "mode": "0644",
+          "path": "adaptation.diff",
+          "sha256": "90955c88e1c2281074b6408427323c8c3c716e3fc3f576949db5799955b692b4",
+          "size": 4404
+        },
+        {
+          "mode": "0644",
+          "path": "references/anti-patterns.md",
+          "sha256": "f50a4223b335a16227f719e1d68443dd317e50f501adc49b653ea956c2f5d51d",
+          "size": 1671
+        },
+        {
+          "mode": "0644",
+          "path": "references/color.md",
+          "sha256": "7eeb3a2d214624435b72a342bc78df86671496526ed9a1b39527c045f6663c34",
+          "size": 1206
+        },
+        {
+          "mode": "0644",
+          "path": "references/components/f4-step-sequence.md",
+          "sha256": "16917aa14c88096eff913db4bea881be13ec26787e8e4c16eb9a91c8226e8ac3",
+          "size": 498
+        },
+        {
+          "mode": "0644",
+          "path": "references/components/h2-split-diptych.md",
+          "sha256": "906b8e35e3595d0aeb15cd7ad7d335e37232b56ffc3bc31a60ac78483ac7e6f6",
+          "size": 641
+        },
+        {
+          "mode": "0644",
+          "path": "references/components/s4-inline-no-break.md",
+          "sha256": "7f7c9bf9131a41159fb2fb3300a9b4f49675faabf2a61951a6a5af8905d958a2",
+          "size": 451
+        },
+        {
+          "mode": "0644",
+          "path": "references/contract.md",
+          "sha256": "ee9e1f07e888ac6031d2f6ec86480e2fbfec99215a891cc32b58ef598a7ae1cc",
+          "size": 2017
+        },
+        {
+          "mode": "0644",
+          "path": "references/interaction-and-states.md",
+          "sha256": "fff870b3fc5bc1a7e6625b05ed6665ab5789f5d8df34b5d954795e257091b9a7",
+          "size": 1599
+        },
+        {
+          "mode": "0644",
+          "path": "references/layout-and-space.md",
+          "sha256": "0771f4a172487d9babe5245fd73b9c7a2b9caa84b8a6ae272390540bbcc44201",
+          "size": 1610
+        },
+        {
+          "mode": "0644",
+          "path": "references/responsive.md",
+          "sha256": "8c7167313003aa3f1aaeb00e1b00852306d115a3492ba70220ced98e70472287",
+          "size": 1057
+        },
+        {
+          "mode": "0644",
+          "path": "references/structure.md",
+          "sha256": "7ef7442ba2fa5854246b29b94dbc3210540f1c303f6780d05f3765bb708a3cf0",
+          "size": 1104
+        },
+        {
+          "mode": "0644",
+          "path": "references/study.md",
+          "sha256": "e03d8c162eaf828c4351d029bc88ea4da2aecfcbb4b66f7fddad1650d5d50467",
+          "size": 1207
+        },
+        {
+          "mode": "0644",
+          "path": "references/themes/brutal.md",
+          "sha256": "e013f3865dc73a0cad9f1836ea8376be1450bea1319db083624eecf20162d0e5",
+          "size": 535
+        },
+        {
+          "mode": "0644",
+          "path": "references/themes/catalog.md",
+          "sha256": "a5f88bfbf1c3f1d0f587d6f0a530482541fa321574a17b795be18f91316381a7",
+          "size": 1350
+        },
+        {
+          "mode": "0644",
+          "path": "references/themes/cobalt.md",
+          "sha256": "6b18fa5313bae85284941f60443d12b500c1778c4b619f54ef74e22c140c1e20",
+          "size": 596
+        },
+        {
+          "mode": "0644",
+          "path": "references/themes/grid.md",
+          "sha256": "4d618f0f2b0e1102e874937c19804118ee26b572424576c2e148fa3fc4f17ade",
+          "size": 644
+        },
+        {
+          "mode": "0644",
+          "path": "references/themes/lumen.md",
+          "sha256": "ed06060caa0b14196646893308846ba3c022ffb35744dee0c5cbad70e5089b0f",
+          "size": 640
+        },
+        {
+          "mode": "0644",
+          "path": "references/themes/plain-editorial.md",
+          "sha256": "8f40e96ea63bc64917d7e03bfb3e20462b2c0d29b7d80d2588be226e6b00b0a2",
+          "size": 585
+        },
+        {
+          "mode": "0644",
+          "path": "references/typography.md",
+          "sha256": "cff1c95546a778d380d0eeda86453b85d54f9fac2ed2577e080fa058953a0784",
+          "size": 1616
+        },
+        {
+          "mode": "0644",
+          "path": "references/verbs/audit.md",
+          "sha256": "6bcf60cdabfeddd9d0bf4d48cacfa62ab24710d32c408d9e1261baf6d2cf08d9",
+          "size": 555
+        },
+        {
+          "mode": "0644",
+          "path": "references/verbs/redesign.md",
+          "sha256": "9eee786efb957ec980b9c4c7a72e3058c807a47d5b5c02697781204d60d4c6c4",
+          "size": 1190
+        },
+        {
+          "mode": "0644",
+          "path": "source/UPSTREAM-SKILL.md.txt",
+          "sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577",
+          "size": 67460
+        },
+        {
+          "mode": "0644",
+          "path": "source/upstream-skill.json",
+          "sha256": "8007f840eaeb33db31fb0ad4b3010503c7acd9423c8b4cf6ba31da94dd0e60dd",
+          "size": 292
+        }
+      ],
+      "frontmatter": {
+        "exit_code": 0,
+        "finding_codes": [],
+        "status": "validated",
+        "validator": "pyyaml-6.0.2-safe-loader"
+      },
+      "manifest_file_count": 26,
+      "manifest_path": "/Users/yoshiki/.local/share/skill-governance/review/hallmark-html-2026-08/hallmark/claude/review-manifest.json",
+      "manifest_sha256": "fbe03dd7017158938a6563cb3c742b169f1b7aa9b533e7db71928fd19621f166",
+      "path": "/Users/yoshiki/.local/share/skill-governance/review/hallmark-html-2026-08/hallmark/claude",
+      "skill_bytes": 5994,
+      "skill_sha256": "9a6fb66d6c5a843c7dcc70f984f6202665e1c2c0b0c552d23bfec4cd4ade05e8",
+      "source_copy_bytes": 67460,
+      "source_copy_sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577",
+      "tree_bytes": 110442,
+      "tree_file_count": 27,
+      "tree_sha256": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+    },
+    "codex": {
+      "files": [
+        {
+          "mode": "0644",
+          "path": "LICENSE",
+          "sha256": "06088a8b94598626f27612dea42300154bf7be967c85d9d3eee4490cb056af7d",
+          "size": 1078
+        },
+        {
+          "mode": "0644",
+          "path": "SKILL.md",
+          "sha256": "9a6fb66d6c5a843c7dcc70f984f6202665e1c2c0b0c552d23bfec4cd4ade05e8",
+          "size": 5994
+        },
+        {
+          "mode": "0644",
+          "path": "SOURCE.md",
+          "sha256": "f48db53c256b7f885538bf0673d5ba945adabb1c4cdd77507c423675dde5fb43",
+          "size": 5272
+        },
+        {
+          "mode": "0644",
+          "path": "adaptation.diff",
+          "sha256": "90955c88e1c2281074b6408427323c8c3c716e3fc3f576949db5799955b692b4",
+          "size": 4404
+        },
+        {
+          "mode": "0644",
+          "path": "references/anti-patterns.md",
+          "sha256": "f50a4223b335a16227f719e1d68443dd317e50f501adc49b653ea956c2f5d51d",
+          "size": 1671
+        },
+        {
+          "mode": "0644",
+          "path": "references/color.md",
+          "sha256": "7eeb3a2d214624435b72a342bc78df86671496526ed9a1b39527c045f6663c34",
+          "size": 1206
+        },
+        {
+          "mode": "0644",
+          "path": "references/components/f4-step-sequence.md",
+          "sha256": "16917aa14c88096eff913db4bea881be13ec26787e8e4c16eb9a91c8226e8ac3",
+          "size": 498
+        },
+        {
+          "mode": "0644",
+          "path": "references/components/h2-split-diptych.md",
+          "sha256": "906b8e35e3595d0aeb15cd7ad7d335e37232b56ffc3bc31a60ac78483ac7e6f6",
+          "size": 641
+        },
+        {
+          "mode": "0644",
+          "path": "references/components/s4-inline-no-break.md",
+          "sha256": "7f7c9bf9131a41159fb2fb3300a9b4f49675faabf2a61951a6a5af8905d958a2",
+          "size": 451
+        },
+        {
+          "mode": "0644",
+          "path": "references/contract.md",
+          "sha256": "ee9e1f07e888ac6031d2f6ec86480e2fbfec99215a891cc32b58ef598a7ae1cc",
+          "size": 2017
+        },
+        {
+          "mode": "0644",
+          "path": "references/interaction-and-states.md",
+          "sha256": "fff870b3fc5bc1a7e6625b05ed6665ab5789f5d8df34b5d954795e257091b9a7",
+          "size": 1599
+        },
+        {
+          "mode": "0644",
+          "path": "references/layout-and-space.md",
+          "sha256": "0771f4a172487d9babe5245fd73b9c7a2b9caa84b8a6ae272390540bbcc44201",
+          "size": 1610
+        },
+        {
+          "mode": "0644",
+          "path": "references/responsive.md",
+          "sha256": "8c7167313003aa3f1aaeb00e1b00852306d115a3492ba70220ced98e70472287",
+          "size": 1057
+        },
+        {
+          "mode": "0644",
+          "path": "references/structure.md",
+          "sha256": "7ef7442ba2fa5854246b29b94dbc3210540f1c303f6780d05f3765bb708a3cf0",
+          "size": 1104
+        },
+        {
+          "mode": "0644",
+          "path": "references/study.md",
+          "sha256": "e03d8c162eaf828c4351d029bc88ea4da2aecfcbb4b66f7fddad1650d5d50467",
+          "size": 1207
+        },
+        {
+          "mode": "0644",
+          "path": "references/themes/brutal.md",
+          "sha256": "e013f3865dc73a0cad9f1836ea8376be1450bea1319db083624eecf20162d0e5",
+          "size": 535
+        },
+        {
+          "mode": "0644",
+          "path": "references/themes/catalog.md",
+          "sha256": "a5f88bfbf1c3f1d0f587d6f0a530482541fa321574a17b795be18f91316381a7",
+          "size": 1350
+        },
+        {
+          "mode": "0644",
+          "path": "references/themes/cobalt.md",
+          "sha256": "6b18fa5313bae85284941f60443d12b500c1778c4b619f54ef74e22c140c1e20",
+          "size": 596
+        },
+        {
+          "mode": "0644",
+          "path": "references/themes/grid.md",
+          "sha256": "4d618f0f2b0e1102e874937c19804118ee26b572424576c2e148fa3fc4f17ade",
+          "size": 644
+        },
+        {
+          "mode": "0644",
+          "path": "references/themes/lumen.md",
+          "sha256": "ed06060caa0b14196646893308846ba3c022ffb35744dee0c5cbad70e5089b0f",
+          "size": 640
+        },
+        {
+          "mode": "0644",
+          "path": "references/themes/plain-editorial.md",
+          "sha256": "8f40e96ea63bc64917d7e03bfb3e20462b2c0d29b7d80d2588be226e6b00b0a2",
+          "size": 585
+        },
+        {
+          "mode": "0644",
+          "path": "references/typography.md",
+          "sha256": "cff1c95546a778d380d0eeda86453b85d54f9fac2ed2577e080fa058953a0784",
+          "size": 1616
+        },
+        {
+          "mode": "0644",
+          "path": "references/verbs/audit.md",
+          "sha256": "6bcf60cdabfeddd9d0bf4d48cacfa62ab24710d32c408d9e1261baf6d2cf08d9",
+          "size": 555
+        },
+        {
+          "mode": "0644",
+          "path": "references/verbs/redesign.md",
+          "sha256": "9eee786efb957ec980b9c4c7a72e3058c807a47d5b5c02697781204d60d4c6c4",
+          "size": 1190
+        },
+        {
+          "mode": "0644",
+          "path": "source/UPSTREAM-SKILL.md.txt",
+          "sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577",
+          "size": 67460
+        },
+        {
+          "mode": "0644",
+          "path": "source/upstream-skill.json",
+          "sha256": "8007f840eaeb33db31fb0ad4b3010503c7acd9423c8b4cf6ba31da94dd0e60dd",
+          "size": 292
+        }
+      ],
+      "frontmatter": {
+        "exit_code": 0,
+        "finding_codes": [],
+        "status": "validated",
+        "validator": "pyyaml-6.0.2-safe-loader"
+      },
+      "manifest_file_count": 26,
+      "manifest_path": "/Users/yoshiki/.local/share/skill-governance/review/hallmark-html-2026-08/hallmark/codex/review-manifest.json",
+      "manifest_sha256": "fbe03dd7017158938a6563cb3c742b169f1b7aa9b533e7db71928fd19621f166",
+      "path": "/Users/yoshiki/.local/share/skill-governance/review/hallmark-html-2026-08/hallmark/codex",
+      "skill_bytes": 5994,
+      "skill_sha256": "9a6fb66d6c5a843c7dcc70f984f6202665e1c2c0b0c552d23bfec4cd4ade05e8",
+      "source_copy_bytes": 67460,
+      "source_copy_sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577",
+      "tree_bytes": 110442,
+      "tree_file_count": 27,
+      "tree_sha256": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+    }
+  }
+}

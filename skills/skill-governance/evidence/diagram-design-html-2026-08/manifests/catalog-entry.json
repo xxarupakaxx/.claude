@@ -1,0 +1,44 @@
+{
+  "completeness": {
+    "comparison_artifact": {
+      "path": "manifests/archive-tree-comparison.json",
+      "sha256": "4c28848554cac8d37472668cee7551b2901fcd4471518b27b2ba4ed541b29ea2"
+    },
+    "observed_skill_paths": [
+      {
+        "mode": "100644",
+        "path": "skills/diagram-design/SKILL.md",
+        "sha": "33b3671eaa4c78711952ead2e1c8cc5b574122f5",
+        "size": 39996,
+        "type": "blob"
+      }
+    ],
+    "reason": "At fixed revision b52a33bfeef85d43995193ee52c13b485154b7b4, the untruncated recursive Git tree and GitHub archive matched all 439 blob paths, byte sizes, and Git blob SHA-1 values. Archive mode normalization (100644->0664, 100755->0775) is documented and executable distinction is preserved.",
+    "status": "verified"
+  },
+  "entry": {
+    "catalog_sha256": "f4620837133e1fcc9702a864257b126c53df3094c83e9c3bc6ce60508488521d",
+    "complete": true,
+    "github": "cathrynlavery/diagram-design",
+    "name_extracted_count": 1,
+    "revision": "b52a33bfeef85d43995193ee52c13b485154b7b4",
+    "skill_count": 1,
+    "skills": [
+      {
+        "blob_sha": "33b3671eaa4c78711952ead2e1c8cc5b574122f5",
+        "license_paths": [
+          "LICENSE"
+        ],
+        "name": "diagram-design",
+        "package_tree_sha": "1bf319831137412e8ab71df321b510fa561fd262",
+        "path": "skills/diagram-design/SKILL.md",
+        "role": "catalog-surface"
+      }
+    ],
+    "tree_archive_blob_paths_match": true,
+    "tree_sha": "b5d1beb8406ffbe8f357d0cc969d7cb3014944b5",
+    "tree_truncated": false
+  },
+  "schema": "catalog-source-entry-draft-v1",
+  "source_id": "diagram-design"
+}

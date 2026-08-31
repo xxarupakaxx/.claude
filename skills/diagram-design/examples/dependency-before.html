@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="artifact-kind" content="html-diagram">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'none'; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Before: dependency list</title>
+<style>
+:root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", system-ui, sans-serif; color: #252321; background: #f6f4ef; }
+body { max-width: 840px; margin: 0 auto; padding: 24px; background: #f6f4ef; }
+h1 { font-size: 22px; margin: 0 0 8px; }
+.note { color: #697079; font-size: 14px; margin: 0 0 16px; }
+svg { display: block; width: 100%; height: auto; }
+.fallback { border-top: 1px solid #d4d0c8; margin-top: 16px; padding-top: 12px; font-size: 14px; }
+.fallback code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+</style>
+</head>
+<body>
+<main>
+<h1>Before: dependency list</h1>
+<p class="note">静的 fixture。SVG が図の正本で、下の要約は図を読めない場合の fallback です。</p>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" role="img" aria-labelledby="dependency-before-title dependency-before-desc">
+  <title id="dependency-before-title">Before: dependency list</title>
+  <desc id="dependency-before-desc">A flat relation list that does not show rank or shared dependency. This is a demonstration fixture, not project evidence.</desc>
+  <style>
+    .paper{fill:#f6f4ef}.ink{fill:#252321}.muted{fill:#697079}.rule{stroke:#d4d0c8}.label{font:600 18px -apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic','Noto Sans JP',system-ui,sans-serif}.mono{font:13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.source{font:12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  </style>
+  <rect class="paper" x="0" y="0" width="760" height="360"/>
+  <text class="label ink" x="40" y="54">Before / 関係の列挙</text>
+  <line class="rule" x1="40" y1="76" x2="720" y2="76" stroke-width="1"/>
+  <g class="mono ink" data-before-list="true">
+    <text data-before-item="renderer-to-snapshot" data-source="demo:dependency#L1" x="56" y="122">Renderer → Snapshot</text>
+    <text data-before-item="parser-to-snapshot" data-source="demo:dependency#L2" x="56" y="164">Parser → Snapshot</text>
+    <text data-before-item="plan-to-renderer" data-source="demo:dependency#L3" x="56" y="206">Plan → Renderer</text>
+    <text data-before-item="plan-to-parser" data-source="demo:dependency#L4" x="56" y="248">Plan → Parser</text>
+    <text data-before-item="snapshot-to-source" data-source="demo:dependency#L5" x="56" y="290">Snapshot → Source anchor</text>
+  </g>
+  <text class="source muted" x="40" y="332">デモデータ。実プロジェクトの事実ではない。</text>
+</svg>
+
+<section class="fallback" aria-label="テキスト fallback">
+<strong>source</strong>: <code>demo fixture</code>（実プロジェクトの事実、効果、採用状態を示さない）<br>
+<strong>読み方</strong>: 関係・順序・境界・Before / After の対応を文字でも確認できます。
+</section>
+</main>
+</body>
+</html>

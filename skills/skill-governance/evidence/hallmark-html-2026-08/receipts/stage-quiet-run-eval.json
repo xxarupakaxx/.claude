@@ -1,0 +1,60 @@
+{
+  "candidate_execution": false,
+  "collection_id": "hallmark-html-2026-08",
+  "evaluation": {
+    "candidate_code_executed": false,
+    "log_dir": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-eval-logs",
+    "note": "今回作成した5つの評価器のみをtrusted quiet-runで実行。Hallmark候補のscript、hook、package manager、site serverは実行していない。HTML contract評価はcandidateのFAILを正しく検出したことをPASSとして記録する。",
+    "runner": "/Users/yoshiki/.codex/scripts/quiet-run.py",
+    "runner_wrapper": "/Users/yoshiki/.claude/scripts/quiet-run.py",
+    "runs": [
+      {
+        "bytecode_disabled": true,
+        "exit_code": 0,
+        "log": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-eval-logs/quiet-epj6empm.log",
+        "script": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-eval-static.py",
+        "status": "PASS"
+      },
+      {
+        "bytecode_disabled": true,
+        "exit_code": 0,
+        "log": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-eval-logs/quiet-uv3xlmr9.log",
+        "script": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-eval-trigger.py",
+        "status": "PASS"
+      },
+      {
+        "bytecode_disabled": true,
+        "exit_code": 0,
+        "log": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-eval-logs/quiet-ofaltx3m.log",
+        "script": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-eval-value-followup.py",
+        "status": "PASS"
+      },
+      {
+        "bytecode_disabled": true,
+        "exit_code": 0,
+        "log": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-eval-logs/quiet-2u7dp5m5.log",
+        "script": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-eval-ui.py",
+        "status": "PASS"
+      },
+      {
+        "bytecode_disabled": true,
+        "exit_code": 0,
+        "log": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-eval-logs/quiet-zgqqyf_j.log",
+        "script": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-eval-html-contract.py",
+        "status": "PASS"
+      }
+    ],
+    "runtime_mutated": false,
+    "schema": "hallmark-quiet-run-eval-v3",
+    "status": "PASS"
+  },
+  "interpretation": "Five trusted evaluation scripts exited 0 without executing Hallmark candidate code; this is a termination/static evidence record.",
+  "kind": "quiet-run",
+  "runtime_mutation": false,
+  "schema": "hallmark-stage-quiet-run-evidence-v1",
+  "source_evidence": {
+    "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-eval-quiet-run.json",
+    "sha256": "c42ffb823d00ebea1105909e006e8c637c9673078045418d976dbd84cde87d05"
+  },
+  "stage": "review"
+}

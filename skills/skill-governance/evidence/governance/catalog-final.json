@@ -1,0 +1,177 @@
+{
+  "command": "/usr/local/bin/python3 -B /Users/yoshiki/.local/share/skill-governance/proposals/html-design-active-2026-08/skill-governance/scripts/governance.py catalog --registry /Users/yoshiki/.local/share/skill-governance/proposals/html-design-active-2026-08/skill-governance/registry.toml --catalog /Users/yoshiki/.local/share/skill-governance/proposals/html-design-active-2026-08/skill-governance/catalog.lock.json --json",
+  "returncode": 0,
+  "result": {
+    "capability": "offline-read",
+    "command": "catalog",
+    "external_verification": "recorded-pinned-evidence-only",
+    "findings": [
+      {
+        "code": "catalog_skill_name_invalid",
+        "message": "Candidate name is non-canonical: Zotero",
+        "path": "openai-plugins:607",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "catalog_license_evidence_gap",
+        "message": "No nearest license file for 415 catalog entries",
+        "path": "",
+        "severity": "ADVISORY"
+      }
+    ],
+    "generation": 3,
+    "live_summary": {
+      "checked": 0,
+      "verified": 0
+    },
+    "local_manifest_after": null,
+    "local_manifest_before": null,
+    "sources": [
+      {
+        "catalog_sha256": "2aed857d784332916dad919ed1d27d8271f87ccc1ee77a9d7b2cc10c904a63a8",
+        "complete": true,
+        "id": "addyosmani-agent-skills",
+        "live_status": "not-requested",
+        "name_extracted_count": 24,
+        "revision": "98967c45a42b88d6b8fb3a88b7ff6273920763d6",
+        "skill_count": 24
+      },
+      {
+        "catalog_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "complete": true,
+        "id": "agent-skills-spec",
+        "live_status": "not-requested",
+        "name_extracted_count": 0,
+        "revision": "38a2ff82958afee88dadf4831509e6f7e9d8ef4e",
+        "skill_count": 0
+      },
+      {
+        "catalog_sha256": "a999d6c88b72b51b472afed2a1c4ad140145a57c15dae8bc7392db1086743dc2",
+        "complete": true,
+        "id": "anthropic-skills",
+        "live_status": "not-requested",
+        "name_extracted_count": 18,
+        "revision": "9d2f1ae187231d8199c64b5b762e1bdf2244733d",
+        "skill_count": 18
+      },
+      {
+        "catalog_sha256": "e017bb2dfe061ed6ddc6477b348d52fa841e3a7759955ff05f7c014eac7a36e1",
+        "complete": true,
+        "id": "cisco-skill-scanner",
+        "live_status": "not-requested",
+        "name_extracted_count": 16,
+        "revision": "41fec4a9570ba1d195d12dbb0b4d140a35e63068",
+        "skill_count": 20
+      },
+      {
+        "catalog_sha256": "f4620837133e1fcc9702a864257b126c53df3094c83e9c3bc6ce60508488521d",
+        "complete": true,
+        "id": "diagram-design",
+        "live_status": "not-requested",
+        "name_extracted_count": 1,
+        "revision": "b52a33bfeef85d43995193ee52c13b485154b7b4",
+        "skill_count": 1
+      },
+      {
+        "catalog_sha256": "d39dc1f41fd92b90b8d131c2b0c4fae737a999a65ce084f81c20cdad9160f2a6",
+        "complete": true,
+        "id": "emilkowalski-skills",
+        "live_status": "not-requested",
+        "name_extracted_count": 6,
+        "revision": "6bf24434f7730ad169077756cf9c7cd7bd675fc6",
+        "skill_count": 6
+      },
+      {
+        "catalog_sha256": "3194fdd347fb7e4aa961b37690468227863f2c1291f70a14b43ec4a18fb32453",
+        "complete": true,
+        "id": "hallmark",
+        "live_status": "not-requested",
+        "name_extracted_count": 1,
+        "revision": "13ac0ec7e148655948100b6396439e481361d690",
+        "skill_count": 1
+      },
+      {
+        "catalog_sha256": "e586ad2d3dcd84606cc78985e9cb9a7d7dfcb8f06cccf795eb3d85a2f2694eb6",
+        "complete": true,
+        "id": "huggingface-skills",
+        "live_status": "not-requested",
+        "name_extracted_count": 26,
+        "revision": "52d324945107f68d06d561743cf26194bdbf9cf8",
+        "skill_count": 26
+      },
+      {
+        "catalog_sha256": "e15a4cbd89575cfa4f5b4a0f3a0762630d71a24b1a0b64cab58a8517708f17ab",
+        "complete": true,
+        "id": "mathbullet-skills",
+        "live_status": "not-requested",
+        "name_extracted_count": 7,
+        "revision": "fe96c626b39abba47fad2d4a4ef738e8a27602b1",
+        "skill_count": 7
+      },
+      {
+        "catalog_sha256": "de77021b5b337d74e304fcab623c6313895f0a03e1eb378c6343f0becdd34209",
+        "complete": true,
+        "id": "mattpocock-skills",
+        "live_status": "not-requested",
+        "name_extracted_count": 41,
+        "revision": "9603c1cc8118d08bc1b3bf34cf714f62178dea3b",
+        "skill_count": 41
+      },
+      {
+        "catalog_sha256": "ee322ff4c819f9323548b6995e352e76da12b455f07a40b5e2c5b02aad7cfb08",
+        "complete": true,
+        "id": "microsoft-azure-skills",
+        "live_status": "not-requested",
+        "name_extracted_count": 66,
+        "revision": "39464cbe27e2b8b72a50fdb104fdabfdb301ef61",
+        "skill_count": 66
+      },
+      {
+        "catalog_sha256": "58dbec49c25c4428f93a06ca366334efd3c4dcf5b2fe736588dbcb33b590c404",
+        "complete": true,
+        "id": "obra-superpowers",
+        "live_status": "not-requested",
+        "name_extracted_count": 14,
+        "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
+        "skill_count": 14
+      },
+      {
+        "catalog_sha256": "1cf81598d147b8f48a24acb6b65f9ed545277773efe6cbf9956540a03072557b",
+        "complete": true,
+        "id": "openai-plugins",
+        "live_status": "not-requested",
+        "name_extracted_count": 608,
+        "revision": "11c74d6ba24d3a6d48f54a194cd00ef3beea18f9",
+        "skill_count": 608
+      },
+      {
+        "catalog_sha256": "6419c71088e8196b08f68721101dcfb52c9a8656b417764a17dc3968de1628f7",
+        "complete": true,
+        "id": "vercel-agent-skills",
+        "live_status": "not-requested",
+        "name_extracted_count": 9,
+        "revision": "f8a72b9603728bb92a217a879b7e62e43ad76c81",
+        "skill_count": 9
+      },
+      {
+        "catalog_sha256": "f852f9abbfe4fca18d6ed3b0fb4488912bec11c067a21ce41a0c65c54e1a66f4",
+        "complete": true,
+        "id": "vercel-skills-cli",
+        "live_status": "not-requested",
+        "name_extracted_count": 1,
+        "revision": "5527c09adc367612b0bffd9c80e3bc28a6b01b6d",
+        "skill_count": 1
+      }
+    ],
+    "status": "ok",
+    "summary": {
+      "complete_source_count": 15,
+      "cross_source_name_collision_groups": 25,
+      "license_evidence_missing_count": 415,
+      "name_extracted_count": 838,
+      "skill_file_count": 842,
+      "source_count": 15,
+      "unique_extracted_name_count": 772
+    }
+  }
+}

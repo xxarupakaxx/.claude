@@ -1,0 +1,701 @@
+{
+  "command": "build_lock_plan",
+  "findings": {
+    "advisory_code_counts": {
+      "external_url": 83,
+      "target_frontmatter_requires_full_validation": 4,
+      "unknown_frontmatter_key": 1
+    },
+    "advisory_count": 88,
+    "all_findings": [
+      {
+        "code": "target_frontmatter_requires_full_validation",
+        "message": "frontmatter_unverified: multiline, anchor, alias, tag, merge, or flow syntax requires full YAML validation",
+        "path": "/Users/yoshiki/.local/share/skill-governance/review/hallmark-html-2026-08/hallmark/codex/SKILL.md:3",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "target_frontmatter_requires_full_validation",
+        "message": "frontmatter_nested: Nested mapping or multiline content requires full YAML validation",
+        "path": "/Users/yoshiki/.local/share/skill-governance/review/hallmark-html-2026-08/hallmark/codex/SKILL.md:4",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://github.com/Nutlope/hallmark",
+        "path": "SOURCE.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://www.usehallmark.com/",
+        "path": "SOURCE.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: http://`",
+        "path": "source/UPSTREAM-SKILL.md.txt",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://`",
+        "path": "source/UPSTREAM-SKILL.md.txt",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://example.com/",
+        "path": "source/UPSTREAM-SKILL.md.txt",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "target_frontmatter_requires_full_validation",
+        "message": "frontmatter_unverified: multiline, anchor, alias, tag, merge, or flow syntax requires full YAML validation",
+        "path": "/Users/yoshiki/.local/share/skill-governance/review/hallmark-html-2026-08/hallmark/claude/SKILL.md:3",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "target_frontmatter_requires_full_validation",
+        "message": "frontmatter_nested: Nested mapping or multiline content requires full YAML validation",
+        "path": "/Users/yoshiki/.local/share/skill-governance/review/hallmark-html-2026-08/hallmark/claude/SKILL.md:4",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://github.com/Nutlope/hallmark",
+        "path": "SOURCE.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://www.usehallmark.com/",
+        "path": "SOURCE.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: http://`",
+        "path": "source/UPSTREAM-SKILL.md.txt",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://`",
+        "path": "source/UPSTREAM-SKILL.md.txt",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://example.com/",
+        "path": "source/UPSTREAM-SKILL.md.txt",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "unknown_frontmatter_key",
+        "message": "Review non-standard key: version",
+        "path": "SKILL.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: http://`",
+        "path": "SKILL.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://`",
+        "path": "SKILL.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://example.com/",
+        "path": "SKILL.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: http://www.w3.org/2000/svg'",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://ai.google.dev/gemini-api/docs/image-generation",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://api.svgl.app/?slug=vercel\"",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://blackforestlabs.ai/",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://brandfetch.com",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://browserframe.com",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://cdn.jsdelivr.net/npm/@tabler/icons@latest/icons/arrow-right.svg\"",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://cdn.simpleicons.org/figma/aaaaaa\"",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://cdn.simpleicons.org/github\"",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://cleanmock.com",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://coverr.co",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://cssgradient.io",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://deviceshots.com",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://ffmpeg.org",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://handbrake.fr",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://heroicons.com",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://iconoir.com",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://lottiefiles.com",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://lucide.dev",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://mixkit.co",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://mockup.style",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://phosphoricons.com",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://picsum.photos/seed/<seed",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://ray.so",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://rive.app",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://simpleicons.org",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://source.unsplash.com/<w",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://storyset.com",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://svgl.app",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://tabler-icons.io",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://thesvg.org",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://undraw.co",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://unsplash.com",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://www.fffuel.co/",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://www.humaaans.com",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://www.iradesign.io",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://www.learnui.design/tools/mesh-gradient-generator.html",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://www.midjourney.com",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://www.nappy.co",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://www.openpeeps.com",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://www.pexels.com",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://www.pexels.com/videos/",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://www.recraft.ai/",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://www.shotstash.com",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://www.videvo.net",
+        "path": "references/assets.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://ai.google.dev/gemini-api/docs/image-generation",
+        "path": "references/custom-craft.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://blackforestlabs.ai/",
+        "path": "references/custom-craft.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://gsap.com",
+        "path": "references/custom-craft.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://jakearchibald.github.io/svgomg/",
+        "path": "references/custom-craft.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://motion.dev",
+        "path": "references/custom-craft.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://scroll-driven-animations.style/",
+        "path": "references/custom-craft.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://threejs.org",
+        "path": "references/custom-craft.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://www.midjourney.com",
+        "path": "references/custom-craft.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://www.recraft.ai/",
+        "path": "references/custom-craft.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://design-tokens.github.io/community-group/format/\",",
+        "path": "references/export-formats.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://browserframe.com",
+        "path": "references/hero-enrichment.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://www.usehallmark.com/imagery/<category",
+        "path": "references/imagery-kit.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://www.usehallmark.com/imagery/watercolor/watercolor-warm-01.webp\"",
+        "path": "references/imagery-kit.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: http://`",
+        "path": "references/study.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://`",
+        "path": "references/study.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://fonts.googleapis.com/css2?family=…\"",
+        "path": "references/study.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap\"",
+        "path": "references/themes/cobalt.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap\"",
+        "path": "references/themes/grid.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://fonts.googleapis.com\"",
+        "path": "references/themes/hum.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap\"",
+        "path": "references/themes/hum.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://fonts.gstatic.com\"",
+        "path": "references/themes/hum.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://fonts.googleapis.com\"",
+        "path": "references/themes/lumen.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap\"",
+        "path": "references/themes/lumen.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://fonts.gstatic.com\"",
+        "path": "references/themes/lumen.md",
+        "severity": "ADVISORY"
+      },
+      {
+        "code": "external_url",
+        "message": "External reference: https://api.fontshare.com/v2/css?f=...\"",
+        "path": "references/typography.md",
+        "severity": "ADVISORY"
+      }
+    ],
+    "blocking_codes": [],
+    "blocking_count": 0,
+    "interpretation": "build_lock_plan returned a measured subject with no blocking findings; advisories are retained and do not constitute safety, value, approval, or promotion evidence."
+  },
+  "generated_at": "2026-08-31",
+  "input_bindings": {
+    "candidate_manifest_sha256": "292818dbe8f9d3c07e0a0680d66e0e4d85857c7ca53374e2fd0e8e32c075fd28",
+    "candidate_tree_sha256": "cccc3c7c88ec944333f132f0565c5089029c86aa37cdb8ebf2a8a705fe5d15fe",
+    "frontmatter_receipts": {
+      "claude": {
+        "path": "receipts/frontmatter-claude.json",
+        "sha256": "9f47a732e692a8257eaf582cdeeeb9120ddc1822ed5ba735b8748c99a7861f75"
+      },
+      "codex": {
+        "path": "receipts/frontmatter-codex.json",
+        "sha256": "e0c6aa876ea38dc885818fff4342aed8a7445d294f8a8b7265e108a847f64869"
+      },
+      "quarantine": {
+        "path": "receipts/prototype-upstream-frontmatter.json",
+        "sha256": "d62deb41d19a0137500c2abff6b0c1929f86a72cb0f9f8e9afd4fb3059205e8a"
+      }
+    },
+    "raw_inspection": {
+      "blocking_codes": {
+        "broken_relative_reference": 3,
+        "markdown_path_escape": 13
+      },
+      "path": "receipts/quarantine-inspection-raw.json",
+      "raw_blocking_count": 16,
+      "sha256": "fdbc9ede9689e2816b4eed0100ef918fc3301b80fabb6e6165865e76604cc964"
+    },
+    "reference_hygiene_ledger": {
+      "path": "adaptations/hallmark-reference-hygiene-ledger.json",
+      "resolved_reference_count": 16,
+      "sha256": "cc9876d48062bd060503fefd1215fbd7a3c6fb214e8efc06db31d795f186070a"
+    },
+    "review_targets": {
+      "claude": {
+        "manifest_sha256": "09a6dcbeceeaa3f8006c3f4ca93ee39c4212eebdc05836c2719c3378d1b6477e",
+        "skill_sha256": "9a6fb66d6c5a843c7dcc70f984f6202665e1c2c0b0c552d23bfec4cd4ade05e8",
+        "tree_sha256": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      },
+      "codex": {
+        "manifest_sha256": "09a6dcbeceeaa3f8006c3f4ca93ee39c4212eebdc05836c2719c3378d1b6477e",
+        "skill_sha256": "9a6fb66d6c5a843c7dcc70f984f6202665e1c2c0b0c552d23bfec4cd4ade05e8",
+        "tree_sha256": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    },
+    "source_revision": "13ac0ec7e148655948100b6396439e481361d690",
+    "upstream_blob_sha": "645221da63743de870501760a48694acdf7aef10",
+    "upstream_package_tree_sha": "747c924c4767b4d5fa6f1c59985c87a21c918334",
+    "upstream_path": "skills/hallmark/SKILL.md"
+  },
+  "lock_plan": {
+    "artifact_key": "hallmark-html-2026-08/hallmark",
+    "blocking_findings": [],
+    "candidate_tree_sha256": "cccc3c7c88ec944333f132f0565c5089029c86aa37cdb8ebf2a8a705fe5d15fe",
+    "generated_at": "2026-08-31",
+    "generation": 3,
+    "lock_plan_sha256": "8bbce8e84e5fed66e62e383a2f5aa697fb68806ae6a5526c35058e60f0376069",
+    "reference_findings_resolved": 16,
+    "registry_sha256": "a4b702e411289315a36fd1602d12443c47c98d50f71dcd6f400a07d6dabefa0a",
+    "review_target_tree_sha256": {
+      "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+      "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+    },
+    "schema_version": 1,
+    "subject_sha256": "62b401259ecbef8cf3e7abde2cb2f777b258b30ca1fb36aa9d27157b4a00740f"
+  },
+  "prototype": {
+    "candidate_code_execution": false,
+    "governance_py_sha256": "a1068f3162417030513dccb9468c499ec1709d6c4160f1399c7190fcb1a9ec96",
+    "revision": "d425eb442853503475e5be0f1f3a13e46223efdd",
+    "revision_bound": true,
+    "source": "/tmp/codex-skill-review-fix-260831/skills/skill-governance/scripts/governance.py"
+  },
+  "runtime_inventory": {
+    "finding_code_counts": {
+      "discovery_excluded_scan_truncated": 3,
+      "discovery_excluded_symlink_recorded": 904,
+      "discovery_symlink_allowlisted": 2,
+      "runtime_skill_name_inferred": 12,
+      "unregistered_skill_surface": 2
+    },
+    "read_only": true,
+    "runtime_presence_blockers_for_candidate": 0,
+    "summary": {
+      "collision_names": 182,
+      "coverage_complete": false,
+      "raw_name_collision_names": 209,
+      "roots": {
+        "claude": 140,
+        "claude-marketplaces": 44,
+        "claude-plugin-cache": 22,
+        "claude-scheduled": 15,
+        "codex": 165,
+        "codex-claude-compat-scheduled": 10,
+        "codex-memory-skills": 1,
+        "codex-plugin-cache": 409,
+        "codex-scheduled": 10,
+        "shared": 69,
+        "vault-claude": 14,
+        "vault-claude-global": 140,
+        "vault-claude-global-scheduled": 10,
+        "vault-claude-mirror": 141,
+        "vault-codex": 158,
+        "vault-codex-claude-compat-scheduled": 10,
+        "vault-codex-mirror": 162,
+        "vault-codex-scheduled": 10,
+        "vault-shared": 19,
+        "vault-shared-ai": 8
+      },
+      "total_entries": 1557,
+      "unique_names": 1148
+    }
+  },
+  "safety_boundary": {
+    "active_lock_mutated": false,
+    "active_registry_mutated": false,
+    "active_runtime_mutated": false,
+    "candidate_code_executed": false,
+    "human_approval_receipt_created": false,
+    "promotion_receipt_created": false,
+    "raw_source_preserved": true,
+    "source_body_preserved": true,
+    "stage_preserved": true,
+    "value_receipt_created": false
+  },
+  "schema": "hallmark-prototype-build-lock-plan-receipt-v1",
+  "status": "advisory-only",
+  "temporary_binding": {
+    "base_dir": "temporary directory; removed before this receipt was written",
+    "catalog": {
+      "catalog_skill_list_sha256": "3194fdd347fb7e4aa961b37690468227863f2c1291f70a14b43ec4a18fb32453",
+      "package_tree_sha": "747c924c4767b4d5fa6f1c59985c87a21c918334",
+      "source_id": "hallmark",
+      "status": "ok",
+      "temporary_copy_sha256": "8469d4872c5d6dac19ab6afc8db23b0b82fc6a6239343e92f99d38ca4e4be967",
+      "tree_sha": "02ebcc67f58295654c073cfb74a20a9a86db1f8f"
+    },
+    "mode": "runtime-external ephemeral BASE_DIR binding",
+    "persistent_temp_artifacts": false,
+    "quarantine_root": "/Users/yoshiki/.local/share/skill-governance/quarantine/hallmark/13ac0ec7e148655948100b6396439e481361d690/hallmark",
+    "registry": {
+      "collection_id": "hallmark-html-2026-08",
+      "local_state": "reviewed",
+      "path": "hallmark-collection-draft/registry-stanza.toml",
+      "review_state": "evidence-pending",
+      "temporary_copy_sha256": "a4b702e411289315a36fd1602d12443c47c98d50f71dcd6f400a07d6dabefa0a"
+    },
+    "registry_shape": {
+      "blocking_count": 0,
+      "finding_codes": [],
+      "mode": "in-memory baseline registry plus Hallmark source/collection append",
+      "prototype_revision": "d425eb442853503475e5be0f1f3a13e46223efdd",
+      "registry_written": false,
+      "status": "PASS",
+      "validator_source": "/tmp/codex-skill-review-fix-260831/skills/skill-governance/scripts/governance.py"
+    },
+    "review_root": "/Users/yoshiki/.local/share/skill-governance/review/hallmark-html-2026-08/hallmark"
+  }
+}

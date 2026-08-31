@@ -917,3 +917,67 @@ reason = "historical baseline snapshot; evidence only, never a runtime Skill roo
 [[coverage_exclusions]]
 path = "/Users/yoshiki/ghq/github.com/xxarupakaxx/.codex/.local/memory/260831_workflow-ecosystem/claude-baseline-files/skills/viewing-plans"
 reason = "historical baseline snapshot; evidence only, never a runtime Skill root; exact leaf exclusion"
+
+[[sources]]
+id = "diagram-design"
+github = "cathrynlavery/diagram-design"
+default_branch = "main"
+observed_revision = "b52a33bfeef85d43995193ee52c13b485154b7b4"
+observed_at = "2026-08-31"
+origin = "community-maintainer"
+mode = "selective-adoption"
+update_policy = "notify-only"
+catalog_required = true
+
+[[sources]]
+id = "hallmark"
+github = "Nutlope/hallmark"
+default_branch = "main"
+observed_revision = "13ac0ec7e148655948100b6396439e481361d690"
+observed_at = "2026-08-31"
+origin = "community-maintainer"
+mode = "selective-adoption"
+update_policy = "notify-only"
+catalog_required = true
+
+[[collections]]
+id = "diagram-design-html-2026-08"
+source_id = "diagram-design"
+local_state = "active"
+review_state = "approved"
+risk_tier = "L0"
+license = "MIT"
+adaptation = "platform-adapted"
+content_relation = "source-backed-static-adaptation"
+targets = ["codex", "claude"]
+default_revision = "b52a33bfeef85d43995193ee52c13b485154b7b4"
+baseline_at = "2026-08-31"
+adaptation_diff = { "path" = "adaptations/diagram-design-html-2026-08.json", "sha256" = "c6ee280e51c89d7cf2c6f7d438b043df6f45dd6d64adc17e6214c634ca8edd14" }
+skills = ["diagram-design"]
+safety_receipt = { "path" = "receipts/diagram-design-html-2026-08/safety.json", "sha256" = "9378b0b35e99f2b2c4856a2380235987b3cbe3744eddd9f927a0337ddded080d" }
+value_receipt = { "path" = "receipts/diagram-design-html-2026-08/value.json", "sha256" = "06a44cad693b30b7973fe927b826b6c86f5cb50ec212d6e49c3d293fd7a8c426" }
+upstream_paths = { "diagram-design" = "skills/diagram-design/SKILL.md" }
+frontmatter_receipts = { "diagram-design" = { "quarantine" = { "path" = "receipts/diagram-design-html-2026-08/frontmatter-quarantine.json", "sha256" = "fc24c9b9749401f94d67413d77f53251c695102c1d5450970d5907c9571f0ecb" }, "codex" = { "path" = "receipts/diagram-design-html-2026-08/frontmatter-codex.json", "sha256" = "fd2b74da944c23c45dd3d57140e762a1d869cb4b939351b35ffb67a3747bcf3e" }, "claude" = { "path" = "receipts/diagram-design-html-2026-08/frontmatter-claude.json", "sha256" = "e74ccb6e932d5c039993d043ed4836a33bdc74e64daf58cd5d0c05fed7e35036" } } }
+approval_receipt = { "path" = "receipts/diagram-design-html-2026-08/approval.json", "sha256" = "8b8d89ffef048d94deca901dcf05b77ccc84279df4076e4531ed601256ccc1ca" }
+promotion_receipt = { "path" = "receipts/diagram-design-html-2026-08/promotion.json", "sha256" = "dce675ed0f2336622860eb8cd49a22b58a31ba1fc2b88889c5853e10484e22c3" }
+
+[[collections]]
+id = "hallmark-html-2026-08"
+source_id = "hallmark"
+local_state = "active"
+review_state = "approved"
+risk_tier = "L0"
+license = "MIT"
+adaptation = "platform-adapted"
+content_relation = "source-backed-static-adaptation"
+targets = ["codex", "claude"]
+default_revision = "13ac0ec7e148655948100b6396439e481361d690"
+baseline_at = "2026-08-31"
+adaptation_diff = { "path" = "adaptations/hallmark-reference-hygiene-ledger.json", "sha256" = "cc9876d48062bd060503fefd1215fbd7a3c6fb214e8efc06db31d795f186070a" }
+skills = ["hallmark"]
+safety_receipt = { "path" = "receipts/hallmark-html-2026-08/safety.json", "sha256" = "8c5282b5632b3e1a3e1677614abf0ee08849d12229ad1530e273d09e7d0d6a26" }
+value_receipt = { "path" = "receipts/hallmark-html-2026-08/value.json", "sha256" = "3707e6a0ba659c7c6c52093ef731f9bed45d13ba929c7d00bbceca26b1f537dd" }
+upstream_paths = { "hallmark" = "skills/hallmark/SKILL.md" }
+frontmatter_receipts = { "hallmark" = { "quarantine" = { "path" = "receipts/hallmark-html-2026-08/prototype-upstream-frontmatter.json", "sha256" = "92582e40d0a13f8d7f3d0da1fbddc77bb8a7f2a7ebbede22807eda55b16f95d7" }, "codex" = { "path" = "receipts/hallmark-html-2026-08/frontmatter-codex.json", "sha256" = "e0c6aa876ea38dc885818fff4342aed8a7445d294f8a8b7265e108a847f64869" }, "claude" = { "path" = "receipts/hallmark-html-2026-08/frontmatter-claude.json", "sha256" = "9f47a732e692a8257eaf582cdeeeb9120ddc1822ed5ba735b8748c99a7861f75" } } }
+approval_receipt = { "path" = "receipts/hallmark-html-2026-08/approval.json", "sha256" = "100f380126f3886e7cf0e19c1645242d998be2b0fe811cea97e89126e6d395f9" }
+promotion_receipt = { "path" = "receipts/hallmark-html-2026-08/promotion.json", "sha256" = "c3e80088e5e5aa5e277907b53fdae88d667334f1bd323f7205c8ebe75c715505" }

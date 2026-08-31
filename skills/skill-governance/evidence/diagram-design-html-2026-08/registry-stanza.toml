@@ -1,0 +1,36 @@
+# Draft only. Merge into the generation-3 governance registry after lead review.
+# No safety/value/approval/promotion receipt is intentionally declared here.
+
+[[sources]]
+id = "diagram-design"
+github = "cathrynlavery/diagram-design"
+default_branch = "main"
+observed_revision = "b52a33bfeef85d43995193ee52c13b485154b7b4"
+observed_at = "2026-08-31"
+origin = "community-maintainer"
+mode = "selective-adoption"
+update_policy = "notify-only"
+catalog_required = true
+
+[[collections]]
+id = "diagram-design-html-2026-08"
+source_id = "diagram-design"
+local_state = "reviewed"
+review_state = "evidence-pending"
+risk_tier = "L0"
+license = "MIT"
+adaptation = "platform-adapted"
+content_relation = "source-backed-static-adaptation"
+targets = ["codex", "claude"]
+default_revision = "b52a33bfeef85d43995193ee52c13b485154b7b4"
+baseline_at = "2026-08-31"
+adaptation_diff = { path = "adaptations/diagram-design-html-2026-08.json", sha256 = "c6ee280e51c89d7cf2c6f7d438b043df6f45dd6d64adc17e6214c634ca8edd14" }
+skills = ["diagram-design"]
+
+[collections.upstream_paths]
+"diagram-design" = "skills/diagram-design/SKILL.md"
+
+[collections.frontmatter_receipts."diagram-design"]
+quarantine = { path = "receipts/frontmatter-quarantine.json", sha256 = "fc24c9b9749401f94d67413d77f53251c695102c1d5450970d5907c9571f0ecb" }
+codex = { path = "receipts/frontmatter-codex.json", sha256 = "fd2b74da944c23c45dd3d57140e762a1d869cb4b939351b35ffb67a3747bcf3e" }
+claude = { path = "receipts/frontmatter-claude.json", sha256 = "e74ccb6e932d5c039993d043ed4836a33bdc74e64daf58cd5d0c05fed7e35036" }

@@ -1,0 +1,11 @@
+{
+  "catalog_required": true,
+  "default_branch": "main",
+  "github": "cathrynlavery/diagram-design",
+  "id": "diagram-design",
+  "mode": "selective-adoption",
+  "observed_at": "2026-08-31",
+  "observed_revision": "b52a33bfeef85d43995193ee52c13b485154b7b4",
+  "origin": "community-maintainer",
+  "update_policy": "notify-only"
+}

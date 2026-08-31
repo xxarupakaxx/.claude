@@ -1,0 +1,533 @@
+{
+  "candidate_skill_sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577",
+  "candidate_tree_sha256": "cccc3c7c88ec944333f132f0565c5089029c86aa37cdb8ebf2a8a705fe5d15fe",
+  "collection_id": "hallmark-html-2026-08",
+  "meaning_of_safe": "prototype safe=true means the captured relative target resolves within the preserved fixed package and does not match the prototype sensitive/external path checks. It does not turn a candidate-root escape into a clean raw Skill result or authorize loading the source site/demo.",
+  "prototype": {
+    "bound_hash": null,
+    "bound_revision": null,
+    "maker_state": "pending independent re-review; do not bind a prototype commit hash",
+    "mode": "read-only in-memory validation",
+    "path": "/tmp/codex-skill-review-fix-260831/skills/skill-governance/scripts/governance.py",
+    "validation": {
+      "finding_count": 0,
+      "findings": [],
+      "resolved_count": 16,
+      "status": "PASS",
+      "valid": true
+    }
+  },
+  "raw_blocking_count": 16,
+  "raw_blocking_tuples": [
+    [
+      "BLOCKING",
+      "markdown_path_escape",
+      "Reference escapes candidate root: ../../site/css/tokens.css",
+      "SKILL.md"
+    ],
+    [
+      "BLOCKING",
+      "broken_relative_reference",
+      "Missing captured target: references/",
+      "SKILL.md"
+    ],
+    [
+      "BLOCKING",
+      "markdown_path_escape",
+      "Reference escapes candidate root: ../../docs/recipes.md",
+      "SKILL.md"
+    ],
+    [
+      "BLOCKING",
+      "markdown_path_escape",
+      "Reference escapes candidate root: ../../docs/study-examples.md",
+      "SKILL.md"
+    ],
+    [
+      "BLOCKING",
+      "markdown_path_escape",
+      "Reference escapes candidate root: ../../../site/css/tokens.css",
+      "references/custom-theme.md"
+    ],
+    [
+      "BLOCKING",
+      "markdown_path_escape",
+      "Reference escapes candidate root: ../../../site/css/tokens.css",
+      "references/custom-theme.md"
+    ],
+    [
+      "BLOCKING",
+      "markdown_path_escape",
+      "Reference escapes candidate root: ../../../site/_tests/05-tracejam-saas/",
+      "references/hero-enrichment.md"
+    ],
+    [
+      "BLOCKING",
+      "markdown_path_escape",
+      "Reference escapes candidate root: ../../../site/_tests/03-maple-bakery/",
+      "references/hero-enrichment.md"
+    ],
+    [
+      "BLOCKING",
+      "markdown_path_escape",
+      "Reference escapes candidate root: ../../../../site/css/tokens.css",
+      "references/themes/carnival.md"
+    ],
+    [
+      "BLOCKING",
+      "markdown_path_escape",
+      "Reference escapes candidate root: ../../../../site/css/tokens.css",
+      "references/themes/cobalt.md"
+    ],
+    [
+      "BLOCKING",
+      "markdown_path_escape",
+      "Reference escapes candidate root: ../../../../site/examples/cobalt-01/",
+      "references/themes/cobalt.md"
+    ],
+    [
+      "BLOCKING",
+      "markdown_path_escape",
+      "Reference escapes candidate root: ../../../../site/examples/cobalt-01/",
+      "references/themes/cobalt.md"
+    ],
+    [
+      "BLOCKING",
+      "markdown_path_escape",
+      "Reference escapes candidate root: ../../../../site/css/tokens.css",
+      "references/themes/hum.md"
+    ],
+    [
+      "BLOCKING",
+      "markdown_path_escape",
+      "Reference escapes candidate root: ../../../../site/css/tokens.css",
+      "references/themes/lumen.md"
+    ],
+    [
+      "BLOCKING",
+      "broken_relative_reference",
+      "Missing captured target: ../",
+      "references/verbs/redesign.md"
+    ],
+    [
+      "BLOCKING",
+      "broken_relative_reference",
+      "Missing captured target: ../genres/",
+      "references/verbs/redesign.md"
+    ]
+  ],
+  "reference_targets": [
+    {
+      "finding": {
+        "code": "markdown_path_escape",
+        "message": "Reference escapes candidate root: ../../site/css/tokens.css",
+        "path": "SKILL.md",
+        "severity": "BLOCKING"
+      },
+      "safe": true,
+      "target": "../../site/css/tokens.css"
+    },
+    {
+      "finding": {
+        "code": "broken_relative_reference",
+        "message": "Missing captured target: references/",
+        "path": "SKILL.md",
+        "severity": "BLOCKING"
+      },
+      "safe": true,
+      "target": "references/"
+    },
+    {
+      "finding": {
+        "code": "markdown_path_escape",
+        "message": "Reference escapes candidate root: ../../docs/recipes.md",
+        "path": "SKILL.md",
+        "severity": "BLOCKING"
+      },
+      "safe": true,
+      "target": "../../docs/recipes.md"
+    },
+    {
+      "finding": {
+        "code": "markdown_path_escape",
+        "message": "Reference escapes candidate root: ../../docs/study-examples.md",
+        "path": "SKILL.md",
+        "severity": "BLOCKING"
+      },
+      "safe": true,
+      "target": "../../docs/study-examples.md"
+    },
+    {
+      "finding": {
+        "code": "markdown_path_escape",
+        "message": "Reference escapes candidate root: ../../../site/css/tokens.css",
+        "path": "references/custom-theme.md",
+        "severity": "BLOCKING"
+      },
+      "safe": true,
+      "target": "../../../site/css/tokens.css"
+    },
+    {
+      "finding": {
+        "code": "markdown_path_escape",
+        "message": "Reference escapes candidate root: ../../../site/css/tokens.css",
+        "path": "references/custom-theme.md",
+        "severity": "BLOCKING"
+      },
+      "safe": true,
+      "target": "../../../site/css/tokens.css"
+    },
+    {
+      "finding": {
+        "code": "markdown_path_escape",
+        "message": "Reference escapes candidate root: ../../../site/_tests/05-tracejam-saas/",
+        "path": "references/hero-enrichment.md",
+        "severity": "BLOCKING"
+      },
+      "safe": true,
+      "target": "../../../site/_tests/05-tracejam-saas/"
+    },
+    {
+      "finding": {
+        "code": "markdown_path_escape",
+        "message": "Reference escapes candidate root: ../../../site/_tests/03-maple-bakery/",
+        "path": "references/hero-enrichment.md",
+        "severity": "BLOCKING"
+      },
+      "safe": true,
+      "target": "../../../site/_tests/03-maple-bakery/"
+    },
+    {
+      "finding": {
+        "code": "markdown_path_escape",
+        "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+        "path": "references/themes/carnival.md",
+        "severity": "BLOCKING"
+      },
+      "safe": true,
+      "target": "../../../../site/css/tokens.css"
+    },
+    {
+      "finding": {
+        "code": "markdown_path_escape",
+        "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+        "path": "references/themes/cobalt.md",
+        "severity": "BLOCKING"
+      },
+      "safe": true,
+      "target": "../../../../site/css/tokens.css"
+    },
+    {
+      "finding": {
+        "code": "markdown_path_escape",
+        "message": "Reference escapes candidate root: ../../../../site/examples/cobalt-01/",
+        "path": "references/themes/cobalt.md",
+        "severity": "BLOCKING"
+      },
+      "safe": true,
+      "target": "../../../../site/examples/cobalt-01/"
+    },
+    {
+      "finding": {
+        "code": "markdown_path_escape",
+        "message": "Reference escapes candidate root: ../../../../site/examples/cobalt-01/",
+        "path": "references/themes/cobalt.md",
+        "severity": "BLOCKING"
+      },
+      "safe": true,
+      "target": "../../../../site/examples/cobalt-01/"
+    },
+    {
+      "finding": {
+        "code": "markdown_path_escape",
+        "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+        "path": "references/themes/hum.md",
+        "severity": "BLOCKING"
+      },
+      "safe": true,
+      "target": "../../../../site/css/tokens.css"
+    },
+    {
+      "finding": {
+        "code": "markdown_path_escape",
+        "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+        "path": "references/themes/lumen.md",
+        "severity": "BLOCKING"
+      },
+      "safe": true,
+      "target": "../../../../site/css/tokens.css"
+    },
+    {
+      "finding": {
+        "code": "broken_relative_reference",
+        "message": "Missing captured target: ../",
+        "path": "references/verbs/redesign.md",
+        "severity": "BLOCKING"
+      },
+      "safe": true,
+      "target": "../"
+    },
+    {
+      "finding": {
+        "code": "broken_relative_reference",
+        "message": "Missing captured target: ../genres/",
+        "path": "references/verbs/redesign.md",
+        "severity": "BLOCKING"
+      },
+      "safe": true,
+      "target": "../genres/"
+    }
+  ],
+  "resolution_map": [
+    {
+      "changed_paths": [
+        "SKILL.md"
+      ],
+      "finding_tuple": [
+        "BLOCKING",
+        "markdown_path_escape",
+        "Reference escapes candidate root: ../../site/css/tokens.css",
+        "SKILL.md"
+      ],
+      "review_target_hashes": {
+        "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+        "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    },
+    {
+      "changed_paths": [
+        "SKILL.md"
+      ],
+      "finding_tuple": [
+        "BLOCKING",
+        "broken_relative_reference",
+        "Missing captured target: references/",
+        "SKILL.md"
+      ],
+      "review_target_hashes": {
+        "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+        "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    },
+    {
+      "changed_paths": [
+        "SKILL.md"
+      ],
+      "finding_tuple": [
+        "BLOCKING",
+        "markdown_path_escape",
+        "Reference escapes candidate root: ../../docs/recipes.md",
+        "SKILL.md"
+      ],
+      "review_target_hashes": {
+        "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+        "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    },
+    {
+      "changed_paths": [
+        "SKILL.md"
+      ],
+      "finding_tuple": [
+        "BLOCKING",
+        "markdown_path_escape",
+        "Reference escapes candidate root: ../../docs/study-examples.md",
+        "SKILL.md"
+      ],
+      "review_target_hashes": {
+        "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+        "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    },
+    {
+      "changed_paths": [
+        "SKILL.md"
+      ],
+      "finding_tuple": [
+        "BLOCKING",
+        "markdown_path_escape",
+        "Reference escapes candidate root: ../../../site/css/tokens.css",
+        "references/custom-theme.md"
+      ],
+      "review_target_hashes": {
+        "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+        "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    },
+    {
+      "changed_paths": [
+        "SKILL.md"
+      ],
+      "finding_tuple": [
+        "BLOCKING",
+        "markdown_path_escape",
+        "Reference escapes candidate root: ../../../site/css/tokens.css",
+        "references/custom-theme.md"
+      ],
+      "review_target_hashes": {
+        "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+        "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    },
+    {
+      "changed_paths": [
+        "SKILL.md"
+      ],
+      "finding_tuple": [
+        "BLOCKING",
+        "markdown_path_escape",
+        "Reference escapes candidate root: ../../../site/_tests/05-tracejam-saas/",
+        "references/hero-enrichment.md"
+      ],
+      "review_target_hashes": {
+        "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+        "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    },
+    {
+      "changed_paths": [
+        "SKILL.md"
+      ],
+      "finding_tuple": [
+        "BLOCKING",
+        "markdown_path_escape",
+        "Reference escapes candidate root: ../../../site/_tests/03-maple-bakery/",
+        "references/hero-enrichment.md"
+      ],
+      "review_target_hashes": {
+        "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+        "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    },
+    {
+      "changed_paths": [
+        "SKILL.md"
+      ],
+      "finding_tuple": [
+        "BLOCKING",
+        "markdown_path_escape",
+        "Reference escapes candidate root: ../../../../site/css/tokens.css",
+        "references/themes/carnival.md"
+      ],
+      "review_target_hashes": {
+        "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+        "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    },
+    {
+      "changed_paths": [
+        "references/themes/cobalt.md"
+      ],
+      "finding_tuple": [
+        "BLOCKING",
+        "markdown_path_escape",
+        "Reference escapes candidate root: ../../../../site/css/tokens.css",
+        "references/themes/cobalt.md"
+      ],
+      "review_target_hashes": {
+        "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+        "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    },
+    {
+      "changed_paths": [
+        "references/themes/cobalt.md"
+      ],
+      "finding_tuple": [
+        "BLOCKING",
+        "markdown_path_escape",
+        "Reference escapes candidate root: ../../../../site/examples/cobalt-01/",
+        "references/themes/cobalt.md"
+      ],
+      "review_target_hashes": {
+        "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+        "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    },
+    {
+      "changed_paths": [
+        "references/themes/cobalt.md"
+      ],
+      "finding_tuple": [
+        "BLOCKING",
+        "markdown_path_escape",
+        "Reference escapes candidate root: ../../../../site/examples/cobalt-01/",
+        "references/themes/cobalt.md"
+      ],
+      "review_target_hashes": {
+        "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+        "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    },
+    {
+      "changed_paths": [
+        "SKILL.md"
+      ],
+      "finding_tuple": [
+        "BLOCKING",
+        "markdown_path_escape",
+        "Reference escapes candidate root: ../../../../site/css/tokens.css",
+        "references/themes/hum.md"
+      ],
+      "review_target_hashes": {
+        "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+        "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    },
+    {
+      "changed_paths": [
+        "references/themes/lumen.md"
+      ],
+      "finding_tuple": [
+        "BLOCKING",
+        "markdown_path_escape",
+        "Reference escapes candidate root: ../../../../site/css/tokens.css",
+        "references/themes/lumen.md"
+      ],
+      "review_target_hashes": {
+        "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+        "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    },
+    {
+      "changed_paths": [
+        "references/verbs/redesign.md"
+      ],
+      "finding_tuple": [
+        "BLOCKING",
+        "broken_relative_reference",
+        "Missing captured target: ../",
+        "references/verbs/redesign.md"
+      ],
+      "review_target_hashes": {
+        "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+        "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    },
+    {
+      "changed_paths": [
+        "references/verbs/redesign.md"
+      ],
+      "finding_tuple": [
+        "BLOCKING",
+        "broken_relative_reference",
+        "Missing captured target: ../genres/",
+        "references/verbs/redesign.md"
+      ],
+      "review_target_hashes": {
+        "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+        "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    }
+  ],
+  "review_target_hashes": {
+    "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+    "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+  },
+  "runtime_mutated": false,
+  "schema": "hallmark-reference-hygiene-evidence-v1",
+  "source_id": "hallmark",
+  "source_mutated": false,
+  "source_revision": "13ac0ec7e148655948100b6396439e481361d690",
+  "upstream_path": "skills/hallmark/SKILL.md"
+}

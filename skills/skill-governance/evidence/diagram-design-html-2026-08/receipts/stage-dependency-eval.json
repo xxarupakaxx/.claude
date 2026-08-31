@@ -1,0 +1,54 @@
+{
+  "schema": "diagram-design-dependency-eval-v1",
+  "status": "PASS",
+  "candidate_execution": false,
+  "before": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/examples/dependency-before.svg",
+  "candidate": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/examples/dependency-candidate.svg",
+  "measured": {
+    "before_items": 5,
+    "candidate_nodes": 5,
+    "candidate_edges": 5,
+    "candidate_ranks": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "incoming_edges": {
+      "renderer": 1,
+      "parser": 1,
+      "snapshot": 2,
+      "source": 1,
+      "plan": 0
+    }
+  },
+  "checks": [
+    {
+      "check": "before-item-count",
+      "status": "PASS",
+      "detail": "5 flat relations"
+    },
+    {
+      "check": "candidate-budget",
+      "status": "PASS",
+      "detail": "5 nodes, 5 edges, 4 ranks"
+    },
+    {
+      "check": "shared-dependency",
+      "status": "PASS",
+      "detail": "snapshot fan-in=2 is declared and measured"
+    },
+    {
+      "check": "source-binding",
+      "status": "PASS",
+      "detail": "every candidate node and edge has data-source"
+    },
+    {
+      "check": "orthogonal-paths",
+      "status": "PASS",
+      "detail": "candidate edge paths use M/H/V only"
+    }
+  ],
+  "failure_count": 0,
+  "fixture_scope": "demonstration only; not project evidence"
+}

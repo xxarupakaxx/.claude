@@ -1,0 +1,20 @@
+{
+  "command": "validate-frontmatter",
+  "findings": [],
+  "frontmatter_sha256": "ca3a5d85196ce0ac17a7f8d9b6c5dd4d76d777b512db770074bdb1b28a61964d",
+  "skill_sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577",
+  "status": "validated",
+  "surface": {
+    "kind": "quarantine",
+    "revision": "13ac0ec7e148655948100b6396439e481361d690",
+    "skill_name": "hallmark",
+    "source_id": "hallmark"
+  },
+  "target": "upstream",
+  "validator": "pyyaml-6.0.2-safe-loader",
+  "values": {
+    "description": "Anti-AI-slop design skill for greenfield pages, audits, redesigns, and design extraction from URLs or screenshots. Use when the user asks to build a new app or landing page, wants to redesign something, invokes Hallmark by name, or uses audit/redesign/study.",
+    "name": "hallmark",
+    "version": "1.1.0"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "approver": {
+    "name": "current user",
+    "type": "human"
+  },
+  "collection_id": "hallmark-html-2026-08",
+  "date": "2026-08-31",
+  "decision": "approved",
+  "evidence": {
+    "approval_record": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/activation-approval-binding.json",
+    "approval_record_sha256": "6513a4c0a883d3a85c303b5cd18132b329bb0abfde0b2afe06817f819a2bf551",
+    "approved_target_trees": {
+      "hallmark": {
+        "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+        "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    },
+    "context": "Reply to the explicit request to apply reviewed source-gate policy and retain the unregistered OpenSpec outside runtime; original Hallmark/Diagram installation request continues",
+    "message": "OK",
+    "namespace_and_risk_resolution": "Receipt namespaced to avoid collisions; L0 classification confirmed; source/review bytes unchanged"
+  },
+  "external_push_authorized": false,
+  "generation": 3,
+  "kind": "approval",
+  "safety_receipt_sha256": "8c5282b5632b3e1a3e1677614abf0ee08849d12229ad1530e273d09e7d0d6a26",
+  "schema_version": 1,
+  "subject_sha256": "8d3c3bf05e10ab9d96729d41886995de0f906cce8d94f9e1869dd6d960fe284b",
+  "value_receipt_sha256": "3707e6a0ba659c7c6c52093ef731f9bed45d13ba929c7d00bbceca26b1f537dd"
+}

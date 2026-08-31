@@ -1,0 +1,75 @@
+{
+  "adapter_limit_bytes": 65536,
+  "candidate_execution": false,
+  "command": "validate-frontmatter",
+  "exit_code": 2,
+  "interpretation": "PyYAML 6.0.2 was available offline, but the active adapter rejected the raw 67,460-byte SKILL.md before YAML import. The raw source remains blocked and unmodified.",
+  "not_approval": true,
+  "observed": {
+    "command": [
+      "/opt/homebrew/bin/uv",
+      "run",
+      "--offline",
+      "--no-project",
+      "--python",
+      "3.13",
+      "--with",
+      "pyyaml==6.0.2",
+      "python",
+      "/Users/yoshiki/.codex/skills/skill-governance/scripts/governance.py",
+      "validate-frontmatter",
+      "/Users/yoshiki/.local/share/skill-governance/quarantine/hallmark/13ac0ec7e148655948100b6396439e481361d690/hallmark",
+      "--target",
+      "common",
+      "--json"
+    ],
+    "diagnostic": {
+      "adapter_limit_bytes": 65536,
+      "candidate_or_guard_edited": false,
+      "failure_code": "frontmatter_file_too_large",
+      "file_bytes": 67460,
+      "guard": "len(raw) > 64 * 1024",
+      "kind": "source-branch inspection; not an approval receipt",
+      "no_network_provisioning": true,
+      "pyyaml_cached_version": "6.0.2",
+      "validator_source": "/Users/yoshiki/.codex/skills/skill-governance/scripts/governance.py:4343"
+    },
+    "exit_code": 2,
+    "result": {
+      "command": "validate-frontmatter",
+      "status": "blocked"
+    },
+    "stderr": "WARN `--no-project` was provided, but no project was found\n",
+    "stdout_if_not_json": null
+  },
+  "observed_command": [
+    "/opt/homebrew/bin/uv",
+    "run",
+    "--offline",
+    "--no-project",
+    "--python",
+    "3.13",
+    "--with",
+    "pyyaml==6.0.2",
+    "python",
+    "/Users/yoshiki/.codex/skills/skill-governance/scripts/governance.py",
+    "validate-frontmatter",
+    "/Users/yoshiki/.local/share/skill-governance/quarantine/hallmark/13ac0ec7e148655948100b6396439e481361d690/hallmark",
+    "--target",
+    "common",
+    "--json"
+  ],
+  "pyyaml_cached_version": "6.0.2",
+  "schema": "hallmark-frontmatter-quarantine-stage-receipt-v1",
+  "source_skill_bytes": 67460,
+  "source_skill_sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577",
+  "status": "blocked",
+  "surface": {
+    "kind": "quarantine",
+    "revision": "13ac0ec7e148655948100b6396439e481361d690",
+    "skill_name": "hallmark",
+    "source_id": "hallmark"
+  },
+  "target": "common",
+  "validator": "governance.py validate-frontmatter"
+}

@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "kind": "value",
+  "collection_id": "diagram-design-html-2026-08",
+  "generation": 3,
+  "subject_sha256": "e0764360aaaddd0bcb7700c63da2c3abbfdce9fed0c73776cd4ea6523d5b5253",
+  "status": "draft-not-installed",
+  "representative_prompts": [
+    "HTML計画書へ依存図を埋め込みたい。以下はテスト用に与える事実です: plan→renderer、parser→renderer、renderer→snapshot、source→snapshot。各矢印の向きと共有先を保持し、これ以外の線や実装事実を足さずSVGを作ってください。",
+    "受付→検証→保存の処理を図にしてください。検証失敗はエラー表示へ進みます。受付とエラー表示は利用者側、検証と保存はサービス側です。与えた3つの接続だけを示すSVGを作ってください。",
+    "計画書で「変更前: 毎回3画面を開く」「変更後: 同じ1画面を更新する」の差を短く見せたい。図が本当に必要か判断し、最小の表現を選んでください。",
+    "フォームのラベルと入力欄の余白を整えたい。どのSkillの仕事か判断してください。依存図や処理図は求めていません。",
+    "ロードマップのTask 2を完了に変更し、進捗を更新してください。Diagram Designで実行すべきか判断してください。",
+    "ブラウザ→API→保存層の構造図をSVGで作ってください。ブラウザとAPIの間だけがtrust boundaryです。APIの内部構造は不明です。与えた3 componentと2接続だけを描き、不明な構造を補わないでください。"
+  ],
+  "baseline": {
+    "loaded_files": [
+      "/Users/yoshiki/.codex/skills/diagram-design/SKILL.md"
+    ],
+    "executed": false,
+    "possible_at_entry": [
+      "visualizing-workがstatic editorial SVG sidecarを選び、reader・question・evidence・confidence・omitted scopeが既知で、spatial groupingが認知負荷を下げる小さなcomparison、timeline、causal、ownership、concept view。"
+    ],
+    "excluded_at_entry": [
+      "visualizing-workの選択なしの直接実行",
+      "dependency graphのようなlayered technical map",
+      "process/canonical flow",
+      "Roadmap、canonical state、task order、progress、session selection",
+      "viewer integration"
+    ],
+    "case_mapping_without_execution": {
+      "dependency": "入口の除外境界（layered technical map）に該当",
+      "process": "入口の除外境界（canonical flow）に該当",
+      "small_comparison": "条件付きで可能だが、simple comparisonはspatial groupingの価値が不足し表へ戻る",
+      "spacing": "入口の対象外",
+      "progress": "Roadmap/progressの除外境界に該当",
+      "structure": "入口の除外境界（layered technical map）に該当"
+    },
+    "success_rate": "not measured; baseline was read-only and cases were not executed"
+  },
+  "candidate": {
+    "stage_tree_sha256": "20a9fdc4e0cc85fddbcf655e7efa35b0fef28ae608e1492ba60c264e3f0af569",
+    "evaluation": {
+      "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-value-results.json",
+      "sha256": "95af482bf0ab8717a01f3383de23f7e05c03f30f8200c2c75472c95754501b0b"
+    },
+    "direct_verification": {
+      "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-value-direct-verification.json",
+      "sha256": "eb81b085699a7546d2a045efd054c4ff769263c332db7e8e5b8dd9e04052632b"
+    },
+    "html_contract": {
+      "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-html-contract.json",
+      "sha256": "cac60c7281f0aee8c0db76aa7bba2da29dcab1782eafed2697050849d75a510a"
+    },
+    "measured_entry_bytes": 5456,
+    "context_tokens_measured": null
+  },
+  "trial_count": 6,
+  "pass_at_1": 1.0,
+  "trigger_precision": 1.0,
+  "trigger_recall": 1.0,
+  "outcome_rubric": {
+    "scope": "Fixed six-case first-response routing and supplied-graph fidelity, not full HTML authoring/model effectiveness",
+    "positive_cases": 3,
+    "negative_cases": 3,
+    "tp": 3,
+    "tn": 3,
+    "fp": 0,
+    "fn": 0,
+    "pass": "Dependency/process/structure SVG preserves exact supplied nodes, edges, boundary and unknown; one-item comparison uses table; spacing/progress excluded",
+    "unmeasured": [
+      "baseline success rate",
+      "general model pass@1",
+      "full HTML generation value",
+      "production effectiveness",
+      "token reduction"
+    ],
+    "supplementary_stage_change": "HTML meta contract was added after SVG trials; SVG outputs unchanged and current example HTML common contract checked separately"
+  },
+  "reviewer": {
+    "type": "independent-agent-and-lead-direct-check",
+    "agent": "diagram_value_review",
+    "model": "unknown/inherited",
+    "review": {
+      "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-value-review.md",
+      "sha256": "513594a1ac02a14fc56b00df9edabccbdc8a10a66be54064ce431501530c9633"
+    }
+  },
+  "date": "2026-08-31",
+  "decision": "pass",
+  "approval_created": false,
+  "runtime_installed": false
+}

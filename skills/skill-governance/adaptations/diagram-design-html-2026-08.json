@@ -1,0 +1,60 @@
+{
+  "adaptation": "platform-adapted",
+  "adopted": [
+    "semantic patternからvisual typeを選ぶ判断",
+    "table-first deletion、dependency rank/fan-in/cycle、process lane/payload、architecture zone/boundary、comparison same-id/first-divergence",
+    "source anchor、fidelity ledger、SVG a11y、system font、self-contained HTML/SVG"
+  ],
+  "collection_id": "diagram-design-html-2026-08",
+  "excluded": [
+    "公式全212 fileのruntime複製、155 example HTML、gallery iframe、animation、export/import scripts",
+    "URL onboarding、profile永続化、global mutation、remote font、external asset、foreignObject、browser automation",
+    "Roadmap進捗、task順、session/Hub選択、canonical stateの管理"
+  ],
+  "execution": {
+    "candidate_code_execution": false,
+    "external_network_in_adaptation": false,
+    "runtime_mutation": false
+  },
+  "generation": 3,
+  "kind": "adaptation-diff",
+  "license": "MIT",
+  "local_review_document": {
+    "path": "../diagram-adaptation.md",
+    "sha256": "91caf5c2b72ff3f0de271829dbf852173df342495f79986e546432418af5b4fe"
+  },
+  "pending": {
+    "human_approval": true,
+    "promotion": true,
+    "registry_lock_binding": true,
+    "value_evaluation": true
+  },
+  "review_stage": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design",
+  "risk_tier": "L0",
+  "schema_version": 1,
+  "source_id": "diagram-design",
+  "source_manifest_reference": "manifests/upstream-file-manifest.json",
+  "source_revision": "b52a33bfeef85d43995193ee52c13b485154b7b4",
+  "status": "draft",
+  "target_manifest_reference": "manifests/stage-targets.json",
+  "target_tree_sha256": {
+    "codex": "20a9fdc4e0cc85fddbcf655e7efa35b0fef28ae608e1492ba60c264e3f0af569",
+    "claude": "20a9fdc4e0cc85fddbcf655e7efa35b0fef28ae608e1492ba60c264e3f0af569"
+  },
+  "targets": [
+    "codex",
+    "claude"
+  ],
+  "upstream_package_tree_sha": "1bf319831137412e8ab71df321b510fa561fd262",
+  "upstream_path": "skills/diagram-design/SKILL.md",
+  "output_contract": {
+    "artifact_kind": "html-diagram",
+    "registered_producer": "diagram-design-sidecar",
+    "route": "html-diagram",
+    "static_profile": "strict-self-contained",
+    "checker": "html_artifact_contract.py",
+    "html_metadata_only_delta": true,
+    "svg_files_unchanged": 10,
+    "evidence": "task:260831_html-runtime-adoption/diagram-eval-html-contract.json"
+  }
+}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="artifact-kind" content="html-diagram">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'none'; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Process: inspect, build, verify</title>
+<style>
+:root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", system-ui, sans-serif; color: #252321; background: #f6f4ef; }
+body { max-width: 840px; margin: 0 auto; padding: 24px; background: #f6f4ef; }
+h1 { font-size: 22px; margin: 0 0 8px; }
+.note { color: #697079; font-size: 14px; margin: 0 0 16px; }
+svg { display: block; width: 100%; height: auto; }
+.fallback { border-top: 1px solid #d4d0c8; margin-top: 16px; padding-top: 12px; font-size: 14px; }
+.fallback code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+</style>
+</head>
+<body>
+<main>
+<h1>Process: inspect, build, verify</h1>
+<p class="note">静的 fixture。SVG が図の正本で、下の要約は図を読めない場合の fallback です。</p>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" role="img" aria-labelledby="process-title process-desc">
+  <title id="process-title">Process: inspect, build, verify</title>
+  <desc id="process-desc">A three lane process where an author hands a brief to a builder and a checker returns evidence.</desc>
+  <style>
+    .paper{fill:#f6f4ef}.ink{fill:#252321}.muted{fill:#697079}.soft{fill:#8c9298}.rule{stroke:#d4d0c8}.lane{fill:#f0eee8;stroke:#d4d0c8}.node{fill:#fff;stroke:#252321;stroke-width:1.2}.focus{fill:#fff3eb;stroke:#b9532b;stroke-width:1.6}.text{font:600 15px -apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic','Noto Sans JP',system-ui,sans-serif}.mono{font:12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.edge{fill:none;stroke:#697079;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}.focusedge{fill:none;stroke:#b9532b;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.source{font:12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  </style>
+  <defs><marker id="process-arrow" viewBox="0 0 8 6" refX="7" refY="3" markerWidth="8" markerHeight="6" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#697079"/></marker><marker id="process-focus-arrow" viewBox="0 0 8 6" refX="7" refY="3" markerWidth="8" markerHeight="6" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#b9532b"/></marker></defs>
+  <rect class="paper" x="0" y="0" width="760" height="420"/>
+  <text class="text ink" x="40" y="36">Process / 担当と handoff</text>
+  <g data-lanes="true"><rect class="lane" x="40" y="68" width="680" height="82" rx="4"/><rect class="lane" x="40" y="160" width="680" height="82" rx="4"/><rect class="lane" x="40" y="252" width="680" height="82" rx="4"/><text class="mono muted" x="62" y="114">仕様</text><text class="mono muted" x="62" y="206">実装</text><text class="mono muted" x="62" y="298">確認</text></g>
+  <g data-edges="true"><path class="edge" data-from="brief" data-to="build" data-source="demo:process#L1" marker-end="url(#process-arrow)" d="M250,109 H300 Q308,109 308,117 V188"/><path class="focusedge" data-from="build" data-to="verify" data-source="demo:process#L2" marker-end="url(#process-focus-arrow)" d="M480,201 H530 Q538,201 538,209 V280"/><path class="edge" data-from="verify" data-to="result" data-source="demo:process#L3" marker-end="url(#process-arrow)" d="M650,280 V352 H620"/></g>
+  <g data-nodes="true"><g data-node-id="brief" data-source="demo:process#L1"><rect class="node" x="110" y="84" width="140" height="50" rx="6"/><text class="text ink" x="180" y="108" text-anchor="middle">Source を読む</text><text class="mono muted" x="180" y="124" text-anchor="middle">notes → brief</text></g><g data-node-id="build" data-source="demo:process#L2"><rect class="node" x="340" y="176" width="140" height="50" rx="6"/><text class="text ink" x="410" y="200" text-anchor="middle">実装する</text><text class="mono muted" x="410" y="216" text-anchor="middle">brief → code</text></g><g data-node-id="verify" data-source="demo:process#L3"><rect class="focus" x="580" y="268" width="140" height="50" rx="6"/><text class="text ink" x="650" y="292" text-anchor="middle">確認する</text><text class="mono muted" x="650" y="308" text-anchor="middle">code → evidence</text></g><g data-node-id="result" data-source="demo:process#L4"><rect class="node" x="480" y="352" width="140" height="44" rx="6"/><text class="text ink" x="550" y="379" text-anchor="middle">結果</text></g></g>
+  <text class="source muted" x="40" y="392">デモデータ。lane は担当、column は順序を示す。</text>
+</svg>
+
+<section class="fallback" aria-label="テキスト fallback">
+<strong>source</strong>: <code>demo fixture</code>（実プロジェクトの事実、効果、採用状態を示さない）<br>
+<strong>読み方</strong>: 関係・順序・境界・Before / After の対応を文字でも確認できます。
+</section>
+</main>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "completeness": {
+    "comparison_artifact": {
+      "path": "manifests/archive-tree-comparison.json",
+      "sha256": "f6134b4e3f7423557655b13a499e68ca6c8317fd67b882b826f4cd13b55a5aed"
+    },
+    "package_bytes": 17787446,
+    "package_file_count": 286,
+    "package_manifest_sha256": "b071732391c563cf5566be67e811866929e7cc8078b1b893416b86f5312f062f",
+    "reason": "All 286 fixed-commit tracked files matched the trusted local Git archive by path, byte size, and Git blob SHA-1. Archive mode normalization is documented. The 107-file canonical Skill subtree remains a separate candidate surface.",
+    "status": "verified"
+  },
+  "entry": {
+    "archive_scope": "trusted local git archive of the fixed repository snapshot; no remote archive fetched in this draft",
+    "catalog_sha256": "3194fdd347fb7e4aa961b37690468227863f2c1291f70a14b43ec4a18fb32453",
+    "complete": true,
+    "github": "Nutlope/hallmark",
+    "name_extracted_count": 1,
+    "revision": "13ac0ec7e148655948100b6396439e481361d690",
+    "skill_count": 1,
+    "skills": [
+      {
+        "blob_sha": "645221da63743de870501760a48694acdf7aef10",
+        "license_paths": [
+          "LICENSE"
+        ],
+        "name": "hallmark",
+        "package_tree_sha": "747c924c4767b4d5fa6f1c59985c87a21c918334",
+        "path": "skills/hallmark/SKILL.md",
+        "role": "catalog-surface"
+      }
+    ],
+    "tree_archive_blob_paths_match": true,
+    "tree_sha": "02ebcc67f58295654c073cfb74a20a9a86db1f8f",
+    "tree_truncated": false
+  },
+  "schema": "catalog-source-entry-draft-v1",
+  "source_id": "hallmark"
+}

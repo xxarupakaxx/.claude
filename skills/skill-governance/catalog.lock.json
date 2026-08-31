@@ -2,7 +2,7 @@
   "generated_at": "2026-08-26T00:00:00+09:00",
   "generation": 3,
   "method": "pinned-github-commit-tree-plus-package-tree-v2",
-  "registry_sha256": "4927426d978c64b406cdb1513f49a1da596d2d95965a8f5100c9d84ca5acf007",
+  "registry_sha256": "e68f5cea7b7eb226e2a42332f158074e92495786b4f99fbcc00d2a107e4bb4b0",
   "schema_version": 1,
   "sources": {
     "addyosmani-agent-skills": {
@@ -676,6 +676,29 @@
       "tree_sha": "8187ae5308a2992ba4dfb74b65ac7cb4b8c6e6ec",
       "tree_truncated": false
     },
+    "diagram-design": {
+      "catalog_sha256": "f4620837133e1fcc9702a864257b126c53df3094c83e9c3bc6ce60508488521d",
+      "complete": true,
+      "github": "cathrynlavery/diagram-design",
+      "name_extracted_count": 1,
+      "revision": "b52a33bfeef85d43995193ee52c13b485154b7b4",
+      "skill_count": 1,
+      "skills": [
+        {
+          "blob_sha": "33b3671eaa4c78711952ead2e1c8cc5b574122f5",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "diagram-design",
+          "package_tree_sha": "1bf319831137412e8ab71df321b510fa561fd262",
+          "path": "skills/diagram-design/SKILL.md",
+          "role": "catalog-surface"
+        }
+      ],
+      "tree_archive_blob_paths_match": true,
+      "tree_sha": "b5d1beb8406ffbe8f357d0cc969d7cb3014944b5",
+      "tree_truncated": false
+    },
     "emilkowalski-skills": {
       "catalog_sha256": "d39dc1f41fd92b90b8d131c2b0c4fae737a999a65ce084f81c20cdad9160f2a6",
       "complete": true,
@@ -748,6 +771,30 @@
       ],
       "tree_archive_blob_paths_match": true,
       "tree_sha": "aaec48e2080401badf98921d69a15b3ebee50231",
+      "tree_truncated": false
+    },
+    "hallmark": {
+      "archive_scope": "trusted local git archive of the fixed repository snapshot; no remote archive fetched in this draft",
+      "catalog_sha256": "3194fdd347fb7e4aa961b37690468227863f2c1291f70a14b43ec4a18fb32453",
+      "complete": true,
+      "github": "Nutlope/hallmark",
+      "name_extracted_count": 1,
+      "revision": "13ac0ec7e148655948100b6396439e481361d690",
+      "skill_count": 1,
+      "skills": [
+        {
+          "blob_sha": "645221da63743de870501760a48694acdf7aef10",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "hallmark",
+          "package_tree_sha": "747c924c4767b4d5fa6f1c59985c87a21c918334",
+          "path": "skills/hallmark/SKILL.md",
+          "role": "catalog-surface"
+        }
+      ],
+      "tree_archive_blob_paths_match": true,
+      "tree_sha": "02ebcc67f58295654c073cfb74a20a9a86db1f8f",
       "tree_truncated": false
     },
     "huggingface-skills": {
@@ -1022,6 +1069,90 @@
       ],
       "tree_archive_blob_paths_match": true,
       "tree_sha": "9ee14e74a1683fc9b434fabca2a83096a3ded13d",
+      "tree_truncated": false
+    },
+    "mathbullet-skills": {
+      "catalog_sha256": "e15a4cbd89575cfa4f5b4a0f3a0762630d71a24b1a0b64cab58a8517708f17ab",
+      "complete": true,
+      "github": "mathbullet/skills",
+      "mode": "selective-adoption",
+      "name_extracted_count": 7,
+      "revision": "fe96c626b39abba47fad2d4a4ef738e8a27602b1",
+      "skill_count": 7,
+      "skills": [
+        {
+          "blob_sha": "2ef1b7de77003cb747af7b4d0c789ba1a98afd1d",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "documenting-with-sources",
+          "package_tree_sha": "b46d894536be88e2b274bc3a46a817e155b3a685",
+          "path": "plugins/documenting-with-sources/skills/documenting-with-sources/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "3090a2242d646c971871ce7450d4d5d318d1a8d8",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "explain",
+          "package_tree_sha": "c84440e139f54479c8bf942450bbc0e52955974c",
+          "path": "plugins/explain/skills/explain/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "b47e4185ca36e8c7617d7ec33b946f666a7af373",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "html",
+          "package_tree_sha": "2d881a0a611f610d977c1c09892dd27806d118d9",
+          "path": "plugins/html/skills/html/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "27bc9383af231f70be862f8a0dd28e19bee86e56",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "ja-text-communication",
+          "package_tree_sha": "03f226b6470f91d0f0a2a7b43d4acecd260dd8ff",
+          "path": "plugins/ja-text-communication/skills/ja-text-communication/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "a4567de4baeadd601261661b3b2239a7314c264d",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "paper-details",
+          "package_tree_sha": "603a554aa9ee471baff1b5264b399c6a7ff60a88",
+          "path": "plugins/paper-details/skills/paper-details/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "075242d683b78b5d3280910d875776d07caf8953",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "survey",
+          "package_tree_sha": "b56c676a7f777dbfe7d48161ee49b3ebd272ba4b",
+          "path": "plugins/survey/skills/survey/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "8d90fd177af310a59de01f424253c852a5dc3c55",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "writing-quotation",
+          "package_tree_sha": "e83e8ec4bdf82d991d6d1c88b973abc177aae907",
+          "path": "plugins/writing-quotation/skills/writing-quotation/SKILL.md",
+          "role": "catalog-surface"
+        }
+      ],
+      "tree_archive_blob_paths_match": true,
+      "tree_sha": "3c725d1f90c240cfb3839e4e75b31d8fbc34c204",
       "tree_truncated": false
     },
     "mattpocock-skills": {
@@ -7671,99 +7802,15 @@
       "tree_archive_blob_paths_match": true,
       "tree_sha": "d3fb223748a9d674ec4e2c01dfd40f9a20ccc6a0",
       "tree_truncated": false
-    },
-    "mathbullet-skills": {
-      "catalog_sha256": "e15a4cbd89575cfa4f5b4a0f3a0762630d71a24b1a0b64cab58a8517708f17ab",
-      "complete": true,
-      "github": "mathbullet/skills",
-      "mode": "selective-adoption",
-      "name_extracted_count": 7,
-      "revision": "fe96c626b39abba47fad2d4a4ef738e8a27602b1",
-      "skill_count": 7,
-      "skills": [
-        {
-          "blob_sha": "2ef1b7de77003cb747af7b4d0c789ba1a98afd1d",
-          "license_paths": [
-            "LICENSE"
-          ],
-          "name": "documenting-with-sources",
-          "package_tree_sha": "b46d894536be88e2b274bc3a46a817e155b3a685",
-          "path": "plugins/documenting-with-sources/skills/documenting-with-sources/SKILL.md",
-          "role": "catalog-surface"
-        },
-        {
-          "blob_sha": "3090a2242d646c971871ce7450d4d5d318d1a8d8",
-          "license_paths": [
-            "LICENSE"
-          ],
-          "name": "explain",
-          "package_tree_sha": "c84440e139f54479c8bf942450bbc0e52955974c",
-          "path": "plugins/explain/skills/explain/SKILL.md",
-          "role": "catalog-surface"
-        },
-        {
-          "blob_sha": "b47e4185ca36e8c7617d7ec33b946f666a7af373",
-          "license_paths": [
-            "LICENSE"
-          ],
-          "name": "html",
-          "package_tree_sha": "2d881a0a611f610d977c1c09892dd27806d118d9",
-          "path": "plugins/html/skills/html/SKILL.md",
-          "role": "catalog-surface"
-        },
-        {
-          "blob_sha": "27bc9383af231f70be862f8a0dd28e19bee86e56",
-          "license_paths": [
-            "LICENSE"
-          ],
-          "name": "ja-text-communication",
-          "package_tree_sha": "03f226b6470f91d0f0a2a7b43d4acecd260dd8ff",
-          "path": "plugins/ja-text-communication/skills/ja-text-communication/SKILL.md",
-          "role": "catalog-surface"
-        },
-        {
-          "blob_sha": "a4567de4baeadd601261661b3b2239a7314c264d",
-          "license_paths": [
-            "LICENSE"
-          ],
-          "name": "paper-details",
-          "package_tree_sha": "603a554aa9ee471baff1b5264b399c6a7ff60a88",
-          "path": "plugins/paper-details/skills/paper-details/SKILL.md",
-          "role": "catalog-surface"
-        },
-        {
-          "blob_sha": "075242d683b78b5d3280910d875776d07caf8953",
-          "license_paths": [
-            "LICENSE"
-          ],
-          "name": "survey",
-          "package_tree_sha": "b56c676a7f777dbfe7d48161ee49b3ebd272ba4b",
-          "path": "plugins/survey/skills/survey/SKILL.md",
-          "role": "catalog-surface"
-        },
-        {
-          "blob_sha": "8d90fd177af310a59de01f424253c852a5dc3c55",
-          "license_paths": [
-            "LICENSE"
-          ],
-          "name": "writing-quotation",
-          "package_tree_sha": "e83e8ec4bdf82d991d6d1c88b973abc177aae907",
-          "path": "plugins/writing-quotation/skills/writing-quotation/SKILL.md",
-          "role": "catalog-surface"
-        }
-      ],
-      "tree_archive_blob_paths_match": true,
-      "tree_sha": "3c725d1f90c240cfb3839e4e75b31d8fbc34c204",
-      "tree_truncated": false
     }
   },
   "summary": {
-    "complete_source_count": 13,
+    "complete_source_count": 15,
     "cross_source_name_collision_groups": 25,
     "license_evidence_missing_count": 415,
-    "name_extracted_count": 836,
-    "skill_file_count": 840,
-    "source_count": 13,
-    "unique_extracted_name_count": 770
+    "name_extracted_count": 838,
+    "skill_file_count": 842,
+    "source_count": 15,
+    "unique_extracted_name_count": 772
   }
 }

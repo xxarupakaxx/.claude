@@ -1,0 +1,11 @@
+{
+  "catalog_required": true,
+  "default_branch": "main",
+  "github": "Nutlope/hallmark",
+  "id": "hallmark",
+  "mode": "selective-adoption",
+  "observed_at": "2026-08-31",
+  "observed_revision": "13ac0ec7e148655948100b6396439e481361d690",
+  "origin": "community-maintainer",
+  "update_policy": "notify-only"
+}

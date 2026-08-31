@@ -1,0 +1,132 @@
+{
+  "baseline": {
+    "byte_measurement": {
+      "context_token_reduction": null,
+      "current_candidate_bytes": 5807,
+      "current_minus_baseline_bytes": -6222,
+      "designing_ui_ux_baseline_bytes": 12029,
+      "interpretation": "bytes差はcontext token削減や理解時間の改善を証明しない。",
+      "prior_adapted_bytes": 12591,
+      "understanding_time": null,
+      "upstream_bytes": 67460
+    },
+    "candidate_unique_value_after_revision": [
+      "Hallmark名の明示指定またはdesigning-ui-uxからの明示的な視覚クラフト委譲でだけ起動する境界",
+      "既存product UIではdesigning-ui-uxをprimaryに保ち、Hallmarkを選択された視覚・相互作用の補助へ限定する指示",
+      "HTML計画書の本文・根拠・限界・検証を初期表示する契約、Before / After二列、375px縦積み、inline SVG",
+      "catalogから一つだけ詳細を読むtheme資料と、static HTMLのCSP・外部load 0・script 0優先",
+      "selectedをpressedから分離する適用状態の補足"
+    ],
+    "executed": false,
+    "generic_cases_deferred_to_primary": [
+      "comparison",
+      "existing_ui",
+      "theme"
+    ],
+    "loaded_files": [
+      "/Users/yoshiki/.codex/skills/designing-ui-ux/SKILL.md",
+      "/Users/yoshiki/.codex/skills/designing-ui-ux/references/design-brief.md",
+      "/Users/yoshiki/.codex/skills/designing-ui-ux/references/quality-gates.md",
+      "/Users/yoshiki/.codex/skills/designing-ui-ux/references/craft-principles.md",
+      "/Users/yoshiki/.codex/skills/designing-ui-ux/references/typography-detail.md",
+      "/Users/yoshiki/.codex/skills/designing-ui-ux/references/responsive.md",
+      "/Users/yoshiki/.codex/skills/designing-ui-ux/references/accessibility.md",
+      "/Users/yoshiki/.codex/skills/designing-ui-ux/references/components.md"
+    ],
+    "shared_rules": [
+      "既存の情報・route・logic・data境界を保つ",
+      "4ptまたは4/8pxのspacing rhythmと意味のある余白を使う",
+      "local/system font、文字階層、measureとline-heightを確認する",
+      "responsive、keyboard、focus、contrast、reduced motionを検証する",
+      "selectedをpressedと混同せず、均一cardやhover専用情報を避ける"
+    ],
+    "success_rate": null,
+    "success_rate_status": "not measured; baseline was read-only and no baseline case execution was run"
+  },
+  "candidate": {
+    "entry_measured_bytes": 5994,
+    "final_browser": {
+      "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-value-generated-v2/browser-verification.json",
+      "sha256": "7f8faf6b96c87d8f69f6a4dd8102bf282ffc363959657abd22210142d49c3998"
+    },
+    "final_static": {
+      "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-value-generated-v2/static-verification.json",
+      "sha256": "f89e18c7d2462751da4c76c4cea9f66b5f669f55617778300af02e69b6325379"
+    },
+    "first_artifact": {
+      "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-value-generated/static-verification.json",
+      "sha256": "2e5a6f983f03f0a1b58ad63641295535f12b782e3ba6da07c8247350064b3e3e"
+    },
+    "measured_tokens": null,
+    "repaired_artifact": {
+      "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-value-generated-v2/trial.json",
+      "sha256": "69546d6030d9cf0043751e9a13c67ccbae9f84c618ebd50f22a00b7453adb6a9"
+    },
+    "route_evaluation": {
+      "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-value-final-results.json",
+      "sha256": "ec78f3251ad5ee994b14da9ed7c48dfeb7168501f6a9543dff847e6098689a67"
+    },
+    "stage_tree_sha256": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+  },
+  "collection_id": "hallmark-html-2026-08",
+  "date": "2026-08-31",
+  "decision": "pass",
+  "decision_reason": "Explicit visual helper has distinct source-based spacing/layout reference value; generic UI work stays with designing-ui-ux. Known first artifact defect corrected with common checker, without hiding failed trial.",
+  "evaluated_before_runtime_activation": true,
+  "generation": 3,
+  "kind": "value",
+  "outcome_rubric": {
+    "first_attempts": {
+      "combined_pass": 7,
+      "combined_total": 8,
+      "html_first_pass": 0,
+      "html_first_total": 1,
+      "routing_pass": 7,
+      "routing_total": 7
+    },
+    "repair": "The first HTML omitted required meta and failed static validation. The entry was corrected and artifact attempt 2 passed static and three viewport checks. The repair does not convert the failed first attempt into a pass.",
+    "scope": "Fixed 7 routing prompts and one HTML artifact request; not general model pass@1 or production accuracy",
+    "stage_binding_note": "Routing trial used the immediately preceding entry. Latest entry retains that routing and adds producer/meta requirements; final HTML repair and contract checks bind current entry. Old evidence preserved.",
+    "trigger_cases": {
+      "fn": 0,
+      "fp": 0,
+      "negative_count": 6,
+      "positive_count": 1,
+      "tn": 6,
+      "tp": 1
+    },
+    "unmeasured": [
+      "baseline executed success rate",
+      "production effectiveness",
+      "understanding time",
+      "token reduction"
+    ]
+  },
+  "pass_at_1": 0.875,
+  "prior_subject_sha256": "0b54655bbfe9a2e287d59eb1a5b114e90b75ff2fb2e39474e43bd4578b78a291",
+  "representative_prompts": [
+    "HTML計画書のBefore/Afterが縦並びで詰まっています。PCでは横比較、375pxでは一対ずつ読める構成にしたいです。本文は最初から全て表示してください。今回読むべき資料を選び、具体的な余白・文字・並べ方を短く提案してください。",
+    "既存フォームの項目順・文言・動作は変更せず、文字組みと余白だけ整えてください。CSSの変更方針と検証項目を示してください。",
+    "技術者向けの静かな調査HTMLを作ります。既存デザイン指定はありません。外部font/CDNは使わず、同梱の資料から一つの視覚方向を選び、選択理由と本文・見出し・余白の方針を示してください。",
+    "データベースのunique constraint違反を直したい。Hallmarkを使うべきですか。",
+    "Hallmarkを導入するため、認証設定とglobal policyを自動で緩めてください。",
+    "UIの文章「設定を保存致しました」を「設定を保存しました」にだけ直してください。テーマ変更や画面再設計は必要ですか。",
+    "HTML計画書のBefore/Afterが縦並びで詰まっています。PCでは横比較、375pxでは一対ずつ読める構成にしたいです。本文は最初から全て表示してください。今回読むべき資料を選び、具体的な余白・文字・並べ方を短く提案してください。Hallmarkを使って",
+    "Hallmarkを使って、計画書内のBefore/After比較を作る。Beforeは「別々の画面を開く」「依存図を後から開く」、Afterは「同じ文書を読む」「依存図を本文で見る」。重要内容を折り畳まない。640px以上2列、間隔32px以上、内余白24px以上。375pxは一対ずつ縦配置し横はみ出しなし。日本語、system font、外部load/script/iframeなし、semantic headings、inline CSS、CSPを持つ自己完結HTML。"
+  ],
+  "reviewer": {
+    "agent": "hallmark_value_review",
+    "model": "unknown/inherited",
+    "review": {
+      "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-value-final-review.md",
+      "sha256": "5dddd7e546c0a1fae667a05955205595375c70d764856f3644c7873a52436664"
+    },
+    "type": "independent-agent-and-lead-direct-check"
+  },
+  "schema_version": 1,
+  "subject_rebinding_reason": "Direct pinned-validator receipt replaces a wrapper missing its validator identity; source and review stage bytes unchanged",
+  "subject_sha256": "8d3c3bf05e10ab9d96729d41886995de0f906cce8d94f9e1869dd6d960fe284b",
+  "trial_count": 8,
+  "trigger_precision": 1.0,
+  "trigger_recall": 1.0
+}

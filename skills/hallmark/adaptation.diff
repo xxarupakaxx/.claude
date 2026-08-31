@@ -1,0 +1,44 @@
+Hallmark adaptation diff ledger
+===============================
+
+Base: Nutlope/hallmark @ 13ac0ec7e148655948100b6396439e481361d690
+Original entry: 67,460 bytes, sha256 59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577
+Local entry: this review target's SKILL.md
+Intent: preserve useful design guidance while making the review target small, offline, and inspectable.
+
+ADDED
+- Japanese entry with four explicit routes: plan-document, audit, redesign, study; Hallmark activates only by explicit naming or an explicit visual-craft delegation from designing-ui-ux.
+- A reader-first plan-document contract: initial display, 32px comparison gap, 24px panel padding, 375px stacking, inline SVG, implementation detail, evidence, and unimplemented labels.
+- Concrete rules for a 4pt spacing scale, Japanese type measure, semantic color, nine applicable interaction states including selected, long paths, keyboard focus, reduced motion, and self-contained CSP delivery.
+- Conditional reference map and five small theme files so an agent can load only the chosen theme and structure.
+
+RETAINED
+- Read existing fonts, palette, motion, spacing, framework, and route before visual changes.
+- Choose a named structure and a coherent visual fingerprint.
+- Use semantic tokens, deliberate spacing, typography hierarchy, accessible focus, responsive checks, and anti-pattern review.
+- Keep audit read-only, preserve existing implementation boundaries during redesign, and separate study from implementation.
+- Use step sequence, split diptych, map diagram, and inline heading as concrete options rather than a generic card template.
+- Keep designing-ui-ux primary for product UI information architecture, task flow, usability, and accessibility; Hallmark is a selected visual-craft supplement and does not create a second UI entry.
+
+CHANGED FOR THIS LOCAL CONTRACT
+- The upstream full entry is retained as source-only evidence; no silent byte truncation is used to meet the 64 KiB validator limit.
+- Original site token links, docs recipe links, demo links, and directory-only links are replaced with concrete local references or explicit source-only classifications.
+- Remote fonts, CDN syntax highlighting, analytics, live API fetch, storage, site server, package setup, and executable runtime examples are not adopted.
+- Preflight and log are no longer implicit writes; only named task-local evidence may be written.
+- Theme loading changes from eager all-theme guidance to catalog-first plus one selected theme file.
+- Upstream default title-scale and decorative directions are constrained for Japanese plan documents so the first viewport is concise and the implementation remains readable.
+- The active entry is 5,807 bytes / 52 lines. This is a reduction from the prior adapted entry (12,591 bytes) and the pinned upstream entry (67,460 bytes); the designing-ui-ux baseline is 12,029 bytes and any context or comprehension reduction remains unmeasured.
+- The eight general states are supplemented with a separate selected state when tabs, radio controls, toggles, or other selection semantics exist; selected is not a synonym for pressed.
+- HTML output is handed to the registered creating-html-documents producer and shared html_artifact_contract; both data-artifact-kind and meta name="artifact-kind" content="html-document" are required. Hallmark does not duplicate the producer or checker.
+- The original artifact trial remains source evidence and is not repaired: its first static check correctly failed with artifact-kind-missing because it supplied only the data attribute.
+- Existing route, logic, data, auth, global configuration, and production file deletion remain outside this visual adaptation.
+
+REMOVED FROM THE ACTIVE CONTEXT
+- Upstream website demo and screenshot/example assets.
+- External font URLs and external image/CSS/runtime dependencies.
+- Any instruction that treats a remote page, package, or project profile as an executable authority.
+- Any claim that a visual proposal or scan is an implementation result.
+- Any automatic trigger for a generic UI, HTML, responsive, task-flow, or accessibility request without explicit Hallmark naming or visual-craft delegation.
+
+REVIEW NOTE
+The original source and package are still available at the fixed quarantine path in SOURCE.md. This ledger describes the local target only; it is not a claim that upstream itself has been changed.

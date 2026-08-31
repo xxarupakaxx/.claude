@@ -1,0 +1,27 @@
+{
+  "claim_scope": "Three single-attempt SVG artifacts; explicit fixture facts, source anchors, and inert SVG structure only",
+  "source_sha256": "9a7e2e79dfa7ef6eb25318a3f0cb4a76ba6a2ac7ca886282d955efc56a27a8b4",
+  "results": [
+    {
+      "case": "dependency",
+      "nodes": 5,
+      "edges": 4,
+      "sha256": "b864fe33021dd079cdaaa6dd3da26b5a1cf1711e6ea3ab3c52b4dcc9349042d7",
+      "status": "PASS"
+    },
+    {
+      "case": "process",
+      "nodes": 4,
+      "edges": 3,
+      "sha256": "62d21b75f6c80d20b5b2da9ba6ccff8f4bd7d726742c396e44ccd268735ee709",
+      "status": "PASS"
+    },
+    {
+      "case": "structure",
+      "nodes": 3,
+      "edges": 2,
+      "sha256": "b839cf7835edc41b59afd6a9d4c36a9c181cd5ccbc5db063615f0c6e39bdbc06",
+      "status": "PASS"
+    }
+  ]
+}

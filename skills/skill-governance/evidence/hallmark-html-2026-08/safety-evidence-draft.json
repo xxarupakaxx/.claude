@@ -1,0 +1,178 @@
+{
+  "blocking_codes": [
+    {
+      "code": "markdown_path_escape",
+      "count": 13,
+      "resolution": "adaptation ledger maps each finding to target changes; raw source stays blocked",
+      "surface": "raw quarantine inspection"
+    },
+    {
+      "code": "broken_relative_reference",
+      "count": 3,
+      "resolution": "adaptation ledger maps each finding to target changes; raw source stays blocked",
+      "surface": "raw quarantine inspection"
+    },
+    {
+      "code": "governance_degraded",
+      "count": 1,
+      "resolution": "lead must complete the existing governance gate before active mutation",
+      "surface": "active governance audit (parity PASS)"
+    }
+  ],
+  "blocking_conditions": [
+    "Raw Skill inspect remains BLOCKED by 16 candidate-relative reference findings: 13 markdown_path_escape and 3 broken_relative_reference. The adapted target ledger resolves these exact findings without changing the raw source.",
+    "The common frontmatter adapter remains BLOCKED by frontmatter_file_too_large (67,460 bytes > 65,536); the quarantine-only target=upstream validation is recorded separately as validated with pinned PyYAML 6.0.2 and does not waive the common boundary.",
+    "The active governance audit is DEGRADED (parity passes), so runtime mutation and promotion remain stopped even though the isolated prototype lock-plan measurement has zero blocking findings.",
+    "The measured lock-plan subject is provisional. No safety, value, human-approval, or promotion receipt is created by this draft."
+  ],
+  "candidate_execution": false,
+  "collection_id": "hallmark-html-2026-08",
+  "decision": "not-created",
+  "generation": 3,
+  "historical_failures": [
+    {
+      "code": "artifact-kind-missing",
+      "count": 1,
+      "resolution": "retain as historical failure; use the parent-owned repaired v2 evidence",
+      "surface": "original value artifact static contract"
+    }
+  ],
+  "human_approval_receipt": null,
+  "not_a_receipt": true,
+  "parent_value_draft": {
+    "not_human_approval": true,
+    "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-value-receipt-draft.json",
+    "sha256": "6b52f9aaf4e724d719a3844f2b5246a23e08b392b299a84a1ebbe548ace53b7a",
+    "status": "draft-not-installed",
+    "v1_artifact": "historical FAIL retained",
+    "v2_artifact": "parent static and browser PASS"
+  },
+  "promotion_receipt": null,
+  "quarantine_mutation": false,
+  "registry_mutation": false,
+  "runtime_mutation": false,
+  "schema": "hallmark-safety-subject-draft-v1",
+  "source_id": "hallmark",
+  "status": "pending",
+  "subject_attempt": {
+    "build_lock_plan": {
+      "advisory_code_counts": {
+        "external_url": 83,
+        "target_frontmatter_requires_full_validation": 4,
+        "unknown_frontmatter_key": 1
+      },
+      "advisory_count": 88,
+      "blocking_count": 0
+    },
+    "common_frontmatter_observation": {
+      "adapter_limit_bytes": 65536,
+      "code": "frontmatter_file_too_large",
+      "file_bytes": 67460,
+      "status": "blocked-on-common-surface-only"
+    },
+    "final_safety_subject": false,
+    "measured_sha256": "62b401259ecbef8cf3e7abde2cb2f777b258b30ca1fb36aa9d27157b4a00740f",
+    "measurement": "prototype build_lock_plan over temporary runtime-external registry/catalog/BASE_DIR binding",
+    "note": "The subject is no longer left null: this digest is the measured proposed lock-plan subject. Pending gates prevent treating it as a final safety or promotion subject.",
+    "receipt": {
+      "path": "receipts/prototype-build-lock-plan.json",
+      "sha256": "e293a90f9fbb0fa9a37d671328cdfdf1cdfa40bde4c88772bc141c3eb1f44d13"
+    },
+    "remaining_gate_codes": [
+      "markdown_path_escape",
+      "broken_relative_reference",
+      "governance_degraded"
+    ],
+    "status": "blocked_pending_gates"
+  },
+  "subject_inputs": {
+    "adaptation": {
+      "conceptual_path": "adaptations/hallmark-html-2026-08.json",
+      "conceptual_sha256": "34a3424aa9889a8a0e24366e10d635f9d35e42bda014a7a9161526c448d506ca",
+      "hygiene_ledger_path": "adaptations/hallmark-reference-hygiene-ledger.json",
+      "hygiene_ledger_sha256": "cc9876d48062bd060503fefd1215fbd7a3c6fb214e8efc06db31d795f186070a"
+    },
+    "archive_comparison": {
+      "path": "manifests/archive-tree-comparison.json",
+      "sha256": "f6134b4e3f7423557655b13a499e68ca6c8317fd67b882b826f4cd13b55a5aed"
+    },
+    "candidate_manifest_sha256": "22f96d791a0ef20974054b2b2d916b5400f85646601d85cee7392654f117e832",
+    "candidate_skill_sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577",
+    "candidate_tree_sha256": "cccc3c7c88ec944333f132f0565c5089029c86aa37cdb8ebf2a8a705fe5d15fe",
+    "catalog_entry": {
+      "path": "manifests/catalog-entry.json",
+      "sha256": "27ede292555e05ede71f88e4a1a06ec635c253d9f71337ae676cd36d7f8950df"
+    },
+    "frontmatter_receipts": {
+      "claude": {
+        "path": "receipts/frontmatter-claude.json",
+        "sha256": "9f47a732e692a8257eaf582cdeeeb9120ddc1822ed5ba735b8748c99a7861f75"
+      },
+      "codex": {
+        "path": "receipts/frontmatter-codex.json",
+        "sha256": "e0c6aa876ea38dc885818fff4342aed8a7445d294f8a8b7265e108a847f64869"
+      },
+      "quarantine": {
+        "path": "receipts/prototype-upstream-frontmatter.json",
+        "sha256": "d62deb41d19a0137500c2abff6b0c1929f86a72cb0f9f8e9afd4fb3059205e8a"
+      }
+    },
+    "license_evidence": {
+      "path": "manifests/license-evidence.json",
+      "sha256": "fb1ebea81ff7c56db4996a0f79a4ba2fb4d94e481b11081ab6bdf6dcb2730835"
+    },
+    "lock_plan": {
+      "advisory_code_counts": {
+        "external_url": 83,
+        "target_frontmatter_requires_full_validation": 4,
+        "unknown_frontmatter_key": 1
+      },
+      "advisory_count": 88,
+      "blocking_count": 0,
+      "candidate_manifest_sha256": "292818dbe8f9d3c07e0a0680d66e0e4d85857c7ca53374e2fd0e8e32c075fd28",
+      "lock_plan_sha256": "8bbce8e84e5fed66e62e383a2f5aa697fb68806ae6a5526c35058e60f0376069",
+      "path": "receipts/prototype-build-lock-plan.json",
+      "sha256": "e293a90f9fbb0fa9a37d671328cdfdf1cdfa40bde4c88772bc141c3eb1f44d13",
+      "subject_sha256": "62b401259ecbef8cf3e7abde2cb2f777b258b30ca1fb36aa9d27157b4a00740f",
+      "target_manifest_sha256": "09a6dcbeceeaa3f8006c3f4ca93ee39c4212eebdc05836c2719c3378d1b6477e"
+    },
+    "package_manifest_sha256": "b071732391c563cf5566be67e811866929e7cc8078b1b893416b86f5312f062f",
+    "prototype": {
+      "active_runtime_mutated": false,
+      "governance_py_sha256": "a1068f3162417030513dccb9468c499ec1709d6c4160f1399c7190fcb1a9ec96",
+      "path": "/tmp/codex-skill-review-fix-260831/skills/skill-governance/scripts/governance.py",
+      "revision": "d425eb442853503475e5be0f1f3a13e46223efdd",
+      "revision_bound": true
+    },
+    "raw_inspection": {
+      "path": "receipts/quarantine-inspection-raw.json",
+      "sha256": "fdbc9ede9689e2816b4eed0100ef918fc3301b80fabb6e6165865e76604cc964"
+    },
+    "reference_hygiene_evidence": {
+      "path": "receipts/reference-hygiene-evidence.json",
+      "sha256": "286fb9364aa7d6ef3f6f54b863d0c919c4cd654049906d927d855a4566828d99"
+    },
+    "skill_tree_sha": "747c924c4767b4d5fa6f1c59985c87a21c918334",
+    "source_revision": "13ac0ec7e148655948100b6396439e481361d690",
+    "source_tree_sha": "02ebcc67f58295654c073cfb74a20a9a86db1f8f",
+    "stage_receipt": {
+      "path": "receipts/stage-receipt.json",
+      "sha256": "3bb0a97f755eb9b7a38cd3509760eb0ae53371915d0890ff60cd27e8adf9e9ee"
+    },
+    "targets": {
+      "claude": {
+        "manifest_sha256": "fbe03dd7017158938a6563cb3c742b169f1b7aa9b533e7db71928fd19621f166",
+        "skill_sha256": "9a6fb66d6c5a843c7dcc70f984f6202665e1c2c0b0c552d23bfec4cd4ade05e8",
+        "tree_sha256": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      },
+      "codex": {
+        "manifest_sha256": "fbe03dd7017158938a6563cb3c742b169f1b7aa9b533e7db71928fd19621f166",
+        "skill_sha256": "9a6fb66d6c5a843c7dcc70f984f6202665e1c2c0b0c552d23bfec4cd4ade05e8",
+        "tree_sha256": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    }
+  },
+  "subject_sha256": "62b401259ecbef8cf3e7abde2cb2f777b258b30ca1fb36aa9d27157b4a00740f",
+  "subject_sha256_status": "measured-provisional-lock-plan-subject; not a safety receipt",
+  "value_receipt": null
+}

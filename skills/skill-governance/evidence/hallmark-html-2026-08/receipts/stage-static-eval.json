@@ -1,0 +1,235 @@
+{
+  "candidate_execution": false,
+  "collection_id": "hallmark-html-2026-08",
+  "evaluation": {
+    "candidate_execution": false,
+    "interpretation": {
+      "active_surface": "SKILL.md and references/ only",
+      "entry_size": {
+        "context_token_reduction_measured": false,
+        "current_bytes": 5994,
+        "designing_ui_ux_baseline_bytes": 12029,
+        "prior_adapted_bytes": 12591,
+        "understanding_time_measured": false,
+        "upstream_bytes": 67460
+      },
+      "external_urls_in_source_surface_are_provenance_only": true,
+      "governance_promotion": "not evaluated here; lead audit/parity and approval remain required",
+      "route_owner": "designing-ui-ux remains primary for product UI information architecture, task flow, usability, and accessibility; Hallmark is an explicitly selected visual-craft supplement",
+      "source_surface": "SOURCE.md, adaptation.diff, LICENSE, source/*, review-manifest.json",
+      "source_surface_is_not_active_context": true
+    },
+    "parity_checks": {
+      "all_target_bytes": true,
+      "file_lists": true,
+      "skill_bytes": true,
+      "tree_sha_equal": true
+    },
+    "review_collection": "hallmark-html-2026-08",
+    "schema": "hallmark-static-eval-v1",
+    "source_commit": "13ac0ec7e148655948100b6396439e481361d690",
+    "source_skill_sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577",
+    "status": "PASS",
+    "targets": {
+      "claude": {
+        "active_dangerous_matches": [],
+        "active_external_urls": [],
+        "active_instruction_files": [
+          "SKILL.md",
+          "references/anti-patterns.md",
+          "references/color.md",
+          "references/components/f4-step-sequence.md",
+          "references/components/h2-split-diptych.md",
+          "references/components/s4-inline-no-break.md",
+          "references/contract.md",
+          "references/interaction-and-states.md",
+          "references/layout-and-space.md",
+          "references/responsive.md",
+          "references/structure.md",
+          "references/study.md",
+          "references/themes/brutal.md",
+          "references/themes/catalog.md",
+          "references/themes/cobalt.md",
+          "references/themes/grid.md",
+          "references/themes/lumen.md",
+          "references/themes/plain-editorial.md",
+          "references/typography.md",
+          "references/verbs/audit.md",
+          "references/verbs/redesign.md"
+        ],
+        "active_markdown_links": [],
+        "all_regular_non_executable": true,
+        "all_utf8": true,
+        "entry_contract": {
+          "baseline_byte_comparison_is_not_context_claim": true,
+          "bytes": 5994,
+          "lines": 52,
+          "route_owner_boundary": true,
+          "selected_state_in_reference": true,
+          "within_adaptation_size_guidance": true
+        },
+        "evidence_dangerous_matches": [],
+        "evidence_external_urls": [
+          {
+            "path": "SOURCE.md",
+            "value": "https://github.com/Nutlope/hallmark"
+          },
+          {
+            "path": "SOURCE.md",
+            "value": "https://www.usehallmark.com/"
+          },
+          {
+            "path": "source/UPSTREAM-SKILL.md.txt",
+            "value": "http://`"
+          },
+          {
+            "path": "source/UPSTREAM-SKILL.md.txt",
+            "value": "https://`"
+          },
+          {
+            "path": "source/UPSTREAM-SKILL.md.txt",
+            "value": "http://`"
+          },
+          {
+            "path": "source/UPSTREAM-SKILL.md.txt",
+            "value": "https://`"
+          },
+          {
+            "path": "source/UPSTREAM-SKILL.md.txt",
+            "value": "https://example.com/"
+          }
+        ],
+        "evidence_files": [
+          "LICENSE",
+          "SOURCE.md",
+          "adaptation.diff",
+          "review-manifest.json",
+          "source/UPSTREAM-SKILL.md.txt",
+          "source/upstream-skill.json"
+        ],
+        "file_count": 27,
+        "filesystem_findings": [],
+        "frontmatter": {
+          "command": "validate-frontmatter",
+          "exit_code": 0,
+          "finding_codes": [],
+          "skill_sha256": "9a6fb66d6c5a843c7dcc70f984f6202665e1c2c0b0c552d23bfec4cd4ade05e8",
+          "status": "validated",
+          "stderr": "WARN `--no-project` was provided, but no project was found",
+          "validator": "pyyaml-6.0.2-safe-loader"
+        },
+        "null_byte_files": [],
+        "path": "/Users/yoshiki/.local/share/skill-governance/review/hallmark-html-2026-08/hallmark/claude",
+        "review_manifest_matches_files": true,
+        "source_skill_byte_exact": true,
+        "target_id": "claude",
+        "total_bytes": 110442,
+        "tree_sha256": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      },
+      "codex": {
+        "active_dangerous_matches": [],
+        "active_external_urls": [],
+        "active_instruction_files": [
+          "SKILL.md",
+          "references/anti-patterns.md",
+          "references/color.md",
+          "references/components/f4-step-sequence.md",
+          "references/components/h2-split-diptych.md",
+          "references/components/s4-inline-no-break.md",
+          "references/contract.md",
+          "references/interaction-and-states.md",
+          "references/layout-and-space.md",
+          "references/responsive.md",
+          "references/structure.md",
+          "references/study.md",
+          "references/themes/brutal.md",
+          "references/themes/catalog.md",
+          "references/themes/cobalt.md",
+          "references/themes/grid.md",
+          "references/themes/lumen.md",
+          "references/themes/plain-editorial.md",
+          "references/typography.md",
+          "references/verbs/audit.md",
+          "references/verbs/redesign.md"
+        ],
+        "active_markdown_links": [],
+        "all_regular_non_executable": true,
+        "all_utf8": true,
+        "entry_contract": {
+          "baseline_byte_comparison_is_not_context_claim": true,
+          "bytes": 5994,
+          "lines": 52,
+          "route_owner_boundary": true,
+          "selected_state_in_reference": true,
+          "within_adaptation_size_guidance": true
+        },
+        "evidence_dangerous_matches": [],
+        "evidence_external_urls": [
+          {
+            "path": "SOURCE.md",
+            "value": "https://github.com/Nutlope/hallmark"
+          },
+          {
+            "path": "SOURCE.md",
+            "value": "https://www.usehallmark.com/"
+          },
+          {
+            "path": "source/UPSTREAM-SKILL.md.txt",
+            "value": "http://`"
+          },
+          {
+            "path": "source/UPSTREAM-SKILL.md.txt",
+            "value": "https://`"
+          },
+          {
+            "path": "source/UPSTREAM-SKILL.md.txt",
+            "value": "http://`"
+          },
+          {
+            "path": "source/UPSTREAM-SKILL.md.txt",
+            "value": "https://`"
+          },
+          {
+            "path": "source/UPSTREAM-SKILL.md.txt",
+            "value": "https://example.com/"
+          }
+        ],
+        "evidence_files": [
+          "LICENSE",
+          "SOURCE.md",
+          "adaptation.diff",
+          "review-manifest.json",
+          "source/UPSTREAM-SKILL.md.txt",
+          "source/upstream-skill.json"
+        ],
+        "file_count": 27,
+        "filesystem_findings": [],
+        "frontmatter": {
+          "command": "validate-frontmatter",
+          "exit_code": 0,
+          "finding_codes": [],
+          "skill_sha256": "9a6fb66d6c5a843c7dcc70f984f6202665e1c2c0b0c552d23bfec4cd4ade05e8",
+          "status": "validated",
+          "stderr": "WARN `--no-project` was provided, but no project was found",
+          "validator": "pyyaml-6.0.2-safe-loader"
+        },
+        "null_byte_files": [],
+        "path": "/Users/yoshiki/.local/share/skill-governance/review/hallmark-html-2026-08/hallmark/codex",
+        "review_manifest_matches_files": true,
+        "source_skill_byte_exact": true,
+        "target_id": "codex",
+        "total_bytes": 110442,
+        "tree_sha256": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+      }
+    }
+  },
+  "interpretation": "Adapted Codex/Claude target filesystem and static contract evidence. PASS here does not clear the raw quarantine 16 findings.",
+  "kind": "static",
+  "runtime_mutation": false,
+  "schema": "hallmark-stage-static-evidence-v1",
+  "source_evidence": {
+    "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-eval-static.json",
+    "sha256": "f95569bea0bc14c4854845085b243a60f30d4ddfb44f7def7f05c215e0da7a6e"
+  },
+  "stage": "review"
+}

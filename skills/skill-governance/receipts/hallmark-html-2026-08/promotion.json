@@ -1,0 +1,32 @@
+{
+  "approval_receipt_sha256": "100f380126f3886e7cf0e19c1645242d998be2b0fe811cea97e89126e6d395f9",
+  "approved_targets": {
+    "hallmark": {
+      "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+      "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+    }
+  },
+  "collection_id": "hallmark-html-2026-08",
+  "date": "2026-08-31",
+  "decision": "promoted",
+  "generation": 3,
+  "kind": "promotion",
+  "quarantine": {
+    "hallmark": "cccc3c7c88ec944333f132f0565c5089029c86aa37cdb8ebf2a8a705fe5d15fe"
+  },
+  "retained_originals": "/Users/yoshiki/.local/share/skill-governance/deployments/html-design-2026-08-31-r2/retained-original",
+  "runtime_before": {
+    "hallmark": {
+      "claude": null,
+      "codex": null
+    }
+  },
+  "runtime_targets": {
+    "hallmark": {
+      "claude": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+      "codex": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+    }
+  },
+  "schema_version": 1,
+  "subject_sha256": "8d3c3bf05e10ab9d96729d41886995de0f906cce8d94f9e1869dd6d960fe284b"
+}

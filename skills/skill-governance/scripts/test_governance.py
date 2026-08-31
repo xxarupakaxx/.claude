@@ -2443,10 +2443,13 @@ class CatalogTests(unittest.TestCase):
             governance.DEFAULT_CATALOG,
         )
         self.assertFalse(governance.has_blockers(findings))
-        self.assertEqual(payload["summary"]["source_count"], 13)
-        self.assertEqual(payload["summary"]["complete_source_count"], 13)
-        self.assertEqual(payload["summary"]["skill_file_count"], 840)
-        self.assertEqual(payload["summary"]["name_extracted_count"], 836)
+        expected_sources = {source["id"] for source in self.registry["sources"]}
+        self.assertEqual(set(self.catalog["sources"]), expected_sources)
+        self.assertEqual(payload["summary"]["source_count"], len(expected_sources))
+        self.assertEqual(payload["summary"]["complete_source_count"], len(expected_sources))
+        entries = [skill for source in self.catalog["sources"].values() for skill in source["skills"]]
+        self.assertEqual(payload["summary"]["skill_file_count"], len(entries))
+        self.assertEqual(payload["summary"]["name_extracted_count"], sum(bool(entry.get("name")) for entry in entries))
 
     def test_architecture_skill_is_in_pinned_matt_catalog(self) -> None:
         skills = self.catalog["sources"]["mattpocock-skills"]["skills"]
@@ -2890,9 +2893,15 @@ class AdapterAndSurfaceTests(unittest.TestCase):
         )
         self.assertNotIn("its canonical artifact is already complete", visualizing)
         adapter = (skills / "diagram-design" / "SKILL.md").read_text(encoding="utf-8")
-        self.assertIn("never redraws canonical states, transitions, or SVG flows", adapter)
-        self.assertIn("never redraws canonical Roadmap task order, progress, or Concept Map", adapter)
-        self.assertIn("next available numbered visual explanation paths", adapter)
+        self.assertIn("do not own roadmap progress, task order, or canonical state diagrams", adapter)
+        self.assertIn("Roadmap の進捗、task 順、session 選択、完了状態", adapter)
+        self.assertIn("canonical な状態機械・状態遷移・実行順序を別の owner が管理", adapter)
+        self.assertIn("SVG 正本", adapter)
+        self.assertIn("foreignObject", adapter)
+        output_contract = (skills / "diagram-design/references/output-contract.md").read_text(encoding="utf-8")
+        self.assertIn("diagram-design-sidecar", output_contract)
+        self.assertIn("strict-self-contained", output_contract)
+        self.assertIn("同じ `data-item` id", output_contract)
 
     def test_platform_invocation_adapters(self) -> None:
         registry, findings = governance.load_registry(governance.DEFAULT_REGISTRY)

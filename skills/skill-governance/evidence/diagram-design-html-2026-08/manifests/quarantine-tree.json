@@ -1,0 +1,1286 @@
+{
+  "bytes": 2886991,
+  "file_count": 212,
+  "files": [
+    {
+      "executable": false,
+      "path": "SKILL.md",
+      "sha256": "6d6988acf7794344c54b26f22f4245e420e4a8e0a41b65547f8c1797339cda8d",
+      "size": 39996
+    },
+    {
+      "executable": false,
+      "path": "assets/example-architecture-dark.html",
+      "sha256": "3767f518519dc7b6fc98066cc76c70937446ea9e71e380cf7c6064dc6ed6f5ba",
+      "size": 12036
+    },
+    {
+      "executable": false,
+      "path": "assets/example-architecture-full.html",
+      "sha256": "84425acb29b181a165e8c07fad268304f77223a92797a7f58679f51c3dd47502",
+      "size": 14987
+    },
+    {
+      "executable": false,
+      "path": "assets/example-architecture.html",
+      "sha256": "03716fdb0a4ad641c30a5267b14a4c573d699f0f31ab3d8a0ba4e2b74ad56177",
+      "size": 12089
+    },
+    {
+      "executable": false,
+      "path": "assets/example-bar-dark.html",
+      "sha256": "fb96534eff0910a006dabca940d71aeb1019076abfbe9a020758747c2e2cbb0a",
+      "size": 9122
+    },
+    {
+      "executable": false,
+      "path": "assets/example-bar-full.html",
+      "sha256": "0095ec6576fff513fee6a731d6eba7fbd9e4726a3e8f6ac183407c0b69a36f58",
+      "size": 11254
+    },
+    {
+      "executable": false,
+      "path": "assets/example-bar.html",
+      "sha256": "1bbd708cdca419c137160056ed9862532a3402ba65d9335bae1be0aef90c7abb",
+      "size": 8919
+    },
+    {
+      "executable": false,
+      "path": "assets/example-beeswarm-dark.html",
+      "sha256": "597cf05ad582eb0dbe8040949c6f164096ce84631e6d3ba85d5fbf778d2b1dc7",
+      "size": 32654
+    },
+    {
+      "executable": false,
+      "path": "assets/example-beeswarm-full.html",
+      "sha256": "b9c6db9d3cbae523d16ac476d37e7996d034d00835218ce8888c373396f2e702",
+      "size": 36452
+    },
+    {
+      "executable": false,
+      "path": "assets/example-beeswarm.html",
+      "sha256": "ddd5c2adc0a9aaf46673b4e3e3207619808d00b719090fe14353d5bf816ccd31",
+      "size": 32182
+    },
+    {
+      "executable": false,
+      "path": "assets/example-bubble-dark.html",
+      "sha256": "e5297625f2a81cebcd63250dcd7455f5c84160da501354f530dfcf59baf0ab9e",
+      "size": 11428
+    },
+    {
+      "executable": false,
+      "path": "assets/example-bubble-full.html",
+      "sha256": "21c83751d106234c8ec450c97d0681a9d680f8e1bea3ab06473696dbd262c42b",
+      "size": 15126
+    },
+    {
+      "executable": false,
+      "path": "assets/example-bubble.html",
+      "sha256": "a507ae84a0a6d03c329e8a26cf5e9de9c77aa21c74d9ce25379af2019f7cd18a",
+      "size": 11337
+    },
+    {
+      "executable": false,
+      "path": "assets/example-bump-dark.html",
+      "sha256": "c6982966a1c775a0d3b176a21f1a86193453ca9550a7c8c00db6ca4f38d4e757",
+      "size": 12916
+    },
+    {
+      "executable": false,
+      "path": "assets/example-bump-full.html",
+      "sha256": "80976313d11eb5c20148143ce2df4ec3fe2340c917965244d8ee959293e35d79",
+      "size": 16625
+    },
+    {
+      "executable": false,
+      "path": "assets/example-bump.html",
+      "sha256": "5c3b46f8d1d0db041cf524ea87a1147f37d1ff2f69ca3b9a4963ae4a8f514756",
+      "size": 12797
+    },
+    {
+      "executable": false,
+      "path": "assets/example-data-flow-dark.html",
+      "sha256": "68144451031cc5c6d56dbb15b6532f24efc2bac4e3dfc9c5e9b8177d539777d8",
+      "size": 12966
+    },
+    {
+      "executable": false,
+      "path": "assets/example-data-flow-full.html",
+      "sha256": "bf4db055606bd5f15e64e0da67c8f2023b8cbea6a27a4bca2be24dbe12f6245a",
+      "size": 15835
+    },
+    {
+      "executable": false,
+      "path": "assets/example-data-flow.html",
+      "sha256": "511788f809b9d674e2f92568955e5fc0c5f5f7a3960eaa0049e136ec93957add",
+      "size": 12803
+    },
+    {
+      "executable": false,
+      "path": "assets/example-datalake-dark.html",
+      "sha256": "98ed93bddc4d2112c3bd886aa2aa469c4f592a034eb39d2d3056033dc75d810d",
+      "size": 25137
+    },
+    {
+      "executable": false,
+      "path": "assets/example-datalake-full.html",
+      "sha256": "c84e13615eeb5d1cee261e485831a180752ef905f9a6252be3cf3b85415073cf",
+      "size": 28649
+    },
+    {
+      "executable": false,
+      "path": "assets/example-datalake.html",
+      "sha256": "a6d9fbf97952ef55f41c531ef1d32d4ba46a6bdb1fc1664997e0b8f51926c9f9",
+      "size": 26680
+    },
+    {
+      "executable": false,
+      "path": "assets/example-db-schema-dark.html",
+      "sha256": "40d12080e78a1ce39f5d6858f9e02562b8f4ec0bffe303ab8d4fc473db561024",
+      "size": 24716
+    },
+    {
+      "executable": false,
+      "path": "assets/example-db-schema-full.html",
+      "sha256": "a69144b54b23e7e6046234ed31fcc26625147af8a9e0dfeff05f4553c3eba8f6",
+      "size": 27605
+    },
+    {
+      "executable": false,
+      "path": "assets/example-db-schema.html",
+      "sha256": "58d473906c57670fecee29bc55377df5b433549445962204412ebd2c081b76db",
+      "size": 24501
+    },
+    {
+      "executable": false,
+      "path": "assets/example-dependency-dark.html",
+      "sha256": "7eb7c3d1e90d9dbb49a97f9490184ff1768930847fe86a112f0262513691c035",
+      "size": 17822
+    },
+    {
+      "executable": false,
+      "path": "assets/example-dependency-full.html",
+      "sha256": "5844a5bfa0eb30e5c7c8d5d23d4a3230ed5fe051e6ca84daf34a5ecb7185ef5b",
+      "size": 21122
+    },
+    {
+      "executable": false,
+      "path": "assets/example-dependency.html",
+      "sha256": "973f7b5f5ac1746bb018e9ea8de9f6853b5f14ff41173e64abcf9855ea5f353b",
+      "size": 17607
+    },
+    {
+      "executable": false,
+      "path": "assets/example-deployment-dark.html",
+      "sha256": "7688eec54dde8950375d2bb724438bce6dce18714ed2f99a0a60ffaacb17190a",
+      "size": 13554
+    },
+    {
+      "executable": false,
+      "path": "assets/example-deployment-full.html",
+      "sha256": "6f6ae188e2c2874a7b6f28943575eff72773950a9ac15dac8b7b3209cfd88cc5",
+      "size": 16831
+    },
+    {
+      "executable": false,
+      "path": "assets/example-deployment.html",
+      "sha256": "6e28f0eee98dd728bfa6b5210b1885caf2b39992fdd06a680e37bbc8863e89b2",
+      "size": 13451
+    },
+    {
+      "executable": false,
+      "path": "assets/example-dp-integration-dark.html",
+      "sha256": "8cb30572815bfe86e449bb22266768f6dd52d91725faebd276c7e9de24113749",
+      "size": 14746
+    },
+    {
+      "executable": false,
+      "path": "assets/example-dp-integration-full.html",
+      "sha256": "9fc9f12a662ed1bf3e837c11be1b05df03db7a845ea203846a47b247ab6edf99",
+      "size": 17263
+    },
+    {
+      "executable": false,
+      "path": "assets/example-dp-integration.html",
+      "sha256": "929b6aaefa9a362d4cd18fb1801a57f28d32aa8dd78ba577375a11926ee2cc94",
+      "size": 14715
+    },
+    {
+      "executable": false,
+      "path": "assets/example-dp-security-matrix-dark.html",
+      "sha256": "ac5515d7fb1e850249aedf6d39deb848cd9edc02068c6944d37a04ca0fcc995e",
+      "size": 10279
+    },
+    {
+      "executable": false,
+      "path": "assets/example-dp-security-matrix-full.html",
+      "sha256": "9cd7d120e069a9be73a0f98b94282e8e9906f802c49fb1c57e5553479d8033ee",
+      "size": 12602
+    },
+    {
+      "executable": false,
+      "path": "assets/example-dp-security-matrix.html",
+      "sha256": "88d7a3fb9788300082274924f1f95dfd0a5a8b3bfca3fcd91b424cc8caa50044",
+      "size": 10906
+    },
+    {
+      "executable": false,
+      "path": "assets/example-er-dark.html",
+      "sha256": "c007c14d88a48a8ea30b1144dd4ac392ee7891a2278262e2a6f6836b43aa7fdf",
+      "size": 14198
+    },
+    {
+      "executable": false,
+      "path": "assets/example-er-full.html",
+      "sha256": "9f43422370cbd751196fd5b8ab802a177d015f739b39064c58f5e7273f56e1c3",
+      "size": 17128
+    },
+    {
+      "executable": false,
+      "path": "assets/example-er.html",
+      "sha256": "aee470dcf37af317f14d21cd9420f6bcb1b65f0fb0047483a42b8afc0cab2774",
+      "size": 14139
+    },
+    {
+      "executable": false,
+      "path": "assets/example-fishbone-dark.html",
+      "sha256": "f884b81b83f7ce40cf85b8aa6c3a55db99b7fb2d38502deff222aaff36d7db47",
+      "size": 8675
+    },
+    {
+      "executable": false,
+      "path": "assets/example-fishbone-full.html",
+      "sha256": "75bfad970d61909fedbf2ede67c3e88057ab46909d7ea7f2c16d3ad2a029aa2e",
+      "size": 11411
+    },
+    {
+      "executable": false,
+      "path": "assets/example-fishbone.html",
+      "sha256": "cd7079857240a9f6228804d3492af0add2eb36343798c9e0ef90657f2a246d04",
+      "size": 8652
+    },
+    {
+      "executable": false,
+      "path": "assets/example-flowchart-dark.html",
+      "sha256": "d61779e1d57f2d5b3b9c01d09f0677251f99acb449ee40e8cb5e3297adaf9de1",
+      "size": 9221
+    },
+    {
+      "executable": false,
+      "path": "assets/example-flowchart-full.html",
+      "sha256": "0386adeb8ef6327a5ae42f6f1f89f59aa1455fa500ef18b3c656a59f010b8192",
+      "size": 12199
+    },
+    {
+      "executable": false,
+      "path": "assets/example-flowchart.html",
+      "sha256": "ba0a39df57d5fd4beccebeb51d62028b420371b30793b2658d308df04d571ff3",
+      "size": 9171
+    },
+    {
+      "executable": false,
+      "path": "assets/example-gantt-dark.html",
+      "sha256": "81016c2956b4cf51d0c2e2b0302ea53c535f3f59a21eae8d4b1a596c448ddb2b",
+      "size": 10331
+    },
+    {
+      "executable": false,
+      "path": "assets/example-gantt-full.html",
+      "sha256": "aab29f4296a7500417c899a445bb7df5f6b785135960e66c5fdfbead27ca475f",
+      "size": 11897
+    },
+    {
+      "executable": false,
+      "path": "assets/example-gantt.html",
+      "sha256": "607745921006b312ab710c3166036aebeb31a2b7cd40df36713a850a28cb73f3",
+      "size": 10074
+    },
+    {
+      "executable": false,
+      "path": "assets/example-high-level-dark.html",
+      "sha256": "49a52a62a30781de7d6ee051cddf9837884a84bb1ce1891eb4dadb4bb82348ae",
+      "size": 24210
+    },
+    {
+      "executable": false,
+      "path": "assets/example-high-level-full.html",
+      "sha256": "d25bde14ab1ac1d9bf47b1613f864517ce3d88553043192abbc856f69bd0f7b6",
+      "size": 28494
+    },
+    {
+      "executable": false,
+      "path": "assets/example-high-level-vertical-dark.html",
+      "sha256": "492b0b9aebb037bfd10f65b16f2212592407a1731682d7469214225451a58fc6",
+      "size": 24980
+    },
+    {
+      "executable": false,
+      "path": "assets/example-high-level-vertical-full.html",
+      "sha256": "3f72c30a5be5a5bd9cde92e366ae1a97cae8473f1d8da2981ffc6d187b5c3dc3",
+      "size": 28749
+    },
+    {
+      "executable": false,
+      "path": "assets/example-high-level-vertical.html",
+      "sha256": "fac0ef026d59a5086880087db4162a3ee2e064a8685c0a093b218df737884c02",
+      "size": 30457
+    },
+    {
+      "executable": false,
+      "path": "assets/example-high-level.html",
+      "sha256": "33789942cb06be5228ffa6e450602d1f7c9344b7d263fa2674b7ba5e6dd7e788",
+      "size": 26976
+    },
+    {
+      "executable": false,
+      "path": "assets/example-import-drawio.html",
+      "sha256": "03ce9820197c9838dd4e02b274d9a4741b8b958da1ea1051f2285d44cf2530a4",
+      "size": 12130
+    },
+    {
+      "executable": false,
+      "path": "assets/example-import-mermaid.html",
+      "sha256": "10c5623a9f6daf9dccb85f15225a155b721e0ec3304d7769c4bb87290da2664a",
+      "size": 8107
+    },
+    {
+      "executable": false,
+      "path": "assets/example-it-state-dark.html",
+      "sha256": "21363f1e08eadbf4c88940f845dd36f462a60e191064d4d9781dd68c9daad4b5",
+      "size": 11992
+    },
+    {
+      "executable": false,
+      "path": "assets/example-it-state-full.html",
+      "sha256": "ed7b2271c358c6046a49c03498384a86fdceda98a1632b235047ee9da9a7b1a0",
+      "size": 14225
+    },
+    {
+      "executable": false,
+      "path": "assets/example-it-state.html",
+      "sha256": "59103bffa775b744828643e361b71f4b80e5ef8a0042abe9ce65c81e3d5dd21e",
+      "size": 12500
+    },
+    {
+      "executable": false,
+      "path": "assets/example-journey-dark.html",
+      "sha256": "c1866ca355d8859d27f6e99d9e2415daf204c313ed4463ae9663ba9e930a9949",
+      "size": 9153
+    },
+    {
+      "executable": false,
+      "path": "assets/example-journey-full.html",
+      "sha256": "8a8263ed88d245376cc7dd0ec8068f02701b346a5d3127e9bb999406046af7cc",
+      "size": 11727
+    },
+    {
+      "executable": false,
+      "path": "assets/example-journey.html",
+      "sha256": "b01e32ff87d63fddf6d1db47155906dd624acc13327856269114f760afc754f0",
+      "size": 9115
+    },
+    {
+      "executable": false,
+      "path": "assets/example-kanban-dark.html",
+      "sha256": "30809cae8600a1852131362df275d9ab1c6aeedc65d3855caed264d48e19f5dc",
+      "size": 11036
+    },
+    {
+      "executable": false,
+      "path": "assets/example-kanban-full.html",
+      "sha256": "a297c9d5da1ea46c6c3c69ffa49525965208cf2ffebb8031a577075d85a390d1",
+      "size": 13901
+    },
+    {
+      "executable": false,
+      "path": "assets/example-kanban.html",
+      "sha256": "3b19fb185019e0e341496de095bb1d92bd1fe4705c1502562ef47cb88329b2bb",
+      "size": 10947
+    },
+    {
+      "executable": false,
+      "path": "assets/example-layers-dark.html",
+      "sha256": "412df7b0710cf14cd95c1e806e708241bda6b3bc8e1f142107adf857ed6aa7d1",
+      "size": 6913
+    },
+    {
+      "executable": false,
+      "path": "assets/example-layers-full.html",
+      "sha256": "0719489be758a08ad66f2de27d120103c41a51982408e78faffac6b9409c9fbc",
+      "size": 10024
+    },
+    {
+      "executable": false,
+      "path": "assets/example-layers.html",
+      "sha256": "196f3cd9866d64da9e04323f258534b1a51d1116140c0db2c8e330adb516a809",
+      "size": 6876
+    },
+    {
+      "executable": false,
+      "path": "assets/example-line-dark.html",
+      "sha256": "b749bb0ddd39387bd86c6a7d09ddc4f5cdc2c6f0220a143bb16f3475aee70864",
+      "size": 7610
+    },
+    {
+      "executable": false,
+      "path": "assets/example-line-full.html",
+      "sha256": "f3757327ce4d465a58b8aaf7428a1c4b3472f7422e782b32164f765b82dcdf96",
+      "size": 10052
+    },
+    {
+      "executable": false,
+      "path": "assets/example-line.html",
+      "sha256": "83f5e305d6ce509b25371db6f6e73fa6f3982b7a8dbe09451091c0a15f3b1d90",
+      "size": 7441
+    },
+    {
+      "executable": false,
+      "path": "assets/example-loop-dark.html",
+      "sha256": "cab1f56390bd59c6b13317854c0fe32497967ab4e822c004d30eedc3324d27c0",
+      "size": 6821
+    },
+    {
+      "executable": false,
+      "path": "assets/example-loop-full.html",
+      "sha256": "c2effa4d65d8713420c2a9261e7eea4f5273f3f87e7e09398bcc6310655bdb4e",
+      "size": 9965
+    },
+    {
+      "executable": false,
+      "path": "assets/example-loop-terminal.html",
+      "sha256": "93a2f86cca043537bf472973c6c1d51de54d85208ec54cd448c40e3f09aa73e8",
+      "size": 9993
+    },
+    {
+      "executable": false,
+      "path": "assets/example-loop.html",
+      "sha256": "b5d0e37b14614ba95d95cdbc5ecdfb84c6c03d7cf664124e029cecb97af340bc",
+      "size": 6790
+    },
+    {
+      "executable": false,
+      "path": "assets/example-medallion-dark.html",
+      "sha256": "65740eb4e2b1286636fc749bdb528dbab7e03948d104c368667ab1ccf85a46f2",
+      "size": 13052
+    },
+    {
+      "executable": false,
+      "path": "assets/example-medallion-full.html",
+      "sha256": "f6ceacd25be82850f65689b07d52b4c9b0e633604e909b13e77ad6468895a688",
+      "size": 15897
+    },
+    {
+      "executable": false,
+      "path": "assets/example-medallion.html",
+      "sha256": "e88a5b1f1f67a7bf6ad83c5144a7f79973a732f68972ba648ec81968579032eb",
+      "size": 12864
+    },
+    {
+      "executable": false,
+      "path": "assets/example-nested-dark.html",
+      "sha256": "1ff6c0e0dc7f9b321607a4de691a0ac1f5a99cef5b9d2dc0c6e9a75a13473f37",
+      "size": 6720
+    },
+    {
+      "executable": false,
+      "path": "assets/example-nested-full.html",
+      "sha256": "0efbb94f914d4edde8107df357f0869de0047011562dfc96856c3537c4e1648b",
+      "size": 9824
+    },
+    {
+      "executable": false,
+      "path": "assets/example-nested.html",
+      "sha256": "17648e5a26604bf678d7cd256ec0d84a54f7f2c6920fb56c030226e6ffc6557a",
+      "size": 6840
+    },
+    {
+      "executable": false,
+      "path": "assets/example-org-chart-dark.html",
+      "sha256": "fd0233be926462fd539b3a953a8abc012fb1f6248b71b658a0a3d194fd4f45e6",
+      "size": 11599
+    },
+    {
+      "executable": false,
+      "path": "assets/example-org-chart-full.html",
+      "sha256": "a1b5d313f47e6cb26240edd5d696e4dc944b6996bbe92f0be7c0b90836d2631f",
+      "size": 12052
+    },
+    {
+      "executable": false,
+      "path": "assets/example-org-chart.html",
+      "sha256": "8c4e95ee52d597f28743673ea11f01ecfcf1a230d6f3dfb6d5ad641b770af46c",
+      "size": 11530
+    },
+    {
+      "executable": false,
+      "path": "assets/example-paved-road-animated.html",
+      "sha256": "edc92180b5dc86cdec954ba50a81e50ccea4a994b58619819bfdf26ff5651689",
+      "size": 28277
+    },
+    {
+      "executable": false,
+      "path": "assets/example-polar-dark.html",
+      "sha256": "7c284696cfed61e832dd4dde814840901967cca64bd54a4cddfff7cbeaddb04e",
+      "size": 10447
+    },
+    {
+      "executable": false,
+      "path": "assets/example-polar-full.html",
+      "sha256": "bfd2ec50116c00a9312efe7bfa5dadfe2512de7c27873e15bdecaa044c932bf3",
+      "size": 12653
+    },
+    {
+      "executable": false,
+      "path": "assets/example-polar.html",
+      "sha256": "596e2042f18044ef1fa2c2eb849f39fa5c7767b2a17e272617ebd27e10bc86b1",
+      "size": 10385
+    },
+    {
+      "executable": false,
+      "path": "assets/example-policy-trace-animated.html",
+      "sha256": "a754efcb4d5d780798d3f386c0a5d68f36b0b12e142bc44603c2d39065daa1e3",
+      "size": 25468
+    },
+    {
+      "executable": false,
+      "path": "assets/example-process-dark.html",
+      "sha256": "5e6ac1365d2e473568ba736975495b9c3509004fb6fca571dedefa8e6cdc5c8e",
+      "size": 15034
+    },
+    {
+      "executable": false,
+      "path": "assets/example-process-full.html",
+      "sha256": "d0c0e6df7ae42fa92a1015421fa1cef211847c4037026de2c70d77a5e164a4cc",
+      "size": 17471
+    },
+    {
+      "executable": false,
+      "path": "assets/example-process.html",
+      "sha256": "50ca0b9e6a3e9f5ba8102ff3c6fb87b6a66b1d59f272777b72a97639d4fe2375",
+      "size": 15001
+    },
+    {
+      "executable": false,
+      "path": "assets/example-pyramid-dark.html",
+      "sha256": "831bc6531d0b3b0eba1b348722a0b3e4d5548f287f5380ddb7e26d3f5edcb80c",
+      "size": 6682
+    },
+    {
+      "executable": false,
+      "path": "assets/example-pyramid-full.html",
+      "sha256": "15306216ab2647d81038cafbb32139fd8e33cff6c1f2407fabbfb9dceb2c2c6e",
+      "size": 9733
+    },
+    {
+      "executable": false,
+      "path": "assets/example-pyramid.html",
+      "sha256": "d12cf7c4c921f3bbd66026af9ed947ff23acdcf414a4309b59c173377d9bdd80",
+      "size": 6578
+    },
+    {
+      "executable": false,
+      "path": "assets/example-quadrant-consultant.html",
+      "sha256": "421142d6be52e56315a4b7d02f94a940fe2d7e4d8b506795392b8086c900926c",
+      "size": 11884
+    },
+    {
+      "executable": false,
+      "path": "assets/example-quadrant-dark.html",
+      "sha256": "ac1edf5d9c1251a51a93eb82db17fc1820811f1934ec59c1272ea7f89c501465",
+      "size": 6606
+    },
+    {
+      "executable": false,
+      "path": "assets/example-quadrant-full.html",
+      "sha256": "11208b7d6353a4feed795e2c1539153843dcf2c057da414c73958b68e08b439e",
+      "size": 9621
+    },
+    {
+      "executable": false,
+      "path": "assets/example-quadrant.html",
+      "sha256": "a147cc85f78958da824d53d226067bff687f3e35a64601394c3075f55c675648",
+      "size": 6574
+    },
+    {
+      "executable": false,
+      "path": "assets/example-queue-animated.html",
+      "sha256": "f42628ce17ae487d0b1ebf2cf29a216a70775f8f305a243e38cb0c44d2efbe0a",
+      "size": 29875
+    },
+    {
+      "executable": false,
+      "path": "assets/example-radar-dark.html",
+      "sha256": "e24eabbc722e67b83ac498407247e1c09d162ff19e047944a323d44594a68258",
+      "size": 7687
+    },
+    {
+      "executable": false,
+      "path": "assets/example-radar-full.html",
+      "sha256": "18203b78130ef1200e78afd8e5a574029f560f4064730e2f2661b6d33ff9e1e6",
+      "size": 10431
+    },
+    {
+      "executable": false,
+      "path": "assets/example-radar.html",
+      "sha256": "767b6a52116665a75b5895c1bde6d96a6a3277449229ff7e21b33afff9b9fcdf",
+      "size": 7865
+    },
+    {
+      "executable": false,
+      "path": "assets/example-ridgeline-dark.html",
+      "sha256": "b430c4ec58ab69c044cba2eb39e20adbc8769cbd85fb5f41d8c3f75136d62f90",
+      "size": 10354
+    },
+    {
+      "executable": false,
+      "path": "assets/example-ridgeline-full.html",
+      "sha256": "9c2631fdd7b5f9df360d18778400212c0fa689685ae1c46d0e65c7279b4a71e6",
+      "size": 14275
+    },
+    {
+      "executable": false,
+      "path": "assets/example-ridgeline.html",
+      "sha256": "0e6b87dfbbba5e8b246a195d28cdb49a52aeebd4912fb40ffabc4fb752b04821",
+      "size": 10283
+    },
+    {
+      "executable": false,
+      "path": "assets/example-sankey-dark.html",
+      "sha256": "4c2a4ff17cfba1412aee8b6569e76c1d314d9ce64d6038c99e89505225b9baf1",
+      "size": 8969
+    },
+    {
+      "executable": false,
+      "path": "assets/example-sankey-full.html",
+      "sha256": "52949b4f1bcfba7bf89c49542ddf6937fda80be6c10c806366cd056d94732eeb",
+      "size": 11817
+    },
+    {
+      "executable": false,
+      "path": "assets/example-sankey.html",
+      "sha256": "f9196488b04763405fe56a56ed201630ce63aa86c96dcf8ba652d3927093707c",
+      "size": 8924
+    },
+    {
+      "executable": false,
+      "path": "assets/example-scatter-dark.html",
+      "sha256": "d1e48f5da1c729879834b797d871eeeff1222fa270ae6a051d02ec40dda42744",
+      "size": 9666
+    },
+    {
+      "executable": false,
+      "path": "assets/example-scatter-full.html",
+      "sha256": "83e8cb8e6d2e788071b3a843c5746ed980675507e41d99b9a3b11beb07b8e6a6",
+      "size": 11579
+    },
+    {
+      "executable": false,
+      "path": "assets/example-scatter.html",
+      "sha256": "576e0061f65b1885cf5fccb794c2827b19fbea66cc14e8284f3fa075ef755d06",
+      "size": 9425
+    },
+    {
+      "executable": false,
+      "path": "assets/example-sequence-dark.html",
+      "sha256": "667d448a51a817fb334d3fae0c6f2ed2ab8a2219e42bb29d97c9e012c2d96a8a",
+      "size": 13794
+    },
+    {
+      "executable": false,
+      "path": "assets/example-sequence-full.html",
+      "sha256": "e165d6e2fe2fa56538820ab6efa56a7ea79f29d75775bac47ee865483d512c1c",
+      "size": 18217
+    },
+    {
+      "executable": false,
+      "path": "assets/example-sequence-oauth-dark.html",
+      "sha256": "8237be551f450082823ba237958d62cf54c9ca1f98ea5e4f1c1eeed68e6613d0",
+      "size": 12113
+    },
+    {
+      "executable": false,
+      "path": "assets/example-sequence-oauth-full.html",
+      "sha256": "c5e5f5d947c7f99474e4390a4ca2536285ca03e57aa7eae7bcb580c4c955fc2f",
+      "size": 16586
+    },
+    {
+      "executable": false,
+      "path": "assets/example-sequence-oauth.html",
+      "sha256": "700ff6d8a06aa0b04b67520e4def6388f1a334c1a63d9df9edc5f697eeee4a40",
+      "size": 14366
+    },
+    {
+      "executable": false,
+      "path": "assets/example-sequence.html",
+      "sha256": "12dcedc98c28d15f7a455f1266c8d8bd93bebe1ed8f352d89bc20703eaa00fad",
+      "size": 13727
+    },
+    {
+      "executable": false,
+      "path": "assets/example-slopegraph-dark.html",
+      "sha256": "fb1fcd70a4d7e63cb57d39ddedfb54f4840118ec6e9905111a4d263ccc7c62b4",
+      "size": 10421
+    },
+    {
+      "executable": false,
+      "path": "assets/example-slopegraph-full.html",
+      "sha256": "262b5db6e1c27327e9ff204ec359821fa92700e5883926ac0217d67a6c13c237",
+      "size": 13961
+    },
+    {
+      "executable": false,
+      "path": "assets/example-slopegraph.html",
+      "sha256": "1d0d0d6835e38c1e84e6a8b7cf2a3f0f3c59f70025941b994b844a6048f53af5",
+      "size": 10339
+    },
+    {
+      "executable": false,
+      "path": "assets/example-state-dark.html",
+      "sha256": "d5a29f22ee80fef6fe6f857e767fb0bf4afca8bc8f8cbb478f33286d76f88706",
+      "size": 8698
+    },
+    {
+      "executable": false,
+      "path": "assets/example-state-full.html",
+      "sha256": "bdcd07a2f12fb3ae0afe34b8f3d9fc455a7fbe02f671b97a7163d35726894017",
+      "size": 11625
+    },
+    {
+      "executable": false,
+      "path": "assets/example-state.html",
+      "sha256": "75521144ce5aaf477096f355e86ae2d3301eb136391a6bd0702a844a8fe7ce30",
+      "size": 8664
+    },
+    {
+      "executable": false,
+      "path": "assets/example-story-map-dark.html",
+      "sha256": "0c288216307ff36b43b513445e0e63fa83ed5902695ead17fdd507a470acc6b7",
+      "size": 12247
+    },
+    {
+      "executable": false,
+      "path": "assets/example-story-map-full.html",
+      "sha256": "ba97bf483442959c35e8d64cd36d177d94fff76215ca3e3b44901b5e4f586443",
+      "size": 15485
+    },
+    {
+      "executable": false,
+      "path": "assets/example-story-map.html",
+      "sha256": "40f737ca1c2a9f46cd8a3ad1a377faabc1adc546a410ff8395e6622b4e773da1",
+      "size": 12188
+    },
+    {
+      "executable": false,
+      "path": "assets/example-swimlane-dark.html",
+      "sha256": "1b45aa776b6e9b71249cb244b0ae0ca9ccc341d316d324364a0fad3d51e60d00",
+      "size": 10520
+    },
+    {
+      "executable": false,
+      "path": "assets/example-swimlane-full.html",
+      "sha256": "5c26540db8c18a1b33e32b90b1cf640d6482804b01d45fa87547c2a73a625852",
+      "size": 13466
+    },
+    {
+      "executable": false,
+      "path": "assets/example-swimlane.html",
+      "sha256": "75fc463ad3282dd0faaa4328c6b07f7e853184eeb1edcff2add8f7ed1876ab3b",
+      "size": 10476
+    },
+    {
+      "executable": false,
+      "path": "assets/example-timeline-dark.html",
+      "sha256": "64bcbb52a88e989b642dee6ef9ca2c47000407430b240760911a062a8e6735a7",
+      "size": 7390
+    },
+    {
+      "executable": false,
+      "path": "assets/example-timeline-full.html",
+      "sha256": "4e9195b6c3eb9d9ff4ee0bb9a19ac166c7098465d80ccf7148af73df4cdcd7f1",
+      "size": 10391
+    },
+    {
+      "executable": false,
+      "path": "assets/example-timeline.html",
+      "sha256": "1a58e3824eb2bb89ff6e57439b61c38d6e4c08b187143436f50108d8e60bfc45",
+      "size": 7338
+    },
+    {
+      "executable": false,
+      "path": "assets/example-tree-dark.html",
+      "sha256": "43aa056d0761d323cad0bd6205de3083fe7413af4e10639cad5e92c8ed41beac",
+      "size": 11029
+    },
+    {
+      "executable": false,
+      "path": "assets/example-tree-full.html",
+      "sha256": "988fda69a8fc3f043b263c254389adc282394d2a468163dde70fa8b56fc6392b",
+      "size": 13993
+    },
+    {
+      "executable": false,
+      "path": "assets/example-tree.html",
+      "sha256": "5de9151661ad9e1b21809d58494390472cdd82ca1ef1ddcde88b6f14e667afcd",
+      "size": 10916
+    },
+    {
+      "executable": false,
+      "path": "assets/example-treemap-dark.html",
+      "sha256": "43cbbb2ec7c30a71edf5f5436e51dd8369cedb1da80f6e6241b62278ea4e5698",
+      "size": 7651
+    },
+    {
+      "executable": false,
+      "path": "assets/example-treemap-full.html",
+      "sha256": "c0b0569090b69050b7b70592dd7d0d3ad01a41e84ea80d03433cf5c3b35e52a2",
+      "size": 10739
+    },
+    {
+      "executable": false,
+      "path": "assets/example-treemap.html",
+      "sha256": "95f0dd0e5072bbe327c7a85d1fa71a18cff3ade32240a917c4b672940d151008",
+      "size": 7581
+    },
+    {
+      "executable": false,
+      "path": "assets/example-uml-class-dark.html",
+      "sha256": "eca2e26603714d4df494532a2a712101321a484cc2d1263f7629b8f0e214357d",
+      "size": 12400
+    },
+    {
+      "executable": false,
+      "path": "assets/example-uml-class-full.html",
+      "sha256": "9c9efff3c44878a9f7cf459ed7a1c7fcdd927cfbfb73ef35ac6b0c0c8d7a7671",
+      "size": 15683
+    },
+    {
+      "executable": false,
+      "path": "assets/example-uml-class.html",
+      "sha256": "c6c353f4d53c476fc3530f20d09cdb9d4b47a2bd22d0f3c56c807732534a685d",
+      "size": 12359
+    },
+    {
+      "executable": false,
+      "path": "assets/example-venn-dark.html",
+      "sha256": "85c6fd7c48e0c4989aebad24862e49d8783386f4cfa3efb27d1e86a724558077",
+      "size": 6699
+    },
+    {
+      "executable": false,
+      "path": "assets/example-venn-full.html",
+      "sha256": "1dd7525e58092b6a4bf1463fdf0df2914d717e3abcfdbaf04ed0ba3dd814f310",
+      "size": 9903
+    },
+    {
+      "executable": false,
+      "path": "assets/example-venn.html",
+      "sha256": "86d763a94bc20fb3038cb00b9ef0fedd1e00cd8009df50852eac77d92e3965da",
+      "size": 5080
+    },
+    {
+      "executable": false,
+      "path": "assets/example-wardley-dark.html",
+      "sha256": "80aff4e268d3775541eca4cf1c1cac918f0895637cd79568d4895e84b9f2046b",
+      "size": 8924
+    },
+    {
+      "executable": false,
+      "path": "assets/example-wardley-full.html",
+      "sha256": "8a9d56c9e50b57bb990a172822b01361cd4cb57322675fdde40be364e890210b",
+      "size": 11346
+    },
+    {
+      "executable": false,
+      "path": "assets/example-wardley.html",
+      "sha256": "b0ffc8f5bde65a8d77d863f22cd6c0d0211490c059dbcb503798851d1413860a",
+      "size": 8883
+    },
+    {
+      "executable": false,
+      "path": "assets/icons.html",
+      "sha256": "8e7f54214b31e9152020e012aff18cb97defdec47ac09cee2081499c0bb0eb4f",
+      "size": 108775
+    },
+    {
+      "executable": false,
+      "path": "assets/index.html",
+      "sha256": "d9d750ff16685bb1d79729fb136201a8ed5fa88077683c9992c62d3f0ca525d4",
+      "size": 15993
+    },
+    {
+      "executable": false,
+      "path": "assets/template-dark.html",
+      "sha256": "84f1d003ebebc95545ed7d238f405e6967305e5ad9a17ebc750de97910369989",
+      "size": 3214
+    },
+    {
+      "executable": false,
+      "path": "assets/template-full.html",
+      "sha256": "538f0a5efdf9e4d14e4b02eb4712cf7479211edd92fd8128688fb910d0bcc8bd",
+      "size": 22602
+    },
+    {
+      "executable": false,
+      "path": "assets/template-motion.html",
+      "sha256": "799feaf296b3088f5e9ea77b1bd6ed16127a05bdbc600fec21fab86fda333429",
+      "size": 19947
+    },
+    {
+      "executable": false,
+      "path": "assets/template-terminal.html",
+      "sha256": "6d000bd0308a737afeb1a11f453945d315abeea9d2a9f357fba534590ea391f9",
+      "size": 4934
+    },
+    {
+      "executable": false,
+      "path": "assets/template.html",
+      "sha256": "48887f37b265f00eff347d29d3d69ac42fe2eb63b867feb83e6f6250d227ba2a",
+      "size": 3337
+    },
+    {
+      "executable": false,
+      "path": "references/animation.md",
+      "sha256": "24ce83341aee976680cb69d43b2afab40efcfa97edcd394e5b17183eb58fc94a",
+      "size": 11815
+    },
+    {
+      "executable": false,
+      "path": "references/doctor.md",
+      "sha256": "bd2331eb5eaf751f254f94332abf8c78b32f22849effb180883fbc7c1e9ab471",
+      "size": 5193
+    },
+    {
+      "executable": false,
+      "path": "references/export.md",
+      "sha256": "ca672e5c74bc1540df108541efed0cea080db7df3bfc69991f297ab604fec97e",
+      "size": 7894
+    },
+    {
+      "executable": false,
+      "path": "references/import-drawio.md",
+      "sha256": "2615ba8efb300ecc498df72223a91c6c712411efb38892fc779b583ad8b7b4ce",
+      "size": 13066
+    },
+    {
+      "executable": false,
+      "path": "references/import-mermaid.md",
+      "sha256": "952de5fb9e0f24178cbbbfd784e9838ad6770d00e5e5550842f4f38f44f75474",
+      "size": 8913
+    },
+    {
+      "executable": false,
+      "path": "references/onboarding.md",
+      "sha256": "f1916f057f1b3175c08254c6b7bfdf1ff4f9165851a1cb28e9cdffd3aa29ac4c",
+      "size": 14054
+    },
+    {
+      "executable": false,
+      "path": "references/output-spec.md",
+      "sha256": "da6f70a409a9d7b4d852f398d90f96592e708db494f31a84f8760e69724c0944",
+      "size": 11419
+    },
+    {
+      "executable": false,
+      "path": "references/primitive-annotation.md",
+      "sha256": "f78cac0af423ead9b74926fa669e9227efc21f15d0f51ea46bc93e79c55a121a",
+      "size": 1708
+    },
+    {
+      "executable": false,
+      "path": "references/primitive-icons.md",
+      "sha256": "bb4a97f27c1bff90107ce54429c89196eba971af982998a9bf4214a0c7570f06",
+      "size": 106768
+    },
+    {
+      "executable": false,
+      "path": "references/primitive-sketchy.md",
+      "sha256": "8859f0d70c10f46f59817cb348346e7fb9e1609b70a4a513d297b8c850c866a4",
+      "size": 1700
+    },
+    {
+      "executable": false,
+      "path": "references/primitive-terminal.md",
+      "sha256": "7b52c2fb229c822a60b0061caa64ae6a68aacd4f1c22a1a98d1d0eaaa2333b55",
+      "size": 3915
+    },
+    {
+      "executable": false,
+      "path": "references/profiles.md",
+      "sha256": "51f6d24e40eca1a13dc562b4b33aa76b56172c5c30fc94897e5bb369a34f9886",
+      "size": 14221
+    },
+    {
+      "executable": false,
+      "path": "references/semantic-patterns.md",
+      "sha256": "c56d7b9dc95066dcea2ecb0810d92fd7b56afd62aaf48ca0971129de0e28bdfa",
+      "size": 10296
+    },
+    {
+      "executable": false,
+      "path": "references/style-guide.md",
+      "sha256": "9ea7ee75d48384f5925c50b2c5dcee9996e5db02531708815e881946ceb3c056",
+      "size": 11550
+    },
+    {
+      "executable": false,
+      "path": "references/type-architecture.md",
+      "sha256": "cb5672b5c69cbe24a0b18d144f8b2e4507a124ebb0dbc0bc898ceafb27612caa",
+      "size": 5001
+    },
+    {
+      "executable": false,
+      "path": "references/type-bar.md",
+      "sha256": "a6ab12ffe6fed07652f47924deefa14e9010f161db26daa90d918db16e353d9d",
+      "size": 13576
+    },
+    {
+      "executable": false,
+      "path": "references/type-data-flow.md",
+      "sha256": "9453c838d2ea7fc199659a369475b3141234e51921d4d4282fac8af9765effc7",
+      "size": 21284
+    },
+    {
+      "executable": false,
+      "path": "references/type-db-schema.md",
+      "sha256": "433f2ede171453ccbc1e6e8d0be4846fa5fb88bb499e8ba7e6db02d066a06c46",
+      "size": 4865
+    },
+    {
+      "executable": false,
+      "path": "references/type-dependency.md",
+      "sha256": "b6262d5337b3184aeb83f503627a665a9108b62a42e5ef2d6549c4167220fa6c",
+      "size": 4187
+    },
+    {
+      "executable": false,
+      "path": "references/type-deployment.md",
+      "sha256": "d3d33ff53bb8bdb7b15bcc3b23d1009ee68b40638588dd054d0ab993fb480fd5",
+      "size": 4184
+    },
+    {
+      "executable": false,
+      "path": "references/type-dp-integration.md",
+      "sha256": "d808c354591ec9b751c662efd187ba4920b1861d4a484d8548f4efcb9d897987",
+      "size": 22247
+    },
+    {
+      "executable": false,
+      "path": "references/type-dp-security-matrix.md",
+      "sha256": "209f4870ec19d90eff1ab80ecfe0062f3a5075c3b666b1a3a900a27260ba8832",
+      "size": 19086
+    },
+    {
+      "executable": false,
+      "path": "references/type-er.md",
+      "sha256": "0f4a718b202edec593e4555e0353a4080d4be6d98328209db083898f2f01302c",
+      "size": 1495
+    },
+    {
+      "executable": false,
+      "path": "references/type-fishbone.md",
+      "sha256": "d2f1c043fd40f5a20305bcc8b835b852b77a26b77516c3bbd813abf70dfa4f20",
+      "size": 5710
+    },
+    {
+      "executable": false,
+      "path": "references/type-flowchart.md",
+      "sha256": "c2af5e2b849255ae4859125db7b101b74bfb9b201204725c1e83fac51a98ebab",
+      "size": 1079
+    },
+    {
+      "executable": false,
+      "path": "references/type-gantt.md",
+      "sha256": "83a84cdd4b2880debd9e602f1d27ffc54197a6c783eb46228711641956f858ee",
+      "size": 2468
+    },
+    {
+      "executable": false,
+      "path": "references/type-high-level.md",
+      "sha256": "86e9e681189b013752edc512a8efb651e67aba52e9ddfbfe46d1fc117f1d5248",
+      "size": 26685
+    },
+    {
+      "executable": false,
+      "path": "references/type-it-state.md",
+      "sha256": "ac3ceb94c4e8083130d5373654e150f1c9b3f0a5e3857a00c8e251f1086bf7b1",
+      "size": 29984
+    },
+    {
+      "executable": false,
+      "path": "references/type-journey.md",
+      "sha256": "135501cef58abd6c716746248a5bfd163e56b68d9f314516bb8f60d26a895256",
+      "size": 5075
+    },
+    {
+      "executable": false,
+      "path": "references/type-kanban.md",
+      "sha256": "e64138a2629db2bf1de6aa4f4979088777a08c1426ef122c57f200aae20fc7eb",
+      "size": 4302
+    },
+    {
+      "executable": false,
+      "path": "references/type-layers.md",
+      "sha256": "393a65464f1189a2244c989a7448a8be5446d5932c907bbdba57d10997729534",
+      "size": 1535
+    },
+    {
+      "executable": false,
+      "path": "references/type-line.md",
+      "sha256": "85a09e3fdd3be20d07181e115434f32462fd738a9a1fa091d880e76c406643df",
+      "size": 33842
+    },
+    {
+      "executable": false,
+      "path": "references/type-loop.md",
+      "sha256": "c7e98b8eda1e6d6904920f4d96310745deb0651920e9d531c8f40e54304ab60d",
+      "size": 12609
+    },
+    {
+      "executable": false,
+      "path": "references/type-medallion.md",
+      "sha256": "a1af03521adb53431766a559e05c984ee07871fd3cf495cf63146999f56f6f42",
+      "size": 22226
+    },
+    {
+      "executable": false,
+      "path": "references/type-nested.md",
+      "sha256": "e8c61323d96cd085e52750e90a989f9ad321600da6814b8926502b4484aced31",
+      "size": 1392
+    },
+    {
+      "executable": false,
+      "path": "references/type-org-chart.md",
+      "sha256": "9905c67d6cf884f4537b9f86f893e6a90b4dc4134ff8bf8ce6187d151efbd6ab",
+      "size": 3082
+    },
+    {
+      "executable": false,
+      "path": "references/type-polar.md",
+      "sha256": "51fd08897a65f4ae2fe0c28b5e3afdd4867633fb960e3107551e49f4f9d1e97c",
+      "size": 7767
+    },
+    {
+      "executable": false,
+      "path": "references/type-process.md",
+      "sha256": "46fe29384b5004a7e79c21f093ed2724e58f258e543f45ed64f871bed6d31eda",
+      "size": 28588
+    },
+    {
+      "executable": false,
+      "path": "references/type-pyramid.md",
+      "sha256": "a07536682478832fbf552aaa066dc827eaa1a072c538766387c8b900ae7add38",
+      "size": 1783
+    },
+    {
+      "executable": false,
+      "path": "references/type-quadrant.md",
+      "sha256": "2346caba0370beaf8b33efd5d9a3e24f3d555b7160a3d523d9d07a37ce6c353a",
+      "size": 6254
+    },
+    {
+      "executable": false,
+      "path": "references/type-radar.md",
+      "sha256": "8379b0313afbfdbb5a641c98f8ac6668419b4add6cea0749a646365fad02c1d3",
+      "size": 5592
+    },
+    {
+      "executable": false,
+      "path": "references/type-sankey.md",
+      "sha256": "bcc39b963fa4f340c7654204fa0c6c0a248a0b42b1669ebeb2375381d8013a2c",
+      "size": 8952
+    },
+    {
+      "executable": false,
+      "path": "references/type-scatter.md",
+      "sha256": "b89fc3d4777c5a09a82d889aaf1592ebf6fa7bc71877458c6b39c32778e690e6",
+      "size": 20245
+    },
+    {
+      "executable": false,
+      "path": "references/type-sequence.md",
+      "sha256": "21c3ef9a491068e871aae99f035883d3c982255df97db1effaf0c3301f562865",
+      "size": 6686
+    },
+    {
+      "executable": false,
+      "path": "references/type-state.md",
+      "sha256": "7fed5690161e6f75d510cf89d1e989885b2d900fdadca5116e7f5b49ad8529a5",
+      "size": 1112
+    },
+    {
+      "executable": false,
+      "path": "references/type-story-map.md",
+      "sha256": "ee49c426397c3e5234fb544ea1394f7c8879610fea897da3b636891e3affb4c4",
+      "size": 4827
+    },
+    {
+      "executable": false,
+      "path": "references/type-swimlane.md",
+      "sha256": "4b689b9dd72078dc76fd2fbb1eb6c0bf0304fee667ae7cd56fab5f19b535f250",
+      "size": 991
+    },
+    {
+      "executable": false,
+      "path": "references/type-timeline.md",
+      "sha256": "9102e61347b17b303eafad52d4f8941d507faf889d9316ed0325e5e0f0ba01ca",
+      "size": 1065
+    },
+    {
+      "executable": false,
+      "path": "references/type-tree.md",
+      "sha256": "cde49c571463bfbb3b91a5ba6abf91a4eb00f1deadc717947a9584fca189e57b",
+      "size": 1248
+    },
+    {
+      "executable": false,
+      "path": "references/type-treemap.md",
+      "sha256": "bec1ad60a0a9e0889c03a40e7e2e32082a2deb16be65b8bf251cbaf1e10401ba",
+      "size": 8613
+    },
+    {
+      "executable": false,
+      "path": "references/type-uml-class.md",
+      "sha256": "8cc0bc8f77a38da58110287c1b112043be9751389ef45772fe607eae9aa77ecd",
+      "size": 4857
+    },
+    {
+      "executable": false,
+      "path": "references/type-venn.md",
+      "sha256": "f8d5d4f0506160e0502f932140306b12d25adea1d1f6f319fb38c2345b0c6b42",
+      "size": 1654
+    },
+    {
+      "executable": false,
+      "path": "references/type-wardley.md",
+      "sha256": "aa93eb728a022b85f38de69c1d287752f91c487b05c50396ee21e769162900a9",
+      "size": 5748
+    },
+    {
+      "executable": false,
+      "path": "scripts/drawio_extract.py",
+      "sha256": "302b357688de234e5a46818a25120fd8fe5a58e5c3338f1f027ec269f24424d9",
+      "size": 31364
+    },
+    {
+      "executable": false,
+      "path": "scripts/mermaid_extract.py",
+      "sha256": "e7f5f45b2cff600c7c1079e76f9aa1836686ee3f3e5003686dff8af98912a1da",
+      "size": 48515
+    },
+    {
+      "executable": false,
+      "path": "scripts/self_check.py",
+      "sha256": "5bb48bdd41378a5bde2cfae64363316e8435ba63a72f9a1e062ff0018d6ba0c7",
+      "size": 16772
+    }
+  ],
+  "git_tree_sha1": "1bf319831137412e8ab71df321b510fa561fd262",
+  "hash_algorithm": "skill-tree-sha256-v1",
+  "revision": "b52a33bfeef85d43995193ee52c13b485154b7b4",
+  "root": "/Users/yoshiki/.local/share/skill-governance/quarantine/diagram-design/b52a33bfeef85d43995193ee52c13b485154b7b4/diagram-design",
+  "schema": "governance-tree-evidence-v1",
+  "source_id": "diagram-design",
+  "surface": "quarantine",
+  "tree_sha256": "6027c05aec720da05ac9f4b25dfffcc67b290a2e2f683c274ec4580da76d4250"
+}

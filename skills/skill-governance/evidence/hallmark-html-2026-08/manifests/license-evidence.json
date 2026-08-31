@@ -1,0 +1,31 @@
+{
+  "collection_id": "hallmark-html-2026-08",
+  "license": "MIT",
+  "local_targets": {
+    "claude": [
+      {
+        "path": "LICENSE",
+        "sha256": "06088a8b94598626f27612dea42300154bf7be967c85d9d3eee4490cb056af7d"
+      }
+    ],
+    "codex": [
+      {
+        "path": "LICENSE",
+        "sha256": "06088a8b94598626f27612dea42300154bf7be967c85d9d3eee4490cb056af7d"
+      }
+    ]
+  },
+  "note": "The Skill subtree has no separate LICENSE path. The repository-root MIT license is preserved byte-exactly in this draft and is also present in each review target as provenance evidence.",
+  "quarantine_license_files": [],
+  "schema": "license-evidence-draft-v1",
+  "source_id": "hallmark",
+  "status": "observed",
+  "upstream": {
+    "api_blob_sha": "f4bfc53d8d773d3b10d95c2d58a5773dd4e2f3aa",
+    "api_size": 1078,
+    "evidence_file": "licenses/LICENSE.txt",
+    "path": "LICENSE",
+    "sha256": "06088a8b94598626f27612dea42300154bf7be967c85d9d3eee4490cb056af7d",
+    "source_api_url": "https://api.github.com/repos/Nutlope/hallmark/git/blobs/f4bfc53d8d773d3b10d95c2d58a5773dd4e2f3aa"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "collection_id": "diagram-design-html-2026-08",
+  "license": "MIT",
+  "local_targets": {
+    "claude": [
+      {
+        "path": "LICENSE",
+        "sha256": "bb7e12e91fecef43024111123ff784cec6c485585561d8b552557c0173b3ed29"
+      }
+    ],
+    "codex": [
+      {
+        "path": "LICENSE",
+        "sha256": "bb7e12e91fecef43024111123ff784cec6c485585561d8b552557c0173b3ed29"
+      }
+    ]
+  },
+  "note": "The upstream package tree has no local LICENSE file; the repository-root MIT LICENSE is the authoritative license evidence. The stage carries an exact copy for review target provenance.",
+  "quarantine_license_files": [],
+  "schema": "license-evidence-draft-v1",
+  "source_id": "diagram-design",
+  "status": "observed",
+  "upstream": {
+    "api_blob_sha": "5270ecfc40942fc2da652a7a2f3e687fc6851ba3",
+    "api_size": 1071,
+    "evidence_file": "licenses/LICENSE.txt",
+    "path": "LICENSE",
+    "sha256": "bb7e12e91fecef43024111123ff784cec6c485585561d8b552557c0173b3ed29",
+    "source_api_url": "https://api.github.com/repos/cathrynlavery/diagram-design/git/blobs/5270ecfc40942fc2da652a7a2f3e687fc6851ba3"
+  }
+}

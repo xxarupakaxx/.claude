@@ -1,0 +1,230 @@
+{
+  "schema_version": 1,
+  "evaluation": {
+    "kind": "independent-value-review",
+    "candidate": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex",
+    "candidate_skill": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/SKILL.md",
+    "candidate_version": "2.6-adapted.1",
+    "baseline": "/Users/yoshiki/.codex/skills/diagram-design",
+    "baseline_skill": "/Users/yoshiki/.codex/skills/diagram-design/SKILL.md",
+    "cases": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-value-cases.json",
+    "model": "unknown/inherited",
+    "attempt_policy": "one initial candidate pass per case; no improvement retry",
+    "output_scope": "task-local JSON, review Markdown, SVGs, and short answer text only",
+    "html_scope_note": "The candidate normally requires HTML plus canonical SVG. HTML was not produced because the explicit evaluation write scope permits only SVG and short answers; full HTML delivery was not assessed.",
+    "external_load": false,
+    "upstream_scripts_executed": false
+  },
+  "cases": [
+    {
+      "id": "dependency",
+      "source_anchor": "task:.local/memory/260831_html-runtime-adoption/diagram-value-cases.json#L4-L4",
+      "attempts": 1,
+      "retry_count": 0,
+      "loaded_files": [
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/SKILL.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/selection.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/output-contract.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/type-dependency.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/visual-rules.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/quality-gate.md"
+      ],
+      "route": {
+        "decision": "use",
+        "pattern": "fan-in / dependency",
+        "visual_type": "dependency",
+        "reason": "rendererにplanとparserが集まり、rendererとsourceがsnapshotを共有するため、rankとfan-inを空間で読む価値がある。4本のfixture接続をそのまま保持できる。"
+      },
+      "answer": "依存図を採用。plan→renderer、parser→renderer、renderer→snapshot、source→snapshotだけを示す。",
+      "generation": {
+        "status": "svg_generated",
+        "output": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-value-output/dependency.svg",
+        "short_answer": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-value-output/dependency.txt",
+        "nodes_drawn": 5,
+        "edges_drawn": 4,
+        "source_edges_kept": 4,
+        "source_nodes_kept": 5,
+        "fidelity": "Merged: なし; Collapsed: なし; Dropped: なし; Kept: 4接続と共有先。"
+      },
+      "failure": null
+    },
+    {
+      "id": "process",
+      "source_anchor": "task:.local/memory/260831_html-runtime-adoption/diagram-value-cases.json#L8-L8",
+      "attempts": 1,
+      "retry_count": 0,
+      "loaded_files": [
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/SKILL.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/selection.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/output-contract.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/type-process.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/visual-rules.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/quality-gate.md"
+      ],
+      "route": {
+        "decision": "use",
+        "pattern": "stage / handoff",
+        "visual_type": "process",
+        "reason": "受付・検証・保存の担当laneと、検証失敗の分岐を同時に読む必要があるため、単純な箇条書きよりlane配置が有効。"
+      },
+      "answer": "処理図を採用。利用者側とサービス側を分け、受付→検証、検証→保存、検証失敗→エラー表示の3接続だけを示す。",
+      "generation": {
+        "status": "svg_generated",
+        "output": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-value-output/process.svg",
+        "short_answer": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-value-output/process.txt",
+        "lanes_drawn": 2,
+        "steps_drawn": 4,
+        "edges_drawn": 3,
+        "source_edges_kept": 3,
+        "source_nodes_kept": 4,
+        "fidelity": "Merged: なし; Collapsed: なし; Dropped: なし; Kept: 3接続、利用者側/サービス側の担当。"
+      },
+      "failure": null
+    },
+    {
+      "id": "small_comparison",
+      "source_anchor": "task:.local/memory/260831_html-runtime-adoption/diagram-value-cases.json#L12-L12",
+      "attempts": 1,
+      "retry_count": 0,
+      "loaded_files": [
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/SKILL.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/selection.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/type-comparison.md"
+      ],
+      "route": {
+        "decision": "do_not_draw",
+        "pattern": "paired trace / state comparison",
+        "visual_type": "table",
+        "reason": "Before/Afterの一項目で、項目・変更前・変更後の3列の表が順序と差を保ったまま最短になる。図の空間配置による追加情報がない。"
+      },
+      "answer": "図は不要。項目・変更前・変更後の3列の表を使う。",
+      "generation": {
+        "status": "table_selected",
+        "output": null,
+        "short_answer": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-value-output/small_comparison.txt"
+      },
+      "failure": null
+    },
+    {
+      "id": "spacing",
+      "source_anchor": "task:.local/memory/260831_html-runtime-adoption/diagram-value-cases.json#L16-L16",
+      "attempts": 1,
+      "retry_count": 0,
+      "loaded_files": [
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/SKILL.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/selection.md"
+      ],
+      "route": {
+        "decision": "exclude",
+        "pattern": null,
+        "visual_type": null,
+        "reason": "フォームのラベルと入力欄の余白は、依存・処理・構造・状態差の説明図ではなくUI/UXのレイアウト調整である。"
+      },
+      "answer": "Diagram Designでは実行しない。UI/UXのレイアウト調整として扱う。",
+      "generation": {
+        "status": "not_applicable",
+        "output": null,
+        "short_answer": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-value-output/spacing.txt"
+      },
+      "failure": null
+    },
+    {
+      "id": "progress",
+      "source_anchor": "task:.local/memory/260831_html-runtime-adoption/diagram-value-cases.json#L20-L20",
+      "attempts": 1,
+      "retry_count": 0,
+      "loaded_files": [
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/SKILL.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/selection.md"
+      ],
+      "route": {
+        "decision": "exclude",
+        "pattern": null,
+        "visual_type": null,
+        "reason": "RoadmapのTask順・進捗・完了状態はDiagram Designの責務外で、viewing-plans側のcanonical stateを更新する仕事である。"
+      },
+      "answer": "Diagram Designでは実行しない。Roadmap/進捗を管理する入口へ戻す。",
+      "generation": {
+        "status": "not_applicable",
+        "output": null,
+        "short_answer": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-value-output/progress.txt"
+      },
+      "failure": null
+    },
+    {
+      "id": "structure",
+      "source_anchor": "task:.local/memory/260831_html-runtime-adoption/diagram-value-cases.json#L24-L24",
+      "attempts": 1,
+      "retry_count": 0,
+      "loaded_files": [
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/SKILL.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/selection.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/output-contract.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/type-architecture.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/visual-rules.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/quality-gate.md"
+      ],
+      "route": {
+        "decision": "use",
+        "pattern": "secure route / boundary",
+        "visual_type": "architecture",
+        "reason": "3 componentと2接続に加え、browser/API間だけのtrust boundaryを空間で示す問いである。API内部はunknownのまま保持できる。"
+      },
+      "answer": "構造図を採用。browser→API→保存層の2接続と、browser/API間だけのtrust boundaryを示し、API内部はunknownとする。",
+      "generation": {
+        "status": "svg_generated",
+        "output": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-value-output/structure.svg",
+        "short_answer": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-value-output/structure.txt",
+        "zones_drawn": 2,
+        "components_drawn": 3,
+        "links_drawn": 2,
+        "source_links_kept": 2,
+        "fidelity": "Merged: なし; Collapsed: なし; Dropped: API内部の未提示構造（unknownとして表示）; Kept: 3 component、2接続、1 trust boundary。"
+      },
+      "failure": null
+    }
+  ],
+  "baseline_read_only_comparison": {
+    "loaded_files": [
+      "/Users/yoshiki/.codex/skills/diagram-design/SKILL.md"
+    ],
+    "executed": false,
+    "possible_at_entry": [
+      "visualizing-workがstatic editorial SVG sidecarを選び、reader・question・evidence・confidence・omitted scopeが既知で、spatial groupingが認知負荷を下げる小さなcomparison、timeline、causal、ownership、concept view。"
+    ],
+    "excluded_at_entry": [
+      "visualizing-workの選択なしの直接実行",
+      "dependency graphのようなlayered technical map",
+      "process/canonical flow",
+      "Roadmap、canonical state、task order、progress、session selection",
+      "viewer integration"
+    ],
+    "case_mapping_without_execution": {
+      "dependency": "入口の除外境界（layered technical map）に該当",
+      "process": "入口の除外境界（canonical flow）に該当",
+      "small_comparison": "条件付きで可能だが、simple comparisonはspatial groupingの価値が不足し表へ戻る",
+      "spacing": "入口の対象外",
+      "progress": "Roadmap/progressの除外境界に該当",
+      "structure": "入口の除外境界（layered technical map）に該当"
+    },
+    "success_rate": "not measured; baseline was read-only and cases were not executed"
+  },
+  "validation": {
+    "svg_static_check": "PASS",
+    "checked_files": [
+      "dependency.svg",
+      "process.svg",
+      "structure.svg"
+    ],
+    "checks": [
+      "XML parse",
+      "viewBox / role=img / non-empty title and desc",
+      "duplicate id absence",
+      "orthogonal connector command check",
+      "expected connector counts: 4 / 3 / 2",
+      "data-source on every connector",
+      "no script, iframe, foreignObject, @import, external href/src, JavaScript, or network URL"
+    ],
+    "fixture_scope": "Only the three requested SVG cases were drawn; no external load, upstream script, runtime, registry, candidate tree, or source file was modified."
+  }
+}

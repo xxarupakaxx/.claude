@@ -1,0 +1,42 @@
+{
+  "collection_id": "hallmark-html-2026-08",
+  "html_contract_fixture": {
+    "candidate_status": "FAIL",
+    "finding_codes": [
+      "artifact-kind-missing"
+    ],
+    "receipt": "receipts/stage-html-contract-eval.json",
+    "status": "PASS"
+  },
+  "human_approval": null,
+  "promotion": null,
+  "quiet_run": {
+    "receipt": "receipts/stage-quiet-run-eval.json",
+    "status": "PASS"
+  },
+  "raw_frontmatter": {
+    "reason": "67,460 > 65,536 before PyYAML",
+    "receipt": "receipts/frontmatter-quarantine.json",
+    "status": "BLOCKED"
+  },
+  "raw_quarantine": {
+    "blocking_count": 16,
+    "receipt": "receipts/quarantine-inspection-raw.json",
+    "status": "BLOCKED"
+  },
+  "schema": "hallmark-stage-evaluation-summary-v1",
+  "static": {
+    "receipt": "receipts/stage-static-eval.json",
+    "status": "PASS"
+  },
+  "status": "review-evidence-pending",
+  "trigger": {
+    "receipt": "receipts/stage-trigger-eval.json",
+    "status": "PASS"
+  },
+  "ui": {
+    "receipt": "receipts/stage-ui-eval.json",
+    "status": "PASS"
+  },
+  "value_receipt": null
+}

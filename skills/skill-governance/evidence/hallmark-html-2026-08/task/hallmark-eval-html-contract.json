@@ -1,0 +1,65 @@
+{
+  "schema": "hallmark-html-artifact-contract-fixture-v1",
+  "status": "PASS",
+  "fixture_result": "PASS",
+  "observed_candidate_contract": {
+    "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-value-generated/candidate.html",
+    "sha256": "26015e94c971ca66c36001fad079d47e9e62ca29f08291a1ef3c18c66db6b6c3",
+    "bytes": 10293,
+    "contract_status": "FAIL",
+    "issues": [
+      {
+        "code": "artifact-kind-missing",
+        "severity": "error",
+        "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-value-generated/candidate.html",
+        "message": "meta name=\"artifact-kind\" is required."
+      }
+    ],
+    "finding_codes": [
+      "artifact-kind-missing"
+    ],
+    "data_artifact_kind": [
+      "html-document"
+    ],
+    "meta_artifact_kind": []
+  },
+  "control_document_contract": {
+    "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-plan-redesign/plan-document.html",
+    "sha256": "2d0eadced998f9b40a1b437a25f61fe29929f42fff726e94562d6980fa866aa2",
+    "bytes": 48381,
+    "contract_status": "PASS",
+    "issues": [],
+    "finding_codes": [],
+    "data_artifact_kind": [
+      "html-document"
+    ],
+    "meta_artifact_kind": [
+      "html-document"
+    ]
+  },
+  "registered_contract": {
+    "producer_owner": "creating-html-documents",
+    "checker": "/Users/yoshiki/.codex/scripts/html_artifact_contract.py",
+    "manifest": "/Users/yoshiki/.codex/config/html-surfaces.json",
+    "route": "html",
+    "static_profile": "strict-self-contained",
+    "expected_artifact_kind": "html-document",
+    "required_markers": [
+      "html[data-artifact-kind=html-document]",
+      "meta[name=artifact-kind][content=html-document]"
+    ]
+  },
+  "assertions": {
+    "uses_registered_common_checker": true,
+    "data_attribute_alone_is_not_sufficient": true,
+    "original_first_pass_failure_preserved": true,
+    "control_document_has_required_meta": true
+  },
+  "candidate_execution": false,
+  "runtime_mutation": false,
+  "original_trial_unchanged": true,
+  "limitations": [
+    "このfixtureは共通checkerがdata属性だけを拒否することを検査する。candidate.htmlを修正してPASSへ変えるものではない。",
+    "producerの実行、browser起動、runtime・registry・lockの変更は行っていない。"
+  ]
+}

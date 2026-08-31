@@ -1,0 +1,37 @@
+# Draft only. Parent lead must review and merge into the generation-3 registry.
+# No safety, value, human-approval, or promotion receipt is declared here.
+# The reference-hygiene ledger is target-bound, while the raw source remains BLOCKED.
+
+[[sources]]
+id = "hallmark"
+github = "Nutlope/hallmark"
+default_branch = "main"
+observed_revision = "13ac0ec7e148655948100b6396439e481361d690"
+observed_at = "2026-08-31"
+origin = "community-maintainer"
+mode = "selective-adoption"
+update_policy = "notify-only"
+catalog_required = true
+
+[[collections]]
+id = "hallmark-html-2026-08"
+source_id = "hallmark"
+local_state = "reviewed"
+review_state = "evidence-pending"
+risk_tier = "unclassified"
+license = "MIT"
+adaptation = "platform-adapted"
+content_relation = "source-backed-static-adaptation"
+targets = ["codex", "claude"]
+default_revision = "13ac0ec7e148655948100b6396439e481361d690"
+baseline_at = "2026-08-31"
+adaptation_diff = { path = "adaptations/hallmark-reference-hygiene-ledger.json", sha256 = "cc9876d48062bd060503fefd1215fbd7a3c6fb214e8efc06db31d795f186070a" }
+skills = ["hallmark"]
+
+[collections.upstream_paths]
+"hallmark" = "skills/hallmark/SKILL.md"
+
+[collections.frontmatter_receipts."hallmark"]
+quarantine = { path = "receipts/prototype-upstream-frontmatter.json", sha256 = "d62deb41d19a0137500c2abff6b0c1929f86a72cb0f9f8e9afd4fb3059205e8a" }
+codex = { path = "receipts/frontmatter-codex.json", sha256 = "e0c6aa876ea38dc885818fff4342aed8a7445d294f8a8b7265e108a847f64869" }
+claude = { path = "receipts/frontmatter-claude.json", sha256 = "9f47a732e692a8257eaf582cdeeeb9120ddc1822ed5ba735b8748c99a7861f75" }

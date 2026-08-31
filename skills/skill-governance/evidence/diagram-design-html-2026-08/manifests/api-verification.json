@@ -1,0 +1,84 @@
+{
+  "commit": {
+    "committer_date": "2026-08-30T00:21:26Z",
+    "sha": "b52a33bfeef85d43995193ee52c13b485154b7b4",
+    "tree_sha": "b5d1beb8406ffbe8f357d0cc969d7cb3014944b5"
+  },
+  "endpoints": {
+    "commit": "https://api.github.com/repos/cathrynlavery/diagram-design/commits/b52a33bfeef85d43995193ee52c13b485154b7b4",
+    "package_tree_recursive": "https://api.github.com/repos/cathrynlavery/diagram-design/git/trees/1bf319831137412e8ab71df321b510fa561fd262?recursive=1",
+    "root_license_blob": "https://api.github.com/repos/cathrynlavery/diagram-design/git/blobs/5270ecfc40942fc2da652a7a2f3e687fc6851ba3",
+    "root_tree_recursive": "https://api.github.com/repos/cathrynlavery/diagram-design/git/trees/b52a33bfeef85d43995193ee52c13b485154b7b4?recursive=1",
+    "skill_blob": "https://api.github.com/repos/cathrynlavery/diagram-design/git/blobs/33b3671eaa4c78711952ead2e1c8cc5b574122f5"
+  },
+  "full_repo_catalog": {
+    "archive_comparison": {
+      "api_blob_count": 439,
+      "archive_file_count": 439,
+      "extra_paths": [],
+      "git_blob_sha1_mismatch_count": 0,
+      "missing_paths": [],
+      "path": "manifests/archive-tree-comparison.json",
+      "sha256": "4c28848554cac8d37472668cee7551b2901fcd4471518b27b2ba4ed541b29ea2",
+      "size_mismatch_count": 0,
+      "status": "PASS",
+      "unexpected_mode_count": 0
+    },
+    "complete": true,
+    "reason": "Fixed-commit recursive Git tree (truncated=false) and the matching GitHub archive have equal path, byte-size, and Git blob SHA-1 sets for all 439 repository blobs; archive mode normalization is recorded separately.",
+    "skill_count_observed": 1
+  },
+  "local_comparisons": {
+    "quarantine_file_bytes": 2886991,
+    "quarantine_file_count": 212,
+    "quarantine_file_manifest_sha256": "774b80b9ddf74baf416dd69063457716b6e44f2c0c30e025e6f6e7f4e6fc1589",
+    "quarantine_git_tree_sha1": "1bf319831137412e8ab71df321b510fa561fd262",
+    "quarantine_package_tree_matches_api": true,
+    "quarantine_skill_git_blob_matches_api": true,
+    "quarantine_tree_sha256": "6027c05aec720da05ac9f4b25dfffcc67b290a2e2f683c274ec4580da76d4250",
+    "root_license_git_blob_matches_api": true,
+    "root_license_sha256": "bb7e12e91fecef43024111123ff784cec6c485585561d8b552557c0173b3ed29"
+  },
+  "package_tree": {
+    "directory_count": 3,
+    "entry_count": 215,
+    "file_bytes": 2886991,
+    "file_count": 212,
+    "path": "skills/diagram-design",
+    "recursive_truncated": false,
+    "sha": "1bf319831137412e8ab71df321b510fa561fd262"
+  },
+  "repository": "cathrynlavery/diagram-design",
+  "retrieved_at": "2026-08-31T02:17:11.954063+00:00",
+  "revision": "b52a33bfeef85d43995193ee52c13b485154b7b4",
+  "root_license_blob": {
+    "mode": "100644",
+    "path": "LICENSE",
+    "sha": "5270ecfc40942fc2da652a7a2f3e687fc6851ba3",
+    "size": 1071,
+    "type": "blob",
+    "url": "https://api.github.com/repos/cathrynlavery/diagram-design/git/blobs/5270ecfc40942fc2da652a7a2f3e687fc6851ba3"
+  },
+  "root_tree": {
+    "entry_count": 472,
+    "recursive_truncated": false,
+    "sha": "b5d1beb8406ffbe8f357d0cc969d7cb3014944b5",
+    "skill_paths": [
+      {
+        "mode": "100644",
+        "path": "skills/diagram-design/SKILL.md",
+        "sha": "33b3671eaa4c78711952ead2e1c8cc5b574122f5",
+        "size": 39996,
+        "type": "blob"
+      }
+    ]
+  },
+  "schema": "github-fixed-revision-api-verification-v1",
+  "skill_blob": {
+    "decoded_bytes": 39996,
+    "path": "skills/diagram-design/SKILL.md",
+    "retrieved_sha": "33b3671eaa4c78711952ead2e1c8cc5b574122f5",
+    "sha": "33b3671eaa4c78711952ead2e1c8cc5b574122f5"
+  },
+  "status": "verified"
+}

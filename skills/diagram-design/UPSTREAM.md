@@ -1,22 +1,17 @@
 # Upstream provenance
 
+Review collection: `diagram-design-html-2026-08`
+Review stage: `/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design`
+
 - Repository: https://github.com/cathrynlavery/diagram-design
-- Source revision: `a157f7616473d966d6f433cf0b4d4f1880603504`
+- Source revision: `b52a33bfeef85d43995193ee52c13b485154b7b4`
+- Source commit date: `2026-08-30T00:21:26Z`
 - Reviewed source directory: `skills/diagram-design`
-- Git tree: `c0e9ef1937ac30dd5b46e58d43f19b375c946a4b`
-- Captured tree SHA-256: `873e204331b6197fa086cc4a1260c3689578894733bec58c2f71397dc00ec8db`
-- License observed in source repository: MIT
+- Upstream package tree: `1bf319831137412e8ab71df321b510fa561fd262`
+- Captured package manifest: `97a426bfbb45b8c6f7fe22d527c2f9fb25d34f1329a6b7952eed5d090b104aa2`
+- License: MIT; root license evidence is kept by the task review record.
 
-## Local adaptation
+The immutable candidate is at:
+`/Users/yoshiki/.local/share/skill-governance/quarantine/diagram-design/b52a33bfeef85d43995193ee52c13b485154b7b4/diagram-design`
 
-This directory is locally authored and static-only. It does not copy or execute upstream scripts, assets, onboarding, style-guide management, icon fetching, font loading, browser automation, or export workflows.
-
-The upstream candidate remains watch-only. A future upstream import requires its own review.
-
-## Deliberately excluded capabilities
-
-- Network access and URL onboarding
-- External image, SVG, icon, and font loading
-- JavaScript, iframe, and `foreignObject` output
-- Playwright or other browser export
-- Shared style-guide or global-state mutation
+This target is a local adaptation. It does not claim to be the complete upstream package, and it does not execute or import upstream files.

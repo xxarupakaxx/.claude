@@ -1,0 +1,186 @@
+{
+  "artifact_id": "hallmark-review-stage-20260831",
+  "collection_id": "hallmark-html-2026-08",
+  "evidence_paths": {
+    "html_contract": "receipts/stage-html-contract-eval.json",
+    "quiet_run": "receipts/stage-quiet-run-eval.json",
+    "raw_frontmatter": "receipts/frontmatter-quarantine.json",
+    "raw_inspection": "receipts/quarantine-inspection-raw.json",
+    "static": "receipts/stage-static-eval.json",
+    "trigger": "receipts/stage-trigger-eval.json",
+    "ui": "receipts/stage-ui-eval.json"
+  },
+  "execution_boundary": {
+    "candidate_code_executed": false,
+    "candidate_hooks_executed": false,
+    "candidate_scripts_executed": false,
+    "credentials_supplied": false,
+    "evaluation_scripts": [
+      "hallmark-eval-static.py",
+      "hallmark-eval-trigger.py",
+      "hallmark-eval-value-followup.py",
+      "hallmark-eval-ui.py",
+      "hallmark-eval-html-contract.py"
+    ],
+    "evaluation_scripts_are_candidate_code": false,
+    "external_loads_run": false,
+    "lock_written": false,
+    "package_install_run": false,
+    "package_manager_run": false,
+    "python_bytecode_disabled": true,
+    "registry_written": false,
+    "runtime_paths_written": false,
+    "site_server_run": false,
+    "trusted_test_runner": {
+      "evaluation_runs": 5,
+      "evidence_path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-eval-quiet-run.json",
+      "path": "/Users/yoshiki/.codex/scripts/quiet-run.py",
+      "status": "PASS"
+    }
+  },
+  "governance_hold": {
+    "audit_blocking_count": 13,
+    "audit_mutation_allowed": false,
+    "audit_path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/governance-audit/audit-now.json",
+    "audit_status": "DEGRADED",
+    "blocking_codes": [
+      "active_mutation_hold",
+      "package_file_set_drift",
+      "runtime_estate_added",
+      "runtime_estate_drift",
+      "unregistered_skill_surface"
+    ],
+    "lead_owns_final_review_and_runtime_promotion": true,
+    "parity_blocking_count": 1,
+    "parity_path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/governance-audit/parity-now.json",
+    "parity_status": "DEGRADED",
+    "promotion_allowed": false
+  },
+  "html_artifact_contract": {
+    "common_checker": "/Users/yoshiki/.codex/scripts/html_artifact_contract.py",
+    "expected_artifact_kind": "html-document",
+    "fixture": {
+      "control_contract_status": "PASS",
+      "control_document_path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-plan-redesign/plan-document.html",
+      "control_document_sha256": "2d0eadced998f9b40a1b437a25f61fe29929f42fff726e94562d6980fa866aa2",
+      "data_only_is_rejected": true,
+      "interpretation": "fixture PASSはdata属性だけの候補を正しくFAILとして検出したことを意味し、候補HTMLの合格を意味しない。",
+      "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-eval-html-contract.json",
+      "sha256": "6bf7a9bbe17d9707772cfba97a03da7e886fb51f4db84ae685f025e5be3f3e94",
+      "status": "PASS",
+      "uses_registered_common_checker": true
+    },
+    "hallmark_boundary": "Hallmark supplies selected visual-craft guidance and hands HTML output to the registered producer and shared checker; it does not duplicate either responsibility.",
+    "producer_owner": "creating-html-documents",
+    "producer_source": "/Users/yoshiki/.codex/skills/creating-html-documents/SKILL.md",
+    "profile": "strict-self-contained",
+    "registered_surface_manifest": "/Users/yoshiki/.codex/config/html-surfaces.json",
+    "required_markers": [
+      "html[data-artifact-kind=\"html-document\"]",
+      "meta[name=\"artifact-kind\"][content=\"html-document\"]"
+    ],
+    "route": "html",
+    "trial": {
+      "browser_status": "PASS (parent fresh verification; this worker did not launch a browser)",
+      "candidate_bytes": 10293,
+      "candidate_path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-value-generated/candidate.html",
+      "candidate_sha256": "26015e94c971ca66c36001fad079d47e9e62ca29f08291a1ef3c18c66db6b6c3",
+      "contract_status": "FAIL",
+      "data_marker_present": true,
+      "finding_codes": [
+        "artifact-kind-missing"
+      ],
+      "meta_marker_present": false,
+      "original_static_verification": {
+        "errors": [
+          {
+            "code": "artifact-kind-missing",
+            "message": "meta name=\"artifact-kind\" is required."
+          }
+        ],
+        "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-value-generated/static-verification.json",
+        "sha256": "2e5a6f983f03f0a1b58ad63641295535f12b782e3ba6da07c8247350064b3e3e",
+        "warnings": []
+      },
+      "repair_required": "再生成時にcreating-html-documents producerの両マーカーを出力し、同じstrict-self-contained checkerを通す。checkerを緩めたりcandidate.htmlをこのfixtureで修正したりしない。",
+      "unchanged": true
+    }
+  },
+  "human_approval_receipt": null,
+  "not_approval_lineage": true,
+  "promotion_blocked": true,
+  "promotion_receipt": null,
+  "runtime_installed": false,
+  "schema": "hallmark-review-stage-evidence-v1",
+  "source": {
+    "candidate_skill_bytes": 67460,
+    "candidate_skill_sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577",
+    "commit_tree_sha": "02ebcc67f58295654c073cfb74a20a9a86db1f8f",
+    "homepage": "https://www.usehallmark.com/",
+    "license": "MIT",
+    "official_repository": "Nutlope/hallmark",
+    "package_manifest_sha256": "b071732391c563cf5566be67e811866929e7cc8078b1b893416b86f5312f062f",
+    "previous_metadata": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-skill-additions/hallmark-metadata.json",
+    "previous_review": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-skill-additions/hallmark-review.md",
+    "quarantine_root": "/Users/yoshiki/.local/share/skill-governance/quarantine/hallmark/13ac0ec7e148655948100b6396439e481361d690",
+    "repository_url": "https://github.com/Nutlope/hallmark",
+    "resolved_commit": "13ac0ec7e148655948100b6396439e481361d690",
+    "resolved_ref": "refs/heads/main",
+    "skill_tree_sha": "747c924c4767b4d5fa6f1c59985c87a21c918334",
+    "source_tree_unchanged": true
+  },
+  "stage": "review",
+  "status": "review-stage",
+  "target_parity": {
+    "all_bytes_equal": true,
+    "all_modes_equal": true,
+    "collection_surface": "hallmark-html-2026-08/hallmark/{codex,claude}",
+    "skill_body_equal": true,
+    "tree_sha_equal": true
+  },
+  "targets": {
+    "claude": {
+      "frontmatter": {
+        "exit_code": 0,
+        "finding_codes": [],
+        "status": "validated",
+        "validator": "pyyaml-6.0.2-safe-loader"
+      },
+      "manifest_file_count": 26,
+      "manifest_path": "/Users/yoshiki/.local/share/skill-governance/review/hallmark-html-2026-08/hallmark/claude/review-manifest.json",
+      "manifest_sha256": "fbe03dd7017158938a6563cb3c742b169f1b7aa9b533e7db71928fd19621f166",
+      "path": "/Users/yoshiki/.local/share/skill-governance/review/hallmark-html-2026-08/hallmark/claude",
+      "skill_bytes": 5994,
+      "skill_sha256": "9a6fb66d6c5a843c7dcc70f984f6202665e1c2c0b0c552d23bfec4cd4ade05e8",
+      "source_copy_bytes": 67460,
+      "source_copy_path": "/Users/yoshiki/.local/share/skill-governance/review/hallmark-html-2026-08/hallmark/claude/source/UPSTREAM-SKILL.md.txt",
+      "source_copy_sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577",
+      "target_id": "claude",
+      "tree_bytes": 110442,
+      "tree_file_count": 27,
+      "tree_sha256": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+    },
+    "codex": {
+      "frontmatter": {
+        "exit_code": 0,
+        "finding_codes": [],
+        "status": "validated",
+        "validator": "pyyaml-6.0.2-safe-loader"
+      },
+      "manifest_file_count": 26,
+      "manifest_path": "/Users/yoshiki/.local/share/skill-governance/review/hallmark-html-2026-08/hallmark/codex/review-manifest.json",
+      "manifest_sha256": "fbe03dd7017158938a6563cb3c742b169f1b7aa9b533e7db71928fd19621f166",
+      "path": "/Users/yoshiki/.local/share/skill-governance/review/hallmark-html-2026-08/hallmark/codex",
+      "skill_bytes": 5994,
+      "skill_sha256": "9a6fb66d6c5a843c7dcc70f984f6202665e1c2c0b0c552d23bfec4cd4ade05e8",
+      "source_copy_bytes": 67460,
+      "source_copy_path": "/Users/yoshiki/.local/share/skill-governance/review/hallmark-html-2026-08/hallmark/codex/source/UPSTREAM-SKILL.md.txt",
+      "source_copy_sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577",
+      "target_id": "codex",
+      "tree_bytes": 110442,
+      "tree_file_count": 27,
+      "tree_sha256": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
+    }
+  },
+  "value_receipt": null
+}

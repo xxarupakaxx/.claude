@@ -1,0 +1,169 @@
+{
+  "schema_version": 1,
+  "kind": "hallmark-review-target",
+  "collection_id": "hallmark-html-2026-08",
+  "source_commit": "13ac0ec7e148655948100b6396439e481361d690",
+  "source_skill_sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577",
+  "source_skill_bytes": 67460,
+  "manifest_self_inclusion": false,
+  "files": [
+    {
+      "path": "LICENSE",
+      "size": 1078,
+      "mode": "0o644",
+      "sha256": "06088a8b94598626f27612dea42300154bf7be967c85d9d3eee4490cb056af7d"
+    },
+    {
+      "path": "SKILL.md",
+      "size": 5994,
+      "mode": "0o644",
+      "sha256": "9a6fb66d6c5a843c7dcc70f984f6202665e1c2c0b0c552d23bfec4cd4ade05e8"
+    },
+    {
+      "path": "SOURCE.md",
+      "size": 5272,
+      "mode": "0o644",
+      "sha256": "f48db53c256b7f885538bf0673d5ba945adabb1c4cdd77507c423675dde5fb43"
+    },
+    {
+      "path": "adaptation.diff",
+      "size": 4404,
+      "mode": "0o644",
+      "sha256": "90955c88e1c2281074b6408427323c8c3c716e3fc3f576949db5799955b692b4"
+    },
+    {
+      "path": "references/anti-patterns.md",
+      "size": 1671,
+      "mode": "0o644",
+      "sha256": "f50a4223b335a16227f719e1d68443dd317e50f501adc49b653ea956c2f5d51d"
+    },
+    {
+      "path": "references/color.md",
+      "size": 1206,
+      "mode": "0o644",
+      "sha256": "7eeb3a2d214624435b72a342bc78df86671496526ed9a1b39527c045f6663c34"
+    },
+    {
+      "path": "references/components/f4-step-sequence.md",
+      "size": 498,
+      "mode": "0o644",
+      "sha256": "16917aa14c88096eff913db4bea881be13ec26787e8e4c16eb9a91c8226e8ac3"
+    },
+    {
+      "path": "references/components/h2-split-diptych.md",
+      "size": 641,
+      "mode": "0o644",
+      "sha256": "906b8e35e3595d0aeb15cd7ad7d335e37232b56ffc3bc31a60ac78483ac7e6f6"
+    },
+    {
+      "path": "references/components/s4-inline-no-break.md",
+      "size": 451,
+      "mode": "0o644",
+      "sha256": "7f7c9bf9131a41159fb2fb3300a9b4f49675faabf2a61951a6a5af8905d958a2"
+    },
+    {
+      "path": "references/contract.md",
+      "size": 2017,
+      "mode": "0o644",
+      "sha256": "ee9e1f07e888ac6031d2f6ec86480e2fbfec99215a891cc32b58ef598a7ae1cc"
+    },
+    {
+      "path": "references/interaction-and-states.md",
+      "size": 1599,
+      "mode": "0o644",
+      "sha256": "fff870b3fc5bc1a7e6625b05ed6665ab5789f5d8df34b5d954795e257091b9a7"
+    },
+    {
+      "path": "references/layout-and-space.md",
+      "size": 1610,
+      "mode": "0o644",
+      "sha256": "0771f4a172487d9babe5245fd73b9c7a2b9caa84b8a6ae272390540bbcc44201"
+    },
+    {
+      "path": "references/responsive.md",
+      "size": 1057,
+      "mode": "0o644",
+      "sha256": "8c7167313003aa3f1aaeb00e1b00852306d115a3492ba70220ced98e70472287"
+    },
+    {
+      "path": "references/structure.md",
+      "size": 1104,
+      "mode": "0o644",
+      "sha256": "7ef7442ba2fa5854246b29b94dbc3210540f1c303f6780d05f3765bb708a3cf0"
+    },
+    {
+      "path": "references/study.md",
+      "size": 1207,
+      "mode": "0o644",
+      "sha256": "e03d8c162eaf828c4351d029bc88ea4da2aecfcbb4b66f7fddad1650d5d50467"
+    },
+    {
+      "path": "references/themes/brutal.md",
+      "size": 535,
+      "mode": "0o644",
+      "sha256": "e013f3865dc73a0cad9f1836ea8376be1450bea1319db083624eecf20162d0e5"
+    },
+    {
+      "path": "references/themes/catalog.md",
+      "size": 1350,
+      "mode": "0o644",
+      "sha256": "a5f88bfbf1c3f1d0f587d6f0a530482541fa321574a17b795be18f91316381a7"
+    },
+    {
+      "path": "references/themes/cobalt.md",
+      "size": 596,
+      "mode": "0o644",
+      "sha256": "6b18fa5313bae85284941f60443d12b500c1778c4b619f54ef74e22c140c1e20"
+    },
+    {
+      "path": "references/themes/grid.md",
+      "size": 644,
+      "mode": "0o644",
+      "sha256": "4d618f0f2b0e1102e874937c19804118ee26b572424576c2e148fa3fc4f17ade"
+    },
+    {
+      "path": "references/themes/lumen.md",
+      "size": 640,
+      "mode": "0o644",
+      "sha256": "ed06060caa0b14196646893308846ba3c022ffb35744dee0c5cbad70e5089b0f"
+    },
+    {
+      "path": "references/themes/plain-editorial.md",
+      "size": 585,
+      "mode": "0o644",
+      "sha256": "8f40e96ea63bc64917d7e03bfb3e20462b2c0d29b7d80d2588be226e6b00b0a2"
+    },
+    {
+      "path": "references/typography.md",
+      "size": 1616,
+      "mode": "0o644",
+      "sha256": "cff1c95546a778d380d0eeda86453b85d54f9fac2ed2577e080fa058953a0784"
+    },
+    {
+      "path": "references/verbs/audit.md",
+      "size": 555,
+      "mode": "0o644",
+      "sha256": "6bcf60cdabfeddd9d0bf4d48cacfa62ab24710d32c408d9e1261baf6d2cf08d9"
+    },
+    {
+      "path": "references/verbs/redesign.md",
+      "size": 1190,
+      "mode": "0o644",
+      "sha256": "9eee786efb957ec980b9c4c7a72e3058c807a47d5b5c02697781204d60d4c6c4"
+    },
+    {
+      "path": "source/UPSTREAM-SKILL.md.txt",
+      "size": 67460,
+      "mode": "0o644",
+      "sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577"
+    },
+    {
+      "path": "source/upstream-skill.json",
+      "size": 292,
+      "mode": "0o644",
+      "sha256": "8007f840eaeb33db31fb0ad4b3010503c7acd9423c8b4cf6ba31da94dd0e60dd"
+    }
+  ],
+  "generated_at": "2026-08-31T02:58:12.160428+00:00",
+  "runtime_installation": false
+}

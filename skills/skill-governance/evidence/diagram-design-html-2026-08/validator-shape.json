@@ -1,0 +1,25 @@
+{
+  "baseline_registry": {
+    "not_modified": true,
+    "path": "/Users/yoshiki/.local/share/skill-governance/proposals/emilkowalski-ja-2026-07/skill-governance/registry.toml",
+    "sha256": "c36a5c0f70350003680e202cc040f663b89b9292452a31f5834d6f6d26214551"
+  },
+  "candidate_adaptation": "platform-adapted",
+  "candidate_collection_id": "diagram-design-html-2026-08",
+  "candidate_has_approval_lineage_receipts": false,
+  "candidate_local_state": "reviewed",
+  "candidate_review_state": "evidence-pending",
+  "candidate_risk_tier": "L0",
+  "candidate_source_id": "diagram-design",
+  "candidate_targets": [
+    "codex",
+    "claude"
+  ],
+  "findings": [],
+  "generated_at": "2026-08-31T02:20:57.415603+00:00",
+  "generation": 3,
+  "mode": "in-memory-read-only",
+  "note": "Candidate source and collection were appended only in memory and passed the current governance validate_registry shape. This is not a registry update, catalog lock, safety receipt, value receipt, approval receipt, promotion receipt, or activation.",
+  "schema": "governance-registry-shape-check-v1",
+  "status": "PASS"
+}

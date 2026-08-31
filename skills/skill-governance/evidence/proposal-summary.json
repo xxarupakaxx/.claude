@@ -1,0 +1,51 @@
+{
+  "schema": "html-design-active-deployment-proposal-v1",
+  "status": "reviewed-approval-pending",
+  "generation": 3,
+  "proposal_root": "/Users/yoshiki/.local/share/skill-governance/proposals/html-design-active-2026-08/skill-governance",
+  "targets": [
+    "codex",
+    "claude"
+  ],
+  "collections": {
+    "diagram": {
+      "collection_id": "diagram-design-html-2026-08",
+      "source_id": "diagram-design",
+      "source_revision": "b52a33bfeef85d43995193ee52c13b485154b7b4",
+      "review_tree_sha256": "20a9fdc4e0cc85fddbcf655e7efa35b0fef28ae608e1492ba60c264e3f0af569",
+      "risk_tier": "L0",
+      "local_state": "reviewed",
+      "review_state": "approval-pending",
+      "subject_sha256": "e0764360aaaddd0bcb7700c63da2c3abbfdce9fed0c73776cd4ea6523d5b5253",
+      "safety_receipt": "receipts/diagram-design-html-2026-08/safety-draft.json",
+      "value_receipt": "receipts/diagram-design-html-2026-08/value-draft.json"
+    },
+    "hallmark": {
+      "collection_id": "hallmark-html-2026-08",
+      "source_id": "hallmark",
+      "source_revision": "13ac0ec7e148655948100b6396439e481361d690",
+      "review_tree_sha256": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+      "risk_tier": "L0",
+      "local_state": "reviewed",
+      "review_state": "approval-pending",
+      "subject_sha256": "0b54655bbfe9a2e287d59eb1a5b114e90b75ff2fb2e39474e43bd4578b78a291",
+      "safety_receipt": "receipts/hallmark-html-2026-08/safety-draft.json",
+      "value_receipt": "receipts/hallmark-html-2026-08/value-draft.json"
+    }
+  },
+  "governance_results": {
+    "catalog_final_returncode": 0,
+    "lock_plan_actual_returncode": 2,
+    "lock_plan_scoped_blocking_count": 0,
+    "actual_runtime_presence_finding_count": 2,
+    "estate_returncode": 2,
+    "reputation_returncode": 0
+  },
+  "runtime_presence_observation": "evidence/runtime-presence-observation.json",
+  "approval_created": false,
+  "promotion_created": false,
+  "runtime_mutated": false,
+  "candidate_code_executed": false,
+  "raw_source_preserved": true,
+  "stage_preserved": true
+}

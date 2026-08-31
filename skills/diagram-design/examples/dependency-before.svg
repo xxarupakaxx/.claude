@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" role="img" aria-labelledby="dependency-before-title dependency-before-desc">
+  <title id="dependency-before-title">Before: dependency list</title>
+  <desc id="dependency-before-desc">A flat relation list that does not show rank or shared dependency. This is a demonstration fixture, not project evidence.</desc>
+  <style>
+    .paper{fill:#f6f4ef}.ink{fill:#252321}.muted{fill:#697079}.rule{stroke:#d4d0c8}.label{font:600 18px -apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic','Noto Sans JP',system-ui,sans-serif}.mono{font:13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.source{font:12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  </style>
+  <rect class="paper" x="0" y="0" width="760" height="360"/>
+  <text class="label ink" x="40" y="54">Before / 関係の列挙</text>
+  <line class="rule" x1="40" y1="76" x2="720" y2="76" stroke-width="1"/>
+  <g class="mono ink" data-before-list="true">
+    <text data-before-item="renderer-to-snapshot" data-source="demo:dependency#L1" x="56" y="122">Renderer → Snapshot</text>
+    <text data-before-item="parser-to-snapshot" data-source="demo:dependency#L2" x="56" y="164">Parser → Snapshot</text>
+    <text data-before-item="plan-to-renderer" data-source="demo:dependency#L3" x="56" y="206">Plan → Renderer</text>
+    <text data-before-item="plan-to-parser" data-source="demo:dependency#L4" x="56" y="248">Plan → Parser</text>
+    <text data-before-item="snapshot-to-source" data-source="demo:dependency#L5" x="56" y="290">Snapshot → Source anchor</text>
+  </g>
+  <text class="source muted" x="40" y="332">デモデータ。実プロジェクトの事実ではない。</text>
+</svg>

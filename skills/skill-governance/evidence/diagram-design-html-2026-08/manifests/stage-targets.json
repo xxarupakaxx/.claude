@@ -1,0 +1,315 @@
+{
+  "collection_id": "diagram-design-html-2026-08",
+  "hash_algorithm": "skill-tree-sha256-v1",
+  "schema": "governance-tree-evidence-v1",
+  "skill_name": "diagram-design",
+  "surface": "review",
+  "targets": {
+    "claude": {
+      "bytes": 66896,
+      "file_count": 24,
+      "files": [
+        {
+          "path": "ADAPTATION.md",
+          "size": 2536,
+          "executable": false,
+          "sha256": "dce8d6dabb7f1065949c0c4b40bbef750bbcf719655bdfe13d2e0ad9af015d9f"
+        },
+        {
+          "path": "LICENSE",
+          "size": 1071,
+          "executable": false,
+          "sha256": "bb7e12e91fecef43024111123ff784cec6c485585561d8b552557c0173b3ed29"
+        },
+        {
+          "path": "SKILL.md",
+          "size": 5456,
+          "executable": false,
+          "sha256": "9e885b3b82b6c390e43a1813726724c3578abdc125e11bbcaeb625dc13f8e46c"
+        },
+        {
+          "path": "SOURCE",
+          "size": 917,
+          "executable": false,
+          "sha256": "5dc91495ee58c127be3999a113dea620ec1dd2145105b64c210342aeb94d0c6d"
+        },
+        {
+          "path": "SOURCE.md",
+          "size": 917,
+          "executable": false,
+          "sha256": "5dc91495ee58c127be3999a113dea620ec1dd2145105b64c210342aeb94d0c6d"
+        },
+        {
+          "path": "UPSTREAM.md",
+          "size": 945,
+          "executable": false,
+          "sha256": "9c36ac3f828e8487ee85a9f724e3fd6f75ecb2ca129d02541610ea7cc6f643a4"
+        },
+        {
+          "path": "examples/architecture.html",
+          "size": 5056,
+          "executable": false,
+          "sha256": "026cfbb65db508a1c06c8abdbc7daeb0212fadd922187cec473e20f91bdf74cb"
+        },
+        {
+          "path": "examples/architecture.svg",
+          "size": 3440,
+          "executable": false,
+          "sha256": "1a2918c182c66eec414be734ec3bf205322c0571f0c6011ef9fdcc544784ceb9"
+        },
+        {
+          "path": "examples/comparison.html",
+          "size": 4503,
+          "executable": false,
+          "sha256": "2eff28a6e92fb874755eb40ab7a4b5526d9af4d558cd09ddc9cf07fe04c7a0ca"
+        },
+        {
+          "path": "examples/comparison.svg",
+          "size": 2891,
+          "executable": false,
+          "sha256": "1c4416a86ddae0793010e3eba443e4e00b0ef049286ffaeebb206b7c68c73bac"
+        },
+        {
+          "path": "examples/dependency-before.html",
+          "size": 3335,
+          "executable": false,
+          "sha256": "e6391b4aca3d5a12ce08cf0f0dc3680d511518df18bf06d99264671f858cf1b9"
+        },
+        {
+          "path": "examples/dependency-before.svg",
+          "size": 1733,
+          "executable": false,
+          "sha256": "c52899861d65b6c9d01b5722a39d9aedc59567223ef78c0c97006abfef9de10b"
+        },
+        {
+          "path": "examples/dependency-candidate.html",
+          "size": 5603,
+          "executable": false,
+          "sha256": "9640036d8082dbf9f182a79d7bb1f0748672d7e03437281b33411e698d6fed50"
+        },
+        {
+          "path": "examples/dependency-candidate.svg",
+          "size": 3979,
+          "executable": false,
+          "sha256": "528439bf6c3fa5eca63cdeb59c7d416effd6db7b273525ee546fe565dcb2272f"
+        },
+        {
+          "path": "examples/process.html",
+          "size": 5216,
+          "executable": false,
+          "sha256": "12c4a51b33a63246624858d1e741baa002bbe081dc09774dda5afbae35f5393a"
+        },
+        {
+          "path": "examples/process.svg",
+          "size": 3598,
+          "executable": false,
+          "sha256": "cdc14117a66da8d847073eeea8175e87ef4997f93b1580d388d183f07630a7f4"
+        },
+        {
+          "path": "references/output-contract.md",
+          "size": 2039,
+          "executable": false,
+          "sha256": "5ae2d67b4b2dbb5699f522f8c36349f67460cd92400e68e9e247293fbf544368"
+        },
+        {
+          "path": "references/quality-gate.md",
+          "size": 1990,
+          "executable": false,
+          "sha256": "6fc8b8c75cc0cc7419a97aab2d717e78b0826ad9d87b7d9cc929ba682abf6363"
+        },
+        {
+          "path": "references/selection.md",
+          "size": 2137,
+          "executable": false,
+          "sha256": "a416eb532da39d234ee20d300fcc99f897341676eea2f7924638a812c8d8a546"
+        },
+        {
+          "path": "references/type-architecture.md",
+          "size": 1779,
+          "executable": false,
+          "sha256": "324d451e8496094c437e6df0c56f9a9c8cd840de75fc255a4a66c483878b517c"
+        },
+        {
+          "path": "references/type-comparison.md",
+          "size": 1663,
+          "executable": false,
+          "sha256": "9b92624ea86e25815744daa51674178958ebc2e99dade0a278f73c1851f53bbf"
+        },
+        {
+          "path": "references/type-dependency.md",
+          "size": 2285,
+          "executable": false,
+          "sha256": "7caf157120d423ef70dec256adc7701bb270763814e089a2fd138c0d6952336a"
+        },
+        {
+          "path": "references/type-process.md",
+          "size": 1939,
+          "executable": false,
+          "sha256": "5f31f246736f4cc16623a23d16300526948c893301b5fc1a396d1970821f28a2"
+        },
+        {
+          "path": "references/visual-rules.md",
+          "size": 1868,
+          "executable": false,
+          "sha256": "200bdd50c99ca0d88fa755f8eab4c7b59f4db6e017da66ea94b2999b7f20f050"
+        }
+      ],
+      "git_tree_sha1": "3f158807c251fdc60bc9f3608d7b8ee522445435",
+      "root": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/claude",
+      "tree_sha256": "20a9fdc4e0cc85fddbcf655e7efa35b0fef28ae608e1492ba60c264e3f0af569"
+    },
+    "codex": {
+      "bytes": 66896,
+      "file_count": 24,
+      "files": [
+        {
+          "path": "ADAPTATION.md",
+          "size": 2536,
+          "executable": false,
+          "sha256": "dce8d6dabb7f1065949c0c4b40bbef750bbcf719655bdfe13d2e0ad9af015d9f"
+        },
+        {
+          "path": "LICENSE",
+          "size": 1071,
+          "executable": false,
+          "sha256": "bb7e12e91fecef43024111123ff784cec6c485585561d8b552557c0173b3ed29"
+        },
+        {
+          "path": "SKILL.md",
+          "size": 5456,
+          "executable": false,
+          "sha256": "9e885b3b82b6c390e43a1813726724c3578abdc125e11bbcaeb625dc13f8e46c"
+        },
+        {
+          "path": "SOURCE",
+          "size": 917,
+          "executable": false,
+          "sha256": "5dc91495ee58c127be3999a113dea620ec1dd2145105b64c210342aeb94d0c6d"
+        },
+        {
+          "path": "SOURCE.md",
+          "size": 917,
+          "executable": false,
+          "sha256": "5dc91495ee58c127be3999a113dea620ec1dd2145105b64c210342aeb94d0c6d"
+        },
+        {
+          "path": "UPSTREAM.md",
+          "size": 945,
+          "executable": false,
+          "sha256": "9c36ac3f828e8487ee85a9f724e3fd6f75ecb2ca129d02541610ea7cc6f643a4"
+        },
+        {
+          "path": "examples/architecture.html",
+          "size": 5056,
+          "executable": false,
+          "sha256": "026cfbb65db508a1c06c8abdbc7daeb0212fadd922187cec473e20f91bdf74cb"
+        },
+        {
+          "path": "examples/architecture.svg",
+          "size": 3440,
+          "executable": false,
+          "sha256": "1a2918c182c66eec414be734ec3bf205322c0571f0c6011ef9fdcc544784ceb9"
+        },
+        {
+          "path": "examples/comparison.html",
+          "size": 4503,
+          "executable": false,
+          "sha256": "2eff28a6e92fb874755eb40ab7a4b5526d9af4d558cd09ddc9cf07fe04c7a0ca"
+        },
+        {
+          "path": "examples/comparison.svg",
+          "size": 2891,
+          "executable": false,
+          "sha256": "1c4416a86ddae0793010e3eba443e4e00b0ef049286ffaeebb206b7c68c73bac"
+        },
+        {
+          "path": "examples/dependency-before.html",
+          "size": 3335,
+          "executable": false,
+          "sha256": "e6391b4aca3d5a12ce08cf0f0dc3680d511518df18bf06d99264671f858cf1b9"
+        },
+        {
+          "path": "examples/dependency-before.svg",
+          "size": 1733,
+          "executable": false,
+          "sha256": "c52899861d65b6c9d01b5722a39d9aedc59567223ef78c0c97006abfef9de10b"
+        },
+        {
+          "path": "examples/dependency-candidate.html",
+          "size": 5603,
+          "executable": false,
+          "sha256": "9640036d8082dbf9f182a79d7bb1f0748672d7e03437281b33411e698d6fed50"
+        },
+        {
+          "path": "examples/dependency-candidate.svg",
+          "size": 3979,
+          "executable": false,
+          "sha256": "528439bf6c3fa5eca63cdeb59c7d416effd6db7b273525ee546fe565dcb2272f"
+        },
+        {
+          "path": "examples/process.html",
+          "size": 5216,
+          "executable": false,
+          "sha256": "12c4a51b33a63246624858d1e741baa002bbe081dc09774dda5afbae35f5393a"
+        },
+        {
+          "path": "examples/process.svg",
+          "size": 3598,
+          "executable": false,
+          "sha256": "cdc14117a66da8d847073eeea8175e87ef4997f93b1580d388d183f07630a7f4"
+        },
+        {
+          "path": "references/output-contract.md",
+          "size": 2039,
+          "executable": false,
+          "sha256": "5ae2d67b4b2dbb5699f522f8c36349f67460cd92400e68e9e247293fbf544368"
+        },
+        {
+          "path": "references/quality-gate.md",
+          "size": 1990,
+          "executable": false,
+          "sha256": "6fc8b8c75cc0cc7419a97aab2d717e78b0826ad9d87b7d9cc929ba682abf6363"
+        },
+        {
+          "path": "references/selection.md",
+          "size": 2137,
+          "executable": false,
+          "sha256": "a416eb532da39d234ee20d300fcc99f897341676eea2f7924638a812c8d8a546"
+        },
+        {
+          "path": "references/type-architecture.md",
+          "size": 1779,
+          "executable": false,
+          "sha256": "324d451e8496094c437e6df0c56f9a9c8cd840de75fc255a4a66c483878b517c"
+        },
+        {
+          "path": "references/type-comparison.md",
+          "size": 1663,
+          "executable": false,
+          "sha256": "9b92624ea86e25815744daa51674178958ebc2e99dade0a278f73c1851f53bbf"
+        },
+        {
+          "path": "references/type-dependency.md",
+          "size": 2285,
+          "executable": false,
+          "sha256": "7caf157120d423ef70dec256adc7701bb270763814e089a2fd138c0d6952336a"
+        },
+        {
+          "path": "references/type-process.md",
+          "size": 1939,
+          "executable": false,
+          "sha256": "5f31f246736f4cc16623a23d16300526948c893301b5fc1a396d1970821f28a2"
+        },
+        {
+          "path": "references/visual-rules.md",
+          "size": 1868,
+          "executable": false,
+          "sha256": "200bdd50c99ca0d88fa755f8eab4c7b59f4db6e017da66ea94b2999b7f20f050"
+        }
+      ],
+      "git_tree_sha1": "3f158807c251fdc60bc9f3608d7b8ee522445435",
+      "root": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex",
+      "tree_sha256": "20a9fdc4e0cc85fddbcf655e7efa35b0fef28ae608e1492ba60c264e3f0af569"
+    }
+  }
+}

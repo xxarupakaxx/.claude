@@ -1,0 +1,146 @@
+{
+  "candidate_execution": false,
+  "collection_id": "hallmark-html-2026-08",
+  "evaluation": {
+    "activation_contract": {
+      "explicit_name_or_visual_delegation_required": true,
+      "generic_ui_html_responsive_taskflow_accessibility_without_hallmark": "do not activate Hallmark",
+      "hallmark_role": "selected visual-craft supplement",
+      "product_ui_primary": "designing-ui-ux"
+    },
+    "candidate_execution": false,
+    "claim": "local route-cue and state-boundary fixture coverage only; this is not a model pass@1 or production trigger measurement",
+    "fixture_confusion": {
+      "false_negative": 0,
+      "false_positive": 0,
+      "fixture_precision": 1.0,
+      "fixture_recall": 1.0,
+      "negative_cases": 6,
+      "positive_cases": 6,
+      "true_negative": 6,
+      "true_positive": 6
+    },
+    "limitations": [
+      "自然言語モデルの自動invocationは実行していない。",
+      "fixtureのcue分類はSkill本文のroute境界を確認するための再現可能な静的検査である。",
+      "fixtureのbyte比較はcontext token削減や理解時間を証明しない。",
+      "runtime promotionには代表promptの実出力、pass@1、reviewerによるvalue receiptが別途必要。"
+    ],
+    "mode": "deterministic-fixture",
+    "model_invocation": false,
+    "results": [
+      {
+        "expected_route": "plan-document",
+        "id": "plan-01",
+        "observed_route": "plan-document",
+        "prompt": "Hallmarkを使い、このHTML計画書の目的、Before / After、依存関係、実装内容をクリックなしで読める形にしたい。",
+        "status": "PASS"
+      },
+      {
+        "expected_route": "plan-document",
+        "id": "plan-02",
+        "observed_route": "plan-document",
+        "prompt": "Hallmarkを視覚クラフト補助として選び、Codemapの依存図を本文へ埋め込み、640px以上はBeforeとAfterを横に並べ、375pxでは縦にしたい。",
+        "status": "PASS"
+      },
+      {
+        "expected_route": "audit",
+        "id": "audit-01",
+        "observed_route": "audit",
+        "prompt": "既存HTMLをHallmarkで監査し、AIっぽい均一カードと隠れた根拠をseverity付きで指摘して。",
+        "status": "PASS"
+      },
+      {
+        "expected_route": "redesign",
+        "id": "redesign-01",
+        "observed_route": "redesign",
+        "prompt": "既存画面の余白と文字組みをHallmarkで再設計したい。routeと業務ロジックは保持して。",
+        "status": "PASS"
+      },
+      {
+        "expected_route": "study",
+        "id": "study-01",
+        "observed_route": "study",
+        "prompt": "Hallmarkで添付スクリーンショットから視覚DNAを抽出し、余白、文字、構成だけを計画へ反映して。",
+        "status": "PASS"
+      },
+      {
+        "expected_route": "redesign",
+        "id": "delegated-redesign",
+        "observed_route": "redesign",
+        "prompt": "designing-ui-uxをprimaryにし、Hallmarkを視覚クラフトの補助として選択する。既存UIのselectedとpressedを分けて再設計して。",
+        "status": "PASS"
+      },
+      {
+        "expected_route": null,
+        "id": "negative-auth",
+        "observed_route": null,
+        "prompt": "Hallmarkを導入するため、API認証のtoken検証と権限 middlewareを実装して。",
+        "status": "PASS"
+      },
+      {
+        "expected_route": null,
+        "id": "negative-sql",
+        "observed_route": null,
+        "prompt": "SQL migrationを作り、クエリの実行速度を改善して。",
+        "status": "PASS"
+      },
+      {
+        "expected_route": null,
+        "id": "negative-git",
+        "observed_route": null,
+        "prompt": "Gitのmerge conflictを解消してmainへpushして。",
+        "status": "PASS"
+      },
+      {
+        "expected_route": null,
+        "id": "negative-translation",
+        "observed_route": null,
+        "prompt": "このMarkdownを英語へ翻訳して。レイアウト変更は不要。",
+        "status": "PASS"
+      },
+      {
+        "expected_route": null,
+        "id": "negative-generic-ui",
+        "observed_route": null,
+        "prompt": "既存product UIのtask flowとアクセシビリティを設計して。Hallmarkの指定はない。",
+        "status": "PASS"
+      },
+      {
+        "expected_route": null,
+        "id": "negative-generic-html",
+        "observed_route": null,
+        "prompt": "HTMLのresponsive layoutを直して、UIを洗練して。Hallmarkは指定しない。",
+        "status": "PASS"
+      }
+    ],
+    "route_contract": {
+      "audit": "既存HTMLの視覚監査、AI風の構造、severity付きfinding",
+      "none": "logic、auth、SQL、Git、翻訳、generic UIなどHallmark外",
+      "plan-document": "HTML計画書、Before / After、依存図、本文、実装、検証",
+      "redesign": "既存画面の余白・文字・構成の視覚変更",
+      "study": "画像または指定資料から視覚DNAを抽出"
+    },
+    "schema": "hallmark-trigger-fixture-eval-v2",
+    "state_contract": {
+      "checks": {
+        "primary_owner_is_named": true,
+        "selected_is_distinct_from_pressed": true,
+        "selected_is_explicitly_named": true,
+        "selected_row_exists": true
+      },
+      "scope": "selected is a separate visual state when selection semantics exist; product UI flow and accessibility remain with designing-ui-ux",
+      "status": "PASS"
+    },
+    "status": "PASS"
+  },
+  "interpretation": "Deterministic route-cue fixture only; no model invocation and no production precision/recall claim.",
+  "kind": "trigger",
+  "runtime_mutation": false,
+  "schema": "hallmark-stage-trigger-evidence-v1",
+  "source_evidence": {
+    "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-eval-trigger.json",
+    "sha256": "aff0c19972f6cea2d0e0c3f20a0cf6faaf28d49b5b222c233f405ce459ca7c6f"
+  },
+  "stage": "review"
+}

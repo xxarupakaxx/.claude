@@ -1,0 +1,51 @@
+{
+  "api": {
+    "archived": false,
+    "created_at": "2026-04-27T20:47:10Z",
+    "description": "Anti-AI-slop design skill for Claude Code, Cursor, and Codex.",
+    "forks_count": 1410,
+    "full_name": "Nutlope/hallmark",
+    "license": {
+      "api_url": "https://api.github.com/licenses/mit",
+      "key": "mit",
+      "name": "MIT License",
+      "spdx_id": "MIT"
+    },
+    "open_issues_count": 42,
+    "pushed_at": "2026-08-06T16:19:18Z",
+    "stargazers_count": 27552,
+    "updated_at": "2026-08-30T22:18:44Z",
+    "watchers_count": 27552
+  },
+  "api_observation_source": "existing fixed metadata; no network fetch performed in this draft",
+  "candidate_skill": {
+    "bytes": 689673,
+    "entry_blob_sha": "645221da63743de870501760a48694acdf7aef10",
+    "entry_sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577",
+    "file_count": 107,
+    "governance_tree_sha256": "cccc3c7c88ec944333f132f0565c5089029c86aa37cdb8ebf2a8a705fe5d15fe",
+    "manifest_sha256": "22f96d791a0ef20974054b2b2d916b5400f85646601d85cee7392654f117e832",
+    "path": "skills/hallmark/SKILL.md",
+    "tree_sha": "747c924c4767b4d5fa6f1c59985c87a21c918334"
+  },
+  "commit_author": "Hassan El Mghari <hassan4709@gmail.com>",
+  "commit_author_date": "2026-08-06T09:19:18-07:00",
+  "commit_message": "Merge pull request #57 from Nutlope/add-grid-theme-v2: Add Grid, the twenty-first theme",
+  "commit_tree_sha": "02ebcc67f58295654c073cfb74a20a9a86db1f8f",
+  "complete_package": {
+    "archive_comparison": "manifests/archive-tree-comparison.json",
+    "bytes": 17787446,
+    "file_count": 286,
+    "manifest_sha256": "b071732391c563cf5566be67e811866929e7cc8078b1b893416b86f5312f062f",
+    "snapshot_path": "/Users/yoshiki/.local/share/skill-governance/quarantine/hallmark/13ac0ec7e148655948100b6396439e481361d690/repository-snapshot"
+  },
+  "default_branch": "main",
+  "homepage": "https://www.usehallmark.com/",
+  "observed_at": "2026-08-30T23:03:03Z",
+  "repository": "Nutlope/hallmark",
+  "repository_url": "https://github.com/Nutlope/hallmark",
+  "resolved_commit": "13ac0ec7e148655948100b6396439e481361d690",
+  "resolved_ref": "refs/heads/main",
+  "schema": "hallmark-source-api-verification-v1",
+  "source_id": "hallmark"
+}

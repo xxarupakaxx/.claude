@@ -1,0 +1,29 @@
+{
+  "schema": "github-reputation-read-observation-v1",
+  "observed_at": "2026-08-31",
+  "read_only": true,
+  "candidate_code_executed": false,
+  "repositories": {
+    "cathrynlavery/diagram-design": {
+      "default_branch": "main",
+      "head": "b52a33bfeef85d43995193ee52c13b485154b7b4",
+      "stars": 28891,
+      "forks": 1842,
+      "open_issues": 30,
+      "archived": false,
+      "license": "MIT",
+      "api_url": "https://api.github.com/repos/cathrynlavery/diagram-design"
+    },
+    "Nutlope/hallmark": {
+      "default_branch": "main",
+      "head": "13ac0ec7e148655948100b6396439e481361d690",
+      "stars": 27574,
+      "forks": 1411,
+      "open_issues": 42,
+      "archived": false,
+      "license": "MIT",
+      "api_url": "https://api.github.com/repos/Nutlope/hallmark"
+    }
+  },
+  "interpretation": "Popularity is advisory evidence only; no catalog entry or state is approved by stars."
+}

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-26",
+  "generated_at": "2026-08-31",
   "generation": 3,
   "hash_algorithm": "skill-tree-sha256-v1",
   "records": [
@@ -364,13 +364,13 @@
       "tree_sha256": "742bbde38532e4976c54b246cb1199237c9881d35a1e6bee1930142fcb42c215"
     },
     {
-      "classification": "preexisting-unclassified",
+      "classification": "active",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
       "relative_path": "diagram-design",
       "resolved_name": "diagram-design",
       "root_id": "claude",
-      "tree_sha256": "354864409034916ef9fbb496014e2be01288fd2d8d04801a602be8bed9ec9c47"
+      "tree_sha256": "20a9fdc4e0cc85fddbcf655e7efa35b0fef28ae608e1492ba60c264e3f0af569"
     },
     {
       "classification": "preexisting-unclassified",
@@ -524,6 +524,15 @@
       "resolved_name": "guarding-git-commands-in-claude-code",
       "root_id": "claude",
       "tree_sha256": "2fba405ca18a1e1dee28d68f6860119f3dba9b1a205d128165c2a16058b54450"
+    },
+    {
+      "classification": "active",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "hallmark",
+      "resolved_name": "hallmark",
+      "root_id": "claude",
+      "tree_sha256": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
     },
     {
       "classification": "legacy-active",
@@ -958,7 +967,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "claude",
-      "tree_sha256": "6ca357e47118b2dd2a6d449422071c3758ec6faaabbc6a342657987a68a26958"
+      "tree_sha256": "df9b931fbdd5dbe99c0a49aa43f0757d7aa883314fe26ef44a49bc4daa681f73"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1735,13 +1744,13 @@
       "tree_sha256": "944fb99879a7e9b56378d1e66b5f0ecdbea32b504ab0153f9e0396b1f230bd9a"
     },
     {
-      "classification": "preexisting-unclassified",
+      "classification": "active",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
       "relative_path": "diagram-design",
       "resolved_name": "diagram-design",
       "root_id": "codex",
-      "tree_sha256": "354864409034916ef9fbb496014e2be01288fd2d8d04801a602be8bed9ec9c47"
+      "tree_sha256": "20a9fdc4e0cc85fddbcf655e7efa35b0fef28ae608e1492ba60c264e3f0af569"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1895,6 +1904,15 @@
       "resolved_name": "guarding-git-commands-in-claude-code",
       "root_id": "codex",
       "tree_sha256": "2fba405ca18a1e1dee28d68f6860119f3dba9b1a205d128165c2a16058b54450"
+    },
+    {
+      "classification": "active",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "hallmark",
+      "resolved_name": "hallmark",
+      "root_id": "codex",
+      "tree_sha256": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5"
     },
     {
       "classification": "legacy-active",
@@ -2410,7 +2428,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "codex",
-      "tree_sha256": "0c7054407cc9cdb530a06cab79e06cd9dc542cbba47f273a478e3ac9e64f55ba"
+      "tree_sha256": "4046405245dfe714e5fe727e3f8ec4d6289bc919181de771eae2b268e1ad7fe0"
     },
     {
       "classification": "preexisting-unclassified",
@@ -5062,6 +5080,6 @@
       "tree_sha256": "73323581b29fa6129136b0d3c393c2b485cddb7d1c2622bf185d36d0d9a570fd"
     }
   ],
-  "registry_sha256": "4927426d978c64b406cdb1513f49a1da596d2d95965a8f5100c9d84ca5acf007",
+  "registry_sha256": "e68f5cea7b7eb226e2a42332f158074e92495786b4f99fbcc00d2a107e4bb4b0",
   "schema_version": 2
 }

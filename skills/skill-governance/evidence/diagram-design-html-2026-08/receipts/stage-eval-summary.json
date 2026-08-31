@@ -1,0 +1,111 @@
+{
+  "schema": "diagram-design-eval-summary-v1",
+  "status": "PASS_STATIC_SHARED_HTML_CONTRACT_AND_INDEPENDENT_VALUE_REVIEW",
+  "claim_scope": "Static structure, source binding, XML syntax, deterministic fixture cues, shared HTML artifact contract, and independent six-case route/value review only; no model invocation, user-effectiveness, or production quality claim.",
+  "source": {
+    "collection_id": "diagram-design-html-2026-08",
+    "repository": "https://github.com/cathrynlavery/diagram-design",
+    "commit": "b52a33bfeef85d43995193ee52c13b485154b7b4",
+    "package_tree": "1bf319831137412e8ab71df321b510fa561fd262",
+    "upstream_manifest_sha256": "97a426bfbb45b8c6f7fe22d527c2f9fb25d34f1329a6b7952eed5d090b104aa2"
+  },
+  "stage": {
+    "root": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design",
+    "target_ids": [
+      "codex",
+      "claude"
+    ],
+    "target_manifest_sha256": "d2f95e1f43c196228bda26ea9af605b9435166ecc1e7c7f3ff68757bab805a70",
+    "target_tree_sha256": {
+      "codex": "20a9fdc4e0cc85fddbcf655e7efa35b0fef28ae608e1492ba60c264e3f0af569",
+      "claude": "20a9fdc4e0cc85fddbcf655e7efa35b0fef28ae608e1492ba60c264e3f0af569"
+    }
+  },
+  "artifacts": {
+    "adaptation": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-adaptation.md",
+    "adaptation_sha256": "91caf5c2b72ff3f0de271829dbf852173df342495f79986e546432418af5b4fe",
+    "stage": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-stage.json",
+    "static": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-static.json",
+    "dependency": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-dependency.json",
+    "trigger": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-trigger.json",
+    "frontmatter_codex": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-frontmatter-codex.json",
+    "frontmatter_claude": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-frontmatter-claude.json",
+    "svg_xml": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-svg-xml.txt",
+    "html_contract": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-html-contract.json",
+    "frontmatter_refresh": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-frontmatter-refresh.json",
+    "value_review": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-value-results.json",
+    "value_review_sha256": "95af482bf0ab8717a01f3383de23f7e05c03f30f8200c2c75472c95754501b0b",
+    "value_direct_verification": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-value-direct-verification.json",
+    "value_direct_verification_sha256": "eb81b085699a7546d2a045efd054c4ff769263c332db7e8e5b8dd9e04052632b",
+    "value_verifier": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/verify-diagram-value.py",
+    "value_verifier_sha256": "5675c4d4785b3289f424a03036dc7c9644c7f7aaeb8540f8ba1ea4bd0c426a2f"
+  },
+  "checks": [
+    {
+      "id": "static-structure-and-parity",
+      "status": "PASS"
+    },
+    {
+      "id": "dependency-fixture",
+      "status": "PASS",
+      "measured": {
+        "before_items": 5,
+        "candidate_nodes": 5,
+        "candidate_edges": 5,
+        "candidate_ranks": 4,
+        "snapshot_fan_in": 2
+      }
+    },
+    {
+      "id": "trigger-fixture",
+      "status": "PASS",
+      "positive_routes": 4,
+      "negative_routes": 4
+    },
+    {
+      "id": "frontmatter-codex",
+      "status": "PASS",
+      "validator": "uv offline PyYAML 6.0.2"
+    },
+    {
+      "id": "frontmatter-claude",
+      "status": "PASS",
+      "validator": "uv offline PyYAML 6.0.2"
+    },
+    {
+      "id": "svg-xml",
+      "status": "PASS",
+      "files": 10
+    },
+    {
+      "id": "shared-html-contract",
+      "status": "PASS",
+      "files": 10,
+      "producer": "diagram-design-sidecar",
+      "route": "html-diagram",
+      "profile": "strict-self-contained"
+    },
+    {
+      "id": "independent-value-review",
+      "status": "PASS",
+      "cases": 6,
+      "direct_svg_verification": {
+        "status": "PASS",
+        "cases": 3,
+        "validator": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/verify-diagram-value.py"
+      },
+      "claim": "Fixture route/value evidence only; no model, production, or user-effectiveness claim."
+    }
+  ],
+  "limits": {
+    "candidate_execution": false,
+    "external_network": false,
+    "browser_automation": false,
+    "model_value_eval": "not performed (no model invocation); independent six-case review PASS",
+    "human_approval": "not present",
+    "active_runtime": "unchanged",
+    "registry_lock": "unchanged",
+    "independent_value_review": "PASS: 6 cases; direct verifier PASS for 3 SVG fixtures; HTML value not assessed in that run"
+  },
+  "next_gate": "Lead-owned final safety binding, human approval, registry/lock binding, and active runtime promotion remain pending."
+}

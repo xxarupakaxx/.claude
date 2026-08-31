@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-26",
+  "generated_at": "2026-08-31",
   "policy": {
     "approval_use": "advisory-only",
     "popularity_is_approval": false
@@ -84,6 +84,26 @@
       "trust_role": "optional-security-signal"
     },
     {
+      "source_id": "diagram-design",
+      "github": "cathrynlavery/diagram-design",
+      "observed_revision": "b52a33bfeef85d43995193ee52c13b485154b7b4",
+      "observed_at": "2026-08-31",
+      "head_matches_pin": true,
+      "archived": false,
+      "stars": 28891,
+      "forks": 1842,
+      "open_issues": 30,
+      "issues_enabled": true,
+      "security_policy": false,
+      "license_signal": "MIT",
+      "trust_role": "community-candidate",
+      "assessment": "静的図の限定候補。人気は承認に使わず、固定tree・adapter境界・両target検証を必須とする。",
+      "evidence_urls": [
+        "https://github.com/cathrynlavery/diagram-design",
+        "https://github.com/cathrynlavery/diagram-design/commit/b52a33bfeef85d43995193ee52c13b485154b7b4"
+      ]
+    },
+    {
       "archived": false,
       "assessment": "デザインとmotionの限定候補。人気は承認に使わず、固定tree、日本語adaptation、安全審査、target検証を必須とする。",
       "evidence_urls": [
@@ -102,6 +122,26 @@
       "source_id": "emilkowalski-skills",
       "stars": 17672,
       "trust_role": "community-candidate"
+    },
+    {
+      "source_id": "hallmark",
+      "github": "Nutlope/hallmark",
+      "observed_revision": "13ac0ec7e148655948100b6396439e481361d690",
+      "observed_at": "2026-08-31",
+      "head_matches_pin": true,
+      "archived": false,
+      "stars": 27574,
+      "forks": 1411,
+      "open_issues": 42,
+      "issues_enabled": true,
+      "security_policy": false,
+      "license_signal": "MIT",
+      "trust_role": "community-candidate",
+      "assessment": "視覚クラフト補助の限定候補。designing-ui-uxをprimaryに残し、人気は承認に使わない。",
+      "evidence_urls": [
+        "https://github.com/Nutlope/hallmark",
+        "https://github.com/Nutlope/hallmark/commit/13ac0ec7e148655948100b6396439e481361d690"
+      ]
     },
     {
       "archived": false,

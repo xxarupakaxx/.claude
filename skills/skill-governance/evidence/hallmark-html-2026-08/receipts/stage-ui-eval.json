@@ -1,0 +1,319 @@
+{
+  "candidate_execution": false,
+  "collection_id": "hallmark-html-2026-08",
+  "evaluation": {
+    "baseline": {
+      "legacy_report_path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-roadmap-audit/report.html",
+      "legacy_report_sha256": "2d0eadced998f9b40a1b437a25f61fe29929f42fff726e94562d6980fa866aa2",
+      "note": "legacy_report.htmlとplan-document.htmlが同一bytesであることは、旧観測画面が残っているという意味ではない。Beforeの根拠は20_survey.mdの観測記録である。",
+      "observations": [
+        {
+          "kind": "observed",
+          "source_line": 9,
+          "statement": "代表RoadmapではPlan Brief、Project Map、Timelineが先に並び、Current Focusは約1,251px位置だった。900px高の初期画面から外れる。"
+        },
+        {
+          "kind": "boundary",
+          "source_line": 28,
+          "statement": "1,815行・135,194 bytesは存在量であり、毎回の自動読込量や無駄の割合を示す測定ではない。"
+        },
+        {
+          "kind": "direction",
+          "source_line": 37,
+          "statement": "調査時点の案はHTML計画書を主表示にし、Before / After、実装、依存図を本文へ置く方向だった。"
+        }
+      ],
+      "source": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-roadmap-audit/20_survey.md",
+      "source_sha256": "5ff3efd2e9564f958a0470eb35ef2ce5c61dc2276640125c28b70960bbd2174a"
+    },
+    "candidate": {
+      "browser_evidence": {
+        "checks": {
+          "accessibilityMedia": {
+            "focusOutline": "solid",
+            "forcedColors": true,
+            "overflow": false,
+            "reducedMotion": true,
+            "scrollBehavior": "auto"
+          },
+          "contrast": {
+            "dark": [],
+            "light": []
+          },
+          "document": {
+            "details": 0,
+            "disclosureControls": 0,
+            "localLinks": [
+              "file:///Users/yoshiki/Notes/Vault/.local/memory/260831_html-roadmap-audit/report.html#main",
+              "file:///Users/yoshiki/Notes/Vault/.local/memory/260831_html-roadmap-audit/report.html#decision",
+              "file:///Users/yoshiki/Notes/Vault/.local/memory/260831_html-roadmap-audit/report.html#compare",
+              "file:///Users/yoshiki/Notes/Vault/.local/memory/260831_html-roadmap-audit/report.html#context",
+              "file:///Users/yoshiki/Notes/Vault/.local/memory/260831_html-roadmap-audit/report.html#architecture",
+              "file:///Users/yoshiki/Notes/Vault/.local/memory/260831_html-roadmap-audit/report.html#implementation",
+              "file:///Users/yoshiki/Notes/Vault/.local/memory/260831_html-roadmap-audit/report.html#acceptance",
+              "file:///Users/yoshiki/Notes/Vault/.local/memory/260831_html-roadmap-audit/report.html#sources",
+              "file:///Users/yoshiki/Notes/Vault/.local/memory/260831_html-plan-redesign/design-sources.md",
+              "file:///Users/yoshiki/Notes/Vault/.local/memory/260831_html-roadmap-audit/20_survey.md",
+              "file:///Users/yoshiki/Notes/Vault/.local/memory/260831_html-roadmap-audit/context-metrics.json",
+              "file:///Users/yoshiki/Notes/Vault/.local/memory/260831_html-roadmap-audit/current-layout.json",
+              "file:///Users/yoshiki/Notes/Vault/.local/memory/260831_html-roadmap-audit/source-audit.md",
+              "file:///Users/yoshiki/Notes/Vault/.local/memory/260831_html-plan-redesign/build-report.mjs",
+              "file:///Users/yoshiki/Notes/Vault/.local/memory/260831_html-plan-redesign/90_verification.md"
+            ],
+            "missingAnchors": [],
+            "scripts": 0,
+            "svgAccessible": true,
+            "svgTextOutsideViewBox": []
+          },
+          "keyboard": {
+            "href": "#main",
+            "outlineStyle": "solid",
+            "outlineWidth": "3px",
+            "text": "本文へ移動",
+            "visible": true
+          },
+          "missingLocalFiles": []
+        },
+        "external_requests": [],
+        "page_errors": [],
+        "source_path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-plan-redesign/browser-verification.json",
+        "target_recorded_by_browser": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-roadmap-audit/report.html",
+        "viewports": [
+          {
+            "body_overflow": false,
+            "comparison_contract": true,
+            "document_width": 375,
+            "hidden_sections": [],
+            "horizontal_two_column": false,
+            "panel_count": 2,
+            "panel_padding": [
+              24,
+              24
+            ],
+            "panel_width": [
+              339,
+              339
+            ],
+            "panel_x": [
+              18,
+              18
+            ],
+            "panel_y": [
+              962.125,
+              1686.796875
+            ],
+            "vertical_stack": true,
+            "width": 375
+          },
+          {
+            "body_overflow": false,
+            "comparison_contract": true,
+            "document_width": 640,
+            "hidden_sections": [],
+            "horizontal_two_column": true,
+            "panel_count": 2,
+            "panel_padding": [
+              28,
+              28
+            ],
+            "panel_width": [
+              280,
+              280
+            ],
+            "panel_x": [
+              24,
+              336
+            ],
+            "panel_y": [
+              670.015625,
+              670.015625
+            ],
+            "vertical_stack": false,
+            "width": 640
+          },
+          {
+            "body_overflow": false,
+            "comparison_contract": true,
+            "document_width": 768,
+            "hidden_sections": [],
+            "horizontal_two_column": true,
+            "panel_count": 2,
+            "panel_padding": [
+              28,
+              28
+            ],
+            "panel_width": [
+              344,
+              344
+            ],
+            "panel_x": [
+              24,
+              400
+            ],
+            "panel_y": [
+              670.015625,
+              670.015625
+            ],
+            "vertical_stack": false,
+            "width": 768
+          },
+          {
+            "body_overflow": false,
+            "comparison_contract": true,
+            "document_width": 1024,
+            "hidden_sections": [],
+            "horizontal_two_column": true,
+            "panel_count": 2,
+            "panel_padding": [
+              28,
+              28
+            ],
+            "panel_width": [
+              472,
+              472
+            ],
+            "panel_x": [
+              24,
+              528
+            ],
+            "panel_y": [
+              661.75,
+              661.75
+            ],
+            "vertical_stack": false,
+            "width": 1024
+          },
+          {
+            "body_overflow": false,
+            "comparison_contract": true,
+            "document_width": 1440,
+            "hidden_sections": [],
+            "horizontal_two_column": true,
+            "panel_count": 2,
+            "panel_padding": [
+              28,
+              28
+            ],
+            "panel_width": [
+              584,
+              584
+            ],
+            "panel_x": [
+              120,
+              736
+            ],
+            "panel_y": [
+              644.046875,
+              644.046875
+            ],
+            "vertical_stack": false,
+            "width": 1440
+          }
+        ]
+      },
+      "bytes": 48381,
+      "css_measurements": {
+        "comparison_gap_px": 32,
+        "comparison_grid_two_columns": true,
+        "desktop_panel_padding_px": 28,
+        "h1_max_rem": 2.5,
+        "mobile_breakpoint_px": 599,
+        "mobile_panel_padding_px": 24
+      },
+      "markup": {
+        "classes": {
+          "after": 1,
+          "before": 1,
+          "compare-panel": 2,
+          "comparison-grid": 1,
+          "dependency-map": 2,
+          "desktop-map": 1,
+          "mobile-map": 1,
+          "step": 4
+        },
+        "details": 0,
+        "disclosure_controls": 0,
+        "duplicate_ids": [],
+        "external_navigation_links": [
+          {
+            "attribute": "href",
+            "tag": "a",
+            "value": "https://github.com/plannotator/effective-html/blob/d95debbaef15af1d201fc6c10c77cf92b524a0d6/skills/design-artifact/SKILL.md"
+          },
+          {
+            "attribute": "href",
+            "tag": "a",
+            "value": "https://github.com/mathbullet/skills/blob/fe96c626b39abba47fad2d4a4ef738e8a27602b1/plugins/html/skills/html/SKILL.md"
+          },
+          {
+            "attribute": "href",
+            "tag": "a",
+            "value": "https://github.com/tailwindlabs/tailwindcss-typography/blob/e3714a3fe55551ce9d51eec4721183ed6b1d5cd1/src/styles.js"
+          },
+          {
+            "attribute": "href",
+            "tag": "a",
+            "value": "https://github.com/primer/css/blob/1c473ee026d96821782e9c79598625692a81fa25/src/markdown/markdown-body.scss"
+          },
+          {
+            "attribute": "href",
+            "tag": "a",
+            "value": "https://github.com/anthropics/skills/blob/3b3fad96af16a10759d930941b4520ba0c40edae/skills/frontend-design/SKILL.md"
+          }
+        ],
+        "external_resource_loads": [],
+        "headings": {
+          "h1": 1,
+          "h2": 7,
+          "h3": 24
+        },
+        "scripts": 0,
+        "svg": 2,
+        "tables": 2
+      },
+      "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-plan-redesign/plan-document.html",
+      "same_bytes_as_legacy_report": true,
+      "sha256": "2d0eadced998f9b40a1b437a25f61fe29929f42fff726e94562d6980fa866aa2"
+    },
+    "candidate_execution": false,
+    "comparison": {
+      "after_model": {
+        "label": "After｜明示的な案",
+        "model": "同じHTMLに目的、Before / After、実装単位、依存SVG、検証、source ledgerを初期表示する。",
+        "visible_change": "比較は640px以上で横二列、375pxだけ縦積み。After側は本文構造と依存図を実際の模型として描く。"
+      },
+      "before_model": {
+        "label": "Before｜観測事実",
+        "model": "Task WorkspaceとHubの要素を集約した模式図。実画面の完全再現ではない。",
+        "visible_issue": "管理情報が本文と実装の説明を押し下げ、別sessionで読む場所を探す。"
+      },
+      "measured_result": "candidate.browser_evidence.viewports と candidate.markup を参照",
+      "selectors_and_states": {
+        "after_panel": ".compare-panel.after",
+        "before_panel": ".compare-panel.before",
+        "comparison_grid": ".comparison-grid",
+        "desktop_dependency_svg": ".desktop-map",
+        "implementation_stage": ".step",
+        "initial_display": "details=0, disclosureControls=0, hiddenSections=[]",
+        "mobile_dependency_svg": ".mobile-map"
+      }
+    },
+    "limitations": [
+      "browser evidenceは既存のlead検証成果物を読み取ったもので、この評価script自身はブラウザを起動していない。",
+      "理解時間、context token削減率、全sessionの操作負荷は未測定。",
+      "plan-document.htmlのAfterは計画上の案であり、global Roadmap/Hub runtimeへの接続完了を示さない。"
+    ],
+    "purpose": "現状の観測事実と、Hallmark適用後の計画書UIを同じ証拠で比較する",
+    "schema": "hallmark-ui-example-eval-v1",
+    "status": "PASS"
+  },
+  "interpretation": "Static HTML comparison and existing browser evidence. It is not a human value receipt.",
+  "kind": "ui",
+  "runtime_mutation": false,
+  "schema": "hallmark-stage-ui-evidence-v1",
+  "source_evidence": {
+    "path": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/hallmark-eval-ui.json",
+    "sha256": "005b46b269e9ed982de8ec07258523749aa7881feab31e52ed43c3cd96b4cb2d"
+  },
+  "stage": "review"
+}

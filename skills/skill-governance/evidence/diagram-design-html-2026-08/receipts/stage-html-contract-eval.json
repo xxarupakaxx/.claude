@@ -1,0 +1,206 @@
+{
+  "schema": "diagram-design-html-contract-eval-v1",
+  "status": "PASS",
+  "candidate_execution": false,
+  "stage_root": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design",
+  "common_checker": {
+    "path": "/private/tmp/codex-html-plan-runtime-260831/scripts/html_artifact_contract.py",
+    "sha256": "9a738d43a09b598fcffff72041595f975b4e4980425d47a3b0f8cfc097ec058a",
+    "manifest": "/private/tmp/codex-html-plan-runtime-260831/config/html-surfaces.json",
+    "profile": "strict-self-contained",
+    "route": "html-diagram",
+    "artifact_kind": "html-diagram",
+    "registered_producer": {
+      "id": "diagram-design-sidecar",
+      "route": "html-diagram",
+      "owner": "diagram-design",
+      "source": "skills/diagram-design/SKILL.md",
+      "templates": [],
+      "outputPatterns": [
+        "92_visual_explanation.html"
+      ],
+      "artifactKind": "html-diagram",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "diagram-matrix"
+    },
+    "producer_registration_status": "PASS",
+    "manifest_check": {
+      "status": "PASS",
+      "errors": [],
+      "warnings": [
+        {
+          "code": "external-load-grandfathered",
+          "severity": "warning",
+          "path": "tools/plan_viewer.html",
+          "message": "External resource load is grandfathered for this profile: <script> https://cdn.jsdelivr.net/npm/marked/marked.min.js",
+          "line": 7
+        },
+        {
+          "code": "external-load-grandfathered",
+          "severity": "warning",
+          "path": "tools/log_viewer.html",
+          "message": "External resource load is grandfathered for this profile: <script> https://cdn.jsdelivr.net/npm/marked/marked.min.js",
+          "line": 7
+        },
+        {
+          "code": "external-load-grandfathered",
+          "severity": "warning",
+          "path": "claude-compat/tools/plan_viewer.html",
+          "message": "External resource load is grandfathered for this profile: <script> https://cdn.jsdelivr.net/npm/marked/marked.min.js",
+          "line": 7
+        },
+        {
+          "code": "external-load-grandfathered",
+          "severity": "warning",
+          "path": "claude-compat/tools/plan_viewer.html",
+          "message": "External resource load is grandfathered for this profile: <script> https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js",
+          "line": 8
+        },
+        {
+          "code": "external-load-grandfathered",
+          "severity": "warning",
+          "path": "claude-compat/tools/log_viewer.html",
+          "message": "External resource load is grandfathered for this profile: <script> https://cdn.jsdelivr.net/npm/marked/marked.min.js",
+          "line": 7
+        },
+        {
+          "code": "external-load-grandfathered",
+          "severity": "warning",
+          "path": "claude-compat/tools/log_viewer.html",
+          "message": "External resource load is grandfathered for this profile: <script> https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js",
+          "line": 8
+        },
+        {
+          "code": "external-load-grandfathered",
+          "severity": "warning",
+          "path": "claude-compat/tools/diagram_viewer.html",
+          "message": "External resource load is grandfathered for this profile: <script> https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js",
+          "line": 751
+        }
+      ]
+    }
+  },
+  "targets": {
+    "codex": {
+      "architecture.html": {
+        "path": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/examples/architecture.html",
+        "bytes": 5056,
+        "sha256": "026cfbb65db508a1c06c8abdbc7daeb0212fadd922187cec473e20f91bdf74cb",
+        "artifact_kind": "html-diagram",
+        "errors": [],
+        "warnings": [],
+        "status": "PASS"
+      },
+      "comparison.html": {
+        "path": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/examples/comparison.html",
+        "bytes": 4503,
+        "sha256": "2eff28a6e92fb874755eb40ab7a4b5526d9af4d558cd09ddc9cf07fe04c7a0ca",
+        "artifact_kind": "html-diagram",
+        "errors": [],
+        "warnings": [],
+        "status": "PASS"
+      },
+      "dependency-before.html": {
+        "path": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/examples/dependency-before.html",
+        "bytes": 3335,
+        "sha256": "e6391b4aca3d5a12ce08cf0f0dc3680d511518df18bf06d99264671f858cf1b9",
+        "artifact_kind": "html-diagram",
+        "errors": [],
+        "warnings": [],
+        "status": "PASS"
+      },
+      "dependency-candidate.html": {
+        "path": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/examples/dependency-candidate.html",
+        "bytes": 5603,
+        "sha256": "9640036d8082dbf9f182a79d7bb1f0748672d7e03437281b33411e698d6fed50",
+        "artifact_kind": "html-diagram",
+        "errors": [],
+        "warnings": [],
+        "status": "PASS"
+      },
+      "process.html": {
+        "path": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/examples/process.html",
+        "bytes": 5216,
+        "sha256": "12c4a51b33a63246624858d1e741baa002bbe081dc09774dda5afbae35f5393a",
+        "artifact_kind": "html-diagram",
+        "errors": [],
+        "warnings": [],
+        "status": "PASS"
+      }
+    },
+    "claude": {
+      "architecture.html": {
+        "path": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/claude/examples/architecture.html",
+        "bytes": 5056,
+        "sha256": "026cfbb65db508a1c06c8abdbc7daeb0212fadd922187cec473e20f91bdf74cb",
+        "artifact_kind": "html-diagram",
+        "errors": [],
+        "warnings": [],
+        "status": "PASS"
+      },
+      "comparison.html": {
+        "path": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/claude/examples/comparison.html",
+        "bytes": 4503,
+        "sha256": "2eff28a6e92fb874755eb40ab7a4b5526d9af4d558cd09ddc9cf07fe04c7a0ca",
+        "artifact_kind": "html-diagram",
+        "errors": [],
+        "warnings": [],
+        "status": "PASS"
+      },
+      "dependency-before.html": {
+        "path": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/claude/examples/dependency-before.html",
+        "bytes": 3335,
+        "sha256": "e6391b4aca3d5a12ce08cf0f0dc3680d511518df18bf06d99264671f858cf1b9",
+        "artifact_kind": "html-diagram",
+        "errors": [],
+        "warnings": [],
+        "status": "PASS"
+      },
+      "dependency-candidate.html": {
+        "path": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/claude/examples/dependency-candidate.html",
+        "bytes": 5603,
+        "sha256": "9640036d8082dbf9f182a79d7bb1f0748672d7e03437281b33411e698d6fed50",
+        "artifact_kind": "html-diagram",
+        "errors": [],
+        "warnings": [],
+        "status": "PASS"
+      },
+      "process.html": {
+        "path": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/claude/examples/process.html",
+        "bytes": 5216,
+        "sha256": "12c4a51b33a63246624858d1e741baa002bbe081dc09774dda5afbae35f5393a",
+        "artifact_kind": "html-diagram",
+        "errors": [],
+        "warnings": [],
+        "status": "PASS"
+      }
+    }
+  },
+  "output_contract_references": {
+    "codex": {
+      "path": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex/references/output-contract.md",
+      "sha256": "5ae2d67b4b2dbb5699f522f8c36349f67460cd92400e68e9e247293fbf544368",
+      "requirements": {
+        "registered_producer": true,
+        "artifact_kind_meta": true,
+        "shared_checker": true,
+        "strict_profile": true
+      },
+      "status": "PASS"
+    },
+    "claude": {
+      "path": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/claude/references/output-contract.md",
+      "sha256": "5ae2d67b4b2dbb5699f522f8c36349f67460cd92400e68e9e247293fbf544368",
+      "requirements": {
+        "registered_producer": true,
+        "artifact_kind_meta": true,
+        "shared_checker": true,
+        "strict_profile": true
+      },
+      "status": "PASS"
+    }
+  },
+  "html_count": 10,
+  "error_count": 0,
+  "scope_note": "Fresh shared-contract validation of the 5 adapted HTML example kinds in both parity targets plus the output-contract reference; SVG and upstream quarantine were not inspected or changed by this check."
+}

@@ -1,0 +1,23 @@
+{
+  "command": "validate-frontmatter",
+  "findings": [],
+  "frontmatter_sha256": "5d44fb4ac58ee753597fba4df9291b5d537c132bdadb28bf525836290784b6ca",
+  "skill_sha256": "6d6988acf7794344c54b26f22f4245e420e4a8e0a41b65547f8c1797339cda8d",
+  "status": "validated",
+  "surface": {
+    "kind": "quarantine",
+    "revision": "b52a33bfeef85d43995193ee52c13b485154b7b4",
+    "skill_name": "diagram-design",
+    "source_id": "diagram-design"
+  },
+  "target": "common",
+  "validator": "pyyaml-6.0.2-safe-loader",
+  "values": {
+    "description": "Create branded architecture, IT current-state, flowchart, sequence, state machine, ER/data model, timeline, swimlane, quadrant, radar/spider, polar chart (polar/radial lollipop), loop/flywheel, nested, tree, org chart, layer stack, Venn, pyramid/funnel, treemap, bar, line, Gantt and scatter charts, high-level, process, medallion, data flow, DP integration, DP security matrix, Sankey, fishbone, Wardley map, kanban, user journey, deployment, dependency graph, UML class, story map, or database schema diagrams as standalone HTML/SVG/PNG. Redraw .drawio/.drawio.png/.drawio.svg or Mermaid .mmd sources at a chosen size/detail; onboard brand tokens from a website; add semantic patterns, callouts, accessible motion, or sketchy/hand-drawn styling.",
+    "license": "MIT",
+    "metadata": {
+      "version": "2.6"
+    },
+    "name": "diagram-design"
+  }
+}

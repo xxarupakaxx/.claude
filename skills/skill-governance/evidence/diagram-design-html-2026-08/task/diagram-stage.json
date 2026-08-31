@@ -1,0 +1,386 @@
+{
+  "schema": "diagram-design-review-stage-v1",
+  "status": "review-stage-draft",
+  "collection_id": "diagram-design-html-2026-08",
+  "skill_name": "diagram-design",
+  "target_ids": [
+    "codex",
+    "claude"
+  ],
+  "candidate_execution": false,
+  "runtime_mutation": false,
+  "source": {
+    "repository": "https://github.com/cathrynlavery/diagram-design",
+    "commit": "b52a33bfeef85d43995193ee52c13b485154b7b4",
+    "package_tree": "1bf319831137412e8ab71df321b510fa561fd262",
+    "upstream_manifest_sha256": "97a426bfbb45b8c6f7fe22d527c2f9fb25d34f1329a6b7952eed5d090b104aa2",
+    "quarantine": "/Users/yoshiki/.local/share/skill-governance/quarantine/diagram-design/b52a33bfeef85d43995193ee52c13b485154b7b4/diagram-design",
+    "license": "MIT",
+    "license_evidence": "task:260831_html-skill-additions/license-evidence/diagram-design-LICENSE.txt"
+  },
+  "stage": {
+    "root": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design",
+    "manifest_definition": "sha256 of UTF-8 canonical JSON file list with path, mode, size, sha256; sort_keys=true, separators=(comma,colon)",
+    "targets": {
+      "codex": {
+        "root": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/codex",
+        "file_count": 24,
+        "bytes": 66896,
+        "manifest_sha256": "d2f95e1f43c196228bda26ea9af605b9435166ecc1e7c7f3ff68757bab805a70",
+        "tree_sha256": "20a9fdc4e0cc85fddbcf655e7efa35b0fef28ae608e1492ba60c264e3f0af569",
+        "git_tree_sha1": "3f158807c251fdc60bc9f3608d7b8ee522445435",
+        "files": [
+          {
+            "path": "ADAPTATION.md",
+            "mode": "0644",
+            "size": 2536,
+            "sha256": "dce8d6dabb7f1065949c0c4b40bbef750bbcf719655bdfe13d2e0ad9af015d9f"
+          },
+          {
+            "path": "LICENSE",
+            "mode": "0644",
+            "size": 1071,
+            "sha256": "bb7e12e91fecef43024111123ff784cec6c485585561d8b552557c0173b3ed29"
+          },
+          {
+            "path": "SKILL.md",
+            "mode": "0644",
+            "size": 5456,
+            "sha256": "9e885b3b82b6c390e43a1813726724c3578abdc125e11bbcaeb625dc13f8e46c"
+          },
+          {
+            "path": "SOURCE",
+            "mode": "0644",
+            "size": 917,
+            "sha256": "5dc91495ee58c127be3999a113dea620ec1dd2145105b64c210342aeb94d0c6d"
+          },
+          {
+            "path": "SOURCE.md",
+            "mode": "0644",
+            "size": 917,
+            "sha256": "5dc91495ee58c127be3999a113dea620ec1dd2145105b64c210342aeb94d0c6d"
+          },
+          {
+            "path": "UPSTREAM.md",
+            "mode": "0644",
+            "size": 945,
+            "sha256": "9c36ac3f828e8487ee85a9f724e3fd6f75ecb2ca129d02541610ea7cc6f643a4"
+          },
+          {
+            "path": "examples/architecture.html",
+            "mode": "0644",
+            "size": 5056,
+            "sha256": "026cfbb65db508a1c06c8abdbc7daeb0212fadd922187cec473e20f91bdf74cb"
+          },
+          {
+            "path": "examples/architecture.svg",
+            "mode": "0644",
+            "size": 3440,
+            "sha256": "1a2918c182c66eec414be734ec3bf205322c0571f0c6011ef9fdcc544784ceb9"
+          },
+          {
+            "path": "examples/comparison.html",
+            "mode": "0644",
+            "size": 4503,
+            "sha256": "2eff28a6e92fb874755eb40ab7a4b5526d9af4d558cd09ddc9cf07fe04c7a0ca"
+          },
+          {
+            "path": "examples/comparison.svg",
+            "mode": "0644",
+            "size": 2891,
+            "sha256": "1c4416a86ddae0793010e3eba443e4e00b0ef049286ffaeebb206b7c68c73bac"
+          },
+          {
+            "path": "examples/dependency-before.html",
+            "mode": "0644",
+            "size": 3335,
+            "sha256": "e6391b4aca3d5a12ce08cf0f0dc3680d511518df18bf06d99264671f858cf1b9"
+          },
+          {
+            "path": "examples/dependency-before.svg",
+            "mode": "0644",
+            "size": 1733,
+            "sha256": "c52899861d65b6c9d01b5722a39d9aedc59567223ef78c0c97006abfef9de10b"
+          },
+          {
+            "path": "examples/dependency-candidate.html",
+            "mode": "0644",
+            "size": 5603,
+            "sha256": "9640036d8082dbf9f182a79d7bb1f0748672d7e03437281b33411e698d6fed50"
+          },
+          {
+            "path": "examples/dependency-candidate.svg",
+            "mode": "0644",
+            "size": 3979,
+            "sha256": "528439bf6c3fa5eca63cdeb59c7d416effd6db7b273525ee546fe565dcb2272f"
+          },
+          {
+            "path": "examples/process.html",
+            "mode": "0644",
+            "size": 5216,
+            "sha256": "12c4a51b33a63246624858d1e741baa002bbe081dc09774dda5afbae35f5393a"
+          },
+          {
+            "path": "examples/process.svg",
+            "mode": "0644",
+            "size": 3598,
+            "sha256": "cdc14117a66da8d847073eeea8175e87ef4997f93b1580d388d183f07630a7f4"
+          },
+          {
+            "path": "references/output-contract.md",
+            "mode": "0644",
+            "size": 2039,
+            "sha256": "5ae2d67b4b2dbb5699f522f8c36349f67460cd92400e68e9e247293fbf544368"
+          },
+          {
+            "path": "references/quality-gate.md",
+            "mode": "0644",
+            "size": 1990,
+            "sha256": "6fc8b8c75cc0cc7419a97aab2d717e78b0826ad9d87b7d9cc929ba682abf6363"
+          },
+          {
+            "path": "references/selection.md",
+            "mode": "0644",
+            "size": 2137,
+            "sha256": "a416eb532da39d234ee20d300fcc99f897341676eea2f7924638a812c8d8a546"
+          },
+          {
+            "path": "references/type-architecture.md",
+            "mode": "0644",
+            "size": 1779,
+            "sha256": "324d451e8496094c437e6df0c56f9a9c8cd840de75fc255a4a66c483878b517c"
+          },
+          {
+            "path": "references/type-comparison.md",
+            "mode": "0644",
+            "size": 1663,
+            "sha256": "9b92624ea86e25815744daa51674178958ebc2e99dade0a278f73c1851f53bbf"
+          },
+          {
+            "path": "references/type-dependency.md",
+            "mode": "0644",
+            "size": 2285,
+            "sha256": "7caf157120d423ef70dec256adc7701bb270763814e089a2fd138c0d6952336a"
+          },
+          {
+            "path": "references/type-process.md",
+            "mode": "0644",
+            "size": 1939,
+            "sha256": "5f31f246736f4cc16623a23d16300526948c893301b5fc1a396d1970821f28a2"
+          },
+          {
+            "path": "references/visual-rules.md",
+            "mode": "0644",
+            "size": 1868,
+            "sha256": "200bdd50c99ca0d88fa755f8eab4c7b59f4db6e017da66ea94b2999b7f20f050"
+          }
+        ]
+      },
+      "claude": {
+        "root": "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design/claude",
+        "file_count": 24,
+        "bytes": 66896,
+        "manifest_sha256": "d2f95e1f43c196228bda26ea9af605b9435166ecc1e7c7f3ff68757bab805a70",
+        "tree_sha256": "20a9fdc4e0cc85fddbcf655e7efa35b0fef28ae608e1492ba60c264e3f0af569",
+        "git_tree_sha1": "3f158807c251fdc60bc9f3608d7b8ee522445435",
+        "files": [
+          {
+            "path": "ADAPTATION.md",
+            "mode": "0644",
+            "size": 2536,
+            "sha256": "dce8d6dabb7f1065949c0c4b40bbef750bbcf719655bdfe13d2e0ad9af015d9f"
+          },
+          {
+            "path": "LICENSE",
+            "mode": "0644",
+            "size": 1071,
+            "sha256": "bb7e12e91fecef43024111123ff784cec6c485585561d8b552557c0173b3ed29"
+          },
+          {
+            "path": "SKILL.md",
+            "mode": "0644",
+            "size": 5456,
+            "sha256": "9e885b3b82b6c390e43a1813726724c3578abdc125e11bbcaeb625dc13f8e46c"
+          },
+          {
+            "path": "SOURCE",
+            "mode": "0644",
+            "size": 917,
+            "sha256": "5dc91495ee58c127be3999a113dea620ec1dd2145105b64c210342aeb94d0c6d"
+          },
+          {
+            "path": "SOURCE.md",
+            "mode": "0644",
+            "size": 917,
+            "sha256": "5dc91495ee58c127be3999a113dea620ec1dd2145105b64c210342aeb94d0c6d"
+          },
+          {
+            "path": "UPSTREAM.md",
+            "mode": "0644",
+            "size": 945,
+            "sha256": "9c36ac3f828e8487ee85a9f724e3fd6f75ecb2ca129d02541610ea7cc6f643a4"
+          },
+          {
+            "path": "examples/architecture.html",
+            "mode": "0644",
+            "size": 5056,
+            "sha256": "026cfbb65db508a1c06c8abdbc7daeb0212fadd922187cec473e20f91bdf74cb"
+          },
+          {
+            "path": "examples/architecture.svg",
+            "mode": "0644",
+            "size": 3440,
+            "sha256": "1a2918c182c66eec414be734ec3bf205322c0571f0c6011ef9fdcc544784ceb9"
+          },
+          {
+            "path": "examples/comparison.html",
+            "mode": "0644",
+            "size": 4503,
+            "sha256": "2eff28a6e92fb874755eb40ab7a4b5526d9af4d558cd09ddc9cf07fe04c7a0ca"
+          },
+          {
+            "path": "examples/comparison.svg",
+            "mode": "0644",
+            "size": 2891,
+            "sha256": "1c4416a86ddae0793010e3eba443e4e00b0ef049286ffaeebb206b7c68c73bac"
+          },
+          {
+            "path": "examples/dependency-before.html",
+            "mode": "0644",
+            "size": 3335,
+            "sha256": "e6391b4aca3d5a12ce08cf0f0dc3680d511518df18bf06d99264671f858cf1b9"
+          },
+          {
+            "path": "examples/dependency-before.svg",
+            "mode": "0644",
+            "size": 1733,
+            "sha256": "c52899861d65b6c9d01b5722a39d9aedc59567223ef78c0c97006abfef9de10b"
+          },
+          {
+            "path": "examples/dependency-candidate.html",
+            "mode": "0644",
+            "size": 5603,
+            "sha256": "9640036d8082dbf9f182a79d7bb1f0748672d7e03437281b33411e698d6fed50"
+          },
+          {
+            "path": "examples/dependency-candidate.svg",
+            "mode": "0644",
+            "size": 3979,
+            "sha256": "528439bf6c3fa5eca63cdeb59c7d416effd6db7b273525ee546fe565dcb2272f"
+          },
+          {
+            "path": "examples/process.html",
+            "mode": "0644",
+            "size": 5216,
+            "sha256": "12c4a51b33a63246624858d1e741baa002bbe081dc09774dda5afbae35f5393a"
+          },
+          {
+            "path": "examples/process.svg",
+            "mode": "0644",
+            "size": 3598,
+            "sha256": "cdc14117a66da8d847073eeea8175e87ef4997f93b1580d388d183f07630a7f4"
+          },
+          {
+            "path": "references/output-contract.md",
+            "mode": "0644",
+            "size": 2039,
+            "sha256": "5ae2d67b4b2dbb5699f522f8c36349f67460cd92400e68e9e247293fbf544368"
+          },
+          {
+            "path": "references/quality-gate.md",
+            "mode": "0644",
+            "size": 1990,
+            "sha256": "6fc8b8c75cc0cc7419a97aab2d717e78b0826ad9d87b7d9cc929ba682abf6363"
+          },
+          {
+            "path": "references/selection.md",
+            "mode": "0644",
+            "size": 2137,
+            "sha256": "a416eb532da39d234ee20d300fcc99f897341676eea2f7924638a812c8d8a546"
+          },
+          {
+            "path": "references/type-architecture.md",
+            "mode": "0644",
+            "size": 1779,
+            "sha256": "324d451e8496094c437e6df0c56f9a9c8cd840de75fc255a4a66c483878b517c"
+          },
+          {
+            "path": "references/type-comparison.md",
+            "mode": "0644",
+            "size": 1663,
+            "sha256": "9b92624ea86e25815744daa51674178958ebc2e99dade0a278f73c1851f53bbf"
+          },
+          {
+            "path": "references/type-dependency.md",
+            "mode": "0644",
+            "size": 2285,
+            "sha256": "7caf157120d423ef70dec256adc7701bb270763814e089a2fd138c0d6952336a"
+          },
+          {
+            "path": "references/type-process.md",
+            "mode": "0644",
+            "size": 1939,
+            "sha256": "5f31f246736f4cc16623a23d16300526948c893301b5fc1a396d1970821f28a2"
+          },
+          {
+            "path": "references/visual-rules.md",
+            "mode": "0644",
+            "size": 1868,
+            "sha256": "200bdd50c99ca0d88fa755f8eab4c7b59f4db6e017da66ea94b2999b7f20f050"
+          }
+        ]
+      }
+    }
+  },
+  "artifacts": {
+    "adaptation": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-adaptation.md",
+    "static_eval": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-static.json",
+    "dependency_eval": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-dependency.json",
+    "trigger_eval": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-trigger.json",
+    "frontmatter_codex": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-frontmatter-codex.json",
+    "frontmatter_claude": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-frontmatter-claude.json",
+    "adaptation_sha256": "91caf5c2b72ff3f0de271829dbf852173df342495f79986e546432418af5b4fe",
+    "eval_summary": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-summary.json",
+    "html_contract": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-html-contract.json",
+    "html_contract_sha256": "cac60c7281f0aee8c0db76aa7bba2da29dcab1782eafed2697050849d75a510a",
+    "frontmatter_refresh": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-frontmatter-refresh.json",
+    "value_review": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-value-results.json",
+    "value_review_sha256": "95af482bf0ab8717a01f3383de23f7e05c03f30f8200c2c75472c95754501b0b",
+    "value_direct_verification": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-value-direct-verification.json",
+    "value_direct_verification_sha256": "eb81b085699a7546d2a045efd054c4ff769263c332db7e8e5b8dd9e04052632b",
+    "value_verifier": "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/verify-diagram-value.py",
+    "value_verifier_sha256": "5675c4d4785b3289f424a03036dc7c9644c7f7aaeb8540f8ba1ea4bd0c426a2f"
+  },
+  "verification_state": {
+    "frontmatter": "validated with uv offline PyYAML 6.0.2 for both targets",
+    "static_structure": "PASS",
+    "dependency_fixture": "PASS",
+    "trigger_fixture": "PASS",
+    "svg_xml": "PASS",
+    "model_value_eval": "not performed (no model invocation); independent six-case value review PASS",
+    "human_approval": "not present",
+    "active_runtime": "unchanged",
+    "html_contract": "PASS: shared html_artifact_contract, 10 HTML files",
+    "frontmatter_refresh": "PASS: full YAML, PyYAML 6.0.2 offline",
+    "independent_value_review": "PASS: 6 cases; verify-diagram-value.py direct verification PASS for 3 SVG fixtures"
+  },
+  "writes_performed": [
+    "/Users/yoshiki/.local/share/skill-governance/review/diagram-design-html-2026-08/diagram-design",
+    "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-static.py",
+    "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-dependency.py",
+    "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-trigger.py",
+    "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-static.json",
+    "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-dependency.json",
+    "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-trigger.json",
+    "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-frontmatter-codex.json",
+    "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-frontmatter-claude.json",
+    "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-svg-xml.txt",
+    "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-adaptation.md",
+    "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-summary.json",
+    "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-stage.json",
+    "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-html-contract.json",
+    "/Users/yoshiki/Notes/Vault/.local/memory/260831_html-runtime-adoption/diagram-eval-frontmatter-refresh.json"
+  ],
+  "remaining_gate": "lead owns final safety binding, human approval, registry/lock binding, and active runtime promotion",
+  "generated_at": "2026-08-31T03:21:14.335320+00:00"
+}

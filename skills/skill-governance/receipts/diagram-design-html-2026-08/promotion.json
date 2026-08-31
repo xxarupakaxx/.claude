@@ -1,0 +1,32 @@
+{
+  "approval_receipt_sha256": "8b8d89ffef048d94deca901dcf05b77ccc84279df4076e4531ed601256ccc1ca",
+  "approved_targets": {
+    "diagram-design": {
+      "claude": "20a9fdc4e0cc85fddbcf655e7efa35b0fef28ae608e1492ba60c264e3f0af569",
+      "codex": "20a9fdc4e0cc85fddbcf655e7efa35b0fef28ae608e1492ba60c264e3f0af569"
+    }
+  },
+  "collection_id": "diagram-design-html-2026-08",
+  "date": "2026-08-31",
+  "decision": "promoted",
+  "generation": 3,
+  "kind": "promotion",
+  "quarantine": {
+    "diagram-design": "6027c05aec720da05ac9f4b25dfffcc67b290a2e2f683c274ec4580da76d4250"
+  },
+  "retained_originals": "/Users/yoshiki/.local/share/skill-governance/deployments/html-design-2026-08-31-r2/retained-original",
+  "runtime_before": {
+    "diagram-design": {
+      "claude": "354864409034916ef9fbb496014e2be01288fd2d8d04801a602be8bed9ec9c47",
+      "codex": "354864409034916ef9fbb496014e2be01288fd2d8d04801a602be8bed9ec9c47"
+    }
+  },
+  "runtime_targets": {
+    "diagram-design": {
+      "claude": "20a9fdc4e0cc85fddbcf655e7efa35b0fef28ae608e1492ba60c264e3f0af569",
+      "codex": "20a9fdc4e0cc85fddbcf655e7efa35b0fef28ae608e1492ba60c264e3f0af569"
+    }
+  },
+  "schema_version": 1,
+  "subject_sha256": "e0764360aaaddd0bcb7700c63da2c3abbfdce9fed0c73776cd4ea6523d5b5253"
+}

@@ -1,0 +1,45 @@
+{
+  "adapter_limit_bytes": 65536,
+  "candidate_code_execution": false,
+  "candidate_scripts_executed": false,
+  "common_adapter_evidence": {
+    "code": "frontmatter_file_too_large",
+    "path": "receipts/frontmatter-quarantine.json",
+    "sha256": "30f689bb4fdbd60908a0ea6054f802655cfe14aae74fa86f77b3a5edddce601a",
+    "status": "blocked"
+  },
+  "command": "validate-frontmatter",
+  "execution": {
+    "mode": "offline",
+    "network_access": false,
+    "pyyaml_version": "6.0.2",
+    "validator_entrypoint": "prototype governance.py validate_frontmatter_full via CLI"
+  },
+  "findings": [],
+  "frontmatter_sha256": "ca3a5d85196ce0ac17a7f8d9b6c5dd4d76d777b512db770074bdb1b28a61964d",
+  "quarantine_only_schema": true,
+  "schema": "hallmark-prototype-upstream-frontmatter-receipt-v1",
+  "skill_sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577",
+  "source_skill_bytes": 67460,
+  "status": "validated",
+  "surface": {
+    "kind": "quarantine",
+    "revision": "13ac0ec7e148655948100b6396439e481361d690",
+    "skill_name": "hallmark",
+    "source_id": "hallmark"
+  },
+  "target": "upstream",
+  "values": {
+    "description": "Anti-AI-slop design skill for greenfield pages, audits, redesigns, and design extraction from URLs or screenshots. Use when the user asks to build a new app or landing page, wants to redesign something, invokes Hallmark by name, or uses audit/redesign/study.",
+    "name": "hallmark",
+    "version": "1.1.0"
+  },
+  "prototype_binding": {
+    "governance_py_sha256": "a1068f3162417030513dccb9468c499ec1709d6c4160f1399c7190fcb1a9ec96",
+    "revision_bound": true,
+    "revision": "d425eb442853503475e5be0f1f3a13e46223efdd",
+    "source": "/tmp/codex-skill-review-fix-260831/skills/skill-governance/scripts/governance.py",
+    "note": "Independently reviewed isolated prototype revision; active runtime remains unchanged and this receipt is not a promotion receipt."
+  },
+  "raw_source_interpretation": "The raw 67,460-byte source is validated only on the quarantine upstream surface; the common adapter still blocks it at 65,536 bytes."
+}

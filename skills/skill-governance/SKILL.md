@@ -23,9 +23,11 @@ disable-model-invocation: true
 4. authority と replica が一致するか確認する。
 
 ```bash
-python3 ~/.codex/skills/skill-governance/scripts/governance.py audit
+uv run --offline --python 3.13 --with pyyaml==6.0.2 python -B ~/.codex/skills/skill-governance/scripts/governance.py audit
 python3 ~/.codex/skills/skill-governance/scripts/governance.py parity
 ```
+
+`audit` と `lock-plan` は、upstream receiptのcaptured YAMLを再検証するため、上記のpinned PyYAML環境で実行する。`--offline` cacheがなければprovisioningを別操作として扱い、検査を省略したり暗黙にnetworkへ切り替えたりしない。
 
 `DEGRADED`、registry-lock mismatch、baseline drift があれば、promotion、update、retire、delete、runtime mutationを停止する。`approved`より前、および`rejected`、`retired`、`revoked`のSkillがruntime rootに残っていても停止する。`inventory`、`catalog`、`sources`、`inspect`、`validate-frontmatter`、`lock-plan`、`estate-plan`などのread-only調査は、そのcommand自身にBLOCKING findingがない範囲で続行してよい。
 

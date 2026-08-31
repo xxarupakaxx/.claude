@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 480" role="img" aria-labelledby="dependency-candidate-title dependency-candidate-desc">
+  <title id="dependency-candidate-title">Candidate: ranked dependency graph</title>
+  <desc id="dependency-candidate-desc">A ranked dependency graph exposes the shared Snapshot dependency with fan-in two. All relations are demonstration data.</desc>
+  <style>
+    .paper{fill:#f6f4ef}.ink{fill:#252321}.muted{fill:#697079}.soft{fill:#8c9298}.rule{stroke:#d4d0c8}.node{fill:#fff;stroke:#252321;stroke-width:1.2}.leaf{fill:#eeece6;stroke:#697079;stroke-width:1}.badge{fill:#e4e0d8}.text{font:600 16px -apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic','Noto Sans JP',system-ui,sans-serif}.sub{font:12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.source{font:12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.edge{fill:none;stroke:#697079;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round}
+  </style>
+  <defs><marker id="dependency-arrow" viewBox="0 0 8 6" refX="7" refY="3" markerWidth="8" markerHeight="6" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#697079"/></marker></defs>
+  <rect class="paper" x="0" y="0" width="760" height="480"/>
+  <text class="text ink" x="40" y="36">Candidate / rank・fan-in を表示</text>
+  <text class="source muted" x="40" y="462">デモデータ。共有依存 Snapshot は依存 2。</text>
+  <g data-edges="true">
+    <path class="edge" data-from="plan" data-to="renderer" data-source="demo:dependency#L3" marker-end="url(#dependency-arrow)" d="M340,100 V132 H230 V180"/>
+    <path class="edge" data-from="plan" data-to="parser" data-source="demo:dependency#L4" marker-end="url(#dependency-arrow)" d="M420,100 V132 H590 V180"/>
+    <path class="edge" data-from="renderer" data-to="snapshot" data-source="demo:dependency#L1" marker-end="url(#dependency-arrow)" d="M230,232 V264 H380 V300"/>
+    <path class="edge" data-from="parser" data-to="snapshot" data-source="demo:dependency#L2" marker-end="url(#dependency-arrow)" d="M590,232 V264 H380 V300"/>
+    <path class="edge" data-from="snapshot" data-to="source" data-source="demo:dependency#L5" marker-end="url(#dependency-arrow)" d="M380,352 V400"/>
+  </g>
+  <g data-nodes="true">
+    <g data-node-id="plan" data-rank="0" data-fan-in="0" data-source="demo:dependency#L3"><rect class="node" x="280" y="48" width="200" height="52" rx="6"/><text class="text ink" x="380" y="80" text-anchor="middle">Plan</text><text class="sub muted" x="380" y="94" text-anchor="middle">rank 0 · 依存 0</text></g>
+    <g data-node-id="renderer" data-rank="1" data-fan-in="1" data-source="demo:dependency#L3"><rect class="node" x="130" y="180" width="200" height="52" rx="6"/><rect class="badge" x="138" y="188" width="54" height="18" rx="3"/><text class="sub muted" x="165" y="201" text-anchor="middle">依存 1</text><text class="text ink" x="230" y="218" text-anchor="middle">Renderer</text></g>
+    <g data-node-id="parser" data-rank="1" data-fan-in="1" data-source="demo:dependency#L4"><rect class="node" x="490" y="180" width="200" height="52" rx="6"/><rect class="badge" x="498" y="188" width="54" height="18" rx="3"/><text class="sub muted" x="525" y="201" text-anchor="middle">依存 1</text><text class="text ink" x="590" y="218" text-anchor="middle">Parser</text></g>
+    <g data-node-id="snapshot" data-rank="2" data-fan-in="2" data-source="demo:dependency#L1-L2"><rect class="node" x="280" y="300" width="200" height="52" rx="6"/><rect class="badge" x="288" y="308" width="54" height="18" rx="3"/><text class="sub muted" x="315" y="321" text-anchor="middle">依存 2</text><text class="text ink" x="380" y="338" text-anchor="middle">Snapshot</text></g>
+    <g data-node-id="source" data-rank="3" data-fan-in="1" data-source="demo:dependency#L5"><rect class="leaf" x="280" y="400" width="200" height="40" rx="6"/><text class="text ink" x="380" y="426" text-anchor="middle">Source anchor</text></g>
+  </g>
+</svg>

@@ -1,0 +1,3144 @@
+{
+  "schema": "deployment-proposal-safety-draft-v1",
+  "kind": "safety-draft",
+  "status": "proposal-draft",
+  "decision": "pass",
+  "final_safety_receipt": false,
+  "collection_id": "hallmark-html-2026-08",
+  "source_id": "hallmark",
+  "skill_name": "hallmark",
+  "generation": 3,
+  "risk_tier": "L0",
+  "license": "MIT",
+  "subject_sha256": "0b54655bbfe9a2e287d59eb1a5b114e90b75ff2fb2e39474e43bd4578b78a291",
+  "binding_scope": "fixed upstream, quarantine candidate, two review targets, adaptation, license, frontmatter, and static target evidence",
+  "upstream": {
+    "source_id": "hallmark",
+    "github": "Nutlope/hallmark",
+    "revision": "13ac0ec7e148655948100b6396439e481361d690",
+    "tree_sha": "02ebcc67f58295654c073cfb74a20a9a86db1f8f",
+    "path": "skills/hallmark/SKILL.md",
+    "blob_sha": "645221da63743de870501760a48694acdf7aef10",
+    "catalog_sha256": "3194fdd347fb7e4aa961b37690468227863f2c1291f70a14b43ec4a18fb32453",
+    "package_tree_sha": "747c924c4767b4d5fa6f1c59985c87a21c918334",
+    "license_paths": [
+      "LICENSE"
+    ],
+    "upstream_name": "hallmark"
+  },
+  "quarantine": {
+    "tree_sha256": "cccc3c7c88ec944333f132f0565c5089029c86aa37cdb8ebf2a8a705fe5d15fe",
+    "manifest": [
+      {
+        "path": "SKILL.md",
+        "size": 67460,
+        "executable": false,
+        "sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577"
+      },
+      {
+        "path": "references/anti-patterns.md",
+        "size": 25676,
+        "executable": false,
+        "sha256": "a36eb346ad59cafaa26119ed1e7c0bbb8aca6637209ee110eb630dd1a9307070"
+      },
+      {
+        "path": "references/assets.md",
+        "size": 25332,
+        "executable": false,
+        "sha256": "60929b3dc2258b69caf3012d99d174e1ad73da9645263db81a9b271cd6fd7d61"
+      },
+      {
+        "path": "references/color.md",
+        "size": 4339,
+        "executable": false,
+        "sha256": "31c470d16ceb17ccce290cbdd00b9e9a88f2094df8eaaefb67c86ec1e1cdb876"
+      },
+      {
+        "path": "references/component-cookbook.md",
+        "size": 30980,
+        "executable": false,
+        "sha256": "4d9ff4eeb675b9d668516ce5d098031d3552453b3671e50da30fb38cb9ab58bb"
+      },
+      {
+        "path": "references/components/c1-outlined-chip.md",
+        "size": 464,
+        "executable": false,
+        "sha256": "bfc3bcef6e23062710845dd8986dbf98574c6c46ffade1db255dbe13a3203262"
+      },
+      {
+        "path": "references/components/c2-inline-form-as-cta.md",
+        "size": 672,
+        "executable": false,
+        "sha256": "1a6e3d564f49a1d3345117bf2f8af5aea46938c6974bf7eb86cf890e5068bc95"
+      },
+      {
+        "path": "references/components/c3-typographic-link.md",
+        "size": 280,
+        "executable": false,
+        "sha256": "59362c6d9f683ec15c3e09862f2ea6cd8e2a84574738ece98e479c58607d0d69"
+      },
+      {
+        "path": "references/components/c4-sticky-bottom-bar.md",
+        "size": 671,
+        "executable": false,
+        "sha256": "67234a8d8722bf0685d00a64ac737748c82af7e0c25271d0c50f418739bd03c6"
+      },
+      {
+        "path": "references/components/f1-bento-grid.md",
+        "size": 782,
+        "executable": false,
+        "sha256": "d696a5ab7d6258cff0d2d9527fe07651bfbda6a725a4dfd8de00f678e1fb2bbc"
+      },
+      {
+        "path": "references/components/f2-sticky-scroll-stack.md",
+        "size": 899,
+        "executable": false,
+        "sha256": "0079ce8c01e8d008882411ed807aa367276cc67af9b956c4f06da1714007ae83"
+      },
+      {
+        "path": "references/components/f3-tabular-spec-sheet.md",
+        "size": 419,
+        "executable": false,
+        "sha256": "16331628cf441c7b570055c8edd60693d0aa793d1bc5eb2bfd145da700d9f072"
+      },
+      {
+        "path": "references/components/f4-step-sequence.md",
+        "size": 448,
+        "executable": false,
+        "sha256": "d3ca2aa99f7e639b8ccda20f5e263f3a33b03830f8c93d666f469b8e629975e2"
+      },
+      {
+        "path": "references/components/f5-annotated-screenshot.md",
+        "size": 410,
+        "executable": false,
+        "sha256": "58f9f4811ea60f923b2f44e0f3e9bac95c40929f8b1af4fdeedd1eae424051ec"
+      },
+      {
+        "path": "references/components/f6-product-card-grid.md",
+        "size": 2729,
+        "executable": false,
+        "sha256": "22ebc07b00d71c950be8d1a0fdad2cc0e7340cfbbf2cd62c43804bfcfaaf106a"
+      },
+      {
+        "path": "references/components/ft1-mast-headed.md",
+        "size": 501,
+        "executable": false,
+        "sha256": "7f5671b583e9991f9a4671c223d6c15efdee5c1161dc616cbe2b398eb8d1b6db"
+      },
+      {
+        "path": "references/components/ft2-inline-rule-single-line.md",
+        "size": 362,
+        "executable": false,
+        "sha256": "de13bf7d9bfaddb42a84fc8584646e914f2273abdb34aa98ea9bd2f5d7ff0493"
+      },
+      {
+        "path": "references/components/ft3-index-style-category-list.md",
+        "size": 483,
+        "executable": false,
+        "sha256": "9f70608d62872be05af910a6168017c872ee1c17b2dbb8329128569231aa3cce"
+      },
+      {
+        "path": "references/components/ft4-dense-typographic.md",
+        "size": 501,
+        "executable": false,
+        "sha256": "b8d087773614698036e63474a8546024d874bb6da2b575e64fcaacc2fba0ad60"
+      },
+      {
+        "path": "references/components/ft5-statement.md",
+        "size": 1303,
+        "executable": false,
+        "sha256": "71be63a51def6a3b59badcd481e49d4d5c5d9f3d63a3b4a5b9c05482110f4000"
+      },
+      {
+        "path": "references/components/ft6-letter-close.md",
+        "size": 1119,
+        "executable": false,
+        "sha256": "8119d22fbbfb3efa83d0bdc41acbfc5037f2c80cb7c39659623d5216eb16c03e"
+      },
+      {
+        "path": "references/components/ft7-newsletter-first.md",
+        "size": 1755,
+        "executable": false,
+        "sha256": "2cd766761a8e18bff7bc473b3303392b806a15e461187ac325138f77a308dd48"
+      },
+      {
+        "path": "references/components/ft8-marquee-scroll.md",
+        "size": 1500,
+        "executable": false,
+        "sha256": "32b8d38df984b0db385e9ce2251bbf6bb8df279e3933c441b97a0b703961e9f0"
+      },
+      {
+        "path": "references/components/h1-marquee.md",
+        "size": 507,
+        "executable": false,
+        "sha256": "8258b25e27232994126701a4f72bf05267fc9c5dfdc14bcf186efaf96a7dbb10"
+      },
+      {
+        "path": "references/components/h2-split-diptych.md",
+        "size": 600,
+        "executable": false,
+        "sha256": "f6077864f5c58414d7a10648aa8a3162767f2e356d0701d01953181a83cf3364"
+      },
+      {
+        "path": "references/components/h3-quote-led.md",
+        "size": 420,
+        "executable": false,
+        "sha256": "4b1427750c5041ab9201cd18fcdd3dd7a93622644eff518d9ad300339f9a46b7"
+      },
+      {
+        "path": "references/components/h4-stat-led.md",
+        "size": 509,
+        "executable": false,
+        "sha256": "9ada00461ea12be83dec2fba58e19fffd2c559925e68eb72ec18e0ec434f6cec"
+      },
+      {
+        "path": "references/components/h5-letter-hero.md",
+        "size": 361,
+        "executable": false,
+        "sha256": "afcd7bb6b4c888d7e8460e7af5e86dc50149ca253419757bed2834bf66083321"
+      },
+      {
+        "path": "references/components/h6-photographic-fold.md",
+        "size": 586,
+        "executable": false,
+        "sha256": "59e046afd5648bfe2737966f1203c0212e7311fbf0e1edee448e3f68f45aa0d0"
+      },
+      {
+        "path": "references/components/h7-demo-video-clipped-by-viewport-edge.md",
+        "size": 1613,
+        "executable": false,
+        "sha256": "12b6f32a47a0b2e73547a0ac8b641cc19b1caa05dda4ffde424defb53afaa0de"
+      },
+      {
+        "path": "references/components/h8-mockup-split-browser-framed.md",
+        "size": 1309,
+        "executable": false,
+        "sha256": "954b0a3aebfe6de8a3be70fedda669099125dd2ebc9c07948fbdb457fd8dc166"
+      },
+      {
+        "path": "references/components/h9-custom-illustration-centerpiece.md",
+        "size": 1479,
+        "executable": false,
+        "sha256": "1d3d32859e6e451a67bfc38a403bd80115a42b6898a4d8788e4cfadb8c83e8d6"
+      },
+      {
+        "path": "references/components/n1-wordmark-2-links.md",
+        "size": 388,
+        "executable": false,
+        "sha256": "8504774127e33f24a09844eb4c678e91b09ed513690fce51f7863d7cf3fdeab1"
+      },
+      {
+        "path": "references/components/n10-floating-on-scroll-morph.md",
+        "size": 1387,
+        "executable": false,
+        "sha256": "056c2107492ab0eb9dafc7ab4c7ff5454222c1ee127fa45615ccc7b8955da36a"
+      },
+      {
+        "path": "references/components/n11-mega-menu.md",
+        "size": 3155,
+        "executable": false,
+        "sha256": "b715421012d0997d25d5739c209be6129132fc91add677d75a8ad82d8672e1d4"
+      },
+      {
+        "path": "references/components/n12-banner-retract.md",
+        "size": 2858,
+        "executable": false,
+        "sha256": "2d52ecb8725b1991d4f6b78301cd6f112464f7b17315bdf0febbff67bca50a56"
+      },
+      {
+        "path": "references/components/n13-inline-cmdk-pill.md",
+        "size": 3314,
+        "executable": false,
+        "sha256": "6375fa0a1bbc92cba9a435159aa46cb084fc030c63e1abf8f073688959d7be75"
+      },
+      {
+        "path": "references/components/n1b-saas-three-section.md",
+        "size": 3047,
+        "executable": false,
+        "sha256": "c2631c7807e33eea9b02faa9121a0f9e64861467b57b8635ee97f5fa52bb60ae"
+      },
+      {
+        "path": "references/components/n2-floating-chip.md",
+        "size": 617,
+        "executable": false,
+        "sha256": "70ea848537c5fe29be30f5e4b7478ecc39f86d0089f207549dc98a873b6c8fc1"
+      },
+      {
+        "path": "references/components/n3-side-rail.md",
+        "size": 536,
+        "executable": false,
+        "sha256": "20ed8a06a599d73190502a4801a3be2933b8e06874371167196b7d32dae66111"
+      },
+      {
+        "path": "references/components/n4-hidden-behind-k.md",
+        "size": 373,
+        "executable": false,
+        "sha256": "bccddb3a25a6afd457163b71e09de07ac23bf5d922fdeb9561e25d825bb97dcf"
+      },
+      {
+        "path": "references/components/n5-floating-pill.md",
+        "size": 1418,
+        "executable": false,
+        "sha256": "6dc8ffb9628fd7ee3669208091e11497864cecea69becc6b513ebdc1f3a737a3"
+      },
+      {
+        "path": "references/components/n6-newspaper-masthead.md",
+        "size": 1619,
+        "executable": false,
+        "sha256": "243a28d1165328c3479a1b75a3ae05dbfe2a6b8c9f867df8e35873b391f8edd5"
+      },
+      {
+        "path": "references/components/n7-brutal-slab.md",
+        "size": 1380,
+        "executable": false,
+        "sha256": "6c58d29129f7fd89b9fc755143648397749cdd06043ae0c0b51e6f07e7e6dcb5"
+      },
+      {
+        "path": "references/components/n8-terminal-command.md",
+        "size": 1651,
+        "executable": false,
+        "sha256": "c88d787bd2e5cf8bf6fb2c4121602dc0289760b41235d437468322821ee4334b"
+      },
+      {
+        "path": "references/components/n9-edge-aligned-minimal.md",
+        "size": 868,
+        "executable": false,
+        "sha256": "cc20c76a5abe7099ed2bde3480c81f75f02a760a4c0d2ac79de1503dca9f9ee3"
+      },
+      {
+        "path": "references/components/s1-left-margin-numbered.md",
+        "size": 495,
+        "executable": false,
+        "sha256": "074ed68eafb03ca775b0593d0599fe20c7891356f473f04996f42425e6586585"
+      },
+      {
+        "path": "references/components/s2-hanging.md",
+        "size": 357,
+        "executable": false,
+        "sha256": "7b6d04cb896051006fe41b041a67ed77d25010edb579c60b03d88f68ae471462"
+      },
+      {
+        "path": "references/components/s3-sticky-pinned.md",
+        "size": 1179,
+        "executable": false,
+        "sha256": "4101cd7a28fe21a9b8094848ac6cc13c89f9e6f9bf801f04ac69b986c76727b4"
+      },
+      {
+        "path": "references/components/s4-inline-no-break.md",
+        "size": 438,
+        "executable": false,
+        "sha256": "4b6d36da05383df1b29afe17b96645b816de07373016deb667efca340bb61ac6"
+      },
+      {
+        "path": "references/components/s5-bottom-anchored.md",
+        "size": 358,
+        "executable": false,
+        "sha256": "55c159e2d8299501f14ac97468404dc8cad35695c2b7eaad2e972d314620eca0"
+      },
+      {
+        "path": "references/components/t1-pull-quote-with-marginalia.md",
+        "size": 465,
+        "executable": false,
+        "sha256": "c7139796972c5f47d723742cbff02916a1ee0f2496456b86ac05d8839542be38"
+      },
+      {
+        "path": "references/components/t2-logo-wall-hairline.md",
+        "size": 733,
+        "executable": false,
+        "sha256": "942121342a61bb4650722f7ba1b605347c6178d69ebeb740139b0bfb5c810e7f"
+      },
+      {
+        "path": "references/components/t3-single-huge-quote.md",
+        "size": 490,
+        "executable": false,
+        "sha256": "7bca56e2cd630da3669f7cf8befd1bd654a5b249cf38b6d9af5a7c62e33b9239"
+      },
+      {
+        "path": "references/components/t4-numbered-stat-strip.md",
+        "size": 470,
+        "executable": false,
+        "sha256": "a5fb5615902f9c4026f4ae7b0c96b536bb3cbb2fb4259031342d1cd190dab729"
+      },
+      {
+        "path": "references/contract.md",
+        "size": 2027,
+        "executable": false,
+        "sha256": "2923a056b95da63d04100ac56bc8cdff6bc0a717ac3e5da5cef69eb5feb4619c"
+      },
+      {
+        "path": "references/copy.md",
+        "size": 12261,
+        "executable": false,
+        "sha256": "703cdbf81fbef6f71d90596a32041d2a33a46fb71ba07ccf5ede6b4b1471d347"
+      },
+      {
+        "path": "references/custom-craft.md",
+        "size": 34133,
+        "executable": false,
+        "sha256": "417ff74cd83e1fea50c41948c53e18365269b880806ef4f31d9e0ebda0f99246"
+      },
+      {
+        "path": "references/custom-theme.md",
+        "size": 24059,
+        "executable": false,
+        "sha256": "da0fb051689bf9d100e50e67209566623c1fbe72e09b943248c458985c39e780"
+      },
+      {
+        "path": "references/design-md.md",
+        "size": 6846,
+        "executable": false,
+        "sha256": "a9368b64dd9b6e53e8c707830ce28fd8601d3195a81647ea46b6995aa3556b3c"
+      },
+      {
+        "path": "references/export-formats.md",
+        "size": 14620,
+        "executable": false,
+        "sha256": "de0a73d9bec7a31abbd0cbbf1ecd51c2e440f1f3fdc08f476a343959ca6c22f3"
+      },
+      {
+        "path": "references/floating-nav.md",
+        "size": 5266,
+        "executable": false,
+        "sha256": "c8c80f6560700bf6ee6baf28b81ec1539e9ff920d885624707de5fe8803c25d1"
+      },
+      {
+        "path": "references/genres/atmospheric.md",
+        "size": 5075,
+        "executable": false,
+        "sha256": "58d36e9a59c7d9e0ca99edeaaadab885f2635386fa69d52ea9eda3c29977e190"
+      },
+      {
+        "path": "references/genres/editorial.md",
+        "size": 4121,
+        "executable": false,
+        "sha256": "1e88cd0c94435c6a9edd1c0b93b67db4321fb3481ff0d66ee24869e655847319"
+      },
+      {
+        "path": "references/genres/modern-minimal.md",
+        "size": 4836,
+        "executable": false,
+        "sha256": "6125db00e38f2baca9369ed4d4aa917d977b85dd5eac6f19dac89707c3c3534b"
+      },
+      {
+        "path": "references/genres/playful.md",
+        "size": 5218,
+        "executable": false,
+        "sha256": "e52c6ff3fe21b5024c83ac1f03285e1d627e3469ff140d6bea728642026c4f95"
+      },
+      {
+        "path": "references/hero-enrichment.md",
+        "size": 32151,
+        "executable": false,
+        "sha256": "63c14cc2c256dd78a69a1c36f4bcb764940aa7f1ba2e6dd40ca36013f8884a83"
+      },
+      {
+        "path": "references/imagery-kit.md",
+        "size": 8544,
+        "executable": false,
+        "sha256": "39d71df8dd6186b27f174fd8ab8ffd379553be3917cff50810c72365f6d6cb53"
+      },
+      {
+        "path": "references/interaction-and-states.md",
+        "size": 13537,
+        "executable": false,
+        "sha256": "e816eb2d067ba9f6f288a3831549da95624a05f432ed2a50f54136f27dd2d67f"
+      },
+      {
+        "path": "references/layout-and-space.md",
+        "size": 6766,
+        "executable": false,
+        "sha256": "987f3a45f5dbe81547117a77987bcedf5376608a6412067e04337047e0c7c839"
+      },
+      {
+        "path": "references/macrostructures.md",
+        "size": 11597,
+        "executable": false,
+        "sha256": "a6f19a17073aca18a6ff7a8fc8c3c5f711865e01c6d97de609771b47fe8394bc"
+      },
+      {
+        "path": "references/macrostructures/01-bento-grid.md",
+        "size": 1836,
+        "executable": false,
+        "sha256": "aa268415862188414f8db94715e20ae7d29df3dc7c494083683378705f3f8493"
+      },
+      {
+        "path": "references/macrostructures/02-long-document.md",
+        "size": 1722,
+        "executable": false,
+        "sha256": "8ca81106396f2bd00eb9ef5d5d1f00c3aab0500394e706d6a2b3221a6c0d910f"
+      },
+      {
+        "path": "references/macrostructures/03-marquee-hero.md",
+        "size": 1645,
+        "executable": false,
+        "sha256": "2b7c35860086da6232cb3725c059bead9a31a91872d464266ce6e07a5a75f755"
+      },
+      {
+        "path": "references/macrostructures/04-stat-led.md",
+        "size": 2120,
+        "executable": false,
+        "sha256": "a6930b4ba6377c8ef5fcb7af6bf4393cd924292cf03871a37636dd4b77de22b7"
+      },
+      {
+        "path": "references/macrostructures/05-workbench.md",
+        "size": 1690,
+        "executable": false,
+        "sha256": "0cbe92772c7b2ffd9b24b9e446b1e1cd9ed22930b39030ef5a6e9cba5512d31f"
+      },
+      {
+        "path": "references/macrostructures/06-conversational-faq.md",
+        "size": 1621,
+        "executable": false,
+        "sha256": "373473bed23d055164edc04b16344fcd3861c1ab39ff73f3c75dc1719663d488"
+      },
+      {
+        "path": "references/macrostructures/07-manifesto.md",
+        "size": 1711,
+        "executable": false,
+        "sha256": "dc1327bad300179c1b233d02d20137776dc98c9affcfd3942b9f3f796ca67b93"
+      },
+      {
+        "path": "references/macrostructures/08-photographic.md",
+        "size": 1491,
+        "executable": false,
+        "sha256": "e5c77bb6ca6d82616c9c63bb6e68ee17c6af7bbca935f9ff29481294d7d1f74c"
+      },
+      {
+        "path": "references/macrostructures/09-quote-led.md",
+        "size": 1817,
+        "executable": false,
+        "sha256": "39069a564d9ebd76daf26f46ec7776828dc45fc6a72ae712b3bf7a4fd012f650"
+      },
+      {
+        "path": "references/macrostructures/10-specimen.md",
+        "size": 1614,
+        "executable": false,
+        "sha256": "7f23cead7f91c2ee2335eb2c87fb0aa1e7826f4573748d549756523085ed6ad4"
+      },
+      {
+        "path": "references/macrostructures/11-catalogue.md",
+        "size": 1186,
+        "executable": false,
+        "sha256": "99ff614600f18cfc80dfa3b9a2158dbea3b3674f76f40b70e721b9255796c265"
+      },
+      {
+        "path": "references/macrostructures/12-letter.md",
+        "size": 1253,
+        "executable": false,
+        "sha256": "6f3ad86e87223bd9b6b1267e27532811efbb60f50606e7f72c8525d2cc01d709"
+      },
+      {
+        "path": "references/macrostructures/13-index-first.md",
+        "size": 1208,
+        "executable": false,
+        "sha256": "25c832844a1b5e6ce17a335ac98e81d98d9e3372f514d83dc26ac299cc077865"
+      },
+      {
+        "path": "references/macrostructures/14-narrative-workflow.md",
+        "size": 1428,
+        "executable": false,
+        "sha256": "e604a1106131fe3a65721066a304922e757a78c997c197227840931079c780fd"
+      },
+      {
+        "path": "references/macrostructures/15-split-studio.md",
+        "size": 1336,
+        "executable": false,
+        "sha256": "400effa4de50d5f2fabd88be37447aa845deb3b67810ed4f2b995df458c852e4"
+      },
+      {
+        "path": "references/macrostructures/16-feature-stack.md",
+        "size": 1386,
+        "executable": false,
+        "sha256": "a389fae7fe39550352bdf1ce68cdaa3965a434fa1154f67d3c276e550d1d165a"
+      },
+      {
+        "path": "references/macrostructures/17-type-specimen.md",
+        "size": 1271,
+        "executable": false,
+        "sha256": "a1487fde891f73bf34a2ca38a631a2cb5c71d3a7b2ccd940114354e291ea8034"
+      },
+      {
+        "path": "references/macrostructures/18-portfolio-grid.md",
+        "size": 1057,
+        "executable": false,
+        "sha256": "af5d0f34a7ef7b81d6f4c8c845497ae553d44f418526d7e503346c9243b034e3"
+      },
+      {
+        "path": "references/macrostructures/19-map-diagram.md",
+        "size": 1269,
+        "executable": false,
+        "sha256": "5a576f25f4c8d58c14f574e3413560118343df9a9669db80c6c452daf509c3c3"
+      },
+      {
+        "path": "references/macrostructures/20-ecosystem-index.md",
+        "size": 1209,
+        "executable": false,
+        "sha256": "fe206580a39ffc4b3534f3a7414155aa626fe16b82b608a0b8b415c1510f17ad"
+      },
+      {
+        "path": "references/macrostructures/21-component-playground.md",
+        "size": 1171,
+        "executable": false,
+        "sha256": "ad3cbdbe9181e9472cb7b7fffbbe35021dc9b5b99ea86adc026f34d6b2c2f01f"
+      },
+      {
+        "path": "references/microinteractions.md",
+        "size": 20017,
+        "executable": false,
+        "sha256": "613ca56c2c16e40aeb594af21fabd651732d9de63c848aee51113602525f6e64"
+      },
+      {
+        "path": "references/motion.md",
+        "size": 4340,
+        "executable": false,
+        "sha256": "330d056810315f65819579f8207afe402703a9192bc76a2009558a59b7c84ccf"
+      },
+      {
+        "path": "references/preview-examples.md",
+        "size": 2834,
+        "executable": false,
+        "sha256": "df61c24c9a67457ef7369ec5f20575095326df72ffe6534c8fa9730581ebf7d9"
+      },
+      {
+        "path": "references/responsive.md",
+        "size": 5918,
+        "executable": false,
+        "sha256": "2bf18d72af704ca5dd3c220359a4c77c718efa19c40f62d9bff61ac4a90209b0"
+      },
+      {
+        "path": "references/slop-test.md",
+        "size": 31065,
+        "executable": false,
+        "sha256": "6eb49fc64ca54929d2c1600e2a6014268f1a7593787c0ed3f6ecb4ac8390ad86"
+      },
+      {
+        "path": "references/structure.md",
+        "size": 15714,
+        "executable": false,
+        "sha256": "ca5c0296ae428f8c4c5214407d431bbda5c453f98f2e7abdec03d644271af32b"
+      },
+      {
+        "path": "references/study.md",
+        "size": 42639,
+        "executable": false,
+        "sha256": "021fe4d001b38ee87414c1bb69321d2e44b67df8ede76ecec225c41a634aab20"
+      },
+      {
+        "path": "references/themes/carnival.md",
+        "size": 19616,
+        "executable": false,
+        "sha256": "119a9c803eac74958e5df6151da8a2575a1cc2d061a619bdb7f32cf972308ee2"
+      },
+      {
+        "path": "references/themes/cobalt.md",
+        "size": 11273,
+        "executable": false,
+        "sha256": "13be92af729e6b82d1b1e51aa078f7c007e2900c8f0798b2c0fd2c0eeac7019e"
+      },
+      {
+        "path": "references/themes/grid.md",
+        "size": 14564,
+        "executable": false,
+        "sha256": "e68e8b97f62d613dc94a03afd346b9e12de8ffcc65dc8633c4c223c92875c7da"
+      },
+      {
+        "path": "references/themes/hum.md",
+        "size": 32317,
+        "executable": false,
+        "sha256": "bbdd1e89a32d6b15e99493ba9497816a0915bd4e9bf150b95868db597c20e1d5"
+      },
+      {
+        "path": "references/themes/lumen.md",
+        "size": 28180,
+        "executable": false,
+        "sha256": "d5459478d3aa1ea6330c221dfe011b717a70dbb036f597403b3a6b3cf82dd53b"
+      },
+      {
+        "path": "references/typography.md",
+        "size": 18381,
+        "executable": false,
+        "sha256": "94d7b2d2b138bd8687e09dc3dd618eaafff500b0497a6d69cb4c29b764e94b9c"
+      },
+      {
+        "path": "references/verbs/audit.md",
+        "size": 2803,
+        "executable": false,
+        "sha256": "0a5b484453f1697a8675a7020df9159d0b4ce22f059b873501bfd82c26d6a31a"
+      },
+      {
+        "path": "references/verbs/redesign.md",
+        "size": 13849,
+        "executable": false,
+        "sha256": "c2830f3b7d68e9622f55d376048a5a454c5ef59d309a211e716d1142e86acbdf"
+      }
+    ],
+    "license_evidence": [],
+    "static_inspection": {
+      "tree_sha256": "cccc3c7c88ec944333f132f0565c5089029c86aa37cdb8ebf2a8a705fe5d15fe",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "size": 67460,
+          "executable": false,
+          "sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577"
+        },
+        {
+          "path": "references/anti-patterns.md",
+          "size": 25676,
+          "executable": false,
+          "sha256": "a36eb346ad59cafaa26119ed1e7c0bbb8aca6637209ee110eb630dd1a9307070"
+        },
+        {
+          "path": "references/assets.md",
+          "size": 25332,
+          "executable": false,
+          "sha256": "60929b3dc2258b69caf3012d99d174e1ad73da9645263db81a9b271cd6fd7d61"
+        },
+        {
+          "path": "references/color.md",
+          "size": 4339,
+          "executable": false,
+          "sha256": "31c470d16ceb17ccce290cbdd00b9e9a88f2094df8eaaefb67c86ec1e1cdb876"
+        },
+        {
+          "path": "references/component-cookbook.md",
+          "size": 30980,
+          "executable": false,
+          "sha256": "4d9ff4eeb675b9d668516ce5d098031d3552453b3671e50da30fb38cb9ab58bb"
+        },
+        {
+          "path": "references/components/c1-outlined-chip.md",
+          "size": 464,
+          "executable": false,
+          "sha256": "bfc3bcef6e23062710845dd8986dbf98574c6c46ffade1db255dbe13a3203262"
+        },
+        {
+          "path": "references/components/c2-inline-form-as-cta.md",
+          "size": 672,
+          "executable": false,
+          "sha256": "1a6e3d564f49a1d3345117bf2f8af5aea46938c6974bf7eb86cf890e5068bc95"
+        },
+        {
+          "path": "references/components/c3-typographic-link.md",
+          "size": 280,
+          "executable": false,
+          "sha256": "59362c6d9f683ec15c3e09862f2ea6cd8e2a84574738ece98e479c58607d0d69"
+        },
+        {
+          "path": "references/components/c4-sticky-bottom-bar.md",
+          "size": 671,
+          "executable": false,
+          "sha256": "67234a8d8722bf0685d00a64ac737748c82af7e0c25271d0c50f418739bd03c6"
+        },
+        {
+          "path": "references/components/f1-bento-grid.md",
+          "size": 782,
+          "executable": false,
+          "sha256": "d696a5ab7d6258cff0d2d9527fe07651bfbda6a725a4dfd8de00f678e1fb2bbc"
+        },
+        {
+          "path": "references/components/f2-sticky-scroll-stack.md",
+          "size": 899,
+          "executable": false,
+          "sha256": "0079ce8c01e8d008882411ed807aa367276cc67af9b956c4f06da1714007ae83"
+        },
+        {
+          "path": "references/components/f3-tabular-spec-sheet.md",
+          "size": 419,
+          "executable": false,
+          "sha256": "16331628cf441c7b570055c8edd60693d0aa793d1bc5eb2bfd145da700d9f072"
+        },
+        {
+          "path": "references/components/f4-step-sequence.md",
+          "size": 448,
+          "executable": false,
+          "sha256": "d3ca2aa99f7e639b8ccda20f5e263f3a33b03830f8c93d666f469b8e629975e2"
+        },
+        {
+          "path": "references/components/f5-annotated-screenshot.md",
+          "size": 410,
+          "executable": false,
+          "sha256": "58f9f4811ea60f923b2f44e0f3e9bac95c40929f8b1af4fdeedd1eae424051ec"
+        },
+        {
+          "path": "references/components/f6-product-card-grid.md",
+          "size": 2729,
+          "executable": false,
+          "sha256": "22ebc07b00d71c950be8d1a0fdad2cc0e7340cfbbf2cd62c43804bfcfaaf106a"
+        },
+        {
+          "path": "references/components/ft1-mast-headed.md",
+          "size": 501,
+          "executable": false,
+          "sha256": "7f5671b583e9991f9a4671c223d6c15efdee5c1161dc616cbe2b398eb8d1b6db"
+        },
+        {
+          "path": "references/components/ft2-inline-rule-single-line.md",
+          "size": 362,
+          "executable": false,
+          "sha256": "de13bf7d9bfaddb42a84fc8584646e914f2273abdb34aa98ea9bd2f5d7ff0493"
+        },
+        {
+          "path": "references/components/ft3-index-style-category-list.md",
+          "size": 483,
+          "executable": false,
+          "sha256": "9f70608d62872be05af910a6168017c872ee1c17b2dbb8329128569231aa3cce"
+        },
+        {
+          "path": "references/components/ft4-dense-typographic.md",
+          "size": 501,
+          "executable": false,
+          "sha256": "b8d087773614698036e63474a8546024d874bb6da2b575e64fcaacc2fba0ad60"
+        },
+        {
+          "path": "references/components/ft5-statement.md",
+          "size": 1303,
+          "executable": false,
+          "sha256": "71be63a51def6a3b59badcd481e49d4d5c5d9f3d63a3b4a5b9c05482110f4000"
+        },
+        {
+          "path": "references/components/ft6-letter-close.md",
+          "size": 1119,
+          "executable": false,
+          "sha256": "8119d22fbbfb3efa83d0bdc41acbfc5037f2c80cb7c39659623d5216eb16c03e"
+        },
+        {
+          "path": "references/components/ft7-newsletter-first.md",
+          "size": 1755,
+          "executable": false,
+          "sha256": "2cd766761a8e18bff7bc473b3303392b806a15e461187ac325138f77a308dd48"
+        },
+        {
+          "path": "references/components/ft8-marquee-scroll.md",
+          "size": 1500,
+          "executable": false,
+          "sha256": "32b8d38df984b0db385e9ce2251bbf6bb8df279e3933c441b97a0b703961e9f0"
+        },
+        {
+          "path": "references/components/h1-marquee.md",
+          "size": 507,
+          "executable": false,
+          "sha256": "8258b25e27232994126701a4f72bf05267fc9c5dfdc14bcf186efaf96a7dbb10"
+        },
+        {
+          "path": "references/components/h2-split-diptych.md",
+          "size": 600,
+          "executable": false,
+          "sha256": "f6077864f5c58414d7a10648aa8a3162767f2e356d0701d01953181a83cf3364"
+        },
+        {
+          "path": "references/components/h3-quote-led.md",
+          "size": 420,
+          "executable": false,
+          "sha256": "4b1427750c5041ab9201cd18fcdd3dd7a93622644eff518d9ad300339f9a46b7"
+        },
+        {
+          "path": "references/components/h4-stat-led.md",
+          "size": 509,
+          "executable": false,
+          "sha256": "9ada00461ea12be83dec2fba58e19fffd2c559925e68eb72ec18e0ec434f6cec"
+        },
+        {
+          "path": "references/components/h5-letter-hero.md",
+          "size": 361,
+          "executable": false,
+          "sha256": "afcd7bb6b4c888d7e8460e7af5e86dc50149ca253419757bed2834bf66083321"
+        },
+        {
+          "path": "references/components/h6-photographic-fold.md",
+          "size": 586,
+          "executable": false,
+          "sha256": "59e046afd5648bfe2737966f1203c0212e7311fbf0e1edee448e3f68f45aa0d0"
+        },
+        {
+          "path": "references/components/h7-demo-video-clipped-by-viewport-edge.md",
+          "size": 1613,
+          "executable": false,
+          "sha256": "12b6f32a47a0b2e73547a0ac8b641cc19b1caa05dda4ffde424defb53afaa0de"
+        },
+        {
+          "path": "references/components/h8-mockup-split-browser-framed.md",
+          "size": 1309,
+          "executable": false,
+          "sha256": "954b0a3aebfe6de8a3be70fedda669099125dd2ebc9c07948fbdb457fd8dc166"
+        },
+        {
+          "path": "references/components/h9-custom-illustration-centerpiece.md",
+          "size": 1479,
+          "executable": false,
+          "sha256": "1d3d32859e6e451a67bfc38a403bd80115a42b6898a4d8788e4cfadb8c83e8d6"
+        },
+        {
+          "path": "references/components/n1-wordmark-2-links.md",
+          "size": 388,
+          "executable": false,
+          "sha256": "8504774127e33f24a09844eb4c678e91b09ed513690fce51f7863d7cf3fdeab1"
+        },
+        {
+          "path": "references/components/n10-floating-on-scroll-morph.md",
+          "size": 1387,
+          "executable": false,
+          "sha256": "056c2107492ab0eb9dafc7ab4c7ff5454222c1ee127fa45615ccc7b8955da36a"
+        },
+        {
+          "path": "references/components/n11-mega-menu.md",
+          "size": 3155,
+          "executable": false,
+          "sha256": "b715421012d0997d25d5739c209be6129132fc91add677d75a8ad82d8672e1d4"
+        },
+        {
+          "path": "references/components/n12-banner-retract.md",
+          "size": 2858,
+          "executable": false,
+          "sha256": "2d52ecb8725b1991d4f6b78301cd6f112464f7b17315bdf0febbff67bca50a56"
+        },
+        {
+          "path": "references/components/n13-inline-cmdk-pill.md",
+          "size": 3314,
+          "executable": false,
+          "sha256": "6375fa0a1bbc92cba9a435159aa46cb084fc030c63e1abf8f073688959d7be75"
+        },
+        {
+          "path": "references/components/n1b-saas-three-section.md",
+          "size": 3047,
+          "executable": false,
+          "sha256": "c2631c7807e33eea9b02faa9121a0f9e64861467b57b8635ee97f5fa52bb60ae"
+        },
+        {
+          "path": "references/components/n2-floating-chip.md",
+          "size": 617,
+          "executable": false,
+          "sha256": "70ea848537c5fe29be30f5e4b7478ecc39f86d0089f207549dc98a873b6c8fc1"
+        },
+        {
+          "path": "references/components/n3-side-rail.md",
+          "size": 536,
+          "executable": false,
+          "sha256": "20ed8a06a599d73190502a4801a3be2933b8e06874371167196b7d32dae66111"
+        },
+        {
+          "path": "references/components/n4-hidden-behind-k.md",
+          "size": 373,
+          "executable": false,
+          "sha256": "bccddb3a25a6afd457163b71e09de07ac23bf5d922fdeb9561e25d825bb97dcf"
+        },
+        {
+          "path": "references/components/n5-floating-pill.md",
+          "size": 1418,
+          "executable": false,
+          "sha256": "6dc8ffb9628fd7ee3669208091e11497864cecea69becc6b513ebdc1f3a737a3"
+        },
+        {
+          "path": "references/components/n6-newspaper-masthead.md",
+          "size": 1619,
+          "executable": false,
+          "sha256": "243a28d1165328c3479a1b75a3ae05dbfe2a6b8c9f867df8e35873b391f8edd5"
+        },
+        {
+          "path": "references/components/n7-brutal-slab.md",
+          "size": 1380,
+          "executable": false,
+          "sha256": "6c58d29129f7fd89b9fc755143648397749cdd06043ae0c0b51e6f07e7e6dcb5"
+        },
+        {
+          "path": "references/components/n8-terminal-command.md",
+          "size": 1651,
+          "executable": false,
+          "sha256": "c88d787bd2e5cf8bf6fb2c4121602dc0289760b41235d437468322821ee4334b"
+        },
+        {
+          "path": "references/components/n9-edge-aligned-minimal.md",
+          "size": 868,
+          "executable": false,
+          "sha256": "cc20c76a5abe7099ed2bde3480c81f75f02a760a4c0d2ac79de1503dca9f9ee3"
+        },
+        {
+          "path": "references/components/s1-left-margin-numbered.md",
+          "size": 495,
+          "executable": false,
+          "sha256": "074ed68eafb03ca775b0593d0599fe20c7891356f473f04996f42425e6586585"
+        },
+        {
+          "path": "references/components/s2-hanging.md",
+          "size": 357,
+          "executable": false,
+          "sha256": "7b6d04cb896051006fe41b041a67ed77d25010edb579c60b03d88f68ae471462"
+        },
+        {
+          "path": "references/components/s3-sticky-pinned.md",
+          "size": 1179,
+          "executable": false,
+          "sha256": "4101cd7a28fe21a9b8094848ac6cc13c89f9e6f9bf801f04ac69b986c76727b4"
+        },
+        {
+          "path": "references/components/s4-inline-no-break.md",
+          "size": 438,
+          "executable": false,
+          "sha256": "4b6d36da05383df1b29afe17b96645b816de07373016deb667efca340bb61ac6"
+        },
+        {
+          "path": "references/components/s5-bottom-anchored.md",
+          "size": 358,
+          "executable": false,
+          "sha256": "55c159e2d8299501f14ac97468404dc8cad35695c2b7eaad2e972d314620eca0"
+        },
+        {
+          "path": "references/components/t1-pull-quote-with-marginalia.md",
+          "size": 465,
+          "executable": false,
+          "sha256": "c7139796972c5f47d723742cbff02916a1ee0f2496456b86ac05d8839542be38"
+        },
+        {
+          "path": "references/components/t2-logo-wall-hairline.md",
+          "size": 733,
+          "executable": false,
+          "sha256": "942121342a61bb4650722f7ba1b605347c6178d69ebeb740139b0bfb5c810e7f"
+        },
+        {
+          "path": "references/components/t3-single-huge-quote.md",
+          "size": 490,
+          "executable": false,
+          "sha256": "7bca56e2cd630da3669f7cf8befd1bd654a5b249cf38b6d9af5a7c62e33b9239"
+        },
+        {
+          "path": "references/components/t4-numbered-stat-strip.md",
+          "size": 470,
+          "executable": false,
+          "sha256": "a5fb5615902f9c4026f4ae7b0c96b536bb3cbb2fb4259031342d1cd190dab729"
+        },
+        {
+          "path": "references/contract.md",
+          "size": 2027,
+          "executable": false,
+          "sha256": "2923a056b95da63d04100ac56bc8cdff6bc0a717ac3e5da5cef69eb5feb4619c"
+        },
+        {
+          "path": "references/copy.md",
+          "size": 12261,
+          "executable": false,
+          "sha256": "703cdbf81fbef6f71d90596a32041d2a33a46fb71ba07ccf5ede6b4b1471d347"
+        },
+        {
+          "path": "references/custom-craft.md",
+          "size": 34133,
+          "executable": false,
+          "sha256": "417ff74cd83e1fea50c41948c53e18365269b880806ef4f31d9e0ebda0f99246"
+        },
+        {
+          "path": "references/custom-theme.md",
+          "size": 24059,
+          "executable": false,
+          "sha256": "da0fb051689bf9d100e50e67209566623c1fbe72e09b943248c458985c39e780"
+        },
+        {
+          "path": "references/design-md.md",
+          "size": 6846,
+          "executable": false,
+          "sha256": "a9368b64dd9b6e53e8c707830ce28fd8601d3195a81647ea46b6995aa3556b3c"
+        },
+        {
+          "path": "references/export-formats.md",
+          "size": 14620,
+          "executable": false,
+          "sha256": "de0a73d9bec7a31abbd0cbbf1ecd51c2e440f1f3fdc08f476a343959ca6c22f3"
+        },
+        {
+          "path": "references/floating-nav.md",
+          "size": 5266,
+          "executable": false,
+          "sha256": "c8c80f6560700bf6ee6baf28b81ec1539e9ff920d885624707de5fe8803c25d1"
+        },
+        {
+          "path": "references/genres/atmospheric.md",
+          "size": 5075,
+          "executable": false,
+          "sha256": "58d36e9a59c7d9e0ca99edeaaadab885f2635386fa69d52ea9eda3c29977e190"
+        },
+        {
+          "path": "references/genres/editorial.md",
+          "size": 4121,
+          "executable": false,
+          "sha256": "1e88cd0c94435c6a9edd1c0b93b67db4321fb3481ff0d66ee24869e655847319"
+        },
+        {
+          "path": "references/genres/modern-minimal.md",
+          "size": 4836,
+          "executable": false,
+          "sha256": "6125db00e38f2baca9369ed4d4aa917d977b85dd5eac6f19dac89707c3c3534b"
+        },
+        {
+          "path": "references/genres/playful.md",
+          "size": 5218,
+          "executable": false,
+          "sha256": "e52c6ff3fe21b5024c83ac1f03285e1d627e3469ff140d6bea728642026c4f95"
+        },
+        {
+          "path": "references/hero-enrichment.md",
+          "size": 32151,
+          "executable": false,
+          "sha256": "63c14cc2c256dd78a69a1c36f4bcb764940aa7f1ba2e6dd40ca36013f8884a83"
+        },
+        {
+          "path": "references/imagery-kit.md",
+          "size": 8544,
+          "executable": false,
+          "sha256": "39d71df8dd6186b27f174fd8ab8ffd379553be3917cff50810c72365f6d6cb53"
+        },
+        {
+          "path": "references/interaction-and-states.md",
+          "size": 13537,
+          "executable": false,
+          "sha256": "e816eb2d067ba9f6f288a3831549da95624a05f432ed2a50f54136f27dd2d67f"
+        },
+        {
+          "path": "references/layout-and-space.md",
+          "size": 6766,
+          "executable": false,
+          "sha256": "987f3a45f5dbe81547117a77987bcedf5376608a6412067e04337047e0c7c839"
+        },
+        {
+          "path": "references/macrostructures.md",
+          "size": 11597,
+          "executable": false,
+          "sha256": "a6f19a17073aca18a6ff7a8fc8c3c5f711865e01c6d97de609771b47fe8394bc"
+        },
+        {
+          "path": "references/macrostructures/01-bento-grid.md",
+          "size": 1836,
+          "executable": false,
+          "sha256": "aa268415862188414f8db94715e20ae7d29df3dc7c494083683378705f3f8493"
+        },
+        {
+          "path": "references/macrostructures/02-long-document.md",
+          "size": 1722,
+          "executable": false,
+          "sha256": "8ca81106396f2bd00eb9ef5d5d1f00c3aab0500394e706d6a2b3221a6c0d910f"
+        },
+        {
+          "path": "references/macrostructures/03-marquee-hero.md",
+          "size": 1645,
+          "executable": false,
+          "sha256": "2b7c35860086da6232cb3725c059bead9a31a91872d464266ce6e07a5a75f755"
+        },
+        {
+          "path": "references/macrostructures/04-stat-led.md",
+          "size": 2120,
+          "executable": false,
+          "sha256": "a6930b4ba6377c8ef5fcb7af6bf4393cd924292cf03871a37636dd4b77de22b7"
+        },
+        {
+          "path": "references/macrostructures/05-workbench.md",
+          "size": 1690,
+          "executable": false,
+          "sha256": "0cbe92772c7b2ffd9b24b9e446b1e1cd9ed22930b39030ef5a6e9cba5512d31f"
+        },
+        {
+          "path": "references/macrostructures/06-conversational-faq.md",
+          "size": 1621,
+          "executable": false,
+          "sha256": "373473bed23d055164edc04b16344fcd3861c1ab39ff73f3c75dc1719663d488"
+        },
+        {
+          "path": "references/macrostructures/07-manifesto.md",
+          "size": 1711,
+          "executable": false,
+          "sha256": "dc1327bad300179c1b233d02d20137776dc98c9affcfd3942b9f3f796ca67b93"
+        },
+        {
+          "path": "references/macrostructures/08-photographic.md",
+          "size": 1491,
+          "executable": false,
+          "sha256": "e5c77bb6ca6d82616c9c63bb6e68ee17c6af7bbca935f9ff29481294d7d1f74c"
+        },
+        {
+          "path": "references/macrostructures/09-quote-led.md",
+          "size": 1817,
+          "executable": false,
+          "sha256": "39069a564d9ebd76daf26f46ec7776828dc45fc6a72ae712b3bf7a4fd012f650"
+        },
+        {
+          "path": "references/macrostructures/10-specimen.md",
+          "size": 1614,
+          "executable": false,
+          "sha256": "7f23cead7f91c2ee2335eb2c87fb0aa1e7826f4573748d549756523085ed6ad4"
+        },
+        {
+          "path": "references/macrostructures/11-catalogue.md",
+          "size": 1186,
+          "executable": false,
+          "sha256": "99ff614600f18cfc80dfa3b9a2158dbea3b3674f76f40b70e721b9255796c265"
+        },
+        {
+          "path": "references/macrostructures/12-letter.md",
+          "size": 1253,
+          "executable": false,
+          "sha256": "6f3ad86e87223bd9b6b1267e27532811efbb60f50606e7f72c8525d2cc01d709"
+        },
+        {
+          "path": "references/macrostructures/13-index-first.md",
+          "size": 1208,
+          "executable": false,
+          "sha256": "25c832844a1b5e6ce17a335ac98e81d98d9e3372f514d83dc26ac299cc077865"
+        },
+        {
+          "path": "references/macrostructures/14-narrative-workflow.md",
+          "size": 1428,
+          "executable": false,
+          "sha256": "e604a1106131fe3a65721066a304922e757a78c997c197227840931079c780fd"
+        },
+        {
+          "path": "references/macrostructures/15-split-studio.md",
+          "size": 1336,
+          "executable": false,
+          "sha256": "400effa4de50d5f2fabd88be37447aa845deb3b67810ed4f2b995df458c852e4"
+        },
+        {
+          "path": "references/macrostructures/16-feature-stack.md",
+          "size": 1386,
+          "executable": false,
+          "sha256": "a389fae7fe39550352bdf1ce68cdaa3965a434fa1154f67d3c276e550d1d165a"
+        },
+        {
+          "path": "references/macrostructures/17-type-specimen.md",
+          "size": 1271,
+          "executable": false,
+          "sha256": "a1487fde891f73bf34a2ca38a631a2cb5c71d3a7b2ccd940114354e291ea8034"
+        },
+        {
+          "path": "references/macrostructures/18-portfolio-grid.md",
+          "size": 1057,
+          "executable": false,
+          "sha256": "af5d0f34a7ef7b81d6f4c8c845497ae553d44f418526d7e503346c9243b034e3"
+        },
+        {
+          "path": "references/macrostructures/19-map-diagram.md",
+          "size": 1269,
+          "executable": false,
+          "sha256": "5a576f25f4c8d58c14f574e3413560118343df9a9669db80c6c452daf509c3c3"
+        },
+        {
+          "path": "references/macrostructures/20-ecosystem-index.md",
+          "size": 1209,
+          "executable": false,
+          "sha256": "fe206580a39ffc4b3534f3a7414155aa626fe16b82b608a0b8b415c1510f17ad"
+        },
+        {
+          "path": "references/macrostructures/21-component-playground.md",
+          "size": 1171,
+          "executable": false,
+          "sha256": "ad3cbdbe9181e9472cb7b7fffbbe35021dc9b5b99ea86adc026f34d6b2c2f01f"
+        },
+        {
+          "path": "references/microinteractions.md",
+          "size": 20017,
+          "executable": false,
+          "sha256": "613ca56c2c16e40aeb594af21fabd651732d9de63c848aee51113602525f6e64"
+        },
+        {
+          "path": "references/motion.md",
+          "size": 4340,
+          "executable": false,
+          "sha256": "330d056810315f65819579f8207afe402703a9192bc76a2009558a59b7c84ccf"
+        },
+        {
+          "path": "references/preview-examples.md",
+          "size": 2834,
+          "executable": false,
+          "sha256": "df61c24c9a67457ef7369ec5f20575095326df72ffe6534c8fa9730581ebf7d9"
+        },
+        {
+          "path": "references/responsive.md",
+          "size": 5918,
+          "executable": false,
+          "sha256": "2bf18d72af704ca5dd3c220359a4c77c718efa19c40f62d9bff61ac4a90209b0"
+        },
+        {
+          "path": "references/slop-test.md",
+          "size": 31065,
+          "executable": false,
+          "sha256": "6eb49fc64ca54929d2c1600e2a6014268f1a7593787c0ed3f6ecb4ac8390ad86"
+        },
+        {
+          "path": "references/structure.md",
+          "size": 15714,
+          "executable": false,
+          "sha256": "ca5c0296ae428f8c4c5214407d431bbda5c453f98f2e7abdec03d644271af32b"
+        },
+        {
+          "path": "references/study.md",
+          "size": 42639,
+          "executable": false,
+          "sha256": "021fe4d001b38ee87414c1bb69321d2e44b67df8ede76ecec225c41a634aab20"
+        },
+        {
+          "path": "references/themes/carnival.md",
+          "size": 19616,
+          "executable": false,
+          "sha256": "119a9c803eac74958e5df6151da8a2575a1cc2d061a619bdb7f32cf972308ee2"
+        },
+        {
+          "path": "references/themes/cobalt.md",
+          "size": 11273,
+          "executable": false,
+          "sha256": "13be92af729e6b82d1b1e51aa078f7c007e2900c8f0798b2c0fd2c0eeac7019e"
+        },
+        {
+          "path": "references/themes/grid.md",
+          "size": 14564,
+          "executable": false,
+          "sha256": "e68e8b97f62d613dc94a03afd346b9e12de8ffcc65dc8633c4c223c92875c7da"
+        },
+        {
+          "path": "references/themes/hum.md",
+          "size": 32317,
+          "executable": false,
+          "sha256": "bbdd1e89a32d6b15e99493ba9497816a0915bd4e9bf150b95868db597c20e1d5"
+        },
+        {
+          "path": "references/themes/lumen.md",
+          "size": 28180,
+          "executable": false,
+          "sha256": "d5459478d3aa1ea6330c221dfe011b717a70dbb036f597403b3a6b3cf82dd53b"
+        },
+        {
+          "path": "references/typography.md",
+          "size": 18381,
+          "executable": false,
+          "sha256": "94d7b2d2b138bd8687e09dc3dd618eaafff500b0497a6d69cb4c29b764e94b9c"
+        },
+        {
+          "path": "references/verbs/audit.md",
+          "size": 2803,
+          "executable": false,
+          "sha256": "0a5b484453f1697a8675a7020df9159d0b4ce22f059b873501bfd82c26d6a31a"
+        },
+        {
+          "path": "references/verbs/redesign.md",
+          "size": 13849,
+          "executable": false,
+          "sha256": "c2830f3b7d68e9622f55d376048a5a454c5ef59d309a211e716d1142e86acbdf"
+        }
+      ],
+      "blocking_findings": [
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../site/css/tokens.css",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "broken_relative_reference",
+          "message": "Missing captured target: references/",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../docs/recipes.md",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../docs/study-examples.md",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../site/css/tokens.css",
+          "path": "references/custom-theme.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../site/css/tokens.css",
+          "path": "references/custom-theme.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../site/_tests/05-tracejam-saas/",
+          "path": "references/hero-enrichment.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../site/_tests/03-maple-bakery/",
+          "path": "references/hero-enrichment.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+          "path": "references/themes/carnival.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+          "path": "references/themes/cobalt.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../../site/examples/cobalt-01/",
+          "path": "references/themes/cobalt.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../../site/examples/cobalt-01/",
+          "path": "references/themes/cobalt.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+          "path": "references/themes/hum.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+          "path": "references/themes/lumen.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "broken_relative_reference",
+          "message": "Missing captured target: ../",
+          "path": "references/verbs/redesign.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "broken_relative_reference",
+          "message": "Missing captured target: ../genres/",
+          "path": "references/verbs/redesign.md"
+        }
+      ],
+      "advisory_findings": [
+        {
+          "severity": "ADVISORY",
+          "code": "unknown_frontmatter_key",
+          "message": "Review non-standard key: version",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: http://`",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://`",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://example.com/",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: http://www.w3.org/2000/svg'",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://ai.google.dev/gemini-api/docs/image-generation",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://api.svgl.app/?slug=vercel\"",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://blackforestlabs.ai/",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://brandfetch.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://browserframe.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://cdn.jsdelivr.net/npm/@tabler/icons@latest/icons/arrow-right.svg\"",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://cdn.simpleicons.org/figma/aaaaaa\"",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://cdn.simpleicons.org/github\"",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://cleanmock.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://coverr.co",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://cssgradient.io",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://deviceshots.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://ffmpeg.org",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://handbrake.fr",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://heroicons.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://iconoir.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://lottiefiles.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://lucide.dev",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://mixkit.co",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://mockup.style",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://phosphoricons.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://picsum.photos/seed/<seed",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://ray.so",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://rive.app",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://simpleicons.org",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://source.unsplash.com/<w",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://storyset.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://svgl.app",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://tabler-icons.io",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://thesvg.org",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://undraw.co",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://unsplash.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.fffuel.co/",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.humaaans.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.iradesign.io",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.learnui.design/tools/mesh-gradient-generator.html",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.midjourney.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.nappy.co",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.openpeeps.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.pexels.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.pexels.com/videos/",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.recraft.ai/",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.shotstash.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.videvo.net",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://ai.google.dev/gemini-api/docs/image-generation",
+          "path": "references/custom-craft.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://blackforestlabs.ai/",
+          "path": "references/custom-craft.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://gsap.com",
+          "path": "references/custom-craft.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://jakearchibald.github.io/svgomg/",
+          "path": "references/custom-craft.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://motion.dev",
+          "path": "references/custom-craft.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://scroll-driven-animations.style/",
+          "path": "references/custom-craft.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://threejs.org",
+          "path": "references/custom-craft.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.midjourney.com",
+          "path": "references/custom-craft.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.recraft.ai/",
+          "path": "references/custom-craft.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://design-tokens.github.io/community-group/format/\",",
+          "path": "references/export-formats.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://browserframe.com",
+          "path": "references/hero-enrichment.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.usehallmark.com/imagery/<category",
+          "path": "references/imagery-kit.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.usehallmark.com/imagery/watercolor/watercolor-warm-01.webp\"",
+          "path": "references/imagery-kit.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: http://`",
+          "path": "references/study.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://`",
+          "path": "references/study.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://fonts.googleapis.com/css2?family=…\"",
+          "path": "references/study.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap\"",
+          "path": "references/themes/cobalt.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap\"",
+          "path": "references/themes/grid.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://fonts.googleapis.com\"",
+          "path": "references/themes/hum.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap\"",
+          "path": "references/themes/hum.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://fonts.gstatic.com\"",
+          "path": "references/themes/hum.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://fonts.googleapis.com\"",
+          "path": "references/themes/lumen.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap\"",
+          "path": "references/themes/lumen.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://fonts.gstatic.com\"",
+          "path": "references/themes/lumen.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://api.fontshare.com/v2/css?f=...\"",
+          "path": "references/typography.md"
+        }
+      ],
+      "full_yaml_pending_codes": [],
+      "candidate_code_execution": false,
+      "raw_findings": [
+        {
+          "severity": "ADVISORY",
+          "code": "unknown_frontmatter_key",
+          "message": "Review non-standard key: version",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: http://`",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://`",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://example.com/",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../site/css/tokens.css",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "broken_relative_reference",
+          "message": "Missing captured target: references/",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../docs/recipes.md",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../docs/study-examples.md",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: http://www.w3.org/2000/svg'",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://ai.google.dev/gemini-api/docs/image-generation",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://api.svgl.app/?slug=vercel\"",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://blackforestlabs.ai/",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://brandfetch.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://browserframe.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://cdn.jsdelivr.net/npm/@tabler/icons@latest/icons/arrow-right.svg\"",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://cdn.simpleicons.org/figma/aaaaaa\"",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://cdn.simpleicons.org/github\"",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://cleanmock.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://coverr.co",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://cssgradient.io",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://deviceshots.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://ffmpeg.org",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://handbrake.fr",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://heroicons.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://iconoir.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://lottiefiles.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://lucide.dev",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://mixkit.co",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://mockup.style",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://phosphoricons.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://picsum.photos/seed/<seed",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://ray.so",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://rive.app",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://simpleicons.org",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://source.unsplash.com/<w",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://storyset.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://svgl.app",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://tabler-icons.io",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://thesvg.org",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://undraw.co",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://unsplash.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.fffuel.co/",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.humaaans.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.iradesign.io",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.learnui.design/tools/mesh-gradient-generator.html",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.midjourney.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.nappy.co",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.openpeeps.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.pexels.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.pexels.com/videos/",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.recraft.ai/",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.shotstash.com",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.videvo.net",
+          "path": "references/assets.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://ai.google.dev/gemini-api/docs/image-generation",
+          "path": "references/custom-craft.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://blackforestlabs.ai/",
+          "path": "references/custom-craft.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://gsap.com",
+          "path": "references/custom-craft.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://jakearchibald.github.io/svgomg/",
+          "path": "references/custom-craft.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://motion.dev",
+          "path": "references/custom-craft.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://scroll-driven-animations.style/",
+          "path": "references/custom-craft.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://threejs.org",
+          "path": "references/custom-craft.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.midjourney.com",
+          "path": "references/custom-craft.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.recraft.ai/",
+          "path": "references/custom-craft.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../site/css/tokens.css",
+          "path": "references/custom-theme.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../site/css/tokens.css",
+          "path": "references/custom-theme.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://design-tokens.github.io/community-group/format/\",",
+          "path": "references/export-formats.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://browserframe.com",
+          "path": "references/hero-enrichment.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../site/_tests/05-tracejam-saas/",
+          "path": "references/hero-enrichment.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../site/_tests/03-maple-bakery/",
+          "path": "references/hero-enrichment.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.usehallmark.com/imagery/<category",
+          "path": "references/imagery-kit.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://www.usehallmark.com/imagery/watercolor/watercolor-warm-01.webp\"",
+          "path": "references/imagery-kit.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: http://`",
+          "path": "references/study.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://`",
+          "path": "references/study.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://fonts.googleapis.com/css2?family=…\"",
+          "path": "references/study.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+          "path": "references/themes/carnival.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap\"",
+          "path": "references/themes/cobalt.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+          "path": "references/themes/cobalt.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../../site/examples/cobalt-01/",
+          "path": "references/themes/cobalt.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../../site/examples/cobalt-01/",
+          "path": "references/themes/cobalt.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap\"",
+          "path": "references/themes/grid.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://fonts.googleapis.com\"",
+          "path": "references/themes/hum.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap\"",
+          "path": "references/themes/hum.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://fonts.gstatic.com\"",
+          "path": "references/themes/hum.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+          "path": "references/themes/hum.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://fonts.googleapis.com\"",
+          "path": "references/themes/lumen.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap\"",
+          "path": "references/themes/lumen.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://fonts.gstatic.com\"",
+          "path": "references/themes/lumen.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+          "path": "references/themes/lumen.md"
+        },
+        {
+          "severity": "ADVISORY",
+          "code": "external_url",
+          "message": "External reference: https://api.fontshare.com/v2/css?f=...\"",
+          "path": "references/typography.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "broken_relative_reference",
+          "message": "Missing captured target: ../",
+          "path": "references/verbs/redesign.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "broken_relative_reference",
+          "message": "Missing captured target: ../genres/",
+          "path": "references/verbs/redesign.md"
+        }
+      ],
+      "resolved_reference_findings": [
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../site/css/tokens.css",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "broken_relative_reference",
+          "message": "Missing captured target: references/",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../docs/recipes.md",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../docs/study-examples.md",
+          "path": "SKILL.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../site/css/tokens.css",
+          "path": "references/custom-theme.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../site/css/tokens.css",
+          "path": "references/custom-theme.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../site/_tests/05-tracejam-saas/",
+          "path": "references/hero-enrichment.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../site/_tests/03-maple-bakery/",
+          "path": "references/hero-enrichment.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+          "path": "references/themes/carnival.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+          "path": "references/themes/cobalt.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../../site/examples/cobalt-01/",
+          "path": "references/themes/cobalt.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../../site/examples/cobalt-01/",
+          "path": "references/themes/cobalt.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+          "path": "references/themes/hum.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "markdown_path_escape",
+          "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+          "path": "references/themes/lumen.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "broken_relative_reference",
+          "message": "Missing captured target: ../",
+          "path": "references/verbs/redesign.md"
+        },
+        {
+          "severity": "BLOCKING",
+          "code": "broken_relative_reference",
+          "message": "Missing captured target: ../genres/",
+          "path": "references/verbs/redesign.md"
+        }
+      ],
+      "frontmatter": {
+        "name": "hallmark",
+        "description": "Anti-AI-slop design skill for greenfield pages, audits, redesigns, and design extraction from URLs or screenshots. Use when the user asks to build a new app or landing page, wants to redesign something, invokes Hallmark by name, or uses audit/redesign/study.",
+        "version": "1.1.0"
+      },
+      "frontmatter_sha256": "ca3a5d85196ce0ac17a7f8d9b6c5dd4d76d777b512db770074bdb1b28a61964d",
+      "frontmatter_declares_version": true,
+      "reference_targets": [
+        {
+          "finding": {
+            "severity": "BLOCKING",
+            "code": "markdown_path_escape",
+            "message": "Reference escapes candidate root: ../../site/css/tokens.css",
+            "path": "SKILL.md"
+          },
+          "target": "../../site/css/tokens.css",
+          "safe": true
+        },
+        {
+          "finding": {
+            "severity": "BLOCKING",
+            "code": "broken_relative_reference",
+            "message": "Missing captured target: references/",
+            "path": "SKILL.md"
+          },
+          "target": "references/",
+          "safe": true
+        },
+        {
+          "finding": {
+            "severity": "BLOCKING",
+            "code": "markdown_path_escape",
+            "message": "Reference escapes candidate root: ../../docs/recipes.md",
+            "path": "SKILL.md"
+          },
+          "target": "../../docs/recipes.md",
+          "safe": true
+        },
+        {
+          "finding": {
+            "severity": "BLOCKING",
+            "code": "markdown_path_escape",
+            "message": "Reference escapes candidate root: ../../docs/study-examples.md",
+            "path": "SKILL.md"
+          },
+          "target": "../../docs/study-examples.md",
+          "safe": true
+        },
+        {
+          "finding": {
+            "severity": "BLOCKING",
+            "code": "markdown_path_escape",
+            "message": "Reference escapes candidate root: ../../../site/css/tokens.css",
+            "path": "references/custom-theme.md"
+          },
+          "target": "../../../site/css/tokens.css",
+          "safe": true
+        },
+        {
+          "finding": {
+            "severity": "BLOCKING",
+            "code": "markdown_path_escape",
+            "message": "Reference escapes candidate root: ../../../site/css/tokens.css",
+            "path": "references/custom-theme.md"
+          },
+          "target": "../../../site/css/tokens.css",
+          "safe": true
+        },
+        {
+          "finding": {
+            "severity": "BLOCKING",
+            "code": "markdown_path_escape",
+            "message": "Reference escapes candidate root: ../../../site/_tests/05-tracejam-saas/",
+            "path": "references/hero-enrichment.md"
+          },
+          "target": "../../../site/_tests/05-tracejam-saas/",
+          "safe": true
+        },
+        {
+          "finding": {
+            "severity": "BLOCKING",
+            "code": "markdown_path_escape",
+            "message": "Reference escapes candidate root: ../../../site/_tests/03-maple-bakery/",
+            "path": "references/hero-enrichment.md"
+          },
+          "target": "../../../site/_tests/03-maple-bakery/",
+          "safe": true
+        },
+        {
+          "finding": {
+            "severity": "BLOCKING",
+            "code": "markdown_path_escape",
+            "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+            "path": "references/themes/carnival.md"
+          },
+          "target": "../../../../site/css/tokens.css",
+          "safe": true
+        },
+        {
+          "finding": {
+            "severity": "BLOCKING",
+            "code": "markdown_path_escape",
+            "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+            "path": "references/themes/cobalt.md"
+          },
+          "target": "../../../../site/css/tokens.css",
+          "safe": true
+        },
+        {
+          "finding": {
+            "severity": "BLOCKING",
+            "code": "markdown_path_escape",
+            "message": "Reference escapes candidate root: ../../../../site/examples/cobalt-01/",
+            "path": "references/themes/cobalt.md"
+          },
+          "target": "../../../../site/examples/cobalt-01/",
+          "safe": true
+        },
+        {
+          "finding": {
+            "severity": "BLOCKING",
+            "code": "markdown_path_escape",
+            "message": "Reference escapes candidate root: ../../../../site/examples/cobalt-01/",
+            "path": "references/themes/cobalt.md"
+          },
+          "target": "../../../../site/examples/cobalt-01/",
+          "safe": true
+        },
+        {
+          "finding": {
+            "severity": "BLOCKING",
+            "code": "markdown_path_escape",
+            "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+            "path": "references/themes/hum.md"
+          },
+          "target": "../../../../site/css/tokens.css",
+          "safe": true
+        },
+        {
+          "finding": {
+            "severity": "BLOCKING",
+            "code": "markdown_path_escape",
+            "message": "Reference escapes candidate root: ../../../../site/css/tokens.css",
+            "path": "references/themes/lumen.md"
+          },
+          "target": "../../../../site/css/tokens.css",
+          "safe": true
+        },
+        {
+          "finding": {
+            "severity": "BLOCKING",
+            "code": "broken_relative_reference",
+            "message": "Missing captured target: ../",
+            "path": "references/verbs/redesign.md"
+          },
+          "target": "../",
+          "safe": true
+        },
+        {
+          "finding": {
+            "severity": "BLOCKING",
+            "code": "broken_relative_reference",
+            "message": "Missing captured target: ../genres/",
+            "path": "references/verbs/redesign.md"
+          },
+          "target": "../genres/",
+          "safe": true
+        }
+      ],
+      "adaptation_diff": {
+        "path": "adaptations/hallmark-reference-hygiene-ledger.json",
+        "sha256": "cc9876d48062bd060503fefd1215fbd7a3c6fb214e8efc06db31d795f186070a"
+      }
+    }
+  },
+  "review_targets": {
+    "claude": {
+      "tree_sha256": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+      "manifest": [
+        {
+          "path": "LICENSE",
+          "size": 1078,
+          "executable": false,
+          "sha256": "06088a8b94598626f27612dea42300154bf7be967c85d9d3eee4490cb056af7d"
+        },
+        {
+          "path": "SKILL.md",
+          "size": 5994,
+          "executable": false,
+          "sha256": "9a6fb66d6c5a843c7dcc70f984f6202665e1c2c0b0c552d23bfec4cd4ade05e8"
+        },
+        {
+          "path": "SOURCE.md",
+          "size": 5272,
+          "executable": false,
+          "sha256": "f48db53c256b7f885538bf0673d5ba945adabb1c4cdd77507c423675dde5fb43"
+        },
+        {
+          "path": "adaptation.diff",
+          "size": 4404,
+          "executable": false,
+          "sha256": "90955c88e1c2281074b6408427323c8c3c716e3fc3f576949db5799955b692b4"
+        },
+        {
+          "path": "references/anti-patterns.md",
+          "size": 1671,
+          "executable": false,
+          "sha256": "f50a4223b335a16227f719e1d68443dd317e50f501adc49b653ea956c2f5d51d"
+        },
+        {
+          "path": "references/color.md",
+          "size": 1206,
+          "executable": false,
+          "sha256": "7eeb3a2d214624435b72a342bc78df86671496526ed9a1b39527c045f6663c34"
+        },
+        {
+          "path": "references/components/f4-step-sequence.md",
+          "size": 498,
+          "executable": false,
+          "sha256": "16917aa14c88096eff913db4bea881be13ec26787e8e4c16eb9a91c8226e8ac3"
+        },
+        {
+          "path": "references/components/h2-split-diptych.md",
+          "size": 641,
+          "executable": false,
+          "sha256": "906b8e35e3595d0aeb15cd7ad7d335e37232b56ffc3bc31a60ac78483ac7e6f6"
+        },
+        {
+          "path": "references/components/s4-inline-no-break.md",
+          "size": 451,
+          "executable": false,
+          "sha256": "7f7c9bf9131a41159fb2fb3300a9b4f49675faabf2a61951a6a5af8905d958a2"
+        },
+        {
+          "path": "references/contract.md",
+          "size": 2017,
+          "executable": false,
+          "sha256": "ee9e1f07e888ac6031d2f6ec86480e2fbfec99215a891cc32b58ef598a7ae1cc"
+        },
+        {
+          "path": "references/interaction-and-states.md",
+          "size": 1599,
+          "executable": false,
+          "sha256": "fff870b3fc5bc1a7e6625b05ed6665ab5789f5d8df34b5d954795e257091b9a7"
+        },
+        {
+          "path": "references/layout-and-space.md",
+          "size": 1610,
+          "executable": false,
+          "sha256": "0771f4a172487d9babe5245fd73b9c7a2b9caa84b8a6ae272390540bbcc44201"
+        },
+        {
+          "path": "references/responsive.md",
+          "size": 1057,
+          "executable": false,
+          "sha256": "8c7167313003aa3f1aaeb00e1b00852306d115a3492ba70220ced98e70472287"
+        },
+        {
+          "path": "references/structure.md",
+          "size": 1104,
+          "executable": false,
+          "sha256": "7ef7442ba2fa5854246b29b94dbc3210540f1c303f6780d05f3765bb708a3cf0"
+        },
+        {
+          "path": "references/study.md",
+          "size": 1207,
+          "executable": false,
+          "sha256": "e03d8c162eaf828c4351d029bc88ea4da2aecfcbb4b66f7fddad1650d5d50467"
+        },
+        {
+          "path": "references/themes/brutal.md",
+          "size": 535,
+          "executable": false,
+          "sha256": "e013f3865dc73a0cad9f1836ea8376be1450bea1319db083624eecf20162d0e5"
+        },
+        {
+          "path": "references/themes/catalog.md",
+          "size": 1350,
+          "executable": false,
+          "sha256": "a5f88bfbf1c3f1d0f587d6f0a530482541fa321574a17b795be18f91316381a7"
+        },
+        {
+          "path": "references/themes/cobalt.md",
+          "size": 596,
+          "executable": false,
+          "sha256": "6b18fa5313bae85284941f60443d12b500c1778c4b619f54ef74e22c140c1e20"
+        },
+        {
+          "path": "references/themes/grid.md",
+          "size": 644,
+          "executable": false,
+          "sha256": "4d618f0f2b0e1102e874937c19804118ee26b572424576c2e148fa3fc4f17ade"
+        },
+        {
+          "path": "references/themes/lumen.md",
+          "size": 640,
+          "executable": false,
+          "sha256": "ed06060caa0b14196646893308846ba3c022ffb35744dee0c5cbad70e5089b0f"
+        },
+        {
+          "path": "references/themes/plain-editorial.md",
+          "size": 585,
+          "executable": false,
+          "sha256": "8f40e96ea63bc64917d7e03bfb3e20462b2c0d29b7d80d2588be226e6b00b0a2"
+        },
+        {
+          "path": "references/typography.md",
+          "size": 1616,
+          "executable": false,
+          "sha256": "cff1c95546a778d380d0eeda86453b85d54f9fac2ed2577e080fa058953a0784"
+        },
+        {
+          "path": "references/verbs/audit.md",
+          "size": 555,
+          "executable": false,
+          "sha256": "6bcf60cdabfeddd9d0bf4d48cacfa62ab24710d32c408d9e1261baf6d2cf08d9"
+        },
+        {
+          "path": "references/verbs/redesign.md",
+          "size": 1190,
+          "executable": false,
+          "sha256": "9eee786efb957ec980b9c4c7a72e3058c807a47d5b5c02697781204d60d4c6c4"
+        },
+        {
+          "path": "review-manifest.json",
+          "size": 5170,
+          "executable": false,
+          "sha256": "fbe03dd7017158938a6563cb3c742b169f1b7aa9b533e7db71928fd19621f166"
+        },
+        {
+          "path": "source/UPSTREAM-SKILL.md.txt",
+          "size": 67460,
+          "executable": false,
+          "sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577"
+        },
+        {
+          "path": "source/upstream-skill.json",
+          "size": 292,
+          "executable": false,
+          "sha256": "8007f840eaeb33db31fb0ad4b3010503c7acd9423c8b4cf6ba31da94dd0e60dd"
+        }
+      ],
+      "license_evidence": [
+        {
+          "path": "LICENSE",
+          "sha256": "06088a8b94598626f27612dea42300154bf7be967c85d9d3eee4490cb056af7d"
+        }
+      ]
+    },
+    "codex": {
+      "tree_sha256": "c22f5c5179968dfdd0a1a66ceaac45ac16c465f09e559c7f1de0e15fb244c3b5",
+      "manifest": [
+        {
+          "path": "LICENSE",
+          "size": 1078,
+          "executable": false,
+          "sha256": "06088a8b94598626f27612dea42300154bf7be967c85d9d3eee4490cb056af7d"
+        },
+        {
+          "path": "SKILL.md",
+          "size": 5994,
+          "executable": false,
+          "sha256": "9a6fb66d6c5a843c7dcc70f984f6202665e1c2c0b0c552d23bfec4cd4ade05e8"
+        },
+        {
+          "path": "SOURCE.md",
+          "size": 5272,
+          "executable": false,
+          "sha256": "f48db53c256b7f885538bf0673d5ba945adabb1c4cdd77507c423675dde5fb43"
+        },
+        {
+          "path": "adaptation.diff",
+          "size": 4404,
+          "executable": false,
+          "sha256": "90955c88e1c2281074b6408427323c8c3c716e3fc3f576949db5799955b692b4"
+        },
+        {
+          "path": "references/anti-patterns.md",
+          "size": 1671,
+          "executable": false,
+          "sha256": "f50a4223b335a16227f719e1d68443dd317e50f501adc49b653ea956c2f5d51d"
+        },
+        {
+          "path": "references/color.md",
+          "size": 1206,
+          "executable": false,
+          "sha256": "7eeb3a2d214624435b72a342bc78df86671496526ed9a1b39527c045f6663c34"
+        },
+        {
+          "path": "references/components/f4-step-sequence.md",
+          "size": 498,
+          "executable": false,
+          "sha256": "16917aa14c88096eff913db4bea881be13ec26787e8e4c16eb9a91c8226e8ac3"
+        },
+        {
+          "path": "references/components/h2-split-diptych.md",
+          "size": 641,
+          "executable": false,
+          "sha256": "906b8e35e3595d0aeb15cd7ad7d335e37232b56ffc3bc31a60ac78483ac7e6f6"
+        },
+        {
+          "path": "references/components/s4-inline-no-break.md",
+          "size": 451,
+          "executable": false,
+          "sha256": "7f7c9bf9131a41159fb2fb3300a9b4f49675faabf2a61951a6a5af8905d958a2"
+        },
+        {
+          "path": "references/contract.md",
+          "size": 2017,
+          "executable": false,
+          "sha256": "ee9e1f07e888ac6031d2f6ec86480e2fbfec99215a891cc32b58ef598a7ae1cc"
+        },
+        {
+          "path": "references/interaction-and-states.md",
+          "size": 1599,
+          "executable": false,
+          "sha256": "fff870b3fc5bc1a7e6625b05ed6665ab5789f5d8df34b5d954795e257091b9a7"
+        },
+        {
+          "path": "references/layout-and-space.md",
+          "size": 1610,
+          "executable": false,
+          "sha256": "0771f4a172487d9babe5245fd73b9c7a2b9caa84b8a6ae272390540bbcc44201"
+        },
+        {
+          "path": "references/responsive.md",
+          "size": 1057,
+          "executable": false,
+          "sha256": "8c7167313003aa3f1aaeb00e1b00852306d115a3492ba70220ced98e70472287"
+        },
+        {
+          "path": "references/structure.md",
+          "size": 1104,
+          "executable": false,
+          "sha256": "7ef7442ba2fa5854246b29b94dbc3210540f1c303f6780d05f3765bb708a3cf0"
+        },
+        {
+          "path": "references/study.md",
+          "size": 1207,
+          "executable": false,
+          "sha256": "e03d8c162eaf828c4351d029bc88ea4da2aecfcbb4b66f7fddad1650d5d50467"
+        },
+        {
+          "path": "references/themes/brutal.md",
+          "size": 535,
+          "executable": false,
+          "sha256": "e013f3865dc73a0cad9f1836ea8376be1450bea1319db083624eecf20162d0e5"
+        },
+        {
+          "path": "references/themes/catalog.md",
+          "size": 1350,
+          "executable": false,
+          "sha256": "a5f88bfbf1c3f1d0f587d6f0a530482541fa321574a17b795be18f91316381a7"
+        },
+        {
+          "path": "references/themes/cobalt.md",
+          "size": 596,
+          "executable": false,
+          "sha256": "6b18fa5313bae85284941f60443d12b500c1778c4b619f54ef74e22c140c1e20"
+        },
+        {
+          "path": "references/themes/grid.md",
+          "size": 644,
+          "executable": false,
+          "sha256": "4d618f0f2b0e1102e874937c19804118ee26b572424576c2e148fa3fc4f17ade"
+        },
+        {
+          "path": "references/themes/lumen.md",
+          "size": 640,
+          "executable": false,
+          "sha256": "ed06060caa0b14196646893308846ba3c022ffb35744dee0c5cbad70e5089b0f"
+        },
+        {
+          "path": "references/themes/plain-editorial.md",
+          "size": 585,
+          "executable": false,
+          "sha256": "8f40e96ea63bc64917d7e03bfb3e20462b2c0d29b7d80d2588be226e6b00b0a2"
+        },
+        {
+          "path": "references/typography.md",
+          "size": 1616,
+          "executable": false,
+          "sha256": "cff1c95546a778d380d0eeda86453b85d54f9fac2ed2577e080fa058953a0784"
+        },
+        {
+          "path": "references/verbs/audit.md",
+          "size": 555,
+          "executable": false,
+          "sha256": "6bcf60cdabfeddd9d0bf4d48cacfa62ab24710d32c408d9e1261baf6d2cf08d9"
+        },
+        {
+          "path": "references/verbs/redesign.md",
+          "size": 1190,
+          "executable": false,
+          "sha256": "9eee786efb957ec980b9c4c7a72e3058c807a47d5b5c02697781204d60d4c6c4"
+        },
+        {
+          "path": "review-manifest.json",
+          "size": 5170,
+          "executable": false,
+          "sha256": "fbe03dd7017158938a6563cb3c742b169f1b7aa9b533e7db71928fd19621f166"
+        },
+        {
+          "path": "source/UPSTREAM-SKILL.md.txt",
+          "size": 67460,
+          "executable": false,
+          "sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577"
+        },
+        {
+          "path": "source/upstream-skill.json",
+          "size": 292,
+          "executable": false,
+          "sha256": "8007f840eaeb33db31fb0ad4b3010503c7acd9423c8b4cf6ba31da94dd0e60dd"
+        }
+      ],
+      "license_evidence": [
+        {
+          "path": "LICENSE",
+          "sha256": "06088a8b94598626f27612dea42300154bf7be967c85d9d3eee4490cb056af7d"
+        }
+      ]
+    }
+  },
+  "adaptation_diff": {
+    "path": "adaptations/hallmark-reference-hygiene-ledger.json",
+    "sha256": "cc9876d48062bd060503fefd1215fbd7a3c6fb214e8efc06db31d795f186070a"
+  },
+  "frontmatter_receipts": {
+    "quarantine": {
+      "path": "receipts/hallmark-html-2026-08/prototype-upstream-frontmatter.json",
+      "sha256": "d62deb41d19a0137500c2abff6b0c1929f86a72cb0f9f8e9afd4fb3059205e8a"
+    },
+    "codex": {
+      "path": "receipts/hallmark-html-2026-08/frontmatter-codex.json",
+      "sha256": "e0c6aa876ea38dc885818fff4342aed8a7445d294f8a8b7265e108a847f64869"
+    },
+    "claude": {
+      "path": "receipts/hallmark-html-2026-08/frontmatter-claude.json",
+      "sha256": "9f47a732e692a8257eaf582cdeeeb9120ddc1822ed5ba735b8748c99a7861f75"
+    }
+  },
+  "source_catalog_entry": {
+    "path": "evidence/hallmark-html-2026-08/manifests/catalog-entry.json",
+    "sha256": "27ede292555e05ede71f88e4a1a06ec635c253d9f71337ae676cd36d7f8950df"
+  },
+  "qualified_checks": [
+    {
+      "path": "evidence/hallmark-html-2026-08/manifests/catalog-entry.json",
+      "sha256": "27ede292555e05ede71f88e4a1a06ec635c253d9f71337ae676cd36d7f8950df"
+    },
+    {
+      "path": "evidence/hallmark-html-2026-08/manifests/archive-tree-comparison.json",
+      "sha256": "f6134b4e3f7423557655b13a499e68ca6c8317fd67b882b826f4cd13b55a5aed"
+    },
+    {
+      "path": "evidence/hallmark-html-2026-08/manifests/license-evidence.json",
+      "sha256": "fb1ebea81ff7c56db4996a0f79a4ba2fb4d94e481b11081ab6bdf6dcb2730835"
+    },
+    {
+      "path": "evidence/hallmark-html-2026-08/manifests/stage-targets.json",
+      "sha256": "8540d4da158a9db1ea8b4f7999d5cccf2455a9c92f8de55d108e13250e1c9fd6"
+    },
+    {
+      "path": "evidence/hallmark-html-2026-08/receipts/stage-receipt.json",
+      "sha256": "3bb0a97f755eb9b7a38cd3509760eb0ae53371915d0890ff60cd27e8adf9e9ee"
+    },
+    {
+      "path": "evidence/hallmark-html-2026-08/receipts/stage-static-eval.json",
+      "sha256": "33ced3c6618c4f3e508600c9df0361ecb583346c41a2800b3bfda0bd2aaaf2b4"
+    },
+    {
+      "path": "evidence/hallmark-html-2026-08/receipts/stage-trigger-eval.json",
+      "sha256": "df2580da77dd6b37e73192b6f8df2ac54d401b0b4e689b90f76151c8ff636111"
+    },
+    {
+      "path": "evidence/hallmark-html-2026-08/receipts/stage-html-contract-eval.json",
+      "sha256": "aca0a6210bdd76842b085f8b28163e8be15c046def9cd4e6f9e1c39830895eb4"
+    },
+    {
+      "path": "evidence/hallmark-html-2026-08/safety-evidence-draft.json",
+      "sha256": "30df7842b582506c8fdeeca468b1253ca9c9bc0680e335c0c5b8063f6d411f75"
+    },
+    {
+      "path": "evidence/hallmark-html-2026-08/receipts/prototype-upstream-frontmatter.json",
+      "sha256": "d62deb41d19a0137500c2abff6b0c1929f86a72cb0f9f8e9afd4fb3059205e8a"
+    },
+    {
+      "path": "evidence/hallmark-html-2026-08/receipts/prototype-build-lock-plan.json",
+      "sha256": "e293a90f9fbb0fa9a37d671328cdfdf1cdfa40bde4c88772bc141c3eb1f44d13"
+    },
+    {
+      "path": "evidence/hallmark-html-2026-08/receipts/reference-hygiene-evidence.json",
+      "sha256": "286fb9364aa7d6ef3f6f54b863d0c919c4cd654049906d927d855a4566828d99"
+    }
+  ],
+  "binding_blockers": [],
+  "binding_blocker_count": 0,
+  "raw_source_findings": {
+    "status": "BLOCKED_PENDING",
+    "blocking_code_counts": {
+      "markdown_path_escape": 13,
+      "broken_relative_reference": 3
+    },
+    "note": "Raw source findings remain bound evidence. Adapted target resolution does not rewrite or waive the raw source."
+  },
+  "raw_common_frontmatter": {
+    "code": "frontmatter_file_too_large",
+    "path": "receipts/frontmatter-quarantine.json",
+    "sha256": "30f689bb4fdbd60908a0ea6054f802655cfe14aae74fa86f77b3a5edddce601a",
+    "status": "blocked"
+  },
+  "raw_source_gate": {
+    "status": "BLOCKED_PENDING",
+    "reference_findings": 16,
+    "common_frontmatter_code": "frontmatter_file_too_large",
+    "note": "This source-surface gate remains separate from the adapted review-target binding."
+  },
+  "independent_review": {
+    "source": "independent stage/value review artifacts listed in qualified_checks",
+    "candidate_code_execution": false,
+    "external_network_in_adaptation": false,
+    "human_approval": false,
+    "promotion": false
+  },
+  "runtime_scope": {
+    "status": "separate-preexisting-observation",
+    "note": "Existing Diagram runtime presence is recorded outside this candidate binding; this proposal does not claim healthy runtime or install it.",
+    "observation_path": "evidence/runtime-presence-observation.json"
+  },
+  "approval_created": false,
+  "promotion_created": false,
+  "runtime_installed": false,
+  "candidate_code_executed": false,
+  "source_preserved": true,
+  "stage_preserved": true,
+  "date": "2026-08-31"
+}

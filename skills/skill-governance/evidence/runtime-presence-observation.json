@@ -1,0 +1,112 @@
+{
+  "schema": "preexisting-runtime-presence-observation-v1",
+  "status": "observed-separately",
+  "observed_at": "2026-08-31",
+  "candidate_collection": "diagram-design-html-2026-08",
+  "runtime_inventory": "actual governance inventory from proposal BASE_DIR configuration",
+  "findings": [
+    {
+      "code": "runtime_present_before_promotion",
+      "message": "Lifecycle state reviewed cannot expose the Skill in a runtime root",
+      "path": "codex:diagram-design",
+      "severity": "BLOCKING"
+    },
+    {
+      "code": "runtime_present_before_promotion",
+      "message": "Lifecycle state reviewed cannot expose the Skill in a runtime root",
+      "path": "claude:diagram-design",
+      "severity": "BLOCKING"
+    }
+  ],
+  "finding_count": 2,
+  "records_scoped_out_of_proposed_absence_check": [
+    {
+      "root_id": "claude",
+      "root_role": "active",
+      "record_scope": "active",
+      "runtimes": [
+        "claude"
+      ],
+      "precedence": 10,
+      "relative_path": "diagram-design",
+      "directory_name": "diagram-design",
+      "frontmatter_name": "diagram-design",
+      "resolved_name": "diagram-design",
+      "name_resolution": "frontmatter",
+      "logical_name": "diagram-design",
+      "frontmatter_state": "strict",
+      "tree_sha256": "354864409034916ef9fbb496014e2be01288fd2d8d04801a602be8bed9ec9c47",
+      "raw_tree_sha256": "354864409034916ef9fbb496014e2be01288fd2d8d04801a602be8bed9ec9c47",
+      "estate_hash_normalizations": [],
+      "disabled_by_selector": false,
+      "tree_finding_codes": [],
+      "frontmatter_finding_codes": []
+    },
+    {
+      "root_id": "codex",
+      "root_role": "active",
+      "record_scope": "active",
+      "runtimes": [
+        "codex"
+      ],
+      "precedence": 10,
+      "relative_path": "diagram-design",
+      "directory_name": "diagram-design",
+      "frontmatter_name": "diagram-design",
+      "resolved_name": "diagram-design",
+      "name_resolution": "frontmatter",
+      "logical_name": "diagram-design",
+      "frontmatter_state": "strict",
+      "tree_sha256": "354864409034916ef9fbb496014e2be01288fd2d8d04801a602be8bed9ec9c47",
+      "raw_tree_sha256": "354864409034916ef9fbb496014e2be01288fd2d8d04801a602be8bed9ec9c47",
+      "estate_hash_normalizations": [],
+      "disabled_by_selector": false,
+      "tree_finding_codes": [],
+      "frontmatter_finding_codes": []
+    }
+  ],
+  "classification": "preexisting-unclassified",
+  "existing_adapter": {
+    "targets": [
+      "codex",
+      "claude"
+    ],
+    "relative_path": "diagram-design",
+    "observed_targets": {
+      "claude": {
+        "tree_sha256": "354864409034916ef9fbb496014e2be01288fd2d8d04801a602be8bed9ec9c47",
+        "files": [
+          {
+            "path": "SKILL.md",
+            "size": 3862,
+            "sha256": "3a63232cca06d575d6851ceb21e95b128b897d47a45d8ff61c638e4c67a886f6"
+          },
+          {
+            "path": "UPSTREAM.md",
+            "size": 974,
+            "sha256": "270c7006038603388abb3c4cbf9ae18abca9201ff5bfb5b22a180d32684ea27d"
+          }
+        ],
+        "relative_path": "diagram-design"
+      },
+      "codex": {
+        "tree_sha256": "354864409034916ef9fbb496014e2be01288fd2d8d04801a602be8bed9ec9c47",
+        "files": [
+          {
+            "path": "SKILL.md",
+            "size": 3862,
+            "sha256": "3a63232cca06d575d6851ceb21e95b128b897d47a45d8ff61c638e4c67a886f6"
+          },
+          {
+            "path": "UPSTREAM.md",
+            "size": 974,
+            "sha256": "270c7006038603388abb3c4cbf9ae18abca9201ff5bfb5b22a180d32684ea27d"
+          }
+        ],
+        "relative_path": "diagram-design"
+      }
+    },
+    "note": "This observation does not copy, update, delete, or classify the adapter as the proposed official package."
+  },
+  "proposal_effect": "Excluded only from the scoped absence check; retained in actual inventory evidence. No healthy-runtime claim."
+}
