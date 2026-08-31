@@ -31,6 +31,12 @@ GitHub Milestone単位でIssue/PRを分類し、非エンジニア（営業・�
 
 ## Step 1: マイルストーン特定 & Issue/PR収集
 
+IssueとPRは各queryの全ページを、次ページがないことを確認するまで取得する。`--limit` やcursorを使う場合も、取得ページ数、query、実行時点、終端条件を記録し、最初のページだけで網羅済みとしない。空のページは、次ページがないことを確認できた場合だけ「確認済み空」とする。
+
+IssueとPRを同じrelease itemへ二重に数えない。canonical keyを `repo#number` として同じ番号をdedupeし、IssueとPRの両方が一つの変更を示す場合は一つのベネフィット項目にまとめ、技術詳細へ両方のリンクを残す。異なる番号を同じ変更とみなす場合は、本文やGitHubの関連付けで関係を確認できたときだけ統合し、確認できなければ「要確認」として保留する。
+
+IssueのcloseやPRのmergeは収集上の状態であり、リリース済み・対象テナントで利用可能であることを意味しない。各itemに `merged/closed`、`released/available`、`unverified` の状態を記録し、利用可能性を確認できないものを提供済みとして公開候補へ含めない。
+
 ```bash
 gh issue list --repo <owner/repo> --milestone "<milestone名>" --state all \
   --json number,title,body,labels,url,closedAt,assignees
@@ -47,6 +53,7 @@ gh pr list --repo <owner/repo> --search "milestone:\"<milestone名>\" is:merged"
 - 分類先: `Bug Fix` / `New Feature` / `Improvement` / `Breaking Change` / `Internal（非公開）`
 - ラベルが無い/曖昧なIssueは「要確認」として一覧提示し、ユーザーに割り振ってもらう。推測で確定しない
 - `Internal` に分類したものはNotion/Slackへの公開対象から除外する
+- 収集状態が `merged/closed` だけのIssue/PRは、`released/available` を確認できるまで公開候補に含めず、「未提供または要確認」として残す
 
 ## Step 3: 非エンジニア向け文章生成
 
@@ -56,12 +63,17 @@ gh pr list --repo <owner/repo> --search "milestone:\"<milestone名>\" is:merged"
 2. **対象範囲**（全テナント / 特定プラン・契約 / 該当なし、を明記）
 3. **技術詳細**（Issue/PR番号・リンク、担当者。エンジニア向け折りたたみセクション）
 
+加えて、各itemの提供状態（merge/close、release、対象テナント・プランでの利用可能性）と、未確認の範囲を記録する。生成した文章は「提供済み」を推測して書かない。
+
 ## Step 4: ユーザーレビュー（CRITICAL・必須ゲート）
 
 Notion/Slackへ実際に書き込む前に、生成した内容（Step 3の3点セット全件）をチャット上に一覧提示し、ユーザーの明示確認を取る。これは外部への投稿・DB更新に該当するため省略できない。
 
+レビューでは、全ページを取得した根拠、Issue/PRの重複除外、提供状態、対象範囲、`Internal`除外、未確認項目を確認する。すでに承認された対象と影響の範囲内で同じ内容を各ページ・各チャンネルへ反映する場合、段階ごとの一律な再承認を追加しない。対象・影響・公開範囲を広げる場合だけ、変更内容を具体化して再確認する。
+
 - 内容の修正依頼があれば反映してから次に進む
 - `Internal` 分類したIssueが公開候補に紛れ込んでいないか、ここで最終確認する
+- 生成、Notionへの保存、Slack公開、GitHubのIssue/MilestoneのCloseは別状態として扱い、レビュー承認だけで後続状態へ進めない
 
 ## Step 5: Notion DBへの書き込み
 
@@ -69,6 +81,7 @@ Notion/Slackへ実際に書き込む前に、生成した内容（Step 3の3点�
 
 - DBスキーマ・1レコードの単位（1機能=1レコード推奨）は `references/notion-schema.md` を読むこと
 - 既存DBへの追記が基本。プロパティ変更は破壊的なのでユーザー確認必須
+- Notionページの生成・更新は `Draft` / `Reviewed` / `Published` の状態を混同せず、作成成功だけで公開済み・利用可能とは扱わない
 
 ## Step 6: Slack投稿
 
@@ -77,12 +90,14 @@ Notion/Slackへ実際に書き込む前に、生成した内容（Step 3の3点�
 - 非エンジニア向け要約を中心に、各Notionページへのリンクを添える
 - 対象範囲を必ず明記する
 - 投稿前にStep 4のレビュー済み内容と一致しているか確認する
+- Slackの投稿成功は、Notionページの表示確認、利用者の確認、GitHubのrelease提供、Issue/MilestoneのCloseを証明しない。各状態と実際の確認結果を別に記録する
 
 ## Step 7: 完了報告
 
 - 作成/更新したNotionページ・DBのURL
 - Slack投稿のパーマリンク
 - カテゴリ別件数、除外（Internal）件数、要確認のまま残った件数
+- 取得ページ数と終端確認、重複除外件数、提供状態別件数、Notion/Slackの実行結果、内容確認と利用可能性の確認を分けて報告する。未確認の提供状態やユーザー確認を成功扱いにしない
 
 ## Anti-Patterns（禁止事項）
 
@@ -92,3 +107,4 @@ Notion/Slackへ実際に書き込む前に、生成した内容（Step 3の3点�
 - ラベルが曖昧なIssueを推測でBug/Feature確定する
 - Notionページ/DB IDを推測で書く（`notion-search`/`notion-fetch`必須）
 - `Internal`分類のIssueを公開チャネルに混入させる
+- 最初のページだけを全件とみなす、IssueとPRを二重に公開する、merge/closeをrelease済みとみなす、生成や通知成功だけでPublished/Closedへ進める

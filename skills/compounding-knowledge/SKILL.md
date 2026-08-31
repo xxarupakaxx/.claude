@@ -44,12 +44,11 @@ description: |
 
 **判別基準**: 「問題→原因→修正」の流れがあるか（→Solution）、「調査→発見→活用」の流れか（→Technical Learning）。1つのセッションで両方存在することが多い。
 
-### Step 2: 並列サブエージェント起動
+### Step 2: 根拠と状態の確認
 
-以下の4つのサブエージェント（Agent Tool）を**並列**で起動。
-原則 `model` を省略し、親セッションのモデルを継承させる。明示指定が必要な場合のみ `~/.claude/rules/model-routing.md` に従う。
+固定人数の並列起動や特定のAgent APIは前提にしない。次の観点を、`context/agent-team-routing.md` のGateを満たし独立確認の利益がある場合だけAgent()へ分担し、そうでなければ一つの担当が順に確認する。新しい横断監査の責務をこのSkillへ追加しない。
 
-#### 2-1: Solution Extractor
+#### 2-1: Solutionの確認
 ```
 05_log.mdとdiffを分析し、以下を抽出:
 - root_cause: 根本原因（1-2文）
@@ -57,7 +56,9 @@ description: |
 - code_changes: 主要なコード変更のサマリー
 ```
 
-#### 2-2: Prevention Strategist
+問題、原因、修正、直接検証がそろわない場合は、Solutionとして解決済みと保存しない。mock、静的検査、単発の通知や構文成功を実運用の成功に広げない。
+
+#### 2-2: 再発条件の確認
 ```
 この問題の再発を防ぐための戦略を提案:
 - prevention: 予防策のリスト
@@ -65,7 +66,7 @@ description: |
 - related_patterns: 類似問題のパターン
 ```
 
-#### 2-3: Category Classifier
+#### 2-3: 保存先の確認
 ```
 solutions/の既存カテゴリを確認し、最適なカテゴリとファイル名を決定:
 - category: solutions/下のサブディレクトリ名
@@ -75,16 +76,31 @@ build-issues, architecture-decisions, database-issues, integration-issues
 新カテゴリの作成も可。
 ```
 
-#### 2-4: Related Docs Finder
+保存先の決定は既存Skillの責務比較を含める。個別の採用・更新・runtime反映は `skill-governance` へ送り、ここで代行しない。
+
+#### 2-4: 関連根拠の確認
 ```
 関連する外部ドキュメント・GitHub Issue・Stack Overflowの記事を検索:
 - references: 関連URLのリスト
 - related_solutions: solutions/内の関連ドキュメント
 ```
 
+外部資料を使う場合は、主張ごとに一次資料のidentity、取得日、版、適用範囲を記録する。二次資料や検索結果だけで現行仕様を確定しない。必要な資料を全文確認できない場合は `unverified` として残す。
+
+#### 2-5: 技術知見の昇格ゲート
+
+コード例、SQL、設定、性能・安全性の主張を保存する前に、少なくとも次を主張ごとに分けて記録する。
+
+- 一次根拠（公式仕様、公式source、または再現可能な実験）と、対応する引用・検証範囲
+- 版、取得日、適用範囲、前提条件
+- 反例・限界（確認できたもの。なければ「確認済み範囲に反例未確認」と記載）、既知のconsumer/runtime差分
+- 実装・本番runtimeでの確認状態、未確認事項、再検証条件
+
+一次根拠、版、適用範囲、または反例・限界の確認状態のいずれかが記録されていない技術主張は、調査中のTechnical Learningとしてのみ保持する。反例が見つからないことを反例がない証明とせず、存在しない反例を創作しない。`confidence: experimental` または `theoretical`、未検証の実装例は、Skill、policy、現行runbookへ昇格させず、根拠がそろうまで保留する。保存済みKnowledgeと採用済み手順を同一視しない。
+
 ### Step 3: ドキュメント生成
 
-サブエージェントの結果を統合し、知見タイプに応じたテンプレートでドキュメントを生成:
+確認結果を統合し、知見タイプに応じたテンプレートでドキュメントを生成:
 
 #### タイプA: Solution テンプレート
 
@@ -100,6 +116,13 @@ solution_summary: "解決策の1行サマリー"
 created: YYYY-MM-DD
 severity: "critical|major|minor"
 effort: "small|medium|large"
+evidence_status: "verified|partial|unverified"
+source_refs: ["一次根拠または実行記録"]
+source_version: "版、commit、または取得日時"
+applicability: "適用範囲と前提"
+counterexamples: ["反例または限界。なければ確認済み範囲に反例未確認と記載"]
+unknowns: ["未確認のruntime・consumer条件"]
+promotion_status: "hold|candidate|approved"
 ---
 
 # [タイトル]
@@ -135,6 +158,7 @@ effort: "small|medium|large"
 title: "発見・知見のタイトル"
 learning_type: "api-discovery|library-behavior|design-pattern|integration-technique|performance-insight"
 source: "調査元（Context7/deepwiki/公式ドキュメント/実験等）"
+source_version: "版または取得日時"
 component: "適用先コンポーネント"
 tags: [tag1, tag2, tag3]
 phases: [investigation, planning]  # REQUIRED: この知見が活きるPhase群
@@ -142,6 +166,10 @@ discovery_summary: "発見の1行サマリー"
 applied_in: "この知見を適用したコミットやファイル"
 created: YYYY-MM-DD
 confidence: "verified|experimental|theoretical"
+applicability: "適用範囲と前提"
+counterexamples: ["反例または限界。なければ確認済み範囲に反例未確認と記載"]
+unknowns: ["未確認のruntime・consumer条件"]
+promotion_status: "hold|candidate|approved"
 ---
 
 # [タイトル]
@@ -173,9 +201,11 @@ confidence: "verified|experimental|theoretical"
 
 ### Step 4: 提案 & ユーザー承認（IMPORTANT）
 
-**Edit禁止ポリシー**: knowledge管理ファイルへの直接書き込みは禁止。
+Technical Learningの保存、Solutionの保存、Skillやruntimeへの採用は別状態で記録する。既存の承認が対象と影響を含む同じ範囲の可逆なローカル保存について、段階ごとの一律な再承認を追加しない。対象・影響を広げる外部write、不可逆操作、runtime反映は別の具体的な承認ゲートへ戻す。
 
-1. **生成したドキュメントを提案として表示**
+**承認前のEdit禁止ポリシー**: 承認前にknowledge管理ファイルへ直接書き込まない。対象と影響を含む既存承認または新しい承認を確認した後は、宣言済みscope内のWriteを許可する。外部write、不可逆操作、runtime反映は別の具体的な承認ゲートへ戻す。
+
+1. 既存の承認が対象・操作・差分を含む場合は、そのdecision IDとscopeを記録して提案をその承認へ結び付ける。それ以外は**生成したドキュメントを提案として表示**する。
    ```markdown
    ## 保存提案
 
@@ -186,15 +216,15 @@ confidence: "verified|experimental|theoretical"
    ---
    ```
 
-2. **AskUserQuestionで承認を取得**
+2. 承認が不足している場合だけ、**AskUserQuestionで承認を取得**する。
    - 「このまま保存」
    - 「修正して保存」（修正点を入力）
    - 「保存しない」
 
-3. **承認後のみWriteツールで保存**
+3. 新しい承認または既存承認の範囲を確認した後、**Writeツールで保存**する。
    - 保存後、`index.json`に新規エントリを追加（ref_count: 0）
 
-4. 必要に応じて `memories/` にもインデックスを作成（同様に提案→承認）
+4. 必要に応じて `memories/` にもインデックスを作成する。既存承認または新規承認のscopeを記録し、同じ対象・影響への一律な再承認は追加しない。
 
 ## solutions/ ディレクトリ構造
 

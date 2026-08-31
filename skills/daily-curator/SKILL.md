@@ -13,10 +13,16 @@ description: 一日分の写真・Gmail・カレンダー・Slack・Driveを横�
 
 ## 0. 準備
 - 今日の日付（JST, Asia/Tokyo）を確定。`Daily/YYYY-MM-DD.md` が無ければ `templates/daily.md` を元に作成（`<% %>` は実値に置換。前後リンクはその日付基準）。
-- **処理ウィンドウ** = 直近の `Inbox/automation/digest/digest-*.md` の日付以降（無ければ過去26時間）。重複起票を避ける。
+- **初期処理ウィンドウ** = 直近の `Inbox/automation/digest/digest-*.md` の日付以降（無ければ過去26時間）。source別の未処理・失敗窓が記録されている場合はそちらを優先し、単一のdigest日付を全source共通のwatermarkにはしない。重複起票を避ける。
 - **時間予算**: scheduled/無人実行は通常30分以内にDaily可視化とdigestを残す。45分を超えそうなら広範な再スキャン、画像生成、PNG化、追加調査を止め、`[!]` backlog とdigestの未処理メモに切り替える。
 - **代替優先順位**: 1) 自分が動く必要のあるTODOのDaily/Linear反映、2) digestの短い実行記録、3) backlogの未処理理由、4) concept sketch。前段が残っている間に後段で時間を使い切らない。
 - **コネクタのツール名**: 以下の節に出る `list_events` / `search_threads` / `slack_search_public_and_private` / `list_recent_files` / `read_file_content` は Codex コネクタの短縮名である。Claude Code では `rules/tool-invocation.md` のとおり `mcp__<server>__<tool>` の完全修飾名でしか呼べない。対応する MCP が未接続なら、その節を**スキップして digest に理由を記録する**。「新着なし」と誤記録しない。
+
+### 実行状態と冪等性
+- 実行開始時に `run_id`、全体の処理窓、書き込み範囲、前回の状態を固定し、写真・Calendar・Gmail・Slack・Driveを**source別**に処理する。各sourceについて処理窓、cursor/watermark、`success`、`normal-empty`（照会と対象窓・ページングの完了を確認した正常な空結果）、`failed`、`unread` をdigestへ記録する。
+- `success` または確認済みの `normal-empty` だけcursor/watermarkを進める。不完全取得、認証・権限エラー、タイムアウト、未読のままの項目では進めず、未処理窓と再開条件をbacklogまたはdigestに残す。空に見えただけで取得成功とは扱わない。
+- 同じ入力窓を再実行するときは、sourceの安定したID・URL・ファイルと既存のノート／markerを照合する。同じ成果物、Dailyリンク、backlog行、通知を二重に作らず、未処理または失敗した項目だけを再開する。
+- スケジュール設定、runの起動、source取得、Vaultへの保存、完了報告・通知は別状態で扱う。設定が存在することや起動が成功したことだけで、取得・保存・通知の成功を宣言しない。
 
 ## 1. 写真 → Daily / ノート
 - `attachments/` に処理ウィンドウ内で追加された画像を `git log --since` / mtime で特定。
@@ -30,8 +36,9 @@ description: 一日分の写真・Gmail・カレンダー・Slack・Driveを横�
 - **自分が実際に動く必要があるもの**（自分主催/準備/締切/1on1準備）→ Daily `## ✅ タスク` に `- [ ]` で追記。
 - 自分の担当でない予定・他人主催で参加するだけ → digestに情勢として記録（**タスクにはしない**）。
 
-## 3. Gmail → ToDo / FYI（**CRITICAL: 必ず実行すること。結果ゼロでもdigestに「Gmail: 新着なし」と記録する**）
-- `search_threads`（`in:inbox newer_than:1d` 等、ウィンドウに合わせる）。**結果がゼロでもスキップ禁止。**
+## 3. Gmail → ToDo / FYI
+- Gmailの照会は、接続済みのMCPで `search_threads`（`in:inbox newer_than:1d` 等、ウィンドウに合わせる）を使い、対象ウィンドウと必要なページングを最後まで取得できる場合に実行する。照会が成功して0件だったときだけ、digestに `Gmail: 新着なし` と `normal-empty` を記録する。
+- MCP未接続、認証・権限エラー、タイムアウト、取得不全、または取得した項目を読み切れない場合は `failed` または `unread` と理由を記録し、`Gmail: 新着なし` とは書かず、cursor/watermarkも進めない。
 - **宣伝・自動通知メルマガは除外**（件数だけdigestに）。
 - 請求/契約/日程調整/本人宛の実務メール → 要返信なら Daily `## ✅ タスク`、参考ならdigest。
 
@@ -64,6 +71,7 @@ description: 一日分の写真・Gmail・カレンダー・Slack・Driveを横�
 
 ## 7. ダイジェスト & backlog
 - `Inbox/automation/digest/digest-YYYY-MM-DD.md` を作成（[[digest-2026-06-16]] の体裁を踏襲。basenameはデイリーと衝突させない）。
+- digestにはsource別の処理窓、cursor/watermarkの前後、`success` / `normal-empty` / `failed` / `unread`、未処理窓と再開条件を残す。全sourceが完了していない場合に日次全体を成功扱いにしない。
 - `Inbox/automation/backlog.md` にフォローアップを `[ ]`/`[!]` で追記、完了は `[x]` + `✅ 日付`。**既存行は消さない（追記のみ）。**
 - 個人情報・センシティブ情報はdigestに生で書かず要約/匿名化。
 
@@ -91,4 +99,5 @@ description: 一日分の写真・Gmail・カレンダー・Slack・Driveを横�
   - cadence: **毎朝 08:00**（必須）。任意で夜 21:00 にもう1回（その日の写真・後で読むの取りこぼし回収）。
     - `/schedule daily at 8am, run /daily-curator on the obsidian-vault repo`
   - connectors: **Calendar / Gmail / Drive / Slack**（全部）／ network: **Full**（URL要約・読書補完のため）／ model: `gpt-5.5` / service_tier: `priority`
+- ここに書かれたcadenceやconnector設定は起動設定の案内であり、登録済み・起動済み・取得済み・保存済み・通知済みの証明ではない。各状態を実際のrun記録で分けて報告する。
 - 各コマンドの一覧・cron例 → [[SCHEDULES]]
