@@ -10,6 +10,8 @@ allowed-tools: Read
 
 本文、変更前後、実装内容、source根拠、検証、依存図を初期表示する。重要情報をdrawerやtabに隠さず、本文にない完了・担当・期限・因果を補わない。
 
+計画全体の依存図は、共通generatorが固定Archifyエンジンから生成する。本文の変更時に自動更新し、白基調の検証済みSVGを冒頭で表示する。入力・失敗表示・実行制限は [Archify overview contract](references/archify-overview.md) に従う。
+
 ## Routeと実行者
 
 | route | 条件 | 成果物 |
