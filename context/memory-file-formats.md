@@ -105,6 +105,9 @@ HTMLの解釈、許可要素・属性・値・サイズ上限の正本は`script
 
 Phase 5では`required-sources`に最低限`task:30_plan.html`と、実装・検証に使う一つ以上の`task:`または`workspace:<repo-relative-file>`を列挙する。checkpointが存在するときだけその参照とID/hashも加える。Evidence Bundleのsource_fingerprintsは、この宣言と完全一致するcanonical keyのSHA-256を持つ。log-onlyにはこのcompletion契約を強制しない。
 
+
+checkpoint.mdのIDは `- [x] A1: 確認内容` のような明示的な箇条書きで記録する。`90_verification.md`は検証結果なので、`evidence_fingerprints`で照合し、`required-sources`や`source_fingerprints`には含めない。
+
 ### 既存Markdownとの互換
 
 既存taskはHTMLがない場合だけ`30_plan.md`を従来どおり読み、`40_progress.md`の既存挙動・hash・completion条件も維持する。両方存在すればHTMLだけを使い、MD siblingの変更で新しい計画の内容やhashを変えない。不正HTMLをvalidなMDで隠さない。個別移行ではHTMLを追加し、元MDを削除・改名・自動更新しない。全taskの一括移行はしない。 他Skillの過去例に30_plan.mdの参照が残っていても、新規計画は共通resolverが選ぶ30_plan.htmlを使う。
