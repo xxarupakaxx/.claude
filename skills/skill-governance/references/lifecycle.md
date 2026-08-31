@@ -70,6 +70,12 @@ review対象を次の値からcanonical JSON化し、`subject_sha256` を作る�
 
 safety review evidenceは source、full commit SHA、tree hash、file manifest、license、capability、finding、dependency、external URL、local adaptation diff、reviewer、decision、review date、next review date を持つ。任意の非空文字列やscanner passをapproval receiptとして扱わない。
 
+## Quarantine source validation
+
+The `upstream` frontmatter target is quarantine-only. It accepts only `name`, `description`, and an optional string `version` that matches semantic versioning. An `upstream` target is rejected for review-stage and runtime paths; the existing `common`, `codex`, and `claude` schemas and their permission keys remain unchanged. Versioned sources and hygiene-ledger collections must use an `upstream` quarantine receipt; versionless legacy collections retain their existing receipt boundary. For `upstream`, the 64 KiB limit applies to the bytes between the frontmatter delimiters after strict UTF-8 decoding; the existing targets retain their whole-file 64 KiB limit. Canonical tree scans continue to enforce the 4 MiB per-file and 32 MiB total-tree limits, and runtime target captures retain their BIDI rejection even when the broader content scan is disabled.
+
+When a collection claims that an upstream relative-reference finding was resolved, its existing path/hash-bound `adaptation_diff` artifact may be a JSON `reference-hygiene-adaptation` ledger. The ledger binds the exact source path, revision, candidate `SKILL.md` and tree hashes, every captured review-target hash, the complete ordered finding tuple list, and a one-to-one resolution map with concrete changed paths. Only `markdown_path_escape` and `broken_relative_reference` may be resolved, and the captured link must normalize to a non-sensitive path inside the upstream repository. Absolute, UNC, drive, tilde, scheme, encoded traversal, credential, configuration, and repository-escaping targets remain blocking. Missing, extra, duplicated, wildcard, or mismatched entries fail closed, and any other blocking finding keeps the collection blocked. A full-YAML pending finding can leave the hygiene tuple only after a captured upstream validation receipt is recomputed and bound; the raw inspection remains evidence. Review-target files are rechecked with the existing static reference and dangerous-pattern scanner from their captured bytes; source-only citation files remain inert evidence and are never active instructions. This ledger does not create a new receipt framework or promote a collection automatically.
+
 ## Value receipt
 
 安全でも成果が改善しなければ採用しない。次を必須にする。

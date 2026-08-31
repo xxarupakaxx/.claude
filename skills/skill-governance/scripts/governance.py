@@ -70,6 +70,11 @@ APPROVED_RUNTIME_STATES = {"active", "update-available", "deprecated"}
 GITHUB_RE = re.compile(r"^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$")
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+SEMVER_RE = re.compile(
+    r"^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)"
+    r"(?:-(?:0|[1-9A-Za-z-][0-9A-Za-z-]*)(?:\.(?:0|[1-9A-Za-z-][0-9A-Za-z-]*))*)?"
+    r"(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$"
+)
 BRANCH_RE = re.compile(r"^[A-Za-z0-9](?:[A-Za-z0-9._/-]*[A-Za-z0-9._-])?$")
 KEY_RE = re.compile(r"^[A-Za-z0-9_-]+$")
 VALID_SOURCE_ORIGINS = {"community-maintainer", "open-standard", "vendor-official", "vendor-security-tool"}
@@ -104,11 +109,15 @@ CLAUDE_FRONTMATTER_KEYS = COMMON_FRONTMATTER_KEYS | {
     "agent",
     "hooks",
 }
+UPSTREAM_FRONTMATTER_KEYS = {"name", "description", "version"}
+REFERENCE_HYGIENE_CODES = frozenset({"markdown_path_escape", "broken_relative_reference"})
+REFERENCE_HYGIENE_KIND = "reference-hygiene-adaptation"
 FULL_YAML_SUPERSEDED_CODES = {
     "frontmatter_tab",
     "frontmatter_nested",
     "frontmatter_unverified",
 }
+FULL_YAML_RESOLUTION_CODES = FULL_YAML_SUPERSEDED_CODES | {"frontmatter_required"}
 LOCAL_STATIC_ADAPTER_ORIGIN = "local-static-adapter"
 LOCAL_STATIC_ADAPTER_FILES = {"SKILL.md", "UPSTREAM.md"}
 
@@ -2837,6 +2846,7 @@ def _tree_artifact_evidence(
     require_license: bool,
     require_identity: bool,
     allow_candidate_invisible_controls: bool = False,
+    scan_content: bool = True,
 ) -> tuple[str | None, list[dict[str, Any]], list[dict[str, str]], list[Finding]]:
     findings = list(tree.findings)
     if not tree.tree_sha256:
@@ -2876,20 +2886,10 @@ def _tree_artifact_evidence(
     ]
     if require_license and not license_records:
         findings.append(blocker("license_evidence_missing", "No captured local license file", tree.root))
-    if not allow_candidate_invisible_controls:
-        for record in tree.files:
-            try:
-                text = record.data.decode("utf-8", "strict")
-            except UnicodeDecodeError:
-                continue
-            if BIDI_OR_ZERO_WIDTH.search(text):
-                findings.append(
-                    blocker(
-                        "target_invisible_control",
-                        "Approved review and runtime targets cannot contain bidi or zero-width control characters",
-                        f"{tree.root}/{record.path}",
-                    )
-                )
+    if scan_content and not allow_candidate_invisible_controls:
+        findings.extend(_review_content_findings(tree.files, root=tree.root))
+    elif not scan_content and not allow_candidate_invisible_controls:
+        findings.extend(_target_bidi_findings(tree.files, tree.root))
     return tree.tree_sha256, [record.public() for record in tree.files], license_records, findings
 
 
@@ -2898,11 +2898,12 @@ def _candidate_tree_evidence(
     local_name: str,
     binding: dict[str, Any],
     quarantine_root: Path,
+    tree: TreeResult | None = None,
 ) -> tuple[str | None, list[dict[str, Any]], list[dict[str, str]], list[Finding]]:
     revision = _expected_revision(collection, local_name)
     upstream_name = str(binding.get("upstream_name", ""))
     path = quarantine_root / str(collection.get("source_id", "")) / revision / upstream_name
-    tree = scan_quarantined_tree(path, quarantine_root)
+    tree = tree or scan_quarantined_tree(path, quarantine_root)
     digest, manifest, licenses, findings = _tree_artifact_evidence(
         tree,
         upstream_name,
@@ -2932,8 +2933,123 @@ def _candidate_tree_evidence(
     return digest, manifest, licenses, findings
 
 
-def _candidate_static_inspection(path: Path, quarantine_root: Path) -> tuple[dict[str, Any], list[Finding]]:
-    payload, raw_findings = inspect_candidate(path, quarantine_root)
+def _frontmatter_body_sha256(raw: bytes) -> str | None:
+    try:
+        text = raw.decode("utf-8", "strict")
+    except UnicodeDecodeError:
+        return None
+    lines = text.splitlines()
+    try:
+        end = lines.index("---", 1)
+    except ValueError:
+        return None
+    return sha256_bytes("\n".join(lines[1:end]).encode("utf-8"))
+
+
+def _frontmatter_declares_key(raw: bytes, key: str) -> bool:
+    try:
+        text = raw.decode("utf-8", "strict")
+    except UnicodeDecodeError:
+        return False
+    lines = text.splitlines()
+    try:
+        end = lines.index("---", 1)
+    except ValueError:
+        return False
+    return any(line.startswith(f"{key}:") for line in lines[1:end])
+
+
+def _reference_target_is_safe(target: str, record_path: str, upstream_path: str) -> bool:
+    if "\\" in target or "%" in target:
+        return False
+    decoded, error = _decode_link_target(target)
+    if error or decoded is None:
+        return False
+    try:
+        parsed = urllib.parse.urlsplit(decoded)
+    except ValueError:
+        return False
+    local = parsed.path
+    if (
+        parsed.scheme
+        or parsed.netloc
+        or local.startswith(("/", "//", "~"))
+        or re.match(r"^[A-Za-z]:", local)
+    ):
+        return False
+    source_root = posixpath.dirname(upstream_path)
+    source_file = posixpath.join(source_root, record_path)
+    normalized = posixpath.normpath(posixpath.join(posixpath.dirname(source_file), local))
+    if normalized == ".." or normalized.startswith("../"):
+        return False
+    sensitive = {
+        ".aws", ".claude", ".codex", ".env", ".git", ".gnupg", ".ssh",
+        "agents.md", "claude.md", "config.toml", "credentials", "credentials.json", "keychain",
+        "secrets", "secrets.json", "settings.json", "token", "tokens.json", "wallet",
+    }
+    return not any(
+        part.lower() in sensitive
+        or part.lower().startswith(".env.")
+        or part.lower().startswith("id_rsa")
+        or part.lower().endswith((".key", ".pem", ".p12", ".secret"))
+        for part in Path(normalized).parts
+    )
+
+
+def _captured_reference_targets(
+    records: list[FileRecord],
+    findings: list[Finding | dict[str, Any]],
+    upstream_path: str,
+) -> list[dict[str, Any]]:
+    known_files = {record.path for record in records}
+    matches: list[dict[str, Any]] = []
+    for record in records:
+        if Path(record.path).suffix.lower() != ".md":
+            continue
+        try:
+            text = record.data.decode("utf-8", "strict")
+        except UnicodeDecodeError:
+            continue
+        targets = [match.group(1) for match in MARKDOWN_LINK.finditer(text)]
+        targets.extend(match.group(1) for match in MARKDOWN_REFERENCE.finditer(text))
+        for target in targets:
+            finding = _inspect_markdown_target(record.path, target, known_files)
+            if finding and finding.code in REFERENCE_HYGIENE_CODES:
+                matches.append(
+                    {
+                        "finding": asdict(finding),
+                        "target": target,
+                        "safe": _reference_target_is_safe(target, record.path, upstream_path),
+                    }
+                )
+    selected: list[dict[str, Any]] = []
+    remaining = list(matches)
+    for item in findings:
+        expected = _finding_tuple(item)
+        if expected[1] not in REFERENCE_HYGIENE_CODES:
+            continue
+        expected_dict = dict(zip(("severity", "code", "message", "path"), expected))
+        match_index = next(
+            (index for index, candidate in enumerate(remaining) if candidate.get("finding") == expected_dict),
+            None,
+        )
+        if match_index is None:
+            selected.append({"finding": expected_dict, "target": None, "safe": False})
+        else:
+            selected.append(remaining.pop(match_index))
+    return selected
+
+
+def _candidate_static_inspection(
+    path: Path,
+    quarantine_root: Path,
+    tree: TreeResult | None = None,
+) -> tuple[dict[str, Any], list[Finding]]:
+    captured_tree = tree
+    if tree is None:
+        payload, raw_findings = inspect_candidate(path, quarantine_root)
+    else:
+        payload, raw_findings = _inspect_candidate_tree(path, tree)
     enforceable = [
         item
         for item in raw_findings
@@ -2949,11 +3065,78 @@ def _candidate_static_inspection(path: Path, quarantine_root: Path) -> tuple[dic
             asdict(item) for item in enforceable if item.severity == "ADVISORY"
         ],
         "full_yaml_pending_codes": sorted(
-            {item.code for item in raw_findings if item.code in FULL_YAML_SUPERSEDED_CODES}
+            {item.code for item in raw_findings if item.code in FULL_YAML_RESOLUTION_CODES}
         ),
         "candidate_code_execution": False,
     }
+    if any(item.code in REFERENCE_HYGIENE_CODES for item in raw_findings):
+        # Preserve the complete captured inspect result for a later, exact ledger
+        # comparison.  Existing candidates without reference findings retain the
+        # established evidence shape and receipt subject.
+        evidence.update(
+            {
+                "raw_findings": payload.get("findings", []),
+                "resolved_reference_findings": [],
+            }
+        )
+    frontmatter = payload.get("frontmatter")
+    skill_record = next((record for record in (captured_tree.files if captured_tree else []) if record.path == "SKILL.md"), None)
+    if isinstance(frontmatter, dict) and "version" in frontmatter and skill_record is not None:
+        evidence["frontmatter"] = frontmatter
+        evidence["frontmatter_sha256"] = _frontmatter_body_sha256(skill_record.data)
+    if skill_record is not None and _frontmatter_declares_key(skill_record.data, "version"):
+        evidence["frontmatter_declares_version"] = True
     return evidence, enforceable
+
+
+def _resolved_full_yaml_codes(
+    collection: dict[str, Any],
+    local_name: str,
+    binding: dict[str, Any],
+    tree: TreeResult | None,
+    inspection: dict[str, Any],
+) -> set[str]:
+    pending = {
+        code for code in inspection.get("full_yaml_pending_codes", [])
+        if code in FULL_YAML_RESOLUTION_CODES
+    }
+    if not pending or tree is None:
+        return set()
+    references = collection.get("frontmatter_receipts")
+    by_name = references.get(local_name) if isinstance(references, dict) else None
+    reference = by_name.get("quarantine") if isinstance(by_name, dict) else None
+    receipt, receipt_findings = _load_receipt(reference)
+    skill = next((record for record in tree.files if record.path == "SKILL.md"), None)
+    if receipt is None or receipt_findings or skill is None:
+        return set()
+    expected_surface = {
+        "kind": "quarantine",
+        "source_id": str(collection.get("source_id", "")),
+        "revision": str(binding.get("revision", "")),
+        "skill_name": str(binding.get("upstream_name", "")),
+    }
+    payload, findings = _validate_frontmatter_bytes(
+        skill.data,
+        "upstream",
+        str(binding.get("upstream_name", "")),
+        f"{tree.root}/SKILL.md",
+        expected_surface,
+    )
+    if has_blockers(findings) or (
+        receipt.get("command") != "validate-frontmatter"
+        or receipt.get("status") != "validated"
+        or receipt.get("target") != "upstream"
+        or receipt.get("surface") != expected_surface
+        or receipt.get("validator") != "pyyaml-6.0.2-safe-loader"
+        or receipt.get("skill_sha256") != sha256_bytes(skill.data)
+        or receipt.get("frontmatter_sha256") != payload.get("frontmatter_sha256")
+        or receipt.get("values") != payload.get("values")
+        or receipt.get("findings") != []
+    ):
+        return set()
+    inspection["frontmatter"] = payload.get("values", {})
+    inspection["frontmatter_sha256"] = payload.get("frontmatter_sha256")
+    return pending
 
 
 def build_lock_plan(
@@ -2996,6 +3179,8 @@ def build_lock_plan(
         candidate_manifests: dict[str, list[dict[str, Any]]] = {}
         candidate_licenses: dict[str, list[dict[str, str]]] = {}
         candidate_inspections: dict[str, dict[str, Any]] = {}
+        candidate_inspection_findings: dict[str, list[Finding]] = {}
+        candidate_trees: dict[str, TreeResult] = {}
         review_hashes: dict[str, dict[str, str]] = {}
         review_manifests: dict[str, dict[str, list[dict[str, Any]]]] = {}
         review_licenses: dict[str, dict[str, list[dict[str, str]]]] = {}
@@ -3010,21 +3195,33 @@ def build_lock_plan(
                 if not isinstance(binding, dict):
                     findings.append(blocker("candidate_binding_missing", "Candidate state requires a pinned upstream binding", key))
                 else:
+                    candidate_path = quarantine_root / str(collection.get("source_id", "")) / revision / str(binding.get("upstream_name", ""))
+                    candidate_tree = scan_quarantined_tree(candidate_path, quarantine_root)
+                    candidate_trees[name] = candidate_tree
                     digest, manifest, licenses, evidence_findings = _candidate_tree_evidence(
                         collection,
                         name,
                         binding,
                         quarantine_root,
+                        candidate_tree,
                     )
                     findings.extend(evidence_findings)
                     if digest:
                         candidate_hashes[name] = digest
                         candidate_manifests[name] = manifest
                         candidate_licenses[name] = licenses
-                    candidate_path = quarantine_root / str(collection.get("source_id", "")) / revision / str(binding.get("upstream_name", ""))
-                    inspection, inspection_findings = _candidate_static_inspection(candidate_path, quarantine_root)
+                    inspection, inspection_findings = _candidate_static_inspection(candidate_path, quarantine_root, candidate_tree)
                     candidate_inspections[name] = inspection
-                    findings.extend(inspection_findings)
+                    candidate_inspection_findings[name] = inspection_findings
+                    if candidate_tree.files and isinstance(inspection.get("raw_findings"), list):
+                        inspection["reference_targets"] = _captured_reference_targets(
+                            candidate_tree.files,
+                            [
+                                Finding(**item) for item in inspection["raw_findings"]
+                                if isinstance(item, dict) and item.get("severity") == "BLOCKING"
+                            ],
+                            str(binding.get("path", "")),
+                        )
                     if digest and inspection.get("tree_sha256") != digest:
                         findings.append(
                             blocker(
@@ -3047,6 +3244,7 @@ def build_lock_plan(
                         require_source=True,
                         require_license=True,
                         require_identity=True,
+                        scan_content=True,
                     )
                     findings.extend(evidence_findings)
                     if digest:
@@ -3072,6 +3270,7 @@ def build_lock_plan(
                         require_source=True,
                         require_license=True,
                         require_identity=state in APPROVED_RUNTIME_STATES,
+                        scan_content=False,
                     )
                     findings.extend(evidence_findings)
                     if digest:
@@ -3081,6 +3280,69 @@ def build_lock_plan(
 
             if state in APPROVED_RUNTIME_STATES and review_hashes.get(name) != runtime_hashes.get(name):
                 findings.append(blocker("promotion_target_drift", "Runtime approval-lineage hashes must equal the approved review-stage hashes", key))
+
+        for name in sorted(collection["skills"]):
+            inspection_findings = candidate_inspection_findings.get(name, [])
+            inspection = candidate_inspections.get(name)
+            reference = collection.get("adaptation_diff")
+            full_yaml_codes: set[str] = set()
+            if inspection is not None:
+                full_yaml_codes = _resolved_full_yaml_codes(
+                    collection,
+                    name,
+                    upstream_bindings.get(name, {}),
+                    candidate_trees.get(name),
+                    inspection,
+                )
+                if full_yaml_codes:
+                    inspection["full_yaml_resolved_codes"] = sorted(full_yaml_codes)
+                inspection_findings = [
+                    item
+                    for item in inspection_findings
+                    if item.code not in full_yaml_codes
+                ]
+            if inspection is not None and isinstance(reference, dict) and _bound_ref_valid(reference, "adaptations"):
+                ledger, ledger_load_findings = _load_reference_hygiene_artifact(reference)
+                findings.extend(ledger_load_findings)
+                if ledger is not None:
+                    binding = upstream_bindings.get(name, {})
+                    if "frontmatter" not in inspection:
+                        skill = next(
+                            (record for record in (candidate_trees.get(name).files if candidate_trees.get(name) else []) if record.path == "SKILL.md"),
+                            None,
+                        )
+                        if skill is not None:
+                            values, _ = parse_frontmatter_strict(skill.data, "SKILL.md")
+                            inspection["frontmatter"] = values
+                            inspection["frontmatter_sha256"] = _frontmatter_body_sha256(skill.data)
+                    raw_findings = inspection.get("raw_findings", inspection_findings)
+                    raw_findings = [
+                        item for item in raw_findings
+                        if (item.get("code") if isinstance(item, dict) else item.code) not in full_yaml_codes
+                    ]
+                    valid, hygiene_findings, resolved = _reference_hygiene_validation(
+                        ledger,
+                        collection,
+                        name,
+                        binding,
+                        candidate_hashes.get(name),
+                        candidate_manifests.get(name, []),
+                        review_hashes.get(name, {}),
+                        review_manifests.get(name, {}),
+                        raw_findings,
+                        full_yaml_codes,
+                        candidate_trees.get(name).files if candidate_trees.get(name) is not None else None,
+                    )
+                    findings.extend(hygiene_findings)
+                    inspection["adaptation_diff"] = reference
+                    if valid:
+                        inspection["resolved_reference_findings"] = resolved
+                        inspection_findings = [
+                            item
+                            for item in inspection_findings
+                            if item.code not in REFERENCE_HYGIENE_CODES and item.code not in full_yaml_codes
+                        ]
+            findings.extend(inspection_findings)
 
         if state in REVIEW_STATES:
             target_hashes = runtime_hashes if state in APPROVED_RUNTIME_STATES else review_hashes
@@ -3595,12 +3857,202 @@ def _skill_sha_from_manifest(manifest: list[dict[str, Any]]) -> str | None:
     return digest if isinstance(digest, str) and re.fullmatch(r"[0-9a-f]{64}", digest) else None
 
 
+def _finding_tuple(item: Finding | dict[str, Any]) -> list[str]:
+    values = asdict(item) if isinstance(item, Finding) else item
+    return [
+        values.get("severity", ""),
+        values.get("code", ""),
+        values.get("message", ""),
+        values.get("path", ""),
+    ]
+
+
+def _load_reference_hygiene_artifact(
+    reference: dict[str, Any] | None,
+) -> tuple[dict[str, Any] | None, list[Finding]]:
+    """Load a JSON hygiene ledger while leaving legacy adaptation prose untouched."""
+    if not _bound_ref_valid(reference, "adaptations"):
+        return None, []
+    raw, findings = _load_bound_artifact(reference, "adaptations")
+    if raw is None:
+        return None, findings
+    if not raw.lstrip().startswith(b"{"):
+        return None, findings
+    try:
+        payload = _strict_json_loads(raw)
+    except (UnicodeDecodeError, json.JSONDecodeError, StrictJSONError) as exc:
+        return None, [*findings, blocker("adaptation_ledger_json", str(exc), str(reference.get("path", "")))]
+    if not isinstance(payload, dict):
+        return None, [*findings, blocker("adaptation_ledger_shape", "Reference hygiene ledger must be a JSON object", str(reference.get("path", "")))]
+    if payload.get("kind") != REFERENCE_HYGIENE_KIND:
+        return None, findings
+    return payload, findings
+
+
+def _reference_hygiene_validation(
+    ledger: dict[str, Any],
+    collection: dict[str, Any],
+    local_name: str,
+    upstream_binding: dict[str, Any],
+    candidate_hash: str | None,
+    candidate_manifest: list[dict[str, Any]],
+    review_target_hashes: dict[str, str],
+    review_target_manifests: dict[str, list[dict[str, Any]]],
+    raw_findings: list[Finding | dict[str, Any]],
+    resolved_full_yaml_codes: set[str] | frozenset[str] = frozenset(),
+    candidate_records: list[FileRecord] | None = None,
+    reference_targets: list[dict[str, Any]] | None = None,
+) -> tuple[bool, list[Finding], list[dict[str, Any]]]:
+    """Validate a path/hash-bound reference exception without mutating raw findings."""
+    findings: list[Finding] = []
+    allowed_fields = {
+        "schema_version", "kind", "collection_id", "local_name", "source_id",
+        "upstream_path", "revision", "candidate_skill_sha256", "candidate_tree_sha256",
+        "finding_tuples", "review_target_hashes", "resolution_map", "decision",
+    }
+    if set(ledger) != allowed_fields:
+        findings.append(blocker("adaptation_ledger_fields", f"Reference hygiene ledger fields must be exactly {sorted(allowed_fields)}", local_name))
+
+    expected_skill_sha = _skill_sha_from_manifest(candidate_manifest)
+    expected_revision = upstream_binding.get("revision")
+    expected_values = {
+        "schema_version": 1, "kind": REFERENCE_HYGIENE_KIND,
+        "collection_id": collection.get("id"), "local_name": local_name,
+        "source_id": collection.get("source_id"), "upstream_path": upstream_binding.get("path"),
+        "revision": expected_revision, "candidate_skill_sha256": expected_skill_sha,
+        "candidate_tree_sha256": candidate_hash, "review_target_hashes": review_target_hashes,
+        "decision": "resolved",
+    }
+    for field_name, expected in expected_values.items():
+        if ledger.get(field_name) != expected:
+            findings.append(blocker("adaptation_ledger_binding", f"{field_name} does not match the captured source or target", local_name))
+    if not isinstance(expected_revision, str) or not SHA_RE.fullmatch(expected_revision):
+        findings.append(blocker("adaptation_ledger_revision", "Ledger revision must be a full source commit", local_name))
+    for field_name in ("candidate_skill_sha256", "candidate_tree_sha256"):
+        value = ledger.get(field_name)
+        if not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{64}", value):
+            findings.append(blocker("adaptation_ledger_hash", f"{field_name} must be a SHA-256 digest", local_name))
+    targets = collection.get("targets") if isinstance(collection.get("targets"), list) else []
+    if (
+        not isinstance(review_target_hashes, dict)
+        or set(review_target_hashes) != set(targets)
+        or any(not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{64}", value) for value in review_target_hashes.values())
+    ):
+        findings.append(blocker("adaptation_ledger_targets", "Ledger must bind every captured review target hash", local_name))
+
+    resolved_full_yaml_codes = set(resolved_full_yaml_codes) & FULL_YAML_RESOLUTION_CODES
+    expected_tuples = [
+        _finding_tuple(item)
+        for item in raw_findings
+        if (asdict(item) if isinstance(item, Finding) else item).get("severity") == "BLOCKING"
+        and (asdict(item) if isinstance(item, Finding) else item).get("code") not in resolved_full_yaml_codes
+    ]
+    if not expected_tuples:
+        findings.append(blocker("adaptation_ledger_no_findings", "Reference hygiene ledger cannot resolve an empty finding set", local_name))
+    unsafe = [item for item in expected_tuples if item[1] not in REFERENCE_HYGIENE_CODES]
+    for item in unsafe:
+        findings.append(blocker("adaptation_ledger_unsafe_finding", f"Only relative-reference findings may be resolved: {item[1]}", item[3]))
+    actual_tuples = ledger.get("finding_tuples")
+    if not isinstance(actual_tuples, list) or actual_tuples != expected_tuples:
+        findings.append(blocker("adaptation_ledger_findings", "finding_tuples must exactly equal the captured blocking findings in order", local_name))
+
+    reference_findings = [item for item in raw_findings if _finding_tuple(item)[1] in REFERENCE_HYGIENE_CODES]
+    if candidate_records is not None:
+        reference_targets = _captured_reference_targets(
+            candidate_records,
+            reference_findings,
+            str(upstream_binding.get("path", "")),
+        )
+    if not isinstance(reference_targets, list):
+        findings.append(blocker("adaptation_ledger_reference_evidence", "Ledger requires captured reference evidence", local_name))
+        reference_targets = []
+    expected_reference_tuples = [_finding_tuple(item) for item in reference_findings]
+    actual_reference_tuples = [
+        _finding_tuple(item.get("finding", {}))
+        for item in reference_targets
+        if isinstance(item, dict) and isinstance(item.get("finding"), dict)
+    ]
+    if actual_reference_tuples != expected_reference_tuples:
+        findings.append(blocker("adaptation_ledger_reference_evidence", "Captured reference evidence must cover every exact finding", local_name))
+    for item in reference_targets:
+        if not isinstance(item, dict) or item.get("safe") is not True or not isinstance(item.get("target"), str):
+            findings.append(blocker("adaptation_ledger_unsafe_reference", "Absolute, external, sensitive, or escaping references cannot be resolved", local_name))
+
+    target_paths = {
+        target: {
+            item.get("path")
+            for item in manifest
+            if isinstance(item, dict) and isinstance(item.get("path"), str)
+        }
+        for target, manifest in review_target_manifests.items()
+    }
+    candidate_paths = {
+        item.get("path")
+        for item in candidate_manifest
+        if isinstance(item, dict) and isinstance(item.get("path"), str)
+    }
+    candidate_record_map = {
+        item.get("path"): item
+        for item in candidate_manifest
+        if isinstance(item, dict) and isinstance(item.get("path"), str)
+    }
+    target_records = {
+        target: {
+            item.get("path"): item
+            for item in manifest
+            if isinstance(item, dict) and isinstance(item.get("path"), str)
+        }
+        for target, manifest in review_target_manifests.items()
+    }
+    resolution_map = ledger.get("resolution_map")
+    if not isinstance(resolution_map, list) or len(resolution_map) != len(expected_tuples):
+        findings.append(blocker("adaptation_ledger_resolution_map", "resolution_map must contain exactly one entry for every captured finding", local_name))
+        resolution_map = []
+    resolved_reference_findings: list[dict[str, Any]] = []
+    for index, entry in enumerate(resolution_map):
+        if not isinstance(entry, dict) or set(entry) != {"finding_tuple", "changed_paths", "review_target_hashes"}:
+            findings.append(blocker("adaptation_ledger_resolution_fields", "Each resolution entry has an exact schema", local_name))
+            continue
+        if index >= len(expected_tuples) or entry.get("finding_tuple") != expected_tuples[index]:
+            findings.append(blocker("adaptation_ledger_resolution_binding", "Resolution entries must bind findings one-to-one and in order", local_name))
+        if entry.get("review_target_hashes") != review_target_hashes:
+            findings.append(blocker("adaptation_ledger_resolution_target", "Resolution target hashes differ from the ledger target hashes", local_name))
+        changed_paths = entry.get("changed_paths")
+        if (
+            not isinstance(changed_paths, list)
+            or not changed_paths
+            or any(not isinstance(value, str) for value in changed_paths)
+            or len(changed_paths) != len(set(changed_paths))
+            or changed_paths != sorted(changed_paths, key=lambda value: value.encode("utf-8") if isinstance(value, str) else b"\xff")
+        ):
+            findings.append(blocker("adaptation_ledger_changed_paths", "changed_paths must be a unique sorted list", local_name))
+            continue
+        for changed_path in changed_paths:
+            if (
+                not isinstance(changed_path, str)
+                or not changed_path
+                or changed_path.startswith("/")
+                or "\\" in changed_path
+                or any(part in {"", ".", ".."} for part in Path(changed_path).parts)
+                or any(char in changed_path for char in "*?[]{}")
+                or changed_path not in candidate_paths
+                or any(changed_path not in paths for paths in target_paths.values())
+                or all(candidate_record_map.get(changed_path) == records.get(changed_path) for records in target_records.values())
+            ):
+                findings.append(blocker("adaptation_ledger_changed_path", "changed_paths must name captured files in every source and target manifest", local_name))
+        if index < len(expected_tuples) and expected_tuples[index][1] in REFERENCE_HYGIENE_CODES:
+            resolved_reference_findings.append(dict(zip(("severity", "code", "message", "path"), expected_tuples[index])))
+    valid = not findings and not unsafe and bool(expected_tuples)
+    return valid, findings, resolved_reference_findings if valid else []
+
+
 def audit_frontmatter_receipts(
     registry: dict[str, Any],
     collection: dict[str, Any],
     upstream_bindings: dict[str, dict[str, Any]],
     candidate_manifests: dict[str, list[dict[str, Any]]],
     target_manifests: dict[str, dict[str, list[dict[str, Any]]]],
+    candidate_inspections: dict[str, dict[str, Any]] | None = None,
 ) -> list[Finding]:
     findings: list[Finding] = []
     references = collection.get("frontmatter_receipts")
@@ -3612,9 +4064,17 @@ def audit_frontmatter_receipts(
         if not isinstance(by_surface, dict):
             findings.append(blocker("frontmatter_receipt_map", "Skill receipt map is missing", f"{collection['id']}/{name}"))
             continue
+        candidate_evidence = (candidate_inspections or {}).get(name, {})
+        captured_frontmatter = candidate_evidence.get("frontmatter")
+        hygiene_ledger, _ = _load_reference_hygiene_artifact(collection.get("adaptation_diff"))
+        requires_upstream = (
+            candidate_evidence.get("frontmatter_declares_version") is True
+            or (isinstance(captured_frontmatter, dict) and "version" in captured_frontmatter)
+        ) or hygiene_ledger is not None
+        quarantine_schemas = {"upstream"} if requires_upstream else {"common", "claude", "upstream"}
         surfaces = {
             "quarantine": (
-                {"common", "claude"},
+                quarantine_schemas,
                 str(upstream_bindings.get(name, {}).get("upstream_name", "")),
                 candidate_manifests.get(name, []),
                 {
@@ -3658,6 +4118,40 @@ def audit_frontmatter_receipts(
                 or receipt.get("findings") != []
             ):
                 findings.append(blocker("frontmatter_receipt_binding", "Full validator receipt does not bind the captured SKILL.md and expected platform/name", f"{collection['id']}/{name}:{surface}"))
+            if receipt.get("target") == "upstream":
+                values = receipt.get("values")
+                if (
+                    not isinstance(values, dict)
+                    or set(values) - UPSTREAM_FRONTMATTER_KEYS
+                    or not isinstance(values.get("name"), str)
+                    or not isinstance(values.get("description"), str)
+                    or not values.get("description")
+                    or (
+                        "version" in values
+                        and (
+                            not isinstance(values.get("version"), str)
+                            or SEMVER_RE.fullmatch(values["version"]) is None
+                        )
+                    )
+                ):
+                    findings.append(
+                        blocker(
+                            "upstream_frontmatter_schema",
+                            "Quarantine upstream receipts may contain only name, description, and semver version",
+                            f"{collection['id']}/{name}:{surface}",
+                        )
+                    )
+                if requires_upstream and (
+                    receipt.get("frontmatter_sha256") != candidate_evidence.get("frontmatter_sha256")
+                    or values != captured_frontmatter
+                ):
+                    findings.append(
+                        blocker(
+                            "upstream_frontmatter_binding",
+                            "Upstream receipt must bind the complete captured frontmatter and digest",
+                            f"{collection['id']}/{name}:{surface}",
+                        )
+                    )
     return findings
 
 
@@ -3688,10 +4182,40 @@ def audit_collection_receipts(
             upstream_bindings,
             candidate_manifests,
             target_manifests,
+            candidate_inspections,
         )
     )
-    _, adaptation_findings = _load_bound_artifact(collection.get("adaptation_diff"), "adaptations")
+    ledger, adaptation_findings = _load_reference_hygiene_artifact(collection.get("adaptation_diff"))
     findings.extend(adaptation_findings)
+    if ledger is not None:
+        for name in sorted(collection.get("skills", [])):
+            inspection = candidate_inspections.get(name, {})
+            valid, hygiene_findings, resolved = _reference_hygiene_validation(
+                ledger,
+                collection,
+                name,
+                upstream_bindings.get(name, {}),
+                candidate_hashes.get(name),
+                candidate_manifests.get(name, []),
+                target_hashes.get(name, {}),
+                target_manifests.get(name, {}),
+                inspection.get("raw_findings", inspection.get("blocking_findings", [])),
+                set(inspection.get("full_yaml_resolved_codes", [])),
+                reference_targets=inspection.get("reference_targets"),
+            )
+            findings.extend(hygiene_findings)
+            if valid and (
+                inspection.get("adaptation_diff") != collection.get("adaptation_diff")
+                or not isinstance(inspection.get("raw_findings"), list)
+                or inspection.get("resolved_reference_findings") != resolved
+            ):
+                findings.append(
+                    blocker(
+                        "adaptation_ledger_evidence",
+                        "Static inspection evidence must bind the exact hygiene ledger reference",
+                        f"{collection['id']}/{name}",
+                    )
+                )
     safety, safety_findings = _load_receipt(collection["safety_receipt"])
     findings.extend(safety_findings)
     if safety is not None:
@@ -4222,8 +4746,66 @@ def _inspect_markdown_target(record_path: str, target: str, known_files: set[str
     return None
 
 
-def inspect_candidate(path: Path, quarantine_root: Path) -> tuple[dict[str, Any], list[Finding]]:
-    tree = scan_quarantined_tree(path, quarantine_root)
+def _review_content_findings(
+    records: list[FileRecord],
+    *,
+    root: str,
+) -> list[Finding]:
+    findings: list[Finding] = []
+    known_files = {record.path for record in records}
+    for record in records:
+        lower_path = record.path.lower()
+        suffix = Path(lower_path).suffix
+        if Path(lower_path).name == ".gitmodules":
+            findings.append(blocker("git_submodule", "Git submodules are not accepted", record.path))
+        if suffix in ARCHIVE_SUFFIXES:
+            findings.append(blocker("archive", "Nested archive requires separate review", record.path))
+        if b"\x00" in record.data:
+            findings.append(blocker("binary_file", "Unreviewed binary content", record.path))
+            continue
+        try:
+            text = record.data.decode("utf-8", "strict")
+        except UnicodeDecodeError as exc:
+            findings.append(blocker("non_utf8_content", str(exc), record.path))
+            continue
+        if BIDI_OR_ZERO_WIDTH.search(text):
+            findings.append(blocker("target_invisible_control", "Approved review and runtime targets cannot contain bidi or zero-width control characters", f"{root}/{record.path}"))
+        for code, pattern, message in DANGEROUS_PATTERNS:
+            if pattern.search(text):
+                findings.append(blocker(code, message, record.path))
+        for url in sorted(set(URL_RE.findall(text))):
+            findings.append(advisory("external_url", f"External reference: {url}", record.path))
+        if suffix == ".md":
+            targets = [match.group(1) for match in MARKDOWN_LINK.finditer(text)]
+            targets.extend(match.group(1) for match in MARKDOWN_REFERENCE.finditer(text))
+            for target in targets:
+                link_finding = _inspect_markdown_target(record.path, target, known_files)
+                if link_finding:
+                    findings.append(link_finding)
+        if Path(lower_path).name == "package.json":
+            _inspect_package_json(record, findings)
+    return findings
+
+
+def _target_bidi_findings(records: list[FileRecord], root: str) -> list[Finding]:
+    findings: list[Finding] = []
+    for record in records:
+        try:
+            text = record.data.decode("utf-8", "strict")
+        except UnicodeDecodeError:
+            continue
+        if BIDI_OR_ZERO_WIDTH.search(text):
+            findings.append(
+                blocker(
+                    "target_invisible_control",
+                    "Approved review and runtime targets cannot contain bidi or zero-width control characters",
+                    f"{root}/{record.path}",
+                )
+            )
+    return findings
+
+
+def _inspect_candidate_tree(path: Path, tree: TreeResult) -> tuple[dict[str, Any], list[Finding]]:
     findings = list(tree.findings)
     skill_record = next((record for record in tree.files if record.path == "SKILL.md"), None)
     frontmatter: dict[str, Any] = {}
@@ -4268,18 +4850,11 @@ def inspect_candidate(path: Path, quarantine_root: Path) -> tuple[dict[str, Any]
             findings.append(blocker("non_utf8_content", str(exc), record.path))
             continue
         if BIDI_OR_ZERO_WIDTH.search(text):
-            findings.append(
-                advisory(
-                    "candidate_invisible_control",
-                    "Bidi or zero-width control character must be removed from every approved target",
-                    record.path,
-                )
-            )
+            findings.append(advisory("candidate_invisible_control", "Bidi or zero-width control character must be removed from every approved target", record.path))
         for code, pattern, message in DANGEROUS_PATTERNS:
             if pattern.search(text):
                 findings.append(blocker(code, message, record.path))
-        urls = sorted(set(URL_RE.findall(text)))
-        for url in urls:
+        for url in sorted(set(URL_RE.findall(text))):
             findings.append(advisory("external_url", f"External reference: {url}", record.path))
         if suffix == ".md":
             targets = [match.group(1) for match in MARKDOWN_LINK.finditer(text)]
@@ -4306,6 +4881,10 @@ def inspect_candidate(path: Path, quarantine_root: Path) -> tuple[dict[str, Any]
         "security_guarantee": "Static findings only; no findings is not a safety proof.",
     }
     return payload, findings
+
+
+def inspect_candidate(path: Path, quarantine_root: Path) -> tuple[dict[str, Any], list[Finding]]:
+    return _inspect_candidate_tree(path, scan_quarantined_tree(path, quarantine_root))
 
 
 def _json_safe_yaml_findings(value: Any, path: str) -> list[Finding]:
@@ -4339,22 +4918,23 @@ def _validate_frontmatter_bytes(
     surface: dict[str, str] | None = None,
 ) -> tuple[dict[str, Any], list[Finding]]:
     findings: list[Finding] = []
-    if len(raw) > 64 * 1024:
+    if target == "upstream" and (surface is None or surface.get("kind") != "quarantine"):
+        finding = blocker(
+            "upstream_target_surface",
+            "The upstream frontmatter target is permitted only for quarantine captures",
+            display_path,
+        )
+        return {"command": "validate-frontmatter", "status": "blocked"}, [finding]
+    if target != "upstream" and len(raw) > 64 * 1024:
         findings.append(blocker("frontmatter_file_too_large", "SKILL.md exceeds 64 KiB adapter limit", display_path))
         return {"command": "validate-frontmatter", "status": "blocked"}, findings
-    try:
-        import yaml  # type: ignore[import-not-found]
-    except ImportError:
-        findings.append(blocker("pyyaml_missing", "Run with pinned pyyaml==6.0.2", display_path))
-        return {"command": "validate-frontmatter", "status": "dependency-missing"}, findings
-    if getattr(yaml, "__version__", "") != "6.0.2":
-        findings.append(blocker("pyyaml_version", f"Expected PyYAML 6.0.2, got {getattr(yaml, '__version__', 'unknown')}"))
-        return {"command": "validate-frontmatter", "status": "dependency-mismatch"}, findings
-
     try:
         text = raw.decode("utf-8", "strict")
     except UnicodeDecodeError as exc:
         findings.append(blocker("frontmatter_non_utf8", str(exc), display_path))
+        return {"command": "validate-frontmatter", "status": "blocked"}, findings
+    if len(raw) > MAX_FILE_BYTES:
+        findings.append(blocker("file_too_large", f"File exceeds {MAX_FILE_BYTES} bytes", display_path))
         return {"command": "validate-frontmatter", "status": "blocked"}, findings
     lines = text.splitlines()
     if not lines or lines[0] != "---":
@@ -4365,6 +4945,24 @@ def _validate_frontmatter_bytes(
     except ValueError:
         findings.append(blocker("frontmatter_unclosed", "Frontmatter closing --- is missing", display_path))
         return {"command": "validate-frontmatter", "status": "blocked"}, findings
+    segments = text.splitlines(keepends=True)
+    header_text = "".join(segments[1:end]) if len(segments) >= end else ""
+    for line_ending in ("\r\n", "\n", "\r"):
+        if header_text.endswith(line_ending):
+            header_text = header_text[: -len(line_ending)]
+            break
+    header_bytes = header_text.encode("utf-8")
+    if len(header_bytes) > 64 * 1024:
+        findings.append(blocker("frontmatter_file_too_large", "YAML header exceeds 64 KiB adapter limit", display_path))
+        return {"command": "validate-frontmatter", "status": "blocked"}, findings
+    try:
+        import yaml  # type: ignore[import-not-found]
+    except ImportError:
+        findings.append(blocker("pyyaml_missing", "Run with pinned pyyaml==6.0.2", display_path))
+        return {"command": "validate-frontmatter", "status": "dependency-missing"}, findings
+    if getattr(yaml, "__version__", "") != "6.0.2":
+        findings.append(blocker("pyyaml_version", f"Expected PyYAML 6.0.2, got {getattr(yaml, '__version__', 'unknown')}"))
+        return {"command": "validate-frontmatter", "status": "dependency-mismatch"}, findings
     body = "\n".join(lines[1:end])
 
     class DuplicateSafeLoader(yaml.SafeLoader):
@@ -4449,7 +5047,16 @@ def _validate_frontmatter_bytes(
     if not isinstance(values, dict):
         findings.append(blocker("frontmatter_mapping", "Frontmatter must be a mapping", display_path))
         values = {}
-    allowed = COMMON_FRONTMATTER_KEYS if target in {"common", "codex"} else CLAUDE_FRONTMATTER_KEYS
+    allowed_by_target = {
+        "common": COMMON_FRONTMATTER_KEYS,
+        "codex": COMMON_FRONTMATTER_KEYS,
+        "claude": CLAUDE_FRONTMATTER_KEYS,
+        "upstream": UPSTREAM_FRONTMATTER_KEYS,
+    }
+    allowed = allowed_by_target.get(target)
+    if allowed is None:
+        findings.append(blocker("frontmatter_target", f"Unsupported frontmatter target: {target}", display_path))
+        allowed = set()
     non_string_keys = [repr(key) for key in values if not isinstance(key, str)]
     if non_string_keys:
         findings.append(blocker("frontmatter_key_type", f"Frontmatter keys must be strings: {non_string_keys}", display_path))
@@ -4464,6 +5071,10 @@ def _validate_frontmatter_bytes(
     if isinstance(values.get("name"), str):
         if values["name"] != expected_dir or not NAME_RE.fullmatch(values["name"]):
             findings.append(blocker("frontmatter_name", f"name must match directory {expected_dir}", display_path))
+    if target == "upstream" and "version" in values:
+        version = values.get("version")
+        if not isinstance(version, str) or SEMVER_RE.fullmatch(version) is None:
+            findings.append(blocker("frontmatter_version", "upstream version must be a semver string", display_path))
     payload = {
         "command": "validate-frontmatter",
         "status": "blocked" if has_blockers(findings) else "validated",
@@ -4521,6 +5132,24 @@ def validate_frontmatter_full(
         finding = blocker(
             "frontmatter_surface_escape",
             "Path must use the canonical quarantine or review-stage layout configured in the registry",
+            str(absolute),
+        )
+        return {"command": "validate-frontmatter", "status": "blocked", "findings": [asdict(finding)]}, [finding]
+    if surface is None:
+        findings = list(tree.findings)
+        if not findings:
+            findings = [
+                blocker(
+                    "frontmatter_surface_escape",
+                    "Path must use a canonical quarantine or review-stage layout",
+                    str(absolute),
+                )
+            ]
+        return {"command": "validate-frontmatter", "status": "blocked", "findings": [asdict(item) for item in findings]}, findings
+    if target == "upstream" and surface.get("kind") != "quarantine":
+        finding = blocker(
+            "upstream_target_surface",
+            "The upstream frontmatter target is permitted only for quarantine captures",
             str(absolute),
         )
         return {"command": "validate-frontmatter", "status": "blocked", "findings": [asdict(finding)]}, [finding]
@@ -5084,7 +5713,7 @@ def build_parser() -> argparse.ArgumentParser:
     validate = subparsers.add_parser("validate-frontmatter", help="Run the pinned full YAML adapter")
     validate.add_argument("path", type=Path)
     validate.add_argument("--registry", type=Path, default=DEFAULT_REGISTRY)
-    validate.add_argument("--target", choices=("common", "codex", "claude"), default="common")
+    validate.add_argument("--target", choices=("common", "codex", "claude", "upstream"), default="common")
     validate.add_argument("--json", action="store_true", dest="json_output")
 
     sources = subparsers.add_parser("sources", help="List or check watched sources")
