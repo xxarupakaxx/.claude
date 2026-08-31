@@ -46,8 +46,9 @@ ${MEMORY_DIR}/memory/YYMMDD_*/
 | ファイル | 抽出する情報 |
 |---------|------------|
 | `05_log.md` | ユーザー指示、実施内容、発見事項（**最重要**） |
-| `30_plan.md` | 計画の概要、タスク一覧 |
-| `40_progress.md` | 進捗状況、完了/未完了タスク |
+| `30_plan.html` | 計画の本文、Task、進捗、依存、acceptance |
+| `30_plan.md` | HTMLがない既存taskの互換計画資料（検索のみ） |
+| `40_progress.md` | 既存Markdown計画の進捗、またはHTML計画の任意の作業メモ |
 | `80_review.md` | レビュー結果、指摘事項 |
 | `99_history.md` | 意思決定、後回し判断 |
 

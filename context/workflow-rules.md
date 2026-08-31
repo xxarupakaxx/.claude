@@ -11,7 +11,7 @@ Phase 0でrouteを一つ選び05_log.mdへ記録する。
 | route | 適用 | 必須の表示・保存 |
 |---|---|---|
 | log-only | 既知手順を一回の実行・検証で閉じる | 05_log.md。30_plan、HTML、Evidence Bundleは要求しない |
-| roadmap | 設計判断、複数Task、依存、継続共有、引継ぎがある | 30_plan.md → 共通sync → roadmap.html |
+| roadmap | 設計判断、複数Task、依存、継続共有、引継ぎがある | 30_plan.html → 共通sync → roadmap.html |
 | explicit-roadmap | ユーザーが計画またはRoadmap表示を明示 | roadmapと同じ。表示を省略しない |
 
 ファイル数だけでrouteを決めない。条件付きgate（Fast Track、Blueprint、Goal、UI/UX、HTML）は context/workflow-details.md を発火時だけ読む。log-onlyでもPhase記録、安全条件、fresh検証は省略しない。
@@ -31,7 +31,11 @@ persistent Goal、/team-run、Goal toolを使う場合は、baselineと観測可
 
 ### Phase 2: 計画
 
-roadmap routeでは30_plan.mdをLLMと人の正本として保存する。Taskごとに目的、変更対象、実装、成果物、検証、acceptance ID、blockedBy、source、write scopeを対応させる。roadmap.htmlとsnapshotは既存parser / generatorの派生viewであり、LLMや手編集で作らない。
+roadmap routeでは、UTF-8の30_plan.htmlをLLMと人が共有する計画の正本として保存する。本文をsemantic HTMLで直接管理し、Taskの進捗・依存・acceptanceも同じHTMLへ結ぶ。新規30_plan.mdは作成しない。本文をJSONや隠れたMarkdownへ重複保存しない。Taskごとに目的、変更対象、実装、成果物、検証、acceptance ID、blockedBy、source、write scopeを対応させる。roadmap.htmlとsnapshotは既存parser / generatorの派生viewであり、LLMや手編集で作らない。
+
+既存taskは30_plan.htmlがない場合だけ30_plan.mdを互換入力として読める。HTMLが存在するtaskではHTMLだけを正本とし、不正なHTMLをMDで隠さない。HTML形式では40_progress.mdを任意の作業メモとして残せるが、計画の進捗を上書きしない。正本の選択は明示workspace rootとtaskに束縛したread-onlyの共通resolverだけで行い、path traversal、symlink、hidden/secret、binary、過大入力は拒否する。
+
+表示完了の4層確認と、生成・公開・Closeの境界はskills/viewing-plans/SKILL.mdへ集約する。
 
 Phase 2 artifactとDelegation Decisionを保存した後、Claudeからは次の共有CLIを実行する。
 

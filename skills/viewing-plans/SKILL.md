@@ -1,73 +1,67 @@
 ---
 name: viewing-plans
-description: 計画・ログ・Roadmapを既存HTMLと補助Viewerで確認する。Roadmap適格性に応じ、短い保守は05_log.mdだけで追跡する。
-allowed-tools: Read, mcp__workflow-html-app__view-plan, mcp__workflow-html-app__view-log, mcp__workflow-html-app__view-verification
+description: 計画・ログ・Roadmapを通常のブラウザで確認する。Roadmap適格性に応じ、短い保守は05_log.mdだけで追跡する。
+allowed-tools: Read
 ---
 
 # Viewing Plans
 
-このSkillは計画を作るSkillではなく、保存済みartifactを安全に表示する補助である。roadmap.htmlは人向けの既定入口、30_plan.mdは人とLLMが読む正本、roadmap-snapshot.jsonは既存parserから作る派生viewである。LLMにHTML全文を書かせず、JSONやHTMLを手で補正しない。
+このSkillは保存済み計画を安全に表示する補助である。`30_plan.html`が人とLLMの共有する計画の正本、`roadmap.html`と`roadmap-snapshot.json`は共通parser/generatorによる派生表示である。新しい計画で`30_plan.md`を作らない。本文をHTMLで直接管理し、派生表示のCSS/JavaScriptやJSONを手で補正しない。
 
-Roadmapは読み通せるHTML計画書を初期画面にする。目的、変更前後、全Taskの実装内容、対象fileとsource根拠、検証、依存図を本文に表示し、重要情報をdrawer・tab・折り畳みに隠さない。Current Taskと次の作業は短く示し、同じ状態を多数のcardへ繰り返さない。正本へ戻れない関係、本文にない完了・担当・期限・因果を表示側で補作しない。
+本文、変更前後、実装内容、source根拠、検証、依存図を初期表示する。重要情報をdrawerやtabに隠さず、本文にない完了・担当・期限・因果を補わない。
 
-## Roadmap適格性ゲート
+## Routeと実行者
 
-Phase 0で表を上から順に評価し、最初に一致した結果を05_log.mdへ roadmap_route: <結果>：<理由> の形で記録する。
-
-| route | 条件 | 動作 |
+| route | 条件 | 成果物 |
 |---|---|---|
-| `explicit-roadmap` | ユーザーがRoadmapまたは計画書Viewを明示 | 30_plan.md、sync、roadmap.htmlを作り表示 |
-| `roadmap` | 設計判断、複数案、依存する複数Task、継続共有、引継ぎがある | 30_plan.md、sync、roadmap.htmlを作り表示 |
-| `log-only` | 手順と完了条件が既知で一回の実行・検証に閉じる | 05_log.mdだけ。30_plan.mdとroadmap.htmlを作らない |
+| explicit-roadmap | 計画書またはRoadmap表示の明示要求 | 30_plan.html → sync → roadmap.html |
+| roadmap | 設計判断、複数工程、依存、継続共有がある | 同上 |
+| log-only | 既知手順を一回の実行・検証で閉じる | 05_log.mdのみ |
 
-競合解消、単発再実行、形式修正、誤字修正、設定同期はlog-onlyを既定とする。ファイル数だけを理由にRoadmapへ昇格させない。仕様や振る舞いの選択、複数の解消案、依存する複数Taskが現れた場合はroadmapへ昇格する。ゲートは表示の要否だけを決め、Phase記録、検証、安全条件、承認、コード変更時のCodemap preflightは省略しない。
+routeはfile数で選ばない。詳細はcontext/workflow-rules.mdを使う。このSkillの権限はReadだけであり、計画の保存・sync・ブラウザ起動は呼出元のleadが既存権限で行う。
 
 <!-- viewer-codemap-preflight:start -->
-コード変更では、最初のedit前にCodemap preflightを実行する。missing / stale / mismatch / insufficientなら context/codemap.md に従いtask-local artifactをrefreshしてから編集する。log-onlyでもfreshnessだけは確認し、Roadmapを生成しない。
+コード変更では最初のedit前にCodemap preflightを実行する。missing / stale / mismatch / insufficientならcontext/codemap.mdに従ってrefreshする。log-onlyでもsource freshnessは確認する。
 <!-- viewer-codemap-preflight:end -->
 
 ## Workflow
 
-1. MEMORY_DIR/memory/<task>を、session IDまたはthread IDの完全一致で特定する。最新時刻だけでtaskを選ばない。
-2. routeに応じて、00_spec.md、20_survey.md、30_plan.md、40_progress.md、80_review.md、90_verification.md、05_log.mdを読む。不要なfileを生成して読み込み量を増やさない。
-3. roadmap / explicit-roadmapでは、Phase 2 artifactとDelegation Decisionを保存した後、trusted local executorでsyncする。Phase 3/4/5も同じ入口を使う。ログ専用ではsyncの検査・skip結果だけを記録する。
-4. syncが検査・生成・atomic publishしたroadmap.htmlの返却pathを、成功後に利用者の入口として開く。invalid renderで既存HTMLを上書きしない。別generatorを二重起動しない。
-5. 必要なときだけPlan / Log / VerificationのMCP Viewerを使う。MCP unavailableやtext fallbackをHTML UI表示済みと扱わず、05_log.mdへ記録する。
-
-Syncの共通形は次のとおりである。
+1. taskをsession/thread IDの完全一致で特定する。更新時刻や似たtitleだけで選ばない。
+2. 共通source resolverで正本を選ぶ。HTMLがあれば唯一の入力とし、不正・symlink等を旧MDで隠さない。HTMLがない既存taskだけ30_plan.mdをlegacyとして読める。
+3. 必要な計画本文・Task・根拠だけをtask-contextから読む。会話全文、HTMLの装飾・runtime code全文、不要なartifactをcontextへ投入しない。
+4. Phase artifactとDelegation Decisionを保存して、trusted local executorから同期する。
 
     python3 ~/.codex/scripts/sync-roadmap.py TASK --workspace-root WORKSPACE --memory-root MEMORY/memory --run-id RUN --phase 2
 
-phaseは2、3、4、5のいずれかで、--dry-runはread-onlyである。主経路のsyncが失敗したとき、旧generatorや別CLIへ黙ってfallbackしない。Claudeは ~/.codex/scripts/sync-roadmap.py を明示入口として使い、詳細はClaudeのcommands/lfg.mdを参照する。
+phaseは2/3/4/5。同じtask/root/run-idを継続して使い、主経路失敗を旧generatorで隠さない。Claudeもこの共通CLIを使う。
 
-## Roadmap data contract
+5. 検査済みroadmap.htmlを通常ブラウザで一度開く。以後は同じfileを更新し、tabやViewerを自動追加しない。workflow-html-app MCPは使わない。
 
-30_plan.mdの各Taskは、仕様、目的、変更対象、実装根拠、実装、成果物、検証、acceptance ID、blockedBy、write scopeを持つ。実装根拠の書式は repo:<relative-path>#<anchor-or-Lx-Ly> とし、生成時点の実sourceを最大限必要な範囲だけ取得する。bare pathや `変更対象` からsource参照を推測しない。
+watchと複数taskのHubは横断確認を明示した場合だけ使う。ログと検証は同じページで確認し、必要な正本へのリンクを渡す。
 
-Plan解釈は scripts/roadmap_plan_contract.py に一本化する。schemaVersion 2のtasks / edges / progress / diagnostics / source lineと、05_log.md等から明示されたtimelineを別々に表示する。v2が存在するのに壊れているsnapshotはlegacy表示で隠さず、errorまたは同期停止にする。v1 fallbackはplanを持たない古いsnapshotだけに限る。
+## HTML正本の契約
 
-各Taskの `実装` を計画、生成元から解決したsource抜粋を生成時点の実sourceとして表示する。実装図がある場合は、planに明示されたnodeとedgeだけをinline SVGで描く。図の正本はSVGで、MarkdownへMermaidを生成しない。UI変更Taskは `UI変更: yes` と `ui-preview-json` 1ブロックを同じTaskへ置き、Before（固定source）・After（計画案）・uncertaintyを分離する。詳細schemaとpreview authoringは `~/.codex/skills/viewing-plans/references/ui-change-preview.md` と context/memory-file-formats.md を参照する。
+具体的なHTML形式はcontext/memory-file-formats.mdと共通parserを参照する。背景・目的・到達点・全体の進め方を先に示し、Taskは成果物や判断のまとまりにする。fileごとの細分化をしない。
 
-UI変更Taskでは、計画を作るLLM自身が対象sourceを確認し、計画開始時点の `HEAD` を40桁commit SHAへ固定してBefore / Afterを記録する。ユーザーへmetadata入力やfile importを求めない。sourceを確認できないBeforeは補作せず `unverified` とし、previewを作れない計画は同期を通さない。
+見える本文を正本とし、steps・status・blockedBy・acceptance・sourceを同じTaskへ結ぶ。同fileのJSONはUI preview/diagramの機械用情報に限定し、本文を重複させない。新HTMLの進捗はHTML自身が所有し、40_progress.mdで上書きしない。raw UTF-8 bytesからsource hashを計算する。
 
-Code Mapはfreshなcodemap.json / codemap.lockだけを本文内に図と根拠の一覧で表示する。roadmapのmtimeでfreshnessを代用しない。source previewはallowlist内の相対pathに限定し、hidden / secret / 個人ノート / symlink / binary / 非UTF-8 / oversized fileを表示しない。Markdownとuser contentはescape / sanitizeする。
+UI変更のBeforeは実sourceと40桁commit SHA、Afterは計画、unknownは未確認事項として分離する。ユーザーにmetadata入力を求めず、LLM自身が対象sourceから記録する。詳細は~/.codex/skills/viewing-plans/references/ui-change-preview.md。実コードは明示repo参照だけから取得し、変更対象名から推測しない。
 
-## 自動・手動の起動
+Code Mapはfreshなcodemap.json / codemap.lockだけを本文で表示する。roadmapのmtimeでfreshnessを代用しない。invalid v2や不正なHTML本文をlegacy Task抽出で隠さない。旧MD-only taskと古いsnapshotの互換読込だけは残す。
 
-`explicit-roadmap`または`roadmap`では、Phase 2完了後にsyncが生成・検査したRoadmapを表示し、30_plan.mdをPlan Viewerで開く。Phase 3/4更新後は同じsyncで再生成し、Phase 5では05_log.mdをLog Viewer、90_verification.mdがあればVerification Viewerで開く。watchは必要な場合だけ使う。
+## 表示完了の確認
 
-手動トリガーは「計画をビューアで見たい」「HTMLで確認したい」「ロードマップを見たい」「ログをビューアで見たい」、または /viewing-plans である。log-onlyで手動表示を明示された場合はexplicit-roadmapへ昇格する。
+表示の完了判定は次の層を分ける。
 
-roadmap Task Hubは横断確認を明示した場合だけ使う補助入口である。通常の計画書生成でHubや追加tabを自動起動しない。既存syncへ明示rootを渡す。選択は完全一致のsession / thread IDを優先し、path・title・更新時刻だけで自動確定しない。command引数、tool output全文、古い会話context、secretを表示用modelへ渡さない。
+- **機械判定**: parser、schema、source hash、link、sync、static gateの結果。
+- **内容確認**: 目的、Task、acceptance、依存、未完了、正本へ戻れる根拠を読める形で確認した結果。
+- **利用可能性**: 生成されたHTMLのpath、ブラウザ起動、表示、リンク到達を実際に確認した結果。
+- **確認導線**: 利用者が次に判断・操作する場所と、未確認事項。機械判定だけで理解済み・実行可能・完了とは扱わない。
+
+HTMLの生成、ローカルでの表示、外部公開、TaskやIssueのCloseは別の状態である。表示しただけで公開・Close・ユーザー確認済みへ進めず、未確認のsourceやリンクは未確認として残す。既存承認の対象と影響を変えない表示確認に、段階ごとの一律な再承認を追加しない。公開、状態変更、対象拡大が必要な場合だけ、その具体的な操作を別の承認境界へ戻す。
 
 ## Security
 
-MCP Appsは対応hostでtext/html;profile=mcp-app、宣言済みresource URI、standard transportを使い、非対応hostではtextへ退化する。CSPで外部loadを禁止し、Markdownとuser contentをsanitizeする。コメント送信など外部writeはこのSkillでは承認しない。
+source previewはallowlist内の相対pathに限定し、secret・個人ノート・symlink・binary・非UTF-8・過大fileを表示しない。HTML本文も未信頼データとして許可要素・属性だけを表示し、script、event handler、外部loadを拒否する。ローカルHTMLはMCP接続や親windowとの通信なしで開き、CSPで外部loadを禁止する。新しい図の正本はSVG。外部writeや追加権限をこのSkillでは承認しない。
 
-関連:
-- context/workflow-rules.md
-- context/memory-file-formats.md
-- context/agent-team-routing.md
-- context/codemap.md
-- context/html-artifact-contract.md と config/html-surfaces.json
-- ~/.codex/skills/viewing-plans/references/ui-change-preview.md
+関連: context/workflow-rules.md、context/memory-file-formats.md、context/codemap.md、context/html-artifact-contract.md、config/html-surfaces.json、~/.codex/skills/viewing-plans/references/ui-change-preview.md。

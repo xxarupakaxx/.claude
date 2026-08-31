@@ -91,7 +91,7 @@
       "relative_path": "autonomous-loops",
       "resolved_name": "autonomous-loops",
       "root_id": "claude",
-      "tree_sha256": "f241dad239ff2b679796d059989b44cf186dc6d7ea35e34de5ab9c7a3675cfc8"
+      "tree_sha256": "b2a1857f33a92f19928524a12047a655ae480deb35161e30334f2c076d544416"
     },
     {
       "classification": "legacy-active",
@@ -253,7 +253,7 @@
       "relative_path": "creating-adr",
       "resolved_name": "creating-adr",
       "root_id": "claude",
-      "tree_sha256": "a5d3b88656e9076445c910c3075294fd79cd42750f73aa3f4a2d30864dd17d47"
+      "tree_sha256": "eb8966ed75425d15d037eb30c3968d6a48a32c0f556615be87b67c1cf217d15c"
     },
     {
       "classification": "active",
@@ -307,7 +307,7 @@
       "relative_path": "deepening-plan",
       "resolved_name": "deepening-plan",
       "root_id": "claude",
-      "tree_sha256": "050f0ea369e7c83cca729e9f070d2e398c9af0e9bd2847033cb9011bf6da24cb"
+      "tree_sha256": "76a794bc2d19c7108baf18eaafce5c233f8c9eba14a9c3a2413714989f2ce0ae"
     },
     {
       "classification": "preexisting-unclassified",
@@ -967,7 +967,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "claude",
-      "tree_sha256": "df9b931fbdd5dbe99c0a49aa43f0757d7aa883314fe26ef44a49bc4daa681f73"
+      "tree_sha256": "90ebc4663c91e67dbf500b5000fd62048594ad55e9adbb71dddb3203d7229a8b"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1084,7 +1084,7 @@
       "relative_path": "summarizing-daily-work",
       "resolved_name": "summarizing-daily-work",
       "root_id": "claude",
-      "tree_sha256": "17315c57a40311a073369b99c89f532a561220b3da59241b2ae51210f8d8b9b8"
+      "tree_sha256": "d25667377e04ee719df64cb95704aa605747498d1a24e298e2b15dcf1c397065"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1192,7 +1192,7 @@
       "relative_path": "viewing-plans",
       "resolved_name": "viewing-plans",
       "root_id": "claude",
-      "tree_sha256": "6db2e81988e482aac1bce88fce56d502e3c24431bbf04506132212a17711c874"
+      "tree_sha256": "c73fb1b2b0c8f0f196177d7bc63f0943258ebf8d3ef6b7877ba9db5a62cbe783"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1435,7 +1435,7 @@
       "relative_path": "autonomous-loops",
       "resolved_name": "autonomous-loops",
       "root_id": "codex",
-      "tree_sha256": "c78b34d97dc79d31d0432b0aa5037097c86d5e664997d4c61d91633292a4fcce"
+      "tree_sha256": "3a1bc27f17a3f6fea7f2800f91f8b3399611c6d8f690f9d7efbd2238b2bbf57c"
     },
     {
       "classification": "legacy-active",
@@ -1633,7 +1633,7 @@
       "relative_path": "creating-adr",
       "resolved_name": "creating-adr",
       "root_id": "codex",
-      "tree_sha256": "a5d3b88656e9076445c910c3075294fd79cd42750f73aa3f4a2d30864dd17d47"
+      "tree_sha256": "eb8966ed75425d15d037eb30c3968d6a48a32c0f556615be87b67c1cf217d15c"
     },
     {
       "classification": "active",
@@ -1687,7 +1687,7 @@
       "relative_path": "deepening-plan",
       "resolved_name": "deepening-plan",
       "root_id": "codex",
-      "tree_sha256": "de5dbf8713a0d933c2a3ba66198d8cb71af9c8b449da77a6073c1eb2691de62d"
+      "tree_sha256": "92d7e4b04c369240be186463b9f2acfb5eb3b12feb1aadf0f3e92e0ca2707620"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2428,7 +2428,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "codex",
-      "tree_sha256": "4046405245dfe714e5fe727e3f8ec4d6289bc919181de771eae2b268e1ad7fe0"
+      "tree_sha256": "1688d846e0b04b07c5ceb1d2864ef7a178ab09f7226b803f5ac7d0592fa9c62f"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2545,7 +2545,7 @@
       "relative_path": "summarizing-daily-work",
       "resolved_name": "summarizing-daily-work",
       "root_id": "codex",
-      "tree_sha256": "ada3b63d82596aeb44f9b0a479efe201a87d7c4c7c8f9af29ae081423404e21e"
+      "tree_sha256": "1e22d1ecb39f38757e4c2582a1d1c426cabef89e20e6e434ddb4fb53aab50e65"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2581,7 +2581,7 @@
       "relative_path": "team-run",
       "resolved_name": "team-run",
       "root_id": "codex",
-      "tree_sha256": "8a9adffde4fe6b6f296865b11d5d63a958ef1ee6b1c689f88ad7ccfdea252b12"
+      "tree_sha256": "b8af80365e016b8947e1a2e0ab31c05991c9014105b7ead4f174622ebe88e8ff"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2671,7 +2671,7 @@
       "relative_path": "viewing-plans",
       "resolved_name": "viewing-plans",
       "root_id": "codex",
-      "tree_sha256": "b25f285821c3138998039daa29ec517040abc64ddfd0a97455930568e3de8dab"
+      "tree_sha256": "c73fb1b2b0c8f0f196177d7bc63f0943258ebf8d3ef6b7877ba9db5a62cbe783"
     },
     {
       "classification": "preexisting-unclassified",

@@ -29,7 +29,7 @@ description: "自律ループパターン集。シーケンシャルパイプラ
 ```markdown
 Pipeline: feature-development
 Steps:
-  1. plan: 設計 → 30_plan.md
+  1. plan: 設計 → 30_plan.html
   2. implement: 実装 → コード変更
   3. test: テスト → テスト結果
   4. review: レビュー → レビュー結果

@@ -98,9 +98,9 @@ description: ADR（Architecture Decision Record）を作成・更新する。技
 
 ### Step 4: 配置先の決定
 
-#### 計画段階（30_plan.md と同セッション・実装着手前）の場合
+#### 計画段階（30_plan.html と同セッション・実装着手前）の場合
 - `${MEMORY_DIR}/memory/<task>/adr/NNNN-<タイトル>.md` を優先
-- タスクメモリ内に複数 ADR を作成し、30_plan.md からリンクする
+- タスクメモリ内に複数 ADR を作成し、30_plan.html からリンクする。HTMLがない既存taskでは30_plan.mdからリンクする
 - ナンバリングはタスク内で連番（0001 から）
 - Status は `Proposed` で開始
 

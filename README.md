@@ -29,6 +29,10 @@ symlink にします。
 
 既存の `~/.agents/skills` は `~/.agents/skills.backup-YYYYMMDD-HHMMSS` に退避されます。
 
+### Roadmap計画の正本
+
+計画の正本は`30_plan.html`、共通syncによる閲覧用の表示は`roadmap.html`です。旧MDの互換読込と完了確認は`skills/viewing-plans/SKILL.md`に従います。
+
 ## 構成
 
 ```
@@ -342,7 +346,7 @@ DBマイグレーション作成を支援。
 
 1. **Phase 0: 準備** - メモリディレクトリ作成、gitignore確認、過去知見検索、Codemap preflight
 2. **Phase 1: 調査** - deepwiki/WebSearch/Context7 のいずれか必須、既存コード確認、GO/NO-GO
-3. **Phase 2: 計画** - 30_plan.md 作成、リスクに応じた検証、`## Phase 2: 計画完了` マーカー追記
+3. **Phase 2: 計画** - 30_plan.html 作成（30_plan.mdは既存taskのlegacy入力）、リスクに応じた検証、`## Phase 2: 計画完了` マーカー追記
 4. **Phase 2.5: Acceptance Criteria** - Sprint Contract 定義
 5. **Phase 3: 実装** - 調査→計画→実行→レビュー
 6. **Phase 4: 品質確認** - lint/format/typecheck/test + 独立レビュー

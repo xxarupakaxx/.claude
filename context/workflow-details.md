@@ -28,7 +28,7 @@ UI、UX、product flow、visual direction、layout、interaction model、主要c
 
 1. projectの .interface-design/system.md と対象ユーザー、課題、主要画面を確認する。
 2. 小規模は意味の異なる2案以上、大規模は原則3案を比較し、tone、layout、color、typography、depth、記憶に残る要素、密度、trade-off、riskを示す。
-3. 選択案と承認内容を05_log.mdと30_plan.mdへ保存し、Phase 2.5へ進む。比較mockupは提案artifactで、production実装の承認とは分ける。
+3. 選択案と承認内容を05_log.mdと30_plan.htmlへ保存し、Phase 2.5へ進む。比較mockupは提案artifactで、production実装の承認とは分ける。
 4. 承認後にmaterialなvisual direction、layout、interaction、componentを変える場合は再承認する。
 
 viewing-plansのUI previewはこの承認の代替ではない。source-backed Before、計画上のAfter、uncertaintyを分け、`~/.codex/skills/viewing-plans/references/ui-change-preview.md`のschemaに従う。
@@ -49,7 +49,7 @@ static gateを先に通し、要求されたbrowser profileでviewport、zoom、
 
 ## 計画を深める判断
 
-30_plan.mdを作った後、追加調査で意思決定が変わる不確実性がある場合だけdeepening-planを使う。小規模、既知手順、追加調査が計画を変えない場合は省略し、理由を05_log.mdへ残す。ADRは rules/adr-criteria.md の3条件を全て満たす判断だけを作る。
+30_plan.htmlを作った後、追加調査で意思決定が変わる不確実性がある場合だけdeepening-planを使う。小規模、既知手順、追加調査が計画を変えない場合は省略し、理由を05_log.mdへ残す。ADRは rules/adr-criteria.md の3条件を全て満たす判断だけを作る。
 
 ## Review escalation
 

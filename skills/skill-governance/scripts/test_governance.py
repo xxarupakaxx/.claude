@@ -2842,9 +2842,9 @@ class AdapterAndSurfaceTests(unittest.TestCase):
                 else root / "viewing-plans/references/ui-change-preview.md"
             )
             for required in (
-                "roadmap.htmlは人向けの既定入口",
-                "30_plan.mdは人とLLMが読む正本",
-                "roadmap-snapshot.jsonは既存parserから作る派生view",
+                "`30_plan.html`が人とLLMの共有する計画の正本",
+                "新しい計画で`30_plan.md`を作らない",
+                "`roadmap.html`と`roadmap-snapshot.json`は共通parser/generatorによる派生表示",
                 "Code Mapはfreshなcodemap.json / codemap.lock",
                 "CSPで外部loadを禁止",
             ):
@@ -2875,9 +2875,9 @@ class AdapterAndSurfaceTests(unittest.TestCase):
             self.assertIn(required, contract)
         roadmap = (skills / "viewing-plans" / "SKILL.md").read_text(encoding="utf-8")
         for required in (
-            "roadmap.htmlは人向けの既定入口",
-            "30_plan.mdは人とLLMが読む正本",
-            "roadmap-snapshot.jsonは既存parserから作る派生view",
+            "`30_plan.html`が人とLLMの共有する計画の正本",
+            "新しい計画で`30_plan.md`を作らない",
+            "`roadmap.html`と`roadmap-snapshot.json`は共通parser/generatorによる派生表示",
             "source previewはallowlist内の相対pathに限定",
             "ローカルHTMLはMCP接続や親windowとの通信なし",
         ):
