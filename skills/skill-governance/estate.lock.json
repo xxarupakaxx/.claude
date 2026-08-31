@@ -442,7 +442,7 @@
       "relative_path": "generate-state-diagram-3d",
       "resolved_name": "generate-state-diagram-3d",
       "root_id": "claude",
-      "tree_sha256": "5f22729d3127c1082cc15fe063783b0bf808b2de17d9bf42ec39eb8fa00f031d"
+      "tree_sha256": "001eaef60462dc30c0df506082dfcc98169dba263cee5b90da7bd56e87f1281f"
     },
     {
       "classification": "preexisting-unclassified",
@@ -451,7 +451,7 @@
       "relative_path": "generate-verification-guide",
       "resolved_name": "generate-verification-guide",
       "root_id": "claude",
-      "tree_sha256": "f021ab158d4b79a3f005385b21709da6b95483ecabc36850b637ebee853cca56"
+      "tree_sha256": "5539a05614ec6af1d197774c5b2ded8818d1cb3c49a913aa5b869fec6cb83330"
     },
     {
       "classification": "preexisting-unclassified",
@@ -958,7 +958,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "claude",
-      "tree_sha256": "6c41f05e61ea02e583fa6a42e7a7e9c25e1263f48f5778ea378d08e81e725ecc"
+      "tree_sha256": "a4082a60ace399c32b24a777285b136edc0f691b83eb679429a02a3f765ef680"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1192,7 +1192,7 @@
       "relative_path": "visualizing-work",
       "resolved_name": "visualizing-work",
       "root_id": "claude",
-      "tree_sha256": "51d25056ce8fb0bdec872a3269ac7928ee7b53b4280f3c7a0edec5db5f326017"
+      "tree_sha256": "f6aa70cb0b42864b0e26f4d996dbf7e0f72fc915a40dd93693f86e44640aee80"
     },
     {
       "classification": "legacy-active",
@@ -1561,7 +1561,7 @@
       "relative_path": "config-mirror-sync",
       "resolved_name": "config-mirror-sync",
       "root_id": "codex",
-      "tree_sha256": "5724c1c2c754fe2750c3ea3c0370999cc89f99d28d359ceb74e9ad74c125e38d"
+      "tree_sha256": "c87e8fde59f691fb53d66174d483bf56a849bf2d9ec05f915b7ddd59d73b19ac"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1813,7 +1813,7 @@
       "relative_path": "generate-state-diagram-3d",
       "resolved_name": "generate-state-diagram-3d",
       "root_id": "codex",
-      "tree_sha256": "5f22729d3127c1082cc15fe063783b0bf808b2de17d9bf42ec39eb8fa00f031d"
+      "tree_sha256": "001eaef60462dc30c0df506082dfcc98169dba263cee5b90da7bd56e87f1281f"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1822,7 +1822,7 @@
       "relative_path": "generate-verification-guide",
       "resolved_name": "generate-verification-guide",
       "root_id": "codex",
-      "tree_sha256": "b11bb10df414ea5ffa729b0abbf29442b89d6c164478e1437bb4e9a2eb919c7b"
+      "tree_sha256": "03dd489e03907815c56f1d36f0849e73ec0c15b6150893f14342cf5a77018f81"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2200,7 +2200,7 @@
       "relative_path": "pr-watch",
       "resolved_name": "pr-watch",
       "root_id": "codex",
-      "tree_sha256": "adfe69ba86ac2c4e05c0a60730e6d381f1ba2db9303c6cfcdf0d222c9cb38584"
+      "tree_sha256": "7b53ff9cb9929e2545a20e499c2a5fcf58630b97d988232da8236a714abf9850"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2410,7 +2410,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "codex",
-      "tree_sha256": "1a63978af8a451325019ba9467c14e66f22092ecdf228ead345ed1b93e6286ec"
+      "tree_sha256": "e22ae9aac3425d0004e14ab0c37368a69c59a24b011fddb45e54c4d398f43370"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2662,7 +2662,7 @@
       "relative_path": "visualizing-work",
       "resolved_name": "visualizing-work",
       "root_id": "codex",
-      "tree_sha256": "19b367fc2e1bb2ac018f4e9a1e2cd54e8ad81cba26f8331f1b7eac4dedc6fce4"
+      "tree_sha256": "cbf3dee6c9c85d18dfc2b90ea5166c358bab3f21585f48032480ff284dbaa3e6"
     },
     {
       "classification": "legacy-active",
@@ -3352,15 +3352,6 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
-      "relative_path": "viewing-plans",
-      "resolved_name": "viewing-plans",
-      "root_id": "shared",
-      "tree_sha256": "2f485e4e07d637c55eb084194286c9d98e9a9469b0d149986f80dd42e7907c28"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
       "relative_path": "zoom-out",
       "resolved_name": "zoom-out",
       "root_id": "shared",
@@ -3905,15 +3896,6 @@
       "resolved_name": "diagnosing-bugs",
       "root_id": "vault-codex",
       "tree_sha256": "944fb99879a7e9b56378d1e66b5f0ecdbea32b504ab0153f9e0396b1f230bd9a"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "diagram-design",
-      "resolved_name": "diagram-design",
-      "root_id": "vault-codex",
-      "tree_sha256": "354864409034916ef9fbb496014e2be01288fd2d8d04801a602be8bed9ec9c47"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4582,7 +4564,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "vault-codex",
-      "tree_sha256": "d1426cd0950d530b7b0338f07715fff90df3e237f78cb3b284db1e8fd008ba31"
+      "tree_sha256": "1a63978af8a451325019ba9467c14e66f22092ecdf228ead345ed1b93e6286ec"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4817,15 +4799,6 @@
       "resolved_name": "verify",
       "root_id": "vault-codex",
       "tree_sha256": "68b9eabf277fad6aeaca4ec761560fc2a5da51890be00316a20c03313f4cae60"
-    },
-    {
-      "classification": "preexisting-unclassified",
-      "hash_normalizations": [],
-      "name_resolution": "frontmatter",
-      "relative_path": "viewing-plans",
-      "resolved_name": "viewing-plans",
-      "root_id": "vault-codex",
-      "tree_sha256": "efe1fc2d58aee78faec472d1a68244a14b917b1fd1382cf2d5fbbcaa2eb34d9b"
     },
     {
       "classification": "preexisting-unclassified",
@@ -5089,6 +5062,6 @@
       "tree_sha256": "73323581b29fa6129136b0d3c393c2b485cddb7d1c2622bf185d36d0d9a570fd"
     }
   ],
-  "registry_sha256": "fbac4ecb87a49250f3c38841efcfce6bbe1a9dc27fb0bda84631dafed63bd90d",
+  "registry_sha256": "4927426d978c64b406cdb1513f49a1da596d2d95965a8f5100c9d84ca5acf007",
   "schema_version": 2
 }

@@ -8,6 +8,10 @@ Claude leadは要件、route、統合、一次資料確認、fresh検証、最�
 
 local Read / Grep / Glob / Bashを先に行い、最小routeを選ぶ。大きなflow、固定全員review、件数合わせのAgent()は既定にしない。user-invokedのSkill / commandは明示要求または既存の承認済み依頼が対象のときだけ起動し、通常のroute選択で自動起動しない。ユーザーが指定したSkillはSKILL.mdを全文確認する。第三者Skillの発見・評判・導入・更新・廃止は skill-governance を入口にし、自動promotionや無審査updateを行わない。
 
+<!-- skill-governance-contract:routing:start -->
+第三者Skillは `skill-governance` で候補catalogとactive runtimeを分離する。read-only inventoryだけをmodel-invokedとし、promotion、update、retirement、delete、runtime mutationはuser-invokedかつ人間承認を必須にする。
+<!-- skill-governance-contract:routing:end -->
+
 ## Delegation Gate
 
 Agent()、Workflow、reviewerを起動する前に全条件を評価する。

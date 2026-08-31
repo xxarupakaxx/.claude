@@ -909,3 +909,11 @@ skills = ["creating-html-documents"]
 quarantine = { path = "receipts/mathbullet-html-2026-08--creating-html-documents--quarantine.json", sha256 = "66ead319d9b696236ba5c9d333c35ab2af73ed30b1ae26fbb9e3129132c12d12" }
 codex = { path = "receipts/mathbullet-html-2026-08--creating-html-documents--codex.json", sha256 = "e52554a18862f054151c41be37bbf7b7e4423ca771aa9600a7bad6b0b06226c1" }
 claude = { path = "receipts/mathbullet-html-2026-08--creating-html-documents--claude.json", sha256 = "d26c000c762cb039ed91a221ac6ac5d021fc4d364cf4084ba3a96ac2c6513678" }
+
+[[coverage_exclusions]]
+path = "/Users/yoshiki/ghq/github.com/xxarupakaxx/.codex/.local/memory/260831_workflow-ecosystem/baseline-files/skills/viewing-plans"
+reason = "historical baseline snapshot; evidence only, never a runtime Skill root; exact leaf exclusion"
+
+[[coverage_exclusions]]
+path = "/Users/yoshiki/ghq/github.com/xxarupakaxx/.codex/.local/memory/260831_workflow-ecosystem/claude-baseline-files/skills/viewing-plans"
+reason = "historical baseline snapshot; evidence only, never a runtime Skill root; exact leaf exclusion"
