@@ -9,7 +9,7 @@ Codemapは、コード変更へ着手する前に読むtask単位の根拠付き
 - `codemap.json`: AIが読む正本。scope、lane、node、edge、evidenceを保持する。
 - `codemap.lock`: source/map fingerprintと展開済みsource manifestを保持するcommit marker。
 
-二点は `scripts/generate-codemap.py refresh` だけで更新する。個別手編集しない。JSONをatomic replaceし、lockを最後に置く。途中失敗後はold lockとnew outputが一致せず、次のcheckが失敗する。人向け表示は`roadmap.html`のCode Map viewが担い、別の`codemap.html`は生成しない。
+二点は `scripts/generate-codemap.py refresh` だけで更新する。個別手編集しない。JSONをatomic replaceし、lockを最後に置く。途中失敗後はold lockとnew outputが一致せず、次のcheckが失敗する。人向け表示は`roadmap.html`の計画本文にあるCode Mapが担い、別の`codemap.html`は生成しない。
 
 authoring sourceは同じtask memory directoryの `codemap.source.json` とする。これは生成二点に含めず、lockへbytes fingerprintを記録する。source定義を変えたままrefreshしなければstaleである。
 
@@ -82,18 +82,18 @@ AIは「ありそう」という理由でverified edgeを作らない。推測�
 
 ## UI契約
 
-Codemap UIは`roadmap.html`のTask Workspaceに埋め込まれた`kind: codemap` adapterを使う。Roadmap snapshotは表示用にCodemap payloadを含むが、freshnessの正本は`codemap.lock`である。
+Codemap UIは`roadmap.html`の計画本文に埋め込まれた`kind: codemap` adapterを使う。Roadmap snapshotは表示用にCodemap payloadを含むが、freshnessの正本は`codemap.lock`である。図と根拠の一覧を最初から表示し、実装説明の近くで読めるようにする。表示のためのdrawerやtab操作を要求しない。
 
-- laneを左から右へ並べる。
-- node選択でincoming/outgoingの1-hop関係だけをright inspectorへ出す。
+- laneとnodeの関係をSVGで示し、狭い画面では読める配置へ組み替える。
+- incoming/outgoingの関係は図とテキスト一覧から確認できる。任意の選択操作だけに根拠を隠さない。
 - verified evidenceを `path:line` で表示する。
 - unknownは破線と `UNKNOWN — reason` の両方で表示する。
 - relationがないnodeへartifact CTAを補作しない。
-- filter、Arrow/Home/End/Enter、mobile horizontal canvasを維持する。
+- SVGにtitle/descを付ける。本文と根拠はkeyboardでたどれ、狭い画面で文字を極端に縮めない。
 
 ## Roadmapとの統合境界
 
-- `roadmap.html`: Plan / ProgressとCode Mapを切り替える唯一の人向け入口。
+- `roadmap.html`: 計画、変更前後、実装内容、検証、Code Mapを初期表示する人向け入口。
 - `roadmap-snapshot.json`: live表示用にRoadmapと検証済みCodemap payloadを保持する。
 - `codemap.json` / `codemap.lock`: caller、impact、test、dependency、evidenceとsource freshnessの機械判定。
 

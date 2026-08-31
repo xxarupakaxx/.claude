@@ -1183,7 +1183,7 @@
       "relative_path": "viewing-plans",
       "resolved_name": "viewing-plans",
       "root_id": "claude",
-      "tree_sha256": "efe1fc2d58aee78faec472d1a68244a14b917b1fd1382cf2d5fbbcaa2eb34d9b"
+      "tree_sha256": "6db2e81988e482aac1bce88fce56d502e3c24431bbf04506132212a17711c874"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2653,7 +2653,7 @@
       "relative_path": "viewing-plans",
       "resolved_name": "viewing-plans",
       "root_id": "codex",
-      "tree_sha256": "efe1fc2d58aee78faec472d1a68244a14b917b1fd1382cf2d5fbbcaa2eb34d9b"
+      "tree_sha256": "b63f1f6723da40be80583a122a0e7518739b79e98648c2ff3cb379c497cbaffa"
     },
     {
       "classification": "preexisting-unclassified",

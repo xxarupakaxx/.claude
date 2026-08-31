@@ -8,7 +8,7 @@ allowed-tools: Read, mcp__workflow-html-app__view-plan, mcp__workflow-html-app__
 
 このSkillは計画を作るSkillではなく、保存済みartifactを安全に表示する補助である。roadmap.htmlは人向けの既定入口、30_plan.mdは人とLLMが読む正本、roadmap-snapshot.jsonは既存parserから作る派生viewである。LLMにHTML全文を書かせず、JSONやHTMLを手で補正しない。
 
-RoadmapのProject Map + Focusは全体像、Current Task、primary action、NextまたはBlocker、Evidenceをsource-backedに表示する。Detail drawerはDocument、Change、Impact、Test、Sourcesを持ち、ImpactからCode Mapを開く。正本へ戻れない関係、本文にない完了・担当・期限・因果を表示側で補作しない。
+Roadmapは読み通せるHTML計画書を初期画面にする。目的、変更前後、全Taskの実装内容、対象fileとsource根拠、検証、依存図を本文に表示し、重要情報をdrawer・tab・折り畳みに隠さない。Current Taskと次の作業は短く示し、同じ状態を多数のcardへ繰り返さない。正本へ戻れない関係、本文にない完了・担当・期限・因果を表示側で補作しない。
 
 ## Roadmap適格性ゲート
 
@@ -50,7 +50,7 @@ Plan解釈は scripts/roadmap_plan_contract.py に一本化する。schemaVersio
 
 UI変更Taskでは、計画を作るLLM自身が対象sourceを確認し、計画開始時点の `HEAD` を40桁commit SHAへ固定してBefore / Afterを記録する。ユーザーへmetadata入力やfile importを求めない。sourceを確認できないBeforeは補作せず `unverified` とし、previewを作れない計画は同期を通さない。
 
-Code Mapはfreshなcodemap.json / codemap.lockだけをDetail drawerのImpactから開く。roadmapのmtimeでfreshnessを代用しない。source previewはallowlist内の相対pathに限定し、hidden / secret / 個人ノート / symlink / binary / 非UTF-8 / oversized fileを表示しない。Markdownとuser contentはescape / sanitizeする。
+Code Mapはfreshなcodemap.json / codemap.lockだけを本文内に図と根拠の一覧で表示する。roadmapのmtimeでfreshnessを代用しない。source previewはallowlist内の相対pathに限定し、hidden / secret / 個人ノート / symlink / binary / 非UTF-8 / oversized fileを表示しない。Markdownとuser contentはescape / sanitizeする。
 
 ## 自動・手動の起動
 
@@ -58,7 +58,7 @@ Code Mapはfreshなcodemap.json / codemap.lockだけをDetail drawerのImpactか
 
 手動トリガーは「計画をビューアで見たい」「HTMLで確認したい」「ロードマップを見たい」「ログをビューアで見たい」、または /viewing-plans である。log-onlyで手動表示を明示された場合はexplicit-roadmapへ昇格する。
 
-roadmap Task Hubを横断確認するときは既存syncへ明示rootを渡す。選択は完全一致のsession / thread IDを優先し、path・title・更新時刻だけで自動確定しない。command引数、tool output全文、古い会話context、secretを表示用modelへ渡さない。
+roadmap Task Hubは横断確認を明示した場合だけ使う補助入口である。通常の計画書生成でHubや追加tabを自動起動しない。既存syncへ明示rootを渡す。選択は完全一致のsession / thread IDを優先し、path・title・更新時刻だけで自動確定しない。command引数、tool output全文、古い会話context、secretを表示用modelへ渡さない。
 
 ## Security
 
