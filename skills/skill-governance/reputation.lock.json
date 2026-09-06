@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-31",
+  "generated_at": "2026-09-06",
   "policy": {
     "approval_use": "advisory-only",
     "popularity_is_approval": false
@@ -161,6 +161,26 @@
       "source_id": "huggingface-skills",
       "stars": 10814,
       "trust_role": "vendor-candidate"
+    },
+    {
+      "archived": false,
+      "assessment": "公開利用 signal と MIT license は確認できるが、人気は承認根拠にしない。show-me だけを固定 tree で隔離し、platform-specific opener と Mermaid を除く local adaptation を審査する。",
+      "evidence_urls": [
+        "https://github.com/humanlayer/skills",
+        "https://github.com/humanlayer/skills/commit/3c2629142c5d437428269b1b722b08c0b87f574d"
+      ],
+      "forks": 76,
+      "github": "humanlayer/skills",
+      "head_matches_pin": true,
+      "issues_enabled": true,
+      "license_signal": "MIT",
+      "observed_at": "2026-09-06",
+      "observed_revision": "3c2629142c5d437428269b1b722b08c0b87f574d",
+      "open_issues": 7,
+      "security_policy": false,
+      "source_id": "humanlayer-skills",
+      "stars": 2720,
+      "trust_role": "community-candidate"
     },
     {
       "archived": false,

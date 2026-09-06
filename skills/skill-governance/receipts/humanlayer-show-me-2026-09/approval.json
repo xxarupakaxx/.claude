@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "kind": "approval",
+  "collection_id": "humanlayer-show-me-2026-09",
+  "generation": 3,
+  "subject_sha256": "136196f4ce8e61863d2e96fadce4c3ee84f12fa084e6a2d67d77fef3b92af8a8",
+  "safety_receipt_sha256": "357fa68ea150d2026671494de798b47c1123e01faba0386b2a5d5a2de9e859a3",
+  "value_receipt_sha256": "d388a869f3524f5c290739af7aef0d723610538396b4481763bcac542c5f39fd",
+  "approval_request_sha256": "81eb04757db4a0a42b188fe54d13234ae68bca541579afb85413e11e0a93650e",
+  "approval_message": "OK",
+  "approver": {
+    "type": "human",
+    "name": "yoshiki"
+  },
+  "date": "2026-09-06",
+  "decision": "approved"
+}

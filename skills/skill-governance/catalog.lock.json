@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-08-26T00:00:00+09:00",
+  "generated_at": "2026-09-06",
   "generation": 3,
   "method": "pinned-github-commit-tree-plus-package-tree-v2",
-  "registry_sha256": "e68f5cea7b7eb226e2a42332f158074e92495786b4f99fbcc00d2a107e4bb4b0",
+  "registry_sha256": "49e65a6c75dc32720a8150b0431f5c7184e98490530936ef5e86431bee114766",
   "schema_version": 1,
   "sources": {
     "addyosmani-agent-skills": {
@@ -795,6 +795,71 @@
       ],
       "tree_archive_blob_paths_match": true,
       "tree_sha": "02ebcc67f58295654c073cfb74a20a9a86db1f8f",
+      "tree_truncated": false
+    },
+    "humanlayer-skills": {
+      "archive_scope": "trusted local git checkout of the fixed repository snapshot; Git tree and blob identities verified",
+      "catalog_sha256": "b7631ccdac27024ac969712f7ed6aecb0ccb9ab4ad97b6ec286cdae81abde00e",
+      "complete": true,
+      "github": "humanlayer/skills",
+      "mode": "selective-adoption",
+      "name_extracted_count": 5,
+      "revision": "3c2629142c5d437428269b1b722b08c0b87f574d",
+      "skill_count": 5,
+      "skills": [
+        {
+          "blob_sha": "6ac5e0e4f81d52fe0657745257d15e3aa9d160ae",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "build-iterated-agentic-loop",
+          "package_tree_sha": "fa04a5cc4842e561e7182b3a074b91c18ffbc1df",
+          "path": "plugins/build-iterated-agentic-loop/skills/build-iterated-agentic-loop/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "c9abc1b884d6002b4b76a7f611cf7686e91d59c8",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "design-control-loop",
+          "package_tree_sha": "a8a023f8f62a384a76297b31d9f844c5ad3adf95",
+          "path": "plugins/design-control-loop/skills/design-control-loop/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "89a1333fbba11e623cef81925361dd098a81443e",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "improve-claude-md",
+          "package_tree_sha": "742389d936458a62c303c5625232038788a9588f",
+          "path": "plugins/improve-claude-md/skills/improve-claude-md/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "5ee3644aa827eb2452be3ead8f66c3b97ad7f4e5",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "narrow-react-prop-types",
+          "package_tree_sha": "172dfb205f5f1419354b431cbb903e1afd55ad87",
+          "path": "plugins/narrow-react-prop-types/skills/narrow-react-prop-types/SKILL.md",
+          "role": "catalog-surface"
+        },
+        {
+          "blob_sha": "d57a0a0afc2800a4cc7a7765e65a9c6c18e67b4f",
+          "license_paths": [
+            "LICENSE"
+          ],
+          "name": "show-me",
+          "package_tree_sha": "0bdb821a21e793a4f6f82a7078c052154447e5cc",
+          "path": "plugins/show-me/skills/show-me/SKILL.md",
+          "role": "catalog-surface"
+        }
+      ],
+      "tree_archive_blob_paths_match": true,
+      "tree_sha": "2f7121eedbf48e98cf1b42dffae97be6815e1fe9",
       "tree_truncated": false
     },
     "huggingface-skills": {
@@ -7805,12 +7870,12 @@
     }
   },
   "summary": {
-    "complete_source_count": 15,
+    "complete_source_count": 16,
     "cross_source_name_collision_groups": 25,
     "license_evidence_missing_count": 415,
-    "name_extracted_count": 838,
-    "skill_file_count": 842,
-    "source_count": 15,
-    "unique_extracted_name_count": 772
+    "name_extracted_count": 843,
+    "skill_file_count": 847,
+    "source_count": 16,
+    "unique_extracted_name_count": 777
   }
 }

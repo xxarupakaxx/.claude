@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "kind": "value",
+  "collection_id": "humanlayer-show-me-2026-09",
+  "generation": 3,
+  "subject_sha256": "136196f4ce8e61863d2e96fadce4c3ee84f12fa084e6a2d67d77fef3b92af8a8",
+  "representative_prompts": [
+    "この保存処理、show me。分岐だけ見たい",
+    "submit から agent 起動までの呼び出しを木で見せて",
+    "この画面の component と state の位置を見せて",
+    "refactor 後の file 責務を浅い tree で見せて",
+    "保存フローの変更点だけ diff で見せて",
+    "UI、daemon、agent の流れを図で見せて",
+    "この UI の状態比較を一枚の HTML で見せて",
+    "この新しい handler の全体像を copy できる形で見せて",
+    "この task の進捗を roadmap で見せて",
+    "認証境界と failure propagation を詳細な技術図にして",
+    "この関数を二文で説明して",
+    "ヒーロー画像を一枚生成して",
+    "認証の仕組みを複数章のHTML解説にして。図でもshow me",
+    "document-owner: creating-html-documents。認証sectionのfailure pathだけshow me"
+  ],
+  "baseline": {
+    "state": "visualizing-work is a broad 7,030-byte entry that selects formal visual artifacts through reader, question, evidence, artifact-contract, and evaluation references",
+    "limitation": "It does not provide a short dedicated entry for inline pseudocode, call/component/file trees, and shape-aware diffs requested with show-me wording"
+  },
+  "candidate": {
+    "state": "A 4,611-byte review entry owns quick inline visual explanations, hands document-shaped HTML to creating-html-documents with a bounded brief, and returns non-recursive local slices when the document owner calls it",
+    "evaluation": {
+      "path": "evidence/humanlayer-show-me-2026-09/task/value-evaluation.json",
+      "sha256": "272c81115efed0e7ee30719021e6334293b7312b2966eee90a89dada6a1cfb87"
+    },
+    "result": {
+      "trial_count": 14,
+      "passed": 14,
+      "positive_routes": 9,
+      "negative_or_handoff_routes": 5,
+      "false_positive": 0,
+      "false_negative": 0
+    }
+  },
+  "trial_count": 14,
+  "pass_at_1": 1.0,
+  "trigger_precision": 1.0,
+  "trigger_recall": 1.0,
+  "outcome_rubric": {
+    "pass": "Quick visual requests select the smallest inline form; document-shaped HTML hands off through a bounded visual brief; document-owned calls return only a local slice; roadmap and detailed diagrams hand off to existing owners; nonvisual requests do not route here.",
+    "fail": "A visual request is missed, a nonvisual request triggers, show-me owns a long-form HTML document, or either skill recursively delegates document ownership."
+  },
+  "reviewer": {
+    "type": "main-agent-deterministic-review",
+    "evidence": {
+      "path": "evidence/humanlayer-show-me-2026-09/task/value-evaluation.json",
+      "sha256": "7842123e191ba25d19f5f909f78c4f63bc9d68e565d4c35023eca5e82252523a"
+    },
+    "limitation": "Deterministic instruction and routing review only; no long-term usage telemetry or independently sampled model benchmark."
+  },
+  "date": "2026-09-06",
+  "decision": "pass"
+}

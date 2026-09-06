@@ -31,6 +31,23 @@ HTMLを書く前に次を一行ずつ確定する。
 
 文書型は固定templateではない。各章に一つの問いを与え、その問いに合うvisual patternを一つ選ぶ。
 
+## show-meをvisual layerとして使う
+
+このSkillが文書全体のownerであり続ける。章立て、source inventory、claim ledger、overview trigger、evidence、HTMLへの配置、CSP、検証、browser表示を`show-me`へ渡さない。
+
+各claimまたはsectionで「何を見せれば最も速く伝わるか」を決めるときだけ`show-me`を使う。入力にはsectionの問い、evidence anchor、欠かせないactor / state / branch / 境界、文書内で再利用する名称を渡す。戻り値は擬似コード、call tree、component / file tree、diff、SVG、または次のvisual briefとする。
+
+```text
+visual-question: 読者が視覚表現から理解すべき問い
+evidence-anchors: file、symbol、test、sourceなどの根拠
+recommended-form: 採用する最小表現
+must-show: 欠かせない要素と関係
+omit: 今回は見せない周辺情報
+fallback: 同じ意味を読めるtext表現
+```
+
+呼出しcontextに`document-owner: creating-html-documents`を明示する。このcontextでは`show-me`は局所visual sliceだけを返し、HTML文書全体を作らず、このSkillへ再委譲しない。受け取った表現が本文と同じ内容を繰り返す場合は採用しない。overviewの要否はこのSkillのOverview gateが決め、`show-me`はoverview内の最小構成を選ぶ。
+
 ## 先に中身を抽出する
 
 HTML構造や図を作る前に、source inventoryとclaim ledgerをcompactな作業メモとして作る。
@@ -94,19 +111,20 @@ cardを先に並べない。同じ状態をbadge、card、summary、diagramで�
 ## 作成手順
 
 1. source inventoryとclaim ledgerを作り、根拠不足と未確認を分離する。
-2. `assets/editorial-document.html` を基礎にする。既存HTMLの編集ではfilenameを変えない。
-3. 文書型に応じて章を選び、不要なplaceholderとcomponentを削る。
-4. 中心主張と現在地を最初のviewportに置く。背景説明から始めない。
-5. orientation triggerに該当する場合だけ、中心主張の直後に短いorientationとoverview SVGを置く。
-6. claim ledgerのdetail unitを本文へ展開する。重要な主張は具体例、境界、evidence、含意へ接続する。
-7. 本文をprimary surfaceにする。desktopでは約68–76字幅、補助railは250–310pxを目安にする。
-8. 図はinline SVGを正本にし、`role="img"`、`title`、`desc`、captionを付ける。Mermaid runtimeを新規導入しない。
-9. codeはescapeし、言語classまたは明示labelを付ける。変更系文書では、変更理由の直後に関連diffを示す。
-10. 表は見出しcellへ`scope`を付ける。
-11. 出典は主張の近くに置き、末尾のsource listへ接続する。sourceの内容と会話上の推測を混ぜない。
-12. `references/validation.md` のgateを通す。
-13. 検証合格後、ユーザーが自動表示を不要と明示していなければ、生成fileの絶対pathをhostのplatform openerで開く。
-14. browser表示の成否、生成fileの絶対path、文書型、検証結果、残る制約を報告する。
+2. 各sectionの問いを定め、文章・tableだけで十分かを先に判断する。視覚化がmaterialなsectionだけ、`document-owner: creating-html-documents`を付けて`show-me`から最小表現またはvisual briefを得る。
+3. `assets/editorial-document.html` を基礎にする。既存HTMLの編集ではfilenameを変えない。
+4. 文書型に応じて章を選び、不要なplaceholderとcomponentを削る。
+5. 中心主張と現在地を最初のviewportに置く。背景説明から始めない。
+6. orientation triggerに該当する場合だけ、中心主張の直後に短いorientationとoverview SVGを置く。
+7. claim ledgerのdetail unitを本文へ展開する。重要な主張は具体例、境界、evidence、含意へ接続する。
+8. 本文をprimary surfaceにする。desktopでは約68–76字幅、補助railは250–310pxを目安にする。
+9. 図はinline SVGを正本にし、`role="img"`、`title`、`desc`、captionを付ける。Mermaid runtimeを新規導入しない。
+10. codeはescapeし、言語classまたは明示labelを付ける。変更系文書では、変更理由の直後に関連diffを示す。
+11. 表は見出しcellへ`scope`を付ける。
+12. 出典は主張の近くに置き、末尾のsource listへ接続する。sourceの内容と会話上の推測を混ぜない。
+13. `references/validation.md` のgateを通す。
+14. 検証合格後、ユーザーが自動表示を不要と明示していなければ、生成fileの絶対pathをhostのplatform openerで開く。
+15. browser表示の成否、生成fileの絶対path、文書型、検証結果、残る制約を報告する。
 
 ## 自己完結を既定にする
 
@@ -145,6 +163,7 @@ cardを先に並べない。同じ状態をbadge、card、summary、diagramで�
 - technical flowではinput、branch、data / state、side effect、failure / recovery、sourceを追える。
 - overview、見出し、一般論だけで本文を埋めていない。
 - triggerに該当しない単純文書では、図を省いた理由が文書構造上自然で、結論、scope、根拠が不足していない。
+- `show-me`へ渡したsectionは局所visual sliceとして閉じ、文書ownerの循環、章立ての重複、根拠のない要素追加がない。
 - 明示的なopt-outがない限り検証済みfileをbrowserで開き、起動できない環境では失敗理由と絶対pathを報告する。
 
 見た目の好みだけで合格にしない。中心主張、具体的detail、根拠到達、含意、安全性を確認する。mobile、print、PDFは依頼された場合だけ追加rubricを適用する。

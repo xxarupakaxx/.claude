@@ -884,7 +884,7 @@ update_policy = "notify-only"
 catalog_required = true
 
 [[collections]]
-id = "mathbullet-html-2026-08"
+id = "mathbullet-html-show-me-2026-09"
 source_id = "mathbullet-skills"
 local_state = "active"
 review_state = "approved"
@@ -895,20 +895,20 @@ content_relation = "reviewed-local-adaptation"
 targets = ["codex", "claude"]
 default_revision = "fe96c626b39abba47fad2d4a4ef738e8a27602b1"
 baseline_at = "2026-08-26"
-adaptation_diff = { path = "adaptations/mathbullet-html-2026-08.json", sha256 = "c2c00d6203dad851f76a0aa66da2792893f446f4d9355a5f71ed2b96b9dca3da" }
-safety_receipt = { path = "receipts/mathbullet-html-2026-08--safety.json", sha256 = "88a21e90e2c1b90a6670dbdcad7672c40581133d8833b283dfd635e3d145fed2" }
-value_receipt = { path = "receipts/mathbullet-html-2026-08--value.json", sha256 = "41737df7842c84567eda87d9fd82b245729f110b8f32247604a409526e315cb6" }
-approval_receipt = { path = "receipts/mathbullet-html-2026-08--approval.json", sha256 = "2e379d70e54e28d4c5da3782bea99c45d4bce740185b3afb422bdd8236ffd53a" }
-promotion_receipt = { path = "receipts/mathbullet-html-2026-08--promotion.json", sha256 = "32290802db87d969a4872660fd69a040b62827bdc70826da2d7d5e5cb5d4f5b5" }
+adaptation_diff = { path = "adaptations/mathbullet-html-show-me-2026-09.json", sha256 = "b8d1ee3ce3fd823261e5ed9c6ae8c5afd3a676a6451c1c6326c584e908cc8f3c" }
+safety_receipt = { path = "receipts/mathbullet-html-show-me-2026-09/safety.json", sha256 = "6b6a68936f6d07f2b53c7d5acd5ab7d4f040e8a0a34264cb88117683606e791a" }
+value_receipt = { path = "receipts/mathbullet-html-show-me-2026-09/value.json", sha256 = "0e43bc3705725e2c503a3d15248f3326525df288072777473d6c94065a066146" }
+approval_receipt = { path = "receipts/mathbullet-html-show-me-2026-09/approval.json", sha256 = "0d5e8344c107bc5ca97224f37c9ca0e4f5d81668a061fee0fad51b98ff8b0fd8" }
+promotion_receipt = { path = "receipts/mathbullet-html-show-me-2026-09/promotion.json", sha256 = "bdd949819ed1a3f1c9b435e7282f5512a2d5bc96cbaff651bbbcd9f928c8a03d" }
 skills = ["creating-html-documents"]
 
 [collections.upstream_paths]
 "creating-html-documents" = "plugins/html/skills/html/SKILL.md"
 
 [collections.frontmatter_receipts."creating-html-documents"]
-quarantine = { path = "receipts/mathbullet-html-2026-08--creating-html-documents--quarantine.json", sha256 = "66ead319d9b696236ba5c9d333c35ab2af73ed30b1ae26fbb9e3129132c12d12" }
-codex = { path = "receipts/mathbullet-html-2026-08--creating-html-documents--codex.json", sha256 = "e52554a18862f054151c41be37bbf7b7e4423ca771aa9600a7bad6b0b06226c1" }
-claude = { path = "receipts/mathbullet-html-2026-08--creating-html-documents--claude.json", sha256 = "d26c000c762cb039ed91a221ac6ac5d021fc4d364cf4084ba3a96ac2c6513678" }
+quarantine = { path = "receipts/mathbullet-html-show-me-2026-09/frontmatter-quarantine.json", sha256 = "66ead319d9b696236ba5c9d333c35ab2af73ed30b1ae26fbb9e3129132c12d12" }
+codex = { path = "receipts/mathbullet-html-show-me-2026-09/frontmatter-codex.json", sha256 = "f65689684da39b196deaf46a538fdb60fefe08d96f80e6d87b7edf4e2c65ad25" }
+claude = { path = "receipts/mathbullet-html-show-me-2026-09/frontmatter-claude.json", sha256 = "9937e4221bc8ee04675e89ece85aa06f7df972de58dcae21dd383e6bc1ab261e" }
 
 [[coverage_exclusions]]
 path = "/Users/yoshiki/ghq/github.com/xxarupakaxx/.codex/.local/memory/260831_workflow-ecosystem/baseline-files/skills/viewing-plans"
@@ -981,3 +981,35 @@ upstream_paths = { "hallmark" = "skills/hallmark/SKILL.md" }
 frontmatter_receipts = { "hallmark" = { "quarantine" = { "path" = "receipts/hallmark-html-2026-08/prototype-upstream-frontmatter.json", "sha256" = "92582e40d0a13f8d7f3d0da1fbddc77bb8a7f2a7ebbede22807eda55b16f95d7" }, "codex" = { "path" = "receipts/hallmark-html-2026-08/frontmatter-codex.json", "sha256" = "e0c6aa876ea38dc885818fff4342aed8a7445d294f8a8b7265e108a847f64869" }, "claude" = { "path" = "receipts/hallmark-html-2026-08/frontmatter-claude.json", "sha256" = "9f47a732e692a8257eaf582cdeeeb9120ddc1822ed5ba735b8748c99a7861f75" } } }
 approval_receipt = { "path" = "receipts/hallmark-html-2026-08/approval.json", "sha256" = "100f380126f3886e7cf0e19c1645242d998be2b0fe811cea97e89126e6d395f9" }
 promotion_receipt = { "path" = "receipts/hallmark-html-2026-08/promotion.json", "sha256" = "c3e80088e5e5aa5e277907b53fdae88d667334f1bd323f7205c8ebe75c715505" }
+
+[[sources]]
+id = "humanlayer-skills"
+github = "humanlayer/skills"
+default_branch = "main"
+observed_revision = "3c2629142c5d437428269b1b722b08c0b87f574d"
+observed_at = "2026-09-06"
+origin = "community-maintainer"
+mode = "selective-adoption"
+update_policy = "notify-only"
+catalog_required = true
+
+[[collections]]
+id = "humanlayer-show-me-2026-09"
+source_id = "humanlayer-skills"
+local_state = "active"
+review_state = "approved"
+risk_tier = "L0"
+license = "MIT"
+adaptation = "platform-adapted"
+content_relation = "reviewed-local-adaptation"
+targets = ["codex", "claude"]
+default_revision = "3c2629142c5d437428269b1b722b08c0b87f574d"
+baseline_at = "2026-09-06"
+adaptation_diff = { "path" = "adaptations/humanlayer-show-me-2026-09.json", "sha256" = "b8315c66eb5799281150a1b73c43c355506172b124c2e47c30a22f00d738d165" }
+safety_receipt = { "path" = "receipts/humanlayer-show-me-2026-09/safety.json", "sha256" = "357fa68ea150d2026671494de798b47c1123e01faba0386b2a5d5a2de9e859a3" }
+value_receipt = { "path" = "receipts/humanlayer-show-me-2026-09/value.json", "sha256" = "d388a869f3524f5c290739af7aef0d723610538396b4481763bcac542c5f39fd" }
+approval_receipt = { "path" = "receipts/humanlayer-show-me-2026-09/approval.json", "sha256" = "55f2f22a448e3dd17e88967ff6940a30e9ce63c4ba5983a761e4ea6bc3890639" }
+promotion_receipt = { "path" = "receipts/humanlayer-show-me-2026-09/promotion.json", "sha256" = "ffa06f57ba7cf9ea367668bc793c1a2bb3e1a38b77bb661642df29994feb6603" }
+skills = ["show-me"]
+upstream_paths = { "show-me" = "plugins/show-me/skills/show-me/SKILL.md" }
+frontmatter_receipts = { "show-me" = { "quarantine" = { "path" = "receipts/humanlayer-show-me-2026-09/frontmatter-quarantine.json", "sha256" = "27b0c504d0cc7cc4faa3b74959e39e2dcae89e3e71194c0813a38ee96927bf7e" }, "codex" = { "path" = "receipts/humanlayer-show-me-2026-09/frontmatter-codex.json", "sha256" = "9a2c84ed95af173f0404eaf182a48bf26e91cc0e165f7b44e1df56784bba5035" }, "claude" = { "path" = "receipts/humanlayer-show-me-2026-09/frontmatter-claude.json", "sha256" = "694e3b48314c67a2f8d969bc969b235de2456bff45fb96403405801fc1e50add" } } }

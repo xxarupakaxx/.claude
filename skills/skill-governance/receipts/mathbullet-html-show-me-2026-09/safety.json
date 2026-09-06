@@ -1,0 +1,399 @@
+{
+  "schema_version": 1,
+  "kind": "safety",
+  "collection_id": "mathbullet-html-show-me-2026-09",
+  "generation": 3,
+  "subject_sha256": "a2cbbd4b18b4a28e62618e87f0c46f078c19b57b9beadb23c5368d5e9cfd5c20",
+  "upstream": {
+    "creating-html-documents": {
+      "blob_sha": "b47e4185ca36e8c7617d7ec33b946f666a7af373",
+      "catalog_sha256": "e15a4cbd89575cfa4f5b4a0f3a0762630d71a24b1a0b64cab58a8517708f17ab",
+      "github": "mathbullet/skills",
+      "license_paths": [
+        "LICENSE"
+      ],
+      "package_tree_sha": "2d881a0a611f610d977c1c09892dd27806d118d9",
+      "path": "plugins/html/skills/html/SKILL.md",
+      "revision": "fe96c626b39abba47fad2d4a4ef738e8a27602b1",
+      "source_id": "mathbullet-skills",
+      "tree_sha": "3c725d1f90c240cfb3839e4e75b31d8fbc34c204",
+      "upstream_name": "html"
+    }
+  },
+  "targets": {
+    "creating-html-documents": {
+      "claude": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971",
+      "codex": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971"
+    }
+  },
+  "quarantine": {
+    "creating-html-documents": "3978d3fc868b0f81d5e59c5b4f7f400c176436a190374acdf95a444b8eb44442"
+  },
+  "candidate_manifests": {
+    "creating-html-documents": [
+      {
+        "executable": false,
+        "path": "SKILL.md",
+        "sha256": "9b7c9137585b89dc8dda5ab27058edc059079d57fbab8cb1681c16ec9dd8019c",
+        "size": 6292
+      },
+      {
+        "executable": false,
+        "path": "design-system/component-samples.html",
+        "sha256": "649f1337297c2b505ca99f963b8452ae7cc8b11e6587f3597d22e0a7d0d2853a",
+        "size": 11964
+      },
+      {
+        "executable": false,
+        "path": "design-system/document.css",
+        "sha256": "2c24738653c2a4c3b37f0eb80345dcd1d02243f5e8e3db13fe1e034618e17701",
+        "size": 12837
+      },
+      {
+        "executable": false,
+        "path": "design-system/math-copy.js",
+        "sha256": "57faa970169eafd9fda529cbbf6c23aa880c39d08e0780fcd07d16e15fa6fd06",
+        "size": 1764
+      },
+      {
+        "executable": true,
+        "path": "render-pdf.sh",
+        "sha256": "bdb7b5e9f2c055a47ed2a17407fa053967032dbaddb165f3f6c928149e6d3dac",
+        "size": 1439
+      }
+    ]
+  },
+  "target_manifests": {
+    "creating-html-documents": {
+      "claude": [
+        {
+          "executable": false,
+          "path": "LICENSE",
+          "sha256": "d050dd820d9f329c7449adaa5fbec08aa31a3bba195fcbb2e7af65c45e700819",
+          "size": 1067
+        },
+        {
+          "executable": false,
+          "path": "SKILL.md",
+          "sha256": "ea8e14334247cd7af48f7e7ba713d69f2366421457bafaf9ddc6440155a47851",
+          "size": 13239
+        },
+        {
+          "executable": false,
+          "path": "SOURCE.md",
+          "sha256": "18723abc3d9ae1b0469792f030d39ecb7a5dfdfa5050c6613b298da79c0f9d66",
+          "size": 2211
+        },
+        {
+          "executable": false,
+          "path": "assets/editorial-document.html",
+          "sha256": "2b9791d36cd35eabb54183d2a0a0353fb107fd303febaaec9e94b033e323a783",
+          "size": 14284
+        },
+        {
+          "executable": false,
+          "path": "evals/evals.json",
+          "sha256": "ee0474617a8fab0f3321736681925dadd6a107192d9816d0348edf3595d9f1d1",
+          "size": 3739
+        },
+        {
+          "executable": false,
+          "path": "references/document-system.md",
+          "sha256": "d58ac645342a06fed19776fdc50362e45378229764fb1a31185916fbff2c7db8",
+          "size": 7004
+        },
+        {
+          "executable": false,
+          "path": "references/validation.md",
+          "sha256": "4b0897f0e00ab16f5bf3dd377bd60c64f20ea5aaad85ba037a66a2c1a7e38101",
+          "size": 4230
+        }
+      ],
+      "codex": [
+        {
+          "executable": false,
+          "path": "LICENSE",
+          "sha256": "d050dd820d9f329c7449adaa5fbec08aa31a3bba195fcbb2e7af65c45e700819",
+          "size": 1067
+        },
+        {
+          "executable": false,
+          "path": "SKILL.md",
+          "sha256": "ea8e14334247cd7af48f7e7ba713d69f2366421457bafaf9ddc6440155a47851",
+          "size": 13239
+        },
+        {
+          "executable": false,
+          "path": "SOURCE.md",
+          "sha256": "18723abc3d9ae1b0469792f030d39ecb7a5dfdfa5050c6613b298da79c0f9d66",
+          "size": 2211
+        },
+        {
+          "executable": false,
+          "path": "assets/editorial-document.html",
+          "sha256": "2b9791d36cd35eabb54183d2a0a0353fb107fd303febaaec9e94b033e323a783",
+          "size": 14284
+        },
+        {
+          "executable": false,
+          "path": "evals/evals.json",
+          "sha256": "ee0474617a8fab0f3321736681925dadd6a107192d9816d0348edf3595d9f1d1",
+          "size": 3739
+        },
+        {
+          "executable": false,
+          "path": "references/document-system.md",
+          "sha256": "d58ac645342a06fed19776fdc50362e45378229764fb1a31185916fbff2c7db8",
+          "size": 7004
+        },
+        {
+          "executable": false,
+          "path": "references/validation.md",
+          "sha256": "4b0897f0e00ab16f5bf3dd377bd60c64f20ea5aaad85ba037a66a2c1a7e38101",
+          "size": 4230
+        }
+      ]
+    }
+  },
+  "license_evidence": {
+    "creating-html-documents": {
+      "claude": [
+        {
+          "path": "LICENSE",
+          "sha256": "d050dd820d9f329c7449adaa5fbec08aa31a3bba195fcbb2e7af65c45e700819"
+        }
+      ],
+      "codex": [
+        {
+          "path": "LICENSE",
+          "sha256": "d050dd820d9f329c7449adaa5fbec08aa31a3bba195fcbb2e7af65c45e700819"
+        }
+      ]
+    }
+  },
+  "license_review": {
+    "declared": "MIT",
+    "upstream_paths": {
+      "creating-html-documents": [
+        "LICENSE"
+      ]
+    },
+    "local_evidence": {
+      "creating-html-documents": {
+        "claude": [
+          {
+            "path": "LICENSE",
+            "sha256": "d050dd820d9f329c7449adaa5fbec08aa31a3bba195fcbb2e7af65c45e700819"
+          }
+        ],
+        "codex": [
+          {
+            "path": "LICENSE",
+            "sha256": "d050dd820d9f329c7449adaa5fbec08aa31a3bba195fcbb2e7af65c45e700819"
+          }
+        ]
+      }
+    },
+    "decision": "pass"
+  },
+  "static_inspection": {
+    "creating-html-documents": {
+      "advisory_findings": [
+        {
+          "code": "external_url",
+          "message": "External reference: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js\"",
+          "path": "SKILL.md",
+          "severity": "ADVISORY"
+        },
+        {
+          "code": "external_url",
+          "message": "External reference: https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js\"",
+          "path": "SKILL.md",
+          "severity": "ADVISORY"
+        },
+        {
+          "code": "external_url",
+          "message": "External reference: https://fonts.googleapis.com\"",
+          "path": "SKILL.md",
+          "severity": "ADVISORY"
+        },
+        {
+          "code": "external_url",
+          "message": "External reference: https://fonts.googleapis.com/css2?family=Ubuntu+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap\"",
+          "path": "SKILL.md",
+          "severity": "ADVISORY"
+        },
+        {
+          "code": "external_url",
+          "message": "External reference: https://fonts.gstatic.com\"",
+          "path": "SKILL.md",
+          "severity": "ADVISORY"
+        },
+        {
+          "code": "external_url",
+          "message": "External reference: https://gist.github.com/k16shikano/eb2929f13ed19c97188393d297be8432",
+          "path": "SKILL.md",
+          "severity": "ADVISORY"
+        },
+        {
+          "code": "external_url",
+          "message": "External reference: https://gist.github.com/k16shikano/fd287c3133457c4fd8f5601d34aa817d",
+          "path": "SKILL.md",
+          "severity": "ADVISORY"
+        },
+        {
+          "code": "external_url",
+          "message": "External reference: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js\"",
+          "path": "design-system/component-samples.html",
+          "severity": "ADVISORY"
+        },
+        {
+          "code": "external_url",
+          "message": "External reference: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js\"&gt;&lt;/script&gt;",
+          "path": "design-system/component-samples.html",
+          "severity": "ADVISORY"
+        },
+        {
+          "code": "external_url",
+          "message": "External reference: https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js\"",
+          "path": "design-system/component-samples.html",
+          "severity": "ADVISORY"
+        },
+        {
+          "code": "external_url",
+          "message": "External reference: https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js\"&gt;&lt;/script&gt;",
+          "path": "design-system/component-samples.html",
+          "severity": "ADVISORY"
+        },
+        {
+          "code": "external_url",
+          "message": "External reference: https://example.com/docs\"",
+          "path": "design-system/component-samples.html",
+          "severity": "ADVISORY"
+        },
+        {
+          "code": "external_url",
+          "message": "External reference: https://fonts.googleapis.com\"",
+          "path": "design-system/component-samples.html",
+          "severity": "ADVISORY"
+        },
+        {
+          "code": "external_url",
+          "message": "External reference: https://fonts.googleapis.com/css2?family=Ubuntu+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap\"",
+          "path": "design-system/component-samples.html",
+          "severity": "ADVISORY"
+        },
+        {
+          "code": "external_url",
+          "message": "External reference: https://fonts.gstatic.com\"",
+          "path": "design-system/component-samples.html",
+          "severity": "ADVISORY"
+        },
+        {
+          "code": "external_url",
+          "message": "External reference: https://x.com/bcherny/status/2017824286489383315\"",
+          "path": "design-system/component-samples.html",
+          "severity": "ADVISORY"
+        },
+        {
+          "code": "external_url",
+          "message": "External reference: http://www.w3.org/2000/svg\"",
+          "path": "design-system/document.css",
+          "severity": "ADVISORY"
+        },
+        {
+          "code": "code_present",
+          "message": "Executable source requires code review",
+          "path": "design-system/math-copy.js",
+          "severity": "ADVISORY"
+        },
+        {
+          "code": "executable_file",
+          "message": "Executable bit requires capability review",
+          "path": "render-pdf.sh",
+          "severity": "ADVISORY"
+        },
+        {
+          "code": "code_present",
+          "message": "Executable source requires code review",
+          "path": "render-pdf.sh",
+          "severity": "ADVISORY"
+        }
+      ],
+      "blocking_findings": [],
+      "candidate_code_execution": false,
+      "files": [
+        {
+          "executable": false,
+          "path": "SKILL.md",
+          "sha256": "9b7c9137585b89dc8dda5ab27058edc059079d57fbab8cb1681c16ec9dd8019c",
+          "size": 6292
+        },
+        {
+          "executable": false,
+          "path": "design-system/component-samples.html",
+          "sha256": "649f1337297c2b505ca99f963b8452ae7cc8b11e6587f3597d22e0a7d0d2853a",
+          "size": 11964
+        },
+        {
+          "executable": false,
+          "path": "design-system/document.css",
+          "sha256": "2c24738653c2a4c3b37f0eb80345dcd1d02243f5e8e3db13fe1e034618e17701",
+          "size": 12837
+        },
+        {
+          "executable": false,
+          "path": "design-system/math-copy.js",
+          "sha256": "57faa970169eafd9fda529cbbf6c23aa880c39d08e0780fcd07d16e15fa6fd06",
+          "size": 1764
+        },
+        {
+          "executable": true,
+          "path": "render-pdf.sh",
+          "sha256": "bdb7b5e9f2c055a47ed2a17407fa053967032dbaddb165f3f6c928149e6d3dac",
+          "size": 1439
+        }
+      ],
+      "full_yaml_pending_codes": [],
+      "tree_sha256": "3978d3fc868b0f81d5e59c5b4f7f400c176436a190374acdf95a444b8eb44442"
+    }
+  },
+  "adaptation_review": {
+    "decision": "pass",
+    "upstream_risks": "候補に外部CDN、clipboard JavaScript、実行可能なPDF shellがある",
+    "containment": "runtime targetでは外部CDN、JavaScript、実行shellを除去し、CSP・offline・system fontを既定化",
+    "functional_review": "Retain the four document types, overview-first and evidence contracts, offline safety, and validated local browser display. Add show-me only as a bounded section-level visual decision layer while creating-html-documents keeps document ownership and prevents recursive handoff.",
+    "opener_safety": "platform openerへ検証済みlocal HTMLの絶対pathだけを渡す。HTML内script、redirect、local server、network公開は追加しない",
+    "target_parity": "Codex and Claude review trees share tree SHA-256 790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971.",
+    "cost_review": "目次的な表面要約を避け、主張・根拠・制約・失敗経路を優先抽出する一方、responsive、PDF、装飾、重複説明は要求がなければ生成しない"
+  },
+  "adaptation_diff": {
+    "path": "adaptations/mathbullet-html-show-me-2026-09.json",
+    "sha256": "b8d1ee3ce3fd823261e5ed9c6ae8c5afd3a676a6451c1c6326c584e908cc8f3c"
+  },
+  "capabilities": [
+    "日本語長文HTML文書の作成",
+    "decision-plan・technical-explainer・change-review・research-reportの文書型",
+    "Roadmap/viewing-plansと整合した計画書表示",
+    "図表・コード差分・用語rail・印刷layout",
+    "offline・desktop-first・accessibility・evidence検証",
+    "detail budget、coverage/loss ledger、minimum sufficient artifactによる情報密度と生成量の制御",
+    "検証済みlocal HTMLのplatform openerによる既定browser表示と明示opt-out",
+    "show-meによるsection単位の最小visual選択",
+    "document-owner contextと再委譲禁止による非循環連携"
+  ],
+  "dependencies": [
+    "host platform opener（macOS open、Linux xdg-open、Windows Start-Process。利用不能時は失敗理由とpathを報告）"
+  ],
+  "external_urls": [
+    "https://github.com/mathbullet/skills/tree/fe96c626b39abba47fad2d4a4ef738e8a27602b1/plugins/html/skills/html",
+    "https://github.com/mathbullet/skills"
+  ],
+  "reviewer": {
+    "type": "main-agent-source-runtime-and-independent-docs-review",
+    "note": "fixed upstream/quarantine、Codex/Claude candidate、canonical review targets、375/768/1440 browser checks、独立docs review Round 2 PASSを直接照合"
+  },
+  "date": "2026-09-06",
+  "next_review_date": "2026-12-06",
+  "decision": "pass"
+}

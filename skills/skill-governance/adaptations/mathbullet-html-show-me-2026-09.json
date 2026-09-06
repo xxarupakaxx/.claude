@@ -1,0 +1,42 @@
+{
+  "collection_id": "mathbullet-html-show-me-2026-09",
+  "content_relation": "reviewed-local-adaptation",
+  "source_commit": "fe96c626b39abba47fad2d4a4ef738e8a27602b1",
+  "source_path": "plugins/html/skills/html",
+  "local_name": "creating-html-documents",
+  "targets": [
+    "codex",
+    "claude"
+  ],
+  "preserved_capabilities": [
+    "Japanese long-form HTML composition",
+    "figures, tables, code diffs, glossary rails, and print layout",
+    "single-document editorial presentation"
+  ],
+  "added_contracts": [
+    "decision-plan, technical-explainer, change-review, and research-report document types",
+    "Roadmap and viewing-plans responsibility boundary for multi-phase work",
+    "overview-first gate for workflow, architecture, lifecycle, before/after, dependency, and failure-propagation documents with 3+ interacting elements",
+    "orientation block immediately after the central claim, covering background, without-this failure, scope, target state, and system position",
+    "accessible inline SVG overview before connected detail slices for complex documents",
+    "detail slices must reuse overview labels, numbers, and boundary names instead of redrawing the same whole-system view",
+    "simple single-fact, single-operation, short comparison, and two-element before/after documents explicitly opt out of forced overview diagrams while preserving conclusion, scope, and evidence",
+    "offline-by-default delivery with CSP and system fonts",
+    "responsive, accessibility, print, and evidence validation gates",
+    "post-validation local browser display through the host platform opener unless the user opts out",
+    "show-me integration as a bounded section-level visual decision layer",
+    "explicit document-owner context and no-recursive-handoff contract",
+    "visual brief fields for question, evidence, form, required elements, omissions, and text fallback"
+  ],
+  "removed_default_capabilities": [
+    "remote Google Fonts",
+    "MathJax and syntax-highlighting CDNs",
+    "clipboard JavaScript",
+    "executable PDF rendering shell",
+    "automatic publication or git delivery"
+  ],
+  "platform_adaptation": {
+    "codex": "Common Agent Skill frontmatter and body.",
+    "claude": "Byte-identical common Skill; no Claude-only automatic invocation key is required for this user-requested document capability."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "command": "validate-frontmatter",
+  "findings": [],
+  "frontmatter_sha256": "283fe3b8365d0d3f40681cdb2edca6eebb842630cf7b1052839cbff40cf4d70e",
+  "skill_sha256": "bea6da70a58096730b9aeb0bae293ddf4726103a98efc9ce13c481619942a810",
+  "status": "validated",
+  "surface": {
+    "kind": "quarantine",
+    "revision": "3c2629142c5d437428269b1b722b08c0b87f574d",
+    "skill_name": "show-me",
+    "source_id": "humanlayer-skills"
+  },
+  "target": "upstream",
+  "validator": "pyyaml-6.0.2-safe-loader",
+  "values": {
+    "description": "Help the user understand the current topic visually with concise diagrams, code-shape sketches, and focused HTML artifacts.",
+    "name": "show-me"
+  }
+}

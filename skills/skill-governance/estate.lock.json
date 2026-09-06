@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-31",
+  "generated_at": "2026-09-06",
   "generation": 3,
   "hash_algorithm": "skill-tree-sha256-v1",
   "records": [
@@ -262,7 +262,7 @@
       "relative_path": "creating-html-documents",
       "resolved_name": "creating-html-documents",
       "root_id": "claude",
-      "tree_sha256": "9d3710dd748af2331d6cce5ca860da64630b53ffe6a0a39955cd49939c637108"
+      "tree_sha256": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971"
     },
     {
       "classification": "legacy-active",
@@ -958,6 +958,15 @@
       "tree_sha256": "87e418395330a8a8f92b521d1fb072be71707a6e76a5f7b8209da9a8b057d61a"
     },
     {
+      "classification": "active",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "show-me",
+      "resolved_name": "show-me",
+      "root_id": "claude",
+      "tree_sha256": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9"
+    },
+    {
       "classification": "preexisting-unclassified",
       "hash_normalizations": [
         "estate.lock.json",
@@ -967,7 +976,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "claude",
-      "tree_sha256": "90ebc4663c91e67dbf500b5000fd62048594ad55e9adbb71dddb3203d7229a8b"
+      "tree_sha256": "7e6c205bf7dec0699be01faafd8d6142907db3cf57a216393b993e58f09f1b2c"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1282,7 +1291,7 @@
       "relative_path": ".system/imagegen",
       "resolved_name": "imagegen",
       "root_id": "codex",
-      "tree_sha256": "7dfb4777c871b971f11d666102a381d2e5bf1a565b170e614b8610cdb3976c99"
+      "tree_sha256": "f643134152a85aa4db430ab82bec85486625d047d26a9683f55a3d5ccff7a84f"
     },
     {
       "classification": "platform-managed",
@@ -1300,7 +1309,7 @@
       "relative_path": ".system/plugin-creator",
       "resolved_name": "plugin-creator",
       "root_id": "codex",
-      "tree_sha256": "724a14f43c7f00664f0bf79aee6ca2e0cd1bfc9155c822c3b17efd430a4ea090"
+      "tree_sha256": "6a278854659bec3de6e88d932afeee2bf932f8a8ad7c92dbd8fe4c8b4164b798"
     },
     {
       "classification": "platform-managed",
@@ -1318,7 +1327,7 @@
       "relative_path": ".system/skill-creator",
       "resolved_name": "skill-creator",
       "root_id": "codex",
-      "tree_sha256": "26c9c122b1b090ddff340f4e4368f044c858c49cda791f8b29971db5c2421e6d"
+      "tree_sha256": "d5b302b09d7958984fbf1ce915a92176f0de67724a13af41e0e251863663ffdf"
     },
     {
       "classification": "platform-managed",
@@ -1327,7 +1336,7 @@
       "relative_path": ".system/skill-installer",
       "resolved_name": "skill-installer",
       "root_id": "codex",
-      "tree_sha256": "1b781ce7ab3774b60613d28f12f9615d01aef9741ac22ce2ed05c2f5284d1831"
+      "tree_sha256": "228de25e62d4b7d478621f0e52f6a87d4e6a46199b558e78cfe4667566c1c975"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1642,7 +1651,7 @@
       "relative_path": "creating-html-documents",
       "resolved_name": "creating-html-documents",
       "root_id": "codex",
-      "tree_sha256": "9d3710dd748af2331d6cce5ca860da64630b53ffe6a0a39955cd49939c637108"
+      "tree_sha256": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2419,6 +2428,15 @@
       "tree_sha256": "87e418395330a8a8f92b521d1fb072be71707a6e76a5f7b8209da9a8b057d61a"
     },
     {
+      "classification": "active",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "show-me",
+      "resolved_name": "show-me",
+      "root_id": "codex",
+      "tree_sha256": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9"
+    },
+    {
       "classification": "preexisting-unclassified",
       "hash_normalizations": [
         "estate.lock.json",
@@ -2428,7 +2446,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "codex",
-      "tree_sha256": "1688d846e0b04b07c5ceb1d2864ef7a178ab09f7226b803f5ac7d0592fa9c62f"
+      "tree_sha256": "8fb5a70213000426ffdf3ade5ee0bdee0099ec1b2858b452eed94f6a35567970"
     },
     {
       "classification": "preexisting-unclassified",
@@ -5089,6 +5107,6 @@
       "tree_sha256": "73323581b29fa6129136b0d3c393c2b485cddb7d1c2622bf185d36d0d9a570fd"
     }
   ],
-  "registry_sha256": "e68f5cea7b7eb226e2a42332f158074e92495786b4f99fbcc00d2a107e4bb4b0",
+  "registry_sha256": "49e65a6c75dc32720a8150b0431f5c7184e98490530936ef5e86431bee114766",
   "schema_version": 2
 }

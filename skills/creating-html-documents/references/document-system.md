@@ -6,6 +6,12 @@
 
 overview、見出し、一般論はdetailの代わりにならない。sectionを増やすより、読者が次の判断やsource確認へ進める具体情報を優先する。
 
+## Visual owner contract
+
+文書全体は`creating-html-documents`がownerになる。各sectionの局所visualだけを`show-me`へ渡し、問い、evidence anchor、must-show、omit、text fallbackをvisual briefで固定する。`document-owner: creating-html-documents`のcontextでは、`show-me`は最小表現を返して終了し、HTML文書全体を作成せず再委譲もしない。
+
+overview trigger、章立て、source inventory、claim ledger、evidenceへの接続、HTML composition、accessibility、CSP、validation、browser表示は文書ownerが保持する。`show-me`の提案が本文を言い換えるだけなら採用せず、文章またはtableを残す。
+
 ## Overview gate
 
 workflow、architecture、lifecycle、before / after、dependency、failure pathなど、3つ以上の相互作用するactor、component、stage、state、責務、dependencyの関係を理解しないと判断できない文書では、中心主張の直後にorientationとaccessibleなinline SVG overviewを置く。欠如時failureが複数の下流へ伝播する場合も必須にする。単にfileやevidenceが3件あるだけでは発火しない。
