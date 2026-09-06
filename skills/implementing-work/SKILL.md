@@ -1,23 +1,25 @@
 ---
 name: implementing-work
-description: spec や ticket に基づいて作業を実装します。
+description: 合意した仕様・ticket・直接の変更依頼を実装し、必要な動作確認まで完了する。
 disable-model-invocation: true
 ---
 
-ユーザーがApproved PRD、ticket、またはfast-trackのdirect requirementで示した作業を実装します。
+# 実装を完了する
 
-実装前にWork Packetの`artifact_id / source_hash / Objective / Scope / Acceptance / Constraints / capability_class / safety_decision_id / side effects / approval evidence / dry-run`を確認します。
+`context/workflow-rules.md`で作業規模を選び、目的、対象、完了条件、既存の制約を確認する。直接の変更依頼では、必要な実装と検証まで進める。
 
-Approved PRDが必要なrouteで`review_status: pass`がない場合、または必要な承認証跡がない場合は実装せず停止します。
+Work Packetを使うrouteでは、scope、acceptance、constraints、capability class、side effects、承認証跡を確認する。Approved PRDが必要なrouteに限り`review_status: pass`を要求する。通常作業にこれらのartifactを新しく要求しない。
 
-可能なところでは、事前に合意した seam で `/tdd` を使います。
+## 実装と確認
 
-コード変更では、実装前に `rules/complexity-budget.md` の要素別 production / test / config・migration target、除外、超過時の再計画条件を確認します。要素完了ごとに actual と variance を記録し、targetを守るためにテスト・安全性・必要なエラー処理を削りません。
+既存の構成と関連する実装・testを根拠に、要求を満たす最小の変更を行う。TDDが変更の振る舞いを確かめるのに適していれば、その境界で使う。
 
-typecheck は定期的に回します。
-単体 test file もこまめに回します。
-full test suite は最後に一度通します。
+変更の影響に合うtypecheck、lint、test、動作確認を選ぶ。全suiteはprojectの必須条件や影響範囲に応じて実行する。失敗を修正したら影響する検証を再実行し、新しい懸念がなければ終了へ進む。
 
-終わったらEvidence Bundle draftへacceptance evidence、test、finding、residual risk、実行済みwriteを記録し、`/reviewing-code` で独立レビューします。レビューへ target / actual / variance / reason を渡します。
+起動や結果の確認を含む依頼では、最初の実装で止まらず、動作確認と必要な修正まで行う。検証だけを依頼された場合は、修正の権限を推測しない。
 
-作業内容は current branch に commit します。
+## 終了
+
+通常作業では変更、検証、残課題を報告する。管理する作業では`context/workflow-rules.md`から該当する工程へ進み、review・Evidence・completion targetまで満たす。code変更量は`rules/complexity-budget.md`に従う。
+
+commitとpushはproject policyと承認範囲に従い、自分の変更だけを対象にする。権限・外部write・不可逆操作の境界は共通ルールを使う。

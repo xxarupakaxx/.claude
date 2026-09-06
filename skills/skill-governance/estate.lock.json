@@ -577,7 +577,7 @@
       "relative_path": "implementing-work",
       "resolved_name": "implementing-work",
       "root_id": "claude",
-      "tree_sha256": "83a3f9f812746603c8c3b6d6697b4468094e03f8517f1980b8c75fcbd2b449b8"
+      "tree_sha256": "10e4c52f78dab1f1d59e406e673c9e0fcc89238bd1da579bb72b472de6b4887f"
     },
     {
       "classification": "active",
@@ -976,7 +976,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "claude",
-      "tree_sha256": "7e6c205bf7dec0699be01faafd8d6142907db3cf57a216393b993e58f09f1b2c"
+      "tree_sha256": "e3b999f48a9ee4b6b216a27267b86af2673c36e983b9f55aa5ece2723a266edf"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1624,7 +1624,7 @@
       "relative_path": "create-skill",
       "resolved_name": "create-skill",
       "root_id": "codex",
-      "tree_sha256": "bd800ce8765c5bbc645c7b763d13d4f4277c495f21d06e7c55b24aacc44c3c09"
+      "tree_sha256": "da7aae4fac76293289734286ada33460e404a9af1935026e1ad00e162b5012a7"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1984,7 +1984,7 @@
       "relative_path": "implementing-work",
       "resolved_name": "implementing-work",
       "root_id": "codex",
-      "tree_sha256": "83a3f9f812746603c8c3b6d6697b4468094e03f8517f1980b8c75fcbd2b449b8"
+      "tree_sha256": "10e4c52f78dab1f1d59e406e673c9e0fcc89238bd1da579bb72b472de6b4887f"
     },
     {
       "classification": "active",
@@ -2446,7 +2446,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "codex",
-      "tree_sha256": "8fb5a70213000426ffdf3ade5ee0bdee0099ec1b2858b452eed94f6a35567970"
+      "tree_sha256": "0bdc512eb1baadee9ffaa87202e3030870388fbd1d7822a17c589dedfb00a3f6"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2671,7 +2671,7 @@
       "relative_path": "verification-loop",
       "resolved_name": "verification-loop",
       "root_id": "codex",
-      "tree_sha256": "41debef61d4cf7bad259c50cd426a4d97b965b781d4f2ef1b7ba473a798d4ec4"
+      "tree_sha256": "67d24a3ca35562559503db813c29787f7454f0506a161f659a5d57a823d15fa8"
     },
     {
       "classification": "preexisting-unclassified",
