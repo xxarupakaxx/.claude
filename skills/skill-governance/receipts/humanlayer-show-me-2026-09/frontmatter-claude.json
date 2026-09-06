@@ -1,0 +1,19 @@
+{
+  "command": "validate-frontmatter",
+  "findings": [],
+  "frontmatter_sha256": "6cc5fc03f2ae22349f64370d315dbd1d6034afc073ca02389c1f089f16ae7e71",
+  "skill_sha256": "7691f183cf94942a3150168588511750660fe0fdc47146f3ee08649bde90528c",
+  "status": "validated",
+  "surface": {
+    "collection_id": "humanlayer-show-me-2026-09",
+    "kind": "review",
+    "skill_name": "show-me",
+    "target_id": "claude"
+  },
+  "target": "claude",
+  "validator": "pyyaml-6.0.2-safe-loader",
+  "values": {
+    "description": "現在の話題を、最小限の擬似コード、call tree、component / file tree、diff、またはSVGで視覚的に説明する。ユーザーが「show me」「図で」「構造を見せて」「流れを見せて」など、文章だけでなく見える形の説明を求めたときに使う。複数章の長文資料や自己完結HTML文書はcreating-html-documentsへ渡す。",
+    "name": "show-me"
+  }
+}

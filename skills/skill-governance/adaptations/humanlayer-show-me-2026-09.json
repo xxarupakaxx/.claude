@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "kind": "adaptation-diff",
+  "collection_id": "humanlayer-show-me-2026-09",
+  "source_id": "humanlayer-skills",
+  "source_revision": "3c2629142c5d437428269b1b722b08c0b87f574d",
+  "source_path": "plugins/show-me/skills/show-me/SKILL.md",
+  "upstream_package_tree_sha": "0bdb821a21e793a4f6f82a7078c052154447e5cc",
+  "quarantine_tree_sha256": "735bf92c237bd9bd9114af68babcdf33fad710e6d25800163a07dab1b64457ca",
+  "review_stage": "/Users/yoshiki/.local/share/skill-governance/review/humanlayer-show-me-2026-09/show-me",
+  "target_tree_sha256": {
+    "codex": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9",
+    "claude": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9"
+  },
+  "license": "MIT",
+  "risk_tier": "L0",
+  "adaptation": "platform-adapted",
+  "content_relation": "reviewed-local-adaptation",
+  "preserved": [
+    "smallest useful visual chosen from pseudocode, call tree, component tree, file tree, diff, and SVG",
+    "brief prose placed beside the visual",
+    "real product labels and data instead of invented detail",
+    "avoid overwhelming the user with every representation"
+  ],
+  "changed": [
+    "Mermaid is replaced by accessible SVG as the canonical source for new diagrams",
+    "Bash(open ...) is replaced by the host's safe local viewer after validation",
+    "external assets, scripts, network requests, local servers, and invented facts are prohibited",
+    "Roadmap progress is routed to viewing-plans and detailed technical diagrams to diagram-design",
+    "document-shaped and self-contained HTML output is routed to creating-html-documents through a bounded visual brief",
+    "calls from creating-html-documents return only a local visual slice and never recurse back to the document owner",
+    "Codex and Claude review targets are byte-identical"
+  ],
+  "excluded": [
+    "automatic publication, commit, or push",
+    "platform-specific shell invocation",
+    "remote font, image, script, iframe, or network dependency"
+  ],
+  "execution": {
+    "candidate_code_execution": false,
+    "external_network_in_adaptation": false,
+    "runtime_mutation": false
+  },
+  "status": "reviewed",
+  "pending": {
+    "safety_receipt": true,
+    "value_receipt": true,
+    "target_bound_human_approval": true,
+    "promotion": true
+  }
+}

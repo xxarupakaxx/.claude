@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "kind": "promotion",
+  "collection_id": "mathbullet-html-show-me-2026-09",
+  "generation": 3,
+  "subject_sha256": "a2cbbd4b18b4a28e62618e87f0c46f078c19b57b9beadb23c5368d5e9cfd5c20",
+  "approval_receipt_sha256": "0d5e8344c107bc5ca97224f37c9ca0e4f5d81668a061fee0fad51b98ff8b0fd8",
+  "quarantine": {
+    "creating-html-documents": "3978d3fc868b0f81d5e59c5b4f7f400c176436a190374acdf95a444b8eb44442"
+  },
+  "approved_targets": {
+    "creating-html-documents": {
+      "codex": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971",
+      "claude": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971"
+    }
+  },
+  "runtime_targets": {
+    "creating-html-documents": {
+      "codex": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971",
+      "claude": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971"
+    }
+  },
+  "date": "2026-09-06",
+  "decision": "promoted"
+}

@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "collection_id": "humanlayer-show-me-2026-09",
+  "method": "main-agent deterministic routing and instruction-coverage review; one pass per case; no retries",
+  "candidate": "/Users/yoshiki/.local/share/skill-governance/review/humanlayer-show-me-2026-09/show-me/codex",
+  "baseline": "/Users/yoshiki/.codex/skills/visualizing-work",
+  "candidate_entry_bytes": 4611,
+  "baseline_entry_bytes": 7030,
+  "baseline_required_reference_bytes_for_full_artifact": 10278,
+  "cases": [
+    {
+      "id": "algorithm",
+      "prompt": "この保存処理、show me。分岐だけ見たい",
+      "expected": "route to show-me and use concise pseudocode",
+      "result": "pass"
+    },
+    {
+      "id": "runtime-call-tree",
+      "prompt": "submit から agent 起動までの呼び出しを木で見せて",
+      "expected": "route to show-me and use a call tree",
+      "result": "pass"
+    },
+    {
+      "id": "component-tree",
+      "prompt": "この画面の component と state の位置を見せて",
+      "expected": "route to show-me and use a component tree with relevant boundaries",
+      "result": "pass"
+    },
+    {
+      "id": "file-responsibility",
+      "prompt": "refactor 後の file 責務を浅い tree で見せて",
+      "expected": "route to show-me and use a shallow file tree",
+      "result": "pass"
+    },
+    {
+      "id": "control-flow-diff",
+      "prompt": "保存フローの変更点だけ diff で見せて",
+      "expected": "route to show-me and use a control-flow diff",
+      "result": "pass"
+    },
+    {
+      "id": "small-relation-svg",
+      "prompt": "UI、daemon、agent の流れを図で見せて",
+      "expected": "route to show-me; use accessible SVG because three interacting elements benefit from spatial layout",
+      "result": "pass"
+    },
+    {
+      "id": "focused-html",
+      "prompt": "この UI の状態比較を一枚の HTML で見せて",
+      "expected": "route through show-me to creating-html-documents with a bounded visual brief because the requested deliverable is HTML",
+      "result": "pass"
+    },
+    {
+      "id": "whole-block",
+      "prompt": "この新しい handler の全体像を copy できる形で見せて",
+      "expected": "route to show-me and show the whole block when a diff would hide ownership or order",
+      "result": "pass"
+    },
+    {
+      "id": "roadmap-boundary",
+      "prompt": "この task の進捗を roadmap で見せて",
+      "expected": "do not own the artifact; route to viewing-plans",
+      "result": "pass"
+    },
+    {
+      "id": "detailed-diagram-boundary",
+      "prompt": "認証境界と failure propagation を詳細な技術図にして",
+      "expected": "route detailed source-backed technical diagram work to diagram-design",
+      "result": "pass"
+    },
+    {
+      "id": "plain-prose",
+      "prompt": "この関数を二文で説明して",
+      "expected": "no show-me route because no visual form is requested or needed",
+      "result": "pass"
+    },
+    {
+      "id": "decorative-image",
+      "prompt": "ヒーロー画像を一枚生成して",
+      "expected": "no show-me route; this is image generation",
+      "result": "pass"
+    },
+    {
+      "id": "long-form-html-owner",
+      "prompt": "認証の仕組みを複数章のHTML解説にして。図でもshow me",
+      "expected": "show-me provides a visual brief and hands document ownership to creating-html-documents",
+      "result": "pass"
+    },
+    {
+      "id": "document-owned-slice",
+      "prompt": "document-owner: creating-html-documents。認証sectionのfailure pathだけshow me",
+      "expected": "show-me returns only the smallest local visual slice and does not delegate back to creating-html-documents",
+      "result": "pass"
+    }
+  ],
+  "result": {
+    "trial_count": 14,
+    "passed": 14,
+    "positive_routes": 9,
+    "negative_or_handoff_routes": 5,
+    "false_positive": 0,
+    "false_negative": 0,
+    "pass_at_1": 1.0,
+    "trigger_precision": 1.0,
+    "trigger_recall": 1.0
+  },
+  "baseline_comparison": {
+    "overlap": "visualizing-work already covers broad, formal visual explanations and remains the owner for reader/question/evidence-driven artifacts",
+    "increment": "show-me adds a short explicit entry for inline pseudocode, call/component/file trees, and shape-aware diffs without requiring a formal artifact contract",
+    "boundary": "show-me hands roadmap progress to viewing-plans, detailed technical diagrams to diagram-design, and document-shaped or HTML output to creating-html-documents; document-owned calls return a local visual slice without recursive handoff",
+    "limitation": "This is a deterministic instruction review, not long-term usage telemetry or an independently sampled model benchmark"
+  },
+  "decision": "pass"
+}

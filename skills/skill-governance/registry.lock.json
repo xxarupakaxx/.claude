@@ -8921,21 +8921,158 @@
         "sha256": "3707e6a0ba659c7c6c52093ef731f9bed45d13ba929c7d00bbceca26b1f537dd"
       }
     },
-    "mathbullet-html-2026-08/creating-html-documents": {
+    "humanlayer-show-me-2026-09/show-me": {
       "adaptation_diff": {
-        "path": "adaptations/mathbullet-html-2026-08.json",
-        "sha256": "c2c00d6203dad851f76a0aa66da2792893f446f4d9355a5f71ed2b96b9dca3da"
+        "path": "adaptations/humanlayer-show-me-2026-09.json",
+        "sha256": "b8315c66eb5799281150a1b73c43c355506172b124c2e47c30a22f00d738d165"
       },
       "approval_receipt": {
-        "path": "receipts/mathbullet-html-2026-08--approval.json",
-        "sha256": "2e379d70e54e28d4c5da3782bea99c45d4bce740185b3afb422bdd8236ffd53a"
+        "path": "receipts/humanlayer-show-me-2026-09/approval.json",
+        "sha256": "55f2f22a448e3dd17e88967ff6940a30e9ce63c4ba5983a761e4ea6bc3890639"
       },
-      "collection_id": "mathbullet-html-2026-08",
+      "collection_id": "humanlayer-show-me-2026-09",
+      "local_name": "show-me",
+      "local_state": "active",
+      "promotion_receipt": {
+        "path": "receipts/humanlayer-show-me-2026-09/promotion.json",
+        "sha256": "ffa06f57ba7cf9ea367668bc793c1a2bb3e1a38b77bb661642df29994feb6603"
+      },
+      "quarantine": {
+        "license_evidence": [],
+        "manifest": [
+          {
+            "executable": false,
+            "path": "SKILL.md",
+            "sha256": "bea6da70a58096730b9aeb0bae293ddf4726103a98efc9ce13c481619942a810",
+            "size": 3297
+          }
+        ],
+        "static_inspection": {
+          "advisory_findings": [],
+          "blocking_findings": [],
+          "candidate_code_execution": false,
+          "files": [
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "bea6da70a58096730b9aeb0bae293ddf4726103a98efc9ce13c481619942a810",
+              "size": 3297
+            }
+          ],
+          "full_yaml_pending_codes": [],
+          "tree_sha256": "735bf92c237bd9bd9114af68babcdf33fad710e6d25800163a07dab1b64457ca"
+        },
+        "tree_sha256": "735bf92c237bd9bd9114af68babcdf33fad710e6d25800163a07dab1b64457ca"
+      },
+      "review_state": "approved",
+      "review_targets": {
+        "claude": {
+          "license_evidence": [
+            {
+              "path": "LICENSE",
+              "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f"
+            }
+          ],
+          "manifest": [
+            {
+              "executable": false,
+              "path": "LICENSE",
+              "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f",
+              "size": 1067
+            },
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "7691f183cf94942a3150168588511750660fe0fdc47146f3ee08649bde90528c",
+              "size": 4611
+            },
+            {
+              "executable": false,
+              "path": "SOURCE.md",
+              "sha256": "56baefa7ac173c2644faf6442b0a08a7daf81ba6d99e5a2624859d02f809d3b3",
+              "size": 1143
+            }
+          ],
+          "tree_sha256": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9"
+        },
+        "codex": {
+          "license_evidence": [
+            {
+              "path": "LICENSE",
+              "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f"
+            }
+          ],
+          "manifest": [
+            {
+              "executable": false,
+              "path": "LICENSE",
+              "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f",
+              "size": 1067
+            },
+            {
+              "executable": false,
+              "path": "SKILL.md",
+              "sha256": "7691f183cf94942a3150168588511750660fe0fdc47146f3ee08649bde90528c",
+              "size": 4611
+            },
+            {
+              "executable": false,
+              "path": "SOURCE.md",
+              "sha256": "56baefa7ac173c2644faf6442b0a08a7daf81ba6d99e5a2624859d02f809d3b3",
+              "size": 1143
+            }
+          ],
+          "tree_sha256": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9"
+        }
+      },
+      "safety_receipt": {
+        "path": "receipts/humanlayer-show-me-2026-09/safety.json",
+        "sha256": "357fa68ea150d2026671494de798b47c1123e01faba0386b2a5d5a2de9e859a3"
+      },
+      "source_revision": "3c2629142c5d437428269b1b722b08c0b87f574d",
+      "subject_sha256": "136196f4ce8e61863d2e96fadce4c3ee84f12fa084e6a2d67d77fef3b92af8a8",
+      "targets": {
+        "claude": {
+          "tree_sha256": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9"
+        },
+        "codex": {
+          "tree_sha256": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9"
+        }
+      },
+      "upstream": {
+        "blob_sha": "d57a0a0afc2800a4cc7a7765e65a9c6c18e67b4f",
+        "catalog_sha256": "b7631ccdac27024ac969712f7ed6aecb0ccb9ab4ad97b6ec286cdae81abde00e",
+        "github": "humanlayer/skills",
+        "license_paths": [
+          "LICENSE"
+        ],
+        "package_tree_sha": "0bdb821a21e793a4f6f82a7078c052154447e5cc",
+        "path": "plugins/show-me/skills/show-me/SKILL.md",
+        "revision": "3c2629142c5d437428269b1b722b08c0b87f574d",
+        "source_id": "humanlayer-skills",
+        "tree_sha": "2f7121eedbf48e98cf1b42dffae97be6815e1fe9",
+        "upstream_name": "show-me"
+      },
+      "value_receipt": {
+        "path": "receipts/humanlayer-show-me-2026-09/value.json",
+        "sha256": "d388a869f3524f5c290739af7aef0d723610538396b4481763bcac542c5f39fd"
+      }
+    },
+    "mathbullet-html-show-me-2026-09/creating-html-documents": {
+      "adaptation_diff": {
+        "path": "adaptations/mathbullet-html-show-me-2026-09.json",
+        "sha256": "b8d1ee3ce3fd823261e5ed9c6ae8c5afd3a676a6451c1c6326c584e908cc8f3c"
+      },
+      "approval_receipt": {
+        "path": "receipts/mathbullet-html-show-me-2026-09/approval.json",
+        "sha256": "0d5e8344c107bc5ca97224f37c9ca0e4f5d81668a061fee0fad51b98ff8b0fd8"
+      },
+      "collection_id": "mathbullet-html-show-me-2026-09",
       "local_name": "creating-html-documents",
       "local_state": "active",
       "promotion_receipt": {
-        "path": "receipts/mathbullet-html-2026-08--promotion.json",
-        "sha256": "32290802db87d969a4872660fd69a040b62827bdc70826da2d7d5e5cb5d4f5b5"
+        "path": "receipts/mathbullet-html-show-me-2026-09/promotion.json",
+        "sha256": "bdd949819ed1a3f1c9b435e7282f5512a2d5bc96cbaff651bbbcd9f928c8a03d"
       },
       "quarantine": {
         "license_evidence": [],
@@ -9152,14 +9289,14 @@
             {
               "executable": false,
               "path": "SKILL.md",
-              "sha256": "71f3584552ee7715f74c09286e8eb00e187e2b4731e5833c0127bd65be45e393",
-              "size": 11486
+              "sha256": "ea8e14334247cd7af48f7e7ba713d69f2366421457bafaf9ddc6440155a47851",
+              "size": 13239
             },
             {
               "executable": false,
               "path": "SOURCE.md",
-              "sha256": "5d2175d4d06007881276d885ad0bd8ff849c58f5d1bbd9cd6630f8996c68cf38",
-              "size": 1866
+              "sha256": "18723abc3d9ae1b0469792f030d39ecb7a5dfdfa5050c6613b298da79c0f9d66",
+              "size": 2211
             },
             {
               "executable": false,
@@ -9170,14 +9307,14 @@
             {
               "executable": false,
               "path": "evals/evals.json",
-              "sha256": "d82d3e86d7036c520d59b64883d0dbddf46a8394c7753e86d2f010907624da48",
-              "size": 2785
+              "sha256": "ee0474617a8fab0f3321736681925dadd6a107192d9816d0348edf3595d9f1d1",
+              "size": 3739
             },
             {
               "executable": false,
               "path": "references/document-system.md",
-              "sha256": "23ce4010010eb76524a3dfccdb52c370f08554c15a86db14838a513416083649",
-              "size": 6313
+              "sha256": "d58ac645342a06fed19776fdc50362e45378229764fb1a31185916fbff2c7db8",
+              "size": 7004
             },
             {
               "executable": false,
@@ -9186,7 +9323,7 @@
               "size": 4230
             }
           ],
-          "tree_sha256": "9d3710dd748af2331d6cce5ca860da64630b53ffe6a0a39955cd49939c637108"
+          "tree_sha256": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971"
         },
         "codex": {
           "license_evidence": [
@@ -9205,14 +9342,14 @@
             {
               "executable": false,
               "path": "SKILL.md",
-              "sha256": "71f3584552ee7715f74c09286e8eb00e187e2b4731e5833c0127bd65be45e393",
-              "size": 11486
+              "sha256": "ea8e14334247cd7af48f7e7ba713d69f2366421457bafaf9ddc6440155a47851",
+              "size": 13239
             },
             {
               "executable": false,
               "path": "SOURCE.md",
-              "sha256": "5d2175d4d06007881276d885ad0bd8ff849c58f5d1bbd9cd6630f8996c68cf38",
-              "size": 1866
+              "sha256": "18723abc3d9ae1b0469792f030d39ecb7a5dfdfa5050c6613b298da79c0f9d66",
+              "size": 2211
             },
             {
               "executable": false,
@@ -9223,14 +9360,14 @@
             {
               "executable": false,
               "path": "evals/evals.json",
-              "sha256": "d82d3e86d7036c520d59b64883d0dbddf46a8394c7753e86d2f010907624da48",
-              "size": 2785
+              "sha256": "ee0474617a8fab0f3321736681925dadd6a107192d9816d0348edf3595d9f1d1",
+              "size": 3739
             },
             {
               "executable": false,
               "path": "references/document-system.md",
-              "sha256": "23ce4010010eb76524a3dfccdb52c370f08554c15a86db14838a513416083649",
-              "size": 6313
+              "sha256": "d58ac645342a06fed19776fdc50362e45378229764fb1a31185916fbff2c7db8",
+              "size": 7004
             },
             {
               "executable": false,
@@ -9239,21 +9376,21 @@
               "size": 4230
             }
           ],
-          "tree_sha256": "9d3710dd748af2331d6cce5ca860da64630b53ffe6a0a39955cd49939c637108"
+          "tree_sha256": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971"
         }
       },
       "safety_receipt": {
-        "path": "receipts/mathbullet-html-2026-08--safety.json",
-        "sha256": "88a21e90e2c1b90a6670dbdcad7672c40581133d8833b283dfd635e3d145fed2"
+        "path": "receipts/mathbullet-html-show-me-2026-09/safety.json",
+        "sha256": "6b6a68936f6d07f2b53c7d5acd5ab7d4f040e8a0a34264cb88117683606e791a"
       },
       "source_revision": "fe96c626b39abba47fad2d4a4ef738e8a27602b1",
-      "subject_sha256": "1b31be80058ff8fccc4c4b29c5470ef36f4d698708f1ae9494d92e1fa17971a8",
+      "subject_sha256": "a2cbbd4b18b4a28e62618e87f0c46f078c19b57b9beadb23c5368d5e9cfd5c20",
       "targets": {
         "claude": {
-          "tree_sha256": "9d3710dd748af2331d6cce5ca860da64630b53ffe6a0a39955cd49939c637108"
+          "tree_sha256": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971"
         },
         "codex": {
-          "tree_sha256": "9d3710dd748af2331d6cce5ca860da64630b53ffe6a0a39955cd49939c637108"
+          "tree_sha256": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971"
         }
       },
       "upstream": {
@@ -9271,8 +9408,8 @@
         "upstream_name": "html"
       },
       "value_receipt": {
-        "path": "receipts/mathbullet-html-2026-08--value.json",
-        "sha256": "41737df7842c84567eda87d9fd82b245729f110b8f32247604a409526e315cb6"
+        "path": "receipts/mathbullet-html-show-me-2026-09/value.json",
+        "sha256": "0e43bc3705725e2c503a3d15248f3326525df288072777473d6c94065a066146"
       }
     },
     "mattpocock-legacy-2026-07/choosing-skills": {
@@ -9998,9 +10135,9 @@
       "value_receipt": null
     }
   },
-  "generated_at": "2026-08-31",
+  "generated_at": "2026-09-06",
   "generation": 3,
   "hash_algorithm": "skill-tree-sha256-v1",
-  "registry_sha256": "e68f5cea7b7eb226e2a42332f158074e92495786b4f99fbcc00d2a107e4bb4b0",
+  "registry_sha256": "49e65a6c75dc32720a8150b0431f5c7184e98490530936ef5e86431bee114766",
   "schema_version": 1
 }

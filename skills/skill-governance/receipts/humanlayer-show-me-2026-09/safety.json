@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "kind": "safety",
+  "collection_id": "humanlayer-show-me-2026-09",
+  "generation": 3,
+  "subject_sha256": "136196f4ce8e61863d2e96fadce4c3ee84f12fa084e6a2d67d77fef3b92af8a8",
+  "upstream": {
+    "show-me": {
+      "blob_sha": "d57a0a0afc2800a4cc7a7765e65a9c6c18e67b4f",
+      "catalog_sha256": "b7631ccdac27024ac969712f7ed6aecb0ccb9ab4ad97b6ec286cdae81abde00e",
+      "github": "humanlayer/skills",
+      "license_paths": [
+        "LICENSE"
+      ],
+      "package_tree_sha": "0bdb821a21e793a4f6f82a7078c052154447e5cc",
+      "path": "plugins/show-me/skills/show-me/SKILL.md",
+      "revision": "3c2629142c5d437428269b1b722b08c0b87f574d",
+      "source_id": "humanlayer-skills",
+      "tree_sha": "2f7121eedbf48e98cf1b42dffae97be6815e1fe9",
+      "upstream_name": "show-me"
+    }
+  },
+  "targets": {
+    "show-me": {
+      "claude": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9",
+      "codex": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9"
+    }
+  },
+  "quarantine": {
+    "show-me": "735bf92c237bd9bd9114af68babcdf33fad710e6d25800163a07dab1b64457ca"
+  },
+  "candidate_manifests": {
+    "show-me": [
+      {
+        "executable": false,
+        "path": "SKILL.md",
+        "sha256": "bea6da70a58096730b9aeb0bae293ddf4726103a98efc9ce13c481619942a810",
+        "size": 3297
+      }
+    ]
+  },
+  "target_manifests": {
+    "show-me": {
+      "claude": [
+        {
+          "executable": false,
+          "path": "LICENSE",
+          "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f",
+          "size": 1067
+        },
+        {
+          "executable": false,
+          "path": "SKILL.md",
+          "sha256": "7691f183cf94942a3150168588511750660fe0fdc47146f3ee08649bde90528c",
+          "size": 4611
+        },
+        {
+          "executable": false,
+          "path": "SOURCE.md",
+          "sha256": "56baefa7ac173c2644faf6442b0a08a7daf81ba6d99e5a2624859d02f809d3b3",
+          "size": 1143
+        }
+      ],
+      "codex": [
+        {
+          "executable": false,
+          "path": "LICENSE",
+          "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f",
+          "size": 1067
+        },
+        {
+          "executable": false,
+          "path": "SKILL.md",
+          "sha256": "7691f183cf94942a3150168588511750660fe0fdc47146f3ee08649bde90528c",
+          "size": 4611
+        },
+        {
+          "executable": false,
+          "path": "SOURCE.md",
+          "sha256": "56baefa7ac173c2644faf6442b0a08a7daf81ba6d99e5a2624859d02f809d3b3",
+          "size": 1143
+        }
+      ]
+    }
+  },
+  "license_evidence": {
+    "show-me": {
+      "claude": [
+        {
+          "path": "LICENSE",
+          "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f"
+        }
+      ],
+      "codex": [
+        {
+          "path": "LICENSE",
+          "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f"
+        }
+      ]
+    }
+  },
+  "license_review": {
+    "declared": "MIT",
+    "upstream_paths": {
+      "show-me": [
+        "LICENSE"
+      ]
+    },
+    "local_evidence": {
+      "show-me": {
+        "claude": [
+          {
+            "path": "LICENSE",
+            "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f"
+          }
+        ],
+        "codex": [
+          {
+            "path": "LICENSE",
+            "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f"
+          }
+        ]
+      }
+    },
+    "decision": "pass"
+  },
+  "static_inspection": {
+    "show-me": {
+      "advisory_findings": [],
+      "blocking_findings": [],
+      "candidate_code_execution": false,
+      "files": [
+        {
+          "executable": false,
+          "path": "SKILL.md",
+          "sha256": "bea6da70a58096730b9aeb0bae293ddf4726103a98efc9ce13c481619942a810",
+          "size": 3297
+        }
+      ],
+      "full_yaml_pending_codes": [],
+      "tree_sha256": "735bf92c237bd9bd9114af68babcdf33fad710e6d25800163a07dab1b64457ca"
+    }
+  },
+  "adaptation_review": {
+    "decision": "pass",
+    "upstream_risks": "No executable files, credentials, hooks, destructive commands, or network actions. Mermaid output and Bash(open ...) conflict with local artifact and platform contracts.",
+    "containment": "Replace Mermaid with accessible canonical SVG; replace shell-specific open with a validated host-local viewer; prohibit remote assets, scripts, network requests, local servers, publication, commit, and push.",
+    "functional_review": "Preserve concise visual explanation and representation selection; route document-shaped HTML to creating-html-documents through a bounded brief; document-owned calls return only a local visual slice without recursion; keep Codex and Claude targets byte-identical.",
+    "target_parity": "Codex and Claude review trees share tree SHA-256 bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9."
+  },
+  "adaptation_diff": {
+    "path": "adaptations/humanlayer-show-me-2026-09.json",
+    "sha256": "b8315c66eb5799281150a1b73c43c355506172b124c2e47c30a22f00d738d165"
+  },
+  "capabilities": [
+    "concise pseudocode, call trees, component trees, file trees, and shape-aware diffs",
+    "accessible SVG as the canonical source for small multi-element diagrams",
+    "bounded visual briefs that hand document-shaped or HTML output to creating-html-documents",
+    "non-recursive section-level visual slices when creating-html-documents retains document ownership",
+    "handoff of roadmap progress and detailed technical diagrams to their existing owners"
+  ],
+  "dependencies": [
+    "host-provided safe local viewer only when opening a validated local artifact"
+  ],
+  "external_urls": [
+    "https://github.com/humanlayer/skills/tree/3c2629142c5d437428269b1b722b08c0b87f574d/plugins/show-me/skills/show-me",
+    "https://github.com/humanlayer/skills"
+  ],
+  "reviewer": {
+    "type": "main-agent-source-runtime-and-static-instruction-review",
+    "note": "Compared fixed Git commit, root tree, package tree, blob, quarantine capture, MIT license, frontmatter, review manifests, and local ownership boundaries without executing candidate code."
+  },
+  "date": "2026-09-06",
+  "next_review_date": "2026-12-06",
+  "decision": "pass"
+}

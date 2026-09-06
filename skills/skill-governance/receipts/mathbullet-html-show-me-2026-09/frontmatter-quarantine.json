@@ -1,0 +1,19 @@
+{
+  "command": "validate-frontmatter",
+  "findings": [],
+  "frontmatter_sha256": "9916b217bdf18ea973a83cef498d2b727fd5d2a2da7b2a7fa9e5760b7e47fe59",
+  "skill_sha256": "9b7c9137585b89dc8dda5ab27058edc059079d57fbab8cb1681c16ec9dd8019c",
+  "status": "validated",
+  "surface": {
+    "kind": "quarantine",
+    "revision": "fe96c626b39abba47fad2d4a4ef738e8a27602b1",
+    "skill_name": "html",
+    "source_id": "mathbullet-skills"
+  },
+  "target": "common",
+  "validator": "pyyaml-6.0.2-safe-loader",
+  "values": {
+    "description": "概念・仕組み・調査内容を、HTML による視覚的な説明ドキュメントとして作成・編集する。",
+    "name": "html"
+  }
+}
