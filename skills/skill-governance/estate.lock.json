@@ -64,7 +64,7 @@
       "relative_path": "article-writing",
       "resolved_name": "article-writing",
       "root_id": "claude",
-      "tree_sha256": "a10cc3ba449f0bb97c955eaa67a7ce1d0d5f080cb158999f595acccd28fd8bb9"
+      "tree_sha256": "c706014115759283f29a83272e4dd4a103566f32ed2098898244cbb117934872"
     },
     {
       "classification": "preexisting-unclassified",
@@ -118,7 +118,7 @@
       "relative_path": "brainstorming",
       "resolved_name": "brainstorming",
       "root_id": "claude",
-      "tree_sha256": "da2702020606d7b6fb653932bb14cffe0067a14c6b3f7ff902817dcb12d61ac9"
+      "tree_sha256": "759e06050c9f93d56e33dd4189c3c83492869cbfe74bfaca6b56dbf440d9d176"
     },
     {
       "classification": "preexisting-unclassified",
@@ -415,7 +415,7 @@
       "relative_path": "exploring-codebase",
       "resolved_name": "exploring-codebase",
       "root_id": "claude",
-      "tree_sha256": "90705efb93a64e2c5ae9cbf6406fa1fbdec4c5f83b6ac14b36fce106215ea816"
+      "tree_sha256": "4e43f874872d5d19ac8a2ace6f0fbc06ba45dd45b49f6723e1c00cda238119f2"
     },
     {
       "classification": "active",
@@ -1417,7 +1417,7 @@
       "relative_path": "article-writing",
       "resolved_name": "article-writing",
       "root_id": "codex",
-      "tree_sha256": "a10cc3ba449f0bb97c955eaa67a7ce1d0d5f080cb158999f595acccd28fd8bb9"
+      "tree_sha256": "c706014115759283f29a83272e4dd4a103566f32ed2098898244cbb117934872"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1471,7 +1471,7 @@
       "relative_path": "brainstorming",
       "resolved_name": "brainstorming",
       "root_id": "codex",
-      "tree_sha256": "762649441a727c23b4892ee9d52e45a8aa943e34060003f0ce1c8ba2fdaba707"
+      "tree_sha256": "b7286ad90a2bd62adbec65125380df70fdad47a4f7393873818b11f1a611386f"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1480,7 +1480,7 @@
       "relative_path": "build-fix",
       "resolved_name": "build-fix",
       "root_id": "codex",
-      "tree_sha256": "dd60f7a0f7047da911ab09895e2e80ba02f6eaa4b0db30267b2025ebc5bda3e4"
+      "tree_sha256": "38ac45adfa5898c2b316b644e297fbf2393d8ec2571aff1ee7e527b53928f437"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1804,7 +1804,7 @@
       "relative_path": "exploring-codebase",
       "resolved_name": "exploring-codebase",
       "root_id": "codex",
-      "tree_sha256": "69e49666d0c7b2ed76819713e1bbf42cc6eda77dae4e0e576b2f0c709180579a"
+      "tree_sha256": "934a52657c2622cbe252d4af2e652df84b046cb7f4d075019fc7f6f08b347ded"
     },
     {
       "classification": "active",
@@ -2350,6 +2350,15 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
+      "relative_path": "reviewing-codebases-architecture-first",
+      "resolved_name": "reviewing-codebases-architecture-first",
+      "root_id": "codex",
+      "tree_sha256": "dda562f1fce7dbe60e5950b2981373133337dc122f2cc9eecb46854279066450"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
       "relative_path": "root-cause-tracing",
       "resolved_name": "root-cause-tracing",
       "root_id": "codex",
@@ -2689,7 +2698,7 @@
       "relative_path": "viewing-plans",
       "resolved_name": "viewing-plans",
       "root_id": "codex",
-      "tree_sha256": "5d45c4630865387fee77fe3256899daf9129eb519f525793722de8aa5972456e"
+      "tree_sha256": "66f8f95698f24f17f04ac0d25b5df8960d2e686ee9859f420676a42af833d746"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2815,7 +2824,7 @@
       "relative_path": "article-writing",
       "resolved_name": "article-writing",
       "root_id": "shared",
-      "tree_sha256": "a10cc3ba449f0bb97c955eaa67a7ce1d0d5f080cb158999f595acccd28fd8bb9"
+      "tree_sha256": "c706014115759283f29a83272e4dd4a103566f32ed2098898244cbb117934872"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2851,7 +2860,7 @@
       "relative_path": "brainstorming",
       "resolved_name": "brainstorming",
       "root_id": "shared",
-      "tree_sha256": "da2702020606d7b6fb653932bb14cffe0067a14c6b3f7ff902817dcb12d61ac9"
+      "tree_sha256": "759e06050c9f93d56e33dd4189c3c83492869cbfe74bfaca6b56dbf440d9d176"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3040,7 +3049,7 @@
       "relative_path": "exploring-codebase",
       "resolved_name": "exploring-codebase",
       "root_id": "shared",
-      "tree_sha256": "2a9793f2e71d55cc4466bf7bb7e98135a532ef5d5ddcd6125d9452ee6fe3afbd"
+      "tree_sha256": "f693dd985e4c4a77f138e80e853d36b97e552c07dd96ffbc89adfd6d9a1968e7"
     },
     {
       "classification": "preexisting-unclassified",

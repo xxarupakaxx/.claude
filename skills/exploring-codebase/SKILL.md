@@ -1,11 +1,11 @@
 ---
 name: exploring-codebase
-description: コードベースの構造・パターン・依存関係を3つの並列 `explorer`/専門探索サブエージェント＋過去知見検索で深堀り調査。新しいPJの理解、機能追加前の影響範囲調査、アーキテクチャ把握に使用。「コードベースを調べて」「アーキテクチャを理解したい」「影響範囲を調査して」「構造を把握したい」等の依頼に対応。
+description: コードベースの構造・パターン・依存関係を、関心事に必要な範囲で調査。独立探索を委譲する利益がある場合だけ利用可能な担当roleを選ぶ。新しいPJの理解、機能追加前の影響範囲調査、アーキテクチャ把握に使用。「コードベースを調べて」「アーキテクチャを理解したい」「影響範囲を調査して」「構造を把握したい」等の依頼に対応。
 ---
 
 # コードベース深堀り探索
 
-3つの専門探索サブエージェント + 過去知見検索を並列起動し、コードベースを多角的に調査する。
+まずローカルで対象と未確認点を絞る。独立した探索を委譲する利益がある場合だけ、利用可能な担当roleをruntimeで確認し、必要なものを選んで調査する。人数・同時起動・代替roleは固定しない。担当が利用できない場合は弱いmodelへ暗黙fallbackせず、同等能力の代替を明示的に選ぶか、その観点を未実施として報告する。
 
 ## 既存設定との関係
 
@@ -29,9 +29,9 @@ description: コードベースの構造・パターン・依存関係を3つの
 - **関心事・キーワード**: 特定の機能、モジュール、技術要素（あれば）
 - **探索の深さ**: quick / medium / thorough（デフォルト: medium）
 
-### Step 2: 3つの探索サブエージェント + 過去知見検索を並列起動
+### Step 2: 必要な探索観点と担当を選ぶ
 
-**CRITICAL**: Agent Tool で以下4つを**同時に**起動する。
+まずローカルで対象と未確認点を絞る。独立した探索を委譲する利益がある場合だけ、`@context/agent-team-routing.md` のDelegation Gateに従って利用可能な担当roleを選ぶ。人数・同時起動・代替roleは固定しない。担当が利用できない場合は弱いmodelへ暗黙fallbackせず、同等能力の代替を明示的に選ぶか、その観点を未実施として報告する。
 
 各エージェントには以下の情報を渡す:
 - 探索対象ディレクトリのフルパス
@@ -41,7 +41,7 @@ description: コードベースの構造・パターン・依存関係を3つの
 
 #### Agent 1: Architecture Explorer
 
-**subagent_type**: `architecture-explorer`（未ロード時は `explorer`）
+**subagent_type**: `architecture-explorer`（利用可能な場合。不可なら弱いmodelへ暗黙fallbackせず、同等能力の代替を明示的に選ぶか担当を省略する）
 
 **プロンプトテンプレート**:
 ```
@@ -56,7 +56,7 @@ description: コードベースの構造・パターン・依存関係を3つの
 
 #### Agent 2: Data Flow Tracer
 
-**subagent_type**: `data-flow-tracer`（未ロード時は `explorer`）
+**subagent_type**: `data-flow-tracer`（利用可能な場合。不可なら弱いmodelへ暗黙fallbackせず、同等能力の代替を明示的に選ぶか担当を省略する）
 
 **プロンプトテンプレート**:
 ```
@@ -71,7 +71,7 @@ description: コードベースの構造・パターン・依存関係を3つの
 
 #### Agent 3: Dependency Mapper
 
-**subagent_type**: `dependency-mapper`（未ロード時は `explorer`）
+**subagent_type**: `dependency-mapper`（利用可能な場合。不可なら弱いmodelへ暗黙fallbackせず、同等能力の代替を明示的に選ぶか担当を省略する）
 
 **プロンプトテンプレート**:
 ```
@@ -86,7 +86,7 @@ description: コードベースの構造・パターン・依存関係を3つの
 
 #### Agent 4: Learnings Researcher（過去知見検索）
 
-**subagent_type**: `learnings-researcher`（未ロード時は `explorer` またはローカル `rg`/SQLite検索で代替）
+**subagent_type**: `learnings-researcher`（利用可能な場合。不可なら弱いmodelへ暗黙fallbackせず、親sessionの検索を明示的に選ぶか未実施として報告する）
 
 **プロンプトテンプレート**:
 ```
@@ -104,7 +104,7 @@ MEMORY_DIRはPJ CLAUDE.mdで定義（未定義なら .local/）。
 
 ### Step 3: 結果の統合
 
-4つのサブエージェントの結果を以下の形式で統合:
+実際に調べた観点の結果を以下の形式で統合。未調査の観点を調査済みとして埋めない:
 
 ```markdown
 # コードベース探索結果
@@ -113,19 +113,19 @@ MEMORY_DIRはPJ CLAUDE.mdで定義（未定義なら .local/）。
 [1-3行で全体像。技術スタック、主要な構成パターン、特筆すべき特徴]
 
 ## Architecture
-[Agent 1の結果をそのまま記載]
+[Architecture観点で確認できた事実と根拠。未調査ならその旨を記載]
 
 ## Data Flow
-[Agent 2の結果をそのまま記載]
+[Data Flow観点で確認できた事実と根拠。未調査ならその旨を記載]
 
 ## Dependencies
-[Agent 3の結果をそのまま記載]
+[Dependencies観点で確認できた事実と根拠。未調査ならその旨を記載]
 
 ## Past Learnings
 [Agent 4の結果。過去の関連知見・解決策・落とし穴。該当なしの場合は「関連する過去知見なし」]
 
 ## 注目ポイント
-- [3つのエージェントの結果を横断して、特に重要な発見を箇条書き]
+- [実際に調査した観点を横断して、判断に影響する発見を箇条書き]
 
 ## 追加調査が必要な箇所
 - [深堀りすべき箇所があれば記載]
@@ -154,7 +154,7 @@ MEMORY_DIRはPJ CLAUDE.mdで定義（未定義なら .local/）。
 
 ## Agent Teams連携
 
-`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` が有効な場合、`~/.claude/agents/` の定義をTeamメンバーとして直接使用可能。大規模コードベースではAgent Teamsでの並列探索がより効果的。
+`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` が有効で、かつ委譲の利益がある場合だけ、`~/.claude/agents/` の定義から利用可能なroleをTeamメンバーとして選択する。大規模コードベースでも全員起動を既定にせず、必要なroleだけ並列探索する。
 
 ## 既存設定への参照
 
