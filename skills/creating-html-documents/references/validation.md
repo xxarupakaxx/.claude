@@ -17,6 +17,17 @@
 
 既定viewportは1440x900。mobile、tablet、print、PDFは明示依頼時だけ追加する。
 
+browser toolが `file:` URLを開けない場合は、生成fileの親directoryを `python3 -m http.server --bind 127.0.0.1` で一時的に配信し、検査後に停止する。
+
+SVGを含む文書では、page上で次を機械検査し、いずれも0にしてから目視する。
+
+- 同じSVG内の `text` のbbox同士の重なり。
+- `text` のbboxが、触れている `rect` の内側に収まっていない（はみ出し）。
+- `text` のbboxがviewBoxの外に出ている。
+- `marker-end` が参照するidが文書内に存在する。
+
+検査後、各図をscreenshotで目視し、矢印とラベルの対応、線と文字の衝突を確認する。
+
 次を記録する。
 
 - viewport、document、bodyのscroll width。
@@ -55,6 +66,7 @@
 - 「処理する」「連携する」「対応する」だけでdetailを閉じていない。
 - 単一事実、単純な一操作、短い値比較、2要素だけのbefore / afterに不要な図を強制していない。
 - 各sectionは一つの問いに答える。
+- 初学者向けexplainerでは、場面の絵、登場人物の地図、主要章の「たとえるなら」と「比喩の限界」、歴史の章、仮設の代表ケース、章ごとの絵、自己テストが揃っている。
 - 同じ情報を複数componentで繰り返さない。
 - 事実、推論、提案、未確定が区別できる。
 - 制作指示、会話、prompt、placeholderが残っていない。

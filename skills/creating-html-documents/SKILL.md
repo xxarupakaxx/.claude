@@ -17,6 +17,7 @@ HTMLを書く前に次を一行ずつ確定する。
 4. 中心主張: 冒頭だけで伝える結論。
 5. 根拠: 事実、比較、図、差分、出典のどれが主張を支えるか。
 6. 配布条件: local単一file、隣接asset、desktop以外の対応要否。
+7. 読者の前提知識: そのドメインの初学者か、実務者か。初学者向けなら、指示がなくても `references/illustrated-explainer.md` の既定を章立てへ組み込む。
 
 複数Phaseの作業では、先に `viewing-plans` でRoadmapを生成する。Roadmapは目的・現在地・次Taskを示し、完成HTMLは判断と説明を担う。両者へ同じ本文を複製しない。
 
@@ -30,6 +31,19 @@ HTMLを書く前に次を一行ずつ確定する。
 - `research-report`: 結論、Overview-first gate該当時のorientation / overview、scope、方法、発見、限界、含意、推奨、source。
 
 文書型は固定templateではない。各章に一つの問いを与え、その問いに合うvisual patternを一つ選ぶ。
+
+## 初学者向けexplainerの既定
+
+読者に前提知識がない、「〜とは何か」「仕組みを知りたい」「まっさらな人向け」「ドメインを把握したい」のいずれかに当たる依頼では、`technical-explainer` に次の既定を自動で加える。ユーザーがアナロジーや絵を明示していなくても省略しない。詳細な型と描き方は `references/illustrated-explainer.md` に置く。
+
+- 具体と抽象の往復: 主要章ごとに「たとえるなら」の囲みを一つ置き、必ず「比喩の限界」を併記する。身近な例で掴ませてから、専門用語へ戻す。
+- なぜ生まれたか: 歴史、以前の方法、何を解いたか、何が難しくなったか、を独立した章にする。
+- 絵としてのoverview: 箱と矢印の流れ図で終えず、登場人物・モノ・書類・お金・記録を描いた場面の絵にする。続けて「登場人物の地図」を置き、周辺の主体が中心の当事者のどの番号を手伝うか縛るかを章番号つきで示す。
+- 詳細章ごとに一枚: 各章の問いに合う型（同型並列、両端、昔と今の帯、ものさし、資金の穴、階段、before / afterの帯）を一枚ずつ差し込む。図番号は章番号ベースにする。
+- 代表ケース: 仮設と明示した数字で、1件が最後まで流れる時系列を追う。
+- 締め: 自己テストの問いと答え、用語集railを置く。
+
+実務者向けのchange-reviewやdecision-planには適用しない。読者が初学者かどうか判断できないときは、読者と目的の一文で決め、判断を文書のmetaに残す。
 
 ## show-meをvisual layerとして使う
 
@@ -105,6 +119,11 @@ detailはoverviewと同じ名称、番号、境界名で接続する。overview�
 | 合格したか | acceptance matrix、evidence table |
 | 正確な値は何か | table。必要時だけchartを添える |
 | 用語・出典を確認したい | evidence rail、脚注、source list |
+| 全体を一枚の絵で見たい | 場面の絵（scene overview）、登場人物の地図 |
+| 身近な例と同じ形か | 同型並列図 |
+| 昔と今で何が変わったか | 期間の帯比較 |
+| どこまで許すか、いくらまでか | ものさし、bar |
+| 悪化するとどうなるか | 下りの階段 |
 
 cardを先に並べない。同じ状態をbadge、card、summary、diagramで重複表示しない。文章で十分ならvisualを増やさない。
 
@@ -113,7 +132,7 @@ cardを先に並べない。同じ状態をbadge、card、summary、diagramで�
 1. source inventoryとclaim ledgerを作り、根拠不足と未確認を分離する。
 2. 各sectionの問いを定め、文章・tableだけで十分かを先に判断する。視覚化がmaterialなsectionだけ、`document-owner: creating-html-documents`を付けて`show-me`から最小表現またはvisual briefを得る。
 3. `assets/editorial-document.html` を基礎にする。既存HTMLの編集ではfilenameを変えない。
-4. 文書型に応じて章を選び、不要なplaceholderとcomponentを削る。
+4. 文書型に応じて章を選び、不要なplaceholderとcomponentを削る。読者が初学者なら、初学者向けexplainerの既定（アナロジー、歴史、場面の絵、登場人物の地図、章ごとの絵、代表ケース、自己テスト）を章立てへ組み込む。
 5. 中心主張と現在地を最初のviewportに置く。背景説明から始めない。
 6. orientation triggerに該当する場合だけ、中心主張の直後に短いorientationとoverview SVGを置く。
 7. claim ledgerのdetail unitを本文へ展開する。重要な主張は具体例、境界、evidence、含意へ接続する。
@@ -122,7 +141,7 @@ cardを先に並べない。同じ状態をbadge、card、summary、diagramで�
 10. codeはescapeし、言語classまたは明示labelを付ける。変更系文書では、変更理由の直後に関連diffを示す。
 11. 表は見出しcellへ`scope`を付ける。
 12. 出典は主張の近くに置き、末尾のsource listへ接続する。sourceの内容と会話上の推測を混ぜない。
-13. `references/validation.md` のgateを通す。
+13. `references/validation.md` のgateを通す。SVGを含む文書では、図中textの重なり、囲みrectからのはみ出し、viewBox外を機械検査し、0にしてから目視する。
 14. 検証合格後、ユーザーが自動表示を不要と明示していなければ、生成fileの絶対pathをhostのplatform openerで開く。
 15. browser表示の成否、生成fileの絶対path、文書型、検証結果、残る制約を報告する。
 
@@ -164,6 +183,8 @@ cardを先に並べない。同じ状態をbadge、card、summary、diagramで�
 - overview、見出し、一般論だけで本文を埋めていない。
 - triggerに該当しない単純文書では、図を省いた理由が文書構造上自然で、結論、scope、根拠が不足していない。
 - `show-me`へ渡したsectionは局所visual sliceとして閉じ、文書ownerの循環、章立ての重複、根拠のない要素追加がない。
+- 初学者向けexplainerでは、場面の絵と登場人物の地図があり、主要章に「たとえるなら」と「比喩の限界」があり、歴史の章、仮設の代表ケース、章ごとの絵、自己テストが揃っている。
+- SVG図のtext同士の重なり、rect外へのはみ出し、viewBox外が0である。
 - 明示的なopt-outがない限り検証済みfileをbrowserで開き、起動できない環境では失敗理由と絶対pathを報告する。
 
 見た目の好みだけで合格にしない。中心主張、具体的detail、根拠到達、含意、安全性を確認する。mobile、print、PDFは依頼された場合だけ追加rubricを適用する。
