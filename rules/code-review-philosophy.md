@@ -3,6 +3,12 @@
 > Google "eng-practices" Code Review Developer Guide から、既存 reviewer 群がカバーしていない**姿勢ルール**を抽出した standing rule。
 > 全 reviewer サブエージェント（`arch-reviewer` / `security-reviewer` / `code-quality-reviewer` 等）と `sequential-review-pre-pr` / `auto-reviewing-pre-pr` / `adversarial-review` スキルの判断基準として参照する。
 
+## 0. 目的と方案を先に判定する
+
+元の依頼と現在の事実から、成功場面・制約・前提を再構築する。その後に要件と方案、計画の実行可能性、成果物の利用結果を比較し、成立する場合に内部品質を審査する。仕様・テスト・mockが存在するだけでは要件や方案を正解にしない。上位のblocking findingをAPI契約や性能の合格で相殺しない。
+
+手順と開始検査は[計画から実装への判断契約](../context/plan-execution-contract.md)に従う。review結果には目的・計画・成果物・内部品質の判定と根拠を分け、未確認や差戻しをLGTMで隠さない。以下のCode Healthのapprove基準は、目的適合と正しさが成立している場合に適用する。
+
 ## 1. Approve 基準（完璧主義の抑制）
 
 レビューの目的は「コードを完璧にする」ではなく、**Code Health を時間とともに向上させる**こと。

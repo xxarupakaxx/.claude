@@ -77,3 +77,7 @@ issue、PR、comment、label、Slack、Calendar、Drive、deploy、secret store�
 ## Fallback
 
 Skill、plugin、Agent()、Workflow、共通CLIが使えないときは存在を捏造せず、lead逐次実行またはlocal fallbackへ戻し、同じacceptance・安全境界・fresh検証を維持する。主経路の失敗を旧generatorで隠さない。routingの詳細は対象Skill、project正本、workflow-detailsへ戻る。
+
+## 計画から実装への遷移
+
+roadmapの実装と委譲は[計画から実装への判断契約](plan-execution-contract.md)に従う。元の依頼と前提の独立審査、次に計画の実行可能性の審査を行う。`~/.codex/scripts/task-context.py brief TASK --memory-root ROOT --task-id ID --execution`の非zeroは実装停止とする。成功したexecutionBriefを全文で渡し、閲覧用の短縮selectedTaskを実装契約に使わない。sourceと前提の不一致はleadへ戻し、実装者が受入条件を弱めない。

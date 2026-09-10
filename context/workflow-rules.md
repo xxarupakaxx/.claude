@@ -108,3 +108,7 @@ Workflow routeは工程の形で、Local / Fast / Standard / Heavy / Judgmentの
 - context/codemap.md
 - context/html-artifact-contract.md と config/html-surfaces.json
 - rules/model-routing.md、rules/complexity-budget.md、rules/security.md
+
+## 計画から実装への開始条件
+
+roadmap / explicit-roadmapのPhase 3では、対象sourceへの最初のwriteとAgent()への委譲より前に[計画から実装への判断契約](plan-execution-contract.md)を読む。`~/.codex/scripts/sync-roadmap.py`のPhase 3と`~/.codex/scripts/task-context.py brief TASK --memory-root ROOT --task-id ID --execution`を実行し、非zeroならPhase 2へ戻す。成功したexecutionBriefを全文で渡す。元の依頼・前提の独立審査、計画審査、成果物の目的適合を内部品質より先に確認し、仕様通りという理由だけで合格にしない。この開始条件は既存の閲覧用JIT briefの手順へ追加適用する。
