@@ -13,3 +13,5 @@
 原典の簡潔な visual explanation と representation chooser を保ち、Mermaid をローカルの SVG 正本契約へ置き換えた。`Bash(open ...)` は特定 shell に固定せず、ホストが提供する安全なローカル viewer を使う契約へ変更した。Roadmap は `viewing-plans`、詳細な技術図は `diagram-design` の責務として境界を追加した。
 
 2026-09-06の追加適合では、複数章・claim ledger・自己完結HTMLを`creating-html-documents`へ渡すowner境界を追加した。同Skillから呼ばれた場合はsection単位のvisual briefまたは最小表現だけを返し、再委譲しない。
+
+2026-09-11の追加適合では、複数fileをまたぐ処理をruntime call depthのLevel、mode別call tree、side-effect境界、source解決、null / placeholder、rate-limit単位で追うsource-backed dependency traceを追加した。自己完結HTMLのowner境界と`diagram-design`のSVG契約は維持する。

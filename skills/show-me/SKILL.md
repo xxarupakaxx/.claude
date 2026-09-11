@@ -1,6 +1,6 @@
 ---
 name: show-me
-description: 現在の話題を、最小限の擬似コード、call tree、component / file tree、diff、またはSVGで視覚的に説明する。ユーザーが「show me」「図で」「構造を見せて」「流れを見せて」など、文章だけでなく見える形の説明を求めたときに使う。複数章の長文資料や自己完結HTML文書はcreating-html-documentsへ渡す。
+description: 現在の話題を、最小限の擬似コード、call tree、component / file tree、ファイル・関数依存trace、diff、またはSVGで視覚的に説明する。ユーザーが「show me」「図で」「構造を見せて」「流れを見せて」「ファイルごとに処理を追いたい」など、文章だけでなく見える形の説明を求めたときに使う。複数章の長文資料や自己完結HTML文書はcreating-html-documentsへ渡す。
 ---
 
 # Show Me
@@ -88,6 +88,95 @@ src/
 ```
 
 ほとんどが新規で、省略すると ownership や順序が隠れる場合は差分ではなくブロック全体を示す。
+
+## ファイルと関数を依存レベルで追う
+
+複数fileをまたぐ処理について「入口からどの関数が何を呼び、どこで副作用が起きるか」を求められた場合は、浅いfile treeだけで終えず、source-backedなdependency traceを作る。
+
+### Levelの定義
+
+Levelは静的import数ではなく、ユーザー操作または外部入力から見た実行時の呼び出し深度とする。入口をLevel 0、その直接の受け手をLevel 1として、DB・外部APIなどの副作用境界まで降りる。循環、callback、queue、workflow再開によって単純な深度にならない場合は、Levelを捏造せずhandoff名または再入点を明記する。
+
+各Levelに最低限、次を結びつける。
+
+- file pathと主要symbol。
+- 呼出元と呼出先。
+- 受け取るinputと次へ渡すpayload。
+- read-only、DB write、外部write、状態遷移などのside effect。
+- branch、停止条件、retryまたはrecovery。
+- 根拠となるsource anchor。確認できない関係は`unknown`とする。
+
+### modeを混ぜない
+
+同じ入口から複数modeへ分岐する場合は、巨大な一本のtreeにせず、該当するものだけを別traceに分ける。
+
+1. preview / dry-runなどのread-only経路。
+2. DB mutation経路。
+3. external sync経路。
+4. 実行後verification / completion経路。
+
+dry-runが台帳作成などの内部writeを行う場合は「対象データは未変更」と「実行記録は作成」を分けて書く。placeholder、CSV上の表現、DB上の`null`、実際に永続化される値も混同しない。
+
+外部APIを含む場合は、rate limitの単位を正確に書く。例えば「1 entity/秒」と「1 API request/秒」を同一視せず、process-localかsharedか、readにも適用されるか、retryでrequest数が増えるかをsourceから確認する。
+
+### 出力の既定
+
+まず依存Levelの一覧を置き、その後にmode別call treeを置く。関係が3要素以上でshared dependencyや分岐を空間で読む価値がある場合だけ、`diagram-design`のdependency契約でSVGを加える。
+
+```text
+Level 0  Screen.tsx
+         submit()
+           ↓ POST request
+Level 1  route.ts
+         POST() → validate() → startWorkflow()
+           ↓ validated payload
+Level 2  workflow.ts
+         runWorkflow() → activity()
+           ├─ dry-run → preview service       [read]
+           ├─ execute → repository transaction [DB write]
+           └─ sync → external client           [external write]
+```
+
+続けて、必要なmodeだけを展開する。
+
+```text
+dry-run
+route.POST
+└─ workflow
+   ├─ validate source
+   ├─ calculate projected result
+   └─ save preview ledger   [対象データは未変更／台帳はwrite]
+
+execute
+route.POST
+└─ workflow
+   └─ repository.transaction
+      ├─ remove old relation
+      ├─ add new relation
+      └─ save item result    [DB write]
+```
+
+自己完結HTMLが必要なら文書ownerを`creating-html-documents`へ渡し、visual briefに次を追加する。
+
+```text
+dependency-level-definition: runtime call depth | handoff stages
+mode-traces: preview | mutation | external-sync | verification のうち必要なもの
+side-effect-boundaries: DB write、external write、ledger-only write
+source-resolution: 入力にない種別や対象をどの関数が解決するか
+null-and-placeholder: 表示値、照合値、永続値の対応
+rate-limit-unit: entity、API request、process、shared quotaのどれか
+```
+
+### 合格条件
+
+- 入口から副作用まで、fileとsymbolを交互に辿れる。
+- dependency Levelの意味が明記され、静的import深度と混同しない。
+- dry-run、mutation、external sync、verificationの境界が読める。
+- 「何を変更するか」と「照合にだけ使う値」が区別されている。
+- source種別を入力が持たない場合、その解決方法と曖昧時の停止条件がある。
+- rate limitの粒度を過大に保証していない。
+- 各edgeをsource anchorへ戻せる。推測は事実として描かない。
+- SVGを使う場合は`diagram-design`のnode・edge上限と検証gateを通す。
 
 ## SVGとHTMLへのhandoff
 
