@@ -43,6 +43,10 @@ Skillやテンプレートの定型を理由に、この原則に反する加筆
 
 上4項目は「仮定を明示する / 最小を選ぶ / 触るべき場所だけ触る / 検証可能な合格基準まで進める」の4原則である。TypeScript の Before/After 実例は `skills/karpathy-examples/EXAMPLES.md` にある。typo 修正や自明な1行変更へ厳格適用しない。
 
+## UI 変更時の fresh review
+
+UI の新規画面・コンポーネント追加、またはユーザーが観察できる挙動・レイアウト構造を変える実装を終えたら、`rules/ui-fresh-review.md` に従う。余白・色・既存文言の微修正など、挙動や構造を変えない変更には適用しない。
+
 ## 指示と知識の配置
 
 - sessionをまたぐ情報はMemoryだけに置かず、git管理された正本へ反映する。
@@ -130,6 +134,7 @@ Superpowers は強い道具だが既定の process gate ではない。
 | team-run composition / exit gate | `context/team-run.md` と `commands/team-run.md` |
 | 複数loopのgraph統治 | `context/graph-engineering.md` と `skills/graph-engineering/SKILL.md` |
 | model / Cost Ladder | `rules/model-routing.md` |
+| UI変更後の独立レビュー | `rules/ui-fresh-review.md` |
 | code complexity budget | `rules/complexity-budget.md` |
 | ADR判定 | `rules/adr-criteria.md` |
 | secret管理の詳細（対象path） | `rules/security.md` |
