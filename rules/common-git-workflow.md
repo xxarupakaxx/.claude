@@ -33,6 +33,16 @@ Google eng-practices 準拠。**First Line** + 空行 + **Body** の 2 部構成
 - ベースブランチ: PJ CLAUDE.mdの`BASE_BRANCH`（未定義時: develop → main → master）
 - 長期ブランチは定期的にベースからリベース
 
+## 変更完了時のpush
+
+変更依頼では、必要な検証を終え、自分の変更だけをコミットした後、現在のブランチに対応する既存のリモートブランチへ通常pushする。条件が揃う場合は再確認を求めず、pushと到達確認までを完了条件に含める。
+
+- 送信先は設定済みupstreamを優先する。upstreamがなければ、設定済みremote上の同名ブランチが一意に存在する場合に使う。無関係なブランチの存在を根拠に送信先を選ばない。
+- fetchで最新状態を確認し、remote・送信先branch・送信するcommitを照合する。リモート側が進んでいれば既存変更を保全して統合し、必要な検証後に通常pushする。競合の解決が目的や仕様を変える場合だけ確認する。
+- ユーザーがpush不要・ローカル作業のみと指定した場合は従う。送信先不明、新規remote・新規remote branch、履歴書換え、branch protectionや認証の変更は、この自動pushの範囲に含めない。project固有の送信先制約を守る。
+- 他の未送信commitが含まれる場合は内容と依頼範囲を確認し、無関係な変更を混ぜて送らない。未コミット変更をまとめてstageしない。
+- 成功後はリモートのcommitを照合し、push先とcommit hashを報告する。失敗した場合は原因を示し、未実施を成功として扱わない。
+
 ## PR
 
 - PRタイトルは70文字以内（コミット First Line と同じ規約）
@@ -59,7 +69,6 @@ Google eng-practices 準拠。**「自己完結した 1 つの変更」**が単�
 
 ## 禁止事項
 
-- main/masterへの直接push
 - `--force` push（`--force-with-lease`は許容）
 - `--no-verify`でフックをスキップ
 - 機密情報（.env, credentials）のコミット

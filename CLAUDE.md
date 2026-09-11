@@ -148,3 +148,5 @@ Superpowers は強い道具だが既定の process gate ではない。
 - code変更ではComplexity Budgetの`target / actual / variance / reason`を報告し、non-code taskでは`N/A (non-code)`とする。
 - WebSearch / WebFetch / deepwiki等で外部記事を調査した場合、回答の最後に参考リンク（タイトル + URL）を列挙する。
 - GitHub CLIを使う場合は`gh auth status`でprincipalを確認する。既定accountは`xxarupakaxx`とし、切替が必要なら自動で行わない。
+
+変更依頼では、自分の変更を検証・コミットした後、既存の送信先ブランチが明確なら`rules/common-git-workflow.md`に従い再確認せず通常pushと到達確認まで行う。
