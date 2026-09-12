@@ -1,0 +1,19 @@
+{
+  "command": "validate-frontmatter",
+  "findings": [],
+  "frontmatter_sha256": "1276276fc3ec24b6e74906497390d9b2f85d3a2f044cb9e5d50aa3c30e404b86",
+  "skill_sha256": "7b1c73860165f24deaf26d3ded4ca6f05d1d2dca81578bf09c6c4881f711bb62",
+  "status": "validated",
+  "surface": {
+    "collection_id": "mathbullet-html-show-me-2026-09",
+    "kind": "review",
+    "skill_name": "creating-html-documents",
+    "target_id": "codex"
+  },
+  "target": "codex",
+  "validator": "pyyaml-6.0.2-safe-loader",
+  "values": {
+    "description": "日本語の計画書、技術解説、調査報告、変更レビュー、長文資料を、具体的な根拠・仕組み・境界・含意まで読めるdesktop向け自己完結HTMLとして作成・編集する。ユーザーがHTML、ブラウザで読む報告書、図・表・コード差分を含む説明資料を求めたときに使う。mobile、印刷、PDFは明示依頼時だけ扱う。",
+    "name": "creating-html-documents"
+  }
+}

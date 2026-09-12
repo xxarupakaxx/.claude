@@ -1,0 +1,21 @@
+{
+  "approval_message": "OK",
+  "approver": {
+    "name": "yoshiki",
+    "type": "human"
+  },
+  "authorization_evidence": {
+    "path": "receipts/astra-2026-09-12/emilkowalski-ja-2026-07/user-authorization.json",
+    "sha256": "4f7b51f53ea5931e52462fe3c9b3e8cd3950abcfc455f5340ae42931e366da62"
+  },
+  "authorization_type": "Explicit task and repair-scope approval; fresh evidence linked by the executing agent, not a claim that the user manually inspected each hash",
+  "collection_id": "emilkowalski-ja-2026-07",
+  "date": "2026-09-12",
+  "decision": "approved",
+  "generation": 3,
+  "kind": "approval",
+  "safety_receipt_sha256": "b3fd5160707da5c3eb794582b8f240ac1f8b912f63e78649f8ef7ba37756df14",
+  "schema_version": 1,
+  "subject_sha256": "1cfc1d4d5ae3b619aa9112c2b0766592447d607f25b74ab44526ab6556df0f79",
+  "value_receipt_sha256": "c6608052f0f9b515bc40aae6ba55ec901dd575489c8344df1566dbf205d9f663"
+}

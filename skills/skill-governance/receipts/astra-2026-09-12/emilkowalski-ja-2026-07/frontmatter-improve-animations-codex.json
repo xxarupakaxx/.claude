@@ -1,0 +1,19 @@
+{
+  "command": "validate-frontmatter",
+  "findings": [],
+  "frontmatter_sha256": "68bf706559be8a8951a4e24171dbdc4a28e6a485243cfa2c932429c55bf8f2c6",
+  "skill_sha256": "82e413c7b3705f948d42b5c5a4e9ffaaef22e1059452e5d10152e33dad90e5ad",
+  "status": "validated",
+  "surface": {
+    "collection_id": "emilkowalski-ja-2026-07",
+    "kind": "review",
+    "skill_name": "improve-animations",
+    "target_id": "codex"
+  },
+  "target": "codex",
+  "validator": "pyyaml-6.0.2-safe-loader",
+  "values": {
+    "description": "コードベースのアニメーションを read-only で監査し、優先順位付きの指摘と、別担当が実装できる自己完結した計画を作る。「アニメーションを改善して」「モーションを監査して」など、単一差分の review ではなくロードマップを求める依頼に使う。",
+    "name": "improve-animations"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "command": "validate-frontmatter",
+  "findings": [],
+  "frontmatter_sha256": "c49ab14cc70b439c6e061b6a60a57bd3365305122d65ed04712677d3b4a5523a",
+  "skill_sha256": "5cf8247cf94a02c64ed8c24dbfb670c96dfb0b6623ade9e86910536950a4f51f",
+  "status": "validated",
+  "surface": {
+    "collection_id": "emilkowalski-ja-2026-07",
+    "kind": "review",
+    "skill_name": "review-animations",
+    "target_id": "codex"
+  },
+  "target": "codex",
+  "validator": "pyyaml-6.0.2-safe-loader",
+  "values": {
+    "description": "ユーザーがアニメーションまたは motion のコードレビューを明示したとき、Emil Kowalski 系の目的・感触・中断可能性・性能・a11y基準で確認する。実装や motion 以外のレビューには使わない。",
+    "name": "review-animations"
+  }
+}

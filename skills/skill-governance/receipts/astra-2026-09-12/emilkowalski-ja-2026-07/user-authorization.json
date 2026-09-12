@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "kind": "user-authorization-evidence",
+  "thread_id": "01a09483-d00a-73d0-b49a-31dcf5a4fea3",
+  "date": "2026-09-12",
+  "objective": "~/.codex の AGENTS.md と全スキルを指定記事に沿って最適化し完了まで進める",
+  "request": "Claude側を含む管理台帳・承認証跡の修復まで進めてよいですか？",
+  "response": "OK",
+  "author": "yoshiki",
+  "source": "Current user message in this thread; approval follows the linked reviewed change report and scope question.",
+  "scope": [
+    "reviewed Codex skill wording changes",
+    "necessary governance estate and receipt repair",
+    "Claude governance replica synchronization",
+    "scoped commits and normal pushes to existing upstreams"
+  ],
+  "limitations": [
+    "No unrelated Claude dirty files",
+    "No new upstream install or revision change",
+    "No reuse of old approval as evidence for a new subject"
+  ],
+  "review_report": "review.md",
+  "change_manifest": "pending-runtime-manifest.json"
+}

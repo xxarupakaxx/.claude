@@ -1,0 +1,52 @@
+{
+  "failed": 0,
+  "method": "Independent static classifications compared by lead; not runtime model invocation or quality measurement",
+  "pass_at_1": 1.0,
+  "precision": 1.0,
+  "recall": 1.0,
+  "source": "html-fresh-review.json",
+  "trials": [
+    {
+      "actual": "creating-html-documents",
+      "expected": "creating-html-documents",
+      "passed": true,
+      "reason": "descriptionが日本語の計画書とHTMLを対象にし、本文にもdecision-plan型とRoadmap責務分離があるため、creating-html-documentsの文書triggerに一致する。",
+      "request": "この技術導入案を、採否、実装Wave、受入条件、リスクが分かる自己完結HTML計画書にして。Roadmapとは役割を分けてください。"
+    },
+    {
+      "actual": "creating-html-documents",
+      "expected": "creating-html-documents",
+      "passed": true,
+      "reason": "technical-explainer、図、処理、制約、自己完結HTMLを明示する依頼であり、descriptionと本文の主要適用条件に一致する。",
+      "request": "このシステムの仕組みを、用語欄、構成図、処理フロー、制約を含む日本語HTML解説にしてください。外部CDNは使わないで。"
+    },
+    {
+      "actual": "creating-html-documents",
+      "expected": "creating-html-documents",
+      "passed": true,
+      "reason": "HTML技術解説に加え、前提知識がない・ドメインを把握したいという現行初心者triggerに明示的に一致する。",
+      "request": "掛け払いとは何か、決済の知識がまったくない人向けに、その資料だけでドメインを把握できるHTMLにしてください。"
+    },
+    {
+      "actual": "none",
+      "expected": "none",
+      "passed": true,
+      "reason": "HTML、計画書、解説、報告、レビュー、長文資料を求めず、Pythonテスト修正だけなのでdescriptionの文書triggerに一致しない。",
+      "request": "Pythonのテストだけ直して"
+    },
+    {
+      "actual": "none",
+      "expected": "none",
+      "passed": true,
+      "reason": "画像生成だけを求め、HTML文書やHTMLに埋め込む図を求めていないためcreating-html-documentsをtriggerしない。",
+      "request": "画像を一枚生成して"
+    },
+    {
+      "actual": "none",
+      "expected": "none",
+      "passed": true,
+      "reason": "show-meの単独依頼だが、HTML文書や長い説明を明示的に不要としている。現行SKILL.mdのshow-me owner契約とdescriptionのHTML文書条件は、局所visual sliceだけで文書全体をtriggerしない境界になっている。",
+      "request": "この関数の呼び出し順だけshow me。HTML文書や長い説明はいりません。"
+    }
+  ]
+}

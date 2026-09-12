@@ -1,0 +1,19 @@
+{
+  "command": "validate-frontmatter",
+  "findings": [],
+  "frontmatter_sha256": "515293a2539426f9f31a64c8498078611a4feaaa331e59e6a857ef92d1a1e71d",
+  "skill_sha256": "11ed583619e65c57447f2374818573a00ffd90f06d636d1a775f5c09d608a829",
+  "status": "validated",
+  "surface": {
+    "collection_id": "emilkowalski-ja-2026-07",
+    "kind": "review",
+    "skill_name": "emil-design-eng",
+    "target_id": "codex"
+  },
+  "target": "codex",
+  "validator": "pyyaml-6.0.2-safe-loader",
+  "values": {
+    "description": "ユーザーが UI のモーションやコンポーネントの手触りを磨くよう求めたとき、Emil Kowalski 系の設計判断を適用する。一般的な機能実装やモーション以外のコードには使わない。",
+    "name": "emil-design-eng"
+  }
+}

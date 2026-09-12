@@ -1,0 +1,77 @@
+{
+  "adaptation": "platform-adapted",
+  "astra_revision": {
+    "date": "2026-09-12",
+    "previous_adaptation": {
+      "path": "adaptations/humanlayer-show-me-2026-09.json",
+      "sha256": "b8315c66eb5799281150a1b73c43c355506172b124c2e47c30a22f00d738d165"
+    },
+    "review_evidence": {
+      "path": "receipts/astra-2026-09-12/humanlayer-show-me-2026-09/independent-review.json",
+      "sha256": "6b9bf499309bea539976b79802142bb6ef8bf18a009fabc4f3d3b80e48ffde52"
+    },
+    "scope": "Reviewed Codex instruction optimization and re-review of existing current targets; no upstream revision or capability expansion",
+    "target_changes": {
+      "show-me": {
+        "claude": {
+          "previous_review_tree_sha256": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9",
+          "review_tree_sha256": "526d49e4b44cd1e6c282e30cc3cb59934be5828b3cb9a2c7750477fca898dc39",
+          "source": "/Users/yoshiki/.claude/skills/show-me"
+        },
+        "codex": {
+          "previous_review_tree_sha256": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9",
+          "review_tree_sha256": "526d49e4b44cd1e6c282e30cc3cb59934be5828b3cb9a2c7750477fca898dc39",
+          "source": "/Users/yoshiki/ghq/github.com/xxarupakaxx/.codex/.local/context/astra-optimization/stage/skills/show-me"
+        }
+      }
+    }
+  },
+  "changed": [
+    "Mermaid is replaced by accessible SVG as the canonical source for new diagrams",
+    "Bash(open ...) is replaced by the host's safe local viewer after validation",
+    "external assets, scripts, network requests, local servers, and invented facts are prohibited",
+    "Roadmap progress is routed to viewing-plans and detailed technical diagrams to diagram-design",
+    "document-shaped and self-contained HTML output is routed to creating-html-documents through a bounded visual brief",
+    "calls from creating-html-documents return only a local visual slice and never recurse back to the document owner",
+    "Codex and Claude review targets are byte-identical"
+  ],
+  "collection_id": "humanlayer-show-me-2026-09",
+  "content_relation": "reviewed-local-adaptation",
+  "excluded": [
+    "automatic publication, commit, or push",
+    "platform-specific shell invocation",
+    "remote font, image, script, iframe, or network dependency"
+  ],
+  "execution": {
+    "candidate_code_execution": false,
+    "external_network_in_adaptation": false,
+    "runtime_mutation": false
+  },
+  "kind": "adaptation-diff",
+  "license": "MIT",
+  "pending": {
+    "promotion": true,
+    "safety_receipt": true,
+    "target_bound_human_approval": true,
+    "value_receipt": true
+  },
+  "preserved": [
+    "smallest useful visual chosen from pseudocode, call tree, component tree, file tree, diff, and SVG",
+    "brief prose placed beside the visual",
+    "real product labels and data instead of invented detail",
+    "avoid overwhelming the user with every representation"
+  ],
+  "quarantine_tree_sha256": "735bf92c237bd9bd9114af68babcdf33fad710e6d25800163a07dab1b64457ca",
+  "review_stage": "/Users/yoshiki/.local/share/skill-governance/review/humanlayer-show-me-2026-09/show-me",
+  "risk_tier": "L0",
+  "schema_version": 1,
+  "source_id": "humanlayer-skills",
+  "source_path": "plugins/show-me/skills/show-me/SKILL.md",
+  "source_revision": "3c2629142c5d437428269b1b722b08c0b87f574d",
+  "status": "reviewed",
+  "target_tree_sha256": {
+    "claude": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9",
+    "codex": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9"
+  },
+  "upstream_package_tree_sha": "0bdb821a21e793a4f6f82a7078c052154447e5cc"
+}

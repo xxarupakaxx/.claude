@@ -1,0 +1,25 @@
+{
+  "approval_receipt_sha256": "d75eb41c955b7a76538fe15df698381ea147962c366fb2d5ec4f67e0cc179841",
+  "approved_targets": {
+    "creating-html-documents": {
+      "claude": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971",
+      "codex": "76ff2f9da513e968ecf7c7b34691ac2a8c8f6cf83fa5dd2b124f1ef4df10f5c8"
+    }
+  },
+  "collection_id": "mathbullet-html-show-me-2026-09",
+  "date": "2026-09-12",
+  "decision": "promoted",
+  "generation": 3,
+  "kind": "promotion",
+  "quarantine": {
+    "creating-html-documents": "3978d3fc868b0f81d5e59c5b4f7f400c176436a190374acdf95a444b8eb44442"
+  },
+  "runtime_targets": {
+    "creating-html-documents": {
+      "claude": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971",
+      "codex": "76ff2f9da513e968ecf7c7b34691ac2a8c8f6cf83fa5dd2b124f1ef4df10f5c8"
+    }
+  },
+  "schema_version": 1,
+  "subject_sha256": "3778114e11256ffbfb1146e21c281bf81c8bce1bfc43ad3e1a53d51587e3ab6e"
+}

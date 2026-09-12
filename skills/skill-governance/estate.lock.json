@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-06",
+  "generated_at": "2026-09-12",
   "generation": 3,
   "hash_algorithm": "skill-tree-sha256-v1",
   "records": [
@@ -964,7 +964,7 @@
       "relative_path": "show-me",
       "resolved_name": "show-me",
       "root_id": "claude",
-      "tree_sha256": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9"
+      "tree_sha256": "526d49e4b44cd1e6c282e30cc3cb59934be5828b3cb9a2c7750477fca898dc39"
     },
     {
       "classification": "preexisting-unclassified",
@@ -976,7 +976,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "claude",
-      "tree_sha256": "e3b999f48a9ee4b6b216a27267b86af2673c36e983b9f55aa5ece2723a266edf"
+      "tree_sha256": "db5bfa48ca102ee28e77a8728a9be5f08f7d9c3f77bed363746fc0abba3e5635"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1291,7 +1291,7 @@
       "relative_path": ".system/imagegen",
       "resolved_name": "imagegen",
       "root_id": "codex",
-      "tree_sha256": "f643134152a85aa4db430ab82bec85486625d047d26a9683f55a3d5ccff7a84f"
+      "tree_sha256": "f11495df19f762e3d4b0cc7aa2f5de2774c2d825ec1560529f4381f2a5b26a8e"
     },
     {
       "classification": "platform-managed",
@@ -1309,7 +1309,7 @@
       "relative_path": ".system/plugin-creator",
       "resolved_name": "plugin-creator",
       "root_id": "codex",
-      "tree_sha256": "6a278854659bec3de6e88d932afeee2bf932f8a8ad7c92dbd8fe4c8b4164b798"
+      "tree_sha256": "2082e80de767461a679b32947f4f27afaf4341ae00c0abb2b107ef6853bbdcbc"
     },
     {
       "classification": "platform-managed",
@@ -1354,7 +1354,7 @@
       "relative_path": "agent-memory",
       "resolved_name": "agent-memory",
       "root_id": "codex",
-      "tree_sha256": "3f1967bf19b0dab9274bb10744c1dc709b5d81389e14c58e3b9cf0b8fa81cb15"
+      "tree_sha256": "5051129d5a2220b4298c756b9ae88f12d64e30319e299577ee6c35ac17faab34"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1363,7 +1363,7 @@
       "relative_path": "ai-trend-scan",
       "resolved_name": "ai-trend-scan",
       "root_id": "codex",
-      "tree_sha256": "be76e8d7162ee1fe4350f0ceb48702fa89c66deaca767da2d831fcc8fd8432db"
+      "tree_sha256": "93efbfa90bfd740b588a5b76c0fc13103516f09f985631d9ce9615488d5fa814"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1372,25 +1372,25 @@
       "relative_path": "alpaca-slack-style",
       "resolved_name": "alpaca-slack-style",
       "root_id": "codex",
-      "tree_sha256": "bab61a2a7329644149202ffbb3f1981b916ded5ac4a01d214327d33f4d2df3fb"
+      "tree_sha256": "905d562b1d22a9597bb7088790ff48b38b576aa0975d4b8ec96b43e752d7a1cb"
     },
     {
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
-      "name_resolution": "hash-bound-directory-inference",
+      "name_resolution": "frontmatter",
       "relative_path": "analyse",
       "resolved_name": "analyse",
       "root_id": "codex",
-      "tree_sha256": "e603afcde552daa69f8bf240875f7fcd5b2177e14def007ee892f15a8b5220a2"
+      "tree_sha256": "97521683e348b3bdd6bdb5abcda25c81b14d4e7771617e1c4338039b6c224134"
     },
     {
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
-      "name_resolution": "hash-bound-directory-inference",
+      "name_resolution": "frontmatter",
       "relative_path": "analyse-problem",
       "resolved_name": "analyse-problem",
       "root_id": "codex",
-      "tree_sha256": "d1b4e3ce494004e59f23b9aa2ac52ee5948155507941a27070adda49542833a3"
+      "tree_sha256": "6d9bd225f221d83a4961e246c29ceb8c2a3e32add043876ab2eb5120d76c93eb"
     },
     {
       "classification": "active",
@@ -1408,7 +1408,7 @@
       "relative_path": "apple-design",
       "resolved_name": "apple-design",
       "root_id": "codex",
-      "tree_sha256": "599fbc11047dfa4d8d08501a4020e061bae6353f78179f6f1b25c80921a47274"
+      "tree_sha256": "cc04f50058c5ab56ed51913dda712707a58a5fbe4911addb00653cece52cdb1e"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1417,7 +1417,7 @@
       "relative_path": "article-writing",
       "resolved_name": "article-writing",
       "root_id": "codex",
-      "tree_sha256": "c706014115759283f29a83272e4dd4a103566f32ed2098898244cbb117934872"
+      "tree_sha256": "9f89c560c263d68562058145bc0b0652d269420862d5aff9f28ac84f2201e3d4"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1435,7 +1435,7 @@
       "relative_path": "auto-reviewing-pre-pr",
       "resolved_name": "auto-reviewing-pre-pr",
       "root_id": "codex",
-      "tree_sha256": "384d086582320b507e64d3789a94dd20adb864b55540726065b23287adde2ffb"
+      "tree_sha256": "15003a655e39f0fea493477f3a34aa4562a772bf324b09ba7c6669da5239997f"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1444,7 +1444,7 @@
       "relative_path": "autonomous-loops",
       "resolved_name": "autonomous-loops",
       "root_id": "codex",
-      "tree_sha256": "3a1bc27f17a3f6fea7f2800f91f8b3399611c6d8f690f9d7efbd2238b2bbf57c"
+      "tree_sha256": "1a87efd1ae6719cd545ec0465a53f60d29582932516181bfe59ecedb5becbbb2"
     },
     {
       "classification": "legacy-active",
@@ -1462,7 +1462,7 @@
       "relative_path": "blueprint",
       "resolved_name": "blueprint",
       "root_id": "codex",
-      "tree_sha256": "1e99608136412a6e2de6d34682a55a06315f575d110a21994eb2de8d7d5b5ec2"
+      "tree_sha256": "7250fa232ce78c206020dd329f81fc75e4914f9174f1a1d8d01908346846b0d0"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1480,7 +1480,7 @@
       "relative_path": "build-fix",
       "resolved_name": "build-fix",
       "root_id": "codex",
-      "tree_sha256": "38ac45adfa5898c2b316b644e297fbf2393d8ec2571aff1ee7e527b53928f437"
+      "tree_sha256": "7f50fb88337511b9a1ba63e4891a6a994733f375157fd81945bd35df6d3cd486"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1489,7 +1489,7 @@
       "relative_path": "bulletproof-problem-solving",
       "resolved_name": "bulletproof-problem-solving",
       "root_id": "codex",
-      "tree_sha256": "583b96d9ee8e3a89a2e9e9be749c5056a30f0a631fd75c6e6c997cf80e2baf49"
+      "tree_sha256": "38b86172c902bde6e8b17f3757aa760f9c872026db039bd0a68ea7eaebc17757"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1498,7 +1498,7 @@
       "relative_path": "capture",
       "resolved_name": "capture",
       "root_id": "codex",
-      "tree_sha256": "de9fc5e42b84f56c17e0b739e3cfd8cdb95e70cd1c727ed1bf64feb5ec3e60ee"
+      "tree_sha256": "c8709be1f3600471ce9f35ae3c10bffdc872a3be93c30e82e4123cbc346dd30f"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1507,7 +1507,7 @@
       "relative_path": "cause-and-effect",
       "resolved_name": "cause-and-effect",
       "root_id": "codex",
-      "tree_sha256": "6f5aafeba97ae40538c3e26deda437965c5fa62aa907f331adb85f2862fb2080"
+      "tree_sha256": "f20a5f891108b594fd341ffeff8d91e699c12b14342449773abc0e1247670f4d"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1516,7 +1516,7 @@
       "relative_path": "caveman",
       "resolved_name": "caveman",
       "root_id": "codex",
-      "tree_sha256": "8e49579e05550980066651f6ab2862934f780d36bb0b3150b17343058c83fdb5"
+      "tree_sha256": "69abf9f6c2754d63851e96ef988b98b0b1f25771a9041d39be553d36192c4aff"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1552,16 +1552,16 @@
       "relative_path": "codebase-review",
       "resolved_name": "codebase-review",
       "root_id": "codex",
-      "tree_sha256": "b7443314172af8c845e29e0f578a065b787c3d98fe6eda76d985230c2897ca5c"
+      "tree_sha256": "cfa62d3d36d270e0e8316c3049362d1c9820070bc87e347d7f00307c336253ad"
     },
     {
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
-      "name_resolution": "hash-bound-directory-inference",
+      "name_resolution": "frontmatter",
       "relative_path": "commit",
       "resolved_name": "commit",
       "root_id": "codex",
-      "tree_sha256": "c503c2ca63408917f133201384217c4a3214299e2d9968adcf82972adbf6d59e"
+      "tree_sha256": "06a0b3c9c12c786d889e84196445ad20933ab37a0950164638743a8e168addd4"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1570,7 +1570,7 @@
       "relative_path": "compounding-knowledge",
       "resolved_name": "compounding-knowledge",
       "root_id": "codex",
-      "tree_sha256": "af05cedab9472d2b77d640011213e6da10f433b4a16acf039673e3146715abea"
+      "tree_sha256": "7e9931a8d5cd1e3f13ad80e86eb97d5c76c1a902929c6fa6da6adb421c026caa"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1579,7 +1579,7 @@
       "relative_path": "config-mirror-sync",
       "resolved_name": "config-mirror-sync",
       "root_id": "codex",
-      "tree_sha256": "f455dcde7ad55a5f68fcf2850e9696954a2d3d5d949cfe319a8daf9bf8518b8e"
+      "tree_sha256": "9ebfba75d60dd302337276b71eb6025f60fe551e49728c3d1a739c20015e2c3b"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1606,7 +1606,7 @@
       "relative_path": "create-hook",
       "resolved_name": "create-hook",
       "root_id": "codex",
-      "tree_sha256": "349e4f2889e2457e16597b6e618fcdcafcf7b584a16e77ccf9acd2224f352469"
+      "tree_sha256": "e940f535899336f57924dc6881dd3eb00a20ccc7ed7e4d121cc16e21af1cd002"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1615,7 +1615,7 @@
       "relative_path": "create-mcp-server",
       "resolved_name": "create-mcp-server",
       "root_id": "codex",
-      "tree_sha256": "1c98647f5101507adccf6745207f63efecd463342df1b4b40d176628652bb927"
+      "tree_sha256": "641da0ef586d5f0154fb0ad98d3f87326e5897f253d75adf11931661f2fd0fee"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1633,7 +1633,7 @@
       "relative_path": "create-subagent",
       "resolved_name": "create-subagent",
       "root_id": "codex",
-      "tree_sha256": "0aed638a482cd278773c2a274133d762e8addc25b4f66d25816f25fdf0f6ce36"
+      "tree_sha256": "012cafd644d85d23f9f1b1c02f25efa39185d4b414a1d60cf5a17fdd765af318"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1651,7 +1651,7 @@
       "relative_path": "creating-html-documents",
       "resolved_name": "creating-html-documents",
       "root_id": "codex",
-      "tree_sha256": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971"
+      "tree_sha256": "76ff2f9da513e968ecf7c7b34691ac2a8c8f6cf83fa5dd2b124f1ef4df10f5c8"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1669,7 +1669,7 @@
       "relative_path": "creating-tracer-tickets",
       "resolved_name": "creating-tracer-tickets",
       "root_id": "codex",
-      "tree_sha256": "651f7acf96984bd4ce246be4473a781c92727d241ac95c21617ce431e7d5aed1"
+      "tree_sha256": "2dddc1bf3532c05d5d0c36b7169c563e9e7468450349df0a60a52429f242ba03"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1678,7 +1678,7 @@
       "relative_path": "daily-curator",
       "resolved_name": "daily-curator",
       "root_id": "codex",
-      "tree_sha256": "0aac2e3dc935d5d6936cfb02c5c20f3d8d33acf49983cb825a2e1d552befd90c"
+      "tree_sha256": "5a5c797be3ca6e11355a572cfec755c5a683b19656d8af8177808352788a5828"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1696,7 +1696,7 @@
       "relative_path": "deepening-plan",
       "resolved_name": "deepening-plan",
       "root_id": "codex",
-      "tree_sha256": "92d7e4b04c369240be186463b9f2acfb5eb3b12feb1aadf0f3e92e0ca2707620"
+      "tree_sha256": "3e62725e2c755142f6c04b919717f4c90ce43a680f0995cbc0d533e374d05914"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1705,7 +1705,7 @@
       "relative_path": "design-eval-loop",
       "resolved_name": "design-eval-loop",
       "root_id": "codex",
-      "tree_sha256": "c2f9cc9afa95116b9271752c70a3c17751ebed674cc9ad0a0948ddfa43c9c099"
+      "tree_sha256": "e109468b9a7487d33f72ebf8a9aa3b55a9f98bbcd933ccbf64bef06cdec725a4"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1714,7 +1714,7 @@
       "relative_path": "design-reviewer",
       "resolved_name": "design-reviewer",
       "root_id": "codex",
-      "tree_sha256": "68fd7f315550c6da547bfc1de0d4468af826e4569e30dc9e6ada2ee4be3ee2ef"
+      "tree_sha256": "987d1a8ec709279fd732b2bce3221bacb9404ff02295fde3add9692210946fc0"
     },
     {
       "classification": "legacy-active",
@@ -1723,7 +1723,7 @@
       "relative_path": "designing-codebases",
       "resolved_name": "designing-codebases",
       "root_id": "codex",
-      "tree_sha256": "4dd1890defa213301f8a45245033dd46eb04258bec4405eea5d52726d47c7d08"
+      "tree_sha256": "6694af144c7a0727ffdfcb12d8890d47276cbb11efa6ecb02769f5d874a4caf4"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1741,7 +1741,7 @@
       "relative_path": "designing-workflows",
       "resolved_name": "designing-workflows",
       "root_id": "codex",
-      "tree_sha256": "0b23f2b33a6cbb965d032afedeeae76726efffce9e9e356e0f9acf26443fefaf"
+      "tree_sha256": "300e0d3b59d42ff9392d8aea44672244b1f3b86dc17a3df7ffbeddc4d8058cc3"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1750,7 +1750,7 @@
       "relative_path": "diagnosing-bugs",
       "resolved_name": "diagnosing-bugs",
       "root_id": "codex",
-      "tree_sha256": "944fb99879a7e9b56378d1e66b5f0ecdbea32b504ab0153f9e0396b1f230bd9a"
+      "tree_sha256": "65b19b2904fa78c5aa0ba92ce93973238e91911758362d5abb27996f5d22c4ea"
     },
     {
       "classification": "active",
@@ -1786,7 +1786,7 @@
       "relative_path": "emil-design-eng",
       "resolved_name": "emil-design-eng",
       "root_id": "codex",
-      "tree_sha256": "5e997f7b8a94a104430d347cb15628813885241ed03bf7a2db209f83944be259"
+      "tree_sha256": "574105ed77f32990fc687bb6b6a73aa68542e82968792f2ed020c4fc33b9364e"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1804,7 +1804,7 @@
       "relative_path": "exploring-codebase",
       "resolved_name": "exploring-codebase",
       "root_id": "codex",
-      "tree_sha256": "934a52657c2622cbe252d4af2e652df84b046cb7f4d075019fc7f6f08b347ded"
+      "tree_sha256": "be51482b9f3b7fd4f3090ac9a7de08c5c132ed740d6436cd61636a8ff1022a1e"
     },
     {
       "classification": "active",
@@ -1813,7 +1813,7 @@
       "relative_path": "find-animation-opportunities",
       "resolved_name": "find-animation-opportunities",
       "root_id": "codex",
-      "tree_sha256": "4ce2be45c5908f198a38644cf90ddd3663e0daff19de2132695eca765bb9bea6"
+      "tree_sha256": "8ed92a955cdf8b2ec02ee7fff79a1cdff783555e0cbf9303dc776363b17414e1"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1822,7 +1822,7 @@
       "relative_path": "generate-state-diagram",
       "resolved_name": "generate-state-diagram",
       "root_id": "codex",
-      "tree_sha256": "6c5ea3084a5d291bb5ce9296700d3324cc87c1491f5acc485029df7197f65800"
+      "tree_sha256": "11e58f0f005e15582b07a0f65e05b6e1ed47b2be4d5b6a78bea31eca4812c332"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1840,7 +1840,7 @@
       "relative_path": "generate-verification-guide",
       "resolved_name": "generate-verification-guide",
       "root_id": "codex",
-      "tree_sha256": "03dd489e03907815c56f1d36f0849e73ec0c15b6150893f14342cf5a77018f81"
+      "tree_sha256": "9d4710b2b9bc12d676767d0df4f97f4f41364d8310ad2025af294225f77be0e1"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1849,7 +1849,7 @@
       "relative_path": "generating-release-notes",
       "resolved_name": "generating-release-notes",
       "root_id": "codex",
-      "tree_sha256": "9cf1b2d0224d3f907f25a7f04282f0697e6c2344b687edf7f596728eb4afc520"
+      "tree_sha256": "0d3bd741071f6a3b5a6fc9a27bb400e3235688d503bd8ce64a96b2b8e20d5a0b"
     },
     {
       "classification": "legacy-active",
@@ -1858,7 +1858,7 @@
       "relative_path": "generating-setup-wizards",
       "resolved_name": "generating-setup-wizards",
       "root_id": "codex",
-      "tree_sha256": "7b9852b2059f95ccbbb810aa19e5141933db9184d14483feb537529ce64c96e7"
+      "tree_sha256": "736186d9fdfd6ef3df0cabf374e1607f9535ed1e01826cbb74abb97ddd2b2836"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1912,7 +1912,7 @@
       "relative_path": "guarding-git-commands-in-claude-code",
       "resolved_name": "guarding-git-commands-in-claude-code",
       "root_id": "codex",
-      "tree_sha256": "2fba405ca18a1e1dee28d68f6860119f3dba9b1a205d128165c2a16058b54450"
+      "tree_sha256": "b062ebcb9276af1d515f1d9802f0867e187b7ac519ae3fca9e74ea8ed743f239"
     },
     {
       "classification": "active",
@@ -1944,11 +1944,11 @@
     {
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
-      "name_resolution": "hash-bound-directory-inference",
+      "name_resolution": "frontmatter",
       "relative_path": "hardgate-disable",
       "resolved_name": "hardgate-disable",
       "root_id": "codex",
-      "tree_sha256": "9953bcf2f506cdcf95bcf13e482646e46f4a1e10b242f17ecbf881e4bd3aa47b"
+      "tree_sha256": "c1293a091a29d72d16a207eb8fd2f77cd147b8efc49ed27903208be358e7845d"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1957,7 +1957,7 @@
       "relative_path": "hatch-pet",
       "resolved_name": "hatch-pet",
       "root_id": "codex",
-      "tree_sha256": "f36056d853571b358f1c1a00cbb169f930969a9b92e5db1e0fbe5f7276acbae6"
+      "tree_sha256": "345d5506a1b50a15532b85c04c497fd306e0e9fe607f64df6b170fc6a27cb196"
     },
     {
       "classification": "preexisting-unclassified",
@@ -1966,7 +1966,7 @@
       "relative_path": "health-check-runner",
       "resolved_name": "health-check-runner",
       "root_id": "codex",
-      "tree_sha256": "aa220657d2af0e94660d5c316174aad2f7869e163e0d3f90af00db4f0432688c"
+      "tree_sha256": "3ab2f9b45cde09fcc77fa1a9c4f86253d4dcf140c66df05556d93d21ac0cf212"
     },
     {
       "classification": "legacy-active",
@@ -1993,7 +1993,7 @@
       "relative_path": "improve-animations",
       "resolved_name": "improve-animations",
       "root_id": "codex",
-      "tree_sha256": "b3c82d11a6b3753065280516a673a9c043b0599aa039fa27464b010e306d3dad"
+      "tree_sha256": "700034f8b1991fe6bb2bee538baaceb65be07e320c480462df00f3ffbb18a4b5"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2002,7 +2002,7 @@
       "relative_path": "improving-architecture",
       "resolved_name": "improving-architecture",
       "root_id": "codex",
-      "tree_sha256": "92d56b4c9ed44389ec53aef8d236ea5f416f0c81898a7291656cc956c4a9bc3c"
+      "tree_sha256": "d140141aba12c2cc4082276b08a3c36ff442873fdf85a003f561469fdba8772c"
     },
     {
       "classification": "legacy-active",
@@ -2011,7 +2011,7 @@
       "relative_path": "improving-codebase-architecture",
       "resolved_name": "improving-codebase-architecture",
       "root_id": "codex",
-      "tree_sha256": "da072a1dbb95a575699e3fb71970859256868e46e4b1800a6346f57cb70e0e34"
+      "tree_sha256": "5595ebee7b308c80754c1233d7d8190d396bfc71e843d3aa2db77a5125bebc27"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2020,7 +2020,7 @@
       "relative_path": "iterative-retrieval",
       "resolved_name": "iterative-retrieval",
       "root_id": "codex",
-      "tree_sha256": "bbf90608324e35df56aa561b43d8add782896fb2de431bb2b2784312a4ca93c7"
+      "tree_sha256": "b0550001452f4c7ecda8a381202f27ccb7202ebbe60b7b52ca9a23c16bfaf6bf"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2038,7 +2038,7 @@
       "relative_path": "kaizen",
       "resolved_name": "kaizen",
       "root_id": "codex",
-      "tree_sha256": "5015b94dae6423f0977b27d582310cb236c531e4efe9d474716f784184bf45c1"
+      "tree_sha256": "ad32ba6c81c8541093e5560073080e08836587af530a8ac598d0094594b36278"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2056,7 +2056,7 @@
       "relative_path": "learning-quiz",
       "resolved_name": "learning-quiz",
       "root_id": "codex",
-      "tree_sha256": "3e6269f3553f4fcbafa9def2810ce8bb7f8a8f88ca3ad2d5758444a003843afa"
+      "tree_sha256": "c44cd6b7fd1178f343fa4bce7e9a9ce546e43e32d7f60b72b32b2e4dbf1ab24c"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2074,7 +2074,7 @@
       "relative_path": "linear-workflow",
       "resolved_name": "linear-workflow",
       "root_id": "codex",
-      "tree_sha256": "cd6c39a3ab0e9254763271544374833c9d0791ea4ef7d139387d810d1ae463e6"
+      "tree_sha256": "6cbc4726b9f75df444f0f6fd9f8c39ed6cac2fcecf3003bed71b59a8cbb6e667"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2101,7 +2101,7 @@
       "relative_path": "managing-obsidian-vaults",
       "resolved_name": "managing-obsidian-vaults",
       "root_id": "codex",
-      "tree_sha256": "08dbce92f23aa9c042fe05f6a83a08afe278fae856130297f7761c738996f2d0"
+      "tree_sha256": "e0bf466ac79958a24cb242d6f9900b155c4f87443c14c0e669205b5cac50baf7"
     },
     {
       "classification": "legacy-active",
@@ -2110,7 +2110,7 @@
       "relative_path": "mapping-large-projects",
       "resolved_name": "mapping-large-projects",
       "root_id": "codex",
-      "tree_sha256": "966e87bc95bba15d5e47203da013de03009f3972925271769ce416a19802e97d"
+      "tree_sha256": "0960b21bebeff578d0807146643f2837de2f9a00d7d07c267874c47fd800f870"
     },
     {
       "classification": "legacy-active",
@@ -2128,7 +2128,7 @@
       "relative_path": "moc-gardener",
       "resolved_name": "moc-gardener",
       "root_id": "codex",
-      "tree_sha256": "e8e4686f9c58db7108d2ada3d673f52df5b74f8a58ee49be093d191176062e68"
+      "tree_sha256": "6cec924ebbdd9099f3dd22a1bb2b121dad570b502c0e16e6b00c7483119b49c5"
     },
     {
       "classification": "legacy-active",
@@ -2137,7 +2137,7 @@
       "relative_path": "modeling-domains",
       "resolved_name": "modeling-domains",
       "root_id": "codex",
-      "tree_sha256": "656357bbea5776805a9af823d24cb18a0272f361deb0a50beafb744ccbed3709"
+      "tree_sha256": "481049cc35216ba09b6d6598dd0fd49cee3ace7efb3b301822048aba8b1672fb"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2146,7 +2146,7 @@
       "relative_path": "natural-japanese",
       "resolved_name": "natural-japanese",
       "root_id": "codex",
-      "tree_sha256": "499df114b301804f1bf74abfb5ee26909718159343327cfa24f8a7d99b4454fb"
+      "tree_sha256": "299a53dbea4edb3be9ec635754f589c04605be9d5842bf96918ab3ef1b937d61"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2155,7 +2155,7 @@
       "relative_path": "notion-docs",
       "resolved_name": "notion-docs",
       "root_id": "codex",
-      "tree_sha256": "eb2c1355ed7426292268dae2cd099682e4f959f6dd2c3238ec264886fd9af6b1"
+      "tree_sha256": "eb3e698ff84765f94f157cbd77a088c3a8f7bd1e171127db223ba3cb8153dc23"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2173,7 +2173,7 @@
       "relative_path": "orchestrate",
       "resolved_name": "orchestrate",
       "root_id": "codex",
-      "tree_sha256": "43280f7782179a008a74a60a0261cecb10df0a3e8f3bdd5cccce4e65f0806626"
+      "tree_sha256": "c153f1d073c4a97c6ad65527c2ba4559ea2dba7cd67f428ac5f71df5562a6168"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2187,11 +2187,11 @@
     {
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
-      "name_resolution": "hash-bound-directory-inference",
+      "name_resolution": "frontmatter",
       "relative_path": "plan-do-check-act",
       "resolved_name": "plan-do-check-act",
       "root_id": "codex",
-      "tree_sha256": "c01152f94f2406b557823a7886f3b2c7027cae9dd46487795908ca755c98a669"
+      "tree_sha256": "19efd2d9b19e9c5923bfca7c87c02507e7e8fbcf5f749466ecef7ea3a9efebc8"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2200,7 +2200,7 @@
       "relative_path": "playwright-skill",
       "resolved_name": "playwright-skill",
       "root_id": "codex",
-      "tree_sha256": "8b128f518907cae3da38624efc7bd264971daef20d47585d285a2cee08ef9e38"
+      "tree_sha256": "77b3b7ed8560d9e58d9b7e3f1f37f61c372347a5ac25cc1965e8bc56ee7debd3"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2227,7 +2227,7 @@
       "relative_path": "pr-watch",
       "resolved_name": "pr-watch",
       "root_id": "codex",
-      "tree_sha256": "7b53ff9cb9929e2545a20e499c2a5fcf58630b97d988232da8236a714abf9850"
+      "tree_sha256": "390eb259ba9fbaf433b40bfcf97b4c1df6690a7976e9b334237e56fc3fde09a0"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2236,7 +2236,7 @@
       "relative_path": "problem-analysis",
       "resolved_name": "problem-analysis",
       "root_id": "codex",
-      "tree_sha256": "b539883b370f94e7c0f34639743b34be1008aaba9424564a6bcc3291d8cd18c6"
+      "tree_sha256": "46aa801f5fcfff829e3a3279e94ee588769bd806b9dbccd6eb00e45adfa918cb"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2245,7 +2245,7 @@
       "relative_path": "project-init",
       "resolved_name": "project-init",
       "root_id": "codex",
-      "tree_sha256": "8f9217002c225e1f580546f9270293d707fbbcf7cc415030a6db35513d46933f"
+      "tree_sha256": "7504a432995e80117938ce12bcda69cd4d8b9c7b633d6d8b4f41aaa5f8717d50"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2263,7 +2263,7 @@
       "relative_path": "prompt-engineering",
       "resolved_name": "prompt-engineering",
       "root_id": "codex",
-      "tree_sha256": "62a93e1c8614e9584442adf83bf851af42a7dd4a021d12e67804f75fd4f0a995"
+      "tree_sha256": "623852c9386f05bcaac099e6950a5188b51b2f2fd102c8266c748f3e715dba59"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2299,7 +2299,7 @@
       "relative_path": "researching-articles",
       "resolved_name": "researching-articles",
       "root_id": "codex",
-      "tree_sha256": "27e712a095c1ad06706b164652e196143f5b5813de7ad795d8ad1d47a0c1eb0b"
+      "tree_sha256": "4a2439c9aca387131bb870eedbdfaf7a6eb80393ef495f33ba8f27594ac0e140"
     },
     {
       "classification": "legacy-active",
@@ -2326,7 +2326,7 @@
       "relative_path": "review-animations",
       "resolved_name": "review-animations",
       "root_id": "codex",
-      "tree_sha256": "2e2fdfc692b233643fe9c293222c051a2e23964a6e1494ccb10f4970dc21b33f"
+      "tree_sha256": "4d83448275b743ca00fd96dbf22117dd1fe44450314835e99dbb3e1eef2f328a"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2362,7 +2362,7 @@
       "relative_path": "root-cause-tracing",
       "resolved_name": "root-cause-tracing",
       "root_id": "codex",
-      "tree_sha256": "d6403efc8bed75b91660410f3e17ec6a09673731035774644ebd2be3ce507a6e"
+      "tree_sha256": "393cf559006f013389ed2626e81bcc51951b54fa1d4fcd4278c4d3b6e4acb133"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2380,7 +2380,7 @@
       "relative_path": "scaffolding-exercises",
       "resolved_name": "scaffolding-exercises",
       "root_id": "codex",
-      "tree_sha256": "ee774375111c85f3a7081ca0ea0edc7e944dbe01a8a63bbd5f20b58212908f94"
+      "tree_sha256": "5a7b3d648d2f92daaaec645c18bf40a7a1648b5fa4ba233f5639d3de1c95570d"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2389,7 +2389,7 @@
       "relative_path": "search-first",
       "resolved_name": "search-first",
       "root_id": "codex",
-      "tree_sha256": "33ffc8b50122f0e29a8e3c86ec96565906bb351e6a3511485ce08b40dae1d5d8"
+      "tree_sha256": "4333087b2bff1be16a99b511193d6f188c2b96235ce6c96c0730fbf234ae433f"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2398,7 +2398,7 @@
       "relative_path": "sequential-review-pre-pr",
       "resolved_name": "sequential-review-pre-pr",
       "root_id": "codex",
-      "tree_sha256": "aa82788d1f752ff15c579aed3ad4aee2d5704ebb280a7c33b50e99f34b9e4e38"
+      "tree_sha256": "4284607f215a4d2787cbdc3992c73cfec9d5479af85dc83def3df5e590dac262"
     },
     {
       "classification": "legacy-active",
@@ -2416,7 +2416,7 @@
       "relative_path": "setting-up-pre-commit-hooks",
       "resolved_name": "setting-up-pre-commit-hooks",
       "root_id": "codex",
-      "tree_sha256": "455030c11176f9965d5f531efdc80d01e0bd5e89b94ca137f2667b71522f3ec1"
+      "tree_sha256": "ee8418db186c8ae1bb387d380bdee4fa0e30dd2c2739ecc9f1a0773312c94fa3"
     },
     {
       "classification": "legacy-active",
@@ -2434,7 +2434,7 @@
       "relative_path": "setup-user-config",
       "resolved_name": "setup-user-config",
       "root_id": "codex",
-      "tree_sha256": "87e418395330a8a8f92b521d1fb072be71707a6e76a5f7b8209da9a8b057d61a"
+      "tree_sha256": "1c895ef35a334b53e82d21f2881b54da96e80426f61223e9cc40443ba7891bb8"
     },
     {
       "classification": "active",
@@ -2443,7 +2443,7 @@
       "relative_path": "show-me",
       "resolved_name": "show-me",
       "root_id": "codex",
-      "tree_sha256": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9"
+      "tree_sha256": "526d49e4b44cd1e6c282e30cc3cb59934be5828b3cb9a2c7750477fca898dc39"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2455,7 +2455,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "codex",
-      "tree_sha256": "0bdc512eb1baadee9ffaa87202e3030870388fbd1d7822a17c589dedfb00a3f6"
+      "tree_sha256": "ff143919b3cc6c06d78557d40d00c4c1215c7e0c032c200e961b08f87da666ef"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2482,7 +2482,7 @@
       "relative_path": "source-command-analyse",
       "resolved_name": "source-command-analyse",
       "root_id": "codex",
-      "tree_sha256": "5a27ee574ea0a813f4cf5559cba0902206d3913d50ad16a0e213f029148bc1e2"
+      "tree_sha256": "70b81ae742b1024a66a577442a66e745ce68a2820b0d8baed4d22dd3ba3810bd"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2491,7 +2491,7 @@
       "relative_path": "source-command-cause-and-effect",
       "resolved_name": "source-command-cause-and-effect",
       "root_id": "codex",
-      "tree_sha256": "fcd9ec9d804eae87d1b8e06d4fe7e3abf62c34b8007e3c436e16c08176d0df33"
+      "tree_sha256": "b157ac677289a5570d65bfd0d6898e5d5c18a6584735482be424fbd32e529842"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2500,7 +2500,7 @@
       "relative_path": "source-command-checkpoint",
       "resolved_name": "source-command-checkpoint",
       "root_id": "codex",
-      "tree_sha256": "489ce22e6508a917b018a355d7d887b88741cabf5e2260ad2ffa2d91df613d30"
+      "tree_sha256": "76cd3d0f3c46a36af21d99089e36c7dae910d739137c282c10ade41e0c318f05"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2527,7 +2527,7 @@
       "relative_path": "source-command-plan-do-check-act",
       "resolved_name": "source-command-plan-do-check-act",
       "root_id": "codex",
-      "tree_sha256": "bd471cf747dfffb566263b57af870c0c77b43e6fe4381a2c1e55d1b6fc2f2caf"
+      "tree_sha256": "5ed4b08a223a72b7bbbff36a08a713a0712e2493acc43de2983935b01dcaa502"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2536,7 +2536,7 @@
       "relative_path": "source-command-root-cause-tracing",
       "resolved_name": "source-command-root-cause-tracing",
       "root_id": "codex",
-      "tree_sha256": "28a1f51da9da3ad042349d688a9d27a1f9a451ff1decbee80f1fc36a56ad3f0c"
+      "tree_sha256": "a8775ae414865952c45422ec586957a61913491bcd4bf928f8e2f8e48121db61"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2545,7 +2545,7 @@
       "relative_path": "source-command-tdd",
       "resolved_name": "source-command-tdd",
       "root_id": "codex",
-      "tree_sha256": "c9e1e254ea3bc4625eb70d436f276f7bd479fbca421d0cc97f4850aca7f16291"
+      "tree_sha256": "041720fd8d62e8e30ab62ca7521ede0f297578f561340b93a77fca219447a792"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2554,7 +2554,7 @@
       "relative_path": "source-command-verify",
       "resolved_name": "source-command-verify",
       "root_id": "codex",
-      "tree_sha256": "91ab2306a6a874c86dde0f0bb181d83a340fb67105c31c2cae5867d049f76675"
+      "tree_sha256": "c721c9b48f27387eef73f1f5d966d39adfce7aadecbb2cf14f312541db59246e"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2563,7 +2563,7 @@
       "relative_path": "source-command-why",
       "resolved_name": "source-command-why",
       "root_id": "codex",
-      "tree_sha256": "92c2edf3470537270433191537008f68a80b0a39d31483733b731026834f2384"
+      "tree_sha256": "cc1f877f680fedb3d5ee542d5d50b6e242bd952fe467f51e383a1d5d072bdb41"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2572,7 +2572,7 @@
       "relative_path": "summarizing-daily-work",
       "resolved_name": "summarizing-daily-work",
       "root_id": "codex",
-      "tree_sha256": "1e22d1ecb39f38757e4c2582a1d1c426cabef89e20e6e434ddb4fb53aab50e65"
+      "tree_sha256": "f8be867b89e379dafdec578f1e761696d82ac97351704c8dcee24d2ec4e694da"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2581,7 +2581,7 @@
       "relative_path": "tdd",
       "resolved_name": "tdd",
       "root_id": "codex",
-      "tree_sha256": "7e15cc7cb7cc85b0fbdb892b2a44f3963460f70dfb58b86ed0c788465c0a7ed9"
+      "tree_sha256": "7f70df6e0472f39f15432af7e3d3d1eb1e6c0a575bb23d1d21aaf8ae9f0330ec"
     },
     {
       "classification": "legacy-active",
@@ -2608,7 +2608,7 @@
       "relative_path": "team-run",
       "resolved_name": "team-run",
       "root_id": "codex",
-      "tree_sha256": "b8af80365e016b8947e1a2e0ab31c05991c9014105b7ead4f174622ebe88e8ff"
+      "tree_sha256": "227991e3d33b98f9954e57756fbc493e489ae9a85692cc3d9624660b6f0d53da"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2617,7 +2617,7 @@
       "relative_path": "techdebt",
       "resolved_name": "techdebt",
       "root_id": "codex",
-      "tree_sha256": "3f8c53f6e3f48bf2433794c9e9be1c47fa246e38226c1cf02766dcf5c14a6238"
+      "tree_sha256": "a2cca2e06c65bb6a844352519509e71cadfc849fdab3a6f86b170ce3495734be"
     },
     {
       "classification": "legacy-active",
@@ -2689,7 +2689,7 @@
       "relative_path": "verify",
       "resolved_name": "verify",
       "root_id": "codex",
-      "tree_sha256": "68b9eabf277fad6aeaca4ec761560fc2a5da51890be00316a20c03313f4cae60"
+      "tree_sha256": "94f9e04818140d0bc5d12a00ca7a7cbc4affb55be3885d0ed3acd88a97c4b86e"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2698,7 +2698,7 @@
       "relative_path": "viewing-plans",
       "resolved_name": "viewing-plans",
       "root_id": "codex",
-      "tree_sha256": "66f8f95698f24f17f04ac0d25b5df8960d2e686ee9859f420676a42af833d746"
+      "tree_sha256": "1e8282617e961a03078fa5bb8d473232e65d244ad7915b972849fdf829c1c526"
     },
     {
       "classification": "preexisting-unclassified",
@@ -2730,11 +2730,11 @@
     {
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
-      "name_resolution": "hash-bound-directory-inference",
+      "name_resolution": "frontmatter",
       "relative_path": "why",
       "resolved_name": "why",
       "root_id": "codex",
-      "tree_sha256": "5f34688345f5811943d4678f1af72b1a25fb50e8652be7c583abcfff244179cb"
+      "tree_sha256": "c7e453cdd2d043443858eb6f07c1dae6e928d075ab306f167bd2e19ae38dca4a"
     },
     {
       "classification": "legacy-active",
@@ -2743,7 +2743,7 @@
       "relative_path": "writing-beats",
       "resolved_name": "writing-beats",
       "root_id": "codex",
-      "tree_sha256": "e6902a55f73749a190cf001a27c8f1df522539f29a5faf447ae732de49264b86"
+      "tree_sha256": "04a81e41482f7a8392554ede385e762b1ff383f6897c55a7eb6cbf0f066ac7c1"
     },
     {
       "classification": "legacy-active",
@@ -2770,7 +2770,7 @@
       "relative_path": "writing-shape",
       "resolved_name": "writing-shape",
       "root_id": "codex",
-      "tree_sha256": "adc9df40ff176920fada461a016a1b99c524150836864dffa721cfa04832226d"
+      "tree_sha256": "19fa5552cc0b69e1f9ef730aee03140dc71658ccaa51b1c7cd6ce6ca0791ee8f"
     },
     {
       "classification": "legacy-active",
@@ -3607,7 +3607,7 @@
       "relative_path": "article-writing",
       "resolved_name": "article-writing",
       "root_id": "vault-codex",
-      "tree_sha256": "a10cc3ba449f0bb97c955eaa67a7ce1d0d5f080cb158999f595acccd28fd8bb9"
+      "tree_sha256": "c706014115759283f29a83272e4dd4a103566f32ed2098898244cbb117934872"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3661,7 +3661,7 @@
       "relative_path": "brainstorming",
       "resolved_name": "brainstorming",
       "root_id": "vault-codex",
-      "tree_sha256": "762649441a727c23b4892ee9d52e45a8aa943e34060003f0ce1c8ba2fdaba707"
+      "tree_sha256": "b7286ad90a2bd62adbec65125380df70fdad47a4f7393873818b11f1a611386f"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3670,7 +3670,7 @@
       "relative_path": "build-fix",
       "resolved_name": "build-fix",
       "root_id": "vault-codex",
-      "tree_sha256": "dd60f7a0f7047da911ab09895e2e80ba02f6eaa4b0db30267b2025ebc5bda3e4"
+      "tree_sha256": "38ac45adfa5898c2b316b644e297fbf2393d8ec2571aff1ee7e527b53928f437"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3814,7 +3814,7 @@
       "relative_path": "create-skill",
       "resolved_name": "create-skill",
       "root_id": "vault-codex",
-      "tree_sha256": "bd800ce8765c5bbc645c7b763d13d4f4277c495f21d06e7c55b24aacc44c3c09"
+      "tree_sha256": "da7aae4fac76293289734286ada33460e404a9af1935026e1ad00e162b5012a7"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3841,7 +3841,7 @@
       "relative_path": "creating-html-documents",
       "resolved_name": "creating-html-documents",
       "root_id": "vault-codex",
-      "tree_sha256": "9d3710dd748af2331d6cce5ca860da64630b53ffe6a0a39955cd49939c637108"
+      "tree_sha256": "76ff2f9da513e968ecf7c7b34691ac2a8c8f6cf83fa5dd2b124f1ef4df10f5c8"
     },
     {
       "classification": "preexisting-unclassified",
@@ -3985,7 +3985,7 @@
       "relative_path": "exploring-codebase",
       "resolved_name": "exploring-codebase",
       "root_id": "vault-codex",
-      "tree_sha256": "69e49666d0c7b2ed76819713e1bbf42cc6eda77dae4e0e576b2f0c709180579a"
+      "tree_sha256": "934a52657c2622cbe252d4af2e652df84b046cb7f4d075019fc7f6f08b347ded"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4165,7 +4165,7 @@
       "relative_path": "implementing-work",
       "resolved_name": "implementing-work",
       "root_id": "vault-codex",
-      "tree_sha256": "83a3f9f812746603c8c3b6d6697b4468094e03f8517f1980b8c75fcbd2b449b8"
+      "tree_sha256": "10e4c52f78dab1f1d59e406e673c9e0fcc89238bd1da579bb72b472de6b4887f"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4531,6 +4531,15 @@
       "classification": "preexisting-unclassified",
       "hash_normalizations": [],
       "name_resolution": "frontmatter",
+      "relative_path": "reviewing-codebases-architecture-first",
+      "resolved_name": "reviewing-codebases-architecture-first",
+      "root_id": "vault-codex",
+      "tree_sha256": "dda562f1fce7dbe60e5950b2981373133337dc122f2cc9eecb46854279066450"
+    },
+    {
+      "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
       "relative_path": "root-cause-tracing",
       "resolved_name": "root-cause-tracing",
       "root_id": "vault-codex",
@@ -4610,6 +4619,15 @@
     },
     {
       "classification": "preexisting-unclassified",
+      "hash_normalizations": [],
+      "name_resolution": "frontmatter",
+      "relative_path": "show-me",
+      "resolved_name": "show-me",
+      "root_id": "vault-codex",
+      "tree_sha256": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9"
+    },
+    {
+      "classification": "preexisting-unclassified",
       "hash_normalizations": [
         "estate.lock.json",
         "reputation.lock.json"
@@ -4618,7 +4636,7 @@
       "relative_path": "skill-governance",
       "resolved_name": "skill-governance",
       "root_id": "vault-codex",
-      "tree_sha256": "1688d846e0b04b07c5ceb1d2864ef7a178ab09f7226b803f5ac7d0592fa9c62f"
+      "tree_sha256": "0bdc512eb1baadee9ffaa87202e3030870388fbd1d7822a17c589dedfb00a3f6"
     },
     {
       "classification": "preexisting-unclassified",
@@ -4843,7 +4861,7 @@
       "relative_path": "verification-loop",
       "resolved_name": "verification-loop",
       "root_id": "vault-codex",
-      "tree_sha256": "41debef61d4cf7bad259c50cd426a4d97b965b781d4f2ef1b7ba473a798d4ec4"
+      "tree_sha256": "67d24a3ca35562559503db813c29787f7454f0506a161f659a5d57a823d15fa8"
     },
     {
       "classification": "preexisting-unclassified",
@@ -5116,6 +5134,6 @@
       "tree_sha256": "73323581b29fa6129136b0d3c393c2b485cddb7d1c2622bf185d36d0d9a570fd"
     }
   ],
-  "registry_sha256": "49e65a6c75dc32720a8150b0431f5c7184e98490530936ef5e86431bee114766",
+  "registry_sha256": "27d378ab08aa9a3d95dfdb271773bba17938a48ebdfaeb19ec8e0d99d2af8c1c",
   "schema_version": 2
 }

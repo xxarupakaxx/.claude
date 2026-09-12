@@ -1,0 +1,581 @@
+{
+  "review_id": "emil-fresh-safety-review",
+  "reviewed_at": "2026-09-12",
+  "decision": {
+    "status": "PASS_WITH_NOTES",
+    "pass": true,
+    "fail": false,
+    "blocking_findings": 0,
+    "rationale": "固定されたregistry/quarantine証拠、stageのplanned target、Claude現行target、frontmatter、外部参照、依存、権限、scriptsを静的に照合した結果、欠落・誤りによる安全上のblocking findingは確認されなかった。"
+  },
+  "scope": {
+    "stage_root": "/Users/yoshiki/.codex/.local/context/astra-optimization/stage/skills",
+    "claude_root": "/Users/yoshiki/.claude/skills",
+    "packages": [
+      "animation-vocabulary",
+      "apple-design",
+      "emil-design-eng",
+      "find-animation-opportunities",
+      "improve-animations",
+      "review-animations"
+    ],
+    "allowed_write_path": "/Users/yoshiki/.codex/.local/context/astra-optimization/emil-fresh-safety-review.json",
+    "out_of_scope": [
+      "実環境 ~/.codex/skills の変更",
+      "stage packageの再設計",
+      "旧upstream/quarantine内容の変更",
+      "既存の12件routing評価の再実行",
+      "第三者script実行、外部接続、runtime書込"
+    ]
+  },
+  "method": {
+    "changed_markdown_full_read": true,
+    "changed_markdown_paths": [
+      "/Users/yoshiki/.codex/.local/context/astra-optimization/stage/skills/apple-design/SKILL.md",
+      "/Users/yoshiki/.codex/.local/context/astra-optimization/stage/skills/emil-design-eng/SKILL.md",
+      "/Users/yoshiki/.codex/.local/context/astra-optimization/stage/skills/find-animation-opportunities/SKILL.md",
+      "/Users/yoshiki/.codex/.local/context/astra-optimization/stage/skills/improve-animations/SKILL.md",
+      "/Users/yoshiki/.codex/.local/context/astra-optimization/stage/skills/review-animations/SKILL.md",
+      "/Users/yoshiki/.claude/skills/apple-design/SKILL.md",
+      "/Users/yoshiki/.claude/skills/emil-design-eng/SKILL.md",
+      "/Users/yoshiki/.claude/skills/find-animation-opportunities/SKILL.md",
+      "/Users/yoshiki/.claude/skills/improve-animations/SKILL.md",
+      "/Users/yoshiki/.claude/skills/review-animations/SKILL.md"
+    ],
+    "all_skill_markdown_read": true,
+    "reference_markdown_read": [
+      "stage/**/SOURCE.md (6 packages)",
+      "stage/improve-animations/AUDIT.md",
+      "stage/improve-animations/PLAN-TEMPLATE.md",
+      "stage/review-animations/STANDARDS.md",
+      "current Claude counterparts of the package references"
+    ],
+    "comparison": [
+      "registry.toml collection metadata and receipt hashes",
+      "proposed-estate.lock.json Codex stage hashes",
+      "before-repair-estate.lock.json old estate hashes",
+      "safety receipt target manifests and quarantine tree hashes",
+      "current Claude file hashes"
+    ],
+    "third_party_scripts_executed": false,
+    "external_network_used": false,
+    "runtime_write_performed": false,
+    "governance_imported": false,
+    "sample_code_executed": false
+  },
+  "evidence": {
+    "registry": {
+      "path": "/Users/yoshiki/.codex/skills/skill-governance/registry.toml",
+      "sha256": "49e65a6c75dc32720a8150b0431f5c7184e98490530936ef5e86431bee114766",
+      "collection_id": "emilkowalski-ja-2026-07",
+      "source_id": "emilkowalski-skills",
+      "source_revision": "6bf24434f7730ad169077756cf9c7cd7bd675fc6",
+      "local_state": "active",
+      "review_state": "approved",
+      "risk": "L1",
+      "license": "MIT",
+      "baseline": "2026-07-19",
+      "targets": [
+        "codex",
+        "claude"
+      ]
+    },
+    "adaptation": {
+      "path": "/Users/yoshiki/.codex/skills/skill-governance/adaptations/emilkowalski-ja-2026-07.json",
+      "sha256": "53a67471aa21d1c689b475881e048d760aca559e78a2ffc0f41dcde802469d60",
+      "relevant_policy": "CodexはClaude専用disable-model-invocationを削除し、Claude targetのreview-animationsではdisable-model-invocation=trueを保持する。安全境界・frontmatter name・コード・command・path・URL・数値・単位は保全する。"
+    },
+    "safety_receipt": {
+      "path": "/Users/yoshiki/.codex/skills/skill-governance/receipts/emilkowalski-ja-2026-07/safety.json",
+      "sha256": "e260d6dada29d6d867d04ad7cd4db6519c52be4867b1d4ddd33fa8d425386aa4",
+      "decision": "pass",
+      "critical": 0,
+      "important": 0,
+      "minor": 0,
+      "candidate_code_execution": false,
+      "dependencies": [],
+      "translation_validator": {
+        "status": "pass",
+        "broken_links": 0,
+        "format_controls": 0,
+        "skills": 6,
+        "translated_files": 18
+      },
+      "advisory_urls": [
+        "https://animations.dev/",
+        "https://easing.dev/",
+        "https://easings.co/",
+        "https://emilkowal.ski/",
+        "https://emilkowal.ski/ui/you-dont-need-animations",
+        "https://github.com/emilkowalski/skills"
+      ]
+    },
+    "value_receipt": {
+      "path": "/Users/yoshiki/.codex/skills/skill-governance/receipts/emilkowalski-ja-2026-07/value.json",
+      "sha256": "72d0d72d0d93d71cde3e35234d21613232b791461369e0ae61d84e53081489cf"
+    },
+    "approval_receipt": {
+      "path": "/Users/yoshiki/.codex/skills/skill-governance/receipts/emilkowalski-ja-2026-07/approval.json",
+      "sha256": "83453b10071e2a8f3f88b0825cd4e325a34bd199bb7b8755d3e20562fdd8fd5e"
+    },
+    "promotion_receipt": {
+      "path": "/Users/yoshiki/.codex/skills/skill-governance/receipts/emilkowalski-ja-2026-07/promotion.json",
+      "sha256": "8fd08c80d8e5fcceb11dce8ac938b13de4d537159a9678d3d86007d9dd73a037"
+    },
+    "old_review": {
+      "path": "/Users/yoshiki/.codex/.local/context/astra-optimization/review.md",
+      "sha256": "6ff479bc0642011f2e342d5a19996eb55f7823e02e75054e9be6335c657e716d",
+      "file_level_hashes_in_review": false,
+      "baseline_used": "file-level old approved target manifests in safety receipt plus before/proposed estate locks"
+    },
+    "quarantine": {
+      "root": "/Users/yoshiki/.local/share/skill-governance/quarantine/emilkowalski-skills/6bf24434f7730ad169077756cf9c7cd7bd675fc6",
+      "source_revision": "6bf24434f7730ad169077756cf9c7cd7bd675fc6",
+      "tree_hashes": {
+        "animation-vocabulary": "fee541e582908a88bb2702ef72e99b484610d213717b74ab65b6e5fe4b86f7be",
+        "apple-design": "04b6787efd4ef6b17bbeb6dfe0161a8844d96312bba5e966aa60787cabe2caa7",
+        "emil-design-eng": "b8bf060aae1fe98e9c95a3b0f105ba894a44cfa5adfeac64e839cafd71f35c93",
+        "find-animation-opportunities": "5416dd6a126ca91b6f2a2a5aa1aeb3bbb6d86258eb64057506893b0fe2df5bf5",
+        "improve-animations": "38d158af29039fad78288b5a50977fe3346c3ae0cb171a241049cc9809f3d965",
+        "review-animations": "122d0ba03a5a15d9185b4f3c9c5316ba895d0211bba35cd61f8c756be12b1215"
+      },
+      "fresh_review_limit": "このレビューではquarantineの再実行・外部取得はせず、registryが固定したrevision/tree hashと既存safety receiptを証拠として使用した。"
+    },
+    "locks": {
+      "proposed_estate": {
+        "path": "/Users/yoshiki/.codex/.local/context/astra-optimization/proposed-estate.lock.json",
+        "generation": 3,
+        "hash_algorithm": "skill-tree-sha256-v1"
+      },
+      "before_repair_estate": {
+        "path": "/Users/yoshiki/.codex/.local/context/astra-optimization/before-repair-estate.lock.json",
+        "generation": 3,
+        "hash_algorithm": "skill-tree-sha256-v1"
+      }
+    }
+  },
+  "packages": [
+    {
+      "name": "animation-vocabulary",
+      "stage_tree_sha256": "6f9207f7f270988c213aef0089ac2a96e6effc9dc501867759f4bf889f01c4ca",
+      "claude_tree_sha256": "6f9207f7f270988c213aef0089ac2a96e6effc9dc501867759f4bf889f01c4ca",
+      "approved_claude_tree_sha256": "6f9207f7f270988c213aef0089ac2a96e6effc9dc501867759f4bf889f01c4ca",
+      "proposed_codex_tree_sha256": "6f9207f7f270988c213aef0089ac2a96e6effc9dc501867759f4bf889f01c4ca",
+      "change_status": "unchanged",
+      "frontmatter": {
+        "stage_name": "animation-vocabulary",
+        "claude_name": "animation-vocabulary",
+        "stage_extra_keys": [],
+        "claude_extra_keys": [],
+        "platform_check": "pass"
+      },
+      "files": [
+        {
+          "path": "LICENSE",
+          "stage_bytes": 1070,
+          "stage_sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+          "claude_bytes": 1070,
+          "claude_sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+          "same_as_old_approved": true
+        },
+        {
+          "path": "SKILL.md",
+          "stage_bytes": 15588,
+          "stage_sha256": "b866218a242ec964310795729379039ccd41134fd1db069dec03a84596ffdca8",
+          "claude_bytes": 15588,
+          "claude_sha256": "b866218a242ec964310795729379039ccd41134fd1db069dec03a84596ffdca8",
+          "same_as_old_approved": true
+        },
+        {
+          "path": "SOURCE.md",
+          "stage_bytes": 792,
+          "stage_sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+          "claude_bytes": 792,
+          "claude_sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+          "same_as_old_approved": true
+        }
+      ],
+      "instruction_safety": "pass: vocabulary guidance has no execution, permission, external-write, or approval-boundary instruction."
+    },
+    {
+      "name": "apple-design",
+      "stage_tree_sha256": "40fccec3da7d7dccf059d3d3540bf16c87b2700f13053030210a4ded5f30f1e3",
+      "claude_tree_sha256": "599fbc11047dfa4d8d08501a4020e061bae6353f78179f6f1b25c80921a47274",
+      "approved_claude_tree_sha256": "599fbc11047dfa4d8d08501a4020e061bae6353f78179f6f1b25c80921a47274",
+      "proposed_codex_tree_sha256": "40fccec3da7d7dccf059d3d3540bf16c87b2700f13053030210a4ded5f30f1e3",
+      "change_status": "planned_stage_only: SKILL.md is intentionally optimized in stage; Claude remains on approved target.",
+      "frontmatter": {
+        "stage_name": "apple-design",
+        "claude_name": "apple-design",
+        "stage_extra_keys": [],
+        "claude_extra_keys": [],
+        "platform_check": "pass"
+      },
+      "files": [
+        {
+          "path": "LICENSE",
+          "stage_bytes": 1070,
+          "stage_sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+          "claude_bytes": 1070,
+          "claude_sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+          "same_as_old_approved": true
+        },
+        {
+          "path": "SKILL.md",
+          "stage_bytes": 8627,
+          "stage_sha256": "bf7f60a68c85ba5d9a4ed6e9f81dcb2bd56ba47773d1eed5566468e252753b64",
+          "claude_bytes": 26722,
+          "claude_sha256": "168a62d48f282e718ab0b70d2e937010b7cab0afcbb36f26456761346bbb7c94",
+          "same_as_old_approved": false,
+          "stage_matches_proposed_codex_target": true,
+          "claude_matches_old_approved": true
+        },
+        {
+          "path": "SOURCE.md",
+          "stage_bytes": 792,
+          "stage_sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+          "claude_bytes": 792,
+          "claude_sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+          "same_as_old_approved": true
+        }
+      ],
+      "instruction_safety": "pass: stage preserves WWDC interaction/spring/gesture/accessibility constraints and explicit scope/write boundary; no execution or external-write instruction found."
+    },
+    {
+      "name": "emil-design-eng",
+      "stage_tree_sha256": "f13cf8df9b835fedaa142abf8f497fcebe23232a2f9b337ac41e809b3af7cb98",
+      "claude_tree_sha256": "5e997f7b8a94a104430d347cb15628813885241ed03bf7a2db209f83944be259",
+      "approved_claude_tree_sha256": "5e997f7b8a94a104430d347cb15628813885241ed03bf7a2db209f83944be259",
+      "proposed_codex_tree_sha256": "f13cf8df9b835fedaa142abf8f497fcebe23232a2f9b337ac41e809b3af7cb98",
+      "change_status": "planned_stage_only: SKILL.md is intentionally optimized in stage; Claude remains on approved target.",
+      "frontmatter": {
+        "stage_name": "emil-design-eng",
+        "claude_name": "emil-design-eng",
+        "stage_extra_keys": [],
+        "claude_extra_keys": [],
+        "platform_check": "pass"
+      },
+      "files": [
+        {
+          "path": "LICENSE",
+          "stage_bytes": 1070,
+          "stage_sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+          "claude_bytes": 1070,
+          "claude_sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+          "same_as_old_approved": true
+        },
+        {
+          "path": "SKILL.md",
+          "stage_bytes": 7730,
+          "stage_sha256": "e43a5556d780c4b2d0c8236e0a4267e4fe91c8fbaf5c64f80f06424f299a0a36",
+          "claude_bytes": 31125,
+          "claude_sha256": "03a7551341d8a965c9f85b457f1d11801c6aba8c96875bfe7fb08415195041c3",
+          "same_as_old_approved": false,
+          "stage_matches_proposed_codex_target": true,
+          "claude_matches_old_approved": true
+        },
+        {
+          "path": "SOURCE.md",
+          "stage_bytes": 792,
+          "stage_sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+          "claude_bytes": 792,
+          "claude_sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+          "same_as_old_approved": true
+        }
+      ],
+      "instruction_safety": "pass: stage preserves motion purpose/frequency/origin, spring/performance/accessibility checks and explicit read/write approval boundary; no executable workflow found."
+    },
+    {
+      "name": "find-animation-opportunities",
+      "stage_tree_sha256": "8ed92a955cdf8b2ec02ee7fff79a1cdff783555e0cbf9303dc776363b17414e1",
+      "claude_tree_sha256": "4ce2be45c5908f198a38644cf90ddd3663e0daff19de2132695eca765bb9bea6",
+      "approved_claude_tree_sha256": "4ce2be45c5908f198a38644cf90ddd3663e0daff19de2132695eca765bb9bea6",
+      "proposed_codex_tree_sha256": "8ed92a955cdf8b2ec02ee7fff79a1cdff783555e0cbf9303dc776363b17414e1",
+      "change_status": "planned_stage_only: SKILL.md is intentionally optimized in stage; Claude remains on approved target.",
+      "frontmatter": {
+        "stage_name": "find-animation-opportunities",
+        "claude_name": "find-animation-opportunities",
+        "stage_extra_keys": [],
+        "claude_extra_keys": [],
+        "platform_check": "pass"
+      },
+      "files": [
+        {
+          "path": "LICENSE",
+          "stage_bytes": 1070,
+          "stage_sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+          "claude_bytes": 1070,
+          "claude_sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+          "same_as_old_approved": true
+        },
+        {
+          "path": "SKILL.md",
+          "stage_bytes": 12601,
+          "stage_sha256": "6d2f0c6c9557d0d95371c99ff864beba2386d712995b83e08b645af7df3b445c",
+          "claude_bytes": 12878,
+          "claude_sha256": "32c3cba071c95e51029693891654df9f9fa1b860a59acc8aab261777a1972802",
+          "same_as_old_approved": false,
+          "stage_matches_proposed_codex_target": true,
+          "claude_matches_old_approved": true
+        },
+        {
+          "path": "SOURCE.md",
+          "stage_bytes": 792,
+          "stage_sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+          "claude_bytes": 792,
+          "claude_sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+          "same_as_old_approved": true
+        }
+      ],
+      "instruction_safety": "pass: stage is explicitly user-invoked/read-only, uses four selection gates and a candidate cap, excludes implementation, and requires scope/a11y/performance evidence."
+    },
+    {
+      "name": "improve-animations",
+      "stage_tree_sha256": "700034f8b1991fe6bb2bee538baaceb65be07e320c480462df00f3ffbb18a4b5",
+      "claude_tree_sha256": "b3c82d11a6b3753065280516a673a9c043b0599aa039fa27464b010e306d3dad",
+      "approved_claude_tree_sha256": "b3c82d11a6b3753065280516a673a9c043b0599aa039fa27464b010e306d3dad",
+      "proposed_codex_tree_sha256": "700034f8b1991fe6bb2bee538baaceb65be07e320c480462df00f3ffbb18a4b5",
+      "change_status": "planned_stage_only: SKILL.md is intentionally optimized in stage; Claude remains on approved target.",
+      "frontmatter": {
+        "stage_name": "improve-animations",
+        "claude_name": "improve-animations",
+        "stage_extra_keys": [],
+        "claude_extra_keys": [],
+        "platform_check": "pass"
+      },
+      "files": [
+        {
+          "path": "AUDIT.md",
+          "stage_bytes": 8830,
+          "stage_sha256": "3f1f7b2150c34c14e4a34fb454e7c19c939cdaa50c9a584cc6f902540ecf041f",
+          "claude_bytes": 8830,
+          "claude_sha256": "3f1f7b2150c34c14e4a34fb454e7c19c939cdaa50c9a584cc6f902540ecf041f",
+          "same_as_old_approved": true
+        },
+        {
+          "path": "LICENSE",
+          "stage_bytes": 1070,
+          "stage_sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+          "claude_bytes": 1070,
+          "claude_sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+          "same_as_old_approved": true
+        },
+        {
+          "path": "PLAN-TEMPLATE.md",
+          "stage_bytes": 4132,
+          "stage_sha256": "abafe06d60999aaf9c298fc4fef6f1febed2dcd4a080497ac52f7dc0002553cc",
+          "claude_bytes": 4132,
+          "claude_sha256": "abafe06d60999aaf9c298fc4fef6f1febed2dcd4a080497ac52f7dc0002553cc",
+          "same_as_old_approved": true
+        },
+        {
+          "path": "SKILL.md",
+          "stage_bytes": 4890,
+          "stage_sha256": "82e413c7b3705f948d42b5c5a4e9ffaaef22e1059452e5d10152e33dad90e5ad",
+          "claude_bytes": 10974,
+          "claude_sha256": "bc2355ff3e811867e182485219f4d173db6c821fb683e245494b7284b952c74c",
+          "same_as_old_approved": false,
+          "stage_matches_proposed_codex_target": true,
+          "claude_matches_old_approved": true
+        },
+        {
+          "path": "SOURCE.md",
+          "stage_bytes": 792,
+          "stage_sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+          "claude_bytes": 792,
+          "claude_sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+          "same_as_old_approved": true
+        }
+      ],
+      "instruction_safety": "pass: stage is read-only planning/audit, forbids source changes/install/build/commit/worktree and direct fanout, and routes only selected references behind the stated gate."
+    },
+    {
+      "name": "review-animations",
+      "stage_tree_sha256": "4d83448275b743ca00fd96dbf22117dd1fe44450314835e99dbb3e1eef2f328a",
+      "claude_tree_sha256": "5a53f0b9757e7b6e0a7aec63acf0f1f18a9a3960c9671eec29e0e70ae8c6ffe1",
+      "approved_claude_tree_sha256": "5a53f0b9757e7b6e0a7aec63acf0f1f18a9a3960c9671eec29e0e70ae8c6ffe1",
+      "proposed_codex_tree_sha256": "4d83448275b743ca00fd96dbf22117dd1fe44450314835e99dbb3e1eef2f328a",
+      "change_status": "planned_stage_only: SKILL.md is intentionally optimized in stage; Claude remains on approved target.",
+      "frontmatter": {
+        "stage_name": "review-animations",
+        "claude_name": "review-animations",
+        "stage_extra_keys": [],
+        "claude_extra_keys": [
+          "disable-model-invocation"
+        ],
+        "claude_disable_model_invocation": true,
+        "platform_check": "pass: Claude-only field is retained on Claude and absent from Codex stage as required by adaptation policy."
+      },
+      "files": [
+        {
+          "path": "LICENSE",
+          "stage_bytes": 1070,
+          "stage_sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+          "claude_bytes": 1070,
+          "claude_sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
+          "same_as_old_approved": true
+        },
+        {
+          "path": "SKILL.md",
+          "stage_bytes": 12043,
+          "stage_sha256": "5cf8247cf94a02c64ed8c24dbfb670c96dfb0b6623ade9e86910536950a4f51f",
+          "claude_bytes": 11857,
+          "claude_sha256": "14f1fadf8397570130a20d0f8ceb3bb0695b997fe97fbf6f76facc2406b4843d",
+          "old_approved_codex_sha256": "57a53081a047cee05c6a7512e408fe901896ea64eda1b62112a803f9b90f044d",
+          "same_as_old_approved": false,
+          "stage_matches_proposed_codex_target": true,
+          "claude_matches_old_approved": true,
+          "reason_for_platform_difference": "Codex stage is the planned optimized target; Claude current is the approved target with disable-model-invocation=true."
+        },
+        {
+          "path": "SOURCE.md",
+          "stage_bytes": 792,
+          "stage_sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+          "claude_bytes": 792,
+          "claude_sha256": "2d2c6c56e856a01b6efeb852acdb65e3cdefa7aed7221249de6bb21a99234c26",
+          "same_as_old_approved": true
+        },
+        {
+          "path": "STANDARDS.md",
+          "stage_bytes": 12442,
+          "stage_sha256": "b6c14736281fd4789062212fee432d4885bcd13c965259e087275158d95f1561",
+          "claude_bytes": 12442,
+          "claude_sha256": "b6c14736281fd4789062212fee432d4885bcd13c965259e087275158d95f1561",
+          "same_as_old_approved": true
+        }
+      ],
+      "instruction_safety": "pass: stage remains read-only motion-code review with explicit review trigger, evidence-based Block/Approve decision, accessibility/performance checks, and no write or execution instruction."
+    }
+  ],
+  "external_references": {
+    "classification": "advisory_reference_only",
+    "stage_by_package": {
+      "animation-vocabulary": [
+        "https://github.com/emilkowalski/skills"
+      ],
+      "apple-design": [
+        "https://github.com/emilkowalski/skills"
+      ],
+      "emil-design-eng": [
+        "https://github.com/emilkowalski/skills"
+      ],
+      "find-animation-opportunities": [
+        "https://github.com/emilkowalski/skills"
+      ],
+      "improve-animations": [
+        "https://github.com/emilkowalski/skills",
+        "https://emilkowal.ski/"
+      ],
+      "review-animations": [
+        "https://github.com/emilkowalski/skills",
+        "https://easing.dev/",
+        "https://easings.co/"
+      ]
+    },
+    "claude_only_or_additional": {
+      "emil-design-eng": [
+        "https://animations.dev/",
+        "https://easing.dev/",
+        "https://easings.co/"
+      ],
+      "find-animation-opportunities": [
+        "https://emilkowal.ski/ui/you-dont-need-animations"
+      ]
+    },
+    "assessment": "URLは説明・参考資料としてのみ現れ、今回のレビューではfetch/import/実行しなかった。registry safety receiptの既知advisoryと一致し、外部write・credential・自動導入を示す命令は見つからない。"
+  },
+  "dependencies_and_execution": {
+    "declared_dependencies": [],
+    "package_manifests_found": [],
+    "stage_script_files": [],
+    "claude_script_files": [],
+    "stage_executable_regular_files": [],
+    "claude_executable_regular_files": [],
+    "code_imports": "確認できたimport/animate/git等はSKILLまたはreference内の説明・コードフェンス例であり、実行手順ではない。",
+    "permissions": "全対象ファイルは通常の0644。第三者script、install、build、runtime policy昇格、認証、外部writeを指示するmetadataは見つからない。"
+  },
+  "findings": [
+    {
+      "id": "planned_stage_runtime_divergence",
+      "severity": "note",
+      "status": "open_until_promotion",
+      "scope": [
+        "apple-design/SKILL.md",
+        "emil-design-eng/SKILL.md",
+        "find-animation-opportunities/SKILL.md",
+        "improve-animations/SKILL.md",
+        "review-animations/SKILL.md"
+      ],
+      "detail": "5件のstage SKILL.mdはplanned Codex target hashに一致する一方、現行Claudeは旧approved target hashを保持している。これは今回のstage-only作業による想定差分で、安全上の欠陥ではない。",
+      "required_follow_up": "promotion時にtargetごとのmanifestを使い、Claudeへ反映する場合もClaude review-animationsのdisable-model-invocation=trueを維持する。今回runtimeは変更していない。"
+    },
+    {
+      "id": "platform_specific_frontmatter",
+      "severity": "note",
+      "status": "resolved_by_target_split",
+      "scope": "review-animations",
+      "detail": "Codex stageにdisable-model-invocationがないこと、Claude現行にtrueがあることは、適応ledgerとregistry receiptのtarget差分に一致する。欠落・誤りとは判定しない。",
+      "required_follow_up": "Codex stageをClaudeへ単純コピーしない。promotion utilityのtarget-aware処理に任せる。"
+    },
+    {
+      "id": "preexisting_external_advisories",
+      "severity": "advisory",
+      "status": "accepted_no_blocker",
+      "detail": "外部URLはemil/easing/animation参考資料とsource attributionに限られ、既存safety receiptのadvisoryと一致する。ネットワーク接続や外部内容の信頼を前提にする実行命令はない。"
+    }
+  ],
+  "validation": {
+    "expected_package_files": 21,
+    "stage_package_files_found": 21,
+    "claude_package_files_found": 21,
+    "missing_or_extra_files": 0,
+    "unchanged_files_matching_old_approved_target": 16,
+    "intentionally_changed_stage_skill_files": 5,
+    "changed_stage_files_matching_proposed_codex_lock": 5,
+    "claude_files_matching_approved_target_manifest": 21,
+    "frontmatter_name_checks": "pass",
+    "platform_frontmatter_check": "pass",
+    "relative_links_outside_code_fences": {
+      "broken": 0,
+      "checked": "stage improve SKILL/AUDIT/PLAN-TEMPLATE, stage review SKILL/STANDARDS, and Claude counterparts"
+    },
+    "zero_width_or_control_format_checks": {
+      "stage": 0,
+      "claude": 0,
+      "note": "code-fence sample paths/links were treated as examples, not filesystem references"
+    },
+    "scripts_and_modes": "pass",
+    "full_read_check": "pass",
+    "write_scope": "この成果JSONのみ作成。stage、~/.codex/skills、~/.claude/skills、quarantine、runtimeへ書込なし。",
+    "no_commit_or_push": true
+  },
+  "unverified": [
+    "runtimeでのSkill invocation、ブラウザ/frame timing、実アプリのmotion behaviorは実行していない。",
+    "外部URLとupstream内容はfetchしていない。registryの固定revision/tree hashおよび既存receiptを使用した。",
+    "quarantine treeはこのfresh reviewで再走査・再実行していない。",
+    "公式docsの時点依存する性能・API主張の再検証はしていない。",
+    "既存のanimation-routing-evaluation.jsonの12件判定は依頼どおり再実行していない。"
+  ],
+  "remaining_questions": [
+    "5件のstage変更をClaude runtimeへいつpromotionするかはこのレビューの範囲外で未決定。",
+    "promotion後の実runtime smoke testは別gateで必要。"
+  ],
+  "lead_post_review_formatting": {
+    "changes": [
+      {
+        "path": "skills/apple-design/SKILL.md",
+        "before_sha256": "bf7f60a68c85ba5d9a4ed6e9f81dcb2bd56ba47773d1eed5566468e252753b64",
+        "after_sha256": "5ff48c71f6003c04e450d0b83802741ff6ee5885922c8c37e1675e2af0c66cd3",
+        "change": "Remove extra blank line at EOF only"
+      },
+      {
+        "path": "skills/emil-design-eng/SKILL.md",
+        "before_sha256": "e43a5556d780c4b2d0c8236e0a4267e4fe91c8fbaf5c64f80f06424f299a0a36",
+        "after_sha256": "11ed583619e65c57447f2374818573a00ffd90f06d636d1a775f5c09d608a829",
+        "change": "Remove extra blank line at EOF only"
+      }
+    ],
+    "method": "Full bytes comparison confirms EOF blank-line removal only; all instructions and resources unchanged",
+    "safety_decision": "pass"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "failed": 0,
+  "method": "Independent static classifications compared by lead; not runtime model invocation or quality measurement",
+  "pass_at_1": 1.0,
+  "precision": 1.0,
+  "recall": 1.0,
+  "source": "animation-routing-evaluation.json",
+  "trials": [
+    {
+      "actual": "review-animations",
+      "expected": "review-animations",
+      "passed": true,
+      "reason": "既存のアニメーションやmotionコードを明示的にレビューする依頼であり、目的・感触・性能・アクセシビリティの専門レビューに一致する。",
+      "request": "既存アニメーションを基準ごとにレビューして"
+    },
+    {
+      "actual": "find-animation-opportunities",
+      "expected": "find-animation-opportunities",
+      "passed": true,
+      "reason": "未充足のmotion opportunityを候補として選別する依頼であり、既存motionの修正や実装を求めていない。",
+      "request": "この画面で追加すべきアニメーション候補を絞って"
+    },
+    {
+      "actual": "animation-vocabulary",
+      "expected": "animation-vocabulary",
+      "passed": true,
+      "reason": "overshootして収束する効果の正式な用語を尋ねており、用語集のBounceの命名用途に一致する。",
+      "request": "少し行き過ぎて戻る動きの正式名称は？"
+    },
+    {
+      "actual": "apple-design",
+      "expected": "apple-design",
+      "passed": true,
+      "reason": "Apple系の流動的なgesture、spring、momentum、interruptible transitionの設計を求めている。",
+      "request": "Appleらしいfluidなgestureとspringを設計して"
+    },
+    {
+      "actual": "emil-design-eng",
+      "expected": "emil-design-eng",
+      "passed": true,
+      "reason": "UIのvisualとinteraction layerの手触りを、目的・頻度・速度・性能・アクセシビリティを通して磨く依頼に一致する。",
+      "request": "UIのpolishと手触りを総合的に改善したい"
+    },
+    {
+      "actual": "improve-animations",
+      "expected": "improve-animations",
+      "passed": true,
+      "reason": "既存アニメーションをread-onlyで監査し、実装を行わず別担当向けの修正計画を作る用途に一致する。",
+      "request": "既存motionを監査し修正計画だけ作って"
+    },
+    {
+      "actual": "none",
+      "expected": "none",
+      "passed": true,
+      "reason": "SQLの性能改善は6つのアニメーション・モーションSkillの適用範囲に含まれない。",
+      "request": "SQLのクエリを高速化して"
+    },
+    {
+      "actual": "none",
+      "expected": "none",
+      "passed": true,
+      "reason": "契約書の要約は6つのアニメーション・モーションSkillの適用範囲に含まれない。",
+      "request": "契約書の条項を要約して"
+    },
+    {
+      "actual": "none",
+      "expected": "none",
+      "passed": true,
+      "reason": "OCR結果の転記はアニメーションの命名・設計・監査・機会探索の用途ではない。",
+      "request": "画像のOCR結果をそのまま書き起こして"
+    },
+    {
+      "actual": "none",
+      "expected": "none",
+      "passed": true,
+      "reason": "Gitのmerge conflict解消はアニメーション・モーションSkillの対象ではない。",
+      "request": "Gitのmerge conflictを解消して"
+    },
+    {
+      "actual": "none",
+      "expected": "none",
+      "passed": true,
+      "reason": "静的なfrontmatterの修正はUIのmotionやアニメーションを扱わない。",
+      "request": "静的なfrontmatterだけ直して"
+    },
+    {
+      "actual": "none",
+      "expected": "none",
+      "passed": true,
+      "reason": "請求書の作成はアニメーション・モーションSkillの適用範囲に含まれない。",
+      "request": "請求書を作成して"
+    }
+  ]
+}

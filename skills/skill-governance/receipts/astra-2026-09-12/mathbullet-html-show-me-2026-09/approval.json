@@ -1,0 +1,21 @@
+{
+  "approval_message": "OK",
+  "approver": {
+    "name": "yoshiki",
+    "type": "human"
+  },
+  "authorization_evidence": {
+    "path": "receipts/astra-2026-09-12/mathbullet-html-show-me-2026-09/user-authorization.json",
+    "sha256": "4f7b51f53ea5931e52462fe3c9b3e8cd3950abcfc455f5340ae42931e366da62"
+  },
+  "authorization_type": "Explicit task and repair-scope approval; fresh evidence linked by the executing agent, not a claim that the user manually inspected each hash",
+  "collection_id": "mathbullet-html-show-me-2026-09",
+  "date": "2026-09-12",
+  "decision": "approved",
+  "generation": 3,
+  "kind": "approval",
+  "safety_receipt_sha256": "ea653e923391ac87ff3196c3d8026ace5ac15c86894964bc4acf24d9f613afac",
+  "schema_version": 1,
+  "subject_sha256": "3778114e11256ffbfb1146e21c281bf81c8bce1bfc43ad3e1a53d51587e3ab6e",
+  "value_receipt_sha256": "569530ea97c9b55df17c05988fc57e2092797ea80968f7fbfe6948bbf68a98b8"
+}

@@ -1,0 +1,552 @@
+{
+  "schema_version": 1,
+  "kind": "fresh-safety-value-review",
+  "review_date": "2026-09-12",
+  "collection_id": "humanlayer-show-me-2026-09",
+  "scope": {
+    "current_runtime_trees": [
+      "/Users/yoshiki/.codex/skills/show-me",
+      "/Users/yoshiki/.claude/skills/show-me"
+    ],
+    "prior_review_trees": [
+      "/Users/yoshiki/.local/share/skill-governance/review/humanlayer-show-me-2026-09/show-me/codex",
+      "/Users/yoshiki/.local/share/skill-governance/review/humanlayer-show-me-2026-09/show-me/claude"
+    ],
+    "registry_collection": [
+      "/Users/yoshiki/.codex/skills/skill-governance/registry.toml",
+      "/Users/yoshiki/.claude/skills/skill-governance/registry.toml"
+    ],
+    "constraints": [
+      "内容は今回KEEPとして再設計しない。",
+      "外部接続、第三者code実行、runtime書込は行わない。",
+      "既存baseline不整合の原因調査は行わない。"
+    ]
+  },
+  "method": {
+    "markdown_review": "現行と旧review treeのSKILL.md/SOURCE.mdを全文再読し、差分・命令・外部参照・権限境界を確認した。",
+    "hash_review": "同一fileはSHA-256、package treeはskill-tree-sha256-v1で照合した。",
+    "value_review": "現行descriptionと本文を適用し、代表的なtrigger 3件と無関係または別ownerの依頼3件を静的に分類した。runtime実行結果ではない。",
+    "execution": "candidate/third-party codeは実行していない。hash、差分、構文の読み取りだけを行った。",
+    "network": "外部network-readは行っていない。",
+    "runtime_mutation": "runtime skillやregistry/receiptは変更していない。出力JSONだけを作成する。"
+  },
+  "documents": {
+    "full_read": {
+      "current": [
+        "/Users/yoshiki/.codex/skills/show-me/SKILL.md",
+        "/Users/yoshiki/.codex/skills/show-me/SOURCE.md",
+        "/Users/yoshiki/.claude/skills/show-me/SKILL.md",
+        "/Users/yoshiki/.claude/skills/show-me/SOURCE.md"
+      ],
+      "prior_review": [
+        "/Users/yoshiki/.local/share/skill-governance/review/humanlayer-show-me-2026-09/show-me/codex/SKILL.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/humanlayer-show-me-2026-09/show-me/codex/SOURCE.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/humanlayer-show-me-2026-09/show-me/claude/SKILL.md",
+        "/Users/yoshiki/.local/share/skill-governance/review/humanlayer-show-me-2026-09/show-me/claude/SOURCE.md"
+      ],
+      "status": "PASS: 8 Markdown files reread in full; LICENSE files were also hash-checked."
+    },
+    "files": {
+      "review_codex": {
+        "SKILL.md": {
+          "path": "/Users/yoshiki/.local/share/skill-governance/review/humanlayer-show-me-2026-09/show-me/codex/SKILL.md",
+          "bytes": 4611,
+          "sha256": "7691f183cf94942a3150168588511750660fe0fdc47146f3ee08649bde90528c"
+        },
+        "SOURCE.md": {
+          "path": "/Users/yoshiki/.local/share/skill-governance/review/humanlayer-show-me-2026-09/show-me/codex/SOURCE.md",
+          "bytes": 1143,
+          "sha256": "56baefa7ac173c2644faf6442b0a08a7daf81ba6d99e5a2624859d02f809d3b3"
+        },
+        "LICENSE": {
+          "path": "/Users/yoshiki/.local/share/skill-governance/review/humanlayer-show-me-2026-09/show-me/codex/LICENSE",
+          "bytes": 1067,
+          "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f"
+        }
+      },
+      "review_claude": {
+        "SKILL.md": {
+          "path": "/Users/yoshiki/.local/share/skill-governance/review/humanlayer-show-me-2026-09/show-me/claude/SKILL.md",
+          "bytes": 4611,
+          "sha256": "7691f183cf94942a3150168588511750660fe0fdc47146f3ee08649bde90528c"
+        },
+        "SOURCE.md": {
+          "path": "/Users/yoshiki/.local/share/skill-governance/review/humanlayer-show-me-2026-09/show-me/claude/SOURCE.md",
+          "bytes": 1143,
+          "sha256": "56baefa7ac173c2644faf6442b0a08a7daf81ba6d99e5a2624859d02f809d3b3"
+        },
+        "LICENSE": {
+          "path": "/Users/yoshiki/.local/share/skill-governance/review/humanlayer-show-me-2026-09/show-me/claude/LICENSE",
+          "bytes": 1067,
+          "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f"
+        }
+      },
+      "current_codex": {
+        "SKILL.md": {
+          "path": "/Users/yoshiki/.codex/skills/show-me/SKILL.md",
+          "bytes": 8956,
+          "sha256": "b28aeef15eea86495b5a7b46a299e91f15573d29b15a8a668d3db2f7a24b94ef"
+        },
+        "SOURCE.md": {
+          "path": "/Users/yoshiki/.codex/skills/show-me/SOURCE.md",
+          "bytes": 1466,
+          "sha256": "583cdecf898601377b00dbf606dd8b9acb16e443bea5fdaeb3dfa2058b198b10"
+        },
+        "LICENSE": {
+          "path": "/Users/yoshiki/.codex/skills/show-me/LICENSE",
+          "bytes": 1067,
+          "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f"
+        }
+      },
+      "current_claude": {
+        "SKILL.md": {
+          "path": "/Users/yoshiki/.claude/skills/show-me/SKILL.md",
+          "bytes": 8956,
+          "sha256": "b28aeef15eea86495b5a7b46a299e91f15573d29b15a8a668d3db2f7a24b94ef"
+        },
+        "SOURCE.md": {
+          "path": "/Users/yoshiki/.claude/skills/show-me/SOURCE.md",
+          "bytes": 1466,
+          "sha256": "583cdecf898601377b00dbf606dd8b9acb16e443bea5fdaeb3dfa2058b198b10"
+        },
+        "LICENSE": {
+          "path": "/Users/yoshiki/.claude/skills/show-me/LICENSE",
+          "bytes": 1067,
+          "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f"
+        }
+      }
+    },
+    "tree_sha256": {
+      "algorithm": "skill-tree-sha256-v1",
+      "prior_review_codex": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9",
+      "prior_review_claude": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9",
+      "current_codex": "526d49e4b44cd1e6c282e30cc3cb59934be5828b3cb9a2c7750477fca898dc39",
+      "current_claude": "526d49e4b44cd1e6c282e30cc3cb59934be5828b3cb9a2c7750477fca898dc39"
+    },
+    "parity": {
+      "current_codex_claude": true,
+      "prior_review_codex_claude": true,
+      "license_old_current_unchanged": true
+    }
+  },
+  "delta": [
+    {
+      "path": "SKILL.md",
+      "prior_review": {
+        "path": "/Users/yoshiki/.local/share/skill-governance/review/humanlayer-show-me-2026-09/show-me/codex/SKILL.md",
+        "bytes": 4611,
+        "sha256": "7691f183cf94942a3150168588511750660fe0fdc47146f3ee08649bde90528c"
+      },
+      "current": {
+        "path": "/Users/yoshiki/.codex/skills/show-me/SKILL.md",
+        "bytes": 8956,
+        "sha256": "b28aeef15eea86495b5a7b46a299e91f15573d29b15a8a668d3db2f7a24b94ef"
+      },
+      "diff": {
+        "added_lines": 90,
+        "removed_lines": 1
+      },
+      "finding": "descriptionにファイル・関数依存traceのtriggerを追加し、source-backedなruntime Level、mode別trace、side-effect境界、source anchor、unknown、rate-limit単位、HTML brief項目の節を追加した。既存のrepresentation chooser、SVG/HTML owner、外部asset禁止、viewer境界は保持した。"
+    },
+    {
+      "path": "SOURCE.md",
+      "prior_review": {
+        "path": "/Users/yoshiki/.local/share/skill-governance/review/humanlayer-show-me-2026-09/show-me/codex/SOURCE.md",
+        "bytes": 1143,
+        "sha256": "56baefa7ac173c2644faf6442b0a08a7daf81ba6d99e5a2624859d02f809d3b3"
+      },
+      "current": {
+        "path": "/Users/yoshiki/.codex/skills/show-me/SOURCE.md",
+        "bytes": 1466,
+        "sha256": "583cdecf898601377b00dbf606dd8b9acb16e443bea5fdaeb3dfa2058b198b10"
+      },
+      "diff": {
+        "added_lines": 2,
+        "removed_lines": 0
+      },
+      "finding": "2026-09-11の依存trace適合を出典台帳へ追記した。source revision、source path、license、collectionは保持した。"
+    },
+    {
+      "path": "LICENSE",
+      "prior_review": {
+        "path": "/Users/yoshiki/.local/share/skill-governance/review/humanlayer-show-me-2026-09/show-me/codex/LICENSE",
+        "bytes": 1067,
+        "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f"
+      },
+      "current": {
+        "path": "/Users/yoshiki/.codex/skills/show-me/LICENSE",
+        "bytes": 1067,
+        "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f"
+      },
+      "diff": {
+        "added_lines": 0,
+        "removed_lines": 0
+      },
+      "finding": "byte-identical。MIT license evidenceのhashは保持された。"
+    }
+  ],
+  "references": {
+    "source": {
+      "repository": "https://github.com/humanlayer/skills",
+      "revision": "3c2629142c5d437428269b1b722b08c0b87f574d",
+      "path": "plugins/show-me/skills/show-me/SKILL.md",
+      "license": "MIT",
+      "network_fetched": false
+    },
+    "internal_skill_refs": {
+      "roots_checked": [
+        "/Users/yoshiki/.codex/skills",
+        "/Users/yoshiki/.claude/skills"
+      ],
+      "creating_html_documents": {
+        "codex": true,
+        "claude": true
+      },
+      "viewing_plans": {
+        "codex": true,
+        "claude": true
+      },
+      "diagram_design": {
+        "codex": true,
+        "claude": true
+      }
+    },
+    "markdown_links": {
+      "current_skill": [],
+      "current_source": [],
+      "prior_review_skill": [],
+      "prior_review_source": []
+    },
+    "external_urls_in_current_markdown": [
+      "https://github.com/humanlayer/skills"
+    ],
+    "note": "SKILL.mdに外部URLや相対Markdown linkはなく、SOURCE.mdのGitHub URLは固定revisionの出典である。SOURCE.md中のBash(open ...)は適合理由の記述で、実行命令ではない。"
+  },
+  "instruction_and_permission_review": {
+    "current_frontmatter": {
+      "keys": [
+        "name",
+        "description"
+      ],
+      "name": "show-me",
+      "allowed_tools": "absent",
+      "hooks": "absent",
+      "model_or_execution_policy": "absent",
+      "status": "Ruby Psych parse PASS"
+    },
+    "code_fences": {
+      "languages": [
+        "text",
+        "tsx",
+        "diff"
+      ],
+      "shell_command_fences": [],
+      "exact_dangerous_command_matches": [],
+      "note": "on(save)内のwrite new contentは擬似コード例で、実行可能なshell命令ではない。"
+    },
+    "side_effect_boundaries": {
+      "existing_local_actions": [
+        "新しい図をSVGとして保存する。",
+        "検証済みのlocal artifactを、必要ならhost提供の安全なlocal viewerで開く。"
+      ],
+      "explicit_prohibitions": [
+        "外部font、画像、script、iframe、network request、local serverを使わない。",
+        "根拠にない人物、数値、状態、接続を補わない。"
+      ],
+      "new_delta": "依存trace節は既存処理のsource-backed説明を求めるだけで、DB writeやexternal writeの実行を指示しない。確認できない関係はunknownとする。"
+    }
+  },
+  "safety_review": {
+    "decision": "PASS",
+    "basis": [
+      "deltaに実行可能file、hook、credential取得、destructive command、network action、権限変更は追加されていない。",
+      "依存traceはruntime call depthとside-effectをsource anchorへ戻し、推測をunknownとして停止できる。",
+      "Codex/Claudeの現行3-file treeは同一で、LICENSE hashは旧review treeから不変。",
+      "SVGの外部asset/script/iframe/network/local-server禁止とviewerのlocal・検証後境界は維持されている。"
+    ]
+  },
+  "value_review": {
+    "decision": "PASS_STATIC_CLASSIFICATION",
+    "runtime_observed": false,
+    "cases": [
+      {
+        "id": "trigger-pseudocode",
+        "category": "representative_trigger",
+        "prompt": "この保存処理、show me。分岐だけ見たい",
+        "classification": "show-me owns",
+        "expected_form": "pseudocode",
+        "basis": "descriptionのshow me triggerとロジック=pseudocodeのchooserに一致する。"
+      },
+      {
+        "id": "trigger-dependency-trace",
+        "category": "representative_trigger",
+        "prompt": "注文受付からDB保存まで、ファイルごとに処理を追いたい。依存traceを見せて",
+        "classification": "show-me owns",
+        "expected_form": "source-backed dependency trace",
+        "basis": "現行descriptionのファイル・関数依存trace triggerと追加節のLevel、side-effect、source anchor契約に一致する。"
+      },
+      {
+        "id": "trigger-spatial-flow",
+        "category": "representative_trigger",
+        "prompt": "UI、daemon、agentの流れを図で見せて",
+        "classification": "show-me owns",
+        "expected_form": "accessible SVG",
+        "basis": "明示的な図要求と3要素以上の関係に対するSVG chooserに一致する。"
+      },
+      {
+        "id": "unrelated-prose",
+        "category": "unrelated_request",
+        "prompt": "この関数を二文で説明して",
+        "classification": "show-me does not own",
+        "expected_route": "plain prose route",
+        "basis": "visual formの要求がなく、本文も短い表現が同じ意味を伝える場合は図を作らない。"
+      },
+      {
+        "id": "unrelated-image",
+        "category": "unrelated_request",
+        "prompt": "ヒーロー画像を一枚生成して",
+        "classification": "show-me does not own",
+        "expected_route": "image-generation route",
+        "basis": "show-meのvisual explanation対象ではなく、画像生成の依頼である。"
+      },
+      {
+        "id": "handoff-roadmap",
+        "category": "out_of_scope_handoff",
+        "prompt": "このtaskの進捗をroadmapで見せて",
+        "classification": "show-me does not own",
+        "expected_route": "viewing-plans",
+        "basis": "本文がRoadmapのtask順・進捗・完了状態をviewing-plansへ明示的に渡している。"
+      }
+    ],
+    "summary": {
+      "representative_trigger_cases": 3,
+      "trigger_cases_classified_as_owner": 3,
+      "unrelated_or_handoff_cases": 3,
+      "unrelated_or_handoff_cases_kept_away": 3,
+      "runtime_precision_recall_claimed": false
+    }
+  },
+  "registry_review": {
+    "collection": "humanlayer-show-me-2026-09",
+    "state_recorded": {
+      "codex": {
+        "id": "humanlayer-show-me-2026-09",
+        "source_id": "humanlayer-skills",
+        "local_state": "active",
+        "review_state": "approved",
+        "risk_tier": "L0",
+        "license": "MIT",
+        "targets": [
+          "codex",
+          "claude"
+        ],
+        "default_revision": "3c2629142c5d437428269b1b722b08c0b87f574d",
+        "baseline_at": "2026-09-06"
+      },
+      "claude": {
+        "id": "humanlayer-show-me-2026-09",
+        "source_id": "humanlayer-skills",
+        "local_state": "active",
+        "review_state": "approved",
+        "risk_tier": "L0",
+        "license": "MIT",
+        "targets": [
+          "codex",
+          "claude"
+        ],
+        "default_revision": "3c2629142c5d437428269b1b722b08c0b87f574d",
+        "baseline_at": "2026-09-06"
+      }
+    },
+    "registry_file_parity": {
+      "registry_toml_sha256": {
+        "codex": "49e65a6c75dc32720a8150b0431f5c7184e98490530936ef5e86431bee114766",
+        "claude": "49e65a6c75dc32720a8150b0431f5c7184e98490530936ef5e86431bee114766",
+        "match": true
+      },
+      "registry_lock_sha256": {
+        "codex": "882ca5020413736aba9d69348d0540f9caa493a6bff7798a156e809bfe9c5a74",
+        "claude": "882ca5020413736aba9d69348d0540f9caa493a6bff7798a156e809bfe9c5a74",
+        "match": true
+      }
+    },
+    "sidecar_reference_hashes": {
+      "codex": [
+        {
+          "label": "adaptation_diff",
+          "path": "/Users/yoshiki/.codex/skills/skill-governance/adaptations/humanlayer-show-me-2026-09.json",
+          "expected_sha256": "b8315c66eb5799281150a1b73c43c355506172b124c2e47c30a22f00d738d165",
+          "actual_sha256": "b8315c66eb5799281150a1b73c43c355506172b124c2e47c30a22f00d738d165"
+        },
+        {
+          "label": "safety_receipt",
+          "path": "/Users/yoshiki/.codex/skills/skill-governance/receipts/humanlayer-show-me-2026-09/safety.json",
+          "expected_sha256": "357fa68ea150d2026671494de798b47c1123e01faba0386b2a5d5a2de9e859a3",
+          "actual_sha256": "357fa68ea150d2026671494de798b47c1123e01faba0386b2a5d5a2de9e859a3"
+        },
+        {
+          "label": "value_receipt",
+          "path": "/Users/yoshiki/.codex/skills/skill-governance/receipts/humanlayer-show-me-2026-09/value.json",
+          "expected_sha256": "d388a869f3524f5c290739af7aef0d723610538396b4481763bcac542c5f39fd",
+          "actual_sha256": "d388a869f3524f5c290739af7aef0d723610538396b4481763bcac542c5f39fd"
+        },
+        {
+          "label": "approval_receipt",
+          "path": "/Users/yoshiki/.codex/skills/skill-governance/receipts/humanlayer-show-me-2026-09/approval.json",
+          "expected_sha256": "55f2f22a448e3dd17e88967ff6940a30e9ce63c4ba5983a761e4ea6bc3890639",
+          "actual_sha256": "55f2f22a448e3dd17e88967ff6940a30e9ce63c4ba5983a761e4ea6bc3890639"
+        },
+        {
+          "label": "promotion_receipt",
+          "path": "/Users/yoshiki/.codex/skills/skill-governance/receipts/humanlayer-show-me-2026-09/promotion.json",
+          "expected_sha256": "ffa06f57ba7cf9ea367668bc793c1a2bb3e1a38b77bb661642df29994feb6603",
+          "actual_sha256": "ffa06f57ba7cf9ea367668bc793c1a2bb3e1a38b77bb661642df29994feb6603"
+        },
+        {
+          "label": "frontmatter_quarantine",
+          "path": "/Users/yoshiki/.codex/skills/skill-governance/receipts/humanlayer-show-me-2026-09/frontmatter-quarantine.json",
+          "expected_sha256": "27b0c504d0cc7cc4faa3b74959e39e2dcae89e3e71194c0813a38ee96927bf7e",
+          "actual_sha256": "27b0c504d0cc7cc4faa3b74959e39e2dcae89e3e71194c0813a38ee96927bf7e"
+        },
+        {
+          "label": "frontmatter_codex",
+          "path": "/Users/yoshiki/.codex/skills/skill-governance/receipts/humanlayer-show-me-2026-09/frontmatter-codex.json",
+          "expected_sha256": "9a2c84ed95af173f0404eaf182a48bf26e91cc0e165f7b44e1df56784bba5035",
+          "actual_sha256": "9a2c84ed95af173f0404eaf182a48bf26e91cc0e165f7b44e1df56784bba5035"
+        },
+        {
+          "label": "frontmatter_claude",
+          "path": "/Users/yoshiki/.codex/skills/skill-governance/receipts/humanlayer-show-me-2026-09/frontmatter-claude.json",
+          "expected_sha256": "694e3b48314c67a2f8d969bc969b235de2456bff45fb96403405801fc1e50add",
+          "actual_sha256": "694e3b48314c67a2f8d969bc969b235de2456bff45fb96403405801fc1e50add"
+        }
+      ],
+      "claude": [
+        {
+          "label": "adaptation_diff",
+          "path": "/Users/yoshiki/.claude/skills/skill-governance/adaptations/humanlayer-show-me-2026-09.json",
+          "expected_sha256": "b8315c66eb5799281150a1b73c43c355506172b124c2e47c30a22f00d738d165",
+          "actual_sha256": "b8315c66eb5799281150a1b73c43c355506172b124c2e47c30a22f00d738d165"
+        },
+        {
+          "label": "safety_receipt",
+          "path": "/Users/yoshiki/.claude/skills/skill-governance/receipts/humanlayer-show-me-2026-09/safety.json",
+          "expected_sha256": "357fa68ea150d2026671494de798b47c1123e01faba0386b2a5d5a2de9e859a3",
+          "actual_sha256": "357fa68ea150d2026671494de798b47c1123e01faba0386b2a5d5a2de9e859a3"
+        },
+        {
+          "label": "value_receipt",
+          "path": "/Users/yoshiki/.claude/skills/skill-governance/receipts/humanlayer-show-me-2026-09/value.json",
+          "expected_sha256": "d388a869f3524f5c290739af7aef0d723610538396b4481763bcac542c5f39fd",
+          "actual_sha256": "d388a869f3524f5c290739af7aef0d723610538396b4481763bcac542c5f39fd"
+        },
+        {
+          "label": "approval_receipt",
+          "path": "/Users/yoshiki/.claude/skills/skill-governance/receipts/humanlayer-show-me-2026-09/approval.json",
+          "expected_sha256": "55f2f22a448e3dd17e88967ff6940a30e9ce63c4ba5983a761e4ea6bc3890639",
+          "actual_sha256": "55f2f22a448e3dd17e88967ff6940a30e9ce63c4ba5983a761e4ea6bc3890639"
+        },
+        {
+          "label": "promotion_receipt",
+          "path": "/Users/yoshiki/.claude/skills/skill-governance/receipts/humanlayer-show-me-2026-09/promotion.json",
+          "expected_sha256": "ffa06f57ba7cf9ea367668bc793c1a2bb3e1a38b77bb661642df29994feb6603",
+          "actual_sha256": "ffa06f57ba7cf9ea367668bc793c1a2bb3e1a38b77bb661642df29994feb6603"
+        },
+        {
+          "label": "frontmatter_quarantine",
+          "path": "/Users/yoshiki/.claude/skills/skill-governance/receipts/humanlayer-show-me-2026-09/frontmatter-quarantine.json",
+          "expected_sha256": "27b0c504d0cc7cc4faa3b74959e39e2dcae89e3e71194c0813a38ee96927bf7e",
+          "actual_sha256": "27b0c504d0cc7cc4faa3b74959e39e2dcae89e3e71194c0813a38ee96927bf7e"
+        },
+        {
+          "label": "frontmatter_codex",
+          "path": "/Users/yoshiki/.claude/skills/skill-governance/receipts/humanlayer-show-me-2026-09/frontmatter-codex.json",
+          "expected_sha256": "9a2c84ed95af173f0404eaf182a48bf26e91cc0e165f7b44e1df56784bba5035",
+          "actual_sha256": "9a2c84ed95af173f0404eaf182a48bf26e91cc0e165f7b44e1df56784bba5035"
+        },
+        {
+          "label": "frontmatter_claude",
+          "path": "/Users/yoshiki/.claude/skills/skill-governance/receipts/humanlayer-show-me-2026-09/frontmatter-claude.json",
+          "expected_sha256": "694e3b48314c67a2f8d969bc969b235de2456bff45fb96403405801fc1e50add",
+          "actual_sha256": "694e3b48314c67a2f8d969bc969b235de2456bff45fb96403405801fc1e50add"
+        }
+      ],
+      "all_registry_path_hash_references_match_sidecar_files": true
+    },
+    "recorded_target_vs_current": {
+      "recorded_review_tree_sha256": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9",
+      "current_runtime_tree_sha256": "526d49e4b44cd1e6c282e30cc3cb59934be5828b3cb9a2c7750477fca898dc39",
+      "tree_match": false,
+      "recorded_review_skill_sha256": "7691f183cf94942a3150168588511750660fe0fdc47146f3ee08649bde90528c",
+      "current_skill_sha256": "b28aeef15eea86495b5a7b46a299e91f15573d29b15a8a668d3db2f7a24b94ef",
+      "skill_match": false,
+      "recorded_review_source_sha256": "56baefa7ac173c2644faf6442b0a08a7daf81ba6d99e5a2624859d02f809d3b3",
+      "current_source_sha256": "583cdecf898601377b00dbf606dd8b9acb16e443bea5fdaeb3dfa2058b198b10",
+      "source_match": false,
+      "current_license_sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f",
+      "license_record_unchanged": true
+    },
+    "receipt_payloads": {
+      "adaptation_target_tree_sha256": {
+        "codex": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9",
+        "claude": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9"
+      },
+      "safety_subject_sha256": "136196f4ce8e61863d2e96fadce4c3ee84f12fa084e6a2d67d77fef3b92af8a8",
+      "safety_target_hashes": {
+        "show-me": {
+          "claude": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9",
+          "codex": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9"
+        }
+      },
+      "value_subject_sha256": "136196f4ce8e61863d2e96fadce4c3ee84f12fa084e6a2d67d77fef3b92af8a8",
+      "value_candidate": "A 4,611-byte review entry owns quick inline visual explanations, hands document-shaped HTML to creating-html-documents with a bounded brief, and returns non-recursive local slices when the document owner calls it",
+      "value_evaluation_sha256": "272c81115efed0e7ee30719021e6334293b7312b2966eee90a89dada6a1cfb87",
+      "approval_subject_sha256": "136196f4ce8e61863d2e96fadce4c3ee84f12fa084e6a2d67d77fef3b92af8a8",
+      "approval_message": "OK",
+      "promotion_approved_targets": {
+        "show-me": {
+          "codex": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9",
+          "claude": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9"
+        }
+      },
+      "promotion_runtime_targets": {
+        "show-me": {
+          "codex": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9",
+          "claude": "bf975b196e5b86411b9508adf8c56c458762694d0d3eefe411ca203ae3257db9"
+        }
+      },
+      "frontmatter_receipt_skill_hashes": {
+        "codex": "7691f183cf94942a3150168588511750660fe0fdc47146f3ee08649bde90528c",
+        "claude": "7691f183cf94942a3150168588511750660fe0fdc47146f3ee08649bde90528c"
+      }
+    },
+    "judgment": {
+      "content": "KEEP",
+      "safety_and_value_for_current_content": "PASS",
+      "ledger": "REPAIR_REQUIRED",
+      "promotion": "HOLD_UNTIL_CURRENT_TREE_AND_CURRENT_VALUE_EVIDENCE_ARE_REBOUND",
+      "reason": "現行tree 526d49e4... は旧review/receiptのbf975b19...と異なる。現行SKILL.md/SOURCE.mdも旧manifestのhash/bytesと異なり、旧value receiptは4,611-byte候補と2026-09-06の14件評価へbindされている。sidecar自身のpath/hash参照は一致するが、payloadの対象treeが旧版のままである。"
+    }
+  },
+  "validation": {
+    "full_markdown_read": "PASS: current and prior-review SKILL.md/SOURCE.md for Codex and Claude were fully reread.",
+    "current_target_parity": "PASS: Codex and Claude current SKILL.md, SOURCE.md, LICENSE are byte-identical.",
+    "prior_review_target_parity": "PASS: Codex and Claude prior-review files are byte-identical.",
+    "license": "PASS: current/prior LICENSE hashes are identical and MIT is recorded.",
+    "diff": "PASS: only the described SKILL.md/SOURCE.md delta exists in the compared package tree; no file was added or removed.",
+    "frontmatter": "PASS: current and prior frontmatter parse with name=show-me and description.",
+    "references": "PASS: no Markdown links; all three internal owner Skills exist on both platforms; one pinned GitHub citation was not fetched.",
+    "instruction_scan": "PASS: no executable shell fence or dangerous command token in current body; side-effect/prohibition boundaries reviewed.",
+    "value_classification": "PASS_STATIC: 3/3 representative triggers classified to show-me and 3/3 unrelated/handoff requests kept away; no runtime quality claim.",
+    "external_network": "NOT USED",
+    "third_party_code_execution": "NOT USED",
+    "runtime_write": "NOT USED",
+    "output_write": "ONLY this fresh-review JSON is written."
+  },
+  "unknowns": [
+    "現行tree用の新しいsubject/safety/value/frontmatter/promotion receiptはこのbounded reviewでは生成していない。台帳修復側で現行tree 526d49e4...へ再bindする必要がある。",
+    "valueの分類は本文適用による静的reviewであり、model実行、長期usage telemetry、独立benchmark、viewer表示結果は未確認。",
+    "固定GitHub citationのupstream内容はnetwork禁止のため再取得していない。SOURCE.mdに記録されたrevision/pathを確認した。",
+    "optionalなhost local viewerを実際には起動していない。"
+  ]
+}

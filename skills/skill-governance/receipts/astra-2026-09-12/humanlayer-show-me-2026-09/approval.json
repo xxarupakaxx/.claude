@@ -1,0 +1,21 @@
+{
+  "approval_message": "OK",
+  "approver": {
+    "name": "yoshiki",
+    "type": "human"
+  },
+  "authorization_evidence": {
+    "path": "receipts/astra-2026-09-12/humanlayer-show-me-2026-09/user-authorization.json",
+    "sha256": "4f7b51f53ea5931e52462fe3c9b3e8cd3950abcfc455f5340ae42931e366da62"
+  },
+  "authorization_type": "Explicit task and repair-scope approval; fresh evidence linked by the executing agent, not a claim that the user manually inspected each hash",
+  "collection_id": "humanlayer-show-me-2026-09",
+  "date": "2026-09-12",
+  "decision": "approved",
+  "generation": 3,
+  "kind": "approval",
+  "safety_receipt_sha256": "e1064a33dd601a5d0bff4f7a91c1c3445ad00ad6ca625c7f1fae3a16f8e88178",
+  "schema_version": 1,
+  "subject_sha256": "0f79bdeb1822fa75e2e738638e3f6cb16d9ece72c4fe94ab5aab40622521adcb",
+  "value_receipt_sha256": "f28a9f5c5dbb1d05ab53fa624fe6de642040c0edbd5fde50959cfdea2041061b"
+}

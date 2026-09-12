@@ -1,0 +1,19 @@
+{
+  "command": "validate-frontmatter",
+  "findings": [],
+  "frontmatter_sha256": "6d58851085d7d1188b4e9170a4c2469ffab0f7bdaf877f79f2f819aecad7e657",
+  "skill_sha256": "6d2f0c6c9557d0d95371c99ff864beba2386d712995b83e08b645af7df3b445c",
+  "status": "validated",
+  "surface": {
+    "collection_id": "emilkowalski-ja-2026-07",
+    "kind": "review",
+    "skill_name": "find-animation-opportunities",
+    "target_id": "codex"
+  },
+  "target": "codex",
+  "validator": "pyyaml-6.0.2-safe-loader",
+  "values": {
+    "description": "ユーザーが「どこをアニメーションさせるべきか」「もっと生き生きと感じさせたい」と明示したとき、コードまたは UI の未充足な motion opportunity を読み取り専用で選別する。既存 motion の修正や実装には使わない。",
+    "name": "find-animation-opportunities"
+  }
+}

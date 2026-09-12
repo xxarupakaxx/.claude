@@ -1,0 +1,46 @@
+{
+  "baseline": {
+    "comparison_limit": "Historical baseline is retained as provenance; this is not a fresh comparative performance benchmark.",
+    "previous_value_receipt": {
+      "path": "receipts/humanlayer-show-me-2026-09/value.json",
+      "sha256": "d388a869f3524f5c290739af7aef0d723610538396b4481763bcac542c5f39fd"
+    }
+  },
+  "candidate": {
+    "limitations": "Static prompt routing only; no UI, browser, external service or implementation-quality benchmark.",
+    "routing_evidence": {
+      "path": "receipts/astra-2026-09-12/humanlayer-show-me-2026-09/routing-evaluation.json",
+      "sha256": "9a5035c71000bae976458730d0317702de3bcb8df6985c7d80a67b2be0180e84"
+    }
+  },
+  "collection_id": "humanlayer-show-me-2026-09",
+  "date": "2026-09-12",
+  "decision": "pass",
+  "generation": 3,
+  "kind": "value",
+  "outcome_rubric": {
+    "fail": "Wrong route or false positive/negative",
+    "pass": "Intended bounded skill selected; unrelated requests select none"
+  },
+  "pass_at_1": 1.0,
+  "representative_prompts": [
+    "この保存処理、show me。分岐だけ見たい",
+    "注文受付からDB保存まで、ファイルごとに処理を追いたい。依存traceを見せて",
+    "UI、daemon、agentの流れを図で見せて",
+    "この関数を二文で説明して",
+    "ヒーロー画像を一枚生成して",
+    "このtaskの進捗をroadmapで見せて"
+  ],
+  "reviewer": {
+    "evidence": {
+      "path": "receipts/astra-2026-09-12/humanlayer-show-me-2026-09/routing-evaluation.json",
+      "sha256": "9a5035c71000bae976458730d0317702de3bcb8df6985c7d80a67b2be0180e84"
+    },
+    "type": "independent-agent-routing-with-lead-comparison"
+  },
+  "schema_version": 1,
+  "subject_sha256": "0f79bdeb1822fa75e2e738638e3f6cb16d9ece72c4fe94ab5aab40622521adcb",
+  "trial_count": 6,
+  "trigger_precision": 1.0,
+  "trigger_recall": 1.0
+}

@@ -1,0 +1,183 @@
+{
+  "adaptation_diff": {
+    "path": "adaptations/astra-2026-09-12/humanlayer-show-me-2026-09.json",
+    "sha256": "2e7658efaf9d2b13a74de904ad1f36b69831298be5a543c61f06df3e31ba9ba2"
+  },
+  "adaptation_review": {
+    "fresh_evidence": {
+      "path": "receipts/astra-2026-09-12/humanlayer-show-me-2026-09/independent-review.json",
+      "sha256": "6b9bf499309bea539976b79802142bb6ef8bf18a009fabc4f3d3b80e48ffde52"
+    },
+    "previous_review": {
+      "path": "receipts/humanlayer-show-me-2026-09/safety.json",
+      "sha256": "357fa68ea150d2026671494de798b47c1123e01faba0386b2a5d5a2de9e859a3"
+    },
+    "review_method": "Independent delta review with unchanged-file hash comparison plus fresh canonical static inspection"
+  },
+  "candidate_manifests": {
+    "show-me": [
+      {
+        "executable": false,
+        "path": "SKILL.md",
+        "sha256": "bea6da70a58096730b9aeb0bae293ddf4726103a98efc9ce13c481619942a810",
+        "size": 3297
+      }
+    ]
+  },
+  "capabilities": [
+    "concise pseudocode, call trees, component trees, file trees, and shape-aware diffs",
+    "accessible SVG as the canonical source for small multi-element diagrams",
+    "bounded visual briefs that hand document-shaped or HTML output to creating-html-documents",
+    "non-recursive section-level visual slices when creating-html-documents retains document ownership",
+    "handoff of roadmap progress and detailed technical diagrams to their existing owners"
+  ],
+  "collection_id": "humanlayer-show-me-2026-09",
+  "date": "2026-09-12",
+  "decision": "pass",
+  "dependencies": [
+    "host-provided safe local viewer only when opening a validated local artifact"
+  ],
+  "external_urls": [
+    "https://github.com/humanlayer/skills/tree/3c2629142c5d437428269b1b722b08c0b87f574d/plugins/show-me/skills/show-me",
+    "https://github.com/humanlayer/skills"
+  ],
+  "generation": 3,
+  "kind": "safety",
+  "license_evidence": {
+    "show-me": {
+      "claude": [
+        {
+          "path": "LICENSE",
+          "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f"
+        }
+      ],
+      "codex": [
+        {
+          "path": "LICENSE",
+          "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f"
+        }
+      ]
+    }
+  },
+  "license_review": {
+    "decision": "pass",
+    "declared": "MIT",
+    "local_evidence": {
+      "show-me": {
+        "claude": [
+          {
+            "path": "LICENSE",
+            "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f"
+          }
+        ],
+        "codex": [
+          {
+            "path": "LICENSE",
+            "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f"
+          }
+        ]
+      }
+    },
+    "upstream_paths": {
+      "show-me": [
+        "LICENSE"
+      ]
+    }
+  },
+  "next_review_date": "2026-12-11",
+  "quarantine": {
+    "show-me": "735bf92c237bd9bd9114af68babcdf33fad710e6d25800163a07dab1b64457ca"
+  },
+  "reviewer": {
+    "evidence": {
+      "path": "receipts/astra-2026-09-12/humanlayer-show-me-2026-09/independent-review.json",
+      "sha256": "6b9bf499309bea539976b79802142bb6ef8bf18a009fabc4f3d3b80e48ffde52"
+    },
+    "type": "independent-agent-plus-lead"
+  },
+  "schema_version": 1,
+  "static_inspection": {
+    "show-me": {
+      "advisory_findings": [],
+      "blocking_findings": [],
+      "candidate_code_execution": false,
+      "files": [
+        {
+          "executable": false,
+          "path": "SKILL.md",
+          "sha256": "bea6da70a58096730b9aeb0bae293ddf4726103a98efc9ce13c481619942a810",
+          "size": 3297
+        }
+      ],
+      "full_yaml_pending_codes": [],
+      "tree_sha256": "735bf92c237bd9bd9114af68babcdf33fad710e6d25800163a07dab1b64457ca"
+    }
+  },
+  "subject_sha256": "0f79bdeb1822fa75e2e738638e3f6cb16d9ece72c4fe94ab5aab40622521adcb",
+  "target_manifests": {
+    "show-me": {
+      "claude": [
+        {
+          "executable": false,
+          "path": "LICENSE",
+          "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f",
+          "size": 1067
+        },
+        {
+          "executable": false,
+          "path": "SKILL.md",
+          "sha256": "b28aeef15eea86495b5a7b46a299e91f15573d29b15a8a668d3db2f7a24b94ef",
+          "size": 8956
+        },
+        {
+          "executable": false,
+          "path": "SOURCE.md",
+          "sha256": "583cdecf898601377b00dbf606dd8b9acb16e443bea5fdaeb3dfa2058b198b10",
+          "size": 1466
+        }
+      ],
+      "codex": [
+        {
+          "executable": false,
+          "path": "LICENSE",
+          "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f",
+          "size": 1067
+        },
+        {
+          "executable": false,
+          "path": "SKILL.md",
+          "sha256": "b28aeef15eea86495b5a7b46a299e91f15573d29b15a8a668d3db2f7a24b94ef",
+          "size": 8956
+        },
+        {
+          "executable": false,
+          "path": "SOURCE.md",
+          "sha256": "583cdecf898601377b00dbf606dd8b9acb16e443bea5fdaeb3dfa2058b198b10",
+          "size": 1466
+        }
+      ]
+    }
+  },
+  "targets": {
+    "show-me": {
+      "claude": "526d49e4b44cd1e6c282e30cc3cb59934be5828b3cb9a2c7750477fca898dc39",
+      "codex": "526d49e4b44cd1e6c282e30cc3cb59934be5828b3cb9a2c7750477fca898dc39"
+    }
+  },
+  "upstream": {
+    "show-me": {
+      "blob_sha": "d57a0a0afc2800a4cc7a7765e65a9c6c18e67b4f",
+      "catalog_sha256": "b7631ccdac27024ac969712f7ed6aecb0ccb9ab4ad97b6ec286cdae81abde00e",
+      "github": "humanlayer/skills",
+      "license_paths": [
+        "LICENSE"
+      ],
+      "package_tree_sha": "0bdb821a21e793a4f6f82a7078c052154447e5cc",
+      "path": "plugins/show-me/skills/show-me/SKILL.md",
+      "revision": "3c2629142c5d437428269b1b722b08c0b87f574d",
+      "source_id": "humanlayer-skills",
+      "tree_sha": "2f7121eedbf48e98cf1b42dffae97be6815e1fe9",
+      "upstream_name": "show-me"
+    }
+  }
+}

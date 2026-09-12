@@ -1,0 +1,52 @@
+{
+  "baseline": {
+    "comparison_limit": "Historical baseline is retained as provenance; this is not a fresh comparative performance benchmark.",
+    "previous_value_receipt": {
+      "path": "receipts/emilkowalski-ja-2026-07--value.json",
+      "sha256": "72d0d72d0d93d71cde3e35234d21613232b791461369e0ae61d84e53081489cf"
+    }
+  },
+  "candidate": {
+    "limitations": "Static prompt routing only; no UI, browser, external service or implementation-quality benchmark.",
+    "routing_evidence": {
+      "path": "receipts/astra-2026-09-12/emilkowalski-ja-2026-07/routing-evaluation.json",
+      "sha256": "5b865c1c1a21891632247ad4551baa125790eba6b3dadeddf7c295e13d008539"
+    }
+  },
+  "collection_id": "emilkowalski-ja-2026-07",
+  "date": "2026-09-12",
+  "decision": "pass",
+  "generation": 3,
+  "kind": "value",
+  "outcome_rubric": {
+    "fail": "Wrong route or false positive/negative",
+    "pass": "Intended bounded skill selected; unrelated requests select none"
+  },
+  "pass_at_1": 1.0,
+  "representative_prompts": [
+    "既存アニメーションを基準ごとにレビューして",
+    "この画面で追加すべきアニメーション候補を絞って",
+    "少し行き過ぎて戻る動きの正式名称は？",
+    "Appleらしいfluidなgestureとspringを設計して",
+    "UIのpolishと手触りを総合的に改善したい",
+    "既存motionを監査し修正計画だけ作って",
+    "SQLのクエリを高速化して",
+    "契約書の条項を要約して",
+    "画像のOCR結果をそのまま書き起こして",
+    "Gitのmerge conflictを解消して",
+    "静的なfrontmatterだけ直して",
+    "請求書を作成して"
+  ],
+  "reviewer": {
+    "evidence": {
+      "path": "receipts/astra-2026-09-12/emilkowalski-ja-2026-07/routing-evaluation.json",
+      "sha256": "5b865c1c1a21891632247ad4551baa125790eba6b3dadeddf7c295e13d008539"
+    },
+    "type": "independent-agent-routing-with-lead-comparison"
+  },
+  "schema_version": 1,
+  "subject_sha256": "1cfc1d4d5ae3b619aa9112c2b0766592447d607f25b74ab44526ab6556df0f79",
+  "trial_count": 12,
+  "trigger_precision": 1.0,
+  "trigger_recall": 1.0
+}

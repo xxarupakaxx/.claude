@@ -1,0 +1,19 @@
+{
+  "command": "validate-frontmatter",
+  "findings": [],
+  "frontmatter_sha256": "59350add60ffd63df7908f9d5e39f4a9e72551ad5acac69fde3f29d00fe2f830",
+  "skill_sha256": "5ff48c71f6003c04e450d0b83802741ff6ee5885922c8c37e1675e2af0c66cd3",
+  "status": "validated",
+  "surface": {
+    "collection_id": "emilkowalski-ja-2026-07",
+    "kind": "review",
+    "skill_name": "apple-design",
+    "target_id": "codex"
+  },
+  "target": "codex",
+  "validator": "pyyaml-6.0.2-safe-loader",
+  "values": {
+    "description": "Apple 系の流動的な Web UI を設計・レビューするときに使う。gesture 駆動の drag/swipe/sheet、spring、momentum、interruptible transition、material、typography、reduced-motion を扱う。一般的な UI 作業だけでは使わない。",
+    "name": "apple-design"
+  }
+}

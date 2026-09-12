@@ -1,0 +1,25 @@
+{
+  "approval_receipt_sha256": "02257314f89e3f921f0e1b4933a648c912edacf3da83ef455094a2d7707bab76",
+  "approved_targets": {
+    "show-me": {
+      "claude": "526d49e4b44cd1e6c282e30cc3cb59934be5828b3cb9a2c7750477fca898dc39",
+      "codex": "526d49e4b44cd1e6c282e30cc3cb59934be5828b3cb9a2c7750477fca898dc39"
+    }
+  },
+  "collection_id": "humanlayer-show-me-2026-09",
+  "date": "2026-09-12",
+  "decision": "promoted",
+  "generation": 3,
+  "kind": "promotion",
+  "quarantine": {
+    "show-me": "735bf92c237bd9bd9114af68babcdf33fad710e6d25800163a07dab1b64457ca"
+  },
+  "runtime_targets": {
+    "show-me": {
+      "claude": "526d49e4b44cd1e6c282e30cc3cb59934be5828b3cb9a2c7750477fca898dc39",
+      "codex": "526d49e4b44cd1e6c282e30cc3cb59934be5828b3cb9a2c7750477fca898dc39"
+    }
+  },
+  "schema_version": 1,
+  "subject_sha256": "0f79bdeb1822fa75e2e738638e3f6cb16d9ece72c4fe94ab5aab40622521adcb"
+}

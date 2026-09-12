@@ -1,0 +1,52 @@
+{
+  "failed": 0,
+  "method": "Independent static classifications compared by lead; not runtime model invocation or quality measurement",
+  "pass_at_1": 1.0,
+  "precision": 1.0,
+  "recall": 1.0,
+  "source": "show-me-fresh-review.json",
+  "trials": [
+    {
+      "actual": "show-me",
+      "expected": "show-me",
+      "passed": true,
+      "reason": "descriptionのshow me triggerとロジック=pseudocodeのchooserに一致する。",
+      "request": "この保存処理、show me。分岐だけ見たい"
+    },
+    {
+      "actual": "show-me",
+      "expected": "show-me",
+      "passed": true,
+      "reason": "現行descriptionのファイル・関数依存trace triggerと追加節のLevel、side-effect、source anchor契約に一致する。",
+      "request": "注文受付からDB保存まで、ファイルごとに処理を追いたい。依存traceを見せて"
+    },
+    {
+      "actual": "show-me",
+      "expected": "show-me",
+      "passed": true,
+      "reason": "明示的な図要求と3要素以上の関係に対するSVG chooserに一致する。",
+      "request": "UI、daemon、agentの流れを図で見せて"
+    },
+    {
+      "actual": "none",
+      "expected": "none",
+      "passed": true,
+      "reason": "visual formの要求がなく、本文も短い表現が同じ意味を伝える場合は図を作らない。",
+      "request": "この関数を二文で説明して"
+    },
+    {
+      "actual": "none",
+      "expected": "none",
+      "passed": true,
+      "reason": "show-meのvisual explanation対象ではなく、画像生成の依頼である。",
+      "request": "ヒーロー画像を一枚生成して"
+    },
+    {
+      "actual": "none",
+      "expected": "none",
+      "passed": true,
+      "reason": "本文がRoadmapのtask順・進捗・完了状態をviewing-plansへ明示的に渡している。",
+      "request": "このtaskの進捗をroadmapで見せて"
+    }
+  ]
+}

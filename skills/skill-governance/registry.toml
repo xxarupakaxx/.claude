@@ -683,55 +683,14 @@ approval_receipt = ""
 value_receipt = ""
 risk_tier = "unclassified"
 license = "MIT"
-adaptation = "shared-identical"
+adaptation = "platform-adapted"
 content_relation = "localized-adaptation"
 targets = ["codex", "claude"]
 default_revision = "391a2701dd948f94f56a39f7533f8eea9a859c87"
 baseline_at = "2026-07-15"
-evidence_gap = [
-  "per-skill-upstream-tree",
-  "local-adaptation-diff",
-  "security-review-receipt",
-  "value-receipt",
-  "human-approval-receipt",
-]
-skills = [
-  "choosing-skills",
-  "creating-tracer-tickets",
-  "designing-codebases",
-  "designing-workflows",
-  "editing-articles",
-  "generating-setup-wizards",
-  "grilling",
-  "grilling-with-docs",
-  "guarding-git-commands-in-claude-code",
-  "handing-off-context",
-  "handing-off-to-claude",
-  "implementing-work",
-  "improving-codebase-architecture",
-  "managing-obsidian-vaults",
-  "mapping-large-projects",
-  "migrating-to-shoehorn",
-  "modeling-domains",
-  "prototyping-solutions",
-  "resolving-merge-conflicts",
-  "reviewing-code",
-  "scaffolding-exercises",
-  "setting-up-engineering-skills",
-  "setting-up-pre-commit-hooks",
-  "setting-up-ts-deep-modules",
-  "teaching-concepts",
-  "triaging-issues",
-  "writing-beats",
-  "writing-fragments",
-  "writing-great-skills",
-  "writing-shape",
-  "writing-specifications",
-]
-
-[collections.revision_overrides]
-grilling = "66898f60e8c744e269f8ce06c2b2b99ce7660d5f"
-mapping-large-projects = "66898f60e8c744e269f8ce06c2b2b99ce7660d5f"
+evidence_gap = ["per-skill-upstream-tree", "local-adaptation-diff", "security-review-receipt", "value-receipt", "human-approval-receipt"]
+skills = ["choosing-skills", "creating-tracer-tickets", "designing-codebases", "designing-workflows", "editing-articles", "generating-setup-wizards", "grilling", "grilling-with-docs", "guarding-git-commands-in-claude-code", "handing-off-context", "handing-off-to-claude", "implementing-work", "improving-codebase-architecture", "managing-obsidian-vaults", "mapping-large-projects", "migrating-to-shoehorn", "modeling-domains", "prototyping-solutions", "resolving-merge-conflicts", "reviewing-code", "scaffolding-exercises", "setting-up-engineering-skills", "setting-up-pre-commit-hooks", "setting-up-ts-deep-modules", "teaching-concepts", "triaging-issues", "writing-beats", "writing-fragments", "writing-great-skills", "writing-shape", "writing-specifications"]
+revision_overrides = { "grilling" = "66898f60e8c744e269f8ce06c2b2b99ce7660d5f", "mapping-large-projects" = "66898f60e8c744e269f8ce06c2b2b99ce7660d5f" }
 
 [[collections]]
 id = "mattpocock-user-entry-2026-07"
@@ -819,58 +778,15 @@ adaptation = "platform-adapted"
 content_relation = "localized-adaptation"
 targets = ["codex", "claude"]
 default_revision = "6bf24434f7730ad169077756cf9c7cd7bd675fc6"
-baseline_at = "2026-07-19"
-adaptation_diff = { path = "adaptations/emilkowalski-ja-2026-07.json", sha256 = "53a67471aa21d1c689b475881e048d760aca559e78a2ffc0f41dcde802469d60" }
-safety_receipt = { path = "receipts/emilkowalski-ja-2026-07--safety.json", sha256 = "e260d6dada29d6d867d04ad7cd4db6519c52be4867b1d4ddd33fa8d425386aa4" }
-value_receipt = { path = "receipts/emilkowalski-ja-2026-07--value.json", sha256 = "72d0d72d0d93d71cde3e35234d21613232b791461369e0ae61d84e53081489cf" }
-approval_receipt = { path = "receipts/emilkowalski-ja-2026-07--approval.json", sha256 = "83453b10071e2a8f3f88b0825cd4e325a34bd199bb7b8755d3e20562fdd8fd5e" }
-promotion_receipt = { path = "receipts/emilkowalski-ja-2026-07--promotion.json", sha256 = "8fd08c80d8e5fcceb11dce8ac938b13de4d537159a9678d3d86007d9dd73a037" }
-skills = [
-  "animation-vocabulary",
-  "apple-design",
-  "emil-design-eng",
-  "find-animation-opportunities",
-  "improve-animations",
-  "review-animations",
-]
-
-[collections.upstream_paths]
-"animation-vocabulary" = "skills/animation-vocabulary/SKILL.md"
-"apple-design" = "skills/apple-design/SKILL.md"
-"emil-design-eng" = "skills/emil-design-eng/SKILL.md"
-"find-animation-opportunities" = "skills/find-animation-opportunities/SKILL.md"
-"improve-animations" = "skills/improve-animations/SKILL.md"
-"review-animations" = "skills/review-animations/SKILL.md"
-
-[collections.frontmatter_receipts."animation-vocabulary"]
-quarantine = { path = "receipts/emilkowalski-ja-2026-07--animation-vocabulary--quarantine.json", sha256 = "db80b79c16b3e57038f24ae124512684a0ffa9670fb38ee1605834e5059e2e87" }
-codex = { path = "receipts/emilkowalski-ja-2026-07--animation-vocabulary--codex.json", sha256 = "e7262ccc1de0b0c090df1a695aa20938b0efdb7988a71806ddc8eefa5e60f47d" }
-claude = { path = "receipts/emilkowalski-ja-2026-07--animation-vocabulary--claude.json", sha256 = "ba6acf38a7da49eb10c6779366ea998b9806d9bf3e2d6984925fe2557599cccf" }
-
-[collections.frontmatter_receipts."apple-design"]
-quarantine = { path = "receipts/emilkowalski-ja-2026-07--apple-design--quarantine.json", sha256 = "76384753aa74395eb7a7e606e86d27890bde11699881ad2d6a019182f98c6105" }
-codex = { path = "receipts/emilkowalski-ja-2026-07--apple-design--codex.json", sha256 = "8167fcc27f272da953203fff7864cad89e55e932ed4e824b237b05152785856b" }
-claude = { path = "receipts/emilkowalski-ja-2026-07--apple-design--claude.json", sha256 = "6488920285ae178ef6628aea26d913f68cea1275624d0c6c9b7eff3d46057964" }
-
-[collections.frontmatter_receipts."emil-design-eng"]
-quarantine = { path = "receipts/emilkowalski-ja-2026-07--emil-design-eng--quarantine.json", sha256 = "9dba9a673053a0918c9245e3f00efccd4b52a866d6a0d52c88df2f52fa381a4a" }
-codex = { path = "receipts/emilkowalski-ja-2026-07--emil-design-eng--codex.json", sha256 = "89da78e47b8a859ab0a6d0c8eca43853fb53e04a144b50f7e824dc67d7b7da52" }
-claude = { path = "receipts/emilkowalski-ja-2026-07--emil-design-eng--claude.json", sha256 = "624f56dfc66d55de815e1839adb47f5213d8aaaf53d5d86195715ad7e16a5870" }
-
-[collections.frontmatter_receipts."find-animation-opportunities"]
-quarantine = { path = "receipts/emilkowalski-ja-2026-07--find-animation-opportunities--quarantine.json", sha256 = "2a1b70a264d2622d0dff2f16d46e9f96604e6e0587ddd452a3fcea9126406611" }
-codex = { path = "receipts/emilkowalski-ja-2026-07--find-animation-opportunities--codex.json", sha256 = "2cc52ae1567fc3739ad5021bc9ce8f36475e09674df93d6d44c11a1cf117e674" }
-claude = { path = "receipts/emilkowalski-ja-2026-07--find-animation-opportunities--claude.json", sha256 = "9186cd567c4d998f9b42b9bfd8c64293ab39d7c913cdc6cdcd4ca917fb25a12f" }
-
-[collections.frontmatter_receipts."improve-animations"]
-quarantine = { path = "receipts/emilkowalski-ja-2026-07--improve-animations--quarantine.json", sha256 = "408c8a054f385cabb6a25564bd43f25297d415bb4e1f51b12021cc7bb632099c" }
-codex = { path = "receipts/emilkowalski-ja-2026-07--improve-animations--codex.json", sha256 = "b5229fd007eafc37d36eab8fb684bc7208d2496753ec3698a8a31b718fb10474" }
-claude = { path = "receipts/emilkowalski-ja-2026-07--improve-animations--claude.json", sha256 = "4bdc4fb7744cd3fcee2d9fb0731aa9509e0785c5e8546484ba5008a28dd73e28" }
-
-[collections.frontmatter_receipts."review-animations"]
-quarantine = { path = "receipts/emilkowalski-ja-2026-07--review-animations--quarantine.json", sha256 = "4d87ab1dc35efcd71bdf40878011a0a4d91f21b76047651f1f7ccd542738587c" }
-codex = { path = "receipts/emilkowalski-ja-2026-07--review-animations--codex.json", sha256 = "2475ee58679c6e091412443be91d61f0f3990d79dc7208d8a11fae4f940a9cb7" }
-claude = { path = "receipts/emilkowalski-ja-2026-07--review-animations--claude.json", sha256 = "fd891277a1684f785f43d238704aae4020d8a94bca874339706021055fa50e79" }
+baseline_at = "2026-09-12"
+adaptation_diff = { "path" = "adaptations/astra-2026-09-12/emilkowalski-ja-2026-07.json", "sha256" = "e33fa3ef4e5c087c72a50bb0787f59bf4b6d6f046beedefc72a932cf068c6a71" }
+safety_receipt = { "path" = "receipts/astra-2026-09-12/emilkowalski-ja-2026-07/safety.json", "sha256" = "b3fd5160707da5c3eb794582b8f240ac1f8b912f63e78649f8ef7ba37756df14" }
+value_receipt = { "path" = "receipts/astra-2026-09-12/emilkowalski-ja-2026-07/value.json", "sha256" = "c6608052f0f9b515bc40aae6ba55ec901dd575489c8344df1566dbf205d9f663" }
+approval_receipt = { "path" = "receipts/astra-2026-09-12/emilkowalski-ja-2026-07/approval.json", "sha256" = "4f3def961db9223b60f1ece368fe8ea1fc6456b9434719377e9271926d820127" }
+promotion_receipt = { "path" = "receipts/astra-2026-09-12/emilkowalski-ja-2026-07/promotion.json", "sha256" = "0314c278b54940a173b89fa8148ffd1c015ee3fd804bf24ea78983ccf96d6eb5" }
+skills = ["animation-vocabulary", "apple-design", "emil-design-eng", "find-animation-opportunities", "improve-animations", "review-animations"]
+upstream_paths = { "animation-vocabulary" = "skills/animation-vocabulary/SKILL.md", "apple-design" = "skills/apple-design/SKILL.md", "emil-design-eng" = "skills/emil-design-eng/SKILL.md", "find-animation-opportunities" = "skills/find-animation-opportunities/SKILL.md", "improve-animations" = "skills/improve-animations/SKILL.md", "review-animations" = "skills/review-animations/SKILL.md" }
+frontmatter_receipts = { "animation-vocabulary" = { "quarantine" = { "path" = "receipts/emilkowalski-ja-2026-07--animation-vocabulary--quarantine.json", "sha256" = "db80b79c16b3e57038f24ae124512684a0ffa9670fb38ee1605834e5059e2e87" }, "codex" = { "path" = "receipts/astra-2026-09-12/emilkowalski-ja-2026-07/frontmatter-animation-vocabulary-codex.json", "sha256" = "657b9a80920b8b4aa82a456283e53ec2e2c785e994c615a08c3e503debf04a97" }, "claude" = { "path" = "receipts/astra-2026-09-12/emilkowalski-ja-2026-07/frontmatter-animation-vocabulary-claude.json", "sha256" = "9e1a84d3b4af29a3a8bd14b25d6fe424c74fb79763d06dd82ac95558b37c14e2" } }, "apple-design" = { "quarantine" = { "path" = "receipts/emilkowalski-ja-2026-07--apple-design--quarantine.json", "sha256" = "76384753aa74395eb7a7e606e86d27890bde11699881ad2d6a019182f98c6105" }, "codex" = { "path" = "receipts/astra-2026-09-12/emilkowalski-ja-2026-07/frontmatter-apple-design-codex.json", "sha256" = "59df4ad78c0cf8d521131c8f90f3fd6f36d237d92ddc5bd1029755204e171ab9" }, "claude" = { "path" = "receipts/astra-2026-09-12/emilkowalski-ja-2026-07/frontmatter-apple-design-claude.json", "sha256" = "779ff926156514c4e63a526eff31f609c1afe818d20b173af6f84149748ecf28" } }, "emil-design-eng" = { "quarantine" = { "path" = "receipts/emilkowalski-ja-2026-07--emil-design-eng--quarantine.json", "sha256" = "9dba9a673053a0918c9245e3f00efccd4b52a866d6a0d52c88df2f52fa381a4a" }, "codex" = { "path" = "receipts/astra-2026-09-12/emilkowalski-ja-2026-07/frontmatter-emil-design-eng-codex.json", "sha256" = "d282979dcf45961046115a3e66c5a8742fd229987d31b04f56f3f84e75e0f2cf" }, "claude" = { "path" = "receipts/astra-2026-09-12/emilkowalski-ja-2026-07/frontmatter-emil-design-eng-claude.json", "sha256" = "ae31cfd65d58b9175cf71bcf6f6af735e79a466570459cbd71f76fc05cfb0946" } }, "find-animation-opportunities" = { "quarantine" = { "path" = "receipts/emilkowalski-ja-2026-07--find-animation-opportunities--quarantine.json", "sha256" = "2a1b70a264d2622d0dff2f16d46e9f96604e6e0587ddd452a3fcea9126406611" }, "codex" = { "path" = "receipts/astra-2026-09-12/emilkowalski-ja-2026-07/frontmatter-find-animation-opportunities-codex.json", "sha256" = "de174c7b93aa0c87e7acd38cb1560b2d1aafeae75a9faeacc7540a896a990341" }, "claude" = { "path" = "receipts/astra-2026-09-12/emilkowalski-ja-2026-07/frontmatter-find-animation-opportunities-claude.json", "sha256" = "5741c9a6569ff7299b7bb346b06d9cee9500c04461b096ad38b5359cde4a0717" } }, "improve-animations" = { "quarantine" = { "path" = "receipts/emilkowalski-ja-2026-07--improve-animations--quarantine.json", "sha256" = "408c8a054f385cabb6a25564bd43f25297d415bb4e1f51b12021cc7bb632099c" }, "codex" = { "path" = "receipts/astra-2026-09-12/emilkowalski-ja-2026-07/frontmatter-improve-animations-codex.json", "sha256" = "1a202e9a44855001c62a355cfc5b651ad7da5c384c04eac7774f32980fb1d454" }, "claude" = { "path" = "receipts/astra-2026-09-12/emilkowalski-ja-2026-07/frontmatter-improve-animations-claude.json", "sha256" = "01514249d1e442fac85d92fc7d04f1e09c29dddb5298da9f8a6f327dc750378f" } }, "review-animations" = { "quarantine" = { "path" = "receipts/emilkowalski-ja-2026-07--review-animations--quarantine.json", "sha256" = "4d87ab1dc35efcd71bdf40878011a0a4d91f21b76047651f1f7ccd542738587c" }, "codex" = { "path" = "receipts/astra-2026-09-12/emilkowalski-ja-2026-07/frontmatter-review-animations-codex.json", "sha256" = "527aedf2293d8895c70af4a4531537b4bbd76ceec3b5ef1054cdfb066a3b7bf2" }, "claude" = { "path" = "receipts/astra-2026-09-12/emilkowalski-ja-2026-07/frontmatter-review-animations-claude.json", "sha256" = "639916f57fa31d0672c29b31d1ed934b6841a1e1a6149bf198611662eb95a183" } } }
 
 [[sources]]
 id = "mathbullet-skills"
@@ -894,21 +810,15 @@ adaptation = "platform-adapted"
 content_relation = "reviewed-local-adaptation"
 targets = ["codex", "claude"]
 default_revision = "fe96c626b39abba47fad2d4a4ef738e8a27602b1"
-baseline_at = "2026-08-26"
-adaptation_diff = { path = "adaptations/mathbullet-html-show-me-2026-09.json", sha256 = "b8d1ee3ce3fd823261e5ed9c6ae8c5afd3a676a6451c1c6326c584e908cc8f3c" }
-safety_receipt = { path = "receipts/mathbullet-html-show-me-2026-09/safety.json", sha256 = "6b6a68936f6d07f2b53c7d5acd5ab7d4f040e8a0a34264cb88117683606e791a" }
-value_receipt = { path = "receipts/mathbullet-html-show-me-2026-09/value.json", sha256 = "0e43bc3705725e2c503a3d15248f3326525df288072777473d6c94065a066146" }
-approval_receipt = { path = "receipts/mathbullet-html-show-me-2026-09/approval.json", sha256 = "0d5e8344c107bc5ca97224f37c9ca0e4f5d81668a061fee0fad51b98ff8b0fd8" }
-promotion_receipt = { path = "receipts/mathbullet-html-show-me-2026-09/promotion.json", sha256 = "bdd949819ed1a3f1c9b435e7282f5512a2d5bc96cbaff651bbbcd9f928c8a03d" }
+baseline_at = "2026-09-12"
+adaptation_diff = { "path" = "adaptations/astra-2026-09-12/mathbullet-html-show-me-2026-09.json", "sha256" = "0ac75dd32a636a792ab0952cd247b53bcd566d56959e21826c3445d0e050ecf9" }
+safety_receipt = { "path" = "receipts/astra-2026-09-12/mathbullet-html-show-me-2026-09/safety.json", "sha256" = "ea653e923391ac87ff3196c3d8026ace5ac15c86894964bc4acf24d9f613afac" }
+value_receipt = { "path" = "receipts/astra-2026-09-12/mathbullet-html-show-me-2026-09/value.json", "sha256" = "569530ea97c9b55df17c05988fc57e2092797ea80968f7fbfe6948bbf68a98b8" }
+approval_receipt = { "path" = "receipts/astra-2026-09-12/mathbullet-html-show-me-2026-09/approval.json", "sha256" = "d75eb41c955b7a76538fe15df698381ea147962c366fb2d5ec4f67e0cc179841" }
+promotion_receipt = { "path" = "receipts/astra-2026-09-12/mathbullet-html-show-me-2026-09/promotion.json", "sha256" = "bf315e87dfb91e7becf4bbba212f0c01904479ca5539219cf2bf0095bf047ce6" }
 skills = ["creating-html-documents"]
-
-[collections.upstream_paths]
-"creating-html-documents" = "plugins/html/skills/html/SKILL.md"
-
-[collections.frontmatter_receipts."creating-html-documents"]
-quarantine = { path = "receipts/mathbullet-html-show-me-2026-09/frontmatter-quarantine.json", sha256 = "66ead319d9b696236ba5c9d333c35ab2af73ed30b1ae26fbb9e3129132c12d12" }
-codex = { path = "receipts/mathbullet-html-show-me-2026-09/frontmatter-codex.json", sha256 = "f65689684da39b196deaf46a538fdb60fefe08d96f80e6d87b7edf4e2c65ad25" }
-claude = { path = "receipts/mathbullet-html-show-me-2026-09/frontmatter-claude.json", sha256 = "9937e4221bc8ee04675e89ece85aa06f7df972de58dcae21dd383e6bc1ab261e" }
+upstream_paths = { "creating-html-documents" = "plugins/html/skills/html/SKILL.md" }
+frontmatter_receipts = { "creating-html-documents" = { "quarantine" = { "path" = "receipts/mathbullet-html-show-me-2026-09/frontmatter-quarantine.json", "sha256" = "66ead319d9b696236ba5c9d333c35ab2af73ed30b1ae26fbb9e3129132c12d12" }, "codex" = { "path" = "receipts/astra-2026-09-12/mathbullet-html-show-me-2026-09/frontmatter-creating-html-documents-codex.json", "sha256" = "fa2705cb87d9189333f5825a5ca75d57f9c663b44786521fad41014226311c4d" }, "claude" = { "path" = "receipts/astra-2026-09-12/mathbullet-html-show-me-2026-09/frontmatter-creating-html-documents-claude.json", "sha256" = "9937e4221bc8ee04675e89ece85aa06f7df972de58dcae21dd383e6bc1ab261e" } } }
 
 [[coverage_exclusions]]
 path = "/Users/yoshiki/ghq/github.com/xxarupakaxx/.codex/.local/memory/260831_workflow-ecosystem/baseline-files/skills/viewing-plans"
@@ -1004,12 +914,20 @@ adaptation = "platform-adapted"
 content_relation = "reviewed-local-adaptation"
 targets = ["codex", "claude"]
 default_revision = "3c2629142c5d437428269b1b722b08c0b87f574d"
-baseline_at = "2026-09-06"
-adaptation_diff = { "path" = "adaptations/humanlayer-show-me-2026-09.json", "sha256" = "b8315c66eb5799281150a1b73c43c355506172b124c2e47c30a22f00d738d165" }
-safety_receipt = { "path" = "receipts/humanlayer-show-me-2026-09/safety.json", "sha256" = "357fa68ea150d2026671494de798b47c1123e01faba0386b2a5d5a2de9e859a3" }
-value_receipt = { "path" = "receipts/humanlayer-show-me-2026-09/value.json", "sha256" = "d388a869f3524f5c290739af7aef0d723610538396b4481763bcac542c5f39fd" }
-approval_receipt = { "path" = "receipts/humanlayer-show-me-2026-09/approval.json", "sha256" = "55f2f22a448e3dd17e88967ff6940a30e9ce63c4ba5983a761e4ea6bc3890639" }
-promotion_receipt = { "path" = "receipts/humanlayer-show-me-2026-09/promotion.json", "sha256" = "ffa06f57ba7cf9ea367668bc793c1a2bb3e1a38b77bb661642df29994feb6603" }
+baseline_at = "2026-09-12"
+adaptation_diff = { "path" = "adaptations/astra-2026-09-12/humanlayer-show-me-2026-09.json", "sha256" = "2e7658efaf9d2b13a74de904ad1f36b69831298be5a543c61f06df3e31ba9ba2" }
+safety_receipt = { "path" = "receipts/astra-2026-09-12/humanlayer-show-me-2026-09/safety.json", "sha256" = "e1064a33dd601a5d0bff4f7a91c1c3445ad00ad6ca625c7f1fae3a16f8e88178" }
+value_receipt = { "path" = "receipts/astra-2026-09-12/humanlayer-show-me-2026-09/value.json", "sha256" = "f28a9f5c5dbb1d05ab53fa624fe6de642040c0edbd5fde50959cfdea2041061b" }
+approval_receipt = { "path" = "receipts/astra-2026-09-12/humanlayer-show-me-2026-09/approval.json", "sha256" = "02257314f89e3f921f0e1b4933a648c912edacf3da83ef455094a2d7707bab76" }
+promotion_receipt = { "path" = "receipts/astra-2026-09-12/humanlayer-show-me-2026-09/promotion.json", "sha256" = "b9958404ca4d2a4d024700edb9f6abda239e77a58256e123ec46a92acd77ed71" }
 skills = ["show-me"]
 upstream_paths = { "show-me" = "plugins/show-me/skills/show-me/SKILL.md" }
-frontmatter_receipts = { "show-me" = { "quarantine" = { "path" = "receipts/humanlayer-show-me-2026-09/frontmatter-quarantine.json", "sha256" = "27b0c504d0cc7cc4faa3b74959e39e2dcae89e3e71194c0813a38ee96927bf7e" }, "codex" = { "path" = "receipts/humanlayer-show-me-2026-09/frontmatter-codex.json", "sha256" = "9a2c84ed95af173f0404eaf182a48bf26e91cc0e165f7b44e1df56784bba5035" }, "claude" = { "path" = "receipts/humanlayer-show-me-2026-09/frontmatter-claude.json", "sha256" = "694e3b48314c67a2f8d969bc969b235de2456bff45fb96403405801fc1e50add" } } }
+frontmatter_receipts = { "show-me" = { "quarantine" = { "path" = "receipts/humanlayer-show-me-2026-09/frontmatter-quarantine.json", "sha256" = "27b0c504d0cc7cc4faa3b74959e39e2dcae89e3e71194c0813a38ee96927bf7e" }, "codex" = { "path" = "receipts/astra-2026-09-12/humanlayer-show-me-2026-09/frontmatter-show-me-codex.json", "sha256" = "e5da7882a8a8996d63883c0b64aa9a0718cb7197a4f8ce69405ee3db12e091f5" }, "claude" = { "path" = "receipts/astra-2026-09-12/humanlayer-show-me-2026-09/frontmatter-show-me-claude.json", "sha256" = "4eeb64aefce0c113622972ae4421874b8abad6b8b3a51ae4ff2747f928a68f15" } } }
+
+[[coverage_exclusions]]
+path = "/Users/yoshiki/ghq/github.com/xxarupakaxx/.codex/.local/context/astra-optimization/stage"
+reason = "Exact review evidence directory for the approved Astra optimization task; never an active Skill root"
+
+[[coverage_exclusions]]
+path = "/Users/yoshiki/ghq/github.com/xxarupakaxx/.codex/.local/context/astra-optimization/review-before"
+reason = "Exact review evidence directory for the approved Astra optimization task; never an active Skill root"

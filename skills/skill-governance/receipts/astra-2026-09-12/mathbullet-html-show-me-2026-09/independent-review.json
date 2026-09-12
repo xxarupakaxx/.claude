@@ -1,0 +1,604 @@
+{
+  "schema_version": 1,
+  "kind": "bounded-fresh-safety-value-review",
+  "review_date": "2026-09-12",
+  "scope": {
+    "collection_id": "mathbullet-html-show-me-2026-09",
+    "skills": [
+      "/Users/yoshiki/.codex/skills/creating-html-documents",
+      "/Users/yoshiki/.claude/skills/creating-html-documents"
+    ],
+    "registry_roots": [
+      "/Users/yoshiki/.codex/skills/skill-governance",
+      "/Users/yoshiki/.claude/skills/skill-governance"
+    ],
+    "review_boundary": "旧review treeと現行treeの差分、変更Markdown全文、外部参照、命令、権限、安全境界、現行description/bodyに対する代表依頼3件と無関係依頼3件の静的trigger分類",
+    "out_of_scope": [
+      "対象Skill、registry、receipt、lockの内容変更",
+      "第三者コードの実行",
+      "ブラウザ、http.server、render、外部通信、runtime write",
+      "品質、レンダリング、a11y、モデル実動作の捏造",
+      "既存baseline不整合の原因調査",
+      "対象の再設計"
+    ]
+  },
+  "review_method": {
+    "tree_comparison": "current file manifestと旧safety receiptのtarget manifestをsha256、byte数、executable bitで比較。tree hashはskill-tree-sha256-v1（相対path、executable bit、file hashのlength-prefix順）を再計算した。旧review treeはCodex Gitのreview commit 4b68b823be467779328a410aacf351fc4e71477cでも照合した。",
+    "markdown_review": "Codex現行treeで旧review treeから変更または追加されたMarkdownを全文読了。Claude側は7ファイル全てが旧manifestとhash一致するため同一file hashを証拠として扱った。",
+    "safety_review": "外部URL、remote resource、script、shell、runtime API、write・publication・permission命令を静的に検索し、命令の境界と実行可否を記録した。",
+    "value_review": "現行SKILL.mdのdescriptionとtrigger本文に対する手作業の静的分類。代表3件と無関係3件を実行せず、品質やruntime結果を主張しない。",
+    "execution_boundary": {
+      "candidate_code_executed": false,
+      "skill_runtime_executed": false,
+      "browser_or_http_server_executed": false,
+      "external_network_called": false,
+      "runtime_write_performed": false,
+      "target_content_changed": false
+    }
+  },
+  "old_review_tree": {
+    "tree_sha256": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971",
+    "review_commit": "4b68b823be467779328a410aacf351fc4e71477c",
+    "review_commit_repository": "/Users/yoshiki/.codex",
+    "receipt_source": "/Users/yoshiki/.codex/skills/skill-governance/receipts/mathbullet-html-show-me-2026-09/safety.json",
+    "manifest": [
+      {
+        "path": "LICENSE",
+        "size": 1067,
+        "sha256": "d050dd820d9f329c7449adaa5fbec08aa31a3bba195fcbb2e7af65c45e700819",
+        "executable": false
+      },
+      {
+        "path": "SKILL.md",
+        "size": 13239,
+        "sha256": "ea8e14334247cd7af48f7e7ba713d69f2366421457bafaf9ddc6440155a47851",
+        "executable": false
+      },
+      {
+        "path": "SOURCE.md",
+        "size": 2211,
+        "sha256": "18723abc3d9ae1b0469792f030d39ecb7a5dfdfa5050c6613b298da79c0f9d66",
+        "executable": false
+      },
+      {
+        "path": "assets/editorial-document.html",
+        "size": 14284,
+        "sha256": "2b9791d36cd35eabb54183d2a0a0353fb107fd303febaaec9e94b033e323a783",
+        "executable": false
+      },
+      {
+        "path": "evals/evals.json",
+        "size": 3739,
+        "sha256": "ee0474617a8fab0f3321736681925dadd6a107192d9816d0348edf3595d9f1d1",
+        "executable": false
+      },
+      {
+        "path": "references/document-system.md",
+        "size": 7004,
+        "sha256": "d58ac645342a06fed19776fdc50362e45378229764fb1a31185916fbff2c7db8",
+        "executable": false
+      },
+      {
+        "path": "references/validation.md",
+        "size": 4230,
+        "sha256": "4b0897f0e00ab16f5bf3dd377bd60c64f20ea5aaad85ba037a66a2c1a7e38101",
+        "executable": false
+      }
+    ]
+  },
+  "current_trees": {
+    "codex": {
+      "root": "/Users/yoshiki/.codex/skills/creating-html-documents",
+      "git_head": "dce58e3b694901abfbf710ee5b569aa84e284860",
+      "target_worktree_status": "clean",
+      "tree_sha256": "76ff2f9da513e968ecf7c7b34691ac2a8c8f6cf83fa5dd2b124f1ef4df10f5c8",
+      "file_count": 8,
+      "manifest": [
+        {
+          "path": "LICENSE",
+          "size": 1067,
+          "sha256": "d050dd820d9f329c7449adaa5fbec08aa31a3bba195fcbb2e7af65c45e700819",
+          "executable": false
+        },
+        {
+          "path": "SKILL.md",
+          "size": 16180,
+          "sha256": "7b1c73860165f24deaf26d3ded4ca6f05d1d2dca81578bf09c6c4881f711bb62",
+          "executable": false
+        },
+        {
+          "path": "SOURCE.md",
+          "size": 2828,
+          "sha256": "1977d5846c52ad4fca62aedc40ea7e31b0dd4ad411357f321ea950e1ca1aadea",
+          "executable": false
+        },
+        {
+          "path": "assets/editorial-document.html",
+          "size": 16219,
+          "sha256": "9c1ca1c7b0417f4c019dd2e569b233c9b43cb11697f27456b9046bc765541174",
+          "executable": false
+        },
+        {
+          "path": "evals/evals.json",
+          "size": 4903,
+          "sha256": "e03897dd9d0591eefe4215aedc3735fbc2b96c1068eae0165869072b4d2df01b",
+          "executable": false
+        },
+        {
+          "path": "references/document-system.md",
+          "size": 8069,
+          "sha256": "bde5378fc65b2d0ea5024d55890d057d333c9123a117dfc7f8062016fde6282f",
+          "executable": false
+        },
+        {
+          "path": "references/illustrated-explainer.md",
+          "size": 6600,
+          "sha256": "622b01799dd2cc6f176c5365f3addaddd3671df342ba874ab2b7747242c39238",
+          "executable": false
+        },
+        {
+          "path": "references/validation.md",
+          "size": 5137,
+          "sha256": "d5a323cf1f323fbd2dab20f20181908b8ec155ae700c48921255c636be7912a4",
+          "executable": false
+        }
+      ]
+    },
+    "claude": {
+      "root": "/Users/yoshiki/.claude/skills/creating-html-documents",
+      "git_head": "a18249582d72d58e842496bce66464a01aa385ab",
+      "target_worktree_status": "clean",
+      "tree_sha256": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971",
+      "file_count": 7,
+      "manifest_matches_old_review_tree": true,
+      "manifest": [
+        {
+          "path": "LICENSE",
+          "size": 1067,
+          "sha256": "d050dd820d9f329c7449adaa5fbec08aa31a3bba195fcbb2e7af65c45e700819",
+          "executable": false
+        },
+        {
+          "path": "SKILL.md",
+          "size": 13239,
+          "sha256": "ea8e14334247cd7af48f7e7ba713d69f2366421457bafaf9ddc6440155a47851",
+          "executable": false
+        },
+        {
+          "path": "SOURCE.md",
+          "size": 2211,
+          "sha256": "18723abc3d9ae1b0469792f030d39ecb7a5dfdfa5050c6613b298da79c0f9d66",
+          "executable": false
+        },
+        {
+          "path": "assets/editorial-document.html",
+          "size": 14284,
+          "sha256": "2b9791d36cd35eabb54183d2a0a0353fb107fd303febaaec9e94b033e323a783",
+          "executable": false
+        },
+        {
+          "path": "evals/evals.json",
+          "size": 3739,
+          "sha256": "ee0474617a8fab0f3321736681925dadd6a107192d9816d0348edf3595d9f1d1",
+          "executable": false
+        },
+        {
+          "path": "references/document-system.md",
+          "size": 7004,
+          "sha256": "d58ac645342a06fed19776fdc50362e45378229764fb1a31185916fbff2c7db8",
+          "executable": false
+        },
+        {
+          "path": "references/validation.md",
+          "size": 4230,
+          "sha256": "4b0897f0e00ab16f5bf3dd377bd60c64f20ea5aaad85ba037a66a2c1a7e38101",
+          "executable": false
+        }
+      ]
+    }
+  },
+  "tree_differences": {
+    "codex_vs_old_review": {
+      "modified": [
+        {
+          "path": "SKILL.md",
+          "old_size": 13239,
+          "old_lines": 169,
+          "old_sha256": "ea8e14334247cd7af48f7e7ba713d69f2366421457bafaf9ddc6440155a47851",
+          "current_size": 16180,
+          "current_lines": 190,
+          "current_sha256": "7b1c73860165f24deaf26d3ded4ca6f05d1d2dca81578bf09c6c4881f711bb62"
+        },
+        {
+          "path": "SOURCE.md",
+          "old_size": 2211,
+          "old_lines": 22,
+          "old_sha256": "18723abc3d9ae1b0469792f030d39ecb7a5dfdfa5050c6613b298da79c0f9d66",
+          "current_size": 2828,
+          "current_lines": 23,
+          "current_sha256": "1977d5846c52ad4fca62aedc40ea7e31b0dd4ad411357f321ea950e1ca1aadea"
+        },
+        {
+          "path": "assets/editorial-document.html",
+          "old_size": 14284,
+          "old_sha256": "2b9791d36cd35eabb54183d2a0a0353fb107fd303febaaec9e94b033e323a783",
+          "current_size": 16219,
+          "current_sha256": "9c1ca1c7b0417f4c019dd2e569b233c9b43cb11697f27456b9046bc765541174"
+        },
+        {
+          "path": "evals/evals.json",
+          "old_size": 3739,
+          "old_sha256": "ee0474617a8fab0f3321736681925dadd6a107192d9816d0348edf3595d9f1d1",
+          "current_size": 4903,
+          "current_sha256": "e03897dd9d0591eefe4215aedc3735fbc2b96c1068eae0165869072b4d2df01b"
+        },
+        {
+          "path": "references/document-system.md",
+          "old_size": 7004,
+          "old_lines": 129,
+          "old_sha256": "d58ac645342a06fed19776fdc50362e45378229764fb1a31185916fbff2c7db8",
+          "current_size": 8069,
+          "current_lines": 139,
+          "current_sha256": "bde5378fc65b2d0ea5024d55890d057d333c9123a117dfc7f8062016fde6282f"
+        },
+        {
+          "path": "references/validation.md",
+          "old_size": 4230,
+          "old_lines": 73,
+          "old_sha256": "4b0897f0e00ab16f5bf3dd377bd60c64f20ea5aaad85ba037a66a2c1a7e38101",
+          "current_size": 5137,
+          "current_lines": 85,
+          "current_sha256": "d5a323cf1f323fbd2dab20f20181908b8ec155ae700c48921255c636be7912a4"
+        }
+      ],
+      "added": [
+        {
+          "path": "references/illustrated-explainer.md",
+          "old_size": null,
+          "old_sha256": null,
+          "current_size": 6600,
+          "current_lines": 76,
+          "current_sha256": "622b01799dd2cc6f176c5365f3addaddd3671df342ba874ab2b7747242c39238"
+        }
+      ],
+      "unchanged": ["LICENSE"]
+    },
+    "claude_vs_old_review": {
+      "modified": [],
+      "added": [],
+      "removed": [],
+      "tree_hash_equal": true,
+      "finding": "Claude現行treeは旧review treeと7ファイルのmanifestおよびtree hashが一致する。"
+    },
+    "collection_binding": {
+      "registry_and_receipts_bind_tree_sha256": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971",
+      "current_claude_tree_sha256": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971",
+      "current_codex_tree_sha256": "76ff2f9da513e968ecf7c7b34691ac2a8c8f6cf83fa5dd2b124f1ef4df10f5c8",
+      "finding": "registry.lock.jsonとsafety/promotionの対象hashはClaudeには一致するが、現行Codexには一致せず、Codex側の台帳subjectがstaleである。今回のレビューではregistry/receiptを変更していない。"
+    }
+  },
+  "changed_markdown_review": [
+    {
+      "path": "/Users/yoshiki/.codex/skills/creating-html-documents/SKILL.md",
+      "full_read": true,
+      "old": {"size": 13239, "lines": 169, "sha256": "ea8e14334247cd7af48f7e7ba713d69f2366421457bafaf9ddc6440155a47851"},
+      "current": {"size": 16180, "lines": 190, "sha256": "7b1c73860165f24deaf26d3ded4ca6f05d1d2dca81578bf09c6c4881f711bb62"},
+      "observed_changes": [
+        "descriptionとnameは維持された。",
+        "前提知識のない読者、〜とは何か、仕組みを知りたい、まっさらな人向け、ドメインを把握したい、という条件をtechnical-explainerの初心者向け既定へ追加した。",
+        "analogy、history、scene overview/actor map、detail章ごとのfigure、仮想case、self-testの既定と、change-review/decision-planでは初心者既定を自動付加しない境界を追加した。",
+        "show-meを局所visual layerに限定し、document owner、source inventory、claim ledger、overview gate、evidence、CSP、validation、browser表示を渡さないowner契約を明記した。",
+        "inline SVG、remote font/CDN/analytics/image/runtimeの既定0、static script 0優先、CSP、HTML内browser opener/redirect/shell禁止、clipboard/PDF/print/publication/git commit/pushの個別gateを維持した。"
+      ],
+      "safety_judgement": "安全境界を広げる外部write・権限・公開・runtime実行命令は観測されない。初心者向け既定の追加は価値面の挙動変更であり、テンプレート対応の不整合は下記unknown/advisoryに記録した。",
+      "value_judgement": "現行descriptionのHTML文書triggerと本文の初心者triggerは具体的で、show-meの直接依頼を文書全体のtriggerへ拡張するowner循環も抑制している。"
+    },
+    {
+      "path": "/Users/yoshiki/.codex/skills/creating-html-documents/SOURCE.md",
+      "full_read": true,
+      "old": {"size": 2211, "lines": 22, "sha256": "18723abc3d9ae1b0469792f030d39ecb7a5dfdfa5050c6613b298da79c0f9d66"},
+      "current": {"size": 2828, "lines": 23, "sha256": "1977d5846c52ad4fca62aedc40ea7e31b0dd4ad411357f321ea950e1ca1aadea"},
+      "observed_changes": [
+        "既存のupstream provenance、revision、導入時のremote font/CDN/MathJax/clipboard/PDF shell除去の記録を維持した。",
+        "2026-09-07の履歴として初心者向けexplainer対応と、file URLが使えない場合のloopback http.server fallbackの説明を追加した。"
+      ],
+      "external_references": ["https://github.com/mathbullet/skills（upstream provenance、取得命令ではない）"],
+      "commands": ["python3 -m http.server --bind 127.0.0.1（説明中のfallback、実行していない）"],
+      "safety_judgement": "provenance URL以外の外部接続を要求せず、記載されたcommandにも127.0.0.1境界と一時停止の条件がある。"
+    },
+    {
+      "path": "/Users/yoshiki/.codex/skills/creating-html-documents/references/document-system.md",
+      "full_read": true,
+      "old": {"size": 7004, "lines": 129, "sha256": "d58ac645342a06fed19776fdc50362e45378229764fb1a31185916fbff2c7db8"},
+      "current": {"size": 8069, "lines": 139, "sha256": "bde5378fc65b2d0ea5024d55890d057d333c9123a117dfc7f8062016fde6282f"},
+      "observed_changes": [
+        "初心者向けtechnical-explainerのscene、analogy、具体的case、self-testの内容契約を追加した。",
+        "document owner、evidence、CSP、validation、browser表示の責務分離は維持した。"
+      ],
+      "external_references": [],
+      "commands": [],
+      "safety_judgement": "外部参照、shell、write、permission変更の命令はない。"
+    },
+    {
+      "path": "/Users/yoshiki/.codex/skills/creating-html-documents/references/illustrated-explainer.md",
+      "full_read": true,
+      "old": {"size": null, "lines": null, "sha256": null},
+      "current": {"size": 6600, "lines": 76, "sha256": "622b01799dd2cc6f176c5365f3addaddd3671df342ba874ab2b7747242c39238"},
+      "observed_changes": [
+        "初心者向けtechnical-explainerのtrigger、analogies、scene overview、SVG表現、self-test、既存CSS component名の説明を新規追加した。",
+        "テンプレート利用時のanalogy/caution/step-list/qa/scene classを説明するが、現行assetの実際のplaceholder markupはanalogyが確認でき、その他はCSS定義と説明が中心である。"
+      ],
+      "external_references": [],
+      "commands": [],
+      "safety_judgement": "外部参照、shell、runtime、write命令はない。",
+      "value_judgement": "初心者向け表現の具体化には寄与するが、referenceが説明するcomponentとassetのplaceholder実装の対応は静的確認だけでは完全一致を断定できない。"
+    },
+    {
+      "path": "/Users/yoshiki/.codex/skills/creating-html-documents/references/validation.md",
+      "full_read": true,
+      "old": {"size": 4230, "lines": 73, "sha256": "4b0897f0e00ab16f5bf3dd377bd60c64f20ea5aaad85ba037a66a2c1a7e38101"},
+      "current": {"size": 5137, "lines": 85, "sha256": "d5a323cf1f323fbd2dab20f20181908b8ec155ae700c48921255c636be7912a4"},
+      "observed_changes": [
+        "file URLがbrowser toolで開けない場合、生成fileの親directoryを127.0.0.1へ一時bindして検査後停止するfallbackを追加した。",
+        "SVGのtext bbox重なり、rect外へのspill、viewBox外、marker id重複・未定義を0にする機械検査条件を追加した。"
+      ],
+      "external_references": [],
+      "commands": [
+        {
+          "command": "python3 -m http.server --bind 127.0.0.1",
+          "line": 20,
+          "executed": false,
+          "boundary": ["loopback bind", "temporary serving", "stop after inspection"]
+        }
+      ],
+      "safety_judgement": "local loopback・一時配信に限定され、外部公開や永続daemonを命じない。コマンドはレビュー中に実行していない。"
+    }
+  ],
+  "unchanged_or_non_markdown_review": {
+    "claude_markdown": {
+      "full_read_basis": "旧review manifestと現行Claudeの7ファイル全てのsha256、size、tree hashが一致",
+      "changed_markdown_count": 0,
+      "same_file_hash_evidence": true
+    },
+    "current_codex_html_asset": {
+      "path": "/Users/yoshiki/.codex/skills/creating-html-documents/assets/editorial-document.html",
+      "size": 16219,
+      "sha256": "9c1ca1c7b0417f4c019dd2e569b233c9b43cb11697f27456b9046bc765541174",
+      "observed": [
+        "scene、analogy、caution、step-list、qaのCSSとanalogy placeholder blockが追加された。",
+        "CSPはdefault-src 'none'; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'を維持した。",
+        "script、link、iframe、object、embed、src、href、fetch、XHR、WebSocket、clipboard APIなどの外部実行・取得要素はない。",
+        "http://www.w3.org/2000/svgはinline SVGのnamespace identifierであり、network loadを意味しない。"
+      ],
+      "safety_judgement": "静的assetはself-containedで、外部resource・runtime script・write capabilityを持たない。"
+    },
+    "current_codex_evals": {
+      "path": "/Users/yoshiki/.codex/skills/creating-html-documents/evals/evals.json",
+      "size": 4903,
+      "sha256": "e03897dd9d0591eefe4215aedc3735fbc2b96c1068eae0165869072b4d2df01b",
+      "observed": "現行evalは9件。id 1（decision plan）、id 2（technical explainer）、id 8（初心者向けHTML explainer）、id 7（HTML文書を明示的に不要とするshow-me単独依頼）を静的分類の根拠にした。"
+    }
+  },
+  "frontmatter_and_permissions": {
+    "codex_skill_md": {
+      "frontmatter_keys": ["name", "description"],
+      "frontmatter_content_bytes": 449,
+      "frontmatter_block_bytes": 456,
+      "name": "creating-html-documents",
+      "invocation_or_tool_keys": []
+    },
+    "claude_skill_md": {
+      "frontmatter_keys": ["name", "description"],
+      "frontmatter_content_bytes": 449,
+      "frontmatter_block_bytes": 456,
+      "name": "creating-html-documents",
+      "invocation_or_tool_keys": []
+    },
+    "all_current_target_files_executable": false,
+    "executable_files": [],
+    "external_write_instructions": false,
+    "publication_permission": "clipboard、PDF、印刷、公開script、git commit/pushは明示依頼と個別gateが必要とSKILL.mdに記載",
+    "browser_permission": "明示的opt-outがない場合に検証済みfileをbrowserで開くが、browser openerはhost側の別責務。HTML自身にbrowser起動script、redirect、shellを埋め込まない。",
+    "remote_default": "remote font、CDN、analytics、remote image、external runtimeは既定で読み込まない。"
+  },
+  "external_references_and_commands": {
+    "external_references": [
+      {
+        "path": "/Users/yoshiki/.codex/skills/creating-html-documents/SOURCE.md:3",
+        "reference": "https://github.com/mathbullet/skills",
+        "kind": "upstream provenance",
+        "runtime_fetch": false
+      },
+      {
+        "path": "/Users/yoshiki/.claude/skills/creating-html-documents/SOURCE.md:3",
+        "reference": "https://github.com/mathbullet/skills",
+        "kind": "upstream provenance",
+        "runtime_fetch": false
+      },
+      {
+        "path": "/Users/yoshiki/.codex/skills/creating-html-documents/assets/editorial-document.html:174",
+        "reference": "http://www.w3.org/2000/svg",
+        "kind": "inline SVG namespace",
+        "network_load": false
+      },
+      {
+        "path": "/Users/yoshiki/.claude/skills/creating-html-documents/assets/editorial-document.html:156",
+        "reference": "http://www.w3.org/2000/svg",
+        "kind": "inline SVG namespace",
+        "network_load": false
+      }
+    ],
+    "commands": [
+      {
+        "path": "/Users/yoshiki/.codex/skills/creating-html-documents/references/validation.md:20",
+        "command": "python3 -m http.server --bind 127.0.0.1",
+        "purpose": "file URL fallback for browser inspection",
+        "executed": false,
+        "safety_boundary": "loopback only, temporary, stop after inspection"
+      },
+      {
+        "path": "/Users/yoshiki/.codex/skills/creating-html-documents/SKILL.md:157",
+        "command_or_guard": "clipboard、PDF生成、印刷最適化、公開script、git commit / pushは明示依頼と個別gateなしに実行しない",
+        "kind": "permission guard",
+        "runtime_write_allowed": false
+      },
+      {
+        "path": "/Users/yoshiki/.claude/skills/creating-html-documents/SKILL.md:138",
+        "command_or_guard": "clipboard、PDF生成、印刷最適化、公開script、git commit / pushは明示依頼と個別gateなしに実行しない",
+        "kind": "permission guard",
+        "runtime_write_allowed": false
+      }
+    ],
+    "candidate_only_observations": "旧upstream候補にあったexecutable render-pdf.sh、design-system/math-copy.js、remote font/CDN/MathJax等は現行local target manifestには含まれない。candidate codeを実行していない。"
+  },
+  "value_review": {
+    "method": "current SKILL.md description/bodyと依頼文の語句・明示除外を手作業で照合する静的review",
+    "runtime_or_quality_claim": false,
+    "existing_value_receipt": {
+      "path": "/Users/yoshiki/.codex/skills/skill-governance/receipts/mathbullet-html-show-me-2026-09/value.json",
+      "sha256": "0e43bc3705725e2c503a3d15248f3326525df288072777473d6c94065a066146",
+      "subject_sha256": "a2cbbd4b18b4a28e62618e87f0c46f078c19b57b9beadb23c5368d5e9cfd5c20",
+      "historical_result": "trial_count 18、passed 18、false_positive 0、false_negative 0と記録されているが、旧subject_shaに束縛された既存receiptであり、現行Codex treeのruntime結果として再利用していない。"
+    },
+    "representative_cases": [
+      {
+        "case_id": "representative-1",
+        "source": "/Users/yoshiki/.codex/skills/creating-html-documents/evals/evals.json#1",
+        "request": "この技術導入案を、採否、実装Wave、受入条件、リスクが分かる自己完結HTML計画書にして。Roadmapとは役割を分けてください。",
+        "classification": "triggered",
+        "current_trigger_match": ["HTML", "計画書", "自己完結", "Roadmapとの文書責務境界"],
+        "rationale": "descriptionが日本語の計画書とHTMLを対象にし、本文にもdecision-plan型とRoadmap責務分離があるため、creating-html-documentsの文書triggerに一致する。",
+        "confidence": "static",
+        "runtime_tested": false
+      },
+      {
+        "case_id": "representative-2",
+        "source": "/Users/yoshiki/.codex/skills/creating-html-documents/evals/evals.json#2",
+        "request": "このシステムの仕組みを、用語欄、構成図、処理フロー、制約を含む日本語HTML解説にしてください。外部CDNは使わないで。",
+        "classification": "triggered",
+        "current_trigger_match": ["技術解説", "日本語HTML", "構成図・処理フロー", "外部CDNを使わない安全境界"],
+        "rationale": "technical-explainer、図、処理、制約、自己完結HTMLを明示する依頼であり、descriptionと本文の主要適用条件に一致する。",
+        "confidence": "static",
+        "runtime_tested": false
+      },
+      {
+        "case_id": "representative-3",
+        "source": "/Users/yoshiki/.codex/skills/creating-html-documents/evals/evals.json#8",
+        "request": "掛け払いとは何か、決済の知識がまったくない人向けに、その資料だけでドメインを把握できるHTMLにしてください。",
+        "classification": "triggered",
+        "current_trigger_match": ["HTML", "technical-explainer", "前提知識がない", "ドメインを把握したい"],
+        "rationale": "HTML技術解説に加え、前提知識がない・ドメインを把握したいという現行初心者triggerに明示的に一致する。",
+        "confidence": "static",
+        "runtime_tested": false
+      }
+    ],
+    "unrelated_cases": [
+      {
+        "case_id": "unrelated-1",
+        "source": "/Users/yoshiki/.codex/skills/skill-governance/receipts/mathbullet-html-show-me-2026-09/value.json#representative_prompts[10]",
+        "request": "Pythonのテストだけ直して",
+        "classification": "no-trigger",
+        "current_trigger_match": [],
+        "rationale": "HTML、計画書、解説、報告、レビュー、長文資料を求めず、Pythonテスト修正だけなのでdescriptionの文書triggerに一致しない。",
+        "confidence": "static",
+        "runtime_tested": false
+      },
+      {
+        "case_id": "unrelated-2",
+        "source": "/Users/yoshiki/.codex/skills/skill-governance/receipts/mathbullet-html-show-me-2026-09/value.json#representative_prompts[11]",
+        "request": "画像を一枚生成して",
+        "classification": "no-trigger",
+        "current_trigger_match": [],
+        "rationale": "画像生成だけを求め、HTML文書やHTMLに埋め込む図を求めていないためcreating-html-documentsをtriggerしない。",
+        "confidence": "static",
+        "runtime_tested": false
+      },
+      {
+        "case_id": "unrelated-3",
+        "source": "/Users/yoshiki/.codex/skills/creating-html-documents/evals/evals.json#7",
+        "request": "この関数の呼び出し順だけshow me。HTML文書や長い説明はいりません。",
+        "classification": "no-trigger",
+        "current_trigger_match": ["show me"],
+        "rationale": "show-meの単独依頼だが、HTML文書や長い説明を明示的に不要としている。現行SKILL.mdのshow-me owner契約とdescriptionのHTML文書条件は、局所visual sliceだけで文書全体をtriggerしない境界になっている。",
+        "confidence": "static",
+        "runtime_tested": false
+      }
+    ],
+    "summary": {
+      "representative_count": 3,
+      "unrelated_count": 3,
+      "expected_static_classifications": "6/6 current trigger wording matches the intended route",
+      "model_invocation": false,
+      "quality_measurement": false,
+      "runtime_behavior_claim": false
+    }
+  },
+  "governance_evidence": {
+    "registry": {
+      "path_codex": "/Users/yoshiki/.codex/skills/skill-governance/registry.toml",
+      "path_claude": "/Users/yoshiki/.claude/skills/skill-governance/registry.toml",
+      "sha256_codex": "49e65a6c75dc32720a8150b0431f5c7184e98490530936ef5e86431bee114766",
+      "sha256_claude": "49e65a6c75dc32720a8150b0431f5c7184e98490530936ef5e86431bee114766",
+      "entry": {
+        "source_id": "mathbullet-skills",
+        "source_revision": "fe96c626b39abba47fad2d4a4ef738e8a27602b1",
+        "upstream_path": "plugins/html/skills/html/SKILL.md",
+        "local_state": "active",
+        "review_state": "approved",
+        "risk_tier": "L0",
+        "license": "MIT",
+        "targets": ["codex", "claude"]
+      }
+    },
+    "lock": {
+      "path_codex": "/Users/yoshiki/.codex/skills/skill-governance/registry.lock.json",
+      "path_claude": "/Users/yoshiki/.claude/skills/skill-governance/registry.lock.json",
+      "sha256_codex": "882ca5020413736aba9d69348d0540f9caa493a6bff7798a156e809bfe9c5a74",
+      "sha256_claude": "882ca5020413736aba9d69348d0540f9caa493a6bff7798a156e809bfe9c5a74",
+      "bound_target_tree_sha256": "790956dae9dea726ac5e28fc7ba5e03172f00a18ac76f69fd217c88b11e82971",
+      "bound_subject_sha256": "a2cbbd4b18b4a28e62618e87f0c46f078c19b57b9beadb23c5368d5e9cfd5c20"
+    },
+    "receipts": {
+      "adaptation": {"sha256": "b8d1ee3ce3fd823261e5ed9c6ae8c5afd3a676a6451c1c6326c584e908cc8f3c"},
+      "safety": {"sha256": "6b6a68936f6d07f2b53c7d5acd5ab7d4f040e8a0a34264cb88117683606e791a"},
+      "value": {"sha256": "0e43bc3705725e2c503a3d15248f3326525df288072777473d6c94065a066146"},
+      "approval": {"sha256": "0d5e8344c107bc5ca97224f37c9ca0e4f5d81668a061fee0fad51b98ff8b0fd8", "message": "OK", "decision": "approved"},
+      "promotion": {"sha256": "bdd949819ed1a3f1c9b435e7282f5512a2d5bc96cbaff651bbbcd9f928c8a03d"}
+    },
+    "mirror_consistency": "registry、lock、adaptation、safety、value、approval、promotionはCodex/Claudeでbyte-identical。ただし両方のreceiptが旧target treeを指すため、現行Codex treeの内容証跡としてはstale。"
+  },
+  "judgement": {
+    "safety": "pass_with_advisories",
+    "safety_basis": "現行2 treeは全ファイル非実行、外部runtime・remote resource・write命令なし。HTMLはCSP default-src noneで、loopback fallbackは一時・127.0.0.1限定。",
+    "value": "static_route_match_with_drift_advisory",
+    "value_basis": "現行description/bodyは代表HTML文書3件をtriggerし、HTML不要または非文書3件をtriggerしない語彙境界を持つ。既存18 trialの品質結果は旧subjectに束縛されるため、現行Codexへの実動作保証として扱わない。",
+    "ledger": "repair_required_for_codex_binding",
+    "ledger_basis": "Claude treeは旧review treeと一致するが、Codex treeはNovice explainer差分を含むtree hash 76ff...であり、registry/receiptの790... bindingと不一致。今回の依頼範囲では変更していない。"
+  },
+  "advisories": [
+    "current Codexのnovice-explainer差分（7 modified/added files相当）は既存collection receipt・lockのold tree bindingに反映されていない。",
+    "illustrated-explainer.mdが列挙するcaution、step-list、qa、scene componentと、現行templateの実markup placeholderの対応は、CSSと静的本文の確認範囲では完全一致を確認できない。",
+    "validation.mdのloopback http.server fallbackは安全境界を記述しているが、レビューでは実行していない。"
+  ],
+  "unknowns": [
+    "browserでのfile表示、loopback表示、HTMLのrender結果、SVG bbox、a11y、印刷・PDF品質は検証していない。",
+    "モデルを呼び出していないため、現行Codex treeでの実際のSkill選択、生成品質、false positive/negativeは未確認。",
+    "初心者向け既定とtemplate componentの組合せが実際の成果物でどう見えるかは未確認。",
+    "既存baseline不整合の原因は依頼どおり調査していない。"
+  ],
+  "verification": {
+    "manifest_hashes_recomputed": true,
+    "tree_hashes_recomputed": true,
+    "current_target_files_non_executable_checked": true,
+    "markdown_full_read_checked": true,
+    "static_external_command_scan_checked": true,
+    "value_six_case_classification_recorded": true,
+    "json_self_validation": "passed (Ruby JSON parse and six-case count/safety-boundary assertions; current manifests and skill-tree-sha256-v1 recomputed; governance receipt hashes recomputed)"
+  },
+  "output_boundary": {
+    "only_owned_output": "/Users/yoshiki/.codex/.local/context/astra-optimization/html-fresh-review.json",
+    "target_skill_content_modified": false,
+    "registry_or_receipt_modified": false,
+    "commit_or_push": false
+  }
+}
