@@ -89,6 +89,27 @@ src/
 
 ほとんどが新規で、省略すると ownership や順序が隠れる場合は差分ではなくブロック全体を示す。
 
+## レビュー順と依存関係を表示する
+
+複数fileにまたがる変更レビュー・技術解説では、追加の指示がなくても、対象fileとsymbolを追う索引を作る。ユーザーがfileを指定した場合はそこを起点とし、説明に必要な呼出元・呼出先だけを広げる。単純な文言修正やコードを扱わない資料には自動追加しない。Skill・設定のfile参照を明示的に求められた場合は、symbolを見出し・設定キーに置き換えて適用する。
+
+- **レビュー順**: 理解・判断のために読む順番。仕様・契約、主要処理、呼出元やUI、検証などから今回に合う順を選び、先に読む理由を一文で示す。依存先の契約を先に読む必要があれば先に置く。ファイル名順や差分の列挙順で代用しない。
+- **依存関係**: `A → B` は「AがBに依存する」。import、型・契約、runtime call、非同期handoffを区別する。依存先から読む順を示す場合も矢印の意味は変えない。cycleは一群として示し、独立した要素に架空の前後関係を付けない。
+- **呼び出し順**: 入力から実行される経路。下記のLevelはruntime call depthであり、レビュー番号や静的依存の深さとは別にする。並行処理、callback、queue再開は全順序にせず分岐・再入点を示す。
+
+索引の各項目は、安定したid、レビュー番号、file path、主要symbol、処理の一文、先に読む項目と理由、source anchorを持ち、HTMLの場合は本文内の詳細anchorも付ける。各call edgeには呼出箇所のsource anchorを付け、symbolの定義だけで呼び出しを証明しない。importだけからruntime callを推測しない。Skillや設定の参照は「手順参照」と明記し、実在しない関数名を作らない。未実装の計画は「予定」、追跡できない関係は`unknown`とする。
+
+図が必要なら`diagram-design`を読み、共有依存・cycleは`references/type-dependency.md`、担当間の処理・payloadは`references/type-process.md`を選ぶ。単純な呼び出しはcall treeで示す。依存図のnodeは責務単位を保ち、file・symbol一覧へidで接続する。一ファイル一箱を強制しない。レビュー番号を実行順の矢印として描かず、Roadmapのtask順は`viewing-plans`へ残す。
+
+HTMLへ渡すvisual briefには次を加える。`document-owner: creating-html-documents`がある場合は同じownerへ返す。
+
+```text
+review-order: id、番号、file、symbol、処理、先に読む理由、source anchor、detail anchor
+relations: from-id、to-id、種別、条件またはpayload、呼出箇所のsource anchor
+order-semantics: レビュー順の理由、依存矢印の向き、runtime Levelの定義
+visual-route: call tree | diagram-design dependency | diagram-design process
+```
+
 ## ファイルと関数を依存レベルで追う
 
 複数fileをまたぐ処理について「入口からどの関数が何を呼び、どこで副作用が起きるか」を求められた場合は、浅いfile treeだけで終えず、source-backedなdependency traceを作る。
@@ -121,7 +142,7 @@ dry-runが台帳作成などの内部writeを行う場合は「対象データ�
 
 ### 出力の既定
 
-まず依存Levelの一覧を置き、その後にmode別call treeを置く。関係が3要素以上でshared dependencyや分岐を空間で読む価値がある場合だけ、`diagram-design`のdependency契約でSVGを加える。
+レビュー索引が必要な場合は先に置く。次に依存Levelの一覧とmode別call treeを置く。共有依存やcycleには`diagram-design`のdependency契約、担当間の分岐・payload受け渡しにはprocess契約を適用し、空間配置に意味がある場合だけSVGを加える。
 
 ```text
 Level 0  Screen.tsx

@@ -54,6 +54,24 @@
       "prompt": "決済チームの実務者向けに、与信APIの変更差分をレビュー用HTMLにまとめて。",
       "expected_output": "change-review型。読者が実務者なので初学者向けexplainerの既定は適用せず、アナロジー囲み、歴史の章、身近な例、自己テストを追加しない。before/after、diff、影響範囲、検証結果を優先する。",
       "files": []
+    },
+    {
+      "id": 10,
+      "prompt": "API、service、repositoryをまたぐ変更をレビュー用HTMLにして。対象はserviceの変更で、読む順番は任せます。",
+      "expected_output": "追加指示なしでレビュー索引を生成し、先に読む契約と理由、file/symbol/処理、詳細anchorを示す。レビュー順、依存の向き、runtime call depthを分ける。呼出元・呼出先は必要範囲だけ追い、call edgeを呼出箇所のsourceへ接続する。HTML内で索引と詳細・根拠をkeyboardで往復できる。",
+      "files": []
+    },
+    {
+      "id": 11,
+      "prompt": "show me。指定したworker.tsのprocessJobから、共通repositoryとcallbackへの依存をファイル・関数単位で追いたい。未解決の動的呼出先もあります。HTMLはいりません。",
+      "expected_output": "show-meが局所表現のownerを保持する。レビュー順の索引とcall traceを返し、共有依存には必要時diagram-designのdependency契約を使う。callbackと並行経路を直列化せず、未解決関係はunknownとし、importをruntime callと断定しない。HTML生成へ委譲しない。",
+      "files": []
+    },
+    {
+      "id": 12,
+      "prompt": "creating-html-documentsとshow-meのSkill参照関係をHTMLで説明して。実行関数があるようには見せないで。",
+      "expected_output": "関係を手順参照と表示し、実在しない関数名やruntime Levelを補わない。見出しとsource行を詳細の根拠にする。レビュー番号と手順参照の矢印を区別し、図が有用ならdiagram-designの契約に従う。",
+      "files": []
     }
   ]
 }

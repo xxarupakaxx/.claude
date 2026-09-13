@@ -15,3 +15,5 @@
 2026-09-06の追加適合では、複数章・claim ledger・自己完結HTMLを`creating-html-documents`へ渡すowner境界を追加した。同Skillから呼ばれた場合はsection単位のvisual briefまたは最小表現だけを返し、再委譲しない。
 
 2026-09-11の追加適合では、複数fileをまたぐ処理をruntime call depthのLevel、mode別call tree、side-effect境界、source解決、null / placeholder、rate-limit単位で追うsource-backed dependency traceを追加した。自己完結HTMLのowner境界と`diagram-design`のSVG契約は維持する。
+
+2026-09-14のローカル適合では、レビューで読む順番、静的依存、runtime callを区別し、file・symbol・呼出箇所の根拠を持つ索引とHTML詳細へのhandoffを追加した。図の型は共有依存と処理の受け渡しで選び分ける。

@@ -62,6 +62,18 @@ fallback: 同じ意味を読めるtext表現
 
 呼出しcontextに`document-owner: creating-html-documents`を明示する。このcontextでは`show-me`は局所visual sliceだけを返し、HTML文書全体を作らず、このSkillへ再委譲しない。受け取った表現が本文と同じ内容を繰り返す場合は採用しない。overviewの要否はこのSkillのOverview gateが決め、`show-me`はoverview内の最小構成を選ぶ。
 
+## ファイル・関数を追うレビュー導線
+
+複数fileの変更レビュー・技術解説、またはfile指定の処理説明では、`show-me`の「レビュー順と依存関係を表示する」を適用する。source inventoryから対象と必要な呼出元・呼出先を渡し、レビュー索引、関係、順序の意味をvisual briefで受け取る。単純な文言修正やコードを扱わない資料では省く。Skill・設定のfile参照を明示的に求められた場合は、symbolを見出し・設定キーに置き換え、runtime Levelは適用外とする。
+
+- 中心主張と、該当時のorientation / overviewの後に「レビューする順番」の番号付き索引を初期表示する。各項目にfile、symbol、処理の一文、先に読む理由を置き、本文内の詳細へリンクする。
+- 詳細は同じidと番号を使い、file path・symbol・source行、入力、具体的な処理、呼出元→呼出先、出力・副作用、関連diff・testを示す。索引へ戻るリンクも置く。既存のdetailへ統合し、別章に同じ説明を複製しない。
+- 索引に続くcall treeまたは図は「依存関係」「呼び出し順」のどちらかを明記する。レビュー順との違い、矢印の意味、runtime Levelを短く説明する。diagram-designのSVGを採用する場合は同じSVG正本を埋め込み、nodeのidからfile・symbolの詳細を辿れる対応表または本文リンクを置く。
+- file pathは省略表示だけで終えず、完全なpathとsource行を選択・コピーできるtextで示す。確認済みのsource URLがあればリンクする。local fileの行ジャンプがbrowserで使えるとは仮定せず、HTML内の根拠抜粋へ移動できるようにする。sourceの版や取得時点を添え、行番号の陳腐化を判別できるようにする。
+- 索引、主要な関係、sourceはhoverやscriptに依存させない。通常のanchorリンクでkeyboardから辿れ、初期表示にtext fallbackがある形にする。長いpathは折り返す。
+
+文書ownerはHTMLへの配置と検証を保持する。`show-me`から`diagram-design`へ渡すのは根拠付きの図の入力だけとし、文書全体やレビュー順の決定を再委譲しない。
+
 ## 先に中身を抽出する
 
 HTML構造や図を作る前に、source inventoryとclaim ledgerをcompactな作業メモとして作る。
