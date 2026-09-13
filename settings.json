@@ -81,6 +81,15 @@
     ],
     "SessionStart": [
       {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/sketchybar-agent-state.sh",
+            "timeout": 3
+          }
+        ]
+      },
+      {
         "matcher": "compact",
         "hooks": [
           {
@@ -427,17 +436,8 @@
   "skipWorkflowUsageWarning": true,
   "theme": "light",
   "remoteControlAtStartup": true,
-  "skipAutoPermissionPrompt": true,
   "voiceEnabled": false,
-  "mcpServers": {
-    "workflow-html-app": {
-      "command": "bash",
-      "args": [
-        "-c",
-        "exec node \"$HOME/.claude/mcp-servers/workflow-html-app/dist/main.js\""
-      ]
-    }
-  },
+  "mcpServers": {},
   "allowedTools": [
     "Bash(cd:*)",
     "Bash(sqlite3:*)",

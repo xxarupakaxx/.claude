@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 input="$(cat)"
 event="$(printf '%s' "$input" | jq -r '.hook_event_name // empty')"
 notification="$(printf '%s' "$input" | jq -r '.notification_type // empty')"
 
 case "$event:$notification" in
-  UserPromptSubmit:*) state="working" ;;
+  SessionStart:*|UserPromptSubmit:*) state="working" ;;
   Notification:permission_prompt|Notification:elicitation_dialog) state="blocked" ;;
   Notification:idle_prompt|Stop:*) state="complete" ;;
   StopFailure:*) state="error" ;;
