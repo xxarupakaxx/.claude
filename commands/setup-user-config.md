@@ -1,3 +1,8 @@
+---
+name: setup-user-config
+description: ユーザー設定 config/user.json を template から作成・更新する。`/setup-user-config` で使用。
+---
+
 $ARGUMENTS を考慮して `setup-user-config` スキルを実行してください。
 
 1. `~/.claude/config/user.example.json` をテンプレートとして読み込む

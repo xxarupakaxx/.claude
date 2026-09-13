@@ -2,8 +2,9 @@
 """Validate the stable entrypoint and knowledge artifact contracts of ~/.claude.
 
 .codex/scripts/validate-agent-harness.py の user-scope Claude Code 版。
-codex 固有の TOML role、config.toml、global mirror、delivery lifecycle
-（gpt-5.6 roster / Work Packet / PRD）契約は .claude に対応物がないため移していない。
+codex 固有の TOML role、config.toml、global mirror の契約は .claude に対応物がないため
+移していない。delivery lifecycle（agent_delivery_lifecycle.py）は commit / pr / pr-watch
+の検証用に複製済みだが、その model roster は Codex 用で Claude の routing には使わない。
 移したのは runtime に依存しない4つの契約である。
 
 1. entrypoint: CLAUDE.md が薄い入口のままか

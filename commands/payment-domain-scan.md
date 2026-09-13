@@ -84,5 +84,4 @@ payment trend ノートと `Daily/YYYY-MM-DD.md` の `## 💭 メモ` から `[[
 - repo: `obsidian-vault`
 - connectors: 不要（外部Webのみ）
 - network: **Full**
-- model: `gpt-5.5`
-- service_tier: `priority`
+- model / service_tier: Codex Cloud Routine 側の設定に従う（Claude Code では指定しない）
