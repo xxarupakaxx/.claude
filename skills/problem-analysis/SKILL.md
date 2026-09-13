@@ -1,137 +1,63 @@
 ---
 name: problem-analysis
-description: 課題分析の統合スキル。A3 one-page で課題を定式化 → Fishbone（6カテゴリ）で原因仮説を網羅 → Iterative 5 Whys で根本原因を絞り込むパイプライン。「問題を分析して」「根本原因を探って」「課題を整理して」「problem-analysisして」等の依頼に対応。本番障害の振り返り、繰り返し発生する問題の構造化、Kaizenサイクルの起点で使用。built-in `analyse-problem` / `cause-and-effect` / `why` を統合した上位スキル。
+description: 本番障害、繰り返す問題、Kaizen の起点を、A3 で定式化し、Fishbone の6カテゴリと Iterative 5 Whys で根本原因候補と検証可能な action plan に整理する。「問題を分析して」「課題を整理して」「根本原因を探って」「problem-analysisして」で使う。単純なバグには使わない。
 ---
 
-# Problem Analysis — 課題分析パイプライン
+# Problem Analysis
 
-## 概要
+問題を **定式化 → 原因仮説 → 根本原因の収束 → 行動計画** の順で整理する。これは built-in の `analyse-problem`、`cause-and-effect`、`why` を統合した上位スキルで、コード変更や単純な不具合の局所修正は行わない。
 
-「問題」を3段階で構造化する統合スキル:
-1. **定式化**（A3）: 現状・理想・ギャップを1ページに整理
-2. **拡散**（Fishbone）: 6カテゴリで原因仮説を網羅
-3. **収束**（5 Whys）: 最有力仮説を根本原因まで掘り下げる
+## 1. A3：観察可能な問題にする
 
-built-in の `analyse-problem` / `cause-and-effect` / `why` を統合（パイプライン化）した上位スキル。
-本来3スキルを個別に呼ぶ必要があったところを、本スキル1つで完結する。
-
-## トリガー
-
-- 「問題を分析して」「課題を整理して」
-- 「根本原因を探って」「なぜそうなったか深掘りして」
-- 「problem-analysis して」
-- 本番障害の振り返り、繰り返し発生するインシデント分析
-- Kaizen サイクル (Phase 0-5.5 の振り返り) の起点
-
-## プロセス
-
-### Step 1: A3 — 課題定式化
-
-1ページにまとめる:
+`${MEMORY_DIR}/memory/<task>/problem_analysis.md` に、事実を中心に次を記す。
 
 ```markdown
 # Problem: <タイトル>
-
 ## Background
-- いつから / どこで / どれくらいの頻度で発生しているか
-- 影響を受けているステークホルダー
-
 ## Current State
-- 現在何が起きているか（事実のみ、解釈なし）
-- 関連メトリクス（数値があれば）
-
 ## Target State
-- 理想の状態（あるべき姿）
-- 成功基準（測定可能な形で）
-
 ## Gap
-- Current と Target の差分を1-3行で
 ```
 
-このステップで「問題」を**観察可能な事実**に変換する。曖昧な「動かない」「重い」は数値化する。
+発生時期、範囲、頻度、影響、関連メトリクス、成功基準を、分かっている範囲だけ書く。`Current` と `Target` の差を短く表し、「動かない」「重い」などは観測方法や値で具体化する。
 
-### Step 2: Fishbone — 6カテゴリの原因仮説
+## 2. Fishbone：仮説を広げる
 
-A3 の Gap に対して、以下6カテゴリで仮説を網羅:
+Gap に対して、関係するカテゴリだけを使い、無理に数を揃えない。
 
-| カテゴリ | 観点 |
-|---------|------|
-| **Method** | プロセス・手順・ワークフロー |
-| **Machine** | ツール・インフラ・ハードウェア |
-| **Material** | データ・入力・依存ライブラリ |
-| **Measurement** | 計測・モニタリング・ログ |
-| **Environment** | 外部条件・タイミング・ネットワーク |
-| **People** | スキル・コミュニケーション・組織 |
+| Category | 観点 |
+| --- | --- |
+| Method | 手順・プロセス・workflow |
+| Machine | tool・インフラ・hardware |
+| Material | data・入力・依存 |
+| Measurement | 計測・monitoring・log |
+| Environment | 外部条件・タイミング・network |
+| People | skill・communication・組織 |
 
-各カテゴリに2-5個の仮説を出す。**この時点では真偽を判定しない**。網羅性が目的。
+この段階では仮説を事実と混同せず、根拠の有無と確認方法を添える。複雑な場合だけ SVG 図を添付する。
 
-出力例（複雑な場合はSVG図を添付してよい）:
-```
-Method:
-  - 手順書が古い
-  - ロールバック手順がない
-Machine:
-  - メモリリーク
-  - キャッシュサイズ不足
-...
-```
+## 3. Iterative 5 Whys：収束する
 
-### Step 3: 5 Whys — 最有力仮説の根本原因
+Fishbone の候補から、影響、尤もらしさ、検証コストを見て最有力の1〜3候補を選ぶ。各回答が次の問いの根拠になる形で掘り、5回に満たなくても根拠が尽きたら止める。個人の責任で止めず、仕組み・環境要因まで確認する。根拠が薄い候補は別枝へ切り替え、根本原因を断定しない。
 
-Fishbone で出した仮説のうち、**最も尤もらしいもの 1-3個** に対して 5 Whys を実施:
+## 4. Action plan
 
-```
-Q1: なぜ <症状> が起きた？
-A1: <仮説1>
-
-Q2: なぜ <A1> が起きた？
-A2: ...
-
-Q3: ...
-Q4: ...
-Q5: なぜ <A4> が起きた？
-A5: <根本原因>
-```
-
-5回掘れない場合は3回で止める（無理に伸ばさない）。
-「人のせい」「気合の問題」で止まったら別の仮説に切り替える（システム要因まで掘る）。
-
-### Step 4: Action Plan
-
-根本原因から逆算したアクションプランを A3 に追記:
+分析結果に次を追記する。
 
 ```markdown
 ## Root Cause
-<5 Whys の最終回答>
-
+<根拠と不確実性>
 ## Actions
 | # | アクション | オーナー | 期日 | 検証方法 |
-|---|----------|---------|------|---------|
-| 1 | ... | ... | ... | ... |
-
+|---|---|---|---|---|
 ## Follow-up
-- Kaizenサイクルでの再点検タイミング
 ```
 
-## 出力先
+各 action を原因に対応づけ、完了条件と再点検時期を含める。重要な設計判断は `creating-adr` へ渡す。
 
-- `${MEMORY_DIR}/memory/<task>/problem_analysis.md` （A3形式の1枚物）
-- 重要判断を含む場合は `creating-adr` で ADR 化
+## 使い分け
 
-## いつ使うか
-
-- ✅ **本番障害の RCA**（再発防止策まで導きたい）
-- ✅ **繰り返し発生する問題**（個別対応ではなく構造的解決を狙う）
-- ✅ **Kaizen サイクルの起点**（漠然とした「うまくいかない」の構造化）
-- ❌ 単純なバグ（→ `diagnosing-bugs`）
-- ❌ 深いコールスタック追跡（→ `root-cause-tracing`）
-- ❌ アーキテクチャ改善（→ `improving-architecture`）
-
-## 関連
-
-- `diagnosing-bugs`: バグ再現と二分探索（症状→原因の局所追跡）
-- `root-cause-tracing`: スタック遡及（エラー発火点の特定）
-- `kaizen`: 改善サイクル全般（本スキルは Kaizen の "P" 起点）
-- `creating-adr`: 重要判断の記録
-
-built-in `analyse-problem` / `cause-and-effect` / `why` は本スキルに統合済み（settings.json `skillOverrides` で off）。
+- バグの再現・局所追跡：`diagnosing-bugs`
+- 深いコールスタックの遡及：`root-cause-tracing`
+- アーキテクチャ改善：`improving-architecture`
+- Kaizen の問題定義・振り返り：この skill

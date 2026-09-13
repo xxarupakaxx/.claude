@@ -1,11 +1,11 @@
 ---
 name: researching-articles
-description: URLや記事・ドキュメントを受け取り、周辺コンテキスト（関連リポジトリ・仕様書・比較技術）まで調査して、10年後の新人でも理解できる詳細なknowledgeノートをInbox/knowledge/に作成し、検証後にone-page-concept-sketchを生成する。「詳しく調べて」「ノートにして」「周辺コンテキストも拾って」「深掘りして」「わかりやすくまとめて」等のフレーズで使用。captureの深掘りモードとして機能する。
+description: URLや記事・ドキュメントを受け取り、周辺コンテキストと一次情報を調査して、根拠・比較・制限を含む Knowledge ノートを `Inbox/knowledge/` に作る。詳細調査やノート化が明示された場合に使い、短い要約や通常の capture には使わない。
 ---
 
 # URL深掘り調査 → Knowledgeノート作成
 
-URLを受け取り、記事本文だけでなく周辺コンテキストまで調査して、「10年後の新人でも理解できる」knowledgeノートを作成する。
+URLを受け取り、記事本文だけでなく周辺コンテキストまで調査して、初見の読者が判断に使える Knowledge ノートを作成する。
 
 captureスキルの軽量URL処理（3行要約 + 箇条書き）とは異なり、**原理・背景・比較・落とし穴**まで掘り下げることが目的。
 
@@ -15,7 +15,7 @@ captureスキルの軽量URL処理（3行要約 + 箇条書き）とは異なり
 - URL（1つ以上）が提示されている
 - 「詳しく」「深掘り」「ノートにしておいて」「周辺コンテキストも」「わかりやすく」「まとめておいて」のフレーズ
 
-単なる「読んだ」「要約して」は captureスキルに任せる。
+単なる「読んだ」「要約して」は capture スキルに任せる。
 
 ## フロー
 
@@ -50,7 +50,7 @@ URLが複数あれば WebFetch で並列取得する。
 他技術との比較など、10年後の新人でも理解できるよう詳しく。
 ```
 
-周辺コンテキストの具体的な調査先を判断する指針は `references/research-targets.md` を参照。
+周辺調査の範囲は URL の種別、依頼の目的、残る不確実性で決める。比較や現在仕様が結論を変えない場合は、周辺調査を増やさない。
 
 ### Step 4: ノートの作成（並列）
 
@@ -72,7 +72,7 @@ related: ["[[関連ノートやMOC]]"]
 ---
 ```
 
-本文の構成は `references/note-structure.md` を参照。
+本文は、主題、中心主張、仕組み、根拠、比較、制限、実務への示唆の順で、必要な項目だけを含める。
 フィールド定義は CLAUDE.md「セカンドブレイン拡張フィールド」に従う。AI/エージェント系のノートは [[AI-Agent-MOC]] の該当クラスタに1行追記して双方向にする。
 
 **図の活用（SVG）**：技術的な仕組み、処理flow、architecture、比較は、図にした方が理解しやすい場合に自己完結したSVGで図示する。SVGは `attachments/` に保存し、Obsidianの本文から埋め込む。Mermaidは新規生成しない。
@@ -97,9 +97,9 @@ FAILがあれば同じ作業内で修正して再実行し、PASSするまで次
 
 ### Step 7: one-page-concept-sketch（直列）
 
-Knowledgeノートの保存、Dailyリンク、Step 6の検証が完了した後に `$one-page-concept-sketch` を実行する。
+Knowledgeノートの保存、Dailyリンク、Step 6の検証が完了した後に `one-page-concept-sketch` スキルを実行する。
 
-1. `.codex/skills/one-page-concept-sketch/SKILL.md` を正本として全文読み、最新のVault Output ContractとQuality Checkに従う。
+1. `~/.claude/skills/one-page-concept-sketch/SKILL.md` を正本として全文読み、最新のVault Output ContractとQuality Checkに従う。
 2. 完成したKnowledgeノートを入力にし、複数ノートを作成した場合は1ノートにつき1件のスケッチを作る。
 3. source-based summaryとしてExact Board modeを既定にし、lane名は `researching-articles` とする。ImagegenまたはDualはユーザーが明示した場合だけ使う。
 4. Source Coverageには元URL、周辺調査の根拠、中心主張、仕組み、制限を引き継ぐ。スケッチ段階で新しい事実を推測して追加しない。

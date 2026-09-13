@@ -1,56 +1,60 @@
 ---
 name: capture
-description: 会話/自由テキストで渡した読書感想・気づき・URLを、適切なノート(reading/note/knowledge)に整形し外部補完してObsidianに保存・リンクする会話用キャプチャ
+description: 会話の読書感想・気づき・URLをreading/note/knowledgeへ分類し、必要な外部補完とDailyリンクを加えてObsidianへ保存する。`/capture`、またはDailyの未処理メモを拾うcapture-sweepで使う。
 ---
 
-# /capture — 会話でそのまま放り込む
+# /capture
 
-OCRや手入力フォームを使わず、**話した/打ったテキストをそのまま**渡すだけで適切なノートに整理する。対話セッション（claude.ai/code・モバイル・Slack）で使う想定。**まず `CLAUDE.md` を読み絶対ルールを守ること。** 詳細手順は `Inbox/automation/playbooks/`（[[AI-Bullpen-Vault]]）。
+話した・打ったテキストを、本人の言葉を保ったノートへ整理する。最初に対象の `CLAUDE.md` と `_shared-ai/knowledge/vault-operation-contract.md`、詳細手順が必要なら `Inbox/automation/playbooks/` を読む。リネーム・削除をせず、既存ノートは追記に限る。
 
-入力: $ARGUMENTS
+入力は起動時の指示（slash command 経由なら `$ARGUMENTS`）または直前の発言。
 
-## 入力の取り方（対話 / 無人の両対応）
-- **対話時**（$ARGUMENTSあり or 直前の私の発言）: それを入力として処理。曖昧で重要な点だけ1問確認し、他は即実行。
-- **無人スケジュール時**（$ARGUMENTSが空 & 会話文脈なし）= "capture-sweep": **デイリーノートが唯一の受け皿**。`Daily/`（今日＋直近数日）の `## 💭 メモ` / `## ✅ タスク` 等に人間が貼ったURLや書いた一行（「『〇〇』読んだ」「後で読む」等）の**未処理分**を入力として処理する。各項目は処理後、その行の直下に `    - → 整理済み [[ノート名]]` を**追記**（行は消さない＝冪等）。`→ 整理済み`/`→ 要約済み` が既に付く項目はスキップ。
-  - ※ これは [[daily-curator|/daily-curator]] §5 と同じ「デイリー→自動要約」を、朝を待たず日中にも回すための軽量版。
-  - （任意）`Inbox/quick-capture.md` やSlack保存メッセージを別口として足してもよいが、**基本はデイリーノートだけでよい**。
-- capture-sweepの開始時に `run_id`、対象Dailyと処理窓、前回のmarker／source位置を固定する。Dailyファイル・行（URLがあればcanonical URL）をsource単位として、`success`、`normal-empty`（対象窓を最後まで確認して未処理項目がない正常な空結果）、`failed`、`unread` を分けて記録する。`success` または確認済みの `normal-empty` だけsource位置を進め、不完全な読み取り・失敗・未読では進めない。
-- 同じ処理窓を再実行するときは、source位置・canonical URL・既存ノート・markerを照合し、同じノート、Dailyリンク、backlog行、通知を二重に作らない。
+## 入力モード
 
-## 1. 意図を分類
-- **読書/視聴の感想**（「『〇〇』読んだ」「あの記事良かった」等）→ `type: reading`
-- **気づき・アイデア・考え**（書名なし）→ `type: note`
-- **URL＋コメント** → [[05_url-knowledge]] の流れ（後で読む/読んだ）
-- **調べて / まとめて / 比較して / 理解しておきたい / 見ておく** → [[09_daily-research-requests]] の流れ。AIが処理できるものは `Inbox/knowledge/` に調査ノート化し、本人アカウントや非公開情報が必要なものは `[!]` として残す。
-- 複数混在ならそれぞれ作る。
+- **対話**: 入力を処理し、結果が変わる重要な不明点だけ1問確認する。
+- **capture-sweep**: 引数・会話文脈が空の無人実行。今日＋直近数日の `Daily/` の `## 💭 メモ` / `## ✅ タスク` などから、人間が書いた未処理行だけを拾う。`→ 整理済み` / `→ 要約済み` がある行は省く。
 
-## 2. ノート作成（自分の層は脚色しない）
-- reading は `templates/reading.md`、note は `templates/note.md` を元に `Inbox/`（読書/知見は `Inbox/knowledge/`）へ新規作成。`<% %>` は実値置換、`tp.file.cursor()` 削除。ファイル名は内容ベースで一意に。
-- テンプレートにある `summary`（1行要約・`"..."` 囲み）と `related`（`"[[ノート名]]"` の配列）を必ず埋める。知見ノートは `templates/knowledge.md`（`type: knowledge`、`depth` は通常 `overview`）を使う。定義は CLAUDE.md「セカンドブレイン拡張フィールド」。
-- **本人が言ったことだけを本人の層**（要点・感想）に書く。言っていないことを足さない。書名/著者が不明で必要なら1問だけ聞く。
-- **図の活用（SVG）**：技術的なURLや記事で処理フロー、比較、architectureを図示した方が分かりやすい場合は、自己完結したSVGを `attachments/` に保存し、本文から埋め込む。Mermaidは新規生成しない。
+sweep開始時に `run_id`、対象Daily、処理window、前回marker/source位置を固定する。sourceごとに `success`、`normal-empty`、`failed`、`unread` を記録し、successまたは確認済みnormal-emptyだけ位置を進める。失敗・不完全読み取り・未読は次回へ残す。同じwindowではcanonical URL、既存ノート、Daily backlink、markerを照合し、二重作成しない。部分失敗を行全体の成功にしない。
 
-## 3. 外部補完 & 基盤化（reading/知見のとき）
-- [[07_reading-enrich]] を適用: `## 🌐 外部コンテキスト（AI補完/要検証）` を `WebSearch`/`WebFetch` で出典付き補完（著者背景・関連概念・対立見解・原典）→ キー概念を概念ノート化し双方向リンク＋[[Concepts-MOC]]追記 → `## 🧠 統合メモ` で自分の言葉×外部×既存ノートを突き合わせFB。
-- 外部補完や調査ノート化で一次情報確認が必要な場合は、`research` スキルを使い、出典付きMarkdownを `Inbox/knowledge/` に残す。
-- ネットワーク制限、外部取得失敗、概念リンクの失敗などが一部でも起きた場合は、その項目を `整理済み` と扱わない。原文ノートを保存できても `→ 要確認` または `→ 保留` と `[!]` backlogに残し、失敗した補完と再開条件を記録する。
-- 複数の入力が混在する行は入力単位ごとに結果を分ける。成功した単位だけに `→ 整理済み` を付け、残りの単位がある行全体を処理済みとは扱わない。部分失敗を行全体の成功や未処理項目の消化として記録しない。
+## 意図を分類
 
-## 4. リンク & ゲート & 保存
-- 今日の `Daily/YYYY-MM-DD.md` の `## 💭 メモ` から作成ノートへリンクを**追記**（無ければ当日Dailyを作成）。アクションがあれば `## ✅ タスク` に `- [ ]`。
-- [[03_guardian]]（リネーム/削除なし・Inbox配下・CLAUDE.md不変）→ [[04_verifier]]（YAML/wikilink/`<% %>`残り）。
-- `→ 整理済み [[ノート名]]` は、必要なノート保存、Daily backlink、依頼された外部補完、Guardian／Verifierがすべて成功した後だけ追記する。どれかが失敗・未読・未確認なら成功markerを付けず、失敗状態と再開条件を残す。
-- `main` にコミットし、`origin/main` へpushする。
+| 入力 | 処理 |
+| --- | --- |
+| 書名・記事名と感想 | `type: reading`（Vaultのreading template） |
+| 書名なしの気づき・アイデア | `type: note`（Vaultのnote template） |
+| URLとコメント | `[[05_url-knowledge]]` のURL導線 |
+| 調べて/まとめて/比較して等 | `[[09_daily-research-requests]]`。可能なら`Inbox/knowledge/`、本人アカウント・非公開情報が必要なら`[!]`で保留 |
 
-## 5. 報告
-- 作ったノート名、補完した外部コンテキストの要点、繋いだ概念、Dailyのリンク先を一言で返す。
+混在入力は単位ごとに分ける。書名や著者が必要だが不明なら1問だけ聞く。
 
-## ⏰ スケジュール設定
-- **主モードは on-demand**（会話・モバイル・Slackでその場で呼ぶ）。定期実行は必須ではない。
-- 定期で「日中の走り書きを溜めずに捌く」なら **capture-sweep** をRoutine化:
-  - prompt: `/capture` ／ repo: `obsidian-vault`
-  - cadence: 日中3時間おき（例 平日 09–21時）。フォーム presetは hourly を選び、`/schedule update` で cron `0 9-21/3 * * 1-5`（最小間隔1h・TZ要確認）。
-  - connectors: 不要（Slack保存メッセージも入れるならSlackのみ）／ network: 外部補完を使うなら **Full**／ model: `gpt-5.5` / service_tier: `priority`
-  - 入力源: **デイリーノート**（`Daily/` 今日＋直近の `## 💭 メモ` 等の未処理項目）。別口の `Inbox/quick-capture.md` は任意。
-- ここに書かれたcadenceやconnector/networkは設定の案内であり、capture-sweepの起動、入力取得、ノート保存、marker更新、完了通知の成功を意味しない。設定・起動・取得・保存・通知を実行記録で分け、部分失敗を次回入力へ戻す。
-- ⚠️ [[daily-curator|/daily-curator]] の朝スイープがデイリー本文・添付・各ソースを拾うため、**capture-sweepは任意**（重複処理は冪等マークで回避）。詳細・各コマンド一覧 → [[SCHEDULES]]
+## ノート作成
+
+読書・note・knowledgeは対応するtemplateを使い、指定がなければ `Inbox/`、知見は `Inbox/knowledge/` に新規作成する。Templaterの `<% %>` を実値へ置換し、`tp.file.cursor()` を残さない。ファイル名は内容に基づき既存と衝突させない。
+
+本人が言った要点・感想だけを本人の層へ書き、AI補完を混ぜない。templateの `summary`（1行・引用符付き）と `related`（`"[[ノート名]]"` 配列）を埋める。knowledgeは `type: knowledge`、`depth: overview` を通常値とし、定義はVaultの拡張fieldを正本にする。
+
+技術URLや記事でflow・比較・architectureを示すと理解が上がる場合だけ、自己完結SVGを `attachments/` に置いて `![[ファイル名]]` で参照する。Mermaidは新規生成しない。
+
+## 外部補完
+
+reading/knowledgeだけ、必要に応じて `[[07_reading-enrich]]` を使い、`## 🌐 外部コンテキスト（AI補完/要検証）` にWebSearch/WebFetchの出典付き情報を置く。著者背景、関連概念、対立見解、原典を本人の感想と分ける。概念ノート化、双方向link、`[[Concepts-MOC]]` 追記は依頼範囲に含まれる場合だけ行う。一次情報確認が必要なら `research` に渡す。
+
+外部取得・概念link・検証の一部が失敗したら、その項目を整理済みとしない。保存できた原文には `→ 要確認` / `→ 保留` と `[!]` backlog、失敗内容、再開条件を残す。
+
+## backlink、marker、gate
+
+作成ノートのlinkを当日 `Daily/YYYY-MM-DD.md` の `## 💭 メモ` に追記する。Dailyがなければ作成し、アクションは `## ✅ タスク` に未完了checkboxで追記する。capture-sweepの元行は削除せず、その直下へ次を追記する。
+
+```text
+    - → 整理済み [[ノート名]]
+```
+
+このmarkerは、必要なノート保存、Daily backlink、依頼された外部補完、`[[03_guardian]]` と `[[04_verifier]]` が全て成功した後だけ付ける。Guardianはリネーム/削除、Inbox外新規、`CLAUDE.md`変更を確認し、VerifierはYAML、wikilink、Templater残りを確認する。失敗・未読・未確認なら成功markerを付けない。
+
+Vault外へ収集物を送らない。commit/pushが現在の依頼またはproject policyに含まれる場合だけ、対象ファイルを分離して実行し、成果物・検証・commit・push・通知を別状態で報告する。
+
+## 報告とschedule
+
+作成ノート、外部補完の要点、概念link、Daily backlink、未処理/失敗と再開条件を短く返す。
+
+主モードはon-demand。capture-sweepを定期化する場合は人間が `[[SCHEDULES]]` の手順で登録する。日中3時間おきなどのcadence、Full network、Slack connector、modelは設定案内であり、起動・取得・保存・marker更新・通知の成功を意味しない。`daily-curator` と入力が重なる場合もmarkerで冪等性を保つ。

@@ -1,162 +1,50 @@
 ---
 name: exploring-codebase
-description: コードベースの構造・パターン・依存関係を、関心事に必要な範囲で調査。独立探索を委譲する利益がある場合だけ利用可能な担当roleを選ぶ。新しいPJの理解、機能追加前の影響範囲調査、アーキテクチャ把握に使用。「コードベースを調べて」「アーキテクチャを理解したい」「影響範囲を調査して」「構造を把握したい」等の依頼に対応。
+description: 関心事に必要な範囲だけ、コードベースの構造・データフロー・依存関係を調査する。新規リポジトリの理解、変更前の影響範囲確認、アーキテクチャ把握に使う。
 ---
 
-# コードベース深堀り探索
+# コードベース探索
 
-まずローカルで対象と未確認点を絞る。独立した探索を委譲する利益がある場合だけ、利用可能な担当roleをruntimeで確認し、必要なものを選んで調査する。人数・同時起動・代替roleは固定しない。担当が利用できない場合は弱いmodelへ暗黙fallbackせず、同等能力の代替を明示的に選ぶか、その観点を未実施として報告する。
+理解することが目的のread-only調査であり、レビューや修正は行わない。まずユーザーの関心事と判断に必要な未知を一つに絞り、必要な観点だけを調べる。
 
-## 既存設定との関係
+## 入力と深さ
 
-- **Phase 0-5（@context/workflow-rules.md）**: Phase 1（調査）の補完。通常の `explorer` 探索より深い多角的調査が必要な場合に使用
-- **メモリディレクトリ（@context/memory-file-formats.md）**: 結果を05_log.mdに記録
-- **codebase-review**: レビュー（品質問題の検出）ではなく、理解（構造の把握）が目的
+- 対象path（未指定ならrepository root）
+- 関心事・keyword（未指定なら入口と主要なflow）
+- 深さ `quick` / `medium` / `thorough`（既定は`medium`）
 
-## 使用場面
+入口と境界を次の順で確認する。README、CONTRIBUTING、spec、ADR、domain glossary、manifest/lockfile/CI、public API・route・schema、core type・state・persistence・外部連携、必要なtest・fixture・history。全ファイルを最初から読み込まず、`rg`やGlobで候補を絞る。設定や自動化では設定ファイルだけでなく、commands/contextなどの正典も確認する。
 
-- 新しいコードベースへのオンボーディング
-- 機能追加・変更前の影響範囲調査
-- 既存アーキテクチャの理解
-- リファクタリング対象の全体像把握
+## 観点の選択
 
-## ワークフロー
+ローカル調査で未確認点を絞った後、独立調査の利益がコストを上回る場合だけ、`../../context/agent-team-routing.md` のDelegation Gateに従って必要な担当を委譲する。人数や並列数は固定しない。Claude Code では `Agent(subagent_type: ...)` で `architecture-explorer`、`data-flow-tracer`、`dependency-mapper`、`learnings-researcher` を利用可能な場合に使う。
 
-### Step 1: 探索対象の特定
+- **Architecture**: module、境界、責務、layer。
+- **Data flow**: 入力から出力、状態、外部副作用まで。
+- **Dependencies**: import、package、runtime・設定依存。
+- **Past learnings**: `MEMORY_DIR`に`memories/`や`solutions/`がある場合だけ、関連する過去知見を検索する。
 
-ユーザーの指示から以下を抽出:
-- **探索対象ディレクトリ**: デフォルトはプロジェクトルート
-- **関心事・キーワード**: 特定の機能、モジュール、技術要素（あれば）
-- **探索の深さ**: quick / medium / thorough（デフォルト: medium）
+委譲時は対象の絶対path、関心事、深さ、返す形式（事実、根拠path:line、未確認点。変更禁止）だけを渡す。利用可能な担当がなければ親sessionで調べるか、未実施と報告する。複数sessionの状態共有が必要な場合だけ`team-run`のTeam Journalを使う。
 
-### Step 2: 必要な探索観点と担当を選ぶ
-
-まずローカルで対象と未確認点を絞る。独立した探索を委譲する利益がある場合だけ、`@context/agent-team-routing.md` のDelegation Gateに従って利用可能な担当roleを選ぶ。人数・同時起動・代替roleは固定しない。担当が利用できない場合は弱いmodelへ暗黙fallbackせず、同等能力の代替を明示的に選ぶか、その観点を未実施として報告する。
-
-各エージェントには以下の情報を渡す:
-- 探索対象ディレクトリのフルパス
-- 関心事・キーワード（あれば）
-- 探索の深さ（thoroughness level）
-- エージェント定義ファイルの内容（調査項目・出力形式）
-
-#### Agent 1: Architecture Explorer
-
-**subagent_type**: `architecture-explorer`（利用可能な場合。不可なら弱いmodelへ暗黙fallbackせず、同等能力の代替を明示的に選ぶか担当を省略する）
-
-**プロンプトテンプレート**:
-```
-以下のコードベースのアーキテクチャを探索・分析してください。
-
-探索対象: {target_dir}
-関心事: {keywords}（なければ全体像把握）
-深さ: {depth}
-
-`architecture-explorer` の調査項目・出力形式に従って調査してください。
-```
-
-#### Agent 2: Data Flow Tracer
-
-**subagent_type**: `data-flow-tracer`（利用可能な場合。不可なら弱いmodelへ暗黙fallbackせず、同等能力の代替を明示的に選ぶか担当を省略する）
-
-**プロンプトテンプレート**:
-```
-以下のコードベースのデータフローを追跡・分析してください。
-
-探索対象: {target_dir}
-関心事: {keywords}（なければ主要フローを追跡）
-深さ: {depth}
-
-`data-flow-tracer` の調査項目・出力形式に従って調査してください。
-```
-
-#### Agent 3: Dependency Mapper
-
-**subagent_type**: `dependency-mapper`（利用可能な場合。不可なら弱いmodelへ暗黙fallbackせず、同等能力の代替を明示的に選ぶか担当を省略する）
-
-**プロンプトテンプレート**:
-```
-以下のコードベースの依存関係を分析・マッピングしてください。
-
-探索対象: {target_dir}
-関心事: {keywords}（なければ全体の依存関係を分析）
-深さ: {depth}
-
-`dependency-mapper` の調査項目・出力形式に従って調査してください。
-```
-
-#### Agent 4: Learnings Researcher（過去知見検索）
-
-**subagent_type**: `learnings-researcher`（利用可能な場合。不可なら弱いmodelへ暗黙fallbackせず、親sessionの検索を明示的に選ぶか未実施として報告する）
-
-**プロンプトテンプレート**:
-```
-以下の調査対象に関連する過去の知見・解決策を検索してください。
-
-探索対象: {target_dir}
-関心事: {keywords}
-
-`learnings-researcher` の検索戦略に従って、
-memories/、solutions/、issues/ を横断検索してください。
-MEMORY_DIRはPJ CLAUDE.mdで定義（未定義なら .local/）。
-```
-
-**スキップ条件**: MEMORY_DIRにmemories/やsolutions/が存在しない場合（新規PJ等）
-
-### Step 3: 結果の統合
-
-実際に調べた観点の結果を以下の形式で統合。未調査の観点を調査済みとして埋めない:
+## 出力
 
 ```markdown
 # コードベース探索結果
 
 ## サマリー
-[1-3行で全体像。技術スタック、主要な構成パターン、特筆すべき特徴]
+<確認できた全体像を1〜3行>
 
-## Architecture
-[Architecture観点で確認できた事実と根拠。未調査ならその旨を記載]
-
-## Data Flow
-[Data Flow観点で確認できた事実と根拠。未調査ならその旨を記載]
-
-## Dependencies
-[Dependencies観点で確認できた事実と根拠。未調査ならその旨を記載]
-
-## Past Learnings
-[Agent 4の結果。過去の関連知見・解決策・落とし穴。該当なしの場合は「関連する過去知見なし」]
+## 調べた観点
+### Architecture / Data Flow / Dependencies / Past Learnings
+<実際に調べた観点だけ。各事実にpath:lineまたはsymbolの根拠>
 
 ## 注目ポイント
-- [実際に調査した観点を横断して、判断に影響する発見を箇条書き]
+- <依頼の判断に影響する発見>
 
-## 追加調査が必要な箇所
-- [深堀りすべき箇所があれば記載]
+## 未確認・追加調査
+- <残るunknownと、解消に必要な証拠>
 ```
 
-### Step 4: 記録と報告
+未調査の章を推測で埋めない。一般論よりschema、resolver、設定、実際のcall siteを優先し、想定と実装の差は事実として記録する。
 
-1. **メモリディレクトリが存在する場合**: 統合結果を05_log.mdに追記
-2. **ユーザーへの報告**: サマリーと注目ポイントを中心に簡潔に報告
-3. **詳細が必要な場合**: 各セクションの深堀りを提案
-
-## 探索の深さガイド
-
-| 深さ | explorer thoroughness | 所要時間目安 | 用途 |
-|------|---------------------|-------------|------|
-| quick | quick | 短い | 技術スタックとディレクトリ構成の概要把握 |
-| medium | medium | 中程度 | 標準的なコードベース理解 |
-| thorough | very thorough | 長い | 詳細なアーキテクチャ分析、移行前の徹底調査 |
-
-## 部分探索モード
-
-特定のモジュール・機能に絞って探索する場合:
-- 探索対象ディレクトリを絞る（例: `src/auth/`）
-- 関心事を具体的に指定（例: 「認証フロー」「決済処理」）
-- 必要なエージェントのみ起動してもよい（例: データフローのみ）
-
-## Agent Teams連携
-
-`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` が有効で、かつ委譲の利益がある場合だけ、`~/.claude/agents/` の定義から利用可能なroleをTeamメンバーとして選択する。大規模コードベースでも全員起動を既定にせず、必要なroleだけ並列探索する。
-
-## 既存設定への参照
-
-- @context/workflow-rules.md（Phase 1との連携）
-- @context/memory-file-formats.md（05_log.mdへの記録）
+メモリディレクトリがプロジェクト規則で定義され、記録が必要なtaskなら統合結果を`05_log.md`へ追記する。通常の一回限りの探索では不要なartifactや全体計画を作らない。

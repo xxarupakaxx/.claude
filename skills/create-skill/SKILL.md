@@ -1,172 +1,39 @@
 ---
 name: create-skill
-description: 既存設定と完全に整合したスキルを自動作成。~/.claude/CLAUDE.md、context/*.md、既存スキルを自動参照し、重複・競合を避けたスキルを生成。使用タイミング: (1) 新しいスキルを作りたい場合、(2) /create-skill --user または --project 実行時。「スキルを追加して」「新しいスキルを作って」「SKILLを作成したい」等の依頼に対応。SKILL.md（YAML frontmatter付き）を生成。
+description: 新しいSkillの作成や、既存Skillの説明・構成・起動条件の整理を依頼されたときに使う。
 allowed-tools: Read, Write, Glob, Grep
 ---
 
-# Create Skill
+# Skillを作成・整理する
 
-既存のuser-level/project-level設定と整合性が取れたスキルを自動作成する。
+`/create-skill [--user|--project] <内容>`で使う。既定はuser scope。既存Skillの改訂では、そのSkillの配置と名前を維持する。
 
-## 使い方
+## 必要性と範囲を決める
 
-```
-/create-skill <内容>                 # user scope（デフォルト）
-/create-skill --user <内容>          # user scope（明示）
-/create-skill --project <内容>       # project scope
-```
+現在の依頼と近いCLAUDE.mdを確認し、必要な正本だけを読む。関連する既存Skillのname・descriptionを検索して重複を確かめる。`context/*.md`、`rules/*.md`、全Skill本文の一括読込は行わない。
 
-## ワークフロー
+繰り返し使う固有の知識・手順・scriptがあればSkillにする。一回限りならtask promptで足りる。CLAUDE.mdには毎回必要な不変条件と条件付き参照だけを置く。Skillを追加すること自体を目的にしない。
 
-### Step 1: 引数パース
+第三者Skillの導入・更新・廃止は`skill-governance`へ戻る。未使用の証拠なしに削除せず、既存の依頼範囲を超えて有効・無効設定を変えない。
 
-```
-入力: /create-skill --project 大規模タスク分割ワークフロー
-→ scope: project
-→ 内容: 大規模タスク分割ワークフロー
-```
+## 起動条件を短く書く
 
-### Step 2: 既存設定の読み込み（必須）
+descriptionは「何をするか」と「いつ使うか」が分かる短い文にする。同義語、利用場面の長い列挙、性能の宣伝、広すぎる必須トリガーを入れない。
 
-**常に読み込む:**
-- `~/.claude/CLAUDE.md` - user-level設定
-- `~/.claude/context/*.md` - 特に以下が重要:
-  - `claude-customization-guide.md` - Skills/Commands/CLAUDE.mdの使い分け
-  - `workflow-rules.md` - Phase 0-5ワークフロー
-  - `memory-file-formats.md` - メモリディレクトリ構造
+例: `データベースのschema移行を作成・検証する。migration変更時に使う。`
 
-**--project時に追加で読み込む:**
-- `./CLAUDE.md` - project-level設定
-- `./context/*.md` - project-level参照ファイル
+データベース全般への言及だけでmigration Skillを起動するような説明は避ける。関連するが対象外の依頼でも選ばれないか確認する。
 
-**既存スキルの確認:**
-- `~/.claude/skills/*/SKILL.md` のfrontmatter（name, description）を取得
-- 重複・競合がないか確認
+## 本文は必要な分岐への入口にする
 
-### Step 3: Skill vs Command vs CLAUDE.md 判定
+SKILL.mdには目的、選択条件、固有の判断、重要な制約、参照先を残す。複数workflowがあれば「この場合はこの参照を読む」と分け、例・テンプレート・長い手順を`references/`へ置く。単純なSkillは一つの短い本文でよい。
 
-@context/claude-customization-guide.md に従い判定:
+共通のPhase・承認・test手順を複製せず、正本へ参照を置く。モデル名だけを理由に固定の読込順、全test、全員reviewを要求しない。完了条件と必要な証拠を示し、実装方法は現行projectに合わせる。
 
-| 選択 | 条件 |
-|------|------|
-| **Skill** | 自動トリガー、ドメイン知識、スクリプト同梱 |
-| **Command** | ユーザー制御、引数必須、ショートカット |
-| **CLAUDE.md追記** | 常時適用ルール、60行以下に収まる |
+新規作成時のfrontmatterと配置例は[Skillテンプレート](references/skill-template.md)を読む。既存Skillの局所修正では必要な項目だけ参照する。
 
-### Step 4: 整合性チェック
+## 完了を確認する
 
-1. **ワークフローとの整合**: Phase 0-5、4ステップ構造との関係
-2. **ディレクトリ構造**: MEMORY_DIR、memory/、tasks/等との整合
-3. **既存スキルとの重複**: 同じ機能を持つスキルがないか
-4. **スコープ判定**: user vs project（@context/claude-customization-guide.md参照）
+frontmatter、参照先、起動すべき依頼と起動すべきでない依頼を確認する。scriptを変更した場合は、その変更に対応する検証を行う。変更したSkillを全文で読み、本文と参照先の矛盾、共通指示の重複を解消する。
 
-問題があればAskUserQuestionで確認。
-
-### Step 5: スキル設計
-
-**設計原則:**
-参照: https://docs.anthropic.com/docs/en/agents-and-tools/agent-skills/best-practices
-
-**命名規則（CRITICAL）:**
-- **gerund形式**（verb + -ing）を使用
-- Good: `implementing-kysely`, `processing-pdfs`, `reviewing-prs`, `managing-databases`
-- Bad: ~~`kysely`~~, ~~`pdf`~~, ~~`pr-review`~~, ~~`database`~~
-- 小文字・数字・ハイフンのみ（64文字以下）
-
-**description（CRITICAL）:**
-- **3人称**で記述（"I can..." や "You can..." は避ける）
-- 「**何をするか**」+「**いつ使うか**」を含める
-- 最大1024文字
-- XMLタグ（`<` や `>`）は含めない
-- ユーザーが言うかもしれない**具体的なタスク・フレーズ**を含める
-- 関連する場合は**ファイルタイプ**に言及する
-
-**description例:**
-```yaml
-# Good（3人称 + What + When + 具体的タスク）
-description: Reviews pull requests for code quality and security. Use when PR number or branch is specified, or when review is requested. "PRをレビューして" "コードレビューお願い" 等の依頼に対応。
-
-# Bad（1人称、Whenがない、具体的タスクなし）
-description: I can review PRs.
-```
-
-**段階的開示（Progressive Disclosure）— CRITICAL:**
-- SKILL.mdは**200行以下を推奨**（最大500行）
-- SKILL.mdに残すもの: トリガー条件、判断ツリー、実行フロー骨格、CRITICALルール
-- references/に移動するもの: コード例、テンプレート、詳細手順、リファレンス資料
-- SKILL.mdからは `Read references/xxx.md` で参照指示を記載
-- 参照は**1階層のみ**（references/内で更にファイル参照しない）
-- 既存設定を`@context/xxx.md`形式で参照（重複記載しない）
-
-### Step 6: スキル作成
-
-**配置先:**
-- `--user`: `~/.claude/skills/<skill-name>/`
-- `--project`: `./.claude/skills/<skill-name>/`
-
-**構造（Progressive Disclosure）:**
-```
-<skill-name>/
-├── SKILL.md              # Level 2: トリガー時ロード（500行以下）
-└── references/           # Level 3: 必要時のみロード
-    └── detail.md
-```
-
-### Step 7: 確認
-
-作成後、以下を報告:
-- 作成したファイル一覧
-- 既存設定との関係
-- 使い方の例
-
-## SKILL.md テンプレート
-
-```yaml
----
-name: <skill-name>
-description: <何をするか>。<いつ使うか>。使用タイミング: (1) xxx、(2) yyy。
----
-
-# <Skill Name>
-
-[1-2文で概要]
-
-## 既存設定との関係
-
-- **Phase 0-5（@context/workflow-rules.md）**: [補完/拡張/独立]
-- **メモリディレクトリ（@context/memory-file-formats.md）**: [既存構造を使用/拡張]
-
-## ワークフロー
-
-[具体的な手順]
-
-## 既存設定への参照
-
-- @context/workflow-rules.md
-- @context/memory-file-formats.md
-```
-
-## 禁止事項
-
-- 既存設定との整合性確認なしでスキル作成
-- 既存スキルと重複する機能の作成
-- **名詞形のスキル名**（`kysely`ではなく`implementing-kysely`）
-- **1人称のdescription**（"I can..."、"You can..."）
-- SKILL.mdに200行以上記載（references/に分離せずに）
-- references/内で更にファイル参照（1階層まで）
-- descriptionに「いつ使うか」がない
-
-## チェックリスト
-
-- [ ] ~/.claude/CLAUDE.md を読んだか
-- [ ] ~/.claude/context/claude-customization-guide.md を確認したか
-- [ ] 既存スキル一覧を確認したか
-- [ ] Skill/Command/CLAUDE.md追記の判定をしたか
-- [ ] **スキル名がgerund形式か**（implementing-xxx, processing-xxx）
-- [ ] **descriptionは3人称か**（"I can..."は不可）
-- [ ] descriptionに「何を」「いつ」が含まれるか
-- [ ] descriptionにXMLタグ（`<` `>`）が含まれていないか
-- [ ] descriptionにユーザーが言いそうな具体的タスク・フレーズが含まれるか
-- [ ] 関連する場合、descriptionにファイルタイプが言及されているか
-- [ ] SKILL.mdは200行以下か（超える場合references/に分離したか）
-- [ ] @context/xxx.md 形式で参照を記載したか
+変更したファイル、使い方、実施した確認を報告する。短さだけで必要な制約や例外を落とさない。

@@ -1,7 +1,7 @@
 ---
 name: review-animations
-description: Emil Kowalskiのデザインエンジニアリング思想に基づく高い品質基準で、アニメーションとモーションのコードをレビューする。既定では問題を指摘し、基準を満たした場合にのみ承認する。
 disable-model-invocation: true
+description: ユーザーがアニメーションまたは motion のコードレビューを明示したとき、Emil Kowalski 系の目的・感触・中断可能性・性能・a11y基準で確認する。実装や motion 以外のレビューには使わない。
 ---
 
 # アニメーションのレビュー
@@ -39,17 +39,17 @@ diff内のすべてのアニメーションを、次の基準で評価する。
 
 1. **目的のあるモーション。** すべてのアニメーションは「なぜ動かすのか」に答えられなければならない。目的は、空間的な一貫性、状態の表示、フィードバック、説明、唐突な変化の防止のいずれかである。頻繁に表示される要素を「格好よく見せる」ためだけのアニメーションはBlockとする。
 
-2. **頻度に適したモーション。** 表示頻度に合わせる。キーボード起点の操作と1日100回以上行う操作にはアニメーションを付けない。1日数十回ならモーションを減らす。ときどき使う操作には標準的なアニメーションを適用できる。まれな操作や初回体験には楽しさを加えてよい。
+2. **頻度に適したモーション。** 表示頻度に合わせる。キーボード起点や反復頻度の高い操作は、待ち時間を生むアニメーションを付けない。1日数十回ならモーションを減らす。ときどき使う操作には標準的なアニメーションを適用でき、まれな操作や初回体験には目的に沿った楽しさを加えてよい。
 
 3. **反応のよいイージング。** 登場または退場する要素には`ease-out`か強いカスタム曲線を使う。UIでの`ease-in`はBlockとする。ユーザーが最も注視する瞬間を遅らせるためである。CSS組み込みのイージングは弱すぎるため、カスタムのcubic-bezierを求める。
 
-4. **300ms未満のUI。** UIアニメーションは300ms未満に収める。UI要素でこれより遅いものは、理由がなければ指摘事項とする。要素別の時間上限は[STANDARDS.md](STANDARDS.md)に記載している。
+4. **短いUI応答。** press、tooltip、dropdownなどの反復UIは300ms未満を起点にする。modal、drawer、説明的な motion が長い場合は、内容、入力、実測した理由があるか確認する。要素別の時間上限は[STANDARDS.md](STANDARDS.md)に記載している。
 
 5. **起点と物理的な自然さ。** popover、dropdown、tooltipは中央ではなくトリガーを起点に拡大するよう`transform-origin`を設定する。`scale(0)`からアニメーションしてはならない。`scale(0.9–0.97)`と`opacity`から始める。Modalは例外であり、中央を維持する。
 
 6. **中断可能性。** toast、toggle、dragのように短時間で繰り返し発火するモーションやジェスチャー駆動のモーションは、中断可能でなければならない。ゼロから再開するkeyframesではなく、現在の状態から対象を変更できるCSS transitionsまたはspringsを使う。
 
-7. **GPUで処理できるプロパティのみ。** アニメーションの対象は`transform`と`opacity`だけにする。`width`、`height`、`margin`、`padding`、`top`、`left`、または高負荷時のFramer Motionの`x`、`y`、`scale`短縮記法は、パフォーマンス上の指摘事項とする。
+7. **描画コストを説明できるプロパティ。** まず`transform`と`opacity`を使う。`width`、`height`、`margin`、`padding`、`top`、`left`、`clip-path`、または library の短縮記法を使う場合は、layout / paint / scheduler の実コスト、代替、許容理由を確認する。一律に「GPU」と断定しない。
 
 8. **アクセシビリティ。** `prefers-reduced-motion`を尊重する。ゼロにするのではなく穏やかにし、`opacity`と色は残して移動をなくす。hoverアニメーションは`@media (hover: hover) and (pointer: fine)`で制限する。
 
@@ -68,8 +68,8 @@ diff内のすべてのアニメーションを、次の基準で評価する。
 - 理由が明記されていない300ms超のUIアニメーション
 - トリガーに結び付いたpopover、dropdown、tooltipでの`transform-origin: center`
 - toast、toggle、短時間で追加または発火する要素でのkeyframes
-- layoutプロパティ（`width`、`height`、`margin`、`padding`、`top`、`left`）のアニメーション
-- ページが高負荷のときも動くモーションでのFramer Motionの`x`、`y`、`scale` props
+- layoutプロパティ（`width`、`height`、`margin`、`padding`、`top`、`left`）を、測定や理由なしにアニメーションしている
+- ページが高負荷のときも動く motion の property / scheduler を、traceなしに安全と断定している
 - 親要素のCSS変数を更新して子要素のtransformを駆動する実装（styleの再計算が多発する）
 - 移動を伴うモーションに`prefers-reduced-motion`対応がない
 - 制限されていない`:hover`モーション
@@ -120,7 +120,7 @@ diff内のすべてのアニメーションを、次の基準で評価する。
 
 最後に、次のどちらかを明記する。
 
-- **Block**：感触を損なうリグレッション、keyboard操作または高頻度の操作に対するアニメーション、UIでの`scale(0)`または`ease-in`、GPUで処理できる実装へ容易に変更できる非GPUアニメーションが一つでもある。
+- **Block**：感触を損なうリグレッション、keyboard操作または高頻度の操作を遅らせるアニメーション、UIでの`scale(0)`または目的のない`ease-in`、重大な性能・a11y欠落が一つでもある。単に別 property だからという理由だけで Block にしない。
 - **Approve**：感触を損なうリグレッションがなく、削除すべき明らかなモーションもなく、時間とイージングが基準内であり、必要な箇所で中断可能性が確保され、reduced-motionが尊重されている。
 
 具体的に書き、`file:line`を示す。

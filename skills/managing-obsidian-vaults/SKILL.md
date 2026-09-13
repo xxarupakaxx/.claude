@@ -1,70 +1,39 @@
 ---
 name: managing-obsidian-vaults
-description: wikilink とインデックスノートを使って Obsidian Vault のノートを検索、作成、管理する。ユーザーが Obsidian のノートを探す、作る、整理する場合に使用する。
+description: wikilink とインデックスノートを使って Obsidian Vault のノートを検索・作成・整理する依頼に使う。Vault の場所やローカル運用規則を確認してから操作する。
 ---
 
 # Obsidian Vault を管理する
 
-## Vault の場所
+## Vault とルールを確定する
 
-作業を始める前に、次の順で Vault の絶対パスを決める。
+絶対パスは次の優先順で決める。
 
-1. ユーザーが指定したパス。
-2. 環境変数 `OBSIDIAN_VAULT_PATH`。
-3. 現在の作業ディレクトリまたは親ディレクトリに `.obsidian/` がある場所。
-4. この環境の既定値 `/Users/yoshiki/Notes/Vault`。
+1. ユーザー指定
+2. `OBSIDIAN_VAULT_PATH`
+3. 現在の作業ディレクトリまたは親にある `.obsidian/`
+4. `/Users/yoshiki/Notes/Vault`
 
-見つからなければ推測で書き込まず、ユーザーへ Vault の場所を確認する。
-以降の例では、確定した絶対パスを `VAULT` に入れて使う。
+見つからなければ書き込まず、場所を確認する。確定後は `VAULT` に入れる。Vault 内の `CLAUDE.md`、`CLAUDE.md`、同等の運用規則を先に読み、ファイル名、配置、追記、添付、削除の規則を優先する。
 
-たとえば `VAULT="${OBSIDIAN_VAULT_PATH:-/Users/yoshiki/Notes/Vault}"` と設定する。
+既存ノート、インデックス、wikilink を調べ、同じ役割のノートを重複作成しない。ファイル名を変えず、削除せず、既存本文は原則追記に留める。画像は `attachments/` に置き、本文では `![[ファイル名]]` で参照する。
 
-Vault 内に `AGENTS.md`、`CLAUDE.md`、または同等の運用規則があれば先に読む。
-ファイル名、配置先、追記、削除、添付ファイルに関するローカル規則は、このスキルの一般例より優先する。
-
-## 命名規則
-
-- **インデックスノート**：Vault の既存規則が採用している場合に、関連トピックを集約する。
-- ファイル名とフォルダ構成は Vault の既存規則に合わせる。
-- 既存ノート、インデックス、wikilink を先に調べ、同じ役割のノートを重複して作らない。
-
-## リンク
-
-- Obsidian の `[[wikilinks]]` 構文を使う：`[[Note Title]]`
-- ノートの末尾から、依存するノートや関連ノートへリンクする。
-- インデックスノートは `[[wikilinks]]` の一覧だけで構成する。
-
-## ワークフロー
-
-### ノートを検索する
+## 検索
 
 ```bash
-# Search by filename
-find "$VAULT" -name "*.md" | grep -i "keyword"
-
-# Search by content
-grep -rl "keyword" "$VAULT" --include="*.md"
+rg --files "$VAULT" -g '*.md' | rg -i 'keyword'
+rg -l -i 'keyword' "$VAULT" -g '*.md'
+rg -l '\[\[Note Title\]\]' "$VAULT" -g '*.md'
+rg --files "$VAULT" -g '*Index*'
 ```
 
-または、Vault のパスに対して Grep や Glob ツールを直接使う。
+ファイル名の既存規則とフォルダ構成を確認し、必要な範囲だけ読む。
 
-### 新しいノートを作成する
+## 新規ノートとリンク
 
-1. Vault のファイル名と frontmatter の規則を使う。
-2. Vault のルールに従って内容を書く。
-3. ノートの末尾に関連ノートへの `[[wikilinks]]` を追加する。
-4. 番号付きの連続ノートの一部であれば、階層的な番号体系を使う。
+- 既存の frontmatter とファイル名規則に従う。
+- ノート末尾に内容上の関連ノートを `[[Note Title]]` で追記する。
+- インデックスノートを作る場合は、既存規則が採用しているときだけ関連ノートの wikilink 一覧にする。
+- 番号付き連続ノートは既存の番号体系を守る。
 
-### 関連ノートを探す
-
-Vault 全体から `[[Note Title]]` を検索してバックリンクを見つける。
-
-```bash
-grep -rl "\\[\\[Note Title\\]\\]" "$VAULT"
-```
-
-### インデックスノートを探す
-
-```bash
-find "$VAULT" -name "*Index*"
-```
+書き込み後はリンク先の存在、添付参照、frontmatter、変更対象を確認する。`Codex-note/` と `Claude-note/` は明示依頼がない限り触らない。

@@ -27,7 +27,7 @@ code sketch は proposal ではなく、制約を手触りのあるものにす�
 
 3 体以上の sub-agent を parallel に起動します。
 Claude Code では Agent tool を使います。
-Codex では `multi_agent_v1.spawn_agent` または現在利用できる agent orchestration を使い、互いに独立した planner または architecture reviewer 相当の role を起動します。
+Codex では `multi_agent_v1.Agent` または現在利用できる agent orchestration を使い、互いに独立した planner または architecture reviewer 相当の role を起動します。
 それぞれが、deepened module に対して **根本的に異なる** interface を出す必要があります。
 
 各 sub-agent には、別々の technical brief を渡します。

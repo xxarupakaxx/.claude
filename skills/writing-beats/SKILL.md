@@ -1,6 +1,6 @@
 ---
 name: writing-beats
-description: 文章の exploit を行い、各用語を使う前に理解の土台を作りながら、素材を beat の journey に組み立てる。
+description: 固定した素材をbeatごとのjourneyへ組み立て、選択した一つのbeatだけを書く長文執筆セッション。素材から記事の導線を選ぶとき、または `/writing-beats` と明示されたときに使う。
 disable-model-invocation: true
 ---
 

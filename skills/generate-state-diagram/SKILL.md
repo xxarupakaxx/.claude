@@ -1,6 +1,6 @@
 ---
 name: generate-state-diagram
-description: ブランチや既存systemから、trigger、guard、状態変化、side effect、failure、recovery、source根拠まで追跡できるSVG状態図・処理フロー図を生成する。「状態図生成」「処理フロー図」「全体像だけでなく詳細も知りたい」等の依頼に使う。必要時だけdesktop向け自己完結HTMLも作る。
+description: 既存branchやsystemからtrigger・guard・state変化・side effect・failure/recovery・source根拠を抽出し、SVG状態図と詳細ledgerを作る。状態図・処理フロー・domain modelの明示依頼で使い、静的SVGが正本になる。
 triggers:
   - "状態図生成"
   - "state diagram"
@@ -12,163 +12,83 @@ invocation: user
 allowed-tools: Read, Bash, Glob, Grep, Write
 ---
 
-# ブランチ状態図と処理フロー図の生成
+# ブランチ状態図・処理フロー図
 
-## 出力契約
+新しい図はSVGを正本とし、詳細をMarkdown ledgerへ置く。標準成果物は `91_state_diagram.svg` と `91_state_diagram.md`。Markdownから `![状態図](91_state_diagram.svg)` で参照する。PNG、PDF、mobile/print版、Mermaidは作らない。HTMLはユーザーが求めた場合、または図とledgerを同じ画面で読む必要がある場合だけ追加する。
 
-新しく生成する図はSVGを正本とし、Mermaidを生成しない。
+## 使う範囲
 
-標準成果物は次の2ファイルとする。
+Phase 5の完了報告、またはユーザーの明示依頼で、workflow、batch、state管理、外部連携、domain model、画面遷移を説明するときに使う。style・文言・テストだけ、設定/文書だけ、状態遷移のない単一関数変更なら省略できる。
 
-- `91_state_diagram.svg`：図の正本。
-- `91_state_diagram.md`：詳細ledger、用語、source map、SVG参照を含む読解の正本。
+## 調査
 
-Markdownでは `![状態図](91_state_diagram.svg)` のようにSVGを参照する。
-`91_state_diagram.html` は、ユーザーがHTMLまたはbrowser表示を求めた場合、あるいは図と詳細ledgerを同じ画面で読む必要がある場合だけ作る。HTML内の図は `<svg>` を直接埋め込み、外部描画libraryや実行時変換へ依存しない。
-
-PDF、PNG、mobile版、印刷版は標準成果物に含めない。明示依頼がある場合だけ別gateで作る。
-
-## 品質基準
-
-図は、domain知識のない新人が「何が起点で、どの条件で分岐し、何を変更し、失敗時に何が残り、どう復旧し、どのsourceを読めば確認できるか」を判断できる内容にする。
-
-- 読み手が達成したい目的から始める。
-- overviewは詳細への索引として使い、説明の代わりにしない。
-- 同じ情報を複数の図へ重複させない。
-- 図中の用語は用語集と一致させる。
-- WHATだけでなく、trigger、guard、effect、WHYを示す。
-- 正常系と失敗系を区別する。
-- 新規追加と既存機能を区別する。
-- sourceで確認できない関係は推測で埋めず、`未確認` と理由を示す。
-- 「処理する」「連携する」「更新する」だけのnodeやedgeを作らない。主体、対象、条件、結果を具体化する。
-
-## 実行タイミング
-
-- Phase 5の完了報告で、ワークフロー、バッチ処理、状態管理、外部連携を含む変更に使う。
-- ユーザーが明示的に呼び出した場合に使う。
-
-次の場合は省略できる。
-
-- UIのスタイルや文言だけの変更。
-- テストだけの変更。
-- 設定または文書だけの変更。
-- 状態遷移を伴わない単一関数の修正。
-
-## 手順
-
-### 1. sourceと問いを固定する
+まず問いを1〜3件に絞り、対象branchと差分を確認する。
 
 ```bash
 git diff <BASE_BRANCH>...HEAD --stat
 git log <BASE_BRANCH>..HEAD --oneline
 ```
 
-branch差分だけでなく、caller、callee、data model、test、設定、運用入口まで読む。読者が図を見て答えたい問いを1〜3件に絞る。
+差分だけで完結させず、caller/callee、data model、test、設定、運用入口を必要な範囲で読む。描画前にevidence inventoryを作り、確認できない関係は `未確認` とする。
 
-### 2. evidence inventoryを作る
+| 対象 | 記録する情報 |
+| --- | --- |
+| actor/component | 責務、input/output、owned state、source anchor |
+| state | 意味、invariant、保存先、開始/終了条件 |
+| transition | trigger、guard、before/after、effect、side effect、failure/recovery、source anchor |
+| data/interface | field/payload、producer/consumer、validation、永続化 |
+| external boundary | 呼出先、timeout、retry、idempotency、partial failure |
 
-描画前に、次をcompactな作業表へ抽出する。該当しないfieldは `N/A`、sourceで確認できないものは `未確認` とする。
+anchorは `path:line`、symbol、test名などへ戻せる形にする。`処理する` のような主体・対象・結果のないnode/edgeを作らない。
 
-| 対象 | 必須情報 |
-|---|---|
-| actor / component | 責務、入力、出力、所有するstate、source anchor |
-| state | 意味、invariant、保存場所、開始条件、終了条件 |
-| transition | trigger、guard、before、after、effect、side effect、failure、recovery、source anchor |
-| data / interface | fieldまたはpayload、producer、consumer、validation、永続化 |
-| external boundary | 呼び出し先、timeout、retry、idempotency、partial failure |
+## 図の選択
 
-source anchorは可能な限り `path:line`、symbol、test名で示す。抽出表に根拠がないedgeは描かない。
+core diagramを一つ置き、同じ関係を複数図へ重複させない。問いに必要な面だけ選ぶ。
 
-### 3. 図の構成を決める
+| 問い | 図の形式 |
+| --- | --- |
+| 入口から主要state、分岐、終了、失敗、復旧 | core flow |
+| status/run/job/retryの遷移 | state diagram |
+| DB/API/file/queue間のpayload | data flow |
+| entity/aggregate/related table | domain model |
+| 画面とユーザー操作 | UI flow |
+| system間の厳密な時系列 | 左から右のsequence風SVG |
 
-標準は、一つのcore diagramと詳細ledgerである。図面数を増やして情報量を水増ししない。追加面は、core diagramとledgerでは別の読者の問いに答えられない場合だけ作る。
+時間変化を再生する図は `generate-state-diagram-3d` へ渡し、静的core diagramは残す。状態図だけで別の問いに答えられないときだけ `diagram-design` の契約で補助SVGを作る。
 
-| 順序 | 図 | 使用条件 | SVG表現 |
-|---|---|---|---|
-| 1 | core flow | 常時 | 入口、主要state、分岐、終了、失敗と復旧 |
-| 2 | 状態遷移 | status、run、job、retry、失敗状態がある | 状態node、開始と終了、条件付きedge |
-| 3 | データフロー | DB、API、file、queue間でデータが動く | system group、data store、label付きedge |
-| 4 | ドメインモデル | entity、aggregate、関連tableがある | entity card、cardinality付きedge |
-| 5 | UI操作フロー | ユーザー操作や画面遷移がある | UI node、action、保存、再表示のedge |
+## SVG契約
 
-複数system間の厳密な時系列が必要な場合は、左から右へ進むsequence形式のSVGを使う。
-時間的な推移を再生する必要がある場合は `generate-state-diagram-3d` を使い、静的core diagramはSVGのまま維持する。
+SVG rootに `xmlns`、明示的な `viewBox`、`role="img"`、空でない `<title>` / `<desc>` を付ける。node/edge/labelをclassまたは `data-*` で識別し、edgeには `trigger [guard] / effect` と根拠を短く示す。矢印はmarker、文字列と属性はXML escape、system fontと埋め込みCSSだけを使う。
 
-### 4. SVGを生成する
+外部script、font、image、network、`foreignObject`、event handler属性、HTMLでの実行時diagram変換を埋め込まない。色だけで意味を伝えず、過密なら複数SVGへ分けてMarkdown/HTMLから全て参照する。
 
-SVGには次を含める。
-
-- `xmlns="http://www.w3.org/2000/svg"` と明示的な `viewBox`。
-- `role="img"`、`<title>`、`<desc>`。
-- 矢印用の `<marker>` と、意味が読めるedge label。
-- edge labelには、可能な範囲で `trigger [guard] / effect` を短く示す。
-- node、edge、labelを識別できるclassまたは `data-*` 属性。
-- 背景に依存しない十分なcontrast。
-- 拡大時にも文字と線が崩れないvector要素。
-
-外部script、外部font、外部画像、`foreignObject`、event handler属性を埋め込まない。
-文字列と属性値をXMLとしてescapeする。
-図と同じ関係をMarkdownの遷移ledgerでも残す。SVGだけで詳細を完結させようとして文字を詰め込まない。
-
-複数面が必要な場合は、一つのSVG内で `<g aria-label="...">` ごとに分ける。
-一枚が過密になる場合は `91_state_diagram_2.svg` のように分割し、MarkdownとHTMLからすべて参照する。
-
-### 5. 詳細ledgerを書く
+## ledger
 
 `91_state_diagram.md` に次を記録する。
 
-- system概要と対象branch。
-- 各SVGへの参照。
-- actor / componentの責務と入出力。
-- 状態の意味、invariant、保存場所。
-- 全遷移のtrigger、guard、before / after、effect、side effect、source anchor。
-- failure / recovery matrix。失敗時の残存物、retry可否、idempotency、手動復旧を含む。
-- data / interface contract。producer、consumer、validation、永続化を含む。
-- 用語集。
-- 変更fileまたは主要sourceの論理groupと役割。
-- business ruleと、そのruleが必要な理由。
-- 読者への含意。監視点、変更時の注意、最初に読むsourceを具体化する。
-- 省略した図と理由。
+- system概要、対象branch、SVG参照、用語集
+- actor/componentの責務と入出力、stateの意味・invariant・保存先
+- 全transitionのtrigger、guard、before/after、effect、side effect、source anchor
+- failure/recovery（残存物、retry可否、idempotency、手動復旧）
+- data/interface（producer、consumer、validation、永続化）
+- 変更fileの論理group、business ruleと理由、監視点・変更時の注意、最初に読むsource/test
+- 省略した図と理由、未確認事項
 
-単なる見出し一覧や図の言い換えにしない。重要な項目には具体例または代表caseを一つ以上付け、境界条件がある場合は反例も示す。
+図の言い換えだけにせず、境界条件、代表case、確認できない部分を分けて書く。preview/dry-run、DB mutation、external sync、verificationなど複数modeがあるときは、mode別traceに分け、内部ledger writeと対象データ変更を区別する。rate limitはentity/API request/process/shared quotaの単位をsourceで確認して書く。
 
-### 6. 必要な場合だけHTMLを生成する
+## HTML（条件付き）
 
-`91_state_diagram.html` はdesktop向けlight themeの自己完結HTMLとする。
+`91_state_diagram.html` を作る場合はinline SVGの自己完結desktop HTMLとし、SVGとledgerのnode、edge、label、source anchorを一致させる。外部library、script、font、iframe、networkを使わない。zoom/filterなどのJavaScript、mobile/print/PDF対応は明示依頼時だけ追加する。
 
-- SVGをinlineで埋め込む。
-- 図と詳細ledgerを同じ名称とsource anchorで接続する。
-- 図containerはdesktop幅で必要な場合だけ縦横scrollを許可する。
-- static HTMLを既定とし、zoom control、copy button、client-side filterなどのJavaScriptを自動追加しない。browser標準のzoomで読む。
-- 1440x900を既定確認幅とする。mobile responsive、print stylesheet、PDF exportは明示依頼がない限り作らない。
+## 検証
 
-SVGをHTMLへ変換した別表現を正本にしない。
-HTMLの図と `.svg` fileが同じnode、edge、labelを持つことを確認する。
+`references/validator-loop.md` と必要なら `references/mermaid-syntax.md` の契約を適用する。
 
-### 7. 検証する
+- XML parserで各SVGをparseし、`xmlns`、`viewBox`、`role`、title、desc、主要node/edgeを確認する。
+- 外部resource、script、`foreignObject`、event handlerがないことを確認する。
+- Markdown/HTMLのSVG参照先が存在し、evidence inventory、図、ledger、source anchorが一致することを確認する。
+- 各transitionにtrigger/guard/effectと根拠がある。欠落は根拠不足として明示する。
+- failure/recovery、data/interface、読者への含意がscopeに応じて記録されている。
+- HTMLを作った場合だけinline SVGと1440x900でのlabel欠落・重なり・overflowを確認する。
 
-- XML parserで各SVGをparseできる。
-- `viewBox`、`title`、`desc`、主要node、主要edgeが存在する。
-- SVG内に外部resourceとevent handlerがない。
-- MarkdownのSVG参照先が存在する。
-- evidence inventoryの確認済み遷移がSVGとledgerに存在し、未確認事項が確認済みとして描かれていない。
-- 各遷移にtrigger、guard、effect、source anchorのいずれかが欠ける場合、欠落理由が明示されている。
-- failure / recovery、data / interface、読者への含意が対象scopeに応じて記載されている。
-- HTMLを作った場合、inline `<svg>` があり、Mermaid runtimeまたはMermaid sourceがない。
-- HTMLを作った場合、1440x900でlabelの切れ、重なり、意図しないoverflowを確認する。
-- 図、遷移ledger、source anchorが一致する。
-
-## 補助説明図
-
-状態図だけでは答えられない別の問いが残る場合だけ、`visualizing-work` を経て `diagram-design` を使う。
-補助図もSVGで生成し、`92_visual_explanation.svg` と読解用の `92_visual_explanation.md` を作る。状態、遷移、処理flowを重複させない。
-不要なら判断理由を `91_state_diagram.md` に残す。
-
-## 自己確認
-
-- 処理の入口は何か。
-- 各edgeは何をtriggerに、どのguardを通り、何を変えるか。
-- 失敗時に何が残り、retryや手動復旧はどう行うか。
-- dataは誰が作り、誰が検証し、どこへ保存するか。
-- その仕組みが読者の実装・運用判断へどう影響するか。
-- 詳細を追うときに最初に開くsourceとtestはどれか。
+検証失敗は原因を直して最初から再実行する。3回直しても成立しない場合は壊れた図を成果物にせず、ledgerと根拠不足を残して報告する。

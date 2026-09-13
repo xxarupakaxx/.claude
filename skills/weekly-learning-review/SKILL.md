@@ -9,7 +9,7 @@ description: 直近1週間のDaily、digest、trend、payment-trend、新規know
 
 毎朝の自動収集（digest、trend、payment-trend）は「読んで終わり」になりやすい。
 このスキルは週に一度、収集済みの情報を学びとして固め、[[AI-Agent-MOC]] や [[LayerX入社準備-MOC]] のグラフに接続し、メタデータの穴を可視化する。
-**まず `CLAUDE.md` を読み絶対ルールとセカンドブレイン拡張フィールドの定義に従うこと。** 地の文は `japanese-tech-writing` の規範で書く。
+**まず適用対象の `CLAUDE.md` と Vaultの `_shared-ai/knowledge/vault-operation-contract.md` を読み、絶対ルールと運用境界を確認すること。** 地の文は `japanese-tech-writing` の規範で書く。
 
 入力: スキル起動時にユーザーが添えた指示（以下「起動時の指示」。slash command 経由なら `$ARGUMENTS` がそこに入る）
 
@@ -23,16 +23,17 @@ description: 直近1週間のDaily、digest、trend、payment-trend、新規know
 
 ## 2. 収集（検索ファースト。全文読みは絞った対象のみ）
 
-1. scheduled / 無人実行では、path列挙や `rg` より前に `ruby _shared-ai/scripts/list-vault-automation-inputs.rb . Daily Inbox/automation/digest Inbox/automation/trends Inbox/automation/payment-trends Inbox/knowledge` を実行する。stdoutに出た許可済みpathだけを後続処理へ渡し、未filterのディレクトリを列挙しない。対話・on-demandでは、ユーザーが指定した範囲または既存の `rg -l "^date_created: <当週の各日付>"` の対象を使い、frontmatterの `summary` / `related` / `depth` / `tags` を回収する。
-2. 系統別に要点を拾う:
+1. path列挙や `rg` より前に、`ruby _shared-ai/scripts/list-vault-automation-inputs.rb . Daily Inbox/automation/digest Inbox/automation/trends Inbox/automation/payment-trends Inbox/knowledge` をローカル実行する。stdoutに出た許可済みpathだけを後続処理へ渡し、未filterのディレクトリを列挙しない。
+2. 当週作成ノートの列挙: 許可済みpathだけを対象に `date_created` を確認し、frontmatterの `summary` / `related` / `depth` / `tags` を回収する。filterがexit 1なら停止する。
+3. 系統別に要点を拾う:
    - `Daily/`: 「🔁 ふりかえり」「💭 メモ」節
    - `Inbox/automation/digest/`: 「概要」節
    - `Inbox/automation/trends/`: 当週ノートのTop見出し
    - `Inbox/automation/payment-trends/`: frontmatterの `learning_theme` と「基礎ノートへの接続」節
    - 当週の新規 knowledge / note: `summary`（なければ冒頭段落）
-3. `Claude-note/` は書き込まない。scheduled / 無人実行では読み取り、リンク追跡、要約、NextActionsへの言及を行わない。対話・on-demandでユーザーが対象を明示した場合だけ、Vaultの境界に従って読み取り対象にできる。
-4. `automation_read: false` または `source_system: claude-note` のノートは、scheduled / 無人実行で列挙、本文読取、リンク追跡、要約の対象外にする。
-5. `Daily`、digest、trend、payment-trend、knowledgeをsource別に、処理窓・cursor/watermark・`success`・`normal-empty`（allowlist、対象日、必要なページングまで確認した正常な空結果）・`failed`・`unread` で記録する。`success` または確認済みの `normal-empty` だけ進捗を進め、取得不全・失敗・未読では前回位置を保持して未処理範囲と再開条件を残す。
+4. `Claude-note/` はVault側とiCloud側の正本が未確定のため、読み取りも書き込みも行わず、NextActionsの状況へ言及しない。呼出しpromptに「読み取りのみ」と残っていても、この停止境界を優先する。
+5. `automation_read: false` または `source_system: claude-note` のノートは、列挙、本文読取、リンク追跡、要約の対象外にする。
+6. `Daily`、digest、trend、payment-trend、knowledgeをsource別に、処理窓・cursor/watermark・`success`・`normal-empty`（allowlist、対象日、必要なページングまで確認した正常な空結果）・`failed`・`unread` で記録する。`success` または確認済みの `normal-empty` だけ進捗を進め、取得不全・失敗・未読では前回位置を保持して未処理範囲と再開条件を残す。
 
 ## 3. 週次レビューノートの生成
 
@@ -76,5 +77,5 @@ frontmatterは拡張スキーマを使う（`type: note`、`tags: [automation, w
 ## ⏰ スケジュール設定
 
 - **主モードは on-demand**（対話で呼ぶ）。定期実行では金曜09:15の `/loop-engineering` の後、金曜18:00に週1回実行する。
-- Codex automation id: `weekly-learning-review`。cadence例は `0 18 * * 5`。
-- このcadenceや登録情報は設定の案内であり、runの起動、Vaultへの保存、完了報告・通知の成功を意味しない。各状態を実際の実行記録で分け、週途中・failed・unreadのrunを完了週として報告しない。
+- Codex automationの現行IDとcadenceは `Inbox/automation/SCHEDULES.md` の `/weekly-learning-review` 節を正本とする。
+- SCHEDULESにあるcadenceや登録情報は設定の案内であり、runの起動、Vaultへの保存、完了報告・通知の成功を意味しない。各状態を実際の実行記録で分け、週途中・failed・unreadのrunを完了週として報告しない。

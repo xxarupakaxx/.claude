@@ -35,7 +35,7 @@
 
 最終回答の前にステップバイステップの推論を要求する。「ステップバイステップで考えてみましょう」（ゼロショット）を追加するか、推論の例（Few-shot）を含める。複数ステップのロジック、数学的推論が必要な複雑な問題、またはモデルの思考プロセスを検証する必要がある場合に使用。分析タスクの精度を30-50%向上させる。
 
-**注意（Claude 4.x）:** Extended thinkingが無効の場合、Claude Opus 4.5は「think」とその派生語に敏感。代わりに「consider」「evaluate」「reason through」を使用。
+**注意（Claude 4.x）:** Extended thinkingが無効の場合、一部モデルは「think」とその派生語に敏感。代わりに「consider」「evaluate」「reason through」を使用。
 
 **例:**
 
@@ -123,16 +123,14 @@ System: あなたはAPI設計を専門とするシニアバックエンドエン
 
 ### Adaptive Thinking
 
-Claude Opus 4.6はadaptive thinking（`thinking: {type: "adaptive"}`）を使用。モデルがクエリ複雑度に応じて自動的に思考深度を調整。effortパラメータ（low/medium/high/max）で制御。
+Claude 4.x frontier model はadaptive thinking（`thinking: {type: "adaptive"}`）を使用。モデルがクエリ複雑度に応じて自動的に思考深度を調整。effortパラメータ（low/medium/high/max）で制御。
 
 | effort | 用途 |
 |--------|------|
 | `max` | 最難問題（大規模コード移行、深い調査） |
 | `high` | 複雑な推論・エージェントワークフロー |
-| `medium` | 一般的なタスク（Sonnet 4.6推奨デフォルト） |
+| `medium` | 一般的なタスク（standard model 推奨デフォルト） |
 | `low` | 高ボリューム・低レイテンシワークロード |
-
-**注（旧世代向け記述）**: 上記のeffort 4値（最上位`max`）はOpus 4.6世代時点のもの。Opus 4.7以降・Fable 5では`xhigh`（`high`と`max`の間）が追加されている。Fable 5向けのeffort指針は`skills/prompting-fable`を参照（公式ガイド準拠）。
 
 **一般的な指示が処方的ステップより効果的**: 「thoroughly consider」は手書きのステップバイステップ計画より良い推論を生む。Claudeの推論は人間が処方するものを超えることが多い。
 
@@ -153,7 +151,7 @@ Claude 4.xのコミュニケーションスタイルは以前より簡潔・直�
 - **「何をするか」で指示**: 「markdownを使うな」→「滑らかな散文段落で書いて」
 - **XMLフォーマット指示（Claude固有）**: `<smoothly_flowing_prose_paragraphs>`タグで出力形式を誘導。他LLMでは直接指示で代替
 - **プロンプトスタイル一致**: プロンプトのフォーマットが出力フォーマットに影響する
-- **LaTeX**: Opus 4.6はデフォルトでLaTeX使用。不要なら明示的にプレーンテキスト指示
+- **LaTeX**: 一部 frontier model はデフォルトでLaTeX使用。不要なら明示的にプレーンテキスト指示
 - **詳細度**: ツール使用後のサマリーが省略されがち。必要なら「ツール使用後に作業の概要を報告」と指示
 
 ### 長コンテキスト最適化

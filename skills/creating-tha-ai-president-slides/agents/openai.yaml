@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create THA AI President Slides"
+  short_description: "THA AI社長の視覚文法で編集可能PPTXを作る"
+  default_prompt: "Use $creating-tha-ai-president-slides to turn my slide content into an editable 16:9 PPTX using the THA AI President visual system."

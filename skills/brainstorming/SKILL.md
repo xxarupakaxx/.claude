@@ -60,3 +60,7 @@ description: "未整理のアイデアや複数の設計案を対話で具体化
 - **柔軟に対応** - 何か理解できない点があれば戻って明確にする
 
 「仮定の明示」「押し戻し」のBefore/After実例は `skills/karpathy-examples/EXAMPLES.md` 参照。
+
+## 実績由来の知見
+
+- 設計議論で提案したスキーマ・APIを確立事実であるかのように提示しない。仮定質問への回答は「進化経路（migration path）」として枠付けし、実際に採用・実装されるまでは即時リファクタが必須であるかのようにも見せない（出典: memories/rollout_summaries/2026-06-26T08-10-29-46n2-future_store_list_input_design.md「Task 1 Failures」）

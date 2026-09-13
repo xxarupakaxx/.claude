@@ -138,7 +138,7 @@ python scripts/migrate.py --verify --backup
 
 Claude 4.xはタスクの委任を自動判断するネイティブ能力を持つ。明示的な指示なしでも適切に委任する。ただし過剰使用に注意。
 
-**Claude Opus 4.6は特にsubagentを多用する傾向がある。** 単純な作業（直接grepで十分な場面等）でもsubagentを生成しがち。明示的なガイダンスで制御:
+**Claude 4.x frontier model は特にsubagentを多用する傾向がある。** 単純な作業（直接grepで十分な場面等）でもsubagentを生成しがち。明示的なガイダンスで制御:
 
 ```text
 Use subagents when tasks can run in parallel, require isolated context,
@@ -187,7 +187,7 @@ to memory before the context window refreshes.
 
 ## 自律性と安全性のバランス
 
-Claude Opus 4.6はガイダンスなしでは不可逆的なアクション（ファイル削除、force-push等）を取る可能性がある:
+Claude 4.x frontier model はガイダンスなしでは不可逆的なアクション（ファイル削除、force-push等）を取る可能性がある:
 
 ```text
 Consider the reversibility and potential impact of your actions.

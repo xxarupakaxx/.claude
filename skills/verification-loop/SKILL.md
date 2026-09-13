@@ -1,120 +1,24 @@
 ---
 name: verification-loop
-description: "合格基準を定義し、通過するまで検証を自動繰り返しするスキル。/checkpointで状態保存、/verifyで検証実行。Phase 4の品質確認を自動化する。"
+description: 明示された検証依頼や失敗したcheckを、合格条件に沿って実行・再検証する。
 ---
 
-# Verification Loop — 自動検証ループ
+# 検証を実行する
 
-## 概要
+`/verify`や検証の明示依頼、修正後の再検証に使う。目的と合格条件を確認し、実在するprojectのコマンドから対象を選ぶ。汎用のチェック一覧をそのまま全taskへ適用しない。
 
-合格基準（Pass Criteria）を定義し、全基準を通過するまで検証→修正→再検証を自動で繰り返す。
-手動の品質確認を自動化し、見落としを防止する。
+## 検証範囲
 
-## トリガー
+- 合格条件をユーザー依頼、projectの必須check、変更の影響から定める。既存checkpointがあれば参照する。
+- 通常作業では会話に条件と結果を残せばよい。`/checkpoint`の明示要求や管理taskでは`context/memory-file-formats.md`の保存形式を使う。
+- 関連test、typecheck、lint、必要な実行確認を選ぶ。全suiteや追加の手動ガイドは、未検証の要求を確かめる場合に使う。
+- 文書・設定の整合確認では差分、参照、形式を確認する。既存の検索やvalidatorで足りれば専用scriptを増やさない。
+- 終了する非対話型テストは`python3 ~/.claude/scripts/quiet-run.py -- <command>`で実行する。
 
-- 「検証ループを回して」
-- 「合格するまでチェックして」
-- `/verify`
-- Phase 4の品質確認時
+## 失敗したとき
 
-## コンポーネント
+修正を含む依頼なら原因と影響を確認し、対象範囲で直して関連checkを再実行する。検証だけの依頼では、失敗の根拠を報告する。
 
-### `/checkpoint` — 検証状態の保存
+同じ修正を2回試して進展がなければ、再現例や検証方法を見直す。LLMだけの連続修正は最大3回、全体は最大5回とし、同一エラーが3回続いたら自動修正を止めて原因・試行・必要な判断を報告する。独立checkerや人間確認は具体的な未解決riskに応じて選ぶ。失敗を隠すために基準を緩めない。
 
-現在の状態をスナップショットとして保存:
-
-```markdown
-## Checkpoint: YYYY-MM-DD HH:MM
-
-### Pass Criteria
-- [ ] TypeScript: `npx tsc --noEmit` がエラー0
-- [ ] Lint: `npm run lint` がエラー0
-- [ ] Test: `npm test` が全パス
-- [ ] Build: `npm run build` が成功
-- [ ] Security: `security-reviewer` が CRITICAL 0件
-- [ ] Custom: [ユーザー定義の基準]
-
-### Current Status
-- tsc: ❌ 3 errors
-- lint: ✅ pass
-- test: ❌ 2 failures
-- build: ❌ blocked by tsc
-```
-
-保存先: `${MEMORY_DIR}/memory/YYMMDD_<task>/checkpoint.md`
-
-### `/verify` — 検証ループ実行
-
-1. checkpoint.mdの合格基準を読み込み
-2. 各基準を順次実行
-3. 失敗した基準を修正
-4. 再検証
-5. 全基準通過まで繰り返し
-
-## 検証ループのフロー
-
-```
-START
-  │
-  ▼
-[合格基準の定義/読込]
-  │
-  ▼
-[基準1を実行] ──PASS──→ [基準2を実行] ──PASS──→ ... ──→ [全PASS] → END
-  │                        │
-  FAIL                     FAIL
-  │                        │
-  ▼                        ▼
-[エラー分析]              [エラー分析]
-  │                        │
-  ▼                        ▼
-[最小修正]                [最小修正]
-  │                        │
-  ▼                        ▼
-[基準1を再実行]           [基準2を再実行]
-  │                        │
-  └── 最大3回失敗 ──→ ユーザーに報告（自動修正限界）
-```
-
-## 合格基準テンプレート
-
-### TypeScript プロジェクト
-```yaml
-criteria:
-  - name: typecheck
-    command: "npx tsc --noEmit"
-    pass: "exit code 0"
-  - name: lint
-    command: "npm run lint"
-    pass: "exit code 0"
-  - name: test
-    command: "npm test"
-    pass: "exit code 0"
-  - name: build
-    command: "npm run build"
-    pass: "exit code 0"
-```
-
-### カスタム基準の追加
-ユーザーが自由に基準を追加可能:
-```yaml
-  - name: coverage
-    command: "npm test -- --coverage"
-    pass: "All files.*[89][0-9]|100"  # 80%以上
-  - name: bundle-size
-    command: "npm run build && du -sh dist/"
-    pass: "size < 5M"
-```
-
-## 安全ガード
-
-- **最大ループ回数**: 5回（無限ループ防止）
-- **同一エラー3回失敗**: 自動修正を中止し、ユーザーに報告
-- **修正の副作用検出**: 修正後に以前PASSだった基準がFAILになったら即報告
-- **LLMのみの連続修正は最大3回**: 以降はサブエージェントレビューを挟む（workflow-rules.md準拠）
-
-## `generate-verification-guide`との関係
-
-- `generate-verification-guide`: 手動テスト用のチェックリスト**ドキュメント生成**
-- `verification-loop`: 自動テストの**実行と修正ループ**
-- 併用推奨: verification-loopで自動チェック → 残りを手動チェックリストで確認
+新しい変更・失敗・懸念がなければ合格済みcheckを繰り返さない。必要な基準を満たしたら、実行結果と未確認事項を報告する。終了コード0だけで起動・表示・外部連携まで確認済みとは扱わない。

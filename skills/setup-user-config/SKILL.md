@@ -1,6 +1,6 @@
 ---
 name: setup-user-config
-description: Layer 2ユーザー設定（~/.claude/config/user.json）の初期化・更新スキル。新規マシンセットアップ時や「設定を初期化して」「user.jsonを作って」等の依頼時に使用。user.example.jsonをテンプレートとしてインタラクティブに値を埋める。
+description: ユーザーが `~/.claude/config/user.json` の初期化・更新を明示したとき、`user.example.json` と既存値を照合して不足分を質問し、確認後に保存・検証する。通常の作業開始だけでは使わない。
 allowed-tools: Read, Write, Bash, Glob, AskUserQuestion
 ---
 
@@ -10,7 +10,7 @@ allowed-tools: Read, Write, Bash, Glob, AskUserQuestion
 
 ## トリガー
 
-- 新規マシンで `config/user.json` が存在しない
+- 新規マシンで `config/user.json` が存在しないことを確認し、ユーザーが初期化を求めた
 - ユーザーが「設定を初期化」「setup」「user.json を作って」等を依頼
 - `/setup-user-config` 実行時
 
@@ -34,9 +34,9 @@ Read ~/.claude/config/user.json → 既存設定の有無を確認
 
 ### Step 2: フィールド入力
 
-user.example.json の各フィールドについて AskUserQuestion で値を収集する。
+`user.example.json` の現在のフィールドを読み、AskUserQuestion で不足値または変更希望の値だけを収集する。テンプレートにないフィールドを創作しない。
 
-既存の user.json がある場合は現在値をデフォルト選択肢に含める。
+既存の user.json がある場合は現在値を保持し、変更対象以外を再入力させない。現在値をデフォルト選択肢に含める。
 
 **収集フィールド（user.example.json に準拠）:**
 
@@ -71,8 +71,8 @@ gh api user --jq .login 2>/dev/null || echo ""
 ### Step 4: 検証
 
 保存後、以下を確認して結果を報告:
-- JSON パース可能か（`Bash: python3 -m json.tool config/user.json`）
-- gitignore されているか（`Bash: git check-ignore config/user.json`）
+- JSON パース可能か（`Bash: python3 -m json.tool ~/.claude/config/user.json`）
+- gitignore されているか（対象の git root から `Bash: git check-ignore ~/.claude/config/user.json`）。対象外なら `未確認` とする。
 
 ## テンプレート拡張時の対応
 

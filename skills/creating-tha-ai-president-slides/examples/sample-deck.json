@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "title": "AI活用を、組織の力へ",
+    "subject": "THA AI President visual system sample",
+    "author": "THA",
+    "company": "THA",
+    "label": "AI PRESIDENT / TEMPLATE SAMPLE",
+    "language": "ja-JP"
+  },
+  "theme": {
+    "fontBody": "BIZ UDGothic",
+    "fontDisplay": "Arial"
+  },
+  "sources": [
+    {
+      "id": "fictional-sample",
+      "kind": "fictional",
+      "title": "テンプレート検証用の架空データ",
+      "note": "数値、コメント、事例はすべてlayout検証用に作成した架空情報"
+    }
+  ],
+  "slides": [
+    {
+      "type": "cover",
+      "eyebrow": "AI × MANAGEMENT",
+      "titleLines": [
+        {"text": "経営の知識を、"},
+        {"text": "組織の力へ", "highlight": true}
+      ],
+      "subtitle": "判断の背景を共有し、現場の意思決定を前に進める",
+      "date": "2026.07",
+      "speakerNotes": "テンプレート再現用の架空サンプル。元資料の内容は使用していない。"
+    },
+    {
+      "type": "section",
+      "number": "01",
+      "title": "なぜ、いま意思決定を変えるのか",
+      "subtitle": "情報量ではなく、判断できる状態を増やす",
+      "speakerNotes": "章扉。濃青から明青のgradientと黄色の短いaccentを使う。"
+    },
+    {
+      "type": "stats",
+      "kicker": "WHY THIS MATTERS",
+      "title": "判断を止める4つの摩擦",
+      "metrics": [
+        {"value": "3×", "label": "確認の往復"},
+        {"value": "42%", "label": "探す時間"},
+        {"value": "2.4h", "label": "回答待ち"},
+        {"value": "6人", "label": "情報の中継"}
+      ],
+      "reasons": [
+        {"title": "情報が散らばる", "body": "判断材料が会議、チャット、資料に分かれている"},
+        {"title": "背景が伝わらない", "body": "結論だけが共有され、次の人が理由を再確認する"},
+        {"title": "再現できない", "body": "同じ問いでも担当者によって回答の深さが変わる"}
+      ],
+      "sourceIds": ["fictional-sample"]
+    },
+    {
+      "type": "issue-cards",
+      "kicker": "ISSUES",
+      "title": "個人の工夫だけでは解けない課題",
+      "cards": [
+        {"label": "SEARCH", "value": "31%", "body": "必要な根拠へすぐ到達できない"},
+        {"label": "WAIT", "value": "2.4h", "body": "有識者の返答を待って判断が止まる"},
+        {"label": "REWORK", "value": "1.8×", "body": "前提の違いで資料を作り直す"},
+        {"label": "QUALITY", "value": "3段階", "body": "担当者ごとに回答品質が揺れる"},
+        {"label": "SILO", "value": "6箇所", "body": "知識が複数の場所へ分散する"},
+        {"label": "HANDOFF", "value": "4人", "body": "確認のたびに情報が要約される"}
+      ],
+      "takeaway": "必要なのは、回答の自動化ではなく判断材料の再現性",
+      "sourceIds": ["fictional-sample"]
+    },
+    {
+      "type": "cards",
+      "kicker": "WORK SCENES",
+      "title": "AIが支えられる6つの場面",
+      "cards": [
+        {"title": "問いを整える", "body": "曖昧な依頼を、判断できる問いへ分解する"},
+        {"title": "根拠を集める", "body": "一次情報と社内資料から必要な証拠をそろえる"},
+        {"title": "論点を比べる", "body": "選択肢、利点、欠点、前提を同じ形式で並べる"},
+        {"title": "たたき台を作る", "body": "会議前に編集可能な初稿を用意する"},
+        {"title": "判断を残す", "body": "決めた理由と見直し条件を次の担当者へ渡す"},
+        {"title": "学びを戻す", "body": "結果を次の問いと運用ルールへ反映する"}
+      ],
+      "sourceIds": ["fictional-sample"]
+    },
+    {
+      "type": "comparison",
+      "kicker": "BEFORE / AFTER",
+      "title": "AI導入で変えるのは、作業より判断の流れ",
+      "left": {
+        "label": "BEFORE",
+        "title": "人に聞くまで止まる",
+        "points": ["資料の所在から確認する", "背景を口頭で補ってもらう", "結論だけを別資料へ転記する"]
+      },
+      "right": {
+        "label": "AFTER",
+        "title": "根拠を持って前へ進む",
+        "points": ["問いから関連資料へ到達する", "背景と判断基準を同時に読む", "結果を次の判断へ再利用する"]
+      },
+      "takeaway": "待ち時間を減らし、レビューできる時間を増やす",
+      "sourceIds": ["fictional-sample"]
+    },
+    {
+      "type": "case-study",
+      "kicker": "CASE STUDY",
+      "title": "意思決定の前工程を整えた架空事例",
+      "context": {
+        "title": "背景",
+        "body": "複数部署が同じ顧客課題を調べていたが、根拠の場所と判断基準が統一されていなかった。"
+      },
+      "episode": {
+        "title": "起きたこと",
+        "body": "担当者は問いと参照範囲を入力し、AIが根拠、反証、未確認事項を整理。責任者は結論ではなく証拠と前提をレビューした。"
+      },
+      "outcomes": [
+        {"value": "1/2", "label": "初稿までの時間"},
+        {"value": "+28pt", "label": "初回判断可能率"},
+        {"value": "3部署", "label": "同じ手順を再現"}
+      ],
+      "sourceIds": ["fictional-sample"]
+    },
+    {
+      "type": "quotes",
+      "kicker": "VOICES",
+      "title": "価値は「答え」より「次に進めること」",
+      "quotes": [
+        {"quote": "どこを確認すればよいかが最初から見えるので、レビューに集中できました。", "name": "企画担当", "role": "架空コメント"},
+        {"quote": "結論だけでなく前提が残るため、別の案件でも判断の型を使えます。", "name": "営業責任者", "role": "架空コメント"},
+        {"quote": "分からない点が明示されるので、安心して人へ引き継げるようになりました。", "name": "運用担当", "role": "架空コメント"}
+      ],
+      "takeaway": "AIの成果は、速さだけでなく判断の再現性で測る",
+      "sourceIds": ["fictional-sample"]
+    },
+    {
+      "type": "layers",
+      "kicker": "OPERATING LAYERS",
+      "title": "AI活用を定着させる5つの層",
+      "layers": [
+        {"label": "01", "title": "情報", "body": "参照する資料を決める"},
+        {"label": "02", "title": "問い", "body": "判断したいことを定義する"},
+        {"label": "03", "title": "生成", "body": "証拠付きの初稿を作る"},
+        {"label": "04", "title": "レビュー", "body": "人が前提と結論を確認する"},
+        {"label": "05", "title": "学習", "body": "結果を運用へ戻す"}
+      ],
+      "speakerNotes": "5層を下へ行くほど濃い青にし、仕組みとしての定着を表す。",
+      "sourceIds": ["fictional-sample"]
+    }
+  ]
+}

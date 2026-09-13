@@ -1,0 +1,10 @@
+{
+  "name": "creating-tha-ai-president-slides",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Deterministic editable PPTX generator for the THA AI President visual system",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "pptxgenjs": "4.0.1"
+  }
+}

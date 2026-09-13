@@ -1,27 +1,17 @@
 ---
 name: "source-command-checkpoint"
-description: "検証状態を保存する。合格基準の定義と現在のステータスをcheckpoint.mdに記録。/verifyと組み合わせて使用。"
+description: "migrated source command `checkpoint` として、PJの品質基準とカスタム基準の現在状態をcheckpoint.mdへ保存する。"
 ---
 
 # source-command-checkpoint
 
-Use this skill when the user asks to run the migrated source command `checkpoint`.
+ユーザーが migrated source command `checkpoint` を求めたときに使う。現在のprojectの `CLAUDE.md` と技術stackから検証コマンド・合格基準を確定し、結果をmemoryへ保存する。
 
-## Command Template
+```text
+/checkpoint
+/checkpoint "coverage 80%以上" "バンドルサイズ5MB以下"
+```
 
-# Checkpoint — 検証状態の保存
+基準を推測で補わず、PJルールを読んでから各基準の現在状態（PASS/FAIL/BLOCKED）を実行確認する。結果を `${MEMORY_DIR}/memory/YYMMDD_<task>/checkpoint.md` に保存し、未実行や環境不足をPASSにしない。
 
-`verification-loop`スキルのStep 1として使用する。
-現在の合格基準と各基準の状態をcheckpoint.mdに保存する。
-
-## 手順
-
-1. PJ CLAUDE.mdから品質チェックコマンドを取得
-2. プロジェクトの技術スタックに合わせた合格基準を自動生成
-3. 各基準の現在の状態を実行して確認
-4. `${MEMORY_DIR}/memory/YYMMDD_<task>/checkpoint.md` に保存
-5. 結果をユーザーに報告
-
-## ユーザーがカスタム基準を指定した場合
-
-`/checkpoint "coverage 80%以上" "バンドルサイズ5MB以下"` のように引数で追加基準を受け付ける。
+詳細: `../checkpoint/SKILL.md`。

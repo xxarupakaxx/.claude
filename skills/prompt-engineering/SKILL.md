@@ -1,77 +1,35 @@
 ---
 name: prompt-engineering
-description: エージェント向けのコマンド、フック、スキル、サブエージェント向けプロンプト、その他LLMインタラクションを作成する際に使用。プロンプト最適化、LLM出力改善、本番用プロンプトテンプレート設計を含む。
+description: エージェント用のコマンド、hook、skill、sub-agent prompt、LLM用テンプレートを作成・改善するときに使う。目的に必要な context、制約、構造化出力、検証を設計する。
 ---
 
-# プロンプト & コンテキストエンジニアリング
+# Prompt & Context Engineering
 
-LLMのパフォーマンス、信頼性、制御性を最大化するための技術。
-2025年以降、単一プロンプトの最適化（Prompt Engineering）から、情報エコシステム全体の設計（Context Engineering）へパラダイムシフトが進行中。
+プロンプトを単独で長くするのではなく、モデルがまだ持っていない情報だけを、目的・制約・入力・出力・検証に分けて設計する。利用者の依頼に必要な範囲だけを対象にし、既存の指示や workflow と重複させない。
 
-## コンテキストエンジニアリングの原則
+## 設計手順
 
-Prompt Engineeringはコンテキストウィンドウ「内」の最適化。Context Engineeringはウィンドウに「何を入れるか」の設計。
+1. 目的、利用者、入力、許可された tool、成功条件を明記する。
+2. 実行時に必要な dynamic context（日時、query、検索結果、状態）だけを選ぶ。
+3. 必須制約、失敗時の扱い、structured output（schema、JSON、必要な XML）を定める。
+4. 必要な場合だけ few-shot、条件分岐、tool orchestration、memory の扱いを加える。
+5. 正常系だけでなく、欠損・境界・敵対的な入力で期待出力と停止条件を確認する。
 
-### 5つの構成要素
+context window は system prompt、会話履歴、tool 定義と共有する。高性能な Claude Code に一般論を教え込まず、未取得の根拠や対象固有の例だけを追加する。
 
-1. **システムプロンプト & 指示** — 安定した動作定義（ロール、制約、出力形式）
-2. **動的コンテキスト** — 実行時に注入される情報（日時、ユーザークエリ、検索結果）
-3. **構造化入出力** — スキーマ定義、XMLタグ（Claude固有）、JSON構造
-4. **ツール統合** — 利用可能な能力とそのパラメータ定義
-5. **メモリシステム** — 短期（会話履歴）+ 長期（キャッシュ、ベクトルストア、ファイルシステム）
+## Claude 4.x を対象にする場合
 
-### コンテキストウィンドウは公共財
+- 旧モデル向けの `CRITICAL: MUST` などの強い文言を、必要な制約を保った通常の直接指示へ置き換える。
+- Claude 4.6 で assistant turn の prefill が使えない環境では、structured output、XML、直接指示で代替する。
+- effort parameter または一つの方針を選ぶ指示で、不要な overthinking を抑える。
+- 明示された範囲の最小変更を指示し、依存しない tool は並列、依存する tool は逐次にする。
 
-プロンプト・コマンド・スキルは他のすべて（システムプロンプト、会話履歴、ツール定義等）とウィンドウを共有する。
-**デフォルト前提**: Claude Codeはすでに非常に賢い。Claude Codeが「まだ持っていない」コンテキストのみを追加する。
+モデルや API の現行仕様を前提にする場合は、公式ドキュメントを確認し、未確認の数値や効果を断定しない。
 
-## コアテクニック
+## 参照先（必要時だけ）
 
-1. **Few-Shot Learning** — 2-5個の入出力ペアで動作を教示
-2. **Chain-of-Thought** — ステップバイステップ推論で精度30-50%向上
-3. **Adaptive/Extended Thinking** — Claude 4.x: effortパラメータで思考深度を制御
-4. **テンプレートシステム** — 変数・条件付きセクションの再利用可能構造
-5. **XMLタグ構造化（Claude固有）** — Claude訓練データに含まれるXMLタグで曖昧さを排除。他LLMでは効果が異なる
+- 手法の選択（few-shot、schema、段階的開示など）：[references/core-techniques.md](references/core-techniques.md)
+- agent の委任、自由度、状態管理：[references/agent-prompting.md](references/agent-prompting.md)
+- `CLAUDE.md`、skill、hook の構造：[references/claude-code-patterns.md](references/claude-code-patterns.md)
 
-詳細: `Read references/core-techniques.md`
-
-## Claude 4.x固有の注意点
-
-- **Overtrigger対策**: 以前のモデル向けの積極的指示（「CRITICAL: MUST use...」）は緩和する。通常の言語で十分
-- **Prefill廃止**: Claude 4.6でassistant turnのprefillは非対応。structured outputs/XML/直接指示で代替
-- **Overthinking制御**: effortパラメータまたは「1つのアプローチを選んでコミットせよ」で制御
-- **過剰エンジニアリング抑止**: 明示的に「最小限の変更のみ」と指示
-- **並列ツール実行**: 依存関係がなければ並列、依存があれば逐次。明示的指示で精度〜100%
-
-## エージェントプロンプティング
-
-Anthropic公式ベストプラクティスに基づく原則集。説得の7原則（権威・コミットメント・希少性・社会的証明・一体感・互恵性・好意）、自由度設計、subagent orchestration、multi-window workflow、state management。
-
-詳細: `Read references/agent-prompting.md`
-
-## Claude固有のパターン
-
-CLAUDE.md設計、skills/hooks設計、サブエージェントプロンプトの実践パターン。
-
-詳細: `Read references/claude-patterns.md`
-
-## 段階的開示（設計原則）
-
-1. **レベル1**: 直接的な指示
-2. **レベル2**: 制約を追加
-3. **レベル3**: 推論ステップを追加
-4. **レベル4**: 例を追加
-
-## 一般的な落とし穴
-
-- **過剰エンジニアリング**: シンプルなものを試す前に複雑なプロンプトから始める
-- **Overtrigger**: 以前のモデル向けの強い言語がClaude 4.xで過剰反応を招く
-- **コンテキスト汚染**: 不要な情報でウィンドウを浪費
-- **曖昧な指示**: 「何をしないか」ではなく「何をするか」で指示する
-- **エッジケース無視**: 異常/境界入力でテストしない
-
-## ソース
-
-- [Anthropic公式: Prompting best practices (Claude 4.x)](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering)
-- [Context Engineering Guide](https://www.promptingguide.ai/guides/context-engineering-guide)
-- [Anthropic Cookbook](https://github.com/anthropics/anthropic-cookbook)
+参照先を丸ごと読む必要はない。目的に該当する section だけを読む。

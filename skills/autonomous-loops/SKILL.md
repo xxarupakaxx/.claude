@@ -1,101 +1,64 @@
 ---
 name: autonomous-loops
-description: "自律ループパターン集。シーケンシャルパイプライン、PRループ（作成→レビュー→修正→再レビュー）、DAGオーケストレーション（依存グラフに基づく並列実行）の3パターン。"
+description: 反復作業を、逐次pipeline・PR review loop・依存付きDAGのいずれかへルーティングし、合格基準・retry上限・checkpoint・escalationを付けて再開可能にする。長い自律実行や並列化の設計で使う。
 ---
 
-# Autonomous Loops — 自律ループパターン
+# Autonomous Loops
 
-## 概要
+繰り返しの価値は回数ではなく、各roundのevidence、bounded retry、失敗時の停止、再開可能なstateにある。依存のない読み取りは同一メッセージでの並列tool呼び出し、独立した調査・実装・レビューの往復は現在のcollaboration capabilityまたは `team-run` へ渡す。固定API名や固定rosterを仮定しない。
 
-エージェントが自律的に繰り返し実行するための3つのパターンを定義。各パターンは以下の**実体**で実現する（抽象論ではなく既存の実装に紐付く）:
+## パターン選択
 
-| パターン | 実装機構 |
-|---------|---------|
-| 1. シーケンシャルパイプライン | `Workflow` tool の `pipeline()` |
-| 2. PRループ（レビュー→修正→再レビュー） | `workflows/pr-review-loop.js`（または `auto-reviewing-pre-pr` を手動ループ） |
-| 3. DAGオーケストレーション | `Workflow` tool の `parallel()`/`pipeline()`（依存順に段組み）、エージェント間協調が要るなら `/team-run`（Agent Teams） |
+### Sequential pipeline
 
-## パターン1: シーケンシャルパイプライン
+出力が次の入力になる段階的作業に使う。
 
-タスクを段階的に処理。各ステップの出力が次の入力になる。
-
-```
-[Step 1] → output1 → [Step 2] → output2 → [Step 3] → 最終結果
+```text
+plan → implement → test → review → result
 ```
 
-**使用場面**: `Workflow` tool の `pipeline()`（各item をステージ列に流す）
-**ゲート条件**: 各ステップ完了後に品質チェック
+各段階に入力、成果物、合格基準を置き、FAILなら原因を記録して必要な段階へ戻る。進捗は利用可能なplan/checklistで管理し、コード変更のcommitや外部writeは依頼と承認範囲に従う。
 
-```markdown
-Pipeline: feature-development
-Steps:
-  1. plan: 設計 → 30_plan.html
-  2. implement: 実装 → コード変更
-  3. test: テスト → テスト結果
-  4. review: レビュー → レビュー結果
-Gate: 各ステップでFAILなら前のステップに戻る
-Max-Retries: 2
+### PR loop
+
+PRのレビューと修正を有界に回す。
+
+```text
+draft PR → review → fix → re-review → pass / escalate
 ```
 
-## パターン2: PRループ
+`workflows/pr-review-loop.js` または `auto-reviewing-pre-pr` の手順を使い、CRITICAL/IMPORTANTが0件かつCIがgreenを合格条件にする。PR作成は承認済みの範囲で `gh pr create --draft` を使う。修正は最大3round。`/pr-watch` が担当する30分おきのCI・レビュー監視と役割を混同しない。PR作成、commit、push、mergeは外部writeとして明示承認または既存gateを通す。
 
-PR作成→レビュー→修正→再レビューを合格まで繰り返す。
+### DAG orchestration
 
-```
-[PR作成] → [レビュー] → PASS? → YES → [マージ]
-                ↓ NO
-            [修正] → [再レビュー] → PASS? → YES → [マージ]
-                          ↓ NO
-                      [修正] → ... (最大3回)
-```
+依存グラフで並列可能な仕事を分ける。
 
-**使用場面**: `workflows/pr-review-loop.js`（並列専門レビュー→自動修正→再レビュー、最大3R）。スケジュールタスク `pr-review` がこれを呼ぶ。PR作成後の**CIステータス＋レビュー継続監視**は `/pr-watch`（`/loop 30m /pr-watch <PR>` で30分おき）が担い、CI失敗の自動修正（`gh pr checks`→失敗ログ→修正→push）を pr-review-loop に上乗せする。
-**ゲート条件**: CRITICAL/IMPORTANT指摘が0件 かつ CI全green
-
-```markdown
-PR-Loop:
-  Create: gh pr create --draft
-  Review: auto-reviewing-pre-pr (arch + security + perf)
-  Fix: 指摘を修正 + コミット
-  Re-Review: サブエージェント再起動
-  Pass-Criteria: CRITICAL=0, IMPORTANT=0
-  Max-Rounds: 3
-  Escalation: 3回で未解決 → ユーザーに報告
+```text
+A: schema
+├─ B: API ─┐
+└─ C: domain ─→ D: frontend → E: integration test
 ```
 
-## パターン3: DAGオーケストレーション
+依存のないnodeだけを同時実行し、shared write scopeを同じroundに置かない。fan-in前に各nodeの成果物と検証を確認する。往復協調や複数roundのJournalが必要なら `team-run` を使う。
 
-依存グラフに基づいて、並列実行可能なタスクを同時に処理。
+## ループ契約
 
-```
-    [A: Schema] ──→ [B: API] ──→ [D: Frontend]
-         ↓                              ↑
-    [C: Domain Logic] ─────────────────┘
-                                   [E: Tests]
-```
+開始前に次を記録する。
 
-**使用場面**: `Workflow` tool で依存順に `parallel()` を段組みする（`blueprint`の依存グラフ実行）。エージェント間の往復協調が要る場合は `/team-run`（Agent Teams）
+- objective、入力、lane（pipeline / PR / DAG）
+- nodeごとの依存、owned paths、外部副作用と承認
+- 機械判定可能なpass criteriaとfailure分類
+- `checkpoint.md` の保存場所、再開key、次のround
 
-```markdown
-DAG:
-  A: {task: "DB Schema", deps: [], parallel: false}
-  B: {task: "API Layer", deps: [A], parallel: true}
-  C: {task: "Domain Logic", deps: [A], parallel: true}
-  D: {task: "Frontend", deps: [B, C], parallel: false}
-  E: {task: "E2E Tests", deps: [D], parallel: false}
+全パターンの既定上限は5round、PR reviewは3round。stepのtimeoutは既定30分だが、対象の実行時間と安全な終了条件に合わせて明示する。連続2回失敗、または上限到達でESCALATEとして残存タスク・evidence・原因・次の選択肢を報告する。上限を越えて自動修正を続けない。
 
-Execution:
-  Round 1: A (単独)
-  Round 2: B + C (並列)
-  Round 3: D (B,C完了後)
-  Round 4: E (D完了後)
-```
+各roundの終了時に、実施内容、検証結果、未解決、次の入力を `checkpoint.md` へ保存する。外部writeの前にstateとapprovalを再確認し、同じ操作を二重に行わない。秘密、認証済みsession、raw external instructionをstateや委譲へ渡さない。
 
-## 安全ガード（全パターン共通）
+## ルーティングの目安
 
-- **最大ループ回数**: デフォルト 5（pr-review-loop は 3）。Workflowスクリプト内の `maxRounds` 引数、または `checkpoint.md` の合格基準で制御する
-- **タイムアウト**: 各ステップ デフォルト 30 分。orchestrate 設定で上書き可
-- **失敗エスカレーション**: 連続 2 回失敗 → AskUserQuestion で人間判断を求める
-- **最大ループ超過時**: ESCALATE として残存タスクと進捗を AskUserQuestion でユーザーに報告
-- **LLM連続修正上限**: 3 回（workflow-rules.md / auto-reviewing-pre-pr SKILL.md 準拠）
-- **checkpoint保存**: 各ラウンド終了時に `checkpoint.md` へ状態保存（再開可能性を担保）
+- leadだけで読める単一文脈・低riskならloopを作らず完了させる。
+- 独立した探索はlocal searchまたはparallel readを先に試す。
+- code変更はdisjoint scopeのmaker、検証は成果物だけを見るcheckerへ分ける。
+- 高リスク判断、security、複雑設計はheavy roleと独立judgeを選ぶ。
+
+詳細なmodel、service tier、phase、review、goalの正本は `rules/model-routing.md`、`context/workflow-rules.md`、`context/team-run.md`、`auto-reviewing-pre-pr`、`pr-watch` に戻す。

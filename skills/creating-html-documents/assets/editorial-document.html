@@ -74,6 +74,24 @@
     .overview-figure text { fill: var(--ink); font-family: var(--sans); font-size: 20px; }
     .overview-figure .small { fill: var(--muted); font-size: 16px; }
     figcaption { margin-top: 9px; color: var(--muted); font-family: var(--mono); font-size: .76rem; line-height: 1.6; }
+    .scene text { fill: var(--ink); font-family: var(--sans); font-size: 20px; }
+    .scene .small { fill: var(--muted); font-size: 15px; }
+    .scene .edge { fill: var(--body); font-size: 14px; }
+    .scene .fail { fill: var(--warning); }
+    .analogy { margin: 20px 0; padding: 14px 18px 14px 20px; border-left: 5px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; background: #edf6f3; }
+    .analogy .label { color: var(--accent); }
+    .analogy p { margin: 6px 0; }
+    .analogy .limit { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--accent); font-size: .9rem; }
+    .caution { margin: 20px 0; padding: 14px 18px; border: 1.5px solid var(--warning); border-radius: var(--radius); background: #fdf1ef; }
+    .caution .label { color: var(--warning); }
+    .caution p { margin: 6px 0; }
+    .step-list { counter-reset: step; list-style: none; padding: 0; margin: 18px 0; border-top: 2px solid var(--strong-rule); }
+    .step-list li { position: relative; padding: 14px 0 14px 56px; margin: 0; border-bottom: 1px solid var(--rule); }
+    .step-list li::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 14px; color: var(--accent); font-family: var(--mono); font-size: 1.3rem; font-weight: 700; line-height: 1.2; }
+    .step-list strong { display: block; color: var(--ink); }
+    .qa { margin: 18px 0; border-top: 2px solid var(--strong-rule); }
+    .qa dt { padding: 14px 0 4px; color: var(--ink); font-weight: 700; }
+    .qa dd { margin: 0 0 14px; padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
     .diff { margin: 18px 0 26px; padding: 10px 0; overflow-x: auto; border: 1.5px solid var(--strong-rule); border-radius: var(--radius); background: var(--surface); font-size: .82rem; line-height: 1.65; }
     .diff code { display: block; min-width: max-content; }
     .line { display: block; padding: 1px 20px 1px 10px; white-space: pre; }
@@ -193,6 +211,12 @@
           <h2 id="section-one">{{SECTION_ONE_TITLE}}</h2>
           <p>{{SECTION_ONE_LEDE}}</p>
           <!-- Detail slice: overviewの番号や名称に接続するcomparison、wave、figure、diff、tableの一つを置く。 -->
+          <!-- 初学者向けexplainerでは、章ごとに.analogyと一枚の絵を置く。不要なら削る。 -->
+          <div class="analogy">
+            <span class="label">たとえるなら</span>
+            <p>{{ANALOGY}}</p>
+            <p class="limit"><strong>比喩の限界:</strong> {{ANALOGY_LIMIT}}</p>
+          </div>
         </section>
         <section aria-labelledby="section-two">
           <h2 id="section-two">{{SECTION_TWO_TITLE}}</h2>

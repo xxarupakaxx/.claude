@@ -1,6 +1,6 @@
 ---
 name: writing-shape
-description: 文章の exploit を行い、素材を一段落ずつ article の形に整える。
+description: 固定した素材を一段落ずつ別articleへ整形する長文執筆セッション。素材から構成を作るとき、または `/writing-shape` と明示されたときに使う。素材ファイルはread-onlyで扱う。
 disable-model-invocation: true
 ---
 

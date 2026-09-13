@@ -1,108 +1,66 @@
 ---
 name: improving-codebase-architecture
-description: コードベースを走査して deepening opportunity を見つけ、視覚的な HTML report として提示し、その中から選んだ候補を grilling で掘り下げます。
+description: コードベースを読み取り専用で調査し、shallow module・seam leakage・locality不足からdeepening候補を1〜3件提示する。architectureのhotspotをsurveyしたいときに使い、実装・ADR・CONTEXT更新は別依頼へ渡す。
 disable-model-invocation: true
 ---
 
-# コードベースアーキテクチャ改善
+# コードベースアーキテクチャ改善 survey
 
-architectural friction を表に出し、**deepening opportunity** を提案します。
-これは shallow module を deep module へ変えるための refactor 候補です。
-狙いは testability と AI-navigability です。
+architectural frictionを根拠付きの候補へ整理するread-onlyの設計規律。目的はtestabilityとAI navigabilityを上げる選択肢を示すことにあり、survey中にrepository、`CONTEXT.md`、ADR、source codeを変更しない。実装、test、ADR作成、用語追加、commitはこのSkillの完了後に別のuser gateで扱う。
 
-この command は project の domain model に支えられ、共有設計語彙の上に成り立ちます。
+## 読む範囲
 
-- architecture の語彙と原則のために `/designing-codebases` skill を使います。
-  そこにある **Module**、**Interface**、**Depth**、**Seam**、**Adapter**、**Leverage**、**Locality** の語を、すべての suggestion でそのまま使います。
-  `component`、`service`、`API`、`boundary` へ drift してはいけません。
-- `CONTEXT.md` の domain language は、良い seam に名前を与えます。
-  `docs/adr/` の ADR は、この command がむやみに蒸し返してはいけない decision を記録しています。
+`/designing-codebases` の語彙（`Module`、`Interface`、`Depth`、`Seam`、`Adapter`、`Leverage`、`Locality`）を使い、PJの `CLAUDE.md`、関係する `CONTEXT.md`、`docs/adr/` の既存判断を先に読む。用語が未定義なら、断定せず候補名と根拠を提示する。`component`、`service`、`API`、`boundary`など別語へ不用意に置き換えない。
 
-## 手順
+現行のsession capabilityがあればexplorer相当の読み取り役を使える。固定APIや `multi_agent_v1` を仮定せず、leadが単独で確認できる場合は委譲しない。各候補は次の問いと証拠で絞る。
 
-### 1. 探索する
+- 一つのconceptを理解するために、多数の小さなmoduleを往復していないか。
+- Interfaceがimplementationと同じ複雑さのshallow moduleになっていないか。
+- pure functionの切り出しがcallerの組み合わせへbugを隠し、Localityを失わせていないか。
+- Seamをまたぐ依存や漏出がないか。
+- Interface越しにtestしにくい理由が何か。
 
-まず project の domain glossary である `CONTEXT.md` を読みます。
-触ろうとしている領域に関係する ADR が `docs/adr/` にあれば、それも先に読みます。
+shallowを疑う対象にはdeletion test（消したときcomplexityが一か所へ集まるか、単に移るだけか）を思考実験として行う。コードを削除・編集して試さない。
 
-その後、探索 sub-agent に codebase を歩き回らせます。
-Claude Code では Agent tool を `subagent_type=Explore` で使います。
-Codex では `multi_agent_v1.spawn_agent` または現在利用できる agent orchestration で explorer 相当の role を使います。
-硬直した heuristic には従いません。
-自然に探索しながら、自分が friction を感じる場所を記録します。
+## 候補の提示
 
-- 一つの concept を理解するのに、多数の小さな module を行き来しなければならない場所はどこか。
-- interface が implementation とほぼ同じ複雑さを持つ **shallow** な module はどこか。
-- testability のためだけに pure function を切り出した結果、実際の bug が caller 側の組み合わせに隠れ、**Locality** を失っている場所はどこか。
-- 強く結合した module が seam をまたいで leak している場所はどこか。
-- 現在の interface 越しには test できない、または test しづらい場所はどこか。
+候補は1〜3件に絞り、同じ問題を複数候補に重ねない。各候補に次を付ける。
 
-shallow だと疑った対象には **deletion test** を当てます。
-それを消したときに複雑さが一か所へ集まるのか、それとも単に移るだけなのかを見ます。
-「消すと complexity が集中する」が欲しい signal です。
+- Filesとmodule、`path:line`またはsymbolの根拠
+- Problem: どのfrictionがどのseamで起きるか
+- Solution: どのmoduleをdeepにするか。実装手順ではなく形を示す
+- Benefits: Locality、Leverage、testabilityへの影響
+- Before / After: node/edgeまたは浅いmoduleを畳み込む簡素なSVG/テキスト図
+- Recommendation: `Strong` / `Worth exploring` / `Speculative`
+- ADR conflict: 既存ADRを再検討するだけの根拠があるときだけ、該当番号と理由
 
-### 2. 候補を HTML レポートで提示する
+sourceで確認できない依存や効果を事実として書かない。候補の利得は保証ではなく、前提と不確実性を添える。最初に着手するTop recommendationと、その判断根拠も一つ示す。
 
-repo には何も落とさず、OS の temp directory に self-contained な HTML file を書きます。
-temp dir は `$TMPDIR` から解決し、なければ `/tmp` を使います。
-Windows では `%TEMP%` を使います。
-出力先は `<tmpdir>/architecture-review-<timestamp>.html` とし、毎回 fresh な file にします。
-その file をユーザー向けに開きます。
-Linux では `xdg-open <path>`、macOS では `open <path>`、Windows では `start <path>` を使います。
-absolute path も伝えます。
+## 可視化（条件付き）
 
-report ではlayoutとstylingに **Tailwind via CDN** を使います。
-diagramは、graph、flow、sequenceを含めて自己完結したinline SVGで描きます。
-mass diagram、cross-section、collapse animationのようなeditorial visualもSVGを正本にします。
-外部のdiagram runtimeへ依存しません。
-各 candidate には **before / after visualisation** を必ず付けます。
-とにかく visual にします。
+ユーザーが視覚的なreportを求めた場合だけ、repository外のtemp directoryへself-contained HTMLを作る。候補カード、before/afterのinline SVG、Files、Problem、Solution、短いWins、Top recommendationを含める。外部script、network依存、独自interactivityを既定で追加せず、HTML正本の詳細は `HTML-REPORT.md` を参照する。図の正本はSVGとする。
 
-各 candidate について、card には次を載せます。
+HTMLを作らない場合は、同じ情報を短いMarkdownで返す。図は関係の理解に寄与する候補だけにし、文章を重複させない。ユーザーが開かないよう指定していなければ、検証済みのlocal artifactを安全なviewerで開く選択肢とabsolute pathを案内する。
 
-- **Files**。
-  関係する file と module。
-- **Problem**。
-  現在の architecture がなぜ friction を生んでいるか。
-- **Solution**。
-  何を変えるかを平易な言葉で書いた説明。
-- **Benefits**。
-  Locality と Leverage の観点で見た利点と、test がどう良くなるか。
-- **Before / After diagram**。
-  shallow さと deepening の形を左右比較で描いた custom visual。
-- **Recommendation strength**。
-  `Strong`、`Worth exploring`、`Speculative` のいずれか。
-  badge として描画します。
+## 選択後のhandoff
 
-report の最後には **Top recommendation** section を置きます。
-最初に着手するならどの candidate か、その理由は何かを書きます。
+ユーザーが候補を選んだら、`/grilling` に次の判断材料を渡す。ここでもside effectを実行しない。
 
-domain には `CONTEXT.md` の語彙を使います。
-architecture には `/designing-codebases` の語彙を使います。
-もし `CONTEXT.md` で「Order」が定義されているなら、「FooBarHandler」でも「Order service」でもなく、「Order intake module」と話します。
+```text
+candidate: <選択したcandidate>
+evidence: <files:symbol / source anchor>
+decision: <制約、依存、deepened moduleのshape>
+seam: <何を内側へ置き、何をinterfaceへ残すか>
+tests: <生き残るtestと追加検証の候補>
+open_questions: <未決定事項>
+next_gate: <実装 / ADR / CONTEXT更新を別依頼で判断>
+```
 
-**ADR conflict** は、本当に摩擦が強く、ADR を再検討する価値があるときだけ表に出します。
-card の中で、それと分かるように明示します。
-たとえば「ADR-0007 と矛盾するが、次の理由で再オープンする価値がある」のような warning callout にします。
-理論上禁止されるすべての refactor を列挙してはいけません。
+`CONTEXT.md` やADRを更新する、sourceを実装する、testを追加する、commitする、既存ADRを再オープンする、といった選択を自動で進めない。ユーザーが別途依頼した場合は、`implementing-work`、`creating-adr`、`modeling-domains`、`designing-codebases`など該当skillへhandoffする。
 
-完全な HTML scaffold、diagram pattern、styling guidance は [HTML-REPORT.md](HTML-REPORT.md) を見ます。
+## 完了条件
 
-この段階では interface そのものはまだ提案しません。
-file を書き終えたら、「どれを掘り下げたいですか」とユーザーに聞きます。
-
-### 3. grilling の反復
-
-ユーザーが candidate を一つ選んだら、`/grilling` skill で design tree を一緒に歩きます。
-制約、dependency、deepened module の shape、seam の奥に置くもの、どの test が生き残るかを詰めます。
-
-decision が固まるたびに side effect をその場で反映します。
-domain model を最新に保つために `/modeling-domains` skill を併用します。
-
-- **deepened module に、`CONTEXT.md` にない concept 名を付けるなら**、その term を `CONTEXT.md` に追加します。
-  file がなければ lazy に作ります。
-- **会話の中で曖昧な term が sharpen されたなら**、その場で `CONTEXT.md` を更新します。
-- **ユーザーが load-bearing な理由で candidate を却下したなら**、ADR を提案してよいかを聞きます。
-  未来の explorer が同じ候補を再提案しないために、その理由を残す価値が本当にあるときだけ勧めます。
-  「今はそこまでの価値がない」や「見れば自明」といった一過性の理由なら提案しません。
-- **deepened module の別 interface 案も見たいなら**、`/designing-codebases` skill を起動し、その design-it-twice pattern を使います。
+- 読み取り対象と根拠が具体的で、候補は1〜3件に収まる。
+- shallow/deep、Seam、Interface、Locality、Leverageの関係がsourceに戻れる。
+- 変更を実施したように報告せず、実装やADRの選択肢と次のgateで止まる。
+- 視覚化を作った場合もrepository変更、外部通信、未検証HTMLを残さない。

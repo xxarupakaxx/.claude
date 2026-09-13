@@ -42,6 +42,18 @@
       "prompt": "この関数の呼び出し順だけshow me。HTML文書や長い説明はいりません。",
       "expected_output": "creating-html-documentsは発火せず、show-meが短いcall treeをownerとして返す。source inventory、claim ledger、章立て、自己完結HTMLを追加しない。",
       "files": []
+    },
+    {
+      "id": 8,
+      "prompt": "掛け払いとは何か、決済の知識がまったくない人向けに、その資料だけでドメインを把握できるHTMLにしてください。",
+      "expected_output": "technical-explainer型に初学者向けexplainerの既定が自動で重なる。アナロジーや絵を指示していなくても、主要章に「たとえるなら」と「比喩の限界」、歴史（なぜ生まれたか）の章、場面の絵としてのoverviewと登場人物の地図、章ごとの一枚の絵、仮設の代表ケース時系列、自己テスト、用語集railが揃う。SVGのtext重なり・はみ出し・viewBox外は0。",
+      "files": []
+    },
+    {
+      "id": 9,
+      "prompt": "決済チームの実務者向けに、与信APIの変更差分をレビュー用HTMLにまとめて。",
+      "expected_output": "change-review型。読者が実務者なので初学者向けexplainerの既定は適用せず、アナロジー囲み、歴史の章、身近な例、自己テストを追加しない。before/after、diff、影響範囲、検証結果を優先する。",
+      "files": []
     }
   ]
 }

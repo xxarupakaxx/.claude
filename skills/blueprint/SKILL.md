@@ -1,6 +1,6 @@
 ---
 name: blueprint
-description: "1行の目的から多セッション・多PRの実装計画を生成。各ステップにcold-start context brief（セッション間コンテキスト喪失に耐えうる自己完結的指示）を付与。adversarial review gateで計画の堅牢性を検証。"
+description: "ユーザーが大規模な目的を複数セッション・多PRへ分ける計画を明示したとき、依存DAGと自己完結した cold-start brief を作る。計画の堅牢性に影響するリスクだけを独立レビューする。"
 ---
 
 # Blueprint — 大規模プロジェクト設計図
@@ -16,15 +16,15 @@ description: "1行の目的から多セッション・多PRの実装計画を生
 - 「複数PRに分割して計画して」
 - 「blueprintを作って」
 - `/blueprint <目的>`
-- 明らかに複数セッションが必要な大規模タスク
+- ユーザーが大規模タスクを複数セッションへ分けることに同意した場合
 
 ## プロセス
 
 ### Phase 1: 目的の分解
 
 1. ユーザーの1行目的を受け取る
-2. `exploring-codebase`で現状のアーキテクチャを把握
-3. `learnings-researcher`で過去の類似プロジェクトを検索
+2. 現状の構造が分割や依存に影響する場合だけ、`exploring-codebase` で調べる
+3. ローカルの知見で不足する場合だけ、`learnings-researcher` で類似事例を検索する
 4. 目的を**独立した作業単位（Work Unit）**に分解
 
 ### Phase 2: 依存グラフ構築
@@ -67,7 +67,7 @@ description: "1行の目的から多セッション・多PRの実装計画を生
 
 ### Phase 4: Adversarial Review Gate
 
-`context/workflow-rules.md`の**レビューアー選択ガイド**に従い、Tier 1コア（`arch-reviewer`, `security-reviewer`, `perf-reviewer`）を並列起動 + `implementation-planner`で実装順序・並列化の最適性を検証。
+`context/workflow-rules.md`の**レビューアー選択ガイド**に従い、計画のDoneを変え得る観点だけ（例：`arch-reviewer`、`security-reviewer`、`perf-reviewer`）を独立レビューする。実装順序や並列化が判断点になる場合だけ `implementation-planner` を加える。固定の全員起動や、根拠のない追加ラウンドは行わない。
 
 レビュー指摘を反映して計画を修正。指摘が残る場合は追加ラウンド。
 

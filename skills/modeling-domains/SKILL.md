@@ -1,6 +1,6 @@
 ---
 name: modeling-domains
-description: project の domain model を構築し、磨き続けます。 domain terminology や ubiquitous language を確定したいとき、architectural decision を記録したいとき、または別 skill が domain model の保守を必要とするときに使います。
+description: ユーザーが project の domain model、domain terminology、ubiquitous language の境界を決めたり、関連する architectural decision を整理したりするときに使う。単に既存の CONTEXT.md を読む作業や、別 Skill の暗黙の補助では起動しない。
 ---
 
 # ドメインモデリング

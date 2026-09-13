@@ -1,6 +1,6 @@
 ---
 name: designing-workflows
-description: このワークスペースで構築したいワークフローの仕様について、私を厳しく問い詰める。
+description: ユーザーがワークフロー仕様の設計を明示したとき、一問ずつ問い、trigger・state・checkpointなど必要な語彙だけを確定する。実装や単発修正には使わない。
 disable-model-invocation: true
 argument-hint: "設計するワークフロー。指定がなければ候補を探す"
 ---

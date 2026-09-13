@@ -1,117 +1,72 @@
 ---
 name: playwright-skill
-description: playwright-cli によるブラウザ自動化。CLIコマンドでブラウザ操作（クリック、入力、スクリーンショット、ネットワークモック等）を実行する。Webサイトのテスト、フォーム入力、スクリーンショット取得、レスポンシブ確認、UX検証、ログインフロー検証、リンク切れチェック、あらゆるブラウザ作業の自動化に対応。Webサイトをテストしたい、ブラウザ操作を自動化したい、Web機能を検証したい、またはブラウザベースのテストを行いたい場合に使用する。
+description: "`playwright-cli`でWebページを操作・検証する。ユーザーがブラウザ自動化、フォーム/ログイン検証、screenshot、responsive/UX確認、link切れ、request mockingを依頼したときに使う。"
 allowed-tools: Bash, Read
 ---
 
-# playwright-cli によるブラウザ自動化
+# playwright-cli
 
-## クイックスタート
+CLIのsnapshotで要素IDを確認し、対象ページだけを操作する。表示・読み取りの確認と、フォーム送信・データ変更・購入などの外部writeを分け、後者はユーザーの明示した対象・範囲・操作に限る。
+
+## 基本操作
 
 ```bash
-# 新しいブラウザを開く
-playwright-cli open
-# ページに移動
-playwright-cli goto https://playwright.dev
-# スナップショットで取得した参照IDを使ってページを操作
-playwright-cli click e15
-playwright-cli type "page.click"
-playwright-cli press Enter
-# スクリーンショットを撮る
+playwright-cli open <url>
+playwright-cli goto <url>
+playwright-cli snapshot
+playwright-cli click <element-id>
+playwright-cli fill <element-id> "<value>"
+playwright-cli press <key>
 playwright-cli screenshot
-# ブラウザを閉じる
 playwright-cli close
 ```
 
-## ブラウザ表示モード
+snapshotを読み、古い要素IDや推測したselectorを使わない。コマンドの詳細は `references/command-reference.md`、代表例は `references/usage-examples.md` を必要な場合だけ読む。
 
-デフォルトはヘッドレス（画面なし）。ログイン画面の操作確認やデバッグには `--headed` を使用:
+## headedとsession
 
-```bash
-# ブラウザウィンドウを表示して開く
-playwright-cli open https://app.example.com --headed
-
-# 永続プロファイル + headed（ログイン状態をディスクに保持）
-playwright-cli open https://app.example.com --headed --persistent
-```
-
-## ログイン・認証フロー
-
-### 基本パターン: CLIでログイン → 状態保存 → 再利用
+ログイン画面の確認やdebugだけ `--headed` を付ける。ログイン状態を再利用する場合は、ユーザーが許可したprofileまたは一時的なstate fileを使う。
 
 ```bash
-# 1. ログインページを開く（headed で目視確認したい場合）
 playwright-cli open https://app.example.com/login --headed
-
-# 2. snapshotで要素IDを確認してフォーム入力
 playwright-cli snapshot
-playwright-cli fill e1 "user@example.com"
-playwright-cli fill e2 "password"
-playwright-cli click e3  # ログインボタン
-
-# 3. 認証状態を保存
-playwright-cli state-save auth.json
-
-# 4. 以降のセッションで復元（headlessでもOK）
+playwright-cli fill <user-id> "$USER_EMAIL"
+playwright-cli fill <password-id> "$USER_PASSWORD"
+playwright-cli click <submit-id>
+playwright-cli state-save <task-memory>/auth-state.json
 playwright-cli open https://app.example.com
-playwright-cli state-load auth.json
+playwright-cli state-load <task-memory>/auth-state.json
 ```
 
-### 永続プロファイルパターン（毎回ログイン不要）
+password、token、cookie、localStorageなどのsecretを会話・ログ・commitへ出さない。認証stateはrepoへ置かず `.gitignore` 対象のtask memoryまたは一時pathへ保存し、不要になったら削除する。永続profile（`--persistent`）は保存範囲を説明できる場合だけ使う。session管理の細則は `references/session-management.md` と `references/storage-state.md` を読む。
+
+## artifactの保存
+
+task memoryがある場合、screenshot、PDF、video、trace、snapshot、auth stateは `${MEMORY_DIR}/memory/YYMMDD_<task_name>/` 配下へ保存する。task memoryがなければ `/tmp/` を使う。用途が分かる名前（`screenshot-<用途>.png`、`<page>.pdf`、`recording-<内容>.webm`、`snapshot-<step>.yaml`）にし、秘密や不要なrawデータを残さない。
 
 ```bash
-# 初回: headed + persistent でログイン操作
-playwright-cli open https://app.example.com/login --headed --persistent
-
-# 次回以降: persistent だけで認証状態が維持される
-playwright-cli open https://app.example.com --persistent
+playwright-cli screenshot --filename=<task-memory>/screenshot-top.png
+playwright-cli pdf --filename=<task-memory>/page.pdf
+playwright-cli video-stop <task-memory>/recording.webm
+playwright-cli snapshot --filename=<task-memory>/snapshot.yaml
 ```
 
-### 注意事項
+## 条件付きの詳細
 
-- 認証状態ファイル（auth.json等）はコミットしない（`.gitignore` に追加）
-- 機密情報は環境変数を使用
-- 自動化完了後は状態ファイルを削除
+目的に応じて必要なreferenceだけ読む。
 
-## ファイル出力先ルール（IMPORTANT）
+| 目的 | 参照 |
+| --- | --- |
+| request mocking | `references/request-mocking.md` |
+| page内コード | `references/running-code.md` |
+| storage/auth | `references/storage-state.md`、`session-management.md` |
+| test生成 | `references/test-generation.md` |
+| trace | `references/tracing.md` |
+| video | `references/video-recording.md` |
 
-**タスク作業中（メモリディレクトリが存在する場合）**、スクリーンショット・PDF・ビデオ・トレース等のファイル出力先は、現在のタスクのメモリディレクトリに保存する。
+## 完了確認
 
-```bash
-# 保存先: ${MEMORY_DIR}/memory/YYMMDD_<task_name>/
-# 例: .local/memory/260207_login-test/
-
-playwright-cli screenshot --filename=${MEMORY_DIR}/memory/YYMMDD_<task_name>/screenshot-top.png
-playwright-cli screenshot e5 --filename=${MEMORY_DIR}/memory/YYMMDD_<task_name>/screenshot-element.png
-playwright-cli pdf --filename=${MEMORY_DIR}/memory/YYMMDD_<task_name>/page.pdf
-playwright-cli video-stop ${MEMORY_DIR}/memory/YYMMDD_<task_name>/recording.webm
-playwright-cli snapshot --filename=${MEMORY_DIR}/memory/YYMMDD_<task_name>/snapshot.yaml
-playwright-cli state-save ${MEMORY_DIR}/memory/YYMMDD_<task_name>/auth-state.json
-```
-
-**命名規則:**
-- スクリーンショット: `screenshot-<用途>.png`（例: `screenshot-top.png`, `screenshot-mobile.png`, `screenshot-after-login.png`）
-- PDF: `<ページ名>.pdf`
-- ビデオ: `recording-<内容>.webm`
-- スナップショット: `snapshot-<ステップ>.yaml`
-- ストレージ状態: `state-<用途>.json`
-
-**タスク外（メモリディレクトリがない場合）**: `/tmp/` に保存する。
-
-## コマンド一覧
-
-→ `Read references/command-reference.md` を参照
-
-## 使用例
-
-→ `Read references/usage-examples.md` を参照
-
-## 詳細トピック
-
-* **リクエストモック** [references/request-mocking.md](references/request-mocking.md)
-* **カスタムPlaywrightコードの実行** [references/running-code.md](references/running-code.md)
-* **ブラウザセッション管理** [references/session-management.md](references/session-management.md)
-* **ストレージ状態（Cookie、localStorage）** [references/storage-state.md](references/storage-state.md)
-* **テスト生成** [references/test-generation.md](references/test-generation.md)
-* **トレーシング** [references/tracing.md](references/tracing.md)
-* **ビデオ録画** [references/video-recording.md](references/video-recording.md)
+- 対象URL、操作、期待結果、実際の結果を分けて記録する。
+- 外部writeの送信前に、対象と入力を再確認する。削除、課金、権限変更、公開、メール送信は明示依頼なしに確定しない。
+- screenshotやtraceは必要な画面だけを取り、認証情報を含むものを共有しない。
+- 未接続、ログイン失敗、要素不在、ネットワーク失敗を成功扱いせず、再現条件と残る状態を報告する。

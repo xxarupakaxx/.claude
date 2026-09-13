@@ -48,6 +48,9 @@ description: Clean Architecture + DDD 観点での重要アーキテクチャ判
 - DB クエリ ≠ コントローラ
 - 境界づけられたコンテキストの分離
 
+### 5. 実装方針まで踏み込む
+「運用でなく構造的・実装的な落としどころ」を求められたら、タスク分解で終わらせず具体的なデータモデル・レイヤー実装方針（既存パターンの流用案含む）まで踏み込んで提示する（出典: memories/rollout_summaries/2026-06-18T06-11-03-wIi8-favorite_food_structural_fallback.md「Preference signals」）
+
 ## アンチパターン
 
 - **NIH (Not Invented Here)**: Auth0/Supabase があるのに自前認証 / Redux/Zustand があるのに自前状態管理

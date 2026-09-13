@@ -1,6 +1,6 @@
 ---
 name: find-animation-opportunities
-description: コードベースまたはUIを調べ、アニメーションさせるべきなのに動いていない箇所を見つけ、動かすべきでない候補は除外する。読み取り専用であり、正確な値を使ったモーションを提案するが、実装は行わない。ユーザーから「ここで何をアニメーションさせられるか」または「もっと生き生きと感じられるようにしたい」と求められたときに使う。既存アニメーションの修正には、improve-animationsまたはreview-animationsを使う。
+description: ユーザーが「どこをアニメーションさせるべきか」「もっと生き生きと感じさせたい」と明示したとき、コードまたは UI の未充足な motion opportunity を読み取り専用で選別する。既存 motion の修正や実装には使わない。
 ---
 
 # アニメーションの機会を見つける
@@ -12,7 +12,7 @@ description: コードベースまたはUIを調べ、アニメーションさ�
 ## 探索姿勢
 
 **節度**を最も重視するシニアデザインエンジニアとして振る舞う。
-このスキルは、Emil Kowalskiの["You Don't Need Animations"](https://emilkowal.ski/ui/you-dont-need-animations)を前提にする。
+このスキルは「必要な motion だけを残す」という Emil Kowalski の設計思想を参考にする。
 最良のアニメーションが、アニメーションしないことである場合もある。
 あらゆる箇所にモーションを提案する探索は役に立たないだけでなく、このリポジトリが避けようとしている、鈍く過剰にアニメーションするインターフェースを生み出す。
 
@@ -37,15 +37,12 @@ description: コードベースまたはUIを調べ、アニメーションさ�
 
 | 頻度 | 判定 |
 | --- | --- |
-| 1日100回以上（keyboard shortcuts、command palette、core navigation） | **棄却する。アニメーションさせない。例外はない** |
+| 1日100回以上（keyboard shortcuts、command palette、core navigation） | **原則として棄却する。待ち時間を生む motion は提案しない** |
 | 1日数十回（hover states、list navigation、頻繁なtoggles） | 棄却するか、ほとんど知覚できないモーション（速く、控えめ）だけを提案する |
 | ときどき（modals、drawers、toasts、settings） | 標準的なアニメーションの候補になる |
 | まれ、または初回（onboarding、empty states、success、celebration） | 候補になる。楽しさを加える予算はここに使う |
 
-キーボード起点の操作（command palettes、shortcuts、focus jumps）は、判断の余地なく失格とする。
-1日に数百回繰り返されるため、アニメーションがあると遅く、反応が遅延し、操作と分断されているように感じる。
-Raycastにはopenまたはcloseのアニメーションがない。
-それが最適な体験である。
+キーボード起点の操作（command palettes、shortcuts、focus jumps）は、通常は即時にする。例外を提案するなら、遅延を生まない理由と実測した効果を明記する。
 
 ### 2. 目的：なぜアニメーションさせるのか
 
@@ -63,14 +60,14 @@ Raycastにはopenまたはcloseのアニメーションがない。
 
 ### 3. 速度：予算内に収められるか
 
-提案は標準予算内で成立しなければならない（UIは300ms未満）。
+提案は標準予算内で成立しなければならない。短い UI feedback は300ms未満を起点にし、modal / drawer や説明的な motion は内容と入力のために長くする理由を示す。
 
 | 要素 | 時間 |
 | --- | --- |
 | Press feedback | 100–160ms |
 | Tooltips、small popovers | 125–200ms |
 | Dropdowns、selects | 150–250ms |
-| Modals、drawers | 200–500ms |
+| Modals、drawers | 200–500ms（理由がある場合） |
 | Marketingまたはexplanatory | 長くてもよい |
 
 遅く目立つアニメーションでなければ成立しない候補は、Gateを通過できない。
@@ -118,8 +115,8 @@ Raycastにはopenまたはcloseのアニメーションがない。
 
 ## Workflow
 
-1. **Recon。** stack、motion libraries、既存のeasingまたはduration tokensを特定する。提案ではparallelなtokenを新設せず、既存tokenを拡張する。プロダクトの性格も特定する。きびきびとしたdashboardでは、遊び心のあるconsumer appより提案を少なく控えめにする。評価対象となるsurfacesについて、大まかなfrequency mapを作る。
-2. **Sweep。** 前述の探索一覧を調べる。すべての継ぎ目の分類について、`file:line`を伴う候補を見つけるか、該当なしと明記した時点で完了する。
+1. **Recon。** stack、motion libraries、既存のeasingまたはduration tokensを特定する。提案ではparallelなtokenを新設せず、既存tokenを拡張する。プロダクトの性格と、評価対象 surface の頻度を確認する。
+2. **Sweep。** 対象に関係する継ぎ目だけを調べ、`file:line`を伴う候補と、調べた範囲で該当しなかった重要箇所を記録する。
 3. **Gate。** すべての候補を4問に通す。厳しく選別する。
 4. **Report。** 後述の形式で報告する。通過する候補がない場合は、そのまま明記する。それは失敗ではなく、よい結果である。
 
@@ -134,9 +131,9 @@ Raycastにはopenまたはcloseのアニメーションがない。
 | 1 | `Toast.tsx:41` | 新しいtoastsが即座に現れる | 唐突な変化の防止 | ときどき | `@starting-style`でenterする：`opacity: 0; translateY(100%)` → settled、`transition: 400ms ease`。同じ辺からexitする |
 | 2 | `Button.tsx:18` | press feedbackがない | フィードバック | 1日数十回 | `:active { transform: scale(0.97) }`、`transition: transform 160ms ease-out`。この頻度区分に合う控えめなモーション |
 
-すべての「Suggested motion」セルに、曲線、時間、プロパティの正確な値を記載する。
+すべての「Suggested motion」セルに、採用する曲線、時間、対象 property の値を記載する。`clip-path`、height、color などを選ぶ場合は、transform / opacity だけでは目的を満たせない理由と性能・reduced-motionの扱いも記す。
 このリポジトリで共有されている語彙（`--ease-out: cubic-bezier(0.23, 1, 0.32, 1)`、`--ease-in-out: cubic-bezier(0.77, 0, 0.175, 1)`、`--ease-drawer: cubic-bezier(0.32, 0.72, 0, 1)`）から取得し、近似しない。
-アニメーションの対象は`transform`と`opacity`だけにする。
+既定の対象は`transform`と`opacity`とし、他の property は目的、browser 性能、代替を確認してから提案する。
 reduced-motion対応はゼロではなく穏やかな動きとして含める。
 提案にhoverが含まれる場合は、`@media (hover: hover) and (pointer: fine)`による制限も含める。
 

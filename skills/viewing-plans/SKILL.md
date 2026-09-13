@@ -6,64 +6,58 @@ allowed-tools: Read
 
 # Viewing Plans
 
-このSkillは保存済み計画を安全に表示する補助である。`30_plan.html`が人とLLMの共有する計画の正本、`roadmap.html`と`roadmap-snapshot.json`は共通parser/generatorによる派生表示である。新しい計画で`30_plan.md`を作らない。本文をHTMLで直接管理し、派生表示のCSS/JavaScriptやJSONを手で補正しない。
+このSkillは、保存済みの計画を安全に表示する補助である。新しい計画の正本は、head・style・bodyを備えた完成済みの`30_plan.html`である。`roadmap.html`はそのDOMとCSSを保ったまま同期した表示で、末尾に機械用の不活性な`embedded-snapshot`を持つ。`roadmap-snapshot.json`はTaskを索引する機械用viewであり、本文の章立てや表示内容を作り直す入力ではない。
 
-本文、変更前後、実装内容、source根拠、検証、依存図を初期表示する。重要情報をdrawerやtabに隠さず、本文にない完了・担当・期限・因果を補わない。
+新しい計画は、なぜ行うか、到達点、実装するコードと構造、根拠、検証を目に見える本文へ書く。Taskは成果物や判断のまとまりで置き、本文にない担当・期限・完了・因果を表示側で補わない。計画のsource生成、UI mock、architecture図の作成はauthoring中に終え、ブラウザはsourceや図を生成しない。
 
-計画全体の依存図は、共通generatorが固定Archifyエンジンから生成する。本文の変更時に自動更新し、白基調の検証済みSVGを冒頭で表示する。入力・失敗表示・実行制限は [Archify overview contract](references/archify-overview.md) に従う。
-
-## Routeと実行者
+## Route
 
 | route | 条件 | 成果物 |
 |---|---|---|
-| explicit-roadmap | 計画書またはRoadmap表示の明示要求 | 30_plan.html → sync → roadmap.html |
-| roadmap | 設計判断、複数工程、依存、継続共有がある | 同上 |
-| log-only | 既知手順を一回の実行・検証で閉じる | 05_log.mdのみ |
+| `explicit-roadmap` | 計画書またはRoadmap表示を明示された | `30_plan.html` → sync → `roadmap.html` |
+| `roadmap` | 設計判断、複数工程、依存、継続共有または引継ぎがある | 同上 |
+| `log-only` | 既知手順を一回の実行・検証で閉じる | `05_log.md`のみ |
 
-routeはfile数で選ばない。詳細はcontext/workflow-rules.mdを使う。このSkillの権限はReadだけであり、計画の保存・sync・ブラウザ起動は呼出元のleadが既存権限で行う。
+routeはfile数で選ばない。詳細は`context/workflow-rules.md`を使う。このSkillの権限はReadだけであり、保存・sync・ブラウザ起動は呼出元のleadが既存権限で行う。
 
-<!-- viewer-codemap-preflight:start -->
-コード変更では最初のedit前にCodemap preflightを実行する。missing / stale / mismatch / insufficientならcontext/codemap.mdに従ってrefreshする。log-onlyでもsource freshnessは確認する。
-<!-- viewer-codemap-preflight:end -->
-
-## Workflow
+## Authoringと同期
 
 1. taskをsession/thread IDの完全一致で特定する。更新時刻や似たtitleだけで選ばない。
-2. 共通source resolverで正本を選ぶ。HTMLがあれば唯一の入力とし、不正・symlink等を旧MDで隠さない。HTMLがない既存taskだけ30_plan.mdをlegacyとして読める。
-3. 必要な計画本文・Task・根拠だけをtask-contextから読む。会話全文、HTMLの装飾・runtime code全文、不要なartifactをcontextへ投入しない。
-4. Phase artifactとDelegation Decisionを保存して、trusted local executorから同期する。
+2. HTMLがある場合は唯一の入力とし、不正なHTMLを旧MDで隠さない。既存taskでHTMLがない場合だけ`30_plan.md`をlegacy入力として読める。
+3. `30_plan.html`の本文に背景・目的・outcome、変更対象、実装コードとarchitecture/data flow、成果物、evidence、verificationを置く。Taskの進捗・依存・acceptance・source根拠も同じ本文へ結ぶ。
+4. UI変更は`ui-change-preview.md`に従い、確認済みsourceに基づく実DOM mockをTask内へ置く。architecture図は明示した`diagramData`を`plan_architecture.py`へ渡し、authoring中に対応するfigureへ検証済みSVGを書き込む。`--check`は現在のfragmentとSVGをread-onlyで確認する。
+5. `~/.claude/scripts/sync-roadmap.py`を同じTASK、workspace root、run-idで実行する。syncは完成済みHTMLとarchitecture図を検証してから、HTMLをDOM/CSSごとコピーする。snapshotはTask索引を保存するだけである。
+6. 検査済みの`roadmap.html`を通常ブラウザで一度開く。以後は同じfileを更新し、tabやViewerを自動追加しない。
 
-    python3 ~/.codex/scripts/sync-roadmap.py TASK --workspace-root WORKSPACE --memory-root MEMORY/memory --run-id RUN --phase 2
+新しい`30_plan.html`をブラウザやgeneratorがTask cardへ再構成してはならない。生成された`embedded-snapshot`は表示の正本ではなく、source hash・Task・検証結果を同期する不活性JSONである。
 
-phaseは2/3/4/5。同じtask/root/run-idを継続して使い、主経路失敗を旧generatorで隠さない。Claudeもこの共通CLIを使う。
+## UI変更とarchitecture
 
-5. 検査済みroadmap.htmlを通常ブラウザで一度開く。以後は同じfileを更新し、tabやViewerを自動追加しない。workflow-html-app MCPは使わない。
+計画本文のUI/UXは[creating-html-documents](../creating-html-documents/SKILL.md)のeditorialな文書設計と、同Skillが指定するテンプレートを参考にしてよい。結論と現在地を冒頭へ置き、関係が複数にまたがる場合は短いorientationと既存のArchify overviewから、実UI比較・コード・検証根拠へ進める。本文を主役にし、余白・見出し・罫線で階層を作る。system font、15–17pxの本文、1.75–1.95の行間、控えめなaccent、必要な場合だけ250–310pxの補助railを起点にする。本文をKPI card群へ分解せず、重要情報をrailや折り畳みに隔離しない。
 
-watchと複数taskのHubは横断確認を明示した場合だけ使う。ログと検証は同じページで確認し、必要な正本へのリンクを渡す。
+取り入れるのは計画書の読みやすさと情報の順序である。比較対象のBeforeまでreferenceの配色へ着せ替えず、対象componentのDOM・styleと固定source根拠を維持する。別の完成HTMLや第二のviewerは作らず、構成図は検証済みArchify SVGを同じ正本へ置く。`html-plan`の既存static / browser gateを、reference Skillのdesktop-only既定で緩和しない。
 
-## HTML正本の契約
+UI変更のBefore / Afterは同じTask内の実際のHTML mockを表示する。UI mockはLLM自身が対象sourceを読んでauthoringし、ユーザーへmetadata入力を求めない。Beforeは40桁commit SHAで確認したcomponent、直接import、局所styleを根拠にし、Afterは計画に書いた未実装案だけを表す。Before/Afterのcaption、anchor、unknownの扱いは[UI Change Preview Runbook](references/ui-change-preview.md)へ集約する。sourceを確認できない箇所は補作せず、未確認理由を残す。
 
-具体的なHTML形式はcontext/memory-file-formats.mdと共通parserを参照する。背景・目的・到達点・全体の進め方を先に示し、Taskは成果物や判断のまとまりにする。fileごとの細分化をしない。
+計画のarchitecture図はTask順や旧Codemapから自動生成しない。実際のcomponentとdata flowを表す明示fragmentだけをArchifyへ渡す。入力、固定runtime、cache、失敗時の表示は[Archify overview contract](references/archify-overview.md)に従う。旧`codemap.*`は履歴互換用であり、新しい計画の入力・preflight・図には使わない。
 
-見える本文を正本とし、steps・status・blockedBy・acceptance・sourceを同じTaskへ結ぶ。同fileのJSONはUI preview/diagramの機械用情報に限定し、本文を重複させない。新HTMLの進捗はHTML自身が所有し、40_progress.mdで上書きしない。raw UTF-8 bytesからsource hashを計算する。
+## 実装へ渡す前の確認
 
-UI変更のBeforeは実sourceと40桁commit SHA、Afterは計画、unknownは未確認事項として分離する。ユーザーにmetadata入力を求めず、LLM自身が対象sourceから記録する。詳細は~/.codex/skills/viewing-plans/references/ui-change-preview.md。実コードは明示repo参照だけから取得し、変更対象名から推測しない。
-
-Code Mapはfreshなcodemap.json / codemap.lockだけを本文で表示する。roadmapのmtimeでfreshnessを代用しない。invalid v2や不正なHTML本文をlegacy Task抽出で隠さない。旧MD-only taskと古いsnapshotの互換読込だけは残す。
+表示成功は実装開始条件を満たした意味ではない。[計画から実装への判断契約](../../context/plan-execution-contract.md)の本文fieldと独立審査を用意し、task-context.pyの`--execution`で確認する。未審査でもPhase 2で表示して計画をレビューできる。
 
 ## 表示完了の確認
 
-表示の完了判定は次の層を分ける。
+- **機械判定**: parser、schema、raw source hash、UI anchor、architecture `--check`、sync、static gate。
+- **内容確認**: why、outcome、実装コード、根拠、検証、未確認事項を本文で読めること。
+- **利用可能性**: 生成されたHTMLのpath、ブラウザ起動、表示、source/図へのリンク到達。
+- **確認導線**: 次に判断・操作する場所と残るunknown。
 
-- **機械判定**: parser、schema、source hash、link、sync、static gateの結果。
-- **内容確認**: 目的、Task、acceptance、依存、未完了、正本へ戻れる根拠を読める形で確認した結果。
-- **利用可能性**: 生成されたHTMLのpath、ブラウザ起動、表示、リンク到達を実際に確認した結果。
-- **確認導線**: 利用者が次に判断・操作する場所と、未確認事項。機械判定だけで理解済み・実行可能・完了とは扱わない。
-
-HTMLの生成、ローカルでの表示、外部公開、TaskやIssueのCloseは別の状態である。表示しただけで公開・Close・ユーザー確認済みへ進めず、未確認のsourceやリンクは未確認として残す。既存承認の対象と影響を変えない表示確認に、段階ごとの一律な再承認を追加しない。公開、状態変更、対象拡大が必要な場合だけ、その具体的な操作を別の承認境界へ戻す。
+HTML生成、ローカル表示、外部公開、TaskやIssueのCloseは別の状態である。表示しただけで公開・Close・ユーザー確認済みへ進めない。
 
 ## Security
 
-source previewはallowlist内の相対pathに限定し、secret・個人ノート・symlink・binary・非UTF-8・過大fileを表示しない。HTML本文も未信頼データとして許可要素・属性だけを表示し、script、event handler、外部loadを拒否する。ローカルHTMLはMCP接続や親windowとの通信なしで開き、CSPで外部loadを禁止する。新しい図の正本はSVG。外部writeや追加権限をこのSkillでは承認しない。
+planのsource previewはallowlist内の相対pathに限定し、secret・個人ノート・symlink・binary・非UTF-8・過大fileを表示しない。本文のHTMLは許可されたsemantic要素・属性だけを使い、scriptの実行、event handler、外部load、外部resourceを許可しない。UI mockのstyleはhead内に置き、確認できたcomponentと直接importのstyleから再現する。実行時data、未知のpixel値、外部URLは推測しない。
 
-関連: context/workflow-rules.md、context/memory-file-formats.md、context/codemap.md、context/html-artifact-contract.md、config/html-surfaces.json、~/.codex/skills/viewing-plans/references/ui-change-preview.md。
+ローカルHTMLはMCP接続や親windowとの通信なしで開く。新しい図の正本はSVGである。外部writeや追加権限をこのSkillで承認しない。
+
+関連: `context/workflow-rules.md`、`context/memory-file-formats.md`、`context/html-artifact-contract.md`、`config/html-surfaces.json`、`references/ui-change-preview.md`、`references/archify-overview.md`。

@@ -1,6 +1,6 @@
 ---
 name: improving-architecture
-description: 既存コードベースのアーキテクチャを段階的に改善するスキル。Ousterhout「A Philosophy of Software Design」のDeep Module概念を判断基準に、Shallow Module検出・Deletion Test・Seam抽出・Locality重視の改善を行う。「アーキテクチャを改善して」「設計が複雑」「リファクタしたい」「improving-architectureして」等の依頼に対応。大規模リファクタ前の方針決め、コードレビューでの設計コメント、技術的負債の解消計画策定時に使用。Phase 1で対象スコープを限定し、Phase 2でShallow/Deepを判定、Phase 3でDeletion Testを適用、Phase 4で改善案を提示、Phase 5でADR化（重要判断時）。
+description: 既存コードのアーキテクチャを read-only で調査し、Deep Module・Deletion Test・Seam・Localityに基づく改善案と実装引継ぎを作るスキル。「アーキテクチャを改善して」「設計が複雑」「リファクタ方針を決めたい」など、設計判断が必要な依頼で使う。実装、ADR作成、commitは別の明示された作業へ引き継ぐ。
 allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Task
 ---
 
@@ -120,9 +120,9 @@ rg "^import.*from '@/foo/internals'" --count-matches
 - リスク: [後方互換性等]
 ```
 
-### 4.3 並列で複数案を生成
+### 4.3 必要な場合だけ複数案を比較
 
-非自明な改善は `brainstorming` で案を比較し、`designing-codebases` で境界とinterfaceを評価する。
+非自明な改善だけ、`brainstorming` で案を比較し、`designing-codebases` で境界とinterfaceを評価する。各Skillが使えない場合は、その欠落を記録して自分の証拠と推論を分ける。
 
 ## Phase 5: ADR化（重要判断時のみ）
 
@@ -135,17 +135,15 @@ rg "^import.*from '@/foo/internals'" --count-matches
 
 ## Phase 6: 段階的適用
 
-### 6.1 1コミット1改善
+### 6.1 実装への引継ぎ
 
-- 大きなリファクタは1PRに詰めない
-- 1つの改善 = 1コミット = テストグリーン状態を維持
+- 大きなリファクタは小さな論理単位へ分ける案として提示する。
+- 変更対象、移行順、互換性、必要な検証を明記し、実装者へ渡せる状態にする。
+- コード、設定、ADR、issue、commitはこのSkillの実行中に変更しない。
 
 ### 6.2 検証
 
-CLAUDE.mdワークフロー Phase 4と統合:
-- lint/format/typecheck/test
-- 専門サブエージェント（`arch-reviewer` 必須）でレビュー
-- Sprint Contractがあれば `/verify`
+現状の証拠を取得する範囲で、既存のlint/format/typecheck/test結果や再現手順を確認する。未実行の検証を実行済みと扱わず、必要な検証を引継ぎに列挙する。専門reviewerは設計判断の不確実性と影響に応じて選ぶ。
 
 ## アンチパターン
 

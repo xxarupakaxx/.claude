@@ -1,111 +1,51 @@
 ---
 name: tdd
-description: テスト駆動開発（Test-Driven Development）スキル。Red-Green-Refactorサイクルを厳格に運用し、テストを先に書いてから実装する。「TDDで進めて」「先にテスト書いて」「Red-Green-Refactor」「tddして」等の依頼時、または新規ロジック実装・バグ修正・リファクタの安全網が欲しい場合に使用。Phase 1で要件をテスト1個に変換、Phase 2でRed（失敗するテスト）、Phase 3でGreen（最小実装で通す）、Phase 4でRefactor（テストを通したまま設計改善）。詳細はreferences/tests.md・mocking.md・deep-modules.md・interface-design.md・refactoring.md参照。
+description: 新規ロジックやバグ修正をRed-Green-Refactorでテスト先行に進める。ユーザーがTDDを明示したとき、または回帰安全網を先に作る価値がある変更に使う。
 allowed-tools: Read, Grep, Glob, Bash, Edit, Write
 ---
 
 # Test-Driven Development
 
-> Red → Green → Refactor を1サイクル30分以内で回す。
-
-## CRITICAL: サイクルの厳守
-
-TDDは「テスト先行」だけではない。次の **3フェーズを順に踏む** ことが本質:
-
-1. **Red**: 失敗するテストを1つ書く（実装はまだない/不完全）
-2. **Green**: テストを通す **最小限** のコードを書く（汚くてよい）
-3. **Refactor**: テストを通したまま設計を改善する（緑のまま）
-
-各フェーズの詳細ルールは references/ を参照:
+テストで観測できる振る舞いを一つずつ固定し、Red → Green → Refactorを繰り返す。詳細な判断は必要なときだけ参照する。
 
 | 関心事 | 参照 |
-|-------|------|
-| テスト粒度・命名・AAA | `references/tests.md` |
-| Mock の境界・使いどころ | `references/mocking.md` |
-| Deep Module を促す書き方 | `references/deep-modules.md` |
-| Interface 設計とTDD | `references/interface-design.md` |
-| Refactor フェーズの方針 | `references/refactoring.md` |
+|---|---|
+| 粒度、命名、AAA | references/tests.md |
+| 外部境界とmock | references/mocking.md |
+| deep module | references/deep-modules.md |
+| interface設計 | references/interface-design.md |
+| refactor | references/refactoring.md |
 
-## Phase 1: 要件のテスト化
+## サイクル
 
-### 1.1 ToDo リスト
+### 1. 要件をケースへ落とす
 
-実装前に、観測可能な振る舞いを箇条書きで列挙:
+実装前に、入力・観測可能な出力・エラーを箇条書きにする。正常系、境界、異常系の順は目安であり、依存が少なく設計を確かめやすいケースを選ぶ。既存テストの存在だけを期待値の証拠にせず、業務上の比較対象を確認する。似た名前の値はfixtureを分け、誤ったキーなら落ちるようにする。
 
-```
-- [ ] 空配列を渡すと 0 を返す
-- [ ] 1要素なら要素自身を返す
-- [ ] 負数を含むと InvalidInputError を投げる
-- [ ] ...
-```
+### 2. Red
 
-このリストが**テストの設計図**。1項目=1テスト。
+一サイクルにつき意味のある最小のテストを一つ追加する。テストランナーで、そのテストが想定した理由で失敗することを確認する。コンパイルエラーも、要求を表す失敗ならRedとして記録する。
 
-### 1.2 順序の選定
+### 3. Green
 
-依存の少ない・自明なものから:
-1. 最も単純な正常系（空入力、null、1件）
-2. 主要な正常系
-3. エッジケース
-4. エラーケース
+失敗したケースを通す最小実装だけを書く。テストにない仕様や将来の抽象化を足さない。対象テストと既存の影響範囲を実行し、既存回帰があれば原因を切り分ける。
 
-詳細: `references/tests.md`
+### 4. Refactor
 
-## Phase 2: Red
+テストを通したまま命名、重複、境界、moduleの深さを改善する。機能追加や期待値の変更が必要になったら別サイクルへ戻る。各変更後に対象テストを再実行する。
 
-### 2.1 失敗するテストを1つ書く
+## 境界と検証
 
-- 1サイクルで足すテストは **1つだけ**
-- 「コンパイルエラー」も Red にカウント
-- テスト名は「〜すべき」形式（`testing.md` ルール準拠）
+DB、API、時刻、乱数などのsystem boundaryは安定したテストダブルへ切り出す。内部実装の細部を過剰にmockせず、公開された振る舞いを検証する。プロジェクトの必須手順に従い、サイクル完了後に必要なlint、typecheck、testを実行する。失敗を修正したら影響する検証を再実行する。
 
-### 2.2 失敗を確認
+作業を止める条件は、要求が観測できない、Redが意図した理由で失敗しない、またはGreenが既存挙動を壊す場合。要件や公開interfaceが未確定なら、brainstormingや設計の参照を先に使う。
 
-- 必ずテストランナーで赤を見る（書いただけで満足しない）
-- 失敗メッセージが**意図通り**かを確認（別の理由で落ちていたら設計ミス）
+## 避けること
 
-## Phase 3: Green
+- テストなしで実装し、後から期待値を合わせる
+- 一サイクルで無関係なケースをまとめて追加する
+- Refactor中に新機能を混ぜる
+- 実装詳細に結び付いたmockや、環境へ直接つなぐflaky testを増やす
+- it("test1") のように振る舞いを表さない名前を使う
 
-### 3.1 最小実装
-
-- 「最も汚い実装」で構わない（hard-code, if-else連発OK）
-- 目的は **緑にすること** であり、設計ではない
-- 「テストにないケースは実装しない」原則（YAGNI）
-
-### 3.2 緑の確認
-
-- 全テストを実行（既存テストの破壊回帰がないか確認）
-- このタイミングで `git add -A && git commit` 推奨（緑状態を保存）
-
-## Phase 4: Refactor
-
-### 4.1 緑のまま改善
-
-- テストを変更してはいけない（変更が必要なら別サイクル）
-- 改善の判断軸は `references/refactoring.md` と `improving-architecture` スキル
-- Deep Module を意識した内部整理（`references/deep-modules.md`）
-
-### 4.2 テストの再実行
-
-- リファクタの度にテスト実行（5秒以内が理想）
-- 緑→緑を維持しているか毎回確認
-
-## Phase 5: 次サイクルへ
-
-ToDoから次の項目を選び、Phase 2へ戻る。
-全項目が完了したら **CLAUDE.mdワークフロー Phase 4** へ合流（lint/typecheck/専門レビュー）。
-
-## アンチパターン
-
-- **Red をスキップ**: テストを書かずに実装→後でテスト追加
-- **複数テスト同時追加**: 1サイクル1テストの原則違反
-- **Refactor 中の機能追加**: テストを増やしながらリファクタ→赤が混入
-- **Mock しすぎ**: 内部詳細をモックして実装変更で全テスト破綻（`references/mocking.md`）
-- **System Boundary を Mock し忘れ**: DB/API/時刻/乱数を直叩き→フレーキー
-- **テスト命名が手抜き**: `it("test1")` のような無意味な名前
-
-## 関連スキル
-
-- `improving-architecture`: Refactorフェーズの方針提供
-- `brainstorming`、`designing-codebases`: 公開Interfaceの案と境界を確認してからTDD
-- `diagnosing-bugs`: バグ修正TDD（最小再現テスト→修正）
+ケースが完了したら次のケースを選び、全ケース後はプロジェクトの通常の実装完了・review routeへ戻る。

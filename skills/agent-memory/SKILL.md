@@ -1,6 +1,6 @@
 ---
 name: agent-memory
-description: "メモリの保存・想起・整理を依頼された場合に使用。トリガー: '覚えて'、'保存して'、'メモして'、'〜について何を話した？'、'ノートを確認'、'メモリを整理'。価値ある発見を保存すべき場合はプロアクティブに使用。"
+description: "記録済みの知見を保存・想起・整理するときに使用する。明示的な『覚えて』『保存して』や、過去の判断を確認する依頼が対象で、通常のノート編集や一時的な会話には使わない。"
 allowed-tools: Read, Write, Grep, Glob
 ---
 
@@ -33,13 +33,14 @@ allowed-tools: Read, Write, Grep, Glob
 2. memories/のsummaryを検索
 3. 該当するmemory/ディレクトリの詳細を参照
 
-## Proactive Usage
+## 適用境界
 
-**Save memories when:**
-- タスク完了時に価値ある知見があった
-- 調査で重要な発見があった
-- トリッキーな問題を解決した
-- アーキテクチャの決定をした
+保存・想起・整理は、ユーザーの明示依頼、または上位 workflow が再利用可能な知見の永続化を明示した場合に行う。タスク完了や調査成功だけで毎回保存を始めず、価値がありそうな場合は候補を示してから保存する。
+
+**保存候補の例:**
+- 調査で検証済みの重要な発見がある
+- トリッキーな問題を解決し、再発条件が分かる
+- アーキテクチャの決定が明示的に記録された
 
 本人の選好や作業上の指示を保存する場合は、本人が明示した現在の選好だけを `current` として扱い、対象・時点・根拠を添える。汎用Skillへ本人の役割、私的事実、関係者、案件固有の許可を複写しない。
 
@@ -118,11 +119,10 @@ rg "keyword" .local/memories/ --no-ignore --hidden -i
 
 ### Save
 
-タスク完了時に価値ある知見をインデックス化:
+タスク完了時に、後で再利用できる知見だけをインデックス化する。`Write` toolで新規ファイルを保存し、必要なら先に親ディレクトリを作る。
 
-```bash
-mkdir -p .local/memories/category-name/
-cat > .local/memories/category-name/topic.md << 'EOF'
+```markdown
+<!-- Write .local/memories/category-name/topic.md -->
 ---
 summary: "簡潔な説明"
 created: 2026-01-14
@@ -139,7 +139,6 @@ related:
 
 ## 詳細
 → related参照
-EOF
 ```
 
 ### Maintain

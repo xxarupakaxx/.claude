@@ -1,178 +1,63 @@
 ---
 name: root-cause-tracing
-description: Use when errors occur deep in execution and you need to trace back to find the original trigger - systematically traces bugs backward through call stack, adding instrumentation when needed, to identify source of invalid data or incorrect behavior
+description: 実行の深い場所で発生したerrorや不正データを、症状からcall chainと入力の生成元へ逆向きにたどる。stack trace、instrumentation、テスト起因の診断を依頼されたときに使う。
 ---
 
-# ルートコーズトレーシング（根本原因追跡）
+# ルートコーズトレーシング
 
-## 概要
+エラーが表示された行だけを直さず、直接の原因、呼出元、渡された値、最初の不正入力を確定してsourceで修正する。入口が不明、stackが長い、同じ症状が複数経路から出る場合に適用する。
 
-バグはコールスタックの深い場所で発現することが多い（間違ったディレクトリでのgit init、間違った場所へのファイル作成、間違ったパスでのデータベースオープン）。エラーが表示される場所で修正しようとするのが本能だが、それは症状の対処に過ぎない。
+## トレース
 
-**核心原則:** 元のトリガーを見つけるまでコールチェーンを逆方向にたどり、ソースで修正する。
+1. **症状を固定**: 完全なerror、実行時点、対象path、入力、環境、再現条件を保存する。
+2. **直接の原因**: 失敗した操作を呼ぶfile・symbol・引数を確認する。エラー文だけで根本原因と断定しない。
+3. **一段上へ戻る**: caller、さらにcallerへ進み、各段で何を呼び、どのpayload/値を渡したかを記録する。
+4. **最初の不正値**: 空値、既定値、変換、fixture、設定、環境のどこで誤った値が生まれたかを特定する。import経路と実行入口をsourceで確定する。
+5. **sourceを直す**: 生成元または境界で修正し、必要なら下流の複数層にもvalidation・guard・明確なerrorを置く。
+6. **再現と回帰**: 元の再現、原因境界のtest、関連する回帰確認を実行し、instrumentationを不要なら削除する。
 
-## 使用タイミング
+トレースが外部権限、環境差、未接続サービスで止まったら、推測で埋めず、最後に確認できた値と外部要因を分けて報告する。
 
-```dot
-digraph when_to_use {
-    "バグがスタックの深い場所で発生？" [shape=diamond];
-    "逆方向にたどれる？" [shape=diamond];
-    "症状の場所で修正" [shape=box];
-    "元のトリガーまでたどる" [shape=box];
-    "より良い: 多層防御も追加" [shape=box];
+## 計装
 
-    "バグがスタックの深い場所で発生？" -> "逆方向にたどれる？" [label="yes"];
-    "逆方向にたどれる？" -> "元のトリガーまでたどる" [label="yes"];
-    "逆方向にたどれる？" -> "症状の場所で修正" [label="no - 行き止まり"];
-    "元のトリガーまでたどる" -> "より良い: 多層防御も追加";
-}
-```
-
-**使用する場面:**
-
-- エラーが実行の深い場所で発生（エントリーポイントではない）
-- スタックトレースが長いコールチェーンを示す
-- 無効なデータがどこで発生したか不明
-- どのテスト/コードが問題を引き起こしているか特定が必要
-
-## トレーシングプロセス
-
-### 1. 症状を観察
-
-```
-Error: git init failed in /Users/jesse/project/packages/core
-```
-
-### 2. 直接の原因を見つける
-
-**どのコードがこれを直接引き起こしているか？**
+静的な追跡で行き止まりになったときだけ、危険な操作の**前**に一時的な計装を置く。テストではloggerが抑制されることがあるため `console.error()` を使う。
 
 ```typescript
-await execFileAsync('git', ['init'], { cwd: projectDir });
-```
-
-### 3. 問う: 何がこれを呼び出したか？
-
-```typescript
-WorktreeManager.createSessionWorktree(projectDir, sessionId)
-  → called by Session.initializeWorkspace()
-  → called by Session.create()
-  → called by test at Project.create()
-```
-
-### 4. 上方向にたどり続ける
-
-**どの値が渡されたか？**
-
-- `projectDir = ''`（空文字列！）
-- `cwd`としての空文字列は`process.cwd()`に解決される
-- それがソースコードディレクトリ！
-
-### 5. 元のトリガーを見つける
-
-**空文字列はどこから来たか？**
-
-```typescript
-const context = setupCoreTest(); // Returns { tempDir: '' }
-Project.create('name', context.tempDir); // beforeEachの前にアクセス！
-```
-
-## スタックトレースの追加
-
-手動でたどれない場合、計装を追加:
-
-```typescript
-// 問題のある操作の前に
-async function gitInit(directory: string) {
-  const stack = new Error().stack;
-  console.error('DEBUG git init:', {
+async function riskyOperation(directory: string) {
+  console.error('DEBUG riskyOperation', {
     directory,
     cwd: process.cwd(),
     nodeEnv: process.env.NODE_ENV,
-    stack,
+    stack: new Error().stack,
   });
-
-  await execFileAsync('git', ['init'], { cwd: directory });
+  return runOperation(directory);
 }
 ```
 
-**重要:** テストでは`console.error()`を使用（loggerではない - 表示されない可能性がある）
-
-**実行してキャプチャ:**
+操作後ではなく直前に、path/cwd、必要な環境、timestamp、入力の安全な要約、完全なstackを出す。秘密、token、個人情報、raw requestをログや委譲へ渡さない。取得したログは目的のpatternだけを絞って読む。
 
 ```bash
-npm test 2>&1 | grep 'DEBUG git init'
+npm test 2>&1 | grep 'DEBUG riskyOperation'
 ```
 
-**スタックトレースを分析:**
+計装は原因確認後に削除または最小化し、デバッグ出力を本番へ残さない。`git init`、file write、DB openなどpathを受ける操作は、空値・相対path・許可rootを境界で検証する。
 
-- テストファイル名を探す
-- 呼び出しをトリガーする行番号を見つける
-- パターンを特定（同じテスト？同じパラメータ？）
+## 多層防御
 
+根本修正に加え、同じ誤りが別経路から入る場合だけ層を追加する。
 
+| 層 | 例 |
+| --- | --- |
+| input boundary | 必須値、型、許可されたpath/範囲 |
+| domain/API | 不正状態を表せない型、前提条件、明確なerror |
+| side-effect boundary | root外write、環境、権限、transactionのguard |
+| test/observability | 回帰test、失敗時の安全なcontext、監視 |
 
-## 実例: 空のprojectDir
+同じguardを無根拠に各層へ複製せず、どの再発経路を防ぐかを記録する。症状の場所だけにfallbackを置いて誤りを隠さない。
 
-**症状:** `.git`が`packages/core/`（ソースコード）に作成される
+## 完了条件
 
-**トレースチェーン:**
-
-1. `git init`が`process.cwd()`で実行される ← 空のcwdパラメータ
-2. WorktreeManagerが空のprojectDirで呼び出される
-3. Session.create()に空文字列が渡される
-4. テストがbeforeEachの前に`context.tempDir`にアクセス
-5. setupCoreTest()が初期状態で`{ tempDir: '' }`を返す
-
-**根本原因:** トップレベル変数の初期化が空の値にアクセス
-
-**修正:** tempDirをgetterにし、beforeEachの前にアクセスするとスローするように
-
-**多層防御も追加:**
-
-- Layer 1: Project.create()がディレクトリを検証
-- Layer 2: WorkspaceManagerが空でないことを検証
-- Layer 3: NODE_ENVガードがtmpdir外でのgit initを拒否
-- Layer 4: git init前のスタックトレースログ
-
-## 核心原則
-
-```dot
-digraph principle {
-    "直接の原因を発見" [shape=ellipse];
-    "1レベル上にたどれる？" [shape=diamond];
-    "逆方向にたどる" [shape=box];
-    "これがソースか？" [shape=diamond];
-    "ソースで修正" [shape=box];
-    "各レイヤーにバリデーション追加" [shape=box];
-    "バグが不可能に" [shape=doublecircle];
-    "症状だけを修正しない" [shape=octagon, style=filled, fillcolor=red, fontcolor=white];
-
-    "直接の原因を発見" -> "1レベル上にたどれる？";
-    "1レベル上にたどれる？" -> "逆方向にたどる" [label="yes"];
-    "1レベル上にたどれる？" -> "症状だけを修正しない" [label="no"];
-    "逆方向にたどる" -> "これがソースか？";
-    "これがソースか？" -> "逆方向にたどる" [label="no - 続く"];
-    "これがソースか？" -> "ソースで修正" [label="yes"];
-    "ソースで修正" -> "各レイヤーにバリデーション追加";
-    "各レイヤーにバリデーション追加" -> "バグが不可能に";
-}
-```
-
-**エラーが表示される場所だけを修正しない。** 逆方向にたどって元のトリガーを見つける。
-
-## スタックトレースのヒント
-
-**テスト内:** `console.error()`を使用、loggerではない - loggerは抑制されている可能性がある
-**操作前:** 失敗した後ではなく、危険な操作の前にログ
-**コンテキストを含める:** ディレクトリ、cwd、環境変数、タイムスタンプ
-**スタックをキャプチャ:** `new Error().stack`で完全なコールチェーンを表示
-
-## 実際のインパクト
-
-デバッグセッション（2025-10-03）から:
-
-- 5レベルのトレースで根本原因を発見
-- ソースで修正（getterバリデーション）
-- 4層の防御を追加
-- 1847テストがパス、汚染ゼロ
+- 実行入口から失敗点までのcall chainと各payloadがsource anchorへ戻れる。
+- 最初に不正値が生まれた場所、または外部要因で未確認の境界が明示されている。
+- 根本修正と、必要な多層防御の理由が分かれている。
+- 元の再現と回帰確認が通り、未確認の環境や推測をPASS扱いしていない。

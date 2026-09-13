@@ -1,13 +1,10 @@
 ---
 name: compounding-knowledge
 description: |
-  解決済み問題・知見を構造化ドキュメントとして自動キャプチャし、
-  solutions/に保存するCompound Engineeringスキル。
-  タスク完了後（Phase 5後）に使用。
-  「知見を保存して」「解決策を記録して」「compoundして」等の依頼に対応。
-  memories/のインデックスより詳細な、再利用可能なソリューションドキュメントを生成。
-  **技術調査で得た知見（SDK API発見、ライブラリ挙動、設計パターン等）も
-  solutions/technical-learnings/ に保存する。**
+  解決済み問題や技術調査の知見を、根拠と再発条件つきの構造化文書として solutions/ に保存するスキル。
+  `/compounding-knowledge` や「知見を保存して」「解決策を記録して」などの明示依頼で使う。
+  Phase 5.5の条件、デバッグ成功、ADR後、またはレビューの再発パターンに該当する場合だけ自動実行を提案する。
+  SDK APIの発見やライブラリ挙動は solutions/technical-learnings/ に分類する。
 ---
 
 # Compounding Knowledge
@@ -46,7 +43,7 @@ description: |
 
 ### Step 2: 根拠と状態の確認
 
-固定人数の並列起動や特定のAgent APIは前提にしない。次の観点を、`context/agent-team-routing.md` のGateを満たし独立確認の利益がある場合だけAgent()へ分担し、そうでなければ一つの担当が順に確認する。新しい横断監査の責務をこのSkillへ追加しない。
+固定人数の並列起動や特定のagent APIは前提にしない。次の観点を、独立確認の利益がある場合だけ分担し、そうでなければ一つの担当が順に確認する。新しい横断監査の責務をこのSkillへ追加しない。
 
 #### 2-1: Solutionの確認
 ```
@@ -201,7 +198,15 @@ promotion_status: "hold|candidate|approved"
 
 ### Step 4: 提案 & ユーザー承認（IMPORTANT）
 
+Escaped Defect Recordからの入力は、replayで元の失敗を防げた場合だけpromotion候補にする。
+
+L0はrecordのみ、L1は回帰test、L2はlocal docs提案、L3はruntime policy候補、L4はshared policy候補とする。
+
+runtime policy、Skill、hook、CI、CLAUDE.md、context、rulesへ影響する変更はlevelに関係なく人間承認を必要とする。
+
 Technical Learningの保存、Solutionの保存、Skillやruntimeへの採用は別状態で記録する。既存の承認が対象と影響を含む同じ範囲の可逆なローカル保存について、段階ごとの一律な再承認を追加しない。対象・影響を広げる外部write、不可逆操作、runtime反映は別の具体的な承認ゲートへ戻す。
+
+重複、false positive、owner、review date、rollbackが未記録ならpromotionしない。
 
 **承認前のEdit禁止ポリシー**: 承認前にknowledge管理ファイルへ直接書き込まない。対象と影響を含む既存承認または新しい承認を確認した後は、宣言済みscope内のWriteを許可する。外部write、不可逆操作、runtime反映は別の具体的な承認ゲートへ戻す。
 

@@ -1,31 +1,18 @@
 ---
 name: "source-command-verify"
-description: "検証ループを実行する。checkpoint.mdの合格基準を全て通過するまで検証→修正→再検証を自動繰り返し。"
+description: "migrated source command `verify` として、checkpoint.mdの合格基準を検証し、承認範囲内の最小修正だけを有界に再検証する。"
 ---
 
 # source-command-verify
 
-Use this skill when the user asks to run the migrated source command `verify`.
+ユーザーが migrated source command `verify` を求めたときに使う。実行契約は `verify` Skillへ委譲する。
 
-## Command Template
+```text
+/verify
+```
 
-# Verify — 検証ループ実行
+`checkpoint.md` がなければ `/checkpoint` を先に案内する。各基準の実行結果を記録し、FAILの修正は現在のuser-approved scope内で可逆な最小変更だけにする。外部write、破壊的操作、仕様変更、承認範囲外の修正は行わず、原因と選択肢を報告する。
 
-`verification-loop`スキルのStep 2として使用する。
-checkpoint.mdの合格基準を読み込み、全基準通過まで自動ループする。
+最大5 loop、同一エラー連続3回、LLM連続修正3回で停止する。以前PASSだった基準が修正後にFAILになった場合も停止し、未確認をPASSと報告しない。
 
-## 手順
-
-1. checkpoint.mdを読み込み（なければ`/checkpoint`を先に実行を促す）
-2. 各合格基準を順次実行
-3. FAILした基準のエラーを分析
-4. 最小限の修正を適用
-5. 再検証（同一エラー3回失敗で中断、最大5ループ）
-6. 全PASS or 中断をユーザーに報告
-
-## 安全ガード
-
-- 最大ループ: 5回
-- 同一エラー連続失敗: 3回で中断
-- 修正の副作用: 以前PASSだった基準がFAILになったら即報告
-- LLMのみ連続修正: 3回で外部フィードバック必須
+詳細: `../verify/SKILL.md`。

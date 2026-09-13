@@ -1,11 +1,13 @@
 ---
 name: scaffolding-exercises
-description: lint を通過する、セクション、問題、解答、解説からなる演習ディレクトリ構造を作成する。ユーザーが演習のひな形、新しいコースセクション、演習用スタブを作りたい場合に使用する。
+description: >-
+  `ai-hero-cli` を使う演習 repo で、ユーザーが明示的に求めたセクション、問題、解答、解説のひな形を作り、lint で検証する。
+  通常のディレクトリ作成や一般的な教材相談には使わない。
 ---
 
 # 演習のひな形を作る
 
-`pnpm ai-hero-cli internal lint` を通過する演習ディレクトリ構造を作り、`git commit` でコミットする。
+対象 repo に `ai-hero-cli` とその `internal lint` command が定義されていることを先に確認する。依頼された演習ディレクトリ構造を作り、`pnpm ai-hero-cli internal lint` で検証する。command がない場合は別のlintを推測せず、前提不足として報告する。commitやpushは、このSkillの自動手順に含めず、projectのgit policyと明示されたwrite scopeに従う。
 
 ## ディレクトリの命名
 
