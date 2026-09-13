@@ -1,0 +1,543 @@
+{
+  "schemaVersion": 1,
+  "effectiveHtml": {
+    "upstreamRepository": "https://github.com/plannotator/effective-html",
+    "upstreamCommit": "d95debbaef15af1d201fc6c10c77cf92b524a0d6",
+    "license": "MIT",
+    "adaptationMode": "reference-first",
+    "governanceStatus": "DEGRADED"
+  },
+  "routes": [
+    {
+      "id": "html",
+      "localOwner": "creating-html-documents",
+      "artifactKind": "html-document",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "html-document-matrix",
+      "validationCommands": [
+        "python3 scripts/verify-html-surfaces.py"
+      ]
+    },
+    {
+      "id": "design-artifact",
+      "localOwner": "designing-ui-ux",
+      "artifactKind": "design-artifact",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "design-approval-matrix",
+      "validationCommands": [
+        "python3 scripts/verify-html-surfaces.py"
+      ]
+    },
+    {
+      "id": "html-wireframe",
+      "localOwner": "designing-ui-ux",
+      "artifactKind": "html-wireframe",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "wireframe-matrix",
+      "validationCommands": [
+        "python3 scripts/verify-html-surfaces.py"
+      ]
+    },
+    {
+      "id": "html-prototype",
+      "localOwner": "designing-ui-ux",
+      "artifactKind": "html-prototype",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "prototype-matrix",
+      "validationCommands": [
+        "python3 scripts/verify-html-surfaces.py"
+      ]
+    },
+    {
+      "id": "html-plan",
+      "localOwner": "viewing-plans",
+      "artifactKind": "html-plan",
+      "staticProfile": "roadmap-generated",
+      "browserProfile": "roadmap-matrix",
+      "validationCommands": [
+        "python3 scripts/verify-html-surfaces.py"
+      ]
+    },
+    {
+      "id": "html-diagram",
+      "localOwner": "visualizing-work",
+      "artifactKind": "html-diagram",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "diagram-matrix",
+      "validationCommands": [
+        "python3 scripts/verify-html-surfaces.py"
+      ]
+    }
+  ],
+  "staticProfiles": {
+    "strict-self-contained": {
+      "requireDoctype": true,
+      "requireLang": true,
+      "requireCharset": true,
+      "requireViewport": true,
+      "requireTitle": true,
+      "requireArtifactKind": true,
+      "requireCsp": true,
+      "forbidExternalLoads": true,
+      "forbidDuplicateIds": true,
+      "forbidForbiddenElements": true,
+      "forbidEventHandlers": true,
+      "externalLinksRequireRel": true,
+      "navigationWarnings": true,
+      "allowImageDataUrls": true
+    },
+    "roadmap-generated": {
+      "extends": "strict-self-contained",
+      "requiredCspDirectives": [
+        "default-src",
+        "script-src",
+        "style-src",
+        "img-src",
+        "connect-src",
+        "base-uri",
+        "form-action"
+      ]
+    },
+    "mcp-current": {
+      "extends": "strict-self-contained",
+      "requireArtifactKind": false,
+      "forbidExternalLoads": false,
+      "allowMissingInWorkingTree": true
+    },
+    "legacy-grandfathered": {
+      "requireDoctype": true,
+      "requireLang": true,
+      "requireCharset": true,
+      "requireViewport": true,
+      "requireTitle": true,
+      "requireArtifactKind": false,
+      "requireCsp": false,
+      "forbidExternalLoads": false,
+      "forbidDuplicateIds": true,
+      "forbidForbiddenElements": false,
+      "forbidEventHandlers": false,
+      "externalLinksRequireRel": true,
+      "navigationWarnings": true,
+      "allowImageDataUrls": true
+    }
+  },
+  "browserProfiles": {
+    "html-document-matrix": [
+      "375x812",
+      "768x1024",
+      "1440x900",
+      "200%-zoom",
+      "overflow",
+      "keyboard",
+      "focus",
+      "forced-colors",
+      "reduced-motion"
+    ],
+    "design-approval-matrix": [
+      "375x812",
+      "768x1024",
+      "1440x900",
+      "overflow",
+      "keyboard",
+      "focus",
+      "contrast"
+    ],
+    "wireframe-matrix": [
+      "375x812",
+      "768x1024",
+      "1440x900",
+      "overflow",
+      "keyboard",
+      "focus"
+    ],
+    "prototype-matrix": [
+      "375x812",
+      "768x1024",
+      "1440x900",
+      "overflow",
+      "keyboard",
+      "focus",
+      "console-errors"
+    ],
+    "roadmap-matrix": [
+      "375x812",
+      "768x1024",
+      "1440x900",
+      "200%-zoom",
+      "overflow",
+      "keyboard",
+      "focus-restoration",
+      "forced-colors",
+      "reduced-motion",
+      "contrast"
+    ],
+    "diagram-matrix": [
+      "375x812",
+      "768x1024",
+      "1440x900",
+      "overflow",
+      "keyboard",
+      "focus",
+      "svg-visible"
+    ]
+  },
+  "producers": [
+    {
+      "id": "roadmap-generator",
+      "route": "html-plan",
+      "owner": "viewing-plans",
+      "source": "scripts/generate-roadmap-view.py",
+      "templates": [
+        "tools/roadmap_viewer.html"
+      ],
+      "outputPatterns": [
+        ".local/memory/*/roadmap.html"
+      ],
+      "artifactKind": "html-plan",
+      "staticProfile": "roadmap-generated",
+      "browserProfile": "roadmap-matrix"
+    },
+    {
+      "id": "roadmap-task-hub",
+      "route": "html-plan",
+      "owner": "viewing-plans",
+      "source": "scripts/roadmap_task_hub.py",
+      "templates": [
+        "tools/roadmap_viewer.html"
+      ],
+      "outputPatterns": [
+        "http://127.0.0.1:*/"
+      ],
+      "artifactKind": "html-plan",
+      "staticProfile": "roadmap-generated",
+      "browserProfile": "roadmap-matrix"
+    },
+    {
+      "id": "roadmap-sync",
+      "route": "html-plan",
+      "owner": "viewing-plans",
+      "source": "scripts/sync-roadmap.py",
+      "templates": [
+        "tools/roadmap_viewer.html"
+      ],
+      "outputPatterns": [
+        ".local/memory/*/roadmap.html"
+      ],
+      "artifactKind": "html-plan",
+      "staticProfile": "roadmap-generated",
+      "browserProfile": "roadmap-matrix"
+    },
+    {
+      "id": "creating-html-documents",
+      "route": "html",
+      "owner": "creating-html-documents",
+      "source": "skills/creating-html-documents/SKILL.md",
+      "templates": [
+        "skills/creating-html-documents/assets/editorial-document.html"
+      ],
+      "outputPatterns": [
+        "*.html"
+      ],
+      "artifactKind": "html-document",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "html-document-matrix"
+    },
+    {
+      "id": "state-diagram-html",
+      "route": "html-diagram",
+      "owner": "generate-state-diagram",
+      "source": "skills/generate-state-diagram/SKILL.md",
+      "templates": [],
+      "outputPatterns": [
+        "91_state_diagram.html",
+        "91_state_diagram_3d.html"
+      ],
+      "artifactKind": "html-diagram",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "diagram-matrix"
+    },
+    {
+      "id": "state-diagram-3d-html",
+      "route": "html-diagram",
+      "owner": "generate-state-diagram-3d",
+      "source": "skills/generate-state-diagram-3d/SKILL.md",
+      "templates": [],
+      "outputPatterns": [
+        "91_state_diagram_3d.html"
+      ],
+      "artifactKind": "html-diagram",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "diagram-matrix"
+    },
+    {
+      "id": "visual-explanation-html",
+      "route": "html-diagram",
+      "owner": "visualizing-work",
+      "source": "skills/visualizing-work/SKILL.md",
+      "templates": [],
+      "outputPatterns": [
+        "92_visual_explanation.html"
+      ],
+      "artifactKind": "html-diagram",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "diagram-matrix"
+    },
+    {
+      "id": "diagram-design-sidecar",
+      "route": "html-diagram",
+      "owner": "diagram-design",
+      "source": "skills/diagram-design/SKILL.md",
+      "templates": [],
+      "outputPatterns": [
+        "92_visual_explanation.html"
+      ],
+      "artifactKind": "html-diagram",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "diagram-matrix"
+    },
+    {
+      "id": "architecture-review-html",
+      "route": "design-artifact",
+      "owner": "improving-codebase-architecture",
+      "source": "skills/improving-codebase-architecture/SKILL.md",
+      "templates": [],
+      "outputPatterns": [
+        "<tmpdir>/architecture-review-<timestamp>.html"
+      ],
+      "artifactKind": "design-artifact",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "design-approval-matrix"
+    },
+    {
+      "id": "teaching-concepts-html",
+      "route": "html",
+      "owner": "teaching-concepts",
+      "source": "skills/teaching-concepts/SKILL.md",
+      "templates": [],
+      "outputPatterns": [
+        "reference/*.html",
+        "lessons/*.html"
+      ],
+      "artifactKind": "html-document",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "html-document-matrix"
+    },
+    {
+      "id": "deep-research-report",
+      "route": "html",
+      "owner": "deep-research",
+      "source": "skills/deep-research/SKILL.md",
+      "templates": [
+        "skills/deep-research/templates/mckinsey_report_template.html"
+      ],
+      "outputPatterns": [
+        "*_report.html"
+      ],
+      "artifactKind": "html-document",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "html-document-matrix"
+    },
+    {
+      "id": "roadmap-plan-authoring",
+      "route": "html-plan",
+      "owner": "viewing-plans",
+      "source": "context/memory-file-formats.md",
+      "templates": [],
+      "outputPatterns": [
+        ".local/memory/*/30_plan.html"
+      ],
+      "artifactKind": "html-plan",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "desktop-document"
+    }
+  ],
+  "surfaces": [
+    {
+      "path": "tools/roadmap_viewer.html",
+      "lifecycle": "canonical",
+      "owner": "viewing-plans",
+      "artifactKind": "html-plan",
+      "staticProfile": "legacy-grandfathered",
+      "browserProfile": "roadmap-matrix"
+    },
+    {
+      "path": "mcp-servers/workflow-html-app/ui/plan-viewer.html",
+      "lifecycle": "legacy",
+      "owner": "workflow-html-app",
+      "artifactKind": "mcp-app-html",
+      "staticProfile": "mcp-current",
+      "browserProfile": "roadmap-matrix"
+    },
+    {
+      "path": "mcp-servers/workflow-html-app/ui/diagram-viewer.html",
+      "lifecycle": "legacy",
+      "owner": "workflow-html-app",
+      "artifactKind": "mcp-app-html",
+      "staticProfile": "mcp-current",
+      "browserProfile": "diagram-matrix"
+    },
+    {
+      "path": "mcp-servers/workflow-html-app/ui/verification-viewer.html",
+      "lifecycle": "legacy",
+      "owner": "workflow-html-app",
+      "artifactKind": "mcp-app-html",
+      "staticProfile": "mcp-current",
+      "browserProfile": "roadmap-matrix",
+      "allowMissingInWorkingTree": true
+    },
+    {
+      "path": "skills/creating-html-documents/assets/editorial-document.html",
+      "lifecycle": "canonical",
+      "owner": "creating-html-documents",
+      "artifactKind": "html-document",
+      "staticProfile": "legacy-grandfathered",
+      "browserProfile": "html-document-matrix"
+    },
+    {
+      "path": "skills/deep-research/templates/mckinsey_report_template.html",
+      "lifecycle": "canonical",
+      "owner": "deep-research",
+      "artifactKind": "html-document",
+      "staticProfile": "legacy-grandfathered",
+      "browserProfile": "html-document-matrix"
+    },
+    {
+      "path": "skills/diagram-design/examples/architecture.html",
+      "lifecycle": "canonical",
+      "owner": "diagram-design",
+      "artifactKind": "html-diagram",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "diagram-matrix"
+    },
+    {
+      "path": "skills/diagram-design/examples/comparison.html",
+      "lifecycle": "canonical",
+      "owner": "diagram-design",
+      "artifactKind": "html-diagram",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "diagram-matrix"
+    },
+    {
+      "path": "skills/diagram-design/examples/dependency-before.html",
+      "lifecycle": "canonical",
+      "owner": "diagram-design",
+      "artifactKind": "html-diagram",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "diagram-matrix"
+    },
+    {
+      "path": "skills/diagram-design/examples/dependency-candidate.html",
+      "lifecycle": "canonical",
+      "owner": "diagram-design",
+      "artifactKind": "html-diagram",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "diagram-matrix"
+    },
+    {
+      "path": "skills/diagram-design/examples/process.html",
+      "lifecycle": "canonical",
+      "owner": "diagram-design",
+      "artifactKind": "html-diagram",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "diagram-matrix"
+    }
+  ],
+  "literalExceptions": [
+    {
+      "path": "mcp-servers/workflow-html-app/server.ts",
+      "contains": ".html",
+      "reason": "Retired workflow-html-app source retained as legacy; not registered or built by the live display workflow.",
+      "removeWhen": "Historical source is removed with explicit approval."
+    },
+    {
+      "path": "scripts/html_artifact_contract.py",
+      "contains": "*.html",
+      "reason": "contract scanner pattern, not a producer",
+      "removeWhen": "not applicable"
+    },
+    {
+      "path": "scripts/validate-matt-skill-integration.py",
+      "contains": "tools/roadmap_viewer.html",
+      "reason": "integration canary target, not a producer",
+      "removeWhen": "canary manifest-driven"
+    },
+    {
+      "path": "skills/designing-ui-ux/SKILL.md",
+      "contains": ".html",
+      "reason": "source extension mention",
+      "removeWhen": "not applicable"
+    },
+    {
+      "path": "skills/design-eval-loop/SKILL.md",
+      "contains": "output.html",
+      "reason": "browser validation example",
+      "removeWhen": "example becomes command manifest"
+    },
+    {
+      "path": "skills/viewing-plans/SKILL.md",
+      "contains": "roadmap.html",
+      "reason": "canonical producer documentation until WU-E centralizes docs",
+      "removeWhen": "WU-E docs contract lands"
+    },
+    {
+      "path": "skills/visualizing-work/SKILL.md",
+      "contains": "roadmap.html",
+      "reason": "dependency mention, not produced by visualizing-work",
+      "removeWhen": "WU-E docs contract lands"
+    },
+    {
+      "path": "skills/diagram-design/SKILL.md",
+      "contains": "roadmap.html",
+      "reason": "dependency mention, not produced by diagram-design",
+      "removeWhen": "WU-E docs contract lands"
+    },
+    {
+      "path": "scripts/generate-codemap.py",
+      "contains": "codemap.html",
+      "reason": "scan exclusion list, not a producer",
+      "removeWhen": "not applicable"
+    },
+    {
+      "path": "skills/viewing-plans/SKILL.md",
+      "contains": "30_plan.html",
+      "reason": "canonical HTML plan source documentation",
+      "removeWhen": "source contract is centralized in the producer manifest"
+    },
+    {
+      "path": "skills/autonomous-loops/SKILL.md",
+      "contains": "30_plan.html",
+      "reason": "read-only canonical-plan reference",
+      "removeWhen": "source contract is centralized in the producer manifest"
+    },
+    {
+      "path": "skills/creating-adr/SKILL.md",
+      "contains": "30_plan.html",
+      "reason": "read-only canonical-plan reference",
+      "removeWhen": "source contract is centralized in the producer manifest"
+    },
+    {
+      "path": "skills/summarizing-daily-work/SKILL.md",
+      "contains": "30_plan.html",
+      "reason": "read-only canonical-plan reference",
+      "removeWhen": "source contract is centralized in the producer manifest"
+    },
+    {
+      "path": "skills/deepening-plan/SKILL.md",
+      "contains": "30_plan.html",
+      "reason": "read-only canonical-plan reference",
+      "removeWhen": "source contract is centralized in the producer manifest"
+    },
+    {
+      "path": "scripts/sync-roadmap.py",
+      "contains": "30_plan.html",
+      "reason": "canonical HTML plan input used by the sync gate",
+      "removeWhen": "source resolver is moved to a manifest-driven contract"
+    },
+    {
+      "path": "scripts/validate-agent-harness.py",
+      "contains": "30_plan.html",
+      "reason": "canonical HTML plan artifact validation",
+      "removeWhen": "HTML plan validation is moved to a manifest-driven contract"
+    }
+  ]
+}

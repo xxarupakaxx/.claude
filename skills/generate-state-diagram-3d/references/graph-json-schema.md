@@ -1,4 +1,4 @@
-# Graph JSON Schema for workflow-html-app 2.5D Diagrams
+# Graph JSON Schema for standalone 2.5D Diagrams
 
 Use this schema for `91_state_diagram_3d.json`.
 
@@ -73,7 +73,7 @@ Use `edges[].id` when timeline steps need to reference a specific transition.
 
 ## Timeline Fields
 
-`timeline` is optional. Omit it for static 2.5D diagrams. When present, it drives the replay/scrubber view in `workflow-html-app`.
+`timeline` is optional. Omit it for static 2.5D diagrams. When present, it drives the replay/scrubber view in a compatible standalone HTML renderer.
 
 | field | required | description |
 |-------|----------|-------------|

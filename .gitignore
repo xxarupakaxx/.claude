@@ -23,6 +23,7 @@
 !/agents/**
 !/config/
 !/config/user.example.json
+!/config/html-surfaces.json
 /config/user.json
 !/hooks/
 !/hooks/**
@@ -34,6 +35,8 @@
 !/rules/**
 !/templates/
 !/templates/**
+!/tests/
+!/tests/**
 !/sui-memory/
 !/sui-memory/**
 **/__pycache__/

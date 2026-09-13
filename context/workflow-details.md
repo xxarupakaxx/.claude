@@ -41,9 +41,9 @@ Phase 2.5のacceptance具体化は確認待ちの理由にならない。追加�
 
 ## HTML artifact gate
 
-HTMLを生成、更新、配布、またはMCP Apps resourceとして返す場合は、最初のwrite前にmanifestを確認する。html、design-artifact、html-wireframe、html-prototype、html-plan、html-diagramのいずれか一つをrouteに選び、producer、source、output、static profile、browser profileが登録済みであることを確認する。未登録なら配布せず、manifest・checker・docsを揃える計画へ戻す。
+HTMLを生成、更新、配布する場合は、最初のwrite前にmanifestを確認する。html、design-artifact、html-wireframe、html-prototype、html-plan、html-diagramのいずれか一つをrouteに選び、producer、source、output、static profile、browser profileが登録済みであることを確認する。未登録なら配布せず、manifest・checker・docsを揃える計画へ戻す。
 
-static gateを先に通し、要求されたbrowser profileでviewport、zoom、overflow、keyboard、focus、forced colors、reduced motion、contrast、console / page errorを確認する。warningをPASSの代替にしない。Roadmapは共通syncが既存parserとgeneratorを使ってatomicに生成し、invalid renderで既存成果物を上書きしない。MCP Appsは対応hostのresource contractとtext fallbackを保ち、外部write・公開・deployの承認をこのgateで推測しない。
+static gateを先に通し、要求されたbrowser profileでviewport、zoom、overflow、keyboard、focus、forced colors、reduced motion、contrast、console / page errorを確認する。warningをPASSの代替にしない。Roadmapは共通syncが既存parserとgeneratorを使ってatomicに生成し、invalid renderで既存成果物を上書きしない。表示は通常ブラウザで行い、HTML表示専用MCPは使わない。外部write・公開・deployの承認をこのgateで推測しない。
 
 図の正本はSVGであり、Markdownへ新しいMermaidを生成しない。HTML diagramは正本SVGの派生物として扱い、登録済みprofileを通過させる。
 

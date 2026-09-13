@@ -7,7 +7,7 @@ triggers:
   - "ローカル検証"
   - "動作確認手順"
 invocation: user
-allowed-tools: Read, Bash, Glob, Grep, Write, mcp__workflow-html-app__view-verification
+allowed-tools: Read, Bash, Glob, Grep, Write
 ---
 
 # ローカル検証ガイド生成スキル
@@ -128,19 +128,9 @@ git diff <BASE_BRANCH>...HEAD --stat
 ### Q: ...
 ```
 
-### Step 6: HTMLビューア表示（オプション）
+### Step 6: ブラウザで確認する（オプション）
 
-検証ガイドをインタラクティブなHTMLビューアで表示する。チェックリストの進捗トラッキング付き。
-
-```
-mcp__workflow-html-app__view-verification(
-  content: "<90_verification.mdの内容>"
-)
-```
-
-- ユーザーが明示的にHTMLビューアを要求した場合に使用
-- チェックボックスをクリックすると進捗バーが更新される
-- 検証項目の完了状況を視覚的に確認できる
+HTML表示を求められた場合は、`viewing-plans`の手順で検査済みの計画書を通常ブラウザで開き、補助表示から`90_verification.md`を確認する。検証ガイドの正本はMarkdownに保ち、画面上のチェック操作だけで完了記録を更新したと扱わない。
 
 ## 出力の品質基準
 

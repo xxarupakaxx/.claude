@@ -43,6 +43,12 @@ symlink にします。
 │   ├── pr.md              # /pr
 │   ├── pr-watch.md        # /pr-watch
 │   └── team-run.md        # /team-run
+├── context/               # Phase・routing・artifact形式・HTML契約の正本
+├── rules/                 # 言語・領域別ルール
+├── config/                # 機械可読な契約（html-surfaces.json）
+├── scripts/               # 契約検証・Roadmap/Codemap生成
+├── evals/                 # 回帰評価シナリオ
+├── tests/                 # scripts のテスト
 ├── skills/                # 自動トリガースキル
 │   ├── agent-memory/
 │   ├── codebase-review/
@@ -59,6 +65,21 @@ symlink にします。
     ├── project/
     └── project-setup/.claude/
 ```
+
+## 契約検証
+
+設定そのものの回帰を機械で検出する。`~/.claude` 直下で実行する。
+
+```bash
+python3 scripts/validate-agent-harness.py --knowledge-dir .local/memories --knowledge-dir .local/solutions
+```
+
+| コマンド | 検証対象 |
+|---|---|
+| `scripts/validate-agent-harness.py` | CLAUDE.md の薄さと正本mapの到達性、`agents/*.md` の frontmatter、`memories/`・`solutions/` の frontmatter 契約 |
+| `scripts/verify-html-surfaces.py` | `config/html-surfaces.json` と実HTML surface の整合（未登録surface、producer source欠落、CSP・外部読み込み等） |
+| `scripts/run-claude-md-canary.py` | CLAUDE.md 起点の参照グラフから `evals/claude-md-thin-entry/scenarios.json` の必須指示に到達できるか。`--baseline-ref <rev>` で過去との比較 |
+| `python3 -m unittest discover -s tests` | `scripts/` のユニットテスト |
 
 ## スキル一覧
 

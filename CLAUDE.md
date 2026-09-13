@@ -4,8 +4,7 @@
 
 ## CRITICAL: 優先順位
 
-system、developer、userの指示を優先し、その範囲でこの入口と対象に近いProject指示を適用する。Skill固有のPhaseは共通workflowの該当工程へ対応させる。
-スキルが独自のPhaseを持っていても、`context/workflow-rules.md` のPhase 0-5.5のフローを必ず守ること。スキルの内容はPhase内のツールとして使う。
+system、developer、userの指示を優先し、その範囲でこの入口と対象に近いProject指示を適用する。Skill固有のPhaseは共通workflowの該当工程へ対応させる。 スキルが独自のPhaseを持っていても、`context/workflow-rules.md` のPhase 0-5.5のフローを必ず守ること。スキルの内容はPhase内のツールとして使う。
 
 ## 文章の共通原則
 
@@ -97,16 +96,14 @@ Claude Code (conductor)
 
 ## Skill Invocation Policy
 
-必須の適用条件があるSkillはその条件に従い、それ以外はタスクに応じて選ぶ。
-重い harness / Superpowers 風の flow は、ユーザーが明示したとき、または高価値で複数ターンの実装に必要なときだけ使う。
+必須の適用条件があるSkillはその条件に従い、それ以外はタスクに応じて選ぶ。 重い harness / Superpowers 風の flow は、ユーザーが明示したとき、または高価値で複数ターンの実装に必要なときだけ使う。
 
 起動権は次の2層に分ける。
 
 - **User-invoked**: `team-run`、`orchestrate`、`grill-me`、`blueprint`、`skill-governance`、`graph-engineering`、PRD化、issue分解、外部Skillの採用・更新・廃止、外部投稿やPR作成など、作業の進路や外部状態を大きく変えるもの。ユーザーの明示、または短い確認を挟んで使う。
 - **Model-invoked**: `research`、`tdd`、`diagnosing-bugs`、`reviewing-code`、`modeling-domains`、`verification-loop`、`consult-gpt` など、現在の作業を小さく安全に進める規律。タスクに合う場合だけ使い、結果を短く報告する。
 
-ルーティングに迷うときは `ask-skill-router` を読む。
-原則は、巨大な自動flowに載せる前に、要求の不一致、共有語彙、TDD/feedback loop、設計の泥団子化のどれが実際のボトルネックかを切り分けること。
+ルーティングに迷うときは `ask-skill-router` を読む。 原則は、巨大な自動flowに載せる前に、要求の不一致、共有語彙、TDD/feedback loop、設計の泥団子化のどれが実際のボトルネックかを切り分けること。
 Superpowers は強い道具だが既定の process gate ではない。
 
 <!-- skill-governance-contract:global:start -->
@@ -131,6 +128,7 @@ Superpowers は強い道具だが既定の process gate ではない。
 | plugin / Skill / agent routing、委譲、外部write | `context/agent-team-routing.md` |
 | artifact / memory形式、session復元、sui-memory、worktree共有 | `context/memory-file-formats.md` |
 | Task Workspace、Codemap preflight、live Roadmap | `context/codemap.md` と `skills/viewing-plans/SKILL.md` |
+| HTML artifact route / producer gate | `context/html-artifact-contract.md` と `config/html-surfaces.json` |
 | team-run composition / exit gate | `context/team-run.md` と `commands/team-run.md` |
 | 複数loopのgraph統治 | `context/graph-engineering.md` と `skills/graph-engineering/SKILL.md` |
 | model / Cost Ladder | `rules/model-routing.md` |

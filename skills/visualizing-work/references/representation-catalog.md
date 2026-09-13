@@ -197,10 +197,7 @@ Use interactive HTML when:
 - the reader needs zoom, filtering, hover details, replay, or step selection
 - the artifact is dense but should stay explorable
 
-Use workflow-html-app when:
-
-- the current Codex/Cowork environment can render it
-- existing plan, verification, or diagram viewers match the chosen representation
+Open HTML directly in the browser; do not use a workflow-html-app MCP viewer.
 
 Use generated imagery when:
 

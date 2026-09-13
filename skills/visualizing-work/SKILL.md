@@ -1,7 +1,7 @@
 ---
 name: visualizing-work
 description: Transforms complex work, code behavior, plans, incidents, research findings, or agent activity into a human-readable visual explanation. Use when the user asks to make processing easier to understand, visualize what is happening, show progress or causality visually, create an explainer, make an HTML view, or choose a better representation without assuming a fixed format.
-allowed-tools: Read, Bash, Glob, Grep, Write, mcp__workflow-html-app__view-plan
+allowed-tools: Read, Bash, Glob, Grep, Write
 ---
 
 # Visualizing Work
@@ -89,7 +89,6 @@ Choose the delivery surface:
   - `generate-state-diagram` has completed `91_state_diagram.*` and a distinct reader question remains; or
   - `viewing-plans` has completed `roadmap.html` and a distinct reader question remains
 - interactive HTML
-- workflow-html-app viewer
 - image or canvas
 - table plus small multiples
 - existing specialized skill such as `generate-state-diagram`, `generate-state-diagram-3d`, `viewing-plans`, or `generate-verification-guide`

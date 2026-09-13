@@ -31,7 +31,7 @@ persistent Goal、/team-run、Goal toolを使う場合は、baselineと観測可
 
 ### Phase 2: 計画
 
-roadmap routeでは、UTF-8の30_plan.htmlをLLMと人が共有する計画の正本として保存する。本文をsemantic HTMLで直接管理し、Taskの進捗・依存・acceptanceも同じHTMLへ結ぶ。新規30_plan.mdは作成しない。本文をJSONや隠れたMarkdownへ重複保存しない。Taskごとに目的、変更対象、実装、成果物、検証、acceptance ID、blockedBy、source、write scopeを対応させる。roadmap.htmlとsnapshotは既存parser / generatorの派生viewであり、LLMや手編集で作らない。
+roadmap routeでは、UTF-8の30_plan.htmlをLLMと人が共有する計画の正本として保存する。本文をsemantic HTMLで直接管理し、Taskの進捗・依存・acceptanceも同じHTMLへ結ぶ。新規30_plan.mdは作成しない。背景・目的・到達点・全体の進め方を先に文章で示し、Taskは成果物や判断がまとまる工程単位とする。JSONの分割単位を、人が読む章立てへ強制せず、本文をJSONや隠れたMarkdownへ重複保存しない。Taskごとに目的、変更対象、実装、成果物、検証、acceptance ID、blockedBy、source、write scopeを対応させる。roadmap.htmlとsnapshotは既存parser / generatorの派生viewであり、LLMや手編集で作らない。HTMLは計画本文の連続表示を既定とし、検証後に通常ブラウザで開く。HTML表示専用MCPは使用しない。
 
 既存taskは30_plan.htmlがない場合だけ30_plan.mdを互換入力として読める。HTMLが存在するtaskではHTMLだけを正本とし、不正なHTMLをMDで隠さない。HTML形式では40_progress.mdを任意の作業メモとして残せるが、計画の進捗を上書きしない。正本の選択は明示workspace rootとtaskに束縛したread-onlyの共通resolverだけで行い、path traversal、symlink、hidden/secret、binary、過大入力は拒否する。
 

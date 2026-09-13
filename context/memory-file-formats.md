@@ -65,7 +65,7 @@ Phase 2 artifact保存後は、全routeで `~/.codex/scripts/sync-roadmap.py` �
 
 00_spec.mdは概要、背景・目的、現在の事実、採用判断、未確定、必須/任意要件、非機能要件、制約を持つ。
 
-新規計画の正本はUTF-8の`30_plan.html`であり、`30_plan.md`を新しく作らない。
+新規計画の正本はUTF-8の`30_plan.html`であり、`30_plan.md`を新しく作らない。背景・目的・到達点・全体の進め方を先に示し、Taskは成果物や判断のまとまりとして書く。file単位や一操作ごとに分割せず、細かな作業はTask内のチェックリストに置く。
 
 見えるsemantic HTMLが本文を所有する。Taskは`data-task-id`を持つsectionと見出し、項目は`data-field`で結ぶ。`purpose`、`targets`、`implementation`、`outputs`、`verification`が基本項目で、`acceptance`、`required-sources`、`implementation-evidence`、`blocked-by`を必要に応じて加える。本文をJSONや隠れたMarkdownへ重複保存しない。
 
