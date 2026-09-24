@@ -1,10 +1,41 @@
-# 作業ルール（Phase 0–5.5）
+# 作業規模と完了境界
 
-この文書はClaude user-scopeの作業順序と遷移gateの正本である。artifact形式は context/memory-file-formats.md、委譲とSkillは context/agent-team-routing.md、条件付きgateは context/workflow-details.md、Task Workspaceは skills/viewing-plans/SKILL.md と context/codemap.mdを参照する。
+この文書はClaude user-scopeの作業規模、作業順序と遷移gateの正本である。artifact形式は context/memory-file-formats.md、委譲とSkillは context/agent-team-routing.md、条件付きgateは context/workflow-details.md、Task Workspaceは skills/viewing-plans/SKILL.md と context/codemap.mdを参照する。
+
+## Phase 0: 目的と影響範囲を把握する
+
+目的、完了条件、対象、既存の制約を依頼と関連ファイルから確認する。判断に影響する仮定・不明点を短く伝え、対象の実装・設定・testを先に調べる。
+
+| 状況 | 進め方 |
+|---|---|
+| 質問、調査、局所的な編集・修正で、影響と検証方法が明確 | 下記の通常作業 |
+| 工程の依存、広い設計判断、複数writer、継続共有・引継ぎが必要 | 下記の管理する作業 |
+| 計画書・Roadmap・Team Runを明示要求、または既存の管理taskを継続 | 管理する作業と該当Skill |
+
+ファイル数だけで決めない。通常作業の途中で依存や重要な未決事項が増えたら、管理する作業へ移り、以後の計画と検証を記録する。既存taskの未完了gateは通常作業への切替で消さない。
+
+外部write、権限・認証・課金、不可逆操作、runtime policy変更では、規模によらず `context/workflow-details.md` のUser Validation GateとReview escalationを確認する。新しいUI/UX判断には同文書のUI/UX Design Approvalを適用する。
+
+## 通常作業は必要な変更と直接検証で閉じる
+
+完了条件に沿って必要な変更と直接検証を行い、その変更に起因する失敗を修正する。実行や画面確認を含む依頼では、起動・結果確認まで続ける。調査・計画だけの依頼はその成果で完了する。
+
+- 作業記録は会話の要点と最終報告で足りる。memory directory、Phaseごとのartifact、Delegation Decision、派生図生成、Roadmap同期やskip証跡を一律には要求しない。
+- code変更では呼出元・影響先・関連testを必要な範囲で確認する。複数moduleのarchitecture/data flowを計画へ残す必要があれば、管理する作業としてCodemapへ記録する。
+- batch、queue、durable workflow、外部API同期、pollingを変更するときは `~/.codex/rules/durable-workflow-safety.md` に従い、最大件数と全終了経路を検証する。
+- testは変更箇所と影響先に合わせて選ぶ。全suiteはprojectの必須条件、共通基盤への影響、関連検証だけでは解消できない懸念がある場合に実行する。文書だけの変更には差分・参照・内容の確認を使う。
+- 新しい変更、失敗、未解消の懸念がなければ、合格済みの検証を繰り返さない。必要な独立reviewは具体的なriskに対応させ、UI変更では `rules/ui-fresh-review.md` を適用する。
+- 変更量は `rules/complexity-budget.md` に従って判断・報告する。通常作業に専用の計画artifactは要求しない。
+
+完了条件と影響範囲の既存契約を満たし、完了を妨げる既知の問題がなくなったら報告する。
+
+## 管理する作業
+
+以下のPhase記録、route、artifact、同期、Delivery lifecycleは、管理する作業に適用する。`log-only`は記録を管理するrouteであり、通常作業の別名ではない。通常作業用のroute値を既存CLIへ渡さない。
 
 ## 既定lane
 
-通常の作業は、把握（Phase 0–1）→計画（Phase 2–2.5）→実装と検証（Phase 3–4.5）→完了と学習（Phase 5–5.5）で進める。既存Phase番号、成果物名、互換表示を維持する。
+管理する作業は、把握（Phase 0–1）→計画（Phase 2–2.5）→実装と検証（Phase 3–4.5）→完了と学習（Phase 5–5.5）で進める。既存Phase番号、成果物名、互換表示を維持する。
 
 Phase 0でrouteを一つ選び05_log.mdへ記録する。
 
@@ -59,7 +90,7 @@ roadmap routeではGoal / requirement → TaskまたはWU → acceptance → evi
 
 freshな直接検証を先に行う。projectのlint / format / typecheck / test、Markdown・リンク・frontmatter、必要なHTML/Codemap gateを実行する。roadmap routeのcompletion検査は共通syncとEvidence validatorへ接続し、log-onlyではEvidence Bundleを要求しない。
 
-リスクに合う最小の独立checkerを選び、結果、finding、再検証、skip理由を05_log.mdへ記録する。CRITICALと正しさに関わるIMPORTANT / MINORは修正する。未解決finding、stale source、未対応acceptanceがあればPhase 2または3へ戻す。
+リスクに合う最小の独立checkerを選び、結果、finding、再検証、skip理由を05_log.mdへ記録する。severityはCRITICAL / IMPORTANT / MINORの3階級とし、CRITICALと正しさ・一貫性に関わるIMPORTANT / MINORは修正する。純粋なスタイル・好みの指摘だけskipできる。review完了後はseverity別件数、CRITICAL / IMPORTANTの全件、ESCALATE項目をチャットで報告する。未解決finding、stale source、未対応acceptanceがあればPhase 2または3へ戻す。
 
 ### Phase 4.5: 引継ぎ
 
