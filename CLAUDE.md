@@ -14,6 +14,12 @@ Skillは明示指定、または現在の作業に固有の知識・手順が役
 
 同等の観測性と安全性がある場合は、MCPサーバーよりCLIツールを先に検討する。委譲は `context/agent-team-routing.md` のDelegation Gateで判断し、Claude固有のAgent()、Workflow、モデル選択は `rules/model-routing.md` に従う。
 
+## 毎セッションのダッシュボード
+
+最初の具体的な依頼で `context/session-dashboard.md` と `skills/viewing-plans/SKILL.md` を読み、費用・進捗・タスク・未回答の質問と、詳細プラン・設計書への導線を持つHTMLを作成して一度開く。通常の局所作業も対象とし、固定テンプレートは使わない。状態が変わる節目と最終報告前に同じHTMLを更新する。費用は既存のローカル記録を確認し、API換算の集計範囲と欠測を明示する。
+
+表示の正本は `context/session-dashboard.md` とする。旧Roadmapの専用ビューア・自動同期は廃止し、旧CLI・MCPを自動起動しない。過去のタスク・計画・設計書と未完了の審査・検証は保持して参照する。作業規模の選択でダッシュボード表示を省略しない。表示不要・書込禁止の明示指定と会話だけの挨拶は除く。
+
 ## 着手前の認識合わせ
 
 - 着手前に目的、成果物の形式・詳しさ、対象範囲、制約、検証可能な完了条件を依頼と既存資料から把握する。分かっていることは聞き直さない。
@@ -42,7 +48,7 @@ Skillは明示指定、または現在の作業に固有の知識・手順が役
 | 実装・作業用ファイル・エラー処理・Skill起動を扱う | `context/claude-code-practices.md` |
 | 委譲・専門Skillを選ぶ | `context/agent-team-routing.md`、`rules/model-routing.md` |
 | 複数moduleの影響を地図で追う | `context/codemap.md` |
-| 計画を表示・同期する | `skills/viewing-plans/SKILL.md`、`~/.codex/scripts/sync-roadmap.py` |
+| 毎セッションの計画・費用・進捗を表示する | `context/session-dashboard.md`、`skills/viewing-plans/SKILL.md` |
 | HTMLを生成・更新・配布する | `context/html-artifact-contract.md`、`config/html-surfaces.json` |
 | Team Runを使う | `context/team-run.md`、`commands/team-run.md` |
 | 複数loopを管理する | `context/graph-engineering.md`、`skills/graph-engineering/SKILL.md` |

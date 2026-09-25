@@ -1,5 +1,11 @@
 # HTML Artifact Contract
 
+## セッションダッシュボード（現行）
+
+`html-plan`の現行producerは`session-dashboard-authoring`。手順は[セッションダッシュボード](session-dashboard.md)を正本とし、runtime homeの`.local/dashboards/<session-id>/dashboard.html`を直接作成・更新する。固定テンプレート・generator・同期・常設serverは使わない。サマリー、タスク表、質問表、詳細プラン・設計への導線を持つ自己完結HTMLとする。
+
+static profileは`strict-self-contained`、browser profileは`html-document-matrix`。数値の出典・対象範囲・欠測とタスク件数の整合、anchor・参照先への到達も確認する。旧Roadmapのrenderer、parser、snapshot、Archify機械属性は新方式の必須条件ではない。以下のRoadmap generator、`30_plan.html → roadmap.html`、sync gateに関する説明は過去形式の互換記録に限定する。旧コードと成果物は保持するが自動起動しない。
+
 この文書は、Claude Code runtime がHTMLを生成・配布するときの共通契約である。`config/html-surfaces.json`をmachine-readableな正本とし、この文書は人間とagent向けにroute、lifecycle、gate、境界を説明する。
 
 Effective HTML upstream は `plannotator/effective-html` commit `d95debbaef15af1d201fc6c10c77cf92b524a0d6`、MIT、`reference-first` adaptation として固定参照する。governance audit が `DEGRADED` の間、第三者Skillのinstall、promotion、runtime file変更は行わない。6 route はlocal ownerへ写像し、実行前後のgateで強制する。
@@ -23,7 +29,7 @@ manifestにないHTML producerやtracked HTML surfaceを新規のcanonical route
 | `design-artifact` | `designing-ui-ux` | `design-artifact` | `strict-self-contained` | `design-approval-matrix` | 承認済みのUI/UX visual artifact |
 | `html-wireframe` | `designing-ui-ux` | `html-wireframe` | `strict-self-contained` | `wireframe-matrix` | low-fidelity構造確認 |
 | `html-prototype` | `designing-ui-ux` + `design-eval-loop` | `html-prototype` | `strict-self-contained` | `prototype-matrix` | working-flowやinteraction prototype |
-| `html-plan` | `viewing-plans` + Roadmap generator | `html-plan` | `roadmap-generated` | `roadmap-matrix` | ブラウザで開く`roadmap.html` |
+| `html-plan` | `viewing-plans` | `html-plan` | `strict-self-contained` | `html-document-matrix` | 毎セッションの`dashboard.html` |
 | `html-diagram` | `visualizing-work` → `generate-state-diagram` / `diagram-design` | `html-diagram` | `strict-self-contained` | `diagram-matrix` | SVG正本をinline表示する補助図HTML |
 
 routeを選べないHTMLは作らない。複数routeの要素を持つ場合は、user-visibleな配布物を所有するrouteを主にし、補助要素はmanifest上のproducerとsurfaceへ明示する。

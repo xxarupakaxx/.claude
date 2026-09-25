@@ -58,13 +58,13 @@ canonical入口は `wayfinder`、`to-spec`、`to-tickets`、`implement`、`teach
 
 Workflow routeとLocal / Fast / Standard / Heavy / Judgmentのcapability classは別軸である。fast-track、prd-flow、multi-packet-flowのWork Packet条件はmemory形式とworkflowを正本とする。必要model不在はROUTING_BLOCKED、承認なしの外部writeやruntime policy変更はWAITING_HUMANで停止する。completion_targetとcompletion_stateはmemory形式に従う。
 
-## Skill、HTML、共通sync
+## SkillとHTMLの入口
 
 調査不足ならresearch / iterative-retrieval、実装ならimplement / tdd / diagnosing-bugs、検証ならverification-loop / reviewing-codeを必要な分だけ読む。team-runは複数turnの共有状態と独立検証が実効的な場合だけ、graph-engineeringは複数loop・typed state・異なるauthorityが必要な場合だけ使う。
 
-HTMLを生成・更新・配布する場合は context/html-artifact-contract.md と config/html-surfaces.jsonを確認し、登録済みproducerだけを使う。Roadmapは30_plan.htmlを入力に`~/.codex/scripts/sync-roadmap.py`が検査・生成・atomic publishし、新規30_plan.mdを作らない。HTMLがない既存taskだけ30_plan.mdをlegacy入力にでき、両方ある場合や不正HTMLではMDへfallbackしない。正本解決は明示root/taskに束縛したread-only resolverで行う。図の正本はSVGで、MarkdownへMermaidを生成しない。
+HTMLを生成・更新・配布する場合は context/html-artifact-contract.md と config/html-surfaces.jsonを確認し、登録済みproducerだけを使う。毎セッションの表示は [session-dashboard](session-dashboard.md) に従い、`session-dashboard-authoring`で完成したHTMLを直接作成・更新する。固定テンプレート、旧Roadmapのsync・generator・Task Hubを自動実行しない。過去の計画・設計・検証記録は保持して参照する。図の正本はSVGで、MarkdownへMermaidを生成しない。
 
-ClaudeのRoadmap同期は ~/.codex の共有CLIを明示入口にする。phase 2、3、4、5で同じTASK、run、rootを使い、--dry-runはread-onlyとする。CLI不存在、引数不正、sync失敗時は旧generatorや別CLIへfallbackしない。完了表示はsync PASSとfresh検証の後だけにする。
+新方式のbriefはダッシュボードのタスク詳細と必要な正本から作り、目的・範囲・計画・完了条件・依存・未完了gateを明示する。旧parserの機械形式や`task-context.py --execution`を新しいHTMLに強制しない。以下のroadmap実行契約は過去形式の互換記録であり、既存taskの未完了の実質的な審査・検証は新方式へ引き継ぐ。
 
 ## 改善候補とExternal Write Gate
 
