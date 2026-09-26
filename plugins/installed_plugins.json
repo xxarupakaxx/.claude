@@ -25,10 +25,10 @@
     "session-report@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/yoshiki/.claude/plugins/cache/claude-plugins-official/session-report/cc56e30b927a",
-        "version": "cc56e30b927a",
+        "installPath": "/Users/yoshiki/.claude/plugins/cache/claude-plugins-official/session-report/e3c573e32a23",
+        "version": "e3c573e32a23",
         "installedAt": "2026-05-25T07:26:46.280Z",
-        "lastUpdated": "2026-09-06T02:53:21.842Z",
+        "lastUpdated": "2026-09-19T13:24:08.063Z",
         "gitCommitSha": "9cacdc0d22152add09ad92206cc705b2666c61cc"
       }
     ],
@@ -45,10 +45,10 @@
     "atlassian@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/yoshiki/.claude/plugins/cache/claude-plugins-official/atlassian/d39014479391",
-        "version": "d39014479391",
+        "installPath": "/Users/yoshiki/.claude/plugins/cache/claude-plugins-official/atlassian/eb9a5956a7ac",
+        "version": "eb9a5956a7ac",
         "installedAt": "2026-06-02T03:32:50.443Z",
-        "lastUpdated": "2026-09-06T02:53:23.424Z",
+        "lastUpdated": "2026-09-19T13:24:11.419Z",
         "gitCommitSha": "9b52fb18e184edc307ce33f8bf4cdf148dedf1f2"
       }
     ],
