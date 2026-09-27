@@ -1,5 +1,7 @@
 # 作業規模と完了境界
 
+新規の作業計画全文とレビューの参照先は、[セッションダッシュボードの計画契約](session-dashboard.md#計画の正本とレビュー)に従う。計画の正本はHTML内の安定したanchorと版で指定し、目的・計画レビュー、実装、検証、完了レビューを同じ本文へ結ぶ。審査対象の本文と現行本文を実装前・完了前に照合する。以下の30_plan・旧CLI・機械審査形式は過去taskの互換記録であり、新方式の開始条件には使用しない。審査・承認・検証の実質的な条件は維持する。
+
 ## 現行の表示方式
 
 新規・再開セッションの表示は[セッションダッシュボード](session-dashboard.md)に統一する。routeは`session-dashboard`。通常作業にも最初の依頼でHTMLを作成して開き、節目に更新する。旧Roadmapのsync、generator、Task Hub、snapshot生成、旧CLIへのroute入力は行わない。
@@ -47,9 +49,10 @@ Phase 0でrouteを一つ選び05_log.mdへ記録する。
 
 | route | 適用 | 必須の表示・保存 |
 |---|---|---|
-| log-only | 既知手順を一回の実行・検証で閉じる | 05_log.md。30_plan、HTML、Evidence Bundleは要求しない |
-| roadmap | 設計判断、複数Task、依存、継続共有、引継ぎがある | 30_plan.html → 共通sync → roadmap.html |
-| explicit-roadmap | ユーザーが計画またはRoadmap表示を明示 | roadmapと同じ。表示を省略しない |
+| session-dashboard | 新規の管理task・計画書の作成 | dashboard.html内の計画全文 → 目的・計画レビュー → 実装・検証 → 完了レビュー。旧CLI・parser・plan-review.jsonは開始条件にしない |
+| log-only（旧記録方式） | 既知手順を一回の実行・検証で閉じる | 05_log.md。30_plan、HTML、Evidence Bundleは要求しない |
+| roadmap（移行前タスク専用） | 設計判断、複数Task、依存、継続共有、引継ぎがある | 30_plan.html → 共通sync → roadmap.html |
+| explicit-roadmap（移行前タスク専用） | ユーザーが計画またはRoadmap表示を明示 | roadmapと同じ。表示を省略しない |
 
 ファイル数だけでrouteを決めない。条件付きgate（Fast Track、Blueprint、Goal、UI/UX、HTML）は context/workflow-details.md を発火時だけ読む。log-onlyでもPhase記録、安全条件、fresh検証は省略しない。
 
@@ -68,13 +71,15 @@ persistent Goal、/team-run、Goal toolを使う場合は、baselineと観測可
 
 ### Phase 2: 計画
 
-roadmap routeでは、UTF-8の30_plan.htmlをLLMと人が共有する計画の正本として保存する。本文をsemantic HTMLで直接管理し、Taskの進捗・依存・acceptanceも同じHTMLへ結ぶ。新規30_plan.mdは作成しない。背景・目的・到達点・全体の進め方を先に文章で示し、Taskは成果物や判断がまとまる工程単位とする。JSONの分割単位を、人が読む章立てへ強制せず、本文をJSONや隠れたMarkdownへ重複保存しない。Taskごとに目的、変更対象、実装、成果物、検証、acceptance ID、blockedBy、source、write scopeを対応させる。roadmap.htmlとsnapshotは既存parser / generatorの派生viewであり、LLMや手編集で作らない。HTMLは計画本文の連続表示を既定とし、検証後に通常ブラウザで開く。HTML表示専用MCPは使用しない。
+新規session-dashboardでは、ダッシュボード内の同じ計画全文・版・審査証拠を参照してこの工程を進める。実装開始・完了判定前の本文照合と審査条件は[計画契約](session-dashboard.md#計画の正本とレビュー)に従う。下記の旧route専用手順は実行しない。
+
+**移行前タスク専用の旧経路：** roadmap routeでは、UTF-8の30_plan.htmlをLLMと人が共有する計画の正本として保存する。本文をsemantic HTMLで直接管理し、Taskの進捗・依存・acceptanceも同じHTMLへ結ぶ。新規30_plan.mdは作成しない。背景・目的・到達点・全体の進め方を先に文章で示し、Taskは成果物や判断がまとまる工程単位とする。JSONの分割単位を、人が読む章立てへ強制せず、本文をJSONや隠れたMarkdownへ重複保存しない。Taskごとに目的、変更対象、実装、成果物、検証、acceptance ID、blockedBy、source、write scopeを対応させる。roadmap.htmlとsnapshotは既存parser / generatorの派生viewであり、LLMや手編集で作らない。HTMLは計画本文の連続表示を既定とし、検証後に通常ブラウザで開く。HTML表示専用MCPは使用しない。
 
 既存taskは30_plan.htmlがない場合だけ30_plan.mdを互換入力として読める。HTMLが存在するtaskではHTMLだけを正本とし、不正なHTMLをMDで隠さない。HTML形式では40_progress.mdを任意の作業メモとして残せるが、計画の進捗を上書きしない。正本の選択は明示workspace rootとtaskに束縛したread-onlyの共通resolverだけで行い、path traversal、symlink、hidden/secret、binary、過大入力は拒否する。
 
 表示完了の4層確認と、生成・公開・Closeの境界はskills/viewing-plans/SKILL.mdへ集約する。
 
-Phase 2 artifactとDelegation Decisionを保存した後、Claudeからは次の共有CLIを実行する。
+移行前タスク専用の旧経路では、Phase 2 artifactとDelegation Decisionを保存した後、Claudeからは次の共有CLIを実行する。
 
     python3 ~/.codex/scripts/sync-roadmap.py TASK --workspace-root ~/.claude --memory-root ~/.claude/.local/memory --run-id RUN --phase 2
 
@@ -84,15 +89,21 @@ DeepeningとADRは不確実性またはcriteriaが発火した場合だけ行う
 
 ### Phase 2.5: Acceptance Contract
 
-roadmap routeではGoal / requirement → TaskまたはWU → acceptance → evidenceを一意にたどれるようにする。negative pathとholistic checkを含め、未対応IDや自由文の完了宣言で代用しない。log-onlyにcheckpoint、HTML、Evidence Bundleを強制しない。
+新規session-dashboardも目的・要件、task、受入条件、検証証拠の対応を同じHTMLに記録する。未検証の自己申告で完了にしない。以下の旧形式artifactだけを新方式の必須条件から外す。
+
+**移行前タスク専用の旧経路：** roadmap routeではGoal / requirement → TaskまたはWU → acceptance → evidenceを一意にたどれるようにする。negative pathとholistic checkを含め、未対応IDや自由文の完了宣言で代用しない。log-onlyにcheckpoint、HTML、Evidence Bundleを強制しない。
 
 ### Phase 3: 実装
+
+新規session-dashboardでは、ダッシュボード内の同じ計画全文・版・審査証拠を参照してこの工程を進める。実装開始・完了判定前の本文照合と審査条件は[計画契約](session-dashboard.md#計画の正本とレビュー)に従う。下記の旧route専用手順は実行しない。
 
 開始前に最新のDelegation Decision、route、acceptance、write scopeを確認する。Agent()やWorkflowはcontext/agent-team-routing.mdのGateを満たす独立単位にだけ使い、密結合の作業はleadが行う。同じfileのwriterを複数にしない。
 
 実装者には目的、次の未完了Task、対象、依存、検証、決定、不明点、source参照だけからなるJIT briefを渡す。会話全文、secret、認証済みsession、全tool outputは渡さない。task-contextは`~/.codex/scripts/task-context.py`を明示root・task付きで使い、引数と出力schemaはcontext helperの実装とtestを正本にし、ここで発明しない。
 
 ### Phase 4: 品質確認
+
+新規session-dashboardでは、ダッシュボード内の同じ計画全文・版・審査証拠を参照してこの工程を進める。実装開始・完了判定前の本文照合と審査条件は[計画契約](session-dashboard.md#計画の正本とレビュー)に従う。下記の旧route専用手順は実行しない。
 
 freshな直接検証を先に行う。projectのlint / format / typecheck / test、Markdown・リンク・frontmatter、必要なHTML/Codemap gateを実行する。roadmap routeのcompletion検査は共通syncとEvidence validatorへ接続し、log-onlyではEvidence Bundleを要求しない。
 
@@ -148,4 +159,4 @@ Workflow routeは工程の形で、Local / Fast / Standard / Heavy / Judgmentの
 
 ## 計画から実装への開始条件
 
-roadmap / explicit-roadmapのPhase 3では、対象sourceへの最初のwriteとAgent()への委譲より前に[計画から実装への判断契約](plan-execution-contract.md)を読む。`~/.codex/scripts/sync-roadmap.py`のPhase 3と`~/.codex/scripts/task-context.py brief TASK --memory-root ROOT --task-id ID --execution`を実行し、非zeroならPhase 2へ戻す。成功したexecutionBriefを全文で渡す。元の依頼・前提の独立審査、計画審査、成果物の目的適合を内部品質より先に確認し、仕様通りという理由だけで合格にしない。この開始条件は既存の閲覧用JIT briefの手順へ追加適用する。
+**移行前タスク専用の旧経路：** roadmap / explicit-roadmapのPhase 3では、対象sourceへの最初のwriteとAgent()への委譲より前に[計画から実装への判断契約](plan-execution-contract.md)を読む。`~/.codex/scripts/sync-roadmap.py`のPhase 3と`~/.codex/scripts/task-context.py brief TASK --memory-root ROOT --task-id ID --execution`を実行し、非zeroならPhase 2へ戻す。成功したexecutionBriefを全文で渡す。元の依頼・前提の独立審査、計画審査、成果物の目的適合を内部品質より先に確認し、仕様通りという理由だけで合格にしない。この開始条件は既存の閲覧用JIT briefの手順へ追加適用する。

@@ -1,5 +1,7 @@
 # HTML Artifact Contract
 
+新規の作業計画全文とレビューの参照先は、[セッションダッシュボードの計画契約](session-dashboard.md#計画の正本とレビュー)に従う。計画の正本はHTML内の安定したanchorと版で指定し、目的・計画レビュー、実装、検証、完了レビューを同じ本文へ結ぶ。審査対象の本文と現行本文を実装前・完了前に照合する。以下の30_plan・旧CLI・機械審査形式は過去taskの互換記録であり、新方式の開始条件には使用しない。審査・承認・検証の実質的な条件は維持する。
+
 ## セッションダッシュボード（現行）
 
 `html-plan`の現行producerは`session-dashboard-authoring`。手順は[セッションダッシュボード](session-dashboard.md)を正本とし、runtime homeの`.local/dashboards/<session-id>/dashboard.html`を直接作成・更新する。固定テンプレート・generator・同期・常設serverは使わない。サマリー、タスク表、質問表、詳細プラン・設計への導線を持つ自己完結HTMLとする。
@@ -108,6 +110,8 @@ Roadmap、prototypeなどruntime挙動を持つsurfaceは、該当profileのbrow
 
 ## Roadmap / Code Map
 
+この節のRoadmap・30_plan・旧parserの形式は移行前タスク専用。新規session-dashboardは[計画とレビューの契約](session-dashboard.md#計画の正本とレビュー)を使い、旧CLIを起動しない。旧計画・未完了gate・証拠は保持する。
+
 `html-plan` routeの主入口は `roadmap.html` である。初期画面を一つのHTML計画書とし、目的、変更前後、Taskごとの実装説明、検証、依存関係をスクロールだけで読めるようにする。重要情報の表示にdrawer・tab・折り畳みの操作を要求せず、sourceに存在する情報だけを使う。
 
 - 企画: `00_spec.md`
@@ -116,7 +120,7 @@ Roadmap、prototypeなどruntime挙動を持つsurfaceは、該当profileのbrow
 - 検証: `checkpoint.md` / `80_review.md` / `90_verification.md`
 - Code Map freshness: `codemap.lock`
 
-新規Roadmap計画の本文は`30_plan.html`が所有する。既存taskはHTMLがない場合だけ`30_plan.md`をlegacyとして読める。両方ある場合やHTMLが不正な場合にMDを使って内容を隠さない。正本選択はtaskと明示workspace rootへ束縛したread-onlyの安全resolverで行い、traversal、symlink、hidden/secret、binary、過大入力を拒否する。
+移行前タスクの旧Roadmap計画の本文は`30_plan.html`が所有する。既存taskはHTMLがない場合だけ`30_plan.md`をlegacyとして読める。両方ある場合やHTMLが不正な場合にMDを使って内容を隠さない。正本選択はtaskと明示workspace rootへ束縛したread-onlyの安全resolverで行い、traversal、symlink、hidden/secret、binary、過大入力を拒否する。
 
 Currentはfreshなin-progress、なければ最初の未完了Taskから一意に決める。primary actionはunresolved blocker、または対象Taskの`実装`sectionにある最初の未完了checkboxだけを使う。欠落時は「未記録」と表示し、commitmentを補作しない。
 
