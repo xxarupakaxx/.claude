@@ -7,7 +7,12 @@
 - `main`、`aside`、`figure`、`table`などsemantic要素を用途どおり使う。
 - id重複がない。anchor targetが存在する。
 - 各SVGを囲む`figure`に、`role="img"`付きSVG、`title`、`desc`、`figcaption`がある。
-- table headerに`scope`がある。
+- `<table` が0である。例外で使う場合はmetaに理由があり、table headerに`scope`がある。
+- 意味を持つラベル（追加、消える、変わる、旧、新、番号）が実要素で、CSSの `::before` / `::after` の `content` に文字がない。
+- outline、border、背景で強調した要素の内側に文字ラベルがある。
+- `overflow:hidden` の箱の中で外側へ出る `outline` を使っていない。数値・日付のセルに `overflow-wrap:anywhere` や `text-overflow:ellipsis` を使っていない。
+- SVGの `text` の色がCSSクラスで指定され、`fill` 属性がCSSに上書きされていない。
+- 外部navigation linkに `rel="noopener noreferrer"` がある。
 - codeをHTMLとして解釈させずescapeする。
 - remote `src`、stylesheet、font、scriptを列挙し、許可根拠のないものを0にする。
 - Mermaid、remote resource、runtime scriptをoverviewやdetail図の表示要件にしていない。
@@ -66,6 +71,7 @@ SVGを含む文書では、page上で次を機械検査し、いずれも0にし
 - 「処理する」「連携する」「対応する」だけでdetailを閉じていない。
 - 単一事実、単純な一操作、短い値比較、2要素だけのbefore / afterに不要な図を強制していない。
 - 各sectionは一つの問いに答える。
+- screen-diffでは、冒頭の件数、地図の枠、場面のラベル、末尾のカードの分類が一致し、旧が「変わる」で新が「追加」のような不揃いな対がない。設計で消したものと未作成のものを分けている。
 - 初学者向けexplainerでは、場面の絵、登場人物の地図、主要章の「たとえるなら」と「比喩の限界」、歴史の章、仮設の代表ケース、章ごとの絵、自己テストが揃っている。
 - 同じ情報を複数componentで繰り返さない。
 - 事実、推論、提案、未確定が区別できる。
@@ -82,6 +88,10 @@ SVGを含む文書では、page上で次を機械検査し、いずれも0にし
 - script無効でも索引・主要関係・根拠が読め、keyboardでリンクを往復できる。長いpathが本文からはみ出さない。
 - SVG採用時はdiagram-designの型別上限を守り、責務nodeとfile・symbolの対応を辿れる。単純なcall treeや文言修正に不要な図を強制しない。
 
+## Independent review
+
+配布前に、実装した文脈と別の、まっさらな文脈のレビュー担当へfileのpathと画面の目的だけを渡し、重要度順の指摘を受ける。指摘の根拠（file:line、観察した幅と場所）を確認してから反映し、反証された指摘は理由を残して除外する。見た目や構造が大きく変わる修正をしたときは、もう一度依頼する。
+
 ## Evidence report
 
 完了報告には次を含める。
@@ -93,4 +103,6 @@ SVGを含む文書では、page上で次を機械検査し、いずれも0にし
 - heading、table、idの結果。
 - mobile、print、PDFを実行したか。未依頼なら `not requested` とする。
 - orientation triggerの判定、overview SVGの有無、detail sliceとの接続結果。
+- 表の件数（0が既定）と、例外時の理由。
+- 独立レビューの実施回数、反映した指摘、除外した指摘と理由。
 - 未検証項目と残るrisk。

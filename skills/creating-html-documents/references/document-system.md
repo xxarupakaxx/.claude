@@ -10,7 +10,7 @@ overview、見出し、一般論はdetailの代わりにならない。section�
 
 文書全体は`creating-html-documents`がownerになる。各sectionの局所visualだけを`show-me`へ渡し、問い、evidence anchor、must-show、omit、text fallbackをvisual briefで固定する。`document-owner: creating-html-documents`のcontextでは、`show-me`は最小表現を返して終了し、HTML文書全体を作成せず再委譲もしない。
 
-overview trigger、章立て、source inventory、claim ledger、evidenceへの接続、HTML composition、accessibility、CSP、validation、browser表示は文書ownerが保持する。`show-me`の提案が本文を言い換えるだけなら採用せず、文章またはtableを残す。
+overview trigger、章立て、source inventory、claim ledger、evidenceへの接続、HTML composition、accessibility、CSP、validation、browser表示は文書ownerが保持する。`show-me`の提案が本文を言い換えるだけなら採用せず、文章または並置を残す。
 
 ## Overview gate
 
@@ -81,12 +81,24 @@ diffだけを並べず、読者が先に理由と影響を理解できるよう�
 3. Overview-first gate該当時のoverview SVG: 複数source、actor、判断軸の関係。必要ならevidence mapとして描く。
 4. scope、母集団、方法。
 5. 主要発見。
-6. Overview gate該当時のdetail slice: sourceごとの主張、evidence quality、比較、代表case、反例。
+6. Overview gate該当時のdetail slice: sourceごとの主張、evidence quality、比較（並置カード）、代表case、反例。
 7. 限界と誤読しやすい点。
 8. 調査結果から直接導ける含意と推奨。
 9. source list。
 
 事実、推論、提案を構造で区別する。数字は意味まで翻訳し、読者に再計算させない。
+
+## Screen diff
+
+推奨順序:
+
+1. 一文の中心主張と凡例（追加、消える、変わる、旧、新）。
+2. 差分の件数（消えた、増えた、変わった）と対象名。
+3. 構造の地図: 旧と新のメニューを左右に置き、行き先を矢印で結ぶSVG。
+4. 業務順の場面: 旧 / 新のミニ画面の並置と1〜3文の説明。
+5. 消えたものと行き先、追加したもの、同じもの・未作成・どちらにもないもののカード。
+
+件数、地図、場面のラベル、末尾のカードで分類を一致させる。表は使わない。詳細は `screen-diff-explainer.md`。
 
 ## 共通component
 
@@ -118,9 +130,9 @@ overviewの番号、名称、境界を再利用し、一つのsubflow、before /
 
 本文の補助であり、別の主役ではない。wideではstickyにできる。narrowとprintでは本文後へ送る。
 
-### Comparison matrix
+### Comparison cards
 
-選択肢を共通軸で比べる。各案のメリット・デメリットを別々に列挙しない。
+選択肢を同じ順序の項目（成立条件、欠点、採否理由）で書いたカードを横に並べる。軸を表にして読者に行と列を往復させない。採用案はdecision bandで先に言い切る。
 
 ### Wave route
 
@@ -134,6 +146,14 @@ overviewの番号、名称、境界を再利用し、一つのsubflow、before /
 
 追加、削除、contextを行単位で示す。赤緑だけでなく記号とlabelを併用する。
 
-### Table
+### Before / after pair
 
-正確な値、責務、比較に使う。cardへ分解すると横比較が難しくなる場合はtableを保つ。
+同じ場面の旧と新を左右に並べ、変わった要素に実要素のラベル（追加、消える、変わる）を付ける。画面ならCSSで描いたミニ画面、コードならdiff、期間なら帯。詳細は `screen-diff-explainer.md`。
+
+### Change map
+
+旧と新の構造を左右に置き、旧要素の行き先を1色の矢印で結ぶinline SVG。消える要素は破線枠、追加は実線枠。矢印の線がラベルの上を通らない配置にする。
+
+### 表の例外
+
+表は既定で使わない。数値の照合が読者の目的で、3列以上の数値を突き合わせないと判断できない場合だけ使い、理由をmetaに残す。責務や比較は並置カードにする。

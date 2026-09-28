@@ -1,11 +1,11 @@
 ---
 name: creating-html-documents
-description: 日本語の計画書、技術解説、調査報告、変更レビュー、長文資料を、具体的な根拠・仕組み・境界・含意まで読めるdesktop向け自己完結HTMLとして作成・編集する。ユーザーがHTML、ブラウザで読む報告書、図・表・コード差分を含む説明資料を求めたときに使う。mobile、印刷、PDFは明示依頼時だけ扱う。
+description: 日本語の計画書、技術解説、調査報告、変更レビュー、画面差（before / after）の解説、長文資料を、具体的な根拠・仕組み・境界・含意まで読めるdesktop向け自己完結HTMLとして作成・編集する。ユーザーがHTML、ブラウザで読む報告書、図・差分・コードを含む説明資料を求めたときに使う。表は使わず、比較・差分・対応関係は並置、カード、地図SVG、ラベルで見せる。mobile、印刷、PDFは明示依頼時だけ扱う。
 ---
 
 # HTML文書を作成する
 
-MarkdownをHTMLで包むのではなく、読者が判断・理解・検証しやすい文書を作る。
+MarkdownをHTMLで包むのではなく、読者が判断・理解・検証しやすい文書を作る。読者が自分の頭の中で情報を組み立て直さなくても、見た瞬間に差分や関係が分かる形を選ぶ。
 
 ## 最初に決める
 
@@ -13,13 +13,27 @@ HTMLを書く前に次を一行ずつ確定する。
 
 1. 読者: 誰が読むか。
 2. 目的: 読後に何を理解または判断するか。
-3. 文書型: `decision-plan`、`technical-explainer`、`change-review`、`research-report` のどれか。
+3. 文書型: `decision-plan`、`technical-explainer`、`change-review`、`research-report`、`screen-diff` のどれか。
 4. 中心主張: 冒頭だけで伝える結論。
 5. 根拠: 事実、比較、図、差分、出典のどれが主張を支えるか。
 6. 配布条件: local単一file、隣接asset、desktop以外の対応要否。
 7. 読者の前提知識: そのドメインの初学者か、実務者か。初学者向けなら、指示がなくても `references/illustrated-explainer.md` の既定を章立てへ組み込む。
 
 複数Phaseの作業では、先に `viewing-plans` でRoadmapを生成する。Roadmapは目的・現在地・次Taskを示し、完成HTMLは判断と説明を担う。両者へ同じ本文を複製しない。
+
+## 表を使わない
+
+表は既定で使わない。表は読者に行と列を往復させ、差分や関係を自分で再構成させる。比較、差分、対応関係、分類、一覧のどれも、表より速く伝わる形がある。読者の問いごとに次の形へ置き換える。
+
+- 何を採用するか: 案ごとのカード（成立条件、欠点、採否理由）を横に並べ、採用案をdecision bandで先に言い切る。
+- 何が変わったか: 同じ場面の旧と新を左右に並置し、変わった要素に「追加」「消える」「変わる」のラベルを付ける。コードならdiff。
+- AはどこへBへ移るか: 旧と新の構造を左右に置き、矢印で行き先を結ぶ地図SVG。または「X → Y」のカード。
+- 分類や一覧: ラベル付きカードのグリッド。
+- 用語と定義: 定義リスト（`dl`）。
+- 合格したか: 受入条件ごとのカードに、結果と根拠へのリンクを置く。
+- 数値の一覧: barやものさし。数値の照合そのものが読者の目的で、3列以上の数値を突き合わせないと判断できない場合だけ、例外として表を使う。
+
+例外として表を使う場合は、文書の `meta` に「表を使った理由」を一文残し、見出しcellに `scope` を付け、5行を超えるなら並べ替えの手がかり（太字、色以外の記号）を置く。この規則は文書だけでなく、このSkillの説明文にも適用する。
 
 ## 文書型を選ぶ
 
@@ -29,6 +43,7 @@ HTMLを書く前に次を一行ずつ確定する。
 - `technical-explainer`: 結論、Overview-first gate該当時のorientation / overview、用語、処理flow、制約、例、検証方法。
 - `change-review`: 変更理由、Overview-first gate該当時のorientation / overview、before / after、重要差分、影響範囲、risk、検証。
 - `research-report`: 結論、Overview-first gate該当時のorientation / overview、scope、方法、発見、限界、含意、推奨、source。
+- `screen-diff`: 二つの状態（旧と新、現行と提案）の画面差。凡例と件数、行き先の地図、業務順の場面ごとの旧 / 新並置、消えたものと行き先、追加したもの、同じもの。詳細は `references/screen-diff-explainer.md`。
 
 文書型は固定templateではない。各章に一つの問いを与え、その問いに合うvisual patternを一つ選ぶ。
 
@@ -44,6 +59,16 @@ HTMLを書く前に次を一行ずつ確定する。
 - 締め: 自己テストの問いと答え、用語集railを置く。
 
 実務者向けのchange-reviewやdecision-planには適用しない。読者が初学者かどうか判断できないときは、読者と目的の一文で決め、判断を文書のmetaに残す。
+
+## 画面差explainer（screen-diff）の既定
+
+依頼に「差分」「何が変わった」「旧と新」「before / after」「現行と提案」が含まれ、対象が画面やメニューのように目で確かめられる構造を持つなら、`screen-diff` を選ぶ。この型では次を省略しない。詳細は `references/screen-diff-explainer.md` に置く。
+
+- 冒頭に凡例（追加、消える、変わる、旧、新）と、「消えた」「増えた」「変わった」の件数を対象名つきで置く。
+- 旧と新の構造（メニュー、サイトマップ）を左右に置き、旧要素の行き先を矢印で結ぶ地図SVGを置く。
+- 業務の順に場面を並べ、各場面は旧のミニ画面と新のミニ画面の並置と、1〜3文の説明で閉じる。ミニ画面はCSSで描き、実物の文言を使い、title barに旧 / 新チップを付ける。
+- ラベル「追加」「消える」「変わる」は実要素として要素の内側に置く。CSSの `::before` / `::after` の `content` で出さない。
+- 末尾に「消えたものと行き先」「追加したもの」「同じもの、未作成のもの、どちらにもないもの」のカードを置き、冒頭の件数と一致させる。
 
 ## show-meをvisual layerとして使う
 
@@ -68,7 +93,7 @@ fallback: 同じ意味を読めるtext表現
 
 - 中心主張と、該当時のorientation / overviewの後に「レビューする順番」の番号付き索引を初期表示する。各項目にfile、symbol、処理の一文、先に読む理由を置き、本文内の詳細へリンクする。
 - 詳細は同じidと番号を使い、file path・symbol・source行、入力、具体的な処理、呼出元→呼出先、出力・副作用、関連diff・testを示す。索引へ戻るリンクも置く。既存のdetailへ統合し、別章に同じ説明を複製しない。
-- 索引に続くcall treeまたは図は「依存関係」「呼び出し順」のどちらかを明記する。レビュー順との違い、矢印の意味、runtime Levelを短く説明する。diagram-designのSVGを採用する場合は同じSVG正本を埋め込み、nodeのidからfile・symbolの詳細を辿れる対応表または本文リンクを置く。
+- 索引に続くcall treeまたは図は「依存関係」「呼び出し順」のどちらかを明記する。レビュー順との違い、矢印の意味、runtime Levelを短く説明する。diagram-designのSVGを採用する場合は同じSVG正本を埋め込み、nodeのidからfile・symbolの詳細を辿れる本文リンクを置く。
 - file pathは省略表示だけで終えず、完全なpathとsource行を選択・コピーできるtextで示す。確認済みのsource URLがあればリンクする。local fileの行ジャンプがbrowserで使えるとは仮定せず、HTML内の根拠抜粋へ移動できるようにする。sourceの版や取得時点を添え、行番号の陳腐化を判別できるようにする。
 - 索引、主要な関係、sourceはhoverやscriptに依存させない。通常のanchorリンクでkeyboardから辿れ、初期表示にtext fallbackがある形にする。長いpathは折り返す。
 
@@ -85,12 +110,11 @@ HTML構造や図を作る前に、source inventoryとclaim ledgerをcompactな�
 
 文書型ごとのdetail unitは次を最低粒度にする。
 
-| 文書型 | detail unitに含めるもの |
-|---|---|
-| decision-plan | 選択肢、成立mechanism、採否理由、trade-off、entry / exit、failure、rollback、evidence |
-| technical-explainer | input、具体的な処理、branch条件、data contract、state / side effect、failure / recovery、source |
-| change-review | file / symbol、before / after、変更理由、caller / downstream impact、compatibility、test evidence |
-| research-report | sourceごとの主張、evidence quality、比較軸、代表case、反例・限界、実務上の含意 |
+- `decision-plan`: 選択肢、成立mechanism、採否理由、trade-off、entry / exit、failure、rollback、evidence。
+- `technical-explainer`: input、具体的な処理、branch条件、data contract、state / side effect、failure / recovery、source。
+- `change-review`: file / symbol、before / after、変更理由、caller / downstream impact、compatibility、test evidence。
+- `research-report`: sourceごとの主張、evidence quality、比較軸、代表case、反例・限界、実務上の含意。
+- `screen-diff`: 場面ごとの旧 / 新の要素、要素ごとの分類（追加、消える、変わる）、行き先、設計で消したか未作成かの区別、仮の値の明示。
 
 「処理する」「連携する」「最適化する」「対応する」のような抽象語だけでdetailを閉じない。主体、対象、条件、観測可能な結果まで具体化する。長文化やsection数を情報量の代替にせず、同じ内容の言い換えを削る。
 
@@ -114,48 +138,64 @@ overviewからdetailへ降りるzoom levelを固定する。
 - Level 3: detail sliceでoverview上の番号や名称を再利用し、一つのsubflow、before / after、failure path、diffだけを詳述する。
 - Level 4: evidenceでtest、source、制約、残余riskを示す。
 
-detailはoverviewと同じ名称、番号、境界名で接続する。overviewの情報を別図として再描画しない。overviewだけで説明を終えず、claim ledgerの具体的なdetail unit、evidence、含意へ降りる。detailで同じ情報を繰り返すだけなら、図を増やさず、該当番号への文章、table、diff、evidenceにする。
+detailはoverviewと同じ名称、番号、境界名で接続する。overviewの情報を別図として再描画しない。overviewだけで説明を終えず、claim ledgerの具体的なdetail unit、evidence、含意へ降りる。detailで同じ情報を繰り返すだけなら、図を増やさず、該当番号への文章、diff、evidenceにする。
 
 単一事実、単純な一操作、短い値比較、2要素だけのbefore / afterにはoverview SVGを強制しない。その場合も結論先行、scope、evidenceは保つ。
 
 ## Visual patternを選ぶ
 
-| 読者の問い | 主な表現 |
-|---|---|
-| 何を採用するか | decision band、比較matrix |
-| 全体のどこを見るか | orientation、overview SVG |
-| 何が変わるか | before / after、diff |
-| どう動くか | inline SVGのflow、sequence |
-| ないと何が壊れるか | failure path、impact map |
-| どの順で進めるか | entry / work / exitを持つWave |
-| 合格したか | acceptance matrix、evidence table |
-| 正確な値は何か | table。必要時だけchartを添える |
-| 用語・出典を確認したい | evidence rail、脚注、source list |
-| 全体を一枚の絵で見たい | 場面の絵（scene overview）、登場人物の地図 |
-| 身近な例と同じ形か | 同型並列図 |
-| 昔と今で何が変わったか | 期間の帯比較 |
-| どこまで許すか、いくらまでか | ものさし、bar |
-| 悪化するとどうなるか | 下りの階段 |
+読者の問いごとに主な表現を一つ選ぶ。
+
+- 何を採用するか: decision band、案ごとの並置カード。
+- 全体のどこを見るか: orientation、overview SVG。
+- 何が変わるか: 旧 / 新の並置とラベル、diff。
+- どこへ移るか: 行き先の矢印を持つ地図SVG。
+- どう動くか: inline SVGのflow、sequence。
+- ないと何が壊れるか: failure path、impact map。
+- どの順で進めるか: entry / work / exitを持つWave。
+- 合格したか: 受入条件ごとのカードと根拠リンク。
+- 正確な値は何か: bar、ものさし。照合が目的のときだけ例外の表。
+- 用語・出典を確認したい: evidence rail、定義リスト、脚注、source list。
+- 全体を一枚の絵で見たい: 場面の絵（scene overview）、登場人物の地図。
+- 身近な例と同じ形か: 同型並列図。
+- 昔と今で何が変わったか: 期間の帯比較。
+- どこまで許すか、いくらまでか: ものさし、bar。
+- 悪化するとどうなるか: 下りの階段。
 
 cardを先に並べない。同じ状態をbadge、card、summary、diagramで重複表示しない。文章で十分ならvisualを増やさない。
 
 ## 作成手順
 
 1. source inventoryとclaim ledgerを作り、根拠不足と未確認を分離する。
-2. 各sectionの問いを定め、文章・tableだけで十分かを先に判断する。視覚化がmaterialなsectionだけ、`document-owner: creating-html-documents`を付けて`show-me`から最小表現またはvisual briefを得る。
-3. `assets/editorial-document.html` を基礎にする。既存HTMLの編集ではfilenameを変えない。
+2. 各sectionの問いを定め、文章だけで十分かを先に判断する。視覚化がmaterialなsectionだけ、`document-owner: creating-html-documents`を付けて`show-me`から最小表現またはvisual briefを得る。
+3. `assets/editorial-document.html` を基礎にする。既存HTMLの編集ではfilenameを変えない。`screen-diff` では `references/screen-diff-explainer.md` の部品CSSを足す。
 4. 文書型に応じて章を選び、不要なplaceholderとcomponentを削る。読者が初学者なら、初学者向けexplainerの既定（アナロジー、歴史、場面の絵、登場人物の地図、章ごとの絵、代表ケース、自己テスト）を章立てへ組み込む。
 5. 中心主張と現在地を最初のviewportに置く。背景説明から始めない。
 6. orientation triggerに該当する場合だけ、中心主張の直後に短いorientationとoverview SVGを置く。
 7. claim ledgerのdetail unitを本文へ展開する。重要な主張は具体例、境界、evidence、含意へ接続する。
 8. 本文をprimary surfaceにする。desktopでは約68–76字幅、補助railは250–310pxを目安にする。
-9. 図はinline SVGを正本にし、`role="img"`、`title`、`desc`、captionを付ける。Mermaid runtimeを新規導入しない。
+9. 図はinline SVGを正本にし、`role="img"`、`title`、`desc`、captionを付ける。SVG内の文字色はCSSクラスで指定する。Mermaid runtimeを新規導入しない。
 10. codeはescapeし、言語classまたは明示labelを付ける。変更系文書では、変更理由の直後に関連diffを示す。
-11. 表は見出しcellへ`scope`を付ける。
+11. 表を使わない。例外で使う場合は理由をmetaに残し、見出しcellへ`scope`を付ける。
 12. 出典は主張の近くに置き、末尾のsource listへ接続する。sourceの内容と会話上の推測を混ぜない。
 13. `references/validation.md` のgateを通す。SVGを含む文書では、図中textの重なり、囲みrectからのはみ出し、viewBox外を機械検査し、0にしてから目視する。
-14. 検証合格後、ユーザーが自動表示を不要と明示していなければ、生成fileの絶対pathをhostのplatform openerで開く。
-15. browser表示の成否、生成fileの絶対path、文書型、検証結果、残る制約を報告する。
+14. 実装した文脈と別の、まっさらな文脈のレビュー担当に、fileのpathと画面の目的だけを渡してレビューさせ、根拠を確認した指摘を反映する。1文書につき1回、指摘の反映で見た目や構造が大きく変わったときはもう1回行う。
+15. 検証合格後、ユーザーが自動表示を不要と明示していなければ、生成fileの絶対pathをhostのplatform openerで開く。
+16. browser表示の成否、生成fileの絶対path、文書型、検証結果、レビューの実施と反映、残る制約を報告する。
+
+## どのモデルでも守る最低水準
+
+判断力に頼らず機械的に確かめられる条件を先に満たす。上の手順を省略した場合でも、次を満たさない文書は配布しない。
+
+- `<table` の出現回数が0である。例外で使うときはmetaに理由がある。
+- 意味を持つラベル（追加、消える、変わる、旧、新、番号）はすべて実要素で、CSSの `::before` / `::after` の `content` に文字がない。
+- 強調した要素（outline、border、背景色で目立たせた要素）には、内側に文字ラベルがある。色だけで意味を伝えない。
+- `overflow:hidden` を持つ箱の中で、外側へ出る `outline` を使っていない。数値と日付のセルに `overflow-wrap:anywhere` と `text-overflow:ellipsis` を使っていない。
+- SVGの `text` の色は `fill` 属性ではなくCSSクラスで指定している。矢印の線がラベルの上を通っていない。
+- 冒頭の件数や要約と、本文のラベル、末尾の一覧の分類が一致している。
+- `h1` は一つ、id重複0、script 0（interactionが不可欠な場合を除く）、外部resource 0、CSPあり、外部navigation linkに `rel="noopener noreferrer"`。
+- 数値はすべて根拠か「仮」の明示があり、同じ数値を複数箇所で使うとき計算が合っている。
+- 独立したレビュー担当の指摘を、根拠を確認してから反映した記録が報告にある。
 
 ## 自己完結を既定にする
 
@@ -184,9 +224,9 @@ cardを先に並べない。同じ状態をbadge、card、summary、diagramで�
 
 - 3秒でpage purpose、中心主張、現在地を区別できる。
 - 1440x900で意図しない横overflow、text overlap、clipがない。
-- heading level skip、duplicate id、見出しなしtableが0。
+- heading level skip、duplicate id、表が0。例外で表を使った場合はmetaに理由がある。
 - keyboard focusが見え、主要情報がhover専用でない。
-- contrastと色以外の意味表示を考慮する。
+- contrastと色以外の意味表示を考慮する。ラベルは実要素で、疑似要素のcontentに文字がない。
 - 外部resourceは依頼で許可されたものだけ。既定は0。
 - 制作過程やpromptの痕跡が本文に残らない。
 - orientation triggerに該当する文書では、中心主張直後のorientation、accessible overview SVG、対応するdetail slice、evidenceが同じ名称や番号で接続している。
@@ -196,7 +236,9 @@ cardを先に並べない。同じ状態をbadge、card、summary、diagramで�
 - triggerに該当しない単純文書では、図を省いた理由が文書構造上自然で、結論、scope、根拠が不足していない。
 - `show-me`へ渡したsectionは局所visual sliceとして閉じ、文書ownerの循環、章立ての重複、根拠のない要素追加がない。
 - 初学者向けexplainerでは、場面の絵と登場人物の地図があり、主要章に「たとえるなら」と「比喩の限界」があり、歴史の章、仮設の代表ケース、章ごとの絵、自己テストが揃っている。
+- screen-diffでは、凡例と件数、行き先の地図、場面ごとの旧 / 新並置、消えたものと行き先、追加したもの、同じもののカードが揃い、分類が全章で一致している。
 - SVG図のtext同士の重なり、rect外へのはみ出し、viewBox外が0である。
+- 独立したレビュー担当の指摘を確認し、反映した。
 - 明示的なopt-outがない限り検証済みfileをbrowserで開き、起動できない環境では失敗理由と絶対pathを報告する。
 
 見た目の好みだけで合格にしない。中心主張、具体的detail、根拠到達、含意、安全性を確認する。mobile、print、PDFは依頼された場合だけ追加rubricを適用する。
