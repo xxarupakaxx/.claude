@@ -15,6 +15,7 @@
     "pr": ""
   },
   "model": "sonnet",
+  "advisorModel": "fable",
   "skillOverrides": {
     "analyse": "off",
     "analyse-problem": "off",
