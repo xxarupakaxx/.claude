@@ -30,6 +30,7 @@ SVGを含む文書では、page上で次を機械検査し、いずれも0にし
 - `text` のbboxが、触れている `rect` の内側に収まっていない（はみ出し）。
 - `text` のbboxがviewBoxの外に出ている。
 - `marker-end` が参照するidが文書内に存在する。
+- 表示倍率（描画幅÷viewBox幅）と、図中の最小文字の実寸（font-size×表示倍率）。実寸12px未満の文字を0にする。
 
 検査後、各図をscreenshotで目視し、矢印とラベルの対応、線と文字の衝突を確認する。
 
@@ -59,6 +60,7 @@ SVGを含む文書では、page上で次を機械検査し、いずれも0にし
 ## Content
 
 - 冒頭だけで結論と次の判断が分かる。
+- 冒頭の要約は、太字の長い段落や狭い補助列の長文で読ませていない。並列する要点は項目に分かれて本文の節へリンクし、要約の条件と推論の表示が本文と一致している。
 - workflow、architecture、lifecycle、before / after、dependency、failure pathなど、3つ以上の相互作用する要素関係またはfailure伝播を扱う文書では、中心主張の直後にorientationとoverview SVGがある。単にfileやevidenceが3件あるだけで必須扱いにしていない。
 - orientationは背景、without-this failure、対象scope、目標状態、全体内の位置を含む。背景が中心主張より前に出ていない。
 - overview SVGはactor / component / stage、主要flow、対象境界、failureの伝播先を示し、captionが読者の問いに答えている。
