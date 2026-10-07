@@ -517,6 +517,12 @@
       "removeWhen": "source contract is centralized in the producer manifest"
     },
     {
+      "path": "skills/viewing-plans/SKILL.md",
+      "contains": "dashboard.html",
+      "reason": "path placeholder for the session-dashboard-authoring output passed to open-default-browser.py, not a producer",
+      "removeWhen": "the skill stops naming the dashboard output file"
+    },
+    {
       "path": "skills/autonomous-loops/SKILL.md",
       "contains": "30_plan.html",
       "reason": "read-only canonical-plan reference",
