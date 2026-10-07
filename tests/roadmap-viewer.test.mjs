@@ -4,7 +4,6 @@ import test from 'node:test';
 import vm from 'node:vm';
 
 const html = readFileSync(new URL('../tools/roadmap_viewer.html', import.meta.url), 'utf8');
-const viewingPlansSkill = readFileSync(new URL('../skills/viewing-plans/SKILL.md', import.meta.url), 'utf8');
 const memoryFileFormats = readFileSync(new URL('../context/memory-file-formats.md', import.meta.url), 'utf8');
 const sourceMatch = html.match(/\/\* ROADMAP_MODEL_START \*\/([\s\S]*?)\/\* ROADMAP_MODEL_END \*\//);
 
@@ -1407,14 +1406,11 @@ test('implementation workspaceは選択Taskの実装図と同値な関係一覧�
   assert.match(renderDiagramSource, /escapeHtml\(edge\.predicate\)/);
 });
 
-test('viewing-plans documents the shared HTML authority and safe legacy boundary', () => {
-  assert.match(viewingPlansSkill, /30_plan\.html.*正本/s);
-  assert.match(viewingPlansSkill, /HTMLがあれば唯一の入力/);
-  assert.match(viewingPlansSkill, /不正.*旧MDで隠さない/);
-  assert.match(viewingPlansSkill, /HTMLがない既存taskだけ30_plan\.mdをlegacy/);
-  assert.match(viewingPlansSkill, /~\/\.codex\/scripts\/sync-roadmap\.py/);
-  assert.match(viewingPlansSkill, /source preview.*allowlist/s);
-  assert.match(viewingPlansSkill, /secret.*symlink.*binary/s);
+test('memory-file-formats documents the shared HTML authority and safe legacy boundary', () => {
+  assert.match(memoryFileFormats, /30_plan\.htmlが正本/);
+  assert.match(memoryFileFormats, /両方存在すればHTMLだけを使い/);
+  assert.match(memoryFileFormats, /既存taskはHTMLがない場合だけ`30_plan\.md`を従来どおり読み/);
+  assert.match(memoryFileFormats, /symlink、secret、binaryを解決しない/);
 
   assert.match(memoryFileFormats, /data-plan-schema="2"/);
   assert.match(memoryFileFormats, /data-task-id="1"/);
