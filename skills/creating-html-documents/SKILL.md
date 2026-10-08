@@ -33,7 +33,7 @@ HTMLを書く前に次を一行ずつ確定する。
 - 合格したか: 受入条件ごとのカードに、結果と根拠へのリンクを置く。
 - 数値の一覧: barやものさし。数値の照合そのものが読者の目的で、3列以上の数値を突き合わせないと判断できない場合だけ、例外として表を使う。
 
-例外として表を使う場合は、文書の `meta` に「表を使った理由」を一文残し、見出しcellに `scope` を付け、5行を超えるなら並べ替えの手がかり（太字、色以外の記号）を置く。この規則は文書だけでなく、このSkillの説明文にも適用する。
+例外として表を使う場合は、文書の `<meta name="table-exception" content="表を使った理由">` に理由を一文残し、見出しcellに `scope` を付け、5行を超えるなら並べ替えの手がかり（太字、色以外の記号）を置く。この規則は文書だけでなく、このSkillの説明文にも適用する。
 
 ## 文書型を選ぶ
 
@@ -168,7 +168,7 @@ cardを先に並べない。同じ状態をbadge、card、summary、diagramで�
 
 1. source inventoryとclaim ledgerを作り、根拠不足と未確認を分離する。
 2. 各sectionの問いを定め、文章だけで十分かを先に判断する。視覚化がmaterialなsectionだけ、`document-owner: creating-html-documents`を付けて`show-me`から最小表現またはvisual briefを得る。
-3. `assets/editorial-document.html` を基礎にする。既存HTMLの編集ではfilenameを変えない。`screen-diff` では `references/screen-diff-explainer.md` の部品CSSを足す。
+3. `assets/editorial-document.html` を基礎にする。`head` に `<meta name="artifact-kind" content="html-document">` を置く（テンプレートには入っていない。lintはこのmetaがないと誤りにする）。既存HTMLの編集ではfilenameを変えない。編集の前に元のfileを `$TMPDIR` へ写しておき、編集の後に `python3 ~/.claude/scripts/html-change-list.py <元> <編集後>` で変更点を列挙する。各行が依頼のどの文に対応するかを確かめ、対応しない行は元へ戻すか、変えた理由を報告に書く。`screen-diff` では `references/screen-diff-explainer.md` の部品CSSを足す。
 4. 文書型に応じて章を選び、不要なplaceholderとcomponentを削る。読者が初学者なら、初学者向けexplainerの既定（アナロジー、歴史、場面の絵、登場人物の地図、章ごとの絵、代表ケース、自己テスト）を章立てへ組み込む。
 5. 中心主張と現在地を最初のviewportに置く。背景説明から始めない。
 6. orientation triggerに該当する場合だけ、中心主張の直後に短いorientationとoverview SVGを置く。
@@ -176,9 +176,9 @@ cardを先に並べない。同じ状態をbadge、card、summary、diagramで�
 8. 本文をprimary surfaceにする。desktopでは約68–76字幅、補助railは250–310pxを目安にする。
 9. 図はinline SVGを正本にし、`role="img"`、`title`、`desc`、captionを付ける。SVG内の文字色はCSSクラスで指定する。Mermaid runtimeを新規導入しない。
 10. codeはescapeし、言語classまたは明示labelを付ける。変更系文書では、変更理由の直後に関連diffを示す。
-11. 表を使わない。例外で使う場合は理由をmetaに残し、見出しcellへ`scope`を付ける。
+11. 表を使わない。例外で使う場合は理由を `table-exception` のmetaに残し、見出しcellへ`scope`を付ける。
 12. 出典は主張の近くに置き、末尾のsource listへ接続する。sourceの内容と会話上の推測を混ぜない。
-13. `references/validation.md` のgateを通す。SVGを含む文書では、図中textの重なり、囲みrectからのはみ出し、viewBox外を機械検査し、0にしてから目視する。
+13. `python3 ~/.claude/scripts/lint-html-document.py <file>` を実行し、誤りを0にする。続けて `references/validation.md` のgateを通す。SVGを含む文書では、図中textの重なり、囲みrectからのはみ出し、viewBox外を機械検査し、0にしてから目視する。
 14. 実装した文脈と別の、まっさらな文脈のレビュー担当に、fileのpathと画面の目的だけを渡してレビューさせ、根拠を確認した指摘を反映する。1文書につき1回、指摘の反映で見た目や構造が大きく変わったときはもう1回行う。
 15. 検証合格後、ユーザーが自動表示を不要と明示していなければ、生成fileの絶対pathをhostのplatform openerで開く。
 16. browser表示の成否、生成fileの絶対path、文書型、検証結果、レビューの実施と反映、残る制約を報告する。
@@ -187,7 +187,13 @@ cardを先に並べない。同じ状態をbadge、card、summary、diagramで�
 
 判断力に頼らず機械的に確かめられる条件を先に満たす。上の手順を省略した場合でも、次を満たさない文書は配布しない。
 
-- `<table` の出現回数が0である。例外で使うときはmetaに理由がある。
+このうち機械で数えられる項目は、`python3 ~/.claude/scripts/lint-html-document.py <file>` が調べる。対象は、`<table`、`th` の `scope`、`h1`、`script`、id重複、外部resource、CSP、外部navigation linkの `rel`、`::before` / `::after` の文字、SVG `text` の `fill` 属性である。誤りが0になるまで直す。例外で表やscriptを使うときは、`<meta name="table-exception" content="理由">` または `<meta name="script-exception" content="理由">` を置く。lintは理由を表示し、「要確認」として扱う（終了コードは0のまま）。
+
+lintの判定は、下の項目より弱い箇所がある。SVG `text` の `fill` 属性は、どの図にも当たるCSS（`svg text` など）が `fill` を指定している場合だけ誤りにし、それ以外は「要確認」として件数を出す。`counter()` と `attr()` で出す番号やラベルも「要確認」になる。「要確認」は、下の項目に照らして自分で判断する。
+
+lintが通っても、最低水準をすべて満たしたことにはならない。強調した要素のラベル、はみ出し、SVG図中の文字の実寸、件数の一致、要約の太字、数値の根拠、レビューの記録は、下の項目を読んで確かめる。
+
+- `<table` の出現回数が0である。例外で使うときは `table-exception` のmetaに理由がある。
 - 意味を持つラベル（追加、消える、変わる、旧、新、番号）はすべて実要素で、CSSの `::before` / `::after` の `content` に文字がない。
 - 強調した要素（outline、border、背景色で目立たせた要素）には、内側に文字ラベルがある。色だけで意味を伝えない。
 - `overflow:hidden` を持つ箱の中で、外側へ出る `outline` を使っていない。数値と日付のセルに `overflow-wrap:anywhere` と `text-overflow:ellipsis` を使っていない。
@@ -231,7 +237,7 @@ cardを先に並べない。同じ状態をbadge、card、summary、diagramで�
 
 - 3秒でpage purpose、中心主張、現在地を区別できる。
 - 1440x900で意図しない横overflow、text overlap、clipがない。
-- heading level skip、duplicate id、表が0。例外で表を使った場合はmetaに理由がある。
+- heading level skip、duplicate id、表が0。例外で表を使った場合は `table-exception` のmetaに理由がある。
 - keyboard focusが見え、主要情報がhover専用でない。
 - contrastと色以外の意味表示を考慮する。ラベルは実要素で、疑似要素のcontentに文字がない。
 - 外部resourceは依頼で許可されたものだけ。既定は0。

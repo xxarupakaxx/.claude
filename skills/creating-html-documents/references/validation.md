@@ -2,12 +2,14 @@
 
 ## Static
 
+- `python3 ~/.claude/scripts/lint-html-document.py <file>` の誤りが0である。下の項目のうち、機械で数えられるものを調べる。残りは読んで確かめる。
 - doctype、`lang`、charset、viewport、title、CSPがある。
 - `h1`は一つ。heading levelを飛ばさない。
 - `main`、`aside`、`figure`、`table`などsemantic要素を用途どおり使う。
 - id重複がない。anchor targetが存在する。
 - 各SVGを囲む`figure`に、`role="img"`付きSVG、`title`、`desc`、`figcaption`がある。
-- `<table` が0である。例外で使う場合はmetaに理由があり、table headerに`scope`がある。
+- `<table` が0である。例外で使う場合は `table-exception` のmetaに理由があり、table headerに`scope`がある。
+- `script` が0である。例外で使う場合は `script-exception` のmetaに理由がある。
 - 意味を持つラベル（追加、消える、変わる、旧、新、番号）が実要素で、CSSの `::before` / `::after` の `content` に文字がない。
 - outline、border、背景で強調した要素の内側に文字ラベルがある。
 - `overflow:hidden` の箱の中で外側へ出る `outline` を使っていない。数値・日付のセルに `overflow-wrap:anywhere` や `text-overflow:ellipsis` を使っていない。
@@ -106,5 +108,6 @@ SVGを含む文書では、page上で次を機械検査し、いずれも0にし
 - mobile、print、PDFを実行したか。未依頼なら `not requested` とする。
 - orientation triggerの判定、overview SVGの有無、detail sliceとの接続結果。
 - 表の件数（0が既定）と、例外時の理由。
+- lintの誤りと要確認の件数、要確認をどう判断したか。
 - 独立レビューの実施回数、反映した指摘、除外した指摘と理由。
 - 未検証項目と残るrisk。
