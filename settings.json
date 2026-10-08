@@ -134,8 +134,18 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash '/Users/yoshiki/.claude/hooks/herdr-agent-state.sh' session",
+            "command": "bash ~/.claude/hooks/herdr-agent-state.sh session",
             "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/scripts/lint-hook-wiring.py --hook --config ~/.claude/settings.json",
+            "timeout": 5
           }
         ]
       }
