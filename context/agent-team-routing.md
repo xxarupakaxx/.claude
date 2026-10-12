@@ -12,6 +12,12 @@ local Read / Grep / Glob / Bashを先に行い、最小routeを選ぶ。大き�
 第三者Skillは `skill-governance` で候補catalogとactive runtimeを分離する。read-only inventoryだけをmodel-invokedとし、promotion、update、retirement、delete、runtime mutationはuser-invokedかつ人間承認を必須にする。
 <!-- skill-governance-contract:routing:end -->
 
+## 作業に合わせたtoolと出力
+
+編集と調査の範囲に合わせてtoolを選ぶ。局所編集は構造化された編集、検索は対象pathと必要な行へ絞った検索を使う。互いに独立した読み取りは、結果を確認できる単位でまとめて並行実行する。依存する処理、書き込み、承認、待機は順に進める。
+
+長い診断はprivateなログへ保存し、画面には結果と必要な抜粋を示す。抜粋で足りなければ該当範囲を追加取得する。一律のBash-only化、モデル・effortの変更、compact閾値の変更は、この方針に含めない。実装済み、実発火確認済み、効果確認済みを区別し、未計測の案を既定へ昇格させない。
+
 ## Delegation Gate
 
 Agent()、Workflow、reviewerを起動する前に全条件を評価する。

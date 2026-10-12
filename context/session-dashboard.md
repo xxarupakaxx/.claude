@@ -49,13 +49,26 @@
 
 この運用は担当者が実行する手順であり、ブラウザやOSが実装を自動的に禁止する機能ではない。旧parser、task-context.py --execution、sync-roadmap.pyを新しいHTMLに適用しない。既存の承認・品質条件は維持する。
 
+### compact・再開へ渡す状態
+
+継続する計画や引継ぎを管理する新規taskでは、[管理taskの初期化](memory-file-formats.md#管理taskの初期化)を先に行う。ダッシュボード作成だけではtask metadataを生成しない。通常の局所作業には初期化を要求しない。既存taskは同じidentityを照合して継続し、metadataを作り直さない。
+
+
+計画のpath・anchor・版・本文hashを、[短い復元状態](memory-file-formats.md#短い状態と検証証拠)へ結ぶ。目的、次の受入条件、依存、未回答の質問、必要なgateと承認参照、検証証拠、次の行動を明示入力から更新する。これは再開の導線であり、計画全文やレビューの代わりにしない。
+
+レビュー対象の計画anchor領域をUTF-8で固定し、領域末尾の改行を除いた本文のSHA-256を保存する。同じbyte列を読取用証拠と復元状態に使う。既存の審査証拠を上書きしてhashを合わせない。差分・依存・実行条件・計画・新しい失敗が変わった証拠はstale、照合不能はunknownと表示し、その証拠に依存する合格を再利用しない。
+
 ### 過去の計画を引き継ぐ
 
 過去の30_plan.html、30_plan.md、plan-review.json、80_review.md等は削除せず参照できるようにする。移行時は元path、計画内容、未完了条件、審査と証拠の対応を確認し、ダッシュボード内へ引き継いだ正本path・anchorを明記する。移行前は旧計画を正本として参照し、移行完了後は旧計画を履歴として保持する。移行しただけで旧審査を新しい計画の合格にせず、審査対象との同一性を確認できなければ未審査にする。
 
 ## 費用・利用量の取得
 
-数値は `python3 ~/.claude/scripts/session-metrics.py metrics --session <session-id>` の出力を使い、その場で集計スクリプトを書かない。このCLIは下記の数え方を実装しており、記録値、token内訳、キャッシュ読み込み率、ツールエラー率、公式単価での推定額、保存済みの為替での円換算をJSONで返す。為替は `session-metrics.py fx` で取得して保存する。単価は `~/.codex/config/model-pricing.json` にあり、モデルごとに出典と確認日を持つ。未登録のモデルは推測せず、公式料金表で確認してから登録する。推定額はtranscriptに残る呼出しだけを数えるので、compactの要約や補助モデルの分だけ実際より小さくなり得る。以下の規則はこのCLIの仕様であり、CLIが使えない場合の手順でもある。
+数値は既存の`session-metrics.py metrics --session <session-id>`で取得する。Codexの入口は`~/.codex/scripts/session-metrics.py`、Claudeの入口は既存shimの`~/.claude/scripts/session-metrics.py`。同一bundleの既存解析器を使い、数値、identity、fieldごとの欠測理由、coverageを返す。別のcollectorやDBは作らない。明示した記録は`--transcript <絶対path> --session-id <ID>`で指定できる。task・run・終了状態・runtime版・親子包含は、確認できた値だけを明示metadataとして渡す。
+
+`--requested-tier`と`--actual-tier`は別である。実効tierは記録や検証済みの根拠がある場合だけ指定する。不明なら省略し、標準料金の参考額が必要な場合だけ`--assume-tier standard`を使う。参考額は`reference_usd`、確認済み条件で計算できる推定額は`estimated_usd`へ分け、欠測はnullとする。参考額を採否の根拠にしない。`measurement_status`、`comparison_qualified`、`coverage`と`field_meta`を確認し、token・料金・結果の欠測を0扱いしない。
+
+子記録の探索は`--include-children`、親のcounterが子を含むかは`--includes-children yes|no|unknown`で区別する。包含がunknownなら親子を合算しない。価格の正本は`~/.codex/config/model-pricing.json`で、モデル別に公式出典・確認日・長文条件を持つ。為替は`session-metrics.py fx`で取得・保存する。取得不能時は保存値の基準日と参考値であることを示す。未登録モデル・未確認単価は推測しない。
 
 対象を明示したローカル記録から、数値と必要な識別子だけを抽出する。生の会話、tool引数・結果全文、認証情報を出力・保存しない。各指標に取得元、対象session/期間、取得時点、完全/部分/未取得を付ける。別セッションの数値を現在のセッションとして表示しない。
 
@@ -65,11 +78,11 @@
 - 複数sessionを集計する場合はsession IDで重複排除し、各sessionの最後の累計だけを合計する。対象範囲と記録あり/全session件数を表示する。親に含まれる子agent費用を再加算しない。親子の包含を確認できない場合は別枠にする。
 - 読込不能、途中行、破損JSON、負数・非有限数があれば、その影響を欠測・部分集計として明示する。料金情報のないsessionを黙って除いた値を「全体累計」と呼ばない。
 - 累計には過去日が含まれ得る。ファイル更新日で日次費用を算出しない。日次表示には期間境界の記録または期間を指定できる既存集計器が必要。
-- tokenはassistant messageのusageをmessage IDで重複排除して集計する。streamingで同じmessage IDが繰り返される場合は最後の完全なusageを使う。入力全体は`input_tokens + cache_read_input_tokens + cache_creation_input_tokens`、キャッシュ率は読み込みtoken/入力全体。既存`cost-state.modelUsage`の累計から得る場合も加算を重ねない。
+- tokenはruntime・session・message ID・request IDを照合して重複排除する。streamingは最後の完全なusageを使い、不完全な更新で既知値を失わない。入力全体は`input_tokens + cache_read_input_tokens + cache_creation_input_tokens`、キャッシュ率は読み込みtoken/入力全体。累計modelUsageは累計として扱い、message単位のusageへ再加算しない。子の包含が不明なら分けて表示する。
 
 ### Codex
 
-- `~/.codex/sessions/`のsession_metaのIDが一致する記録を読む。`token_usage_record`の最新`thread_token_usage`をセッション累計として使う。ない場合だけ`event_msg/token_count`の最新`info.total_token_usage`を使い、両方を加算しない。累計を行ごとに足さない。
+- Codexの記録はsession identityを照合し、呼出し別usageのIDで重複排除する。累計形式は差分・resetを識別し、呼出し別記録と累計を二重加算しない。`exec --json`の記録も同じ解析器で扱う。record IDや必要な内訳がない場合はunknownとし、別session・曖昧な重複・壊れた行を完全なcoverageに含めない。
 - `cached_input_tokens`は`input_tokens`の内数。キャッシュ率はcached/inputで、分母0は未取得。出力tokenにはreasoningを二重加算しない。
 - USD額が記録されていれば取得元と範囲を示して使う。USD記録がなくてもtoken内訳とモデルが分かる場合は、公式単価を確認してAPI換算の推定額を計算し、日本円で表示する。料金区分が不明なら標準料金を仮定した参考額と明記し、確認済みの他区分の額も併記できる。モデル名から単価を推測せず、利用上限の使用率を費用へ換算しない。
 
@@ -89,6 +102,9 @@
 ツールエラー率は、結果が判明した呼出しのうちエラーだった件数/結果が判明した呼出し件数。ツールが提供するerror flagや終了状態を使い、本文の「error」という単語では判定しない。呼出しと結果を照合できなければ未取得とする。cache率やerror率は分子・分母も示す。文脈読み落としはコンテキスト量減少だけから推測しない。
 
 `post-cost-track.sh`は時刻とツール名だけの記録であり、token・費用の取得元にはならない。ccusage等が導入済みならその仕様・集計範囲を確認して使えるが、表示のためだけに未導入ツールを自動installしたり、生ログを外部送信したりしない。
+
+
+費用/成功件数は、成功1件以上かつ必要な費用coverageが100%の場合だけ表示する。成功0件やcoverage不足はNAとし、全試行費用の既知小計、成功件数、欠測数を併記する。CLIやhookが結果・実効tier・cache内訳を提供しない場合は、その指標の比較を保留する。構造化結果がない本文から失敗率を作らない。単なる設定、合成fixtureの合格、実発火、改善効果を別々に記録する。
 
 ## 表示と検証
 

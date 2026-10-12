@@ -36,7 +36,7 @@ MEMORY_DIRはプロジェクトのAGENTS.mdで定め、未定義なら .local/ �
 
 ## task metadataとsession復元
 
-task-meta.jsonはgeneratorが管理するmachine-owned manifestである。人がPhaseやCodemap状態を重複管理しない。
+task-meta.jsonは共通init CLIが新規作成するmachine-owned manifestである。既存taskのmetadataは維持する。人がPhaseやCodemap状態を重複管理しない。
 
     {"schema_version":1,"task_id":"YYMMDD_task","task_title":"表示名",
      "thread_id":"...","session_id":"...","project_path":"/abs/project",
@@ -45,7 +45,102 @@ task-meta.jsonはgeneratorが管理するmachine-owned manifestである。人�
 
 必須は schema_version、task_id、task_title、project_path、worktree_path、task_state、code_change、created_at、updated_at。task_stateは active / waiting / verifying / completed / archived。thread_id、session_id、approval_stateは任意である。絶対pathは実在する対象を指す。
 
-復元は session ID、次に thread IDの完全一致を優先する。不一致のtaskを最新時刻、名前、pathだけで自動選択しない。完全一致がなく、active / waiting / verifyingが一件だけなら互換fallbackを使えるが、理由を05_log.mdに記録する。複数候補、metadata破損、context不一致は候補を提示し、停止または明示選択へ戻す。handovers/<session-id>.mdを正本とし、HANDOVER.mdは互換pointerに留める。runtime/locksはworktree固有とする。
+既存schema1の補助key `project`、`run_id`、`title`、`workspace_root` は、metadataを読むときだけ任意の部分集合として受け入れる。各値は空白だけではない文字列で、NULを含まず、UTF-8へencode可能で4,096 bytes以下とする。metadata全体4MiBの上限、必須9keyと既存optional keyの検証を維持し、上記以外の未知key、型違反、schema違反、必須key欠落、上限超過を拒否する。
+
+補助値はidentity・context・状態の判定に使わず、必須keyの代用にしない。`run_id`をsession/threadへ変換せず、補助値とcanonical値の一致も要求しない。新規initは必須9keyと明示されたsession/threadだけを生成し、補助keyを出力しない。init・resolve・save・loadで既存metadataを読み取るときは、正規化、移行write、chmodを行わず、bytes・mode・mtimeを保全する。既存のtask directoryと個人logも変更しない。
+
+session IDがある場合は、そのIDの完全一致だけで選択する。不一致でもthread IDへ切り替えない。session IDがない場合に限り、thread IDの完全一致を使う。双方のIDがない場合、無効なID、複数候補、metadata破損、runtime・project・worktreeの不一致は自動選択を止める。最新時刻、名前、唯一のactive taskによるfallbackは使わない。
+
+task metadataの保存先と、復元用handoverの保存先を区別する。既存のruntime homeにあるtask metadataも、明示した対象rootからIDとcontextを検証して参照する。保存するhandoverとlockは対象worktree内だけに置く。`MEMORY_DIR/handovers/<session-id>.md`を正本とし、session IDがない場合は`thread-<thread-id>.md`を使う。`HANDOVER.md`はIDと正本への相対pathだけの互換pointerである。
+
+正本とpointerには生成元・schema・runtime・ID・所有情報・hashを付け、lock、変更前hashの照合、atomic writeで更新する。既存の手書き・旧形式・他runtime・他session・編集済みファイル、symlink、競合があれば保全して停止する。別sessionの正本を消さず、pointerの競合と正本の保存結果を別に報告する。
+
+### 管理taskの初期化
+
+継続する計画や引継ぎを管理する新規taskは、短い状態の初回保存より前に共通CLIでidentityを初期化する。通常の局所作業には要求しない。task IDとtitle、code_change、runtimeが提供したsessionまたはthread ID、実在するcwd・project・worktreeを明示する。worktreeとcwdはrealpathで一致させる。
+
+```sh
+python3 ~/.codex/scripts/session_handover.py init \
+  --runtime codex --cwd '<WORKTREE>' --session-id '<SESSION_ID>' \
+  --project-path '<PROJECT>' --worktree-path '<WORKTREE>' \
+  --task-memory-root '<RUNTIME_HOME>/.local/memory' \
+  --task-id '<TASK_ID>' --task-title '<TASK_TITLE>' --code-change true
+```
+
+Claudeでは`--runtime claude`とそのruntime homeを指定する。sessionが提供されない場合だけ、`--session-id`を省いて既知の`--thread-id`を使う。code変更がないtaskは`--code-change false`にする。IDが両方不明なら初期化せず、別sessionや最新taskを代用しない。
+
+task-memory-rootは、trusted process環境の`CODEX_HOME`または`CLAUDE_HOME`（未指定なら`~/.codex`または`~/.claude`）のrealpath直下の`.local/memory`と完全一致させる。任意の外部root・相対rootを渡さない。fixtureの専用rootもこの環境変数で明示し、同じ制約を使う。Claudeアプリの`CLAUDE_CONFIG_DIR`とcoreの`CLAUDE_HOME`は別の設定である。専用検証では両方の対象rootとhook環境を明示し、通常homeのmetadataへfallbackさせない。
+
+成功時は`<exact-task-id>/task-meta.json`を新規作成し、stdoutの`status=created`と終了コード0を確認する。既存metadataやsession/threadの競合、不正context、保存失敗はstderrの`status=rejected`と終了コード2を確認する。既存metadataは同じ内容でも更新しない。既存task directoryの権限と他fileも保持する。既存taskを継続するときは内容とidentityを確認してresolve/save/loadへ進み、新規taskのinitを繰り返さない。
+
+initはidentity/contextだけを既存schemaで保存する。短い状態、計画、gate、承認、検証証拠は以下の明示state JSONに置く。native hookからmetadataや最初の短い状態を自動作成しない。旧generatorを起動して補わない。
+
+### 短い状態と検証証拠
+
+復元状態は、明示した構造化入力から目的、次の受入条件、計画のpath・anchor・版・本文hash、依存、未回答の質問、必要なgateと承認参照、検証証拠、次の行動を保存する。会話全文・transcript・実行ログから自動生成しない。未知の項目を「なし」「合格」で埋めない。800–1500 tokenは目安であり、安全条件や未完了gateを削る上限にはしない。
+
+証拠には対象差分、依存、実行条件、計画、追加の失敗のfingerprintを結ぶ。変化した証拠はstale、照合できない証拠はunknownとし、その証拠に依存する合格を再利用しない。変更も失敗も懸念もない場合は、同じ検証を繰り返さない。必須testと独立reviewの条件は維持する。新しい計画はダッシュボード内を正本とし、旧parserの実行を復元条件にしない。
+
+### 手動保存と参照
+
+`~/.codex/scripts/session_handover.py`を両runtimeの共通入口にする。前提は、対象session/threadとproject/worktreeを記録した既存の`task-meta.json`が、明示したtask memory rootに一件だけあること。metadataがない場合は`task_not_found`として止め、新規taskなら上記のinit経路を使う。旧generatorを起動したり、最新taskを代用したりしない。task metadataにはidentityを置き、以下の短い状態を追加しない。
+
+短い状態は明示したJSON fileから渡す。以下は未実行の検証を保持する形の例であり、path、版、hash、目的、gate、依存は対象taskの事実に置き換える。空の配列は「なし」と確認した場合だけ使う。承認参照は証跡への参照であり、文字列だけで承認を証明しない。
+
+```json
+{
+  "schema_version": 1,
+  "objective": "対象taskで達成する状態",
+  "next_acceptance": "次に確認する受入条件",
+  "plan": {
+    "path": "/absolute/path/dashboard.html",
+    "anchor": "#improvement-plan",
+    "version": "v8",
+    "sha256": "<対象sectionのSHA-256・64文字>"
+  },
+  "dependencies": [],
+  "unanswered_questions": [],
+  "required_gates": [
+    {"name": "検証", "status": "not_run", "approval_ref": null,
+     "evidence_refs": ["unit-suite"]}
+  ],
+  "evidence": [
+    {"name": "unit-suite", "status": "not_run", "command": "対象の検証コマンド",
+     "result": "未実行",
+     "fingerprints": {"diff": null, "dependencies": null, "execution": null,
+                      "plan": null, "failure": null}}
+  ],
+  "next_action": "未完了の検証を実施する"
+}
+```
+
+計画hashは指定anchorの`<section>`開始から対応する`</section>`の末尾までのUTF-8本文に対して計算する。末尾改行を追加せず、`data-plan-version`と`version`を一致させる。homeのダッシュボードは既定の許可rootで参照できる。別の計画rootを使う場合だけ、信頼できる絶対pathを`--plan-root`で明示する。
+
+1. 初回保存は次の引数を使う。`<...>`は実在する絶対pathまたは正確なIDへ置き換える。Claudeでは`--runtime claude`にする。session IDが提供されない場合だけ、`--session-id`を省いて`--thread-id`を使う。
+
+   ```sh
+   python3 ~/.codex/scripts/session_handover.py save \
+     --runtime codex --cwd '<WORKTREE>' --session-id '<SESSION_ID>' \
+     --project-path '<PROJECT>' --worktree-path '<WORKTREE>' \
+     --task-memory-root '<RUNTIME_HOME>/.local/memory' \
+     --memory-dir '<WORKTREE>/.local' --state-file '<STATE_JSON>'
+   ```
+
+2. 保存結果の`canonical`と`pointer`を別々に確認する。既存canonicalの更新では、前回結果の`hash`を`--expected-canonical-hash`へ渡す。pointerも更新するときは前回の`hash`を`--expected-pointer-hash`へ渡す。更新直前に読んだhashの一致だけで、編集済みの不明fileを上書きする許可にはしない。競合の終了コードは3、schema/path/identityの拒否は2である。pointer競合でもcanonicalだけ保存された場合があるため、終了コードだけで保存結果を判断しない。
+
+3. 参照は同じruntime・identity・contextで行う。
+
+   ```sh
+   python3 ~/.codex/scripts/session_handover.py load \
+     --runtime codex --cwd '<WORKTREE>' --session-id '<SESSION_ID>' \
+     --project-path '<PROJECT>' --worktree-path '<WORKTREE>' \
+     --task-memory-root '<RUNTIME_HOME>/.local/memory' \
+     --memory-dir '<WORKTREE>/.local' --format json
+   ```
+
+   検証合格を再利用するときは、現在の`diff`、`dependencies`、`execution`、`plan`、`failure`を持つJSONを`--fingerprints-file`で渡す。欠測や未照合を`null`で保持し、過去のfingerprintを現在値として転記しない。plan本文のhash照合と検証証拠の失効判定は別に行う。
+
+native adapterは保存済みの短い状態を検証して再利用する。初回の短い状態を会話やログから推測して作らない。実イベントの能力・発火が未確認のruntimeでは、この手動経路だけを動作確認済みとして扱う。
 
 ## 05_log.md
 
