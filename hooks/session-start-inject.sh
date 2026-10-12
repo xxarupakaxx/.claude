@@ -1,23 +1,13 @@
 #!/bin/bash
-# session-start-inject.sh
-# コンテキスト圧縮後にHANDOVER.mdの内容を注入する
-# SessionStart (compact) で発火
+set -u
 
-INPUT=$(cat)
-CWD=$(echo "$INPUT" | jq -r '.cwd // ""')
-
-if [ -z "$CWD" ]; then
+CORE="${SESSION_HANDOVER_CORE:-}"
+if [ -z "$CORE" ]; then
+  CODEX_ROOT="${CODEX_HOME:-$HOME/.codex}"
+  CORE="$CODEX_ROOT/scripts/session_handover.py"
+fi
+if [ ! -f "$CORE" ]; then
+  printf '%s\n' 'session-handover: core_not_found' >&2
   exit 0
 fi
-
-HANDOVER_FILE="$CWD/.local/HANDOVER.md"
-
-if [ -f "$HANDOVER_FILE" ]; then
-  echo "=== SESSION HANDOVER (auto-injected after compaction) ==="
-  echo ""
-  cat "$HANDOVER_FILE"
-  echo ""
-  echo "=== END HANDOVER ==="
-fi
-
-exit 0
+exec python3 "$CORE" hook --runtime claude --event SessionStart
