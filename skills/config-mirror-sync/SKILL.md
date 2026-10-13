@@ -29,7 +29,7 @@ Obsidian側では次を実行しない。`clone --recurse-submodules`が設定�
 gitlinkを進めてよいのは、次の全端末でdeinitを確認できたときだけである。端末が増えたら行を足し、確認したら状態と日付を書き換える。
 
 - `yoshiki.morii.001`のMac（`/Users/yoshiki.morii.001/ghq/github.com/xxarupakaxx/obsidian-vault`）: 2026-10-08にdeinit済み。
-- 個人のMac（`/Users/yoshiki/Notes/Vault`）: 未確認。毎朝07:50の自動化`vault-dotfiles-submodule-update`は、promptで`git submodule update --init --remote --merge`を実行する。deinitしても翌朝に初期化し直すので、このpromptを本手順へ直すまでは未確認として扱う。promptはSKILL.mdをVaultの`.codex`内から読むので、deinit後は`~/.codex`側を読むように直す。
+- 個人のMac（`/Users/yoshiki/Notes/Vault`）: 2026-10-13、Vault側の`.codex`・`.claude-global`を元データ保全後にdeinitし、未初期化をローカルで確認。毎朝07:50の自動化`vault-dotfiles-submodule-update`の停止は本人確認済み（設定自体の実測は未取得）。
 
 ## 対象の決定
 
