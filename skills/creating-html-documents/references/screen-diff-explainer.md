@@ -15,11 +15,13 @@ API（リクエスト、レスポンス、エンドポイント）、コード�
 
 1. 一文の中心主張と、凡例（追加、消える、変わる、旧、新のラベル）。
 2. 差分の件数。「消えた」「増えた」「変わった」の3つを並べ、それぞれに対象名を列挙する。この件数は以降の全章と一致させる。
-3. 構造の地図。旧と新のメニュー（またはサイトマップ）を左右に置き、旧の要素の行き先を矢印で結ぶinline SVG。消える要素は破線枠、追加は実線枠、行き先の矢印は1色。
-4. 業務の順に並べた場面。各場面は「旧のミニ画面 → 新のミニ画面」の並置と、1〜3文の説明で閉じる。場面の数は4〜8を目安にする。
+3. 構造の地図。旧と新のメニュー（またはサイトマップ）を左右に置き、旧の要素の行き先を矢印で結ぶinline SVG。消える要素は破線枠、追加は実線枠、行き先の矢印は1色。差分が一つの画面の中に閉じ、メニューが変わらず、別の画面へ移る要素も無いときは、この地図を省き、2の件数の行に「画面の構成は変わらない」と一行書く。同じ画面の中での位置の変化は、場面の並置で示す。同じ二つの箱を並べただけの地図は描かない。
+4. 業務の順に並べた場面。各場面は「旧のミニ画面 → 新のミニ画面」の並置と、1〜3文の説明で閉じる。場面の数は4〜8を目安にし、一つの画面に閉じた差分では操作の段階ごとに1〜3場面でよい。
 5. 消えたものと、その行き先。カードのグリッド。各カードは「消えたもの → 行き先」。行き先がなければ「代替なし」と書く。
 6. 追加したもの。カードのグリッド。
 7. 変わっていないもの、未作成のもの、どちらにもないもの。設計で消したものと、資料や試作で作っていないだけのものを混ぜない。
+
+5〜7で件数が0の分類は、空のグリッドを置かず「なし」と一行書く。
 
 ## ミニ画面（wireframe）の描き方
 
@@ -34,7 +36,7 @@ API（リクエスト、レスポンス、エンドポイント）、コード�
 - 「追加」「消える」「変わる」は実要素（`<em class="lb add">追加</em>` など）として、強調する要素の内側の先頭に置く。CSSの `::before` / `::after` の `content` で出さない。疑似要素のラベルは `overflow:hidden` で切れ、隣の要素に重なり、支援技術とコピーで失われる。
 - 色は補助で、ラベル文字が主。凡例をページ先頭に置く。
 - 画面全体を強調するときは、外側 `outline` ではなく `border` を使う。ミニ画面の外枠に `overflow:hidden` があると外側のoutlineは3辺が切れる。
-- 隣り合うセルを別々に強調するときは、outlineのはみ出しがセル間隔を超えないようにする。
+- セルや見出しなど画面内の要素を強調するときは、outlineを枠の内側に描く。`outline-offset` を線幅と同じ負の値（2pxの線なら `-2px`）にし、文字が線に重ならないよう内側に余白を取る。`overflow:hidden` や `overflow-x:auto` を持つ箱の中では、外側へ出たoutlineが箱の端で切れる。
 
 ## 地図SVGの規則
 
@@ -84,9 +86,10 @@ API（リクエスト、レスポンス、エンドポイント）、コード�
 ```css
 .lb{display:inline-block;padding:0 6px;border-radius:3px;color:#fff;font-size:10px;font-weight:700;line-height:16px;font-style:normal;margin-right:5px;white-space:nowrap}
 .lb.add{background:#176b34}.lb.del{background:#a3302d}.lb.chg{background:#1769aa}
-.hl.add{outline:2px solid #176b34;outline-offset:1px;background:#e9f8ee}
-.hl.del{outline:2px dashed #a3302d;outline-offset:1px;background:repeating-linear-gradient(45deg,#fdeceb,#fdeceb 5px,#fff 5px,#fff 10px)}
-.hl.chg{outline:2px solid #1769aa;outline-offset:1px;background:#e8f1fa}
+.hl{padding:3px 5px}
+.hl.add{outline:2px solid #176b34;outline-offset:-2px;background:#e9f8ee}
+.hl.del{outline:2px dashed #a3302d;outline-offset:-2px;background:repeating-linear-gradient(45deg,#fdeceb,#fdeceb 5px,#fff 5px,#fff 10px)}
+.hl.chg{outline:2px solid #1769aa;outline-offset:-2px;background:#e8f1fa}
 .wf-main.hl{outline:none;border:3px solid #176b34}
 .wf-main.hl.del{border-style:dashed;border-color:#a3302d}
 .pair{display:grid;grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr);gap:14px;align-items:start}
@@ -105,6 +108,8 @@ API（リクエスト、レスポンス、エンドポイント）、コード�
 - `<table` が0である。
 - 強調した要素のすべてに文字ラベルがあり、`::after` / `::before` の `content` に意味を持つ文字がない。
 - 冒頭の件数と、末尾のカード数、場面内のラベルが一致する。
-- 1280px前後の2カラムで、数字と日付が途中で折れず、省略記号で隠れない。
+- 強調の枠が、`overflow` を持つミニ画面や行の端で切れていない。
+- 既定の1440x900の2カラムで、数字と日付が途中で折れず、省略記号で隠れない。
 - SVGの文字色が意図どおりに出ている（CSSクラスで指定）。矢印の線がラベルの上を通らない。
-- 実装者と別の文脈のレビュー担当に、上の点を含めて確認を依頼し、指摘を反映してから配布する。
+- 構造の地図を省いた場合は、差分が一つの画面に閉じていて、件数の行に「画面の構成は変わらない」とある。
+- 上の点は自分で確かめる。そのうえで、実装者と別の文脈のレビュー担当にfileのpathと画面の目的だけを渡してレビューを依頼し（SKILL.mdの作成手順14）、根拠を確認した指摘を反映してから配布する。点検の観点は渡さず、レビュー担当が自由に観察できるようにする。
