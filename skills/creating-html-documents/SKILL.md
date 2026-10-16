@@ -42,28 +42,28 @@ HTMLを書く前に次を一行ずつ確定する。
 
 詳細は `references/document-system.md` を読む。
 
-- `decision-plan`: 採用判断、Overview-first gate該当時のorientation / overview、現状と目標、比較根拠、実装Wave、受入条件、risk、rollback。
-- `technical-explainer`: 結論、Overview-first gate該当時のorientation / overview、用語、処理flow、制約、例、検証方法。
-- `change-review`: 変更理由、Overview-first gate該当時のorientation / overview、before / after、重要差分、影響範囲、risk、検証。
-- `research-report`: 結論、Overview-first gate該当時のorientation / overview、scope、方法、発見、限界、含意、推奨、source。
+- `decision-plan`: 採用判断、Overview gate該当時のorientation / overview、現状と目標、比較根拠、実装Wave、受入条件、risk、rollback。
+- `technical-explainer`: 結論、Overview gate該当時のorientation / overview、用語、処理flow、制約、例、検証方法。
+- `change-review`: 変更理由、Overview gate該当時のorientation / overview、before / after、重要差分、影響範囲、risk、検証。
+- `research-report`: 結論、Overview gate該当時のorientation / overview、scope、方法、発見、限界、含意、推奨、source。
 - `screen-diff`: 二つの状態（旧と新、現行と提案）の画面差。凡例と件数、行き先の地図、業務順の場面ごとの旧 / 新並置、消えたものと行き先、追加したもの、同じもの。詳細は `references/screen-diff-explainer.md`。
 
 文書型は固定templateではない。各章に一つの問いを与え、その問いに合うvisual patternを一つ選ぶ。
 
 ## 初学者向けexplainerの既定
 
-読者が対象ドメインの前提知識を持たず、目的がその読者の理解である解説では、文書型（多くは `technical-explainer`）に次の既定を自動で加える。依頼に「前提知識がない」「まっさらな人向け」「初めて」とある場合や、「〜とは何か」「ドメインを把握したい」のように対象を一から知りたい依頼で、読者が実務者だと分かる手がかりがない場合が当たる。「仕組みを知りたい」「解説して」のような依頼語は、読者の理解が目的であることの合図で、下の「理解の穴に気づける解説の既定」を発火させるが、それだけでは読者を初学者とみなさない。ユーザーがアナロジーや絵を明示していなくても省略しない。詳細な型と描き方は `references/illustrated-explainer.md` に置く。
+読者が対象ドメインの前提知識を持たず、目的がその読者の理解である解説では、文書型（多くは `technical-explainer`）に次の既定を自動で加える。依頼に「前提知識がない」「まっさらな人向け」「初めて」とある場合や、「〜とは何か」「ドメインを把握したい」のように対象を一から知りたい依頼で、読者が実務者だと分かる手がかりがない場合が当たる。「仕組みを知りたい」「解説して」のような依頼語は、読者の理解が目的であることの合図で、下の「理解の確認の既定」を発火させるが、それだけでは読者を初学者とみなさない。ユーザーがアナロジーや絵を明示していなくても省略しない。詳細な型と描き方は `references/illustrated-explainer.md` に置く。
 
 - 具体と抽象の往復: 主要章ごとに「たとえるなら」の囲みを一つ置き、必ず「比喩の限界」を併記する。身近な例で掴ませてから、専門用語へ戻す。
 - なぜ生まれたか: 歴史、以前の方法、何を解いたか、何が難しくなったか、を独立した章にする。
 - 絵としてのoverview: 箱と矢印の流れ図で終えず、登場人物と、対象で実際に動くもの（決済ならモノ・書類・お金、認証なら要求・証明・権限）と記録を描いた場面の絵にする。続けて「登場人物の地図」を置き、周辺の主体が中心の当事者のどの番号を手伝うか縛るかを章番号つきで示す。主体は実在する数だけ置き、地図が場面の絵の繰り返しになるなら場面の絵の直後の箇条書きで代える。
 - 詳細章ごとに一枚: 各章の問いに合う型（同型並列、両端、昔と今の帯、ものさし、資金の穴、階段、before / afterの帯）を一枚ずつ差し込む。図番号は章番号ベースにする。
 - 代表ケース: 仮設と明示した数字で、1件が最後まで流れる時系列を追う。
-- 締め: 答えを折りたたんだ自己テストと、用語集railを置く。自己テストの作り方は `references/mastery-explainer.md` に従う。
+- 締め: わかったつもりの罠、答えを折りたたんだ自己テスト、最後の説明チェックを置く。順は `references/document-system.md` のTechnical explainer、作り方は `references/mastery-explainer.md` に従う。用語集は締めに置かず、右railに参照用として置く。
 
-読者が実務者（そのドメインの用語と基本の流れを知っている人）の文書には適用しない。実務者向けの `technical-explainer` や仕様説明も含み、目的が読者の理解なら、下の「理解の穴に気づける解説の既定」だけを重ねる。`decision-plan`、チームが差分を確かめて判断するためのレビュー記録、`screen-diff`、短い確認用HTML、ダッシュボードにも適用しない。読者が初学者かどうか判断できないときは、読者と目的を一文で決める。判断は「最初に決める」のとおり `<meta name="reader">` に残す。
+読者が実務者（そのドメインの用語と基本の流れを知っている人）の文書には適用しない。実務者向けの `technical-explainer` や仕様説明も含み、目的が読者の理解なら、下の「理解の確認の既定」だけを重ねる。`decision-plan`、チームが差分を確かめて判断するためのレビュー記録、`screen-diff`、短い確認用HTML、ダッシュボードにも適用しない。読者が初学者かどうか判断できないときは、読者と目的を一文で決める。判断は「最初に決める」のとおり `<meta name="reader">` に残す。
 
-## 理解の穴に気づける解説の既定
+## 理解の確認の既定（理解の穴に気づける解説）
 
 読者自身が対象を理解し、身につけるための解説では、指示がなくても次を本文に組み込む。「解説して」「教えて」「わかるように」「仕組みを知りたい」「マスターしたい」といった依頼や、PR・設計・ドメイン・障害・ライブラリの挙動の解説が当たる。読者の前提知識の有無は問わず、初学者なら上の既定も重ねる。判断のための計画書、チームが差分を確かめて判断するためのレビュー記録、差分の把握だけを求める文書（`screen-diff` や、APIの差分を見やすく示す `change-review` など）、短い確認用HTML、ダッシュボードには適用しない。「差分が視覚的にわかる」のように見やすさを求める「わかる」は、理解が目的であることの合図にしない。PRの解説は `change-review` の要素（before / after、ファイルごとの差分）を持つが、目的が読者の理解ならこの既定を重ねる。読者と目的の判断は `<meta name="reader">` に一文で残す。詳細は `references/mastery-explainer.md` に置く。初学者向けの既定と重ねたときの章順と、ファイルの索引の位置は、`references/document-system.md` のTechnical explainerに一本の順序としてまとめてある。
 
@@ -77,7 +77,7 @@ HTMLを書く前に次を一行ずつ確定する。
 - わかったつもりの罠: 読者が本当に持ちそうな誤解を5〜8個、「誤解 → 実際 → 戻る章」で並べる。
 - 自己テスト: 答えは `details` で折りたたみ、開く前に答えさせる。説明・予測・区別・境界・応用の問いを混ぜて目安8〜12問にし、各答えに戻る章へのリンクを付ける。
 - 最後の説明チェック: 何も見ずに3文前後で説明させ、含めるべき要点と、詰まったときに戻る章を示す。
-- 独立レビュー: 通常の観点に加え、事実の誤りと言い過ぎ、根拠ラベルの強さ、確かめた範囲の過大評価、説明の無い語、理解の断絶を確かめてもらう。
+- 独立レビュー: pathと目的だけを渡して自由に観察してもらう通常のレビューに加え、事実の誤りと言い過ぎ、根拠ラベルの強さの不一致、確かめた範囲の過大評価、説明の無い語、時点や用語の揺れ、理解の断絶の6観点を渡す。
 
 ## 画面差explainer（screen-diff）の既定
 
@@ -89,9 +89,11 @@ HTMLを書く前に次を一行ずつ確定する。
 - ラベル「追加」「消える」「変わる」は実要素として要素の内側に置く。CSSの `::before` / `::after` の `content` で出さない。
 - 末尾に「消えたものと行き先」「追加したもの」「同じもの、未作成のもの、どちらにもないもの」のカードを置き、冒頭の件数と一致させる。
 
+凡例と件数がorientationの役を、構造の地図がoverviewの役を担うので、Overview gateに当たっても別のorientationとoverview SVGは足さない。
+
 ## show-meをvisual layerとして使う
 
-このSkillが文書全体のownerであり続ける。章立て、source inventory、claim ledger、overview trigger、evidence、HTMLへの配置、CSP、検証、browser表示を`show-me`へ渡さない。
+このSkillが文書全体のownerであり続ける。章立て、source inventory、claim ledger、Overview gateの判定、evidence、HTMLへの配置、CSP、検証、browser表示を`show-me`へ渡さない。
 
 各claimまたはsectionで「何を見せれば最も速く伝わるか」を決めるときだけ`show-me`を使う。入力にはsectionの問い、evidence anchor、欠かせないactor / state / branch / 境界、文書内で再利用する名称を渡す。戻り値は擬似コード、call tree、component / file tree、diff、SVG、または次のvisual briefとする。
 
@@ -110,9 +112,9 @@ fallback: 同じ意味を読めるtext表現
 
 複数fileの変更レビュー・技術解説、またはfile指定の処理説明では、`show-me`の「レビュー順と依存関係を表示する」を適用する。source inventoryから対象と必要な呼出元・呼出先を渡し、索引、関係、順序の意味をvisual briefで受け取る。単純な文言修正やコードを扱わない資料では省く。
 
-この節のruntime Levelは、`show-me` の「Levelの定義」と同じく、利用者の操作や外部入力を受ける入口をLevel 0、その直接の受け手をLevel 1とする実行時の呼び出しの深さである。循環、callback、queueでの再開のように単純な深さにならない箇所では、Levelを付けず、handoffの名前か再入点を書く。索引の番号、静的な依存の深さ、下の「Orientationとoverviewは索引にする」のzoom level（Level 0〜4）とは別のものとして書く。Skill・設定のfile参照を明示的に求められた場合は、symbolを見出し・設定キーに置き換え、runtime Levelは適用外とする。
+この節のruntime Levelは、`show-me` の「Levelの定義」と同じく、利用者の操作や外部入力を受ける入口をLevel 0、その直接の受け手をLevel 1とする実行時の呼び出しの深さである。循環、callback、queueでの再開のように単純な深さにならない箇所では、Levelを付けず、handoffの名前か再入点を書く。索引の番号、静的な依存の深さ、下の「Orientationとoverviewを詳細への入口にする」のzoom level（Level 0〜4）とは別のものとして書く。Skill・設定のfile参照を明示的に求められた場合は、symbolを見出し・設定キーに置き換え、runtime Levelは適用外とする。
 
-- 中心主張と、該当時のorientation / overviewの後に、読む順に並べた番号付きの索引を初期表示する。初学者向けでは登場人物の地図の後に置く。ほかの章との順は `references/document-system.md` のTechnical explainerとChange reviewに従う。索引の見出しは文書の目的で分ける。チームが差分を確かめて判断するレビュー記録では「レビューする順番」、それ以外（`technical-explainer`、PRの解説、差分の把握だけを求める文書）では「ファイルを読む順番」とする。各項目にfile、symbol、処理の一文、先に読む理由を置き、本文内の詳細へリンクする。
+- 中心主張と、該当時のorientation / overviewの後に、読む順に並べた番号付きの索引を初期表示する。初学者向けでは登場人物の地図の後に置く。ほかの章との順は `references/document-system.md` のTechnical explainerとChange reviewに従う。索引の並びは `show-me` の「レビュー順」（理解・判断のために読む順）で、見出しだけを文書の目的で分ける。チームが差分を確かめて判断するレビュー記録では「レビューする順番」、それ以外（`technical-explainer`、PRの解説、差分の把握だけを求める文書）では「ファイルを読む順番」とする。各項目にfile、symbol、処理の一文、先に読む理由を置き、本文内の詳細へリンクする。
 - 詳細は同じidと番号を使い、file path・symbol・source行、入力、具体的な処理、呼出元→呼出先、出力・副作用、関連diff・testを示す。索引へ戻るリンクも置く。既存のdetailへ統合し、別章に同じ説明を複製しない。
 - 索引に続くcall treeまたは図は「依存関係」「呼び出し順」のどちらかを明記する。索引の順との違い、矢印の意味、runtime Levelを短く説明する。その図がoverviewと同じ要素と矢印になるなら別に描かず、overviewの各nodeに索引の番号を振る。その場合は、番号が読む順で実行の順ではないこと、矢印の意味、runtime Levelをcaptionに書く。diagram-designのSVGを採用する場合は同じSVG正本を埋め込み、nodeのidからfile・symbolの詳細を辿れる本文リンクを置く。
 - file pathは省略表示だけで終えず、完全なpathとsource行を選択・コピーできるtextで示す。確認済みのsource URLがあればリンクする。local fileの行ジャンプがbrowserで使えるとは仮定せず、HTML内の根拠抜粋へ移動できるようにする。sourceの版や取得時点を添え、行番号の陳腐化を判別できるようにする。
@@ -139,9 +141,9 @@ HTML構造や図を作る前に、source inventoryとclaim ledgerをcompactな�
 
 「処理する」「連携する」「最適化する」「対応する」のような抽象語だけでdetailを閉じない。主体、対象、条件、観測可能な結果まで具体化する。長文化やsection数を情報量の代替にせず、同じ内容の言い換えを削る。
 
-## Orientationとoverviewは索引にする
+## Orientationとoverviewを詳細への入口にする
 
-workflow、architecture、lifecycle、before / after、dependency、failure pathなどを説明し、3つ以上の相互作用するactor、component、stage、state、責務、dependencyが関係する文書では、中心主張の直後にorientationとaccessibleなinline SVG overviewを置く。欠如時failureが複数箇所へ伝播する場合も同じ扱いにする。単にfileやevidenceが3件あるだけでは発火しない。
+workflow、architecture、lifecycle、before / after、dependency、failure pathなどを説明し、3つ以上の相互作用するactor、component、stage、state、責務、dependencyが関係する文書では、中心主張の直後にorientationとaccessibleなinline SVG overviewを置く。欠如時failureが複数箇所へ伝播する場合も同じ扱いにする。単にfileやevidenceが3件あるだけでは発火しない。この条件をOverview gateと呼ぶ。
 
 orientationは長い背景説明ではない。次の5点を短く並べ、読者が「なぜ読むか」と「全体のどこを見ているか」を先に掴めるようにする。
 
@@ -190,17 +192,17 @@ cardを先に並べない。同じ状態をbadge、card、summary、diagramで�
 1. source inventoryとclaim ledgerを作り、根拠不足と未確認を分離する。
 2. 各sectionの問いを定め、文章だけで十分かを先に判断する。視覚化がmaterialなsectionだけ、`document-owner: creating-html-documents`を付けて`show-me`から最小表現またはvisual briefを得る。
 3. `assets/editorial-document.html` を基礎にする。`head` に `<meta name="artifact-kind" content="html-document">` を置く（テンプレートには入っていない。lintはこのmetaがないと誤りにする）。既存HTMLの編集ではfilenameを変えない。編集の前に元のfileを `$TMPDIR` へ写しておき、編集の後に `python3 ~/.claude/scripts/html-change-list.py <元> <編集後>` で変更点を列挙する。各行が依頼のどの文に対応するかを確かめ、対応しない行は元へ戻すか、変えた理由を報告に書く。`screen-diff` では `references/screen-diff-explainer.md` の部品CSSを足す。
-4. 文書型に応じて章を選び、不要なplaceholderとcomponentを削る。読者が初学者なら、初学者向けexplainerの既定（アナロジー、歴史、場面の絵、登場人物の地図、章ごとの絵、代表ケース、自己テスト）を章立てへ組み込む。読者自身の理解が目的なら、理解の穴に気づける解説の既定（読み終えたらできること、仕組みの地図、予想、根拠ラベル、誤解、折りたたんだ自己テスト、説明チェック）も組み込む。
-5. 中心主張と現在地を最初のviewportに置く。背景説明から始めない。
-6. orientation triggerに該当する場合だけ、中心主張の直後に短いorientationとoverview SVGを置く。
+4. 文書型に応じて章を選び、不要なplaceholderとcomponentを削る。読者が初学者なら、初学者向けexplainerの既定（アナロジー、歴史、場面の絵、登場人物の地図、章ごとの絵、代表ケース、自己テスト）を章立てへ組み込む。読者自身の理解が目的なら、理解の確認の既定（読み終えたらできること、仕組みの地図、予想、根拠ラベル、誤解、折りたたんだ自己テスト、説明チェック）も組み込む。
+5. 中心主張と現在地を最初のviewportに置く。現在地は、decision bandの下端の状態注記に一行で書く。`decision-plan` では採否の段階、ほかの文書型では対象の版・時点と確かめた範囲を書く。`screen-diff` では、比べた二つの版とそれぞれの時点、確かめた範囲を書く。背景説明から始めない。
+6. Overview gateに該当する場合だけ、中心主張の直後に短いorientationとoverview SVGを置く。
 7. claim ledgerのdetail unitを本文へ展開する。重要な主張は具体例、境界、evidence、含意へ接続する。
 8. 本文をprimary surfaceにする。desktopでは約68–76字幅、補助railは250–310pxを目安にする。
-9. 図はinline SVGを正本にし、`role="img"`、`title`、`desc`、captionを付ける。SVG内の文字色はCSSクラスで指定する。Mermaid runtimeを新規導入しない。
+9. 図はinline SVGを正本にし、`role="img"`、`title`、`desc`、captionを付ける。意味を持たない装飾のSVG（並置の間の矢印など）は、親に `aria-hidden="true"` を付け、`role`、`title`、`desc`、captionを付けない。SVG内の文字色はCSSクラスで指定する。Mermaid runtimeを新規導入しない。
 10. codeはescapeし、言語classまたは明示labelを付ける。変更系文書では、変更理由の直後に関連diffを示す。
 11. 表を使わない。例外で使う場合は理由を `table-exception` のmetaに残し、見出しcellへ`scope`を付ける。
 12. 出典は主張の近くに置き、末尾のsource listへ接続する。sourceの内容と会話上の推測を混ぜない。
 13. `python3 ~/.claude/scripts/lint-html-document.py <file>` を実行し、誤りを0にする。続けて `references/validation.md` のgateを通す。SVGを含む文書では、図中textの重なり、囲みrectからのはみ出し、viewBox外を機械検査し、0にしてから目視する。
-14. 実装した文脈と別の、まっさらな文脈のレビュー担当に、fileのpathと画面の目的だけを渡してレビューさせ、根拠を確認した指摘を反映する。1文書につき1回、指摘の反映で見た目や構造が大きく変わったときはもう1回行う。理解のための解説では、pathと目的に加えて `references/mastery-explainer.md` の確認観点（事実の誤りと言い過ぎ、根拠ラベルの強さ、確かめた範囲、説明の無い語、理解の断絶）も渡す。
+14. 実装した文脈と別の、まっさらな文脈のレビュー担当に、fileのpathと文書の目的だけを渡してレビューさせ、根拠を確認した指摘を反映する。1文書につき1回、指摘の反映で見た目や構造が大きく変わったときはもう1回行う。理解のための解説では、pathと目的に加えて `references/mastery-explainer.md` の確認観点（事実の誤りと言い過ぎ、根拠ラベルの強さの不一致、確かめた範囲の過大評価、説明の無い語、時点や用語の揺れ、理解の断絶）も渡す。
 15. 検証合格後、ユーザーが自動表示を不要と明示していなければ、生成fileの絶対pathをhostのplatform openerで開く。
 16. browser表示の成否、生成fileの絶対path、文書型、検証結果、レビューの実施と反映、残る制約を報告する。
 
@@ -208,9 +210,9 @@ cardを先に並べない。同じ状態をbadge、card、summary、diagramで�
 
 判断力に頼らず機械的に確かめられる条件を先に満たす。上の手順を省略した場合でも、次を満たさない文書は配布しない。
 
-このうち機械で数えられる項目は、`python3 ~/.claude/scripts/lint-html-document.py <file>` が調べる。対象は、`<table`、`th` の `scope`、`h1`、`script`、id重複、外部resource、CSP、外部navigation linkの `rel`、`::before` / `::after` の文字、SVG `text` の `fill` 属性である。誤りが0になるまで直す。例外で表やscriptを使うときは、`<meta name="table-exception" content="理由">` または `<meta name="script-exception" content="理由">` を置く。lintは理由を表示し、「要確認」として扱う（終了コードは0のまま）。
+このうち機械で数えられる項目は、`python3 ~/.claude/scripts/lint-html-document.py <file>` が調べる。対象は、`<table`、`th` の `scope`、`h1`、`script`、id重複、外部resource、CSP、外部navigation linkの `rel`、`::before` / `::after` の文字、SVG `text` の `fill` 属性、外側へ描く `outline`（「要確認」だけ）である。誤りが0になるまで直す。例外で表やscriptを使うときは、`<meta name="table-exception" content="理由">` または `<meta name="script-exception" content="理由">` を置く。lintは理由を表示し、「要確認」として扱う（終了コードは0のまま）。
 
-lintの判定は、下の項目より弱い箇所がある。SVG `text` の `fill` 属性は、どの図にも当たるCSS（`svg text` など）が `fill` を指定している場合だけ誤りにし、それ以外は「要確認」として件数を出す。`counter()` と `attr()` で出す番号やラベルも「要確認」になる。「要確認」は、下の項目に照らして自分で判断する。
+lintの判定は、下の項目より弱い箇所がある。SVG `text` の `fill` 属性は、どの図にも当たるCSS（`svg text` など）が `fill` を指定している場合だけ誤りにし、それ以外は「要確認」として件数を出す。`counter()` と `attr()` で出す番号やラベルも「要確認」になる。外側へ描く `outline`（`:focus` を除き、`outline-offset` が負でないもの）は、文書のどこかに `overflow` を切るCSS（`hidden`、`auto`、`scroll`、`clip`）があれば「要確認」にし、箱の入れ子は追わない。「要確認」は、下の項目に照らして自分で判断する。
 
 lintが通っても、最低水準をすべて満たしたことにはならない。強調した要素のラベル、はみ出し、SVG図中の文字の実寸、件数の一致、要約の太字、数値の根拠、レビューの記録は、下の項目を読んで確かめる。
 
@@ -219,13 +221,13 @@ lintが通っても、最低水準をすべて満たしたことにはならな�
 - 強調した要素（outline、border、背景色で目立たせた要素）には、内側に文字ラベルがある。色だけで意味を伝えない。
 - `overflow:hidden` を持つ箱の中で、外側へ出る `outline` を使っていない。数値と日付のセルに `overflow-wrap:anywhere` と `text-overflow:ellipsis` を使っていない。
 - SVGの `text` の色は `fill` 属性ではなくCSSクラスで指定している。矢印の線がラベルの上を通っていない。
-- SVG図中の文字は、表示倍率（描画幅÷viewBox幅）を掛けた実寸で12px以上である。
+- SVG図中の文字は、表示倍率（描画幅÷viewBox幅）を掛けた実寸で12px以上である。screen-diffのミニ画面の文字も12px以上である。
 - 冒頭の件数や要約と、本文のラベル、末尾の一覧の分類が一致している。
 - 冒頭の要約（decision band）の本文が、段落ごと `strong`、`b`、`font-weight:700` になっていない。本文幅の40%未満の列に、4行を超える文章を入れていない。用語集もこの規則に従い、各項目を4行以内の短い定義にして、長い説明は本文の初出に置く。
 - `h1` は一つ、id重複0、script 0（interactionが不可欠な場合を除く）、外部resource 0、CSPあり、外部navigation linkに `rel="noopener noreferrer"`。
 - 数値はすべて根拠か「仮」の明示があり、同じ数値を複数箇所で使うとき計算が合っている。
 - 独立したレビュー担当の指摘を、根拠を確認してから反映した記録が報告にある。
-- 理解のための解説では、自己テストの答えが `details` で折りたたまれ、各答えと各誤解に戻る章へのリンクがあり、予想の問いが示す答えの位置が実在する。根拠ラベルの無い言い切りが無い。
+- 理解のための解説では、自己テストの答えが `details` で折りたたまれ、各答えと各誤解に戻る章へのリンクがあり、予想の問いが示す答えの位置が実在する。本文（「最小用語」の章を含む）に根拠ラベルの無い言い切りが無い。参照用の用語集は本文の定義の再掲なので除く。
 
 ## 自己完結を既定にする
 
@@ -264,11 +266,11 @@ lintが通っても、最低水準をすべて満たしたことにはならな�
 - contrastと色以外の意味表示を考慮する。ラベルは実要素で、疑似要素のcontentに文字がない。
 - 外部resourceは依頼で許可されたものだけ。既定は0。
 - 制作過程やpromptの痕跡が本文に残らない。
-- orientation triggerに該当する文書では、中心主張直後のorientation、accessible overview SVG、対応するdetail slice、evidenceが同じ名称や番号で接続している。
+- Overview gateに該当する文書では、中心主張直後のorientation、accessible overview SVG、対応するdetail slice、evidenceが同じ名称や番号で接続している。
 - 各主要主張が具体的な根拠、仕組み、読者への含意へ接続し、materialな境界条件または反例が落ちていない。
 - technical flowではinput、branch、data / state、side effect、failure / recovery、sourceを追える。
 - overview、見出し、一般論だけで本文を埋めていない。
-- triggerに該当しない単純文書では、図を省いた理由が文書構造上自然で、結論、scope、根拠が不足していない。
+- Overview gateに該当しない単純文書では、図を省いた理由が文書構造上自然で、結論、scope、根拠が不足していない。
 - `show-me`へ渡したsectionは局所visual sliceとして閉じ、文書ownerの循環、章立ての重複、根拠のない要素追加がない。
 - 初学者向けexplainerでは、場面の絵と登場人物の地図（地図が場面の絵の繰り返しになる場合は、場面の絵の直後の箇条書き）があり、主要章に「たとえるなら」と「比喩の限界」があり、歴史の章、仮設の代表ケース、章ごとの絵、自己テストが揃っている。
 - 理解のための解説では、読み終えたらできること、仕組みの地図と中心の問い、読む前の予想とその回収、根拠の強さのラベルと確かめた範囲、わかったつもりの罠、折りたたんだ自己テスト、最後の説明チェックが揃い、「読み終えたらできること」の各項目に対応する問いがある。

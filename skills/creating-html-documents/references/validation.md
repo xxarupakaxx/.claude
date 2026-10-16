@@ -7,7 +7,7 @@
 - `h1`は一つ。heading levelを飛ばさない。
 - `main`、`aside`、`figure`、`table`などsemantic要素を用途どおり使う。
 - id重複がない。anchor targetが存在する。
-- 各SVGを囲む`figure`に、`role="img"`付きSVG、`title`、`desc`、`figcaption`がある。
+- 意味を持つ各SVGを囲む`figure`に、`role="img"`付きSVG、`title`、`desc`、`figcaption`がある。装飾のSVGは親に `aria-hidden="true"` があり、意味を伝えていない。
 - `<table` が0である。例外で使う場合は `table-exception` のmetaに理由があり、table headerに`scope`がある。
 - `script` が0である。例外で使う場合は `script-exception` のmetaに理由がある。
 - 意味を持つラベル（追加、消える、変わる、旧、新、番号）が実要素で、CSSの `::before` / `::after` の `content` に文字がない。
@@ -97,7 +97,7 @@ SVGを含む文書では、page上で次を機械検査し、いずれも0にし
 
 ## Independent review
 
-配布前に、実装した文脈と別の、まっさらな文脈のレビュー担当へfileのpathと画面の目的だけを渡し、重要度順の指摘を受ける。指摘の根拠（file:line、観察した幅と場所）を確認してから反映し、反証された指摘は理由を残して除外する。見た目や構造が大きく変わる修正をしたときは、もう一度依頼する。理解のための解説では、`mastery-explainer.md` の確認観点（事実の誤りと言い過ぎ、根拠ラベルの強さ、確かめた範囲の過大評価、説明の無い語、時点や用語の揺れ、理解の断絶）も渡す。
+配布前に、実装した文脈と別の、まっさらな文脈のレビュー担当へfileのpathと文書の目的だけを渡し、重要度順の指摘を受ける。指摘の根拠（file:line、観察した幅と場所）を確認してから反映し、反証された指摘は理由を残して除外する。見た目や構造が大きく変わる修正をしたときは、もう一度依頼する。理解のための解説では、`mastery-explainer.md` の確認観点（事実の誤りと言い過ぎ、根拠ラベルの強さの不一致、確かめた範囲の過大評価、説明の無い語、時点や用語の揺れ、理解の断絶）も渡す。
 
 ## Evidence report
 
@@ -109,7 +109,7 @@ SVGを含む文書では、page上で次を機械検査し、いずれも0にし
 - external resourceとscriptの件数。
 - heading、table、idの結果。
 - mobile、print、PDFを実行したか。未依頼なら `not requested` とする。
-- orientation triggerの判定、overview SVGの有無、detail sliceとの接続結果。
+- Overview gateの判定、overview SVGの有無、detail sliceとの接続結果。
 - 表の件数（0が既定）と、例外時の理由。
 - lintの誤りと要確認の件数、要確認をどう判断したか。
 - 独立レビューの実施回数、反映した指摘、除外した指摘と理由。

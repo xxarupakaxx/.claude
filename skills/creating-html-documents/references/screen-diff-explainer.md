@@ -27,9 +27,10 @@ API（リクエスト、レスポンス、エンドポイント）、コード�
 
 - CSSだけで描く。sidebar、title bar、行、ボタン、入力欄、モーダル、パネルの最小部品を用意し、実物の文言をそのまま使う。
 - 差分に関係する列と項目だけを載せる。省いた列があることを章の冒頭で一度断る（「ラベルのない違いは省略によるもので、機能の差ではない」）。
-- 各ミニ画面のtitle barに「旧」「新」のチップを置く。1カラム化した幅でも、今見ているのが旧か新か分かるようにする。
+- 各ミニ画面のtitle barに「旧」「新」のチップを置く。幅を狭めて1カラムになっても、今見ているのが旧か新か分かるようにするためである。狭い幅での点検は、mobileやtabletを依頼されたときだけ行う。
 - 旧と新で同じ場面を同じ順序、同じ粒度で描く。旧にある要素が新で消えたなら旧側に「消える」、新に増えたなら新側に「追加」、同じ位置で中身が変わったなら両側に「変わる」を付ける。旧が「変わる」で新が「追加」のような対にしない。
 - 数字と日付は途中で折らない。`overflow-wrap:anywhere` を数値セルに使わず、列を減らすか幅を広げる。省略記号（…）で隠さない。
+- ミニ画面の文字は、ラベルとチップを含めて12px以上にする。縮めて収めず、載せる列を減らす。
 
 ## ラベルの規則
 
@@ -51,6 +52,8 @@ API（リクエスト、レスポンス、エンドポイント）、コード�
 - 仮の数値は仮と明記し、同じ数値を複数箇所で使うときは計算が合っていることを確かめる。
 
 ## 最小のHTML部品
+
+見本は行と表の部品だけを示す。sidebar、ボタン、入力欄、モーダル、パネルは同じ流儀で足す。側面のメニュー（sidebar）を描かない画面は `.wf-body.nosb` にする。`.lb.block` は、ラベルを独立した行に置くときに使う。900px以下で1カラムにする指定は、幅を狭めたときに崩れないための最小の備えで、mobile対応ではない。
 
 ```html
 <div class="pair">
@@ -84,21 +87,30 @@ API（リクエスト、レスポンス、エンドポイント）、コード�
 ```
 
 ```css
-.lb{display:inline-block;padding:0 6px;border-radius:3px;color:#fff;font-size:10px;font-weight:700;line-height:16px;font-style:normal;margin-right:5px;white-space:nowrap}
+.lb{display:inline-block;padding:0 6px;border-radius:3px;color:#fff;font-size:12px;font-weight:700;line-height:18px;font-style:normal;margin-right:5px;white-space:nowrap}
+.lb.block{display:table;margin:0 0 6px}
 .lb.add{background:#176b34}.lb.del{background:#a3302d}.lb.chg{background:#1769aa}
 .hl{padding:3px 5px}
 .hl.add{outline:2px solid #176b34;outline-offset:-2px;background:#e9f8ee}
 .hl.del{outline:2px dashed #a3302d;outline-offset:-2px;background:repeating-linear-gradient(45deg,#fdeceb,#fdeceb 5px,#fff 5px,#fff 10px)}
 .hl.chg{outline:2px solid #1769aa;outline-offset:-2px;background:#e8f1fa}
+.wf-main{padding:10px 12px}
 .wf-main.hl{outline:none;border:3px solid #176b34}
 .wf-main.hl.del{border-style:dashed;border-color:#a3302d}
 .pair{display:grid;grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr);gap:14px;align-items:start}
+.col{min-width:0}.col-h{margin:0 0 6px;font-weight:700}.col-h.new{color:#2E3782}
+.mid{align-self:center;justify-self:center;color:#5a5d58}.mid svg{display:block;width:34px;height:34px}
 .wf{border:1.5px solid #242522;border-radius:10px;background:#fff;overflow:hidden;font-size:12px}
+.wf.old{border-color:#5a5d58}.wf.new{border-color:#2E3782}
+.wf-bar{display:flex;align-items:center;gap:6px;padding:6px 10px;border-bottom:1px solid #242522;background:#f2f1ec;font-weight:700}
+.wf-body{display:grid;grid-template-columns:140px minmax(0,1fr)}.wf-body.nosb{grid-template-columns:minmax(0,1fr)}
 .tr{display:grid;gap:8px;padding:4px 0;border-bottom:1px dotted #c8c8c8}
+.tr.th{font-weight:700}
 .tr > span{min-width:0;overflow-wrap:normal;word-break:normal}
-.rows{overflow-x:auto;font-size:11px}
-.chip{display:inline-block;padding:0 8px;border-radius:4px;color:#fff;font-size:11px;font-weight:700;line-height:18px}
+.rows{overflow-x:auto;font-size:12px}
+.chip{display:inline-block;padding:0 8px;border-radius:4px;color:#fff;font-size:12px;font-weight:700;line-height:20px}
 .chip.old{background:#5a5d58}.chip.new{background:#2E3782}
+.cap{margin-top:10px;color:#4a4d48}
 .cards{list-style:none;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 @media (max-width:900px){.pair{grid-template-columns:minmax(0,1fr)}.cards{grid-template-columns:minmax(0,1fr)}}
 ```
@@ -108,8 +120,9 @@ API（リクエスト、レスポンス、エンドポイント）、コード�
 - `<table` が0である。
 - 強調した要素のすべてに文字ラベルがあり、`::after` / `::before` の `content` に意味を持つ文字がない。
 - 冒頭の件数と、末尾のカード数、場面内のラベルが一致する。
+- ミニ画面の文字が、ラベルとチップを含めて12px以上である。
 - 強調の枠が、`overflow` を持つミニ画面や行の端で切れていない。
 - 既定の1440x900の2カラムで、数字と日付が途中で折れず、省略記号で隠れない。
 - SVGの文字色が意図どおりに出ている（CSSクラスで指定）。矢印の線がラベルの上を通らない。
 - 構造の地図を省いた場合は、差分が一つの画面に閉じていて、件数の行に「画面の構成は変わらない」とある。
-- 上の点は自分で確かめる。そのうえで、実装者と別の文脈のレビュー担当にfileのpathと画面の目的だけを渡してレビューを依頼し（SKILL.mdの作成手順14）、根拠を確認した指摘を反映してから配布する。点検の観点は渡さず、レビュー担当が自由に観察できるようにする。
+- 上の点は自分で確かめる。そのうえで、実装者と別の文脈のレビュー担当にfileのpathと文書の目的だけを渡してレビューを依頼し（SKILL.mdの作成手順14）、根拠を確認した指摘を反映してから配布する。点検の観点は渡さず、レビュー担当が自由に観察できるようにする。

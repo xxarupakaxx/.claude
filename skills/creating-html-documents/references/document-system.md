@@ -10,7 +10,7 @@ overview、見出し、一般論はdetailの代わりにならない。section�
 
 文書全体は`creating-html-documents`がownerになる。各sectionの局所visualだけを`show-me`へ渡し、問い、evidence anchor、must-show、omit、text fallbackをvisual briefで固定する。`document-owner: creating-html-documents`のcontextでは、`show-me`は最小表現を返して終了し、HTML文書全体を作成せず再委譲もしない。
 
-overview trigger、章立て、source inventory、claim ledger、evidenceへの接続、HTML composition、accessibility、CSP、validation、browser表示は文書ownerが保持する。`show-me`の提案が本文を言い換えるだけなら採用せず、文章または並置を残す。
+Overview gateの判定、章立て、source inventory、claim ledger、evidenceへの接続、HTML composition、accessibility、CSP、validation、browser表示は文書ownerが保持する。`show-me`の提案が本文を言い換えるだけなら採用せず、文章または並置を残す。
 
 ## Overview gate
 
@@ -27,11 +27,11 @@ orientationは背景、without-this failure、対象scope、目標状態、全�
 推奨順序:
 
 1. 中心主張とstatus。
-2. Overview-first gate該当時のorientation: 背景、without-this failure、scope、目標状態、全体内の位置。
-3. Overview-first gate該当時のoverview SVG: 対象system、decision point、主要dependency、failureの伝播先。
+2. Overview gate該当時のorientation: 背景、without-this failure、scope、目標状態、全体内の位置。
+3. Overview gate該当時のoverview SVG: 対象system、decision point、主要dependency、failureの伝播先。
 4. 現状と目標。
 5. 選択肢の比較と採否理由。
-6. Overview-first gate該当時のdetail slice: 目標構造または重要な移行flow。
+6. Overview gate該当時のdetail slice: 目標構造または重要な移行flow。
 7. entry / work / exitを持つ実装Wave。
 8. acceptanceとevidence。
 9. risk、停止条件、rollback。
@@ -46,8 +46,8 @@ Task一覧だけを計画書と呼ばない。誰が何をするかだけでな�
 1. 一文の結論（decision band）。
 2. 【理解】読み終えたらできること。
 3. 【初学者】章を読む順。decision bandの外に一行で置く。
-4. Overview-first gate該当時のorientation: 背景、without-this failure、scope、目標状態、全体内の位置。
-5. Overview-first gate該当時のoverview SVG: 全体構造と主要flow。【初学者】では場面の絵にし、直後に登場人物の地図を置く。
+4. Overview gate該当時のorientation: 背景、without-this failure、scope、目標状態、全体内の位置。
+5. Overview gate該当時のoverview SVG: 全体構造と主要flow。【初学者】では場面の絵にし、直後に登場人物の地図を置く。
 6. 【索引】ファイルの索引と、それに続く依存関係または呼び出し順の図。
 7. 【初学者】身近な例で掴む章。
 8. 読者が先に必要とする最小用語。
@@ -79,8 +79,8 @@ Task一覧だけを計画書と呼ばない。誰が何をするかだけでな�
 推奨順序:
 
 1. 変更の理由と影響。
-2. Overview-first gate該当時のorientation: 背景、without-this failure、scope、目標状態、全体内の位置。
-3. Overview-first gate該当時のoverview SVG: 変更対象、上流、下流、検証、rollback point。
+2. Overview gate該当時のorientation: 背景、without-this failure、scope、目標状態、全体内の位置。
+3. Overview gate該当時のoverview SVG: 変更対象、上流、下流、検証、rollback point。
 4. 複数fileの変更では、ファイルの索引と、それに続く依存関係または呼び出し順の図。
 5. before / afterの要約。
 6. Overview gate該当時のdetail slice: file / symbol、before / after、変更理由、関連diff。
@@ -98,8 +98,8 @@ diffだけを並べず、読者が先に理由と影響を理解できるよう�
 推奨順序:
 
 1. 結論と次の一手。
-2. Overview-first gate該当時のorientation: 調査対象が全体のどこにあり、未理解だと何を誤判断するか。
-3. Overview-first gate該当時のoverview SVG: 複数source、actor、判断軸の関係。必要ならevidence mapとして描く。
+2. Overview gate該当時のorientation: 調査対象が全体のどこにあり、未理解だと何を誤判断するか。
+3. Overview gate該当時のoverview SVG: 複数source、actor、判断軸の関係。必要ならevidence mapとして描く。
 4. scope、母集団、方法。
 5. 主要発見。
 6. Overview gate該当時のdetail slice: sourceごとの主張、evidence quality、比較（並置カード）、代表case、反例。
@@ -111,7 +111,7 @@ diffだけを並べず、読者が先に理由と影響を理解できるよう�
 
 ## Screen diff
 
-依頼が差分を求め、かつ対象が画面の構造を持つときだけ選ぶ。API、コード、設定、データの差分はChange reviewで扱う。
+依頼が差分を求め、かつ対象が画面の構造を持つときだけ選ぶ。API、コード、設定、データの差分はChange reviewで扱う。この型では、凡例と件数がorientationの役を、構造の地図がoverviewの役を担う。Overview gateに当たっても、別のorientationとoverview SVGは足さない。
 
 推奨順序:
 
