@@ -31,7 +31,7 @@
     html { background: var(--paper); }
     body { margin: 0; background: var(--paper); color: var(--body); font-family: var(--sans); font-size: 16px; line-height: 1.9; text-rendering: optimizeLegibility; -webkit-text-size-adjust: 100%; }
     a { color: var(--link); text-underline-offset: .18em; }
-    a:focus-visible { outline: 3px solid var(--link); outline-offset: 3px; border-radius: 3px; }
+    a:focus-visible, summary:focus-visible { outline: 3px solid var(--link); outline-offset: 3px; border-radius: 3px; }
     code, pre { font-family: var(--mono); }
     :not(pre) > code { padding: .08em .34em; border-radius: 4px; background: #efeee9; font-size: .92em; }
     .page { width: min(1180px, 100%); margin: 0 auto; padding: 42px 48px 72px; }
@@ -100,6 +100,22 @@
     .qa { margin: 18px 0; border-top: 2px solid var(--strong-rule); }
     .qa dt { padding: 14px 0 4px; color: var(--ink); font-weight: 700; }
     .qa dd { margin: 0 0 14px; padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
+    .qa details > summary { cursor: pointer; color: var(--link); font-weight: 600; }
+    .goals { margin: 20px 0; padding: 14px 18px; border: 1.5px solid var(--accent); border-radius: var(--radius); background: var(--surface); }
+    .goals .label { color: var(--accent); }
+    .goals ul { margin: 6px 0 0; padding-left: 1.4em; }
+    .predict { margin: 20px 0; padding: 12px 18px; border: 1.5px dashed var(--link); border-radius: var(--radius); background: #f3f7fc; }
+    .answer { margin: 20px 0; padding: 12px 18px; border-left: 5px solid var(--link); border-radius: 0 var(--radius) var(--radius) 0; background: #f3f7fc; }
+    .predict .label, .answer .label { color: var(--link); }
+    .predict p, .answer p { margin: 4px 0; }
+    .tag { display: inline-block; margin: 0 3px; padding: 0 6px; border: 1px solid; border-radius: 4px; font-size: .72rem; font-weight: 700; line-height: 1.65; white-space: nowrap; }
+    .tag.fact { color: var(--add-ink); background: var(--add-bg); }
+    .tag.cited { color: var(--link); background: #eaf2fa; }
+    .tag.guess { color: #6f5200; background: #fbf4dc; }
+    .tag.open { color: var(--warning); background: #fdf1ef; }
+    .myths { margin: 16px 0; padding: 0; list-style: none; }
+    .myths li { margin: 0 0 12px; padding: 12px 16px; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); }
+    .myth { display: block; color: var(--del-ink); font-weight: 700; }
     .diff { margin: 18px 0 26px; padding: 10px 0; overflow-x: auto; border: 1.5px solid var(--strong-rule); border-radius: var(--radius); background: var(--surface); font-size: .82rem; line-height: 1.65; }
     .diff code { display: block; min-width: max-content; }
     .line { display: block; padding: 1px 20px 1px 10px; white-space: pre; }
@@ -171,6 +187,14 @@
           </div>
           <p class="decision-status"><strong>{{STATUS_LABEL}}</strong>{{STATUS}} {{STATUS_DETAIL}}</p>
         </div>
+        <!-- 読者自身の理解が目的の解説だけ残す（references/mastery-explainer.md）。それ以外の文書では削る。 -->
+        <div class="goals wide">
+          <span class="label">読み終えたらできること</span>
+          <ul>
+            <li>{{GOAL_ONE}}</li>
+            <li>{{GOAL_TWO}}</li>
+          </ul>
+        </div>
         <!-- orientation triggerに該当しない単純文書では、このsectionごと削る。 -->
         <section class="wide" aria-labelledby="orientation-title">
           <h2 id="orientation-title">{{ORIENTATION_TITLE}}</h2>
@@ -236,6 +260,11 @@
           <h2 id="section-one">{{SECTION_ONE_TITLE}}</h2>
           <p>{{SECTION_ONE_LEDE}}</p>
           <!-- Detail slice: overviewの番号や名称に接続するcomparison、wave、figure、diff、tableの一つを置く。 -->
+          <!-- 理解のための解説では、主要章の前に予想の問いを置き、答えの位置を正確に書く。不要なら削る。 -->
+          <div class="predict">
+            <span class="label">読む前に予想</span>
+            <p>{{PREDICTION_QUESTION}}</p>
+          </div>
           <!-- 初学者向けexplainerでは、章ごとに.analogyと一枚の絵を置く。不要なら削る。 -->
           <div class="analogy">
             <span class="label">たとえるなら</span>
@@ -246,6 +275,14 @@
         <section aria-labelledby="section-two">
           <h2 id="section-two">{{SECTION_TWO_TITLE}}</h2>
           <p>{{SECTION_TWO_LEDE}}</p>
+        </section>
+        <!-- 読者自身の理解が目的の解説だけ残す。答えは details で折りたたみ、戻る章へリンクする。 -->
+        <section aria-labelledby="self-test">
+          <h2 id="self-test">{{SELF_TEST_TITLE}}</h2>
+          <dl class="qa">
+            <dt>{{QUESTION_ONE}}</dt>
+            <dd><details><summary>答えを開く</summary><p>{{ANSWER_ONE}} <a href="#section-one">{{BACK_LINK_LABEL}}へ戻る</a></p></details></dd>
+          </dl>
         </section>
       </main>
       <aside class="rail" aria-labelledby="rail-title">
