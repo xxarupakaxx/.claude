@@ -1,0 +1,26 @@
+{
+  "repository": "https://github.com/emilkowalski/skills",
+  "commit": "2d228630ba1446365f614a108cb8252f1feda202",
+  "retrieved": "2026-10-18",
+  "license": "MIT",
+  "collection": "emilkowalski-2026-10",
+  "managed": [
+    "animate",
+    "animate-expo",
+    "animation-performance",
+    "ask-sonner",
+    "break-ui",
+    "mobile-native",
+    "pick-ui-library",
+    "prototype",
+    "write-swift"
+  ],
+  "local_adaptations": [
+    "animation-vocabulary",
+    "apple-design",
+    "emil-design-eng",
+    "find-animation-opportunities",
+    "improve-animations",
+    "review-animations"
+  ]
+}
