@@ -29,6 +29,8 @@ GitHubのPR pageと通常のcompare pageはmerge baseが異なる場合がある
 
 GitHubのList pull request files APIは最大3,000 filesである。GitHubのdiff表示にもPR全体・file・renderable fileの上限がある。上限到達、patch欠落、binary、巨大fileではAPI/UIを完全なcoverage証拠にせず、local object graph、producer固有の検証、PR分割判断を併用する。
 
+base先端のSHA、同じbaseへのopen PR、未解決のレビュースレッドを`references/security-incident-lens.md`のcommandで取得し、取得時刻とともに記録する。base先端はIntegrationの入力であり、merge判断のdrift検査には含めない。取得が上限で切れたらcoverage gapに残す。
+
 snapshotを保存した後はbranch名からdiffを再生成しない。報告前にremoteのbase/head SHAを再取得してmerge-baseを再計算し、driftを判定する。
 
 ## Coverage ledger
@@ -120,6 +122,7 @@ severityは問題の種類ではなく具体的impactで決める。「test不�
 | formatter/linterが確実に検出し既存checkが実行される | tooling resultへ委ねる |
 | 同じroot causeの別症状 | 一つのfindingへ統合しaffected locationsを列挙 |
 | 反証で成立しない | rejected candidate、報告しない |
+| 既存の未解決レビュースレッド | lensの3分類で照合する。要修正のうちfinding gateを満たすものだけfinding、残りはExisting review threadsへ |
 
 reviewer間でseverityが違う場合は高い方を機械採用せず、failure scenarioとimpactを再確認して一つに決める。
 
@@ -145,6 +148,8 @@ reviewer間でseverityが違う場合は高い方を機械採用せず、failure
 
 draft、GitHub merge conflict、branch protection未充足はreview findingと混ぜず、merge blockerとしてreportする。merge blockerが一つでもあれば`READY`を返さない。
 
+Integrationの結果は次のように扱う。テキストの衝突はmerge blocker、base側のspec・testとの矛盾はfinding gateを満たせばfinding、同じpathを触るopen PRとマージ順はadvisoryとし、merge判断に入れない（詳細は`references/security-incident-lens.md`）。
+
 ## Report template
 
 ```markdown
@@ -160,8 +165,24 @@ draft、GitHub merge conflict、branch protection未充足はreview findingと�
 ### [MINOR][Nit] optional mentoring point
 - Reason: code health上の利点と、今回のmergeをblockしないこと
 
+## Security / incident conclusion
+- Security: 確認済み / 一部 / 未確認 — 確認した経路と結果
+- Incident: 確認済み / 一部 / 未確認 — 確認した経路と結果
+- Correctness / test / contract / maintainability: 確認状態
+- Not checked: 未確認の範囲（「問題なし」と書かない）
+
 ## Questions / residual risks
 - ...
+
+## Existing review threads
+- 要修正 / 修正済み未resolve / 誤検知・非採用: thread URL — 根拠 `path:line`
+
+## Production manual work
+- なし（根拠: ...） または 作業・順序・根拠
+
+## Integration
+- Base tip: sha（取得時刻） / merge-tree: 衝突なし・あり / mergeable: ...
+- Open PRs on same paths（advisory）: #N — 重なるpath、推奨するマージ順
 
 ## Coverage
 - Covered: N/N paths
