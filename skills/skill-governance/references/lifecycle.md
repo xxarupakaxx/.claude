@@ -126,3 +126,7 @@ machine receiptでは `representative_prompts`、`baseline`、`candidate`、`tri
 ## imozuruの限定検査
 
 固定版imozuruの制限付き導入だけは、[Skillの入口](../SKILL.md)の「imozuruの固定された制限付き導入」に従う。標準lifecycle、全体のmutation禁止、通常のL2判定はそのまま維持する。
+
+全体のずれと固定能力の判定は分離する。`restricted_status`と既定の終了値は全体のずれも示し、専用runnerの`--require-capability`だけが固定scopeの`capability_status`を使う。正常な観測後の完全一致差分以外は、この分離の対象にしない。
+
+通常依頼の実動作は起動後に確認し、4件の正例trace、対象外の単一事実確認とlocal-only HTMLの負例、profile hashと両送達proofをgeneration-2 value-completion receiptへ保存する。起動前のfixture結果と実測を区別し、小標本の発火精度を一般化しない。

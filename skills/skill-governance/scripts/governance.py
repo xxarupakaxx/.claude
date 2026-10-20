@@ -42,7 +42,7 @@ MAX_GITHUB_RESPONSE = 32 * 1024 * 1024
 MAX_YAML_EVENTS = 2_048
 MAX_YAML_DEPTH = 32
 BASE_DIR = Path(__file__).resolve().parents[1]
-RESTRICTED_CHECKER_SHA256 = "cca87fe5f218c449025587c0a2d1a6a9c8ee8f10addae5b4de14055f0760bf07"
+RESTRICTED_CHECKER_SHA256 = "2d0e3883b6d3e5ad2f8a1f572183c29b2035a8485ed494fe9dfe6688ffa54dd1"
 DEFAULT_REGISTRY = BASE_DIR / "registry.toml"
 DEFAULT_LOCK = BASE_DIR / "registry.lock.json"
 DEFAULT_CATALOG = BASE_DIR / "catalog.lock.json"
@@ -5775,6 +5775,8 @@ def build_parser() -> argparse.ArgumentParser:
     restricted = subparsers.add_parser("restricted-audit", help="Verify the single fixed imozuru restricted profile")
     restricted.add_argument("--phase", required=True, choices=("ready", "active"))
     restricted.add_argument("--json", required=True, action="store_true", dest="json_output")
+    restricted.add_argument("--require-capability", action="store_true", help="Use only the fixed imozuru capability for the exit status")
+    restricted.add_argument("--summary", action="store_true", help="Summarize output without skipping checks")
     return parser
 
 
@@ -5800,6 +5802,7 @@ def main(argv: list[str] | None = None) -> int:
                     "phase": args.phase,
                     "profile_id": "marycache-imozuru-2026-10",
                     "restricted_status": "blocked",
+                    "capability_status": "blocked",
                     "findings": [asdict(finding)],
                 },
                 True,
@@ -5813,8 +5816,8 @@ def main(argv: list[str] | None = None) -> int:
         exec(compile(raw, str(restricted_path), "exec"), restricted.__dict__)
 
         payload, findings = restricted.restricted_audit_payload(restricted.PROFILE_DIR, args.phase)
-        emit(payload, True)
-        return 2 if has_blockers(findings) else 0
+        emit(restricted.summary_payload(payload) if args.summary else payload, True)
+        return restricted.audit_exit_code(payload, findings, args.phase, args.require_capability)
     registry_path = args.registry.absolute()
     args.registry = registry_path
     for attribute, filename in (

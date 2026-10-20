@@ -51,7 +51,7 @@ def evidence_envelope(kind: str, target_hash: str, **updates: object) -> bytes:
     return json.dumps(value, sort_keys=True).encode()
 
 
-def delivery_fixture(base: Path, *, stale_ancestor: bool = False, missing_artifact: bool = False) -> tuple[dict[str, object], dict[str, object], Path]:
+def delivery_fixture(base: Path, *, stale_ancestor: bool = False, missing_artifact: bool = False, stale_integration: bool = False) -> tuple[dict[str, object], dict[str, object], Path]:
     repos: dict[str, dict[str, object]] = {}
     commits: dict[str, str] = {}
     target_hash = "a" * 64
@@ -63,6 +63,8 @@ def delivery_fixture(base: Path, *, stale_ancestor: bool = False, missing_artifa
         subprocess.run(["/usr/bin/git", "-C", str(repo), "-c", "user.name=t", "-c", "user.email=t@example.invalid", "commit", "--allow-empty", "-qm", "base"], check=True)
         write(repo / "skills/imozuru/SKILL.md", b"stale" if stale_ancestor else name.encode())
         write(repo / "scripts/governance.py", b"stale-module" if stale_ancestor else b"module")
+        write(repo / "skills/research/SKILL.md", b"caller")
+        write(repo / "skills/research/references/source.md", b"stale" if stale_integration else b"fixed")
         artifact_dir = repo / "restricted-profiles" / restricted.PROFILE_ID
         for filename in restricted.PROFILE_ARTIFACTS:
             if missing_artifact and filename == "approval-receipt.json":
@@ -81,9 +83,11 @@ def delivery_fixture(base: Path, *, stale_ancestor: bool = False, missing_artifa
             subprocess.run(["/usr/bin/git", "-C", str(repo), "-c", "user.name=t", "-c", "user.email=t@example.invalid", "commit", "-qm", "current"], check=True)
         elif missing_artifact:
             write(artifact_dir / "approval-receipt.json", b"approval-receipt.json")
+        if stale_integration:
+            write(repo / "skills/research/references/source.md", b"fixed")
         commits[name] = proof_commit
         subprocess.run(["/usr/bin/git", "-C", str(repo), "update-ref", "refs/remotes/origin/main", proof_commit], check=True)
-        scope_paths = ("skills/imozuru/SKILL.md", "scripts/governance.py")
+        scope_paths = ("skills/imozuru/SKILL.md", "scripts/governance.py", "skills/research/SKILL.md", "skills/research/references/source.md")
         repos[name] = {
             "path": str(repo),
             "scope_files": [
@@ -100,13 +104,18 @@ def delivery_fixture(base: Path, *, stale_ancestor: bool = False, missing_artifa
                 for side in ("authority", "replica")
             }
         },
+        "generation": 2,
+        "integration_trees": [
+            {"path": str(base / name / "skills/research"), "tree_sha256": restricted._safe_tree(base / name / "skills/research").tree_sha256}
+            for name in repos
+        ],
         "integration_files": [],
         "delivery": {"repos": repos},
         "valid_until": "2027-01-18T00:00:00Z",
     }
     profile_sha = gov.sha256_bytes(b"profile")
     proof = {
-        "schema_version": 1, "generation": 1, "success": True,
+        "schema_version": 1, "generation": 2, "success": True,
         "profile_sha256": profile_sha,
         "target_tree_sha256": {name: target_hash for name in repos},
         "delivery_commits": commits,
@@ -270,7 +279,7 @@ class RestrictedAuditTests(unittest.TestCase):
             restricted._bound_inventory(profile, inventory, [])
         )
         registry = {"roots": [{"id": "root", "path": "/skills"}]}
-        with mock.patch.object(gov, "audit_payload", return_value=({"status": "DEGRADED", "mutation_allowed": False, "findings": audit_rows}, [])), mock.patch.object(gov, "load_registry", return_value=(registry, [])), mock.patch.object(gov, "inventory_payload", return_value=inventory), mock.patch.object(gov, "parity_payload", return_value=({"status": "ok"}, [])):
+        with mock.patch.object(gov, "audit_payload", return_value=({"status": "DEGRADED", "mutation_allowed": False, "findings": audit_rows}, [])), mock.patch.object(gov, "load_registry", return_value=(registry, [])), mock.patch.object(gov, "inventory_payload", return_value=inventory), mock.patch.object(gov, "parity_payload", return_value=({"status": "ok"}, [])), mock.patch.object(restricted, "_validate_observations"):
             findings: list[gov.Finding] = []
             restricted._check_global(profile, "ready_absent", findings)
             self.assertFalse(findings)
@@ -532,14 +541,22 @@ class RestrictedAuditTests(unittest.TestCase):
                 self.assertIsNone(restricted._codex_physical_path(logical / "skills", findings, "race"))
 
     def test_delivery_rejects_random_ancestor_and_missing_artifact(self) -> None:
-        for scenario in ("stale", "missing"):
+        for scenario in ("stale", "missing", "integration_scope", "integration_blob"):
             with self.subTest(scenario=scenario), tempfile.TemporaryDirectory() as temporary:
                 base = Path(os.path.realpath(temporary))
-                profile, _, proof_path = delivery_fixture(base, stale_ancestor=scenario == "stale", missing_artifact=scenario == "missing")
+                profile, repos, proof_path = delivery_fixture(base, stale_ancestor=scenario == "stale", missing_artifact=scenario == "missing", stale_integration=scenario == "integration_blob")
+                if scenario == "integration_scope":
+                    repos["codex"]["scope_files"] = [row for row in repos["codex"]["scope_files"] if row["path"] != "skills/research/references/source.md"]
                 with mock.patch.object(restricted, "DELIVERY_PROOF", proof_path):
                     findings: list[gov.Finding] = []
                     restricted._check_delivery(profile, gov.sha256_bytes(b"profile"), fixture_artifacts(base), findings)
-                self.assertTrue({"restricted_delivery_tree_blob", "restricted_delivery_tree_paths"} & {item.code for item in findings})
+                if scenario == "integration_scope":
+                    self.assertIn("restricted_delivery_scope_coverage", {item.code for item in findings})
+                elif scenario == "integration_blob":
+                    self.assertIn("restricted_delivery_tree_blob", {item.code for item in findings})
+                    self.assertTrue(any(item.code == "restricted_delivery_tree_blob" and "skills/research/references/source.md" in item.path for item in findings))
+                else:
+                    self.assertTrue({"restricted_delivery_tree_blob", "restricted_delivery_tree_paths"} & {item.code for item in findings})
 
     def test_delivery_ignores_replace_refs_and_blocks_grafts(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -615,6 +632,93 @@ class RestrictedAuditTests(unittest.TestCase):
                     "future": "restricted_delivery_remote_time",
                 }
                 self.assertIn(expected[scenario], {item.code for item in findings})
+
+    def test_capability_drift_preserves_default_exit_and_summary(self) -> None:
+        profile_raw = b'{"packages":{"authority":{"path":"/fixture"}}}'
+        audit = {"status": "DEGRADED", "mutation_allowed": False, "findings": []}
+        for codes in (("global_findings", "inventory"), ("inventory", "observation"), ("unknown",)):
+            with self.subTest(codes=codes), mock.patch.object(restricted, "_profile_artifacts", return_value={"profile.json": profile_raw}), mock.patch.object(restricted, "_validate_profile", return_value=True), mock.patch.object(gov, "load_registry", return_value=({}, [])), mock.patch.object(restricted, "_check_hashes"), mock.patch.object(restricted, "_check_source"), mock.patch.object(restricted, "_check_integration"), mock.patch.object(restricted, "_tree_state", return_value="active"), mock.patch.object(restricted, "_check_receipts"):
+                def observe(profile, state, findings):
+                    findings.extend(restricted._finding(code, code) for code in codes)
+                    return audit, {}
+                with mock.patch.object(restricted, "_check_global", side_effect=observe):
+                    payload, findings = restricted.restricted_audit_payload(Path("/fixture"), "active")
+                expected = "active" if set(codes) == {"global_findings", "inventory"} else "blocked"
+                self.assertEqual(payload["restricted_status"], "blocked")
+                self.assertEqual(payload["capability_status"], expected)
+                self.assertEqual(restricted.audit_exit_code(payload, findings, "active", False), 2)
+                self.assertEqual(restricted.audit_exit_code(payload, findings, "active", True), 0 if expected == "active" else 2)
+                summary = restricted.summary_payload(payload)
+                self.assertEqual(summary["capability_status"], expected)
+                self.assertNotIn("global_findings", summary)
+                for key in ("capability_status", "capability_scope", "global_drift", "restricted_status"):
+                    bad = dict(payload); bad.pop(key)
+                    self.assertEqual(restricted.audit_exit_code(bad, findings, "active", True), 2)
+                bad = dict(payload, restricted_status="active")
+                self.assertEqual(restricted.audit_exit_code(bad, findings, "active", True), 2)
+
+    def test_cli_capability_mode_is_explicit_and_unknown_flags_fail(self) -> None:
+        args = ["restricted-audit", "--phase", "active", "--json"]
+        self.assertFalse(gov.build_parser().parse_args(args).require_capability)
+        self.assertTrue(gov.build_parser().parse_args(args + ["--require-capability", "--summary"]).require_capability)
+        with mock.patch("sys.stderr"), self.assertRaises(SystemExit):
+            gov.build_parser().parse_args(args + ["--ignore-global"])
+
+    def test_fixed_integration_trees_reject_omissions_duplicates_and_other_paths(self) -> None:
+        rows = [{"path": path, "tree_sha256": "a" * 64} for path in sorted(restricted.EXPECTED_INTEGRATIONS)]
+        findings = []; restricted._validate_integration_trees(rows, findings)
+        self.assertFalse(findings)
+        for bad in (None, [], rows[:-1], rows + rows[:1], [{**rows[0], "path": "/other"}] + rows[1:], [{**rows[0], "tree_sha256": "bad"}] + rows[1:]):
+            findings = []; restricted._validate_integration_trees(bad, findings)
+            self.assertTrue(gov.has_blockers(findings))
+
+    def test_integration_tree_rejects_changed_missing_extra_and_unsafe_files(self) -> None:
+        for scenario in ("modify", "remove", "extra", "symlink", "hardlink"):
+            with self.subTest(scenario=scenario), tempfile.TemporaryDirectory() as temporary:
+                root = Path(os.path.realpath(temporary))
+                write(root / "SKILL.md", b"fixed")
+                profile = {"integration_files": [], "integration_trees": [{"path": str(root), "tree_sha256": restricted._safe_tree(root).tree_sha256}]}
+                findings = []; restricted._check_integration(profile, findings)
+                self.assertFalse(findings)
+                if scenario == "modify": write(root / "SKILL.md", b"changed")
+                elif scenario == "remove": (root / "SKILL.md").unlink()
+                elif scenario == "extra": write(root / "extra.py", b"extra")
+                elif scenario == "symlink": (root / "extra").symlink_to(root / "SKILL.md")
+                else: os.link(root / "SKILL.md", root / "extra")
+                restricted._check_integration(profile, findings)
+                self.assertIn("restricted_integration_tree", {item.code for item in findings})
+
+    def test_observation_distinguishes_absence_from_failed_or_malformed_scan(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            missing = str(Path(temporary) / "absent")
+            registry = {"roots": [{"id": "test", "path": missing}]}
+            audit = {"command": "audit", "findings": []}
+            inventory = {
+                "command": "inventory", "status": "blocked", "hash_algorithm": gov.HASH_ALGORITHM,
+                "records": [], "coverage": {"test": {"path": missing, "discovered": 0, "recorded": 0, "complete": False}},
+                "summary": {"total_entries": 0, "roots": {"test": 0}},
+                "surface_probe": {}, "collisions": {}, "raw_name_collisions": {}, "symlinks": [],
+                "findings": [{"severity": "BLOCKING", "code": "root_unavailable", "message": "[Errno 2] fixture path missing", "path": missing}],
+            }
+            findings = []; restricted._validate_observations(audit, inventory, registry, findings)
+            self.assertFalse(findings)
+            known_policy = {"command": "audit", "findings": [{"severity": "BLOCKING", "code": "baseline_drift", "message": "legacy mismatch", "path": "unrelated"}]}
+            findings = []; restricted._validate_observations(known_policy, inventory, registry, findings)
+            self.assertFalse(findings)
+            for scenario in ("unknown", "audit_unknown", "stat_error", "read", "count", "roots", "schema", "present", "permission", "race"):
+                with self.subTest(scenario=scenario):
+                    inv = json.loads(json.dumps(inventory)); aud = json.loads(json.dumps(audit))
+                    if scenario == "unknown": inv["findings"][0]["code"] = "new_unknown"
+                    elif scenario in ("audit_unknown", "stat_error"): aud["findings"] = [{"severity": "BLOCKING", "code": "scanner_timeout" if scenario == "audit_unknown" else "stat_error", "message": "failed", "path": missing}]
+                    elif scenario == "read": inv["findings"][0]["code"] = "discovery_unreadable"
+                    elif scenario == "count": inv["summary"]["total_entries"] = 1
+                    elif scenario == "roots": inv["coverage"]["extra"] = {}
+                    elif scenario == "schema": inv["findings"] = "bad"
+                    elif scenario == "race": aud["findings"] = [{"severity": "BLOCKING", "code": "toctou_changed", "message": "changed", "path": missing}]
+                    probe = mock.patch.object(Path, "lstat", side_effect=PermissionError("denied")) if scenario == "permission" else mock.patch.object(Path, "lstat", return_value=object()) if scenario == "present" else mock.patch.object(restricted, "SHA256_RE", restricted.SHA256_RE)
+                    with probe:
+                        findings = []; restricted._validate_observations(aud, inv, registry, findings)
+                    self.assertTrue(gov.has_blockers(findings))
 
     def test_malformed_profile_is_blocked_without_exception(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

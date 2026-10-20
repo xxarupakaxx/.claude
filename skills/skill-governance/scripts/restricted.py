@@ -30,6 +30,38 @@ except (AttributeError, ImportError):
 
 
 PROFILE_ID = "marycache-imozuru-2026-10"
+CAPABILITY_SCOPE = "imozuru-public-source-v1"
+GLOBAL_DRIFT_CODES = frozenset({"restricted_global_findings", "restricted_inventory"})
+OBSERVED_AUDIT_POLICY_CODES = frozenset({
+    'active_shadow_override',
+    'approval_receipt_binding',
+    'baseline_drift',
+    'candidate_invisible_control',
+    'catalog_license_evidence_gap',
+    'catalog_skill_name_invalid',
+    'code_present',
+    'codex_disabled_skill_missing',
+    'discovery_excluded_scan_truncated',
+    'discovery_excluded_symlink_recorded',
+    'discovery_symlink_allowlisted',
+    'discovery_symlink_unreviewed',
+    'executable_file',
+    'external_url',
+    'lock_field_mismatch',
+    'promotion_receipt_binding',
+    'promotion_target_drift',
+    'root_unavailable',
+    'runtime_estate_added',
+    'runtime_estate_drift',
+    'runtime_estate_removed',
+    'runtime_skill_identity_mismatch',
+    'safety_receipt_binding',
+    'stale_hold',
+    'target_frontmatter_requires_full_validation',
+    'unknown_frontmatter_key',
+    'unregistered_skill_surface',
+    'value_receipt_binding',
+})
 COLLECTION_ID = PROFILE_ID
 SOURCE_ID = "marycache-imozuru"
 SOURCE_REVISION = "980ec7f50f0b954e9e1b1d85865c29a427c8e776"
@@ -57,6 +89,11 @@ EXPECTED_REMOTES = {
     "codex": "ssh://git@github.com/xxarupakaxx/.codex.git",
     "claude": "ssh://git@github.com/xxarupakaxx/.claude.git",
 }
+EXPECTED_INTEGRATIONS = frozenset(
+    str(root / "skills" / skill)
+    for root in EXPECTED_REPOS.values()
+    for skill in ("research", "ask-skill-router", "creating-html-documents")
+)
 REMOTE_BRANCH = "refs/heads/main"
 REMOTE_OBSERVATION_FUTURE_SKEW = timedelta(minutes=5)
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -301,12 +338,13 @@ def _validate_profile(profile: dict[str, Any], findings: list[gov.Finding]) -> b
     top = {
         "schema_version", "profile_id", "collection_id", "source", "valid_until",
         "governance", "packages", "targets", "integration_files", "audit",
-        "collision_roots", "delivery", "verifier",
+        "collision_roots", "delivery", "verifier", "capability_scope", "generation", "integration_trees",
     }
     if not _keys(profile, top, "profile", findings):
         return False
-    if profile.get("schema_version") != 1 or profile.get("profile_id") != PROFILE_ID or profile.get("collection_id") != COLLECTION_ID:
+    if profile.get("schema_version") != 2 or profile.get("capability_scope") != CAPABILITY_SCOPE or type(profile.get("generation")) is not int or profile["generation"] != 2 or profile.get("profile_id") != PROFILE_ID or profile.get("collection_id") != COLLECTION_ID:
         findings.append(_finding("identity", "Profile schema or fixed identity differs", "profile"))
+    _validate_integration_trees(profile.get("integration_trees"), findings)
     source = profile.get("source")
     source_keys = {"id", "revision", "quarantine_path", "quarantine_tree_sha256"}
     if _keys(source, source_keys, "source", findings):
@@ -486,6 +524,21 @@ def _check_hashes(profile: dict[str, Any], registry: dict[str, Any], findings: l
                 findings.append(_finding("base_file", "Base governance file differs", f"{side}:{name}"))
 
 
+def _validate_integration_trees(rows: Any, findings: list[gov.Finding]) -> None:
+    if not isinstance(rows, list):
+        findings.append(_finding("integration_trees", "Exactly six integration trees are required", "integration_trees"))
+        return
+    paths = []
+    for row in rows:
+        if not _keys(row, {"path", "tree_sha256"}, "integration_tree", findings):
+            continue
+        paths.append(row["path"])
+        if not isinstance(row["path"], str) or row["path"] not in EXPECTED_INTEGRATIONS or not SHA256_RE.fullmatch(str(row["tree_sha256"])):
+            findings.append(_finding("integration_trees", "Integration path or hash is not fixed", "integration_trees"))
+    if len(paths) != 6 or set(paths) != EXPECTED_INTEGRATIONS:
+        findings.append(_finding("integration_trees", "All six unique fixed integration trees are required", "integration_trees"))
+
+
 def _check_integration(profile: dict[str, Any], findings: list[gov.Finding]) -> None:
     for entry in profile["integration_files"]:
         path = Path(entry["path"])
@@ -495,6 +548,11 @@ def _check_integration(profile: dict[str, Any], findings: list[gov.Finding]) -> 
         raw = _external_file(path, findings)
         if raw is not None and gov.sha256_bytes(raw) != entry["sha256"]:
             findings.append(_finding("integration", "Integration file differs", str(path)))
+
+    for entry in profile["integration_trees"]:
+        tree = _safe_tree(Path(entry["path"]))
+        if tree.findings or tree.tree_sha256 != entry["tree_sha256"]:
+            findings.append(_finding("integration_tree", "Integration package differs or is unsafe", entry["path"]))
 
 
 def _check_source(profile: dict[str, Any], findings: list[gov.Finding]) -> None:
@@ -585,6 +643,76 @@ def _bound_inventory(
     }
 
 
+def _validate_observations(audit: dict[str, Any], inventory: dict[str, Any], registry: dict[str, Any], findings: list[gov.Finding]) -> None:
+    """Distinguish observed legacy policy failures from an incomplete scan."""
+    def fail(message: str) -> None:
+        findings.append(_finding("observation", message, "audit/inventory"))
+
+    for label, value in (("audit", audit), ("inventory", inventory)):
+        rows = value.get("findings")
+        if value.get("command") != label or not isinstance(rows, list):
+            fail(f"Malformed {label} result")
+            return
+        if any(not isinstance(row, dict) or set(row) != {"severity", "code", "message", "path"} or any(not isinstance(item, str) for item in row.values()) or row["severity"] not in {"BLOCKING", "ADVISORY"} or not row["code"] for row in rows):
+            fail(f"Malformed {label} findings")
+            return
+    roots = {row["id"]: row for row in registry["roots"]}
+    records, coverage, summary = inventory.get("records"), inventory.get("coverage"), inventory.get("summary")
+    if inventory.get("status") not in {"ok", "blocked"} or inventory.get("hash_algorithm") != gov.HASH_ALGORITHM or not isinstance(records, list) or not isinstance(coverage, dict) or not isinstance(summary, dict) or set(coverage) != set(roots):
+        fail("Inventory schema or root set differs")
+        return
+    if any(not isinstance(inventory.get(key), dict) for key in ("surface_probe", "collisions", "raw_name_collisions")) or not isinstance(inventory.get("symlinks"), list):
+        fail("Inventory surface schema differs")
+        return
+    counts: Counter[str] = Counter()
+    identities = set()
+    for row in records:
+        if not isinstance(row, dict) or row.get("root_id") not in roots or any(not isinstance(row.get(key), str) for key in ("directory_name", "resolved_name", "relative_path")) or not isinstance(row.get("tree_finding_codes"), list):
+            fail("Malformed inventory record")
+            return
+        identity = (row["root_id"], row["relative_path"])
+        if identity in identities:
+            fail("Duplicate inventory record")
+        identities.add(identity)
+        counts[row["root_id"]] += 1
+        # The existing vendor cache may contain oversized assets; it cannot
+        # supply the fixed runner or the pinned integration packages.
+        allowed_tree = {"file_too_large"} if row.get("record_scope") == "plugin-managed" else set()
+        if any(code not in allowed_tree for code in row["tree_finding_codes"]):
+            fail("Inventory tree scan failed")
+    if type(summary.get("total_entries")) is not int or summary["total_entries"] != len(records) or summary.get("roots") != {root: counts[root] for root in roots}:
+        fail("Inventory summary counts differ")
+    for root_id, row in coverage.items():
+        if not isinstance(row, dict) or any(type(row.get(key)) is not int or row[key] != counts[root_id] for key in ("discovered", "recorded")) or type(row.get("complete")) is not bool or row.get("path") != str(gov.expand_path(roots[root_id]["path"])):
+            fail("Inventory root coverage differs")
+    observed_codes = {
+        "codex_disabled_skill_missing", "runtime_skill_identity_mismatch",
+        "runtime_skill_name_inferred", "runtime_skill_name_unverified",
+        "discovery_symlink_unreviewed", "discovery_symlink_allowlisted",
+        "discovery_excluded_scan_truncated", "discovery_excluded_symlink_recorded",
+        "unregistered_skill_surface",
+    }
+    root_paths = {str(gov.expand_path(row["path"])) for row in roots.values()}
+    observations = [*inventory["findings"], *[row for row in audit["findings"] if row["code"] in {"root_unavailable", "root_missing", "codex_disabled_skill_missing"}]]
+    for row in observations:
+        if row["code"] in {"root_unavailable", "root_missing", "codex_disabled_skill_missing"}:
+            try:
+                Path(row["path"]).lstat()
+            except OSError as exc:
+                if exc.errno == errno.ENOENT and row["message"].startswith("[Errno 2]") and (row["code"] == "codex_disabled_skill_missing" or row["path"] in root_paths):
+                    continue
+            fail("Missing path was not confirmed as ENOENT")
+        elif row["code"] not in observed_codes:
+            fail(f"Unknown or failed inventory observation: {row['code']}")
+    # Audit also scans governance receipts and sources. Read/race failures
+    # there cannot be reclassified as an exact-comparison drift.
+    for row in audit["findings"]:
+        if row["code"] not in OBSERVED_AUDIT_POLICY_CODES:
+            fail(f"Unknown audit observation: {row['code']}")
+        if any(token in row["code"] for token in ("toctou", "unreadable", "open_failed", "read_failed", "lstat_failed", "directory_changed", "path_replaced", "revalidation_failed")):
+            fail(f"Audit observation failed: {row['code']}")
+
+
 def _check_global(profile: dict[str, Any], state: str, findings: list[gov.Finding]) -> tuple[dict[str, Any], dict[str, Any]]:
     base = profile["governance"]["base_files"]
     package = Path(profile["packages"]["authority"]["path"])
@@ -612,6 +740,7 @@ def _check_global(profile: dict[str, Any], state: str, findings: list[gov.Findin
     registry, registry_findings = gov.load_registry(paths["registry.toml"])
     findings.extend(_finding("registry", f"{item.code}: {item.message}", item.path) for item in registry_findings)
     inventory = gov.inventory_payload(registry) if not gov.has_blockers(registry_findings) else {"records": []}
+    _validate_observations(audit, inventory, registry, findings)
     bound_inventory = _bound_inventory(profile, inventory, findings)
     digest = _digest_json(bound_inventory)
     if digest != rules["inventory_sha256_by_state"].get(state):
@@ -857,7 +986,7 @@ def _check_delivery(
     if proof is None or not _keys(proof, keys, "delivery_proof", findings):
         return
     target_hashes = {name: entry["tree_sha256"] for name, entry in profile["targets"]["runtime"].items()}
-    if proof.get("schema_version") != 1 or proof.get("generation") != 1 or proof.get("success") is not True or proof.get("profile_sha256") != profile_sha or proof.get("target_tree_sha256") != target_hashes:
+    if proof.get("schema_version") != 1 or proof.get("generation") != profile["generation"] or proof.get("success") is not True or proof.get("profile_sha256") != profile_sha or proof.get("target_tree_sha256") != target_hashes:
         findings.append(_finding("delivery_proof", "Delivery proof identity or target hashes differ", str(DELIVERY_PROOF)))
     repos = profile["delivery"]["repos"]
     observations = proof.get("remote_observations")
@@ -896,6 +1025,13 @@ def _check_delivery(
             for entry in profile["integration_files"]
             if Path(entry["path"]).is_relative_to(repo_path)
         )
+        for entry in profile["integration_trees"]:
+            integration_root = Path(entry["path"])
+            if integration_root.is_relative_to(repo_path):
+                tree = _safe_tree(physical_repo / integration_root.relative_to(repo_path))
+                if tree.findings or tree.tree_sha256 != entry["tree_sha256"]:
+                    findings.append(_finding("delivery_integration", "Integration tree differs during delivery validation", entry["path"]))
+                required_scope.update(integration_root / record.path for record in tree.files)
         declared_scope = {repo_path / entry["path"] for entry in repo["scope_files"]}
         artifact_paths = {
             Path(profile["packages"][side]["path"]) / "restricted-profiles" / PROFILE_ID / filename
@@ -1008,11 +1144,17 @@ def _restricted_audit_payload(profile_dir: Path, phase: str) -> tuple[dict[str, 
             state = _tree_state(profile, phase, findings)
             audit, _ = _check_global(profile, state, findings)
             _check_receipts(raws, profile_raw, profile, phase, findings)
+    drift = [item for item in findings if item.code in GLOBAL_DRIFT_CODES]
+    scoped = [item for item in findings if item.code not in GLOBAL_DRIFT_CODES]
     payload = {
         "command": "restricted-audit",
         "phase": phase,
         "profile_id": PROFILE_ID,
         "restricted_status": "blocked" if gov.has_blockers(findings) else phase,
+        "capability_scope": CAPABILITY_SCOPE,
+        "capability_status": "blocked" if gov.has_blockers(scoped) else phase,
+        "global_drift": "HOLD" if drift else "unchanged",
+        "global_drift_findings": [asdict(item) for item in drift],
         "global_status": audit.get("status", "unknown"),
         "global_mutation_allowed": audit.get("mutation_allowed"),
         "runtime_state": state,
@@ -1034,6 +1176,10 @@ def restricted_audit_payload(profile_dir: Path, phase: str) -> tuple[dict[str, A
             "phase": phase,
             "profile_id": PROFILE_ID,
             "restricted_status": "blocked",
+            "capability_scope": CAPABILITY_SCOPE,
+            "capability_status": "blocked",
+            "global_drift": "unknown",
+            "global_drift_findings": [],
             "global_status": "unknown",
             "global_mutation_allowed": None,
             "runtime_state": "unknown",
@@ -1041,3 +1187,31 @@ def restricted_audit_payload(profile_dir: Path, phase: str) -> tuple[dict[str, A
             "findings": [asdict(finding)],
             "global_findings": [],
         }, [finding]
+
+
+def audit_exit_code(payload: dict[str, Any], findings: list[gov.Finding], phase: str, require_capability: bool) -> int:
+    """Keep the old exit contract unless the fixed capability is requested."""
+    if not require_capability:
+        return 0 if payload.get("restricted_status") == phase and not gov.has_blockers(findings) else 2
+    scoped = [item for item in findings if item.code not in GLOBAL_DRIFT_CODES]
+    drift = any(item.code in GLOBAL_DRIFT_CODES for item in findings)
+    expected_status = "blocked" if drift or gov.has_blockers(scoped) else phase
+    valid = (
+        payload.get("capability_scope") == CAPABILITY_SCOPE
+        and payload.get("capability_status") == phase
+        and payload.get("restricted_status") == expected_status
+        and payload.get("global_drift") == ("HOLD" if drift else "unchanged")
+        and payload.get("global_status") == "DEGRADED"
+        and payload.get("global_mutation_allowed") is False
+        and not gov.has_blockers(scoped)
+    )
+    return 0 if valid else 2
+
+
+def summary_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    result = {key: value for key, value in payload.items() if key not in {"findings", "global_findings", "global_drift_findings"}}
+    result["findings"] = [row for row in payload.get("findings", []) if row["code"] not in GLOBAL_DRIFT_CODES]
+    result["global_finding_count"] = len(payload.get("global_findings", []))
+    result["global_drift_finding_count"] = len(payload.get("global_drift_findings", []))
+    result["global_drift_codes"] = [row["code"] for row in payload.get("global_drift_findings", [])]
+    return result
