@@ -99,6 +99,6 @@ Project固有の品質check後、自分の変更だけを論理単位でcommit�
 
 日本語の文章を出す前に `skills/yomiyasu/SKILL.md` の「1. 基本原則」を読み、その基準で見直す。チャットの応答、文書、Notion・Slack・メールの文案、HTMLの本文、commitとPRの説明を対象にする。意味の保持と情報の不増補を最優先にし、自然な文と、並列が明確な箇条書きは直さない。「変えたところ」などの欄は、推敲を依頼されたときだけ付ける。
 
-ファイルへ保存する成果物と外部へ出す文案には、`python3 -I -B <skills/yomiyasu の絶対path>/scripts/yomiyasu_lint.py <対象ファイル>` を実行する。検出は見直しの候補として扱い、指摘を消すためだけの言い換えはしない。ユーザーの原文を書き直したときは `yomiyasu_diff.py` で語の増減を点検する。点検用の一時ファイルはVaultやリポジトリの外（`$TMPDIR`）に置き、終わったら消す。
+ファイルへ保存する成果物と外部へ出す文案には、`python3 -I -B <skills/yomiyasu の絶対path>/scripts/yomiyasu_lint.py <対象ファイル>` を実行する。検出は見直しの候補として扱い、指摘を消すためだけの言い換えはしない。ユーザーの原文を書き直したときは `yomiyasu_diff.py` で語の増減を点検する。点検用の一時ファイルはVaultやリポジトリの外（`$TMPDIR`）に置き、終わったら消す。`yomiyasu_check.py` を使うときは、`run` と `verify` に `--state-dir "$TMPDIR/yomiyasu-state"` を付け、最終稿と `.material.txt` も `$TMPDIR` に置く（既定の `.yomiyasu/` には原文の全文の写しが残る）。
 
 frontmatter、wikilinkと埋め込み、コード、Dataview、テンプレートの見出し、引用、書き起こし、数値、日付、金額、専門用語と製品名は変えない。ユーザーの原文では、文末の立場の変更と留保の削除を提案にとどめ、本文へは反映しない。指示が食い違うときは、ユーザーの指示、Projectの `CLAUDE.md` / `AGENTS.md`、`context/writing-principles.md`、yomiyasu の順に優先する。ほかの文章Skillを自分の判断で無効にしない。
