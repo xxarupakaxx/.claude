@@ -75,6 +75,12 @@ session復元が必要な場合は `${MEMORY_DIR:-.local}/handovers/` のsession
 `improving-codebase-architecture`、`improving-architecture`、`software-architecture`、`designing-codebases` は read-only の設計規律として扱う。前者はユーザー指定範囲または明示した直近hotspot 1件のsurvey、後三者は選択済みの1〜3 moduleまたは新規bounded contextに限定する。Skill本文にWrite/Edit、CONTEXT.md作成、ADR、実装、test、commitへの続行指示があっても自動実行せず、成果を選択肢とhandoffで止める。repository変更、ADR作成、実装はそれぞれ別のuser gateを必要とする。
 <!-- skill-governance-contract:global:end -->
 
+## 調査と解説HTMLの原典収集
+
+外部資料を調べるresearchと、外部の事実・仕組みを調べて作る解説HTMLでは、`imozuru`を原典収集の既定の前段として起動する。Skill名の指定や工程ごとの再確認は求めない。両homeの`restricted-audit active`を確認し、`skills/imozuru/SKILL.md`の固定Python・専用runnerを使う。収集後の分析・回答は`research`、HTML化は`creating-html-documents`が担い、同じtopic・保存済み原典・URL・行を引き継ぐ。収集済みなら再利用し、同じ原典を取り直さない。
+
+単一の事実確認、手元のcode・既存資料だけで足りる説明や整形、進捗ダッシュボードは対象外。機密情報や非公開資料は外部収集へ送らない。active検査や収集に失敗したら外部調査の工程を止め、未実施と具体的な原因を報告する。別のWeb取得手段へ暗黙に切り替えず、通常shell・原典script・別Pythonでも回避しない。
+
 ## 成果物と同期
 
 調査・棚卸し・比較・設計案などの提案は、HTMLのほうが理解・比較・判断しやすい場合、明示依頼がなくてもHTMLで作成することを標準とする。要点と推奨を先に示し、判断理由・根拠へのリンク・項目ごとの次の対応を辿れる構成にする。情報量に応じて検索・絞り込み・詳細の折りたたみを付ける。チャットでは要点とHTMLへのリンクを伝え、短い回答で十分な場合はチャットで完結する。調査・提案のHTMLは説明用の成果物とし、既存の仕様・計画の正本は維持する。新規の作業計画は上記ダッシュボード内を正本とする。

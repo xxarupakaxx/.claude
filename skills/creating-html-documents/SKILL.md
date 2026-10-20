@@ -122,6 +122,12 @@ fallback: 同じ意味を読めるtext表現
 
 文書ownerはHTMLへの配置と検証を保持する。`show-me`から`diagram-design`へ渡すのは根拠付きの図の入力だけとし、文書全体や索引の順の決定を再委譲しない。
 
+## 外部資料が必要なときの原典収集
+
+外部の事実・仕組みを調べて作る`technical-explainer` / `research-report`では、Skill名の指定がなくても、章立てと根拠台帳を作る前に`imozuru`を起動する。両homeの`restricted-audit active`を確認し、`imozuru/SKILL.md`の固定Python・専用runnerで公開原典を収集する。同じ作業で収集済みならtopicと原典を再利用し、同じ原典を取り直さない。保存済み原典のURLと行をsource inventoryとclaim ledgerへ渡し、内容の説明とHTML化はこのSkillで行う。
+
+手元のcode・既存資料だけで足りる説明や整形、単一の事実確認、進捗ダッシュボードは対象外。機密情報や非公開資料を外部へ送らない。active検査や収集に失敗したら外部調査を止め、未実施と具体的な原因を報告する。別のWeb取得手段へ暗黙に切り替えず、通常shell・原典script・別Pythonでも回避しない。
+
 ## 先に中身を抽出する
 
 HTML構造や図を作る前に、source inventoryとclaim ledgerをcompactな作業メモとして作る。

@@ -362,6 +362,19 @@
       "artifactKind": "html-plan",
       "staticProfile": "strict-self-contained",
       "browserProfile": "desktop-document"
+    },
+    {
+      "id": "imozuru-report",
+      "route": "html",
+      "owner": "imozuru",
+      "source": "skills/imozuru/scripts/report.py",
+      "templates": [],
+      "outputPatterns": [
+        "~/.local/share/imozuru/topics/<topic>/report.html"
+      ],
+      "artifactKind": "html-document",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "html-document-matrix"
     }
   ],
   "surfaces": [
@@ -557,6 +570,7 @@
       "contains": "30_plan.html",
       "reason": "canonical HTML plan artifact validation",
       "removeWhen": "HTML plan validation is moved to a manifest-driven contract"
-    }
+    },
+    {"path": "skills/imozuru/SKILL.md", "contains": "report.html", "reason": "Instructions reference the imozuru-report producer output; this guide does not generate HTML.", "removeWhen": "The contract scanner resolves producer ownership for guide references."}
   ]
 }
