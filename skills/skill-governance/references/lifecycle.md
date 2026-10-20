@@ -122,3 +122,7 @@ machine receiptでは `representative_prompts`、`baseline`、`candidate`、`tri
 - [ ] promotion 前後 hash が一致する。
 - [ ] safety reviewの期限が切れていない。
 - [ ] Codex / Claude の test、parity、rollback を確認した。
+
+## imozuruの限定検査
+
+固定版imozuruの制限付き導入だけは、[Skillの入口](../SKILL.md)の「imozuruの固定された制限付き導入」に従う。標準lifecycle、全体のmutation禁止、通常のL2判定はそのまま維持する。

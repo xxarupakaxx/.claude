@@ -42,6 +42,7 @@ MAX_GITHUB_RESPONSE = 32 * 1024 * 1024
 MAX_YAML_EVENTS = 2_048
 MAX_YAML_DEPTH = 32
 BASE_DIR = Path(__file__).resolve().parents[1]
+RESTRICTED_CHECKER_SHA256 = "cca87fe5f218c449025587c0a2d1a6a9c8ee8f10addae5b4de14055f0760bf07"
 DEFAULT_REGISTRY = BASE_DIR / "registry.toml"
 DEFAULT_LOCK = BASE_DIR / "registry.lock.json"
 DEFAULT_CATALOG = BASE_DIR / "catalog.lock.json"
@@ -300,8 +301,8 @@ def _directory_snapshot(info: os.stat_result) -> tuple[int, int, int, int, int]:
     return (info.st_dev, info.st_ino, info.st_mode, info.st_mtime_ns, info.st_ctime_ns)
 
 
-def _file_snapshot(info: os.stat_result) -> tuple[int, int, int, int, int, int]:
-    return (info.st_dev, info.st_ino, info.st_mode, info.st_size, info.st_mtime_ns, info.st_ctime_ns)
+def _file_snapshot(info: os.stat_result) -> tuple[int, int, int, int, int, int, int]:
+    return (info.st_dev, info.st_ino, info.st_mode, info.st_nlink, info.st_size, info.st_mtime_ns, info.st_ctime_ns)
 
 
 def _open_root_directory(path: Path) -> tuple[int | None, os.stat_result | None, Finding | None]:
@@ -465,6 +466,7 @@ def _scan_tree_fd(
     display_root: str,
     *,
     excluded_directory_names: frozenset[str] = frozenset(),
+    reject_hardlinks: bool = False,
 ) -> TreeResult:
     findings: list[Finding] = []
     records: list[FileRecord] = []
@@ -523,6 +525,9 @@ def _scan_tree_fd(
                 continue
             if not stat.S_ISREG(mode):
                 findings.append(blocker("special_file", "Only regular files and directories are accepted", relative))
+                continue
+            if reject_hardlinks and info.st_nlink != 1:
+                findings.append(blocker("hardlink", "Hard-linked files are not accepted", relative))
                 continue
             if len(records) >= MAX_FILES:
                 findings.append(blocker("too_many_files", f"Tree exceeds {MAX_FILES} files", relative))
@@ -589,18 +594,35 @@ def _scan_tree_fd(
     return TreeResult(display_root, _tree_hash(records, findings), records, findings)
 
 
-def scan_tree(root: Path, *, excluded_directory_names: frozenset[str] = frozenset()) -> TreeResult:
+def scan_tree(
+    root: Path,
+    *,
+    excluded_directory_names: frozenset[str] = frozenset(),
+    reject_hardlinks: bool = False,
+) -> TreeResult:
     root = root.absolute()
     root_fd, _, finding = _open_root_directory(root)
     if finding or root_fd is None:
         return TreeResult(str(root), None, [], [finding or blocker("root_unavailable", "Root unavailable", str(root))])
     try:
-        return _scan_tree_fd(root_fd, str(root), excluded_directory_names=excluded_directory_names)
+        return _scan_tree_fd(
+            root_fd,
+            str(root),
+            excluded_directory_names=excluded_directory_names,
+            reject_hardlinks=reject_hardlinks,
+        )
     finally:
         os.close(root_fd)
 
 
-def _scan_canonical_tree(root: Path, parts: tuple[str, ...], display_root: str, scope: str) -> TreeResult:
+def _scan_canonical_tree(
+    root: Path,
+    parts: tuple[str, ...],
+    display_root: str,
+    scope: str,
+    *,
+    reject_hardlinks: bool = False,
+) -> TreeResult:
     """Scan a canonical child while retaining and revalidating its complete path chain."""
     opened: list[tuple[int, os.stat_result, str]] = []
     root_fd, root_snapshot, finding = _open_root_directory(root)
@@ -649,7 +671,11 @@ def _scan_canonical_tree(root: Path, parts: tuple[str, ...], display_root: str, 
             opened.append((child_fd, os.fstat(child_fd), relative_part))
             current_fd = child_fd
 
-        tree = _scan_tree_fd(current_fd, display_root)
+        tree = _scan_tree_fd(
+            current_fd,
+            display_root,
+            reject_hardlinks=reject_hardlinks,
+        )
         findings = list(tree.findings)
 
         for fd, snapshot, relative_part in opened:
@@ -3430,7 +3456,13 @@ def build_lock_plan(
     return lock, findings
 
 
-def _read_regular_path(path: Path, trusted_root: Path) -> tuple[bytes | None, Finding | None]:
+def _read_regular_path(
+    path: Path,
+    trusted_root: Path,
+    *,
+    reject_hardlinks: bool = False,
+    metadata: dict[str, Any] | None = None,
+) -> tuple[bytes | None, Finding | None]:
     """Read a regular file beneath a trusted root without following inner symlinks."""
     declared_root = trusted_root.absolute()
     root = Path(os.path.realpath(declared_root)).absolute()
@@ -3469,6 +3501,8 @@ def _read_regular_path(path: Path, trusted_root: Path) -> tuple[bytes | None, Fi
             return None, blocker("file_unavailable", str(exc), str(path))
         if stat.S_ISLNK(info.st_mode) or not stat.S_ISREG(info.st_mode):
             return None, blocker("file_not_regular", "Expected a non-symlink regular file", str(path))
+        if reject_hardlinks and info.st_nlink != 1:
+            return None, blocker("hardlink", "Hard-linked files are not accepted", str(path))
         data, read_finding = _read_regular_file_at(current_fd, leaf, info, str(path))
         if read_finding or data is None:
             return None, read_finding or blocker("file_unavailable", "Regular file unavailable", str(path))
@@ -3532,6 +3566,8 @@ def _read_regular_path(path: Path, trusted_root: Path) -> tuple[bytes | None, Fi
                     os.close(fd)
                 except OSError:
                     pass
+        if metadata is not None:
+            metadata["executable"] = bool(info.st_mode & 0o111)
         return data, None
     finally:
         for fd, _, _ in reversed(opened):
@@ -5735,6 +5771,10 @@ def build_parser() -> argparse.ArgumentParser:
     delivery.add_argument("--registry", type=Path, default=DEFAULT_REGISTRY)
     delivery.add_argument("--live", action="store_true", help="Use git ls-remote for explicit remote proof")
     delivery.add_argument("--json", action="store_true", dest="json_output")
+
+    restricted = subparsers.add_parser("restricted-audit", help="Verify the single fixed imozuru restricted profile")
+    restricted.add_argument("--phase", required=True, choices=("ready", "active"))
+    restricted.add_argument("--json", required=True, action="store_true", dest="json_output")
     return parser
 
 
@@ -5743,6 +5783,38 @@ def main(argv: list[str] | None = None) -> int:
         print("Python 3.11 or newer is required", file=sys.stderr)
         return 3
     args = build_parser().parse_args(argv)
+    if args.command == "restricted-audit":
+        import types
+
+        restricted_path = Path(__file__).resolve().with_name("restricted.py")
+        raw, issue = _read_regular_path(restricted_path, BASE_DIR, reject_hardlinks=True)
+        if issue or raw is None or sha256_bytes(raw) != RESTRICTED_CHECKER_SHA256:
+            finding = blocker(
+                "restricted_checker_integrity",
+                issue.message if issue else "Restricted checker bytes differ from the compiled-in hash",
+                str(restricted_path),
+            )
+            emit(
+                {
+                    "command": "restricted-audit",
+                    "phase": args.phase,
+                    "profile_id": "marycache-imozuru-2026-10",
+                    "restricted_status": "blocked",
+                    "findings": [asdict(finding)],
+                },
+                True,
+            )
+            return 2
+        module_name = "_skill_governance_restricted"
+        restricted = types.ModuleType(module_name)
+        restricted.__file__ = str(restricted_path)
+        restricted.__package__ = ""
+        sys.modules[module_name] = restricted
+        exec(compile(raw, str(restricted_path), "exec"), restricted.__dict__)
+
+        payload, findings = restricted.restricted_audit_payload(restricted.PROFILE_DIR, args.phase)
+        emit(payload, True)
+        return 2 if has_blockers(findings) else 0
     registry_path = args.registry.absolute()
     args.registry = registry_path
     for attribute, filename in (

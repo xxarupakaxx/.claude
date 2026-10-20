@@ -119,3 +119,20 @@ update は通知だけ行い、新 artifact として再審査する。retire �
 - authority / replica が別 generation、または片側だけ push 済みである。
 
 停止時は勝手に例外化せず、evidence と必要な承認を報告する。
+
+## imozuruの固定された制限付き導入
+
+`marycache-imozuru-2026-10` だけは、標準auditと別の `restricted-audit` で検証する。これは固定commitのimozuru、4targetの同一tree、専用runner、統合設定、個別の審査証拠とユーザー承認、両repositoryへの送達に限定する。標準auditのDEGRADED・mutation禁止、標準L2判定、既存4つの管理fileは変更しない。他のSkillや更新へ適用しない。
+
+固定したPython環境で次を実行する。`ready`は反映前後の一致を検査する。`active`は両pushの送達証拠も要求する。いずれもread-onlyであり、自動反映しない。
+
+```bash
+/Users/yoshiki/.local/share/skill-governance/runtime/pyyaml-6.0.2/bin/python -I -B <skill_dir>/scripts/governance.py restricted-audit --phase ready --json
+/Users/yoshiki/.local/share/skill-governance/runtime/pyyaml-6.0.2/bin/python -I -B <skill_dir>/scripts/governance.py restricted-audit --phase active --json
+```
+
+`<skill_dir>`はこのSkillの絶対pathへ置き換える。profileは `restricted-profiles/marycache-imozuru-2026-10/` の4fileで管理する。6種類の検査証拠と送達記録はruntime外の `~/.local/share/skill-governance/` に置き、pathとhashを照合する。公開Webの取得は `imozuru/scripts/run.py` からだけ行い、activeでなければ停止する。
+
+限定検査では、Codexの既存除外済み一時directoryにある3種類の補助symlinkについて、固定された宛先と属性が一致する場合だけ乱数path成分を正規化する。symlinkの件数、種類、宛先、属性は比較に残す。通常のglobal auditの出力と、他のpath・findingは変更しない。
+
+送達記録は両origin/mainへ到達した観測時点を示す。checkerはofflineであり、現在のremote状態の継続監視ではない。片側の未送達、期限切れ、関連外のdrift、証拠の欠落・改変はHOLDとする。通常のshell、原典script、別のPython環境への切替や、全体baselineの再生成で回避しない。
