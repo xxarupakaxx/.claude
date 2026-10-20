@@ -9426,12 +9426,12 @@
           {
             "executable": false,
             "path": "skills/imozuru/SOURCE.md",
-            "sha256": "87ad9055a05942a98edda284875a5189066d26824dad6a51b0ed5a33387a47ba"
+            "sha256": "1ce6599e6322b9201bef4f2565e4c00835f819c716caf665808520bb8b4129e7"
           },
           {
             "executable": false,
             "path": "skills/imozuru/references/local-integration.md",
-            "sha256": "6592b482904f81bee0e6a1d65761a714ea38552327cda36d6c51cdef3fed366d"
+            "sha256": "034b105fca850d0ee37004f5d950c25978a2ed0b3ee05ef9dc7d9ff1fb4c0932"
           },
           {
             "executable": false,
@@ -9456,7 +9456,7 @@
           {
             "executable": false,
             "path": "skills/imozuru/scripts/run.py",
-            "sha256": "e258b91e8bfbfae9a32e1c53cbe8d1e94398b1db306f088bb735ac422535f087"
+            "sha256": "bd839d7ddf657efa1c4019894168dea9097b594e44680d2edfd405a98feb887c"
           },
           {
             "executable": false,
@@ -9466,7 +9466,7 @@
           {
             "executable": false,
             "path": "skills/imozuru/tests/test_run.py",
-            "sha256": "d2711ebe8e6da3299318d1d7ccf65d8499560321a1abfcdf74d6c20b158564ea"
+            "sha256": "bed547151d71291d649d40775ff43334a0a922bc39f18c680213b064016088f3"
           },
           {
             "executable": false,
@@ -10571,12 +10571,12 @@
           {
             "executable": false,
             "path": "skills/imozuru/SOURCE.md",
-            "sha256": "87ad9055a05942a98edda284875a5189066d26824dad6a51b0ed5a33387a47ba"
+            "sha256": "1ce6599e6322b9201bef4f2565e4c00835f819c716caf665808520bb8b4129e7"
           },
           {
             "executable": false,
             "path": "skills/imozuru/references/local-integration.md",
-            "sha256": "6592b482904f81bee0e6a1d65761a714ea38552327cda36d6c51cdef3fed366d"
+            "sha256": "034b105fca850d0ee37004f5d950c25978a2ed0b3ee05ef9dc7d9ff1fb4c0932"
           },
           {
             "executable": false,
@@ -10601,7 +10601,7 @@
           {
             "executable": false,
             "path": "skills/imozuru/scripts/run.py",
-            "sha256": "e258b91e8bfbfae9a32e1c53cbe8d1e94398b1db306f088bb735ac422535f087"
+            "sha256": "bd839d7ddf657efa1c4019894168dea9097b594e44680d2edfd405a98feb887c"
           },
           {
             "executable": false,
@@ -10611,7 +10611,7 @@
           {
             "executable": false,
             "path": "skills/imozuru/tests/test_run.py",
-            "sha256": "d2711ebe8e6da3299318d1d7ccf65d8499560321a1abfcdf74d6c20b158564ea"
+            "sha256": "bed547151d71291d649d40775ff43334a0a922bc39f18c680213b064016088f3"
           },
           {
             "executable": false,
@@ -13765,24 +13765,24 @@
       "claude": {
         "path": "/Users/yoshiki/.local/share/skill-governance/review/marycache-imozuru-2026-10/imozuru/claude",
         "root_id": "claude",
-        "tree_sha256": "f0bd849ba38f3fcc18a8e33474f6fb7369681f75ac081bd6700cc2eb1e3b35da"
+        "tree_sha256": "00c0b6c0788fb14bd52c9595df948ccb655afd50cfa68d77d0709aeb72adc2aa"
       },
       "codex": {
         "path": "/Users/yoshiki/.local/share/skill-governance/review/marycache-imozuru-2026-10/imozuru/codex",
         "root_id": "codex",
-        "tree_sha256": "f0bd849ba38f3fcc18a8e33474f6fb7369681f75ac081bd6700cc2eb1e3b35da"
+        "tree_sha256": "00c0b6c0788fb14bd52c9595df948ccb655afd50cfa68d77d0709aeb72adc2aa"
       }
     },
     "runtime": {
       "claude": {
         "path": "/Users/yoshiki/.claude/skills/imozuru",
         "root_id": "claude",
-        "tree_sha256": "f0bd849ba38f3fcc18a8e33474f6fb7369681f75ac081bd6700cc2eb1e3b35da"
+        "tree_sha256": "00c0b6c0788fb14bd52c9595df948ccb655afd50cfa68d77d0709aeb72adc2aa"
       },
       "codex": {
         "path": "/Users/yoshiki/.codex/skills/imozuru",
         "root_id": "codex",
-        "tree_sha256": "f0bd849ba38f3fcc18a8e33474f6fb7369681f75ac081bd6700cc2eb1e3b35da"
+        "tree_sha256": "00c0b6c0788fb14bd52c9595df948ccb655afd50cfa68d77d0709aeb72adc2aa"
       }
     }
   },

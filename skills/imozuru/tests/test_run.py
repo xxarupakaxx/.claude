@@ -54,6 +54,25 @@ class Boundaries(unittest.TestCase):
             with patch.object(r, 'PACKAGE', package), patch.object(r.subprocess, 'run', return_value=result), self.assertRaisesRegex(ValueError, 'activation'):
                 r.verify_active()
 
+    def test_verifier_can_run_system_git_without_relaxing_worker_environment(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            package = Path(temporary) / 'imozuru'
+            governance = package.parent / 'skill-governance'
+            profile = governance / 'restricted-profiles' / r.PROFILE_ID / 'profile.json'
+            profile.parent.mkdir(parents=True)
+            profile.write_text(json.dumps({'verifier': {'python_path': r.VERIFIER}}))
+            verifier = governance / 'scripts/governance.py'
+            verifier.parent.mkdir()
+            verifier.write_text("import json, os, subprocess\n"
+                                "assert os.environ['PATH'] == '/usr/bin:/bin'\n"
+                                "assert 'IMOZURU_FIXTURE_SENTINEL' not in os.environ\n"
+                                "subprocess.run(['git', '--version'], check=True, stdout=subprocess.DEVNULL)\n"
+                                "print(json.dumps({'capability_scope':'imozuru-public-source-v1','capability_status':'active'}))\n")
+            with patch.object(r, 'PACKAGE', package), patch.dict(os.environ, {'PATH':'/untrusted', 'IMOZURU_FIXTURE_SENTINEL':'not inherited'}):
+                r.verify_active()
+            self.assertEqual(r.clean_env()['PATH'], '')
+            self.assertEqual(r.clean_env()['HOME'], '/nonexistent')
+
     def test_private_and_ambiguous_urls(self):
         bad = ['file:///etc/passwd', 'http://127.0.0.1/', 'http://10.0.0.1/', 'http://169.254.169.254/', 'http://2130706433/', 'http://0x7f000001/', 'http://0177.0.0.1/', 'http://[::1]/', 'http://[::ffff:127.0.0.1]/', 'http://[64:ff9b::7f00:1]/', 'http://[2002:0808:0808::1]/', 'https://user@example.org/', 'https://example.org:8443/', 'https://example.org./', 'https://example.org/?token=secret', 'https://exa\u200bmple.org/', 'https://example.org/\npath', 'https://example.org\\@evil.org/']
         for url in bad:

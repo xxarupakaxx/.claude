@@ -6,7 +6,7 @@
 
 ## 起動と保存
 
-入口は `/Users/yoshiki/.local/share/skill-governance/runtime/pyyaml-6.0.2/bin/python -I -S -B <skill_dir>/scripts/run.py <話題> <command>`。固定Pythonとisolated・no-site・bytecode禁止の各flagを確認し、起動時に両homeの同一版と固定scope `imozuru-public-source-v1`の`capability_status=active`を検査する。検査に失敗したら止め、通常のshellや原典scriptへ切り替えない。管理方針は自動変更しない。
+入口は `/Users/yoshiki/.local/share/skill-governance/runtime/pyyaml-6.0.2/bin/python -I -S -B <skill_dir>/scripts/run.py <話題> <command>`。固定Pythonとisolated・no-site・bytecode禁止の各flagを確認し、起動時に両homeの同一版と固定scope `imozuru-public-source-v1`の`capability_status=active`を検査する。検査に失敗したら止め、通常のshellや原典scriptへ切り替えない。監査subprocessだけはGitの読み取り検査のため`PATH=/usr/bin:/bin`を使う。worker・hopには引き続き空のPATHを渡し、外部プロセスを禁止する。管理方針は自動変更しない。
 
 収集の前に、次の両方で終了値0と`capability_status=active`を確認する。全体の`restricted_status=blocked`や`global_drift=HOLD`が併記されても、固定能力の成功とは別の全体警告として残す。既定の監査終了値を無視せず、ここに示す明示的な限定判定を使う。
 
