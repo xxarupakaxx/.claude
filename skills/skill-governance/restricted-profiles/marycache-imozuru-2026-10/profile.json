@@ -9259,6 +9259,7 @@
     "required_mutation_allowed": false,
     "required_status": "DEGRADED"
   },
+  "capability_scope": "imozuru-public-source-v1",
   "collection_id": "marycache-imozuru-2026-10",
   "collision_roots": [
     {
@@ -9350,7 +9351,7 @@
           {
             "executable": false,
             "path": "CLAUDE.md",
-            "sha256": "e7642b5bb4d4c40f43ca288ba4a9ec9ebb77ce51c05d3205c9e5b3cd6b728f56"
+            "sha256": "57b1db8ff9d7c8533b1126e01f2c008e342f2b2545af5310aa7d47497593b166"
           },
           {
             "executable": false,
@@ -9360,12 +9361,57 @@
           {
             "executable": false,
             "path": "skills/ask-skill-router/SKILL.md",
-            "sha256": "6bbe0158c5f53ba4c7069b129336a221ab5bf30d1304552129f1357ced1b42b9"
+            "sha256": "c8a6a60ca2844a0f6db174a06c78b60a4301f17d7961a1809fbdc0f5348aa41c"
+          },
+          {
+            "executable": false,
+            "path": "skills/creating-html-documents/LICENSE",
+            "sha256": "d050dd820d9f329c7449adaa5fbec08aa31a3bba195fcbb2e7af65c45e700819"
           },
           {
             "executable": false,
             "path": "skills/creating-html-documents/SKILL.md",
-            "sha256": "d0bc4035709498577928b1a2df719663aff6abb011b030a36f4be0a1d7ccf3f1"
+            "sha256": "db179e07d31b2723b045529a314f13a64c68e71bf93f6bc201652c3de75f02ba"
+          },
+          {
+            "executable": false,
+            "path": "skills/creating-html-documents/SOURCE.md",
+            "sha256": "54c5d8fa6948d021a7a99bd3b3c7b3bff1624f1bd510c048fa61d79ee88537dd"
+          },
+          {
+            "executable": false,
+            "path": "skills/creating-html-documents/assets/editorial-document.html",
+            "sha256": "6d2b8c510cba74461e8fad04cb7652cc33cbcac2dac59981c35b2c04d4816387"
+          },
+          {
+            "executable": false,
+            "path": "skills/creating-html-documents/evals/evals.json",
+            "sha256": "bfbe6b3b137478abcaf493f2ee1d13a77a8ce454c0a7451c75ab111d23db7b94"
+          },
+          {
+            "executable": false,
+            "path": "skills/creating-html-documents/references/document-system.md",
+            "sha256": "f5811391403f284491d299a6b583127e16de06008e3c2f2e6fe8ad277fa1ace9"
+          },
+          {
+            "executable": false,
+            "path": "skills/creating-html-documents/references/illustrated-explainer.md",
+            "sha256": "cc1ee65bc9f0519f61462e087245baffa44e4f2288ac4f4d037ada74d04b2368"
+          },
+          {
+            "executable": false,
+            "path": "skills/creating-html-documents/references/mastery-explainer.md",
+            "sha256": "ea8488083bf17fa69f438d51d7db98d273da24ad747000431df8255166404b2e"
+          },
+          {
+            "executable": false,
+            "path": "skills/creating-html-documents/references/screen-diff-explainer.md",
+            "sha256": "a026a340621d4449921a4ca88b5a68341443c3483c081a922617b7c242bd8956"
+          },
+          {
+            "executable": false,
+            "path": "skills/creating-html-documents/references/validation.md",
+            "sha256": "f7caa8bcb3a5ae372261bf059c4f04ad988b71761c5d757a7fc03b7efe771df1"
           },
           {
             "executable": false,
@@ -9375,17 +9421,17 @@
           {
             "executable": false,
             "path": "skills/imozuru/SKILL.md",
-            "sha256": "a0a56f475e7bdf5bb90f2a09bfd25549ffd16748cc36f67e6e46d2551ce4da4d"
+            "sha256": "36449353cc9d64e91a81dc0c598f6a9df5411e3f088def1ac3060cac49a086a4"
           },
           {
             "executable": false,
             "path": "skills/imozuru/SOURCE.md",
-            "sha256": "1cf181c1c99bd769915bc1cbe104f8dfe8d97f477f891b0bb8d06ca03c80226c"
+            "sha256": "87ad9055a05942a98edda284875a5189066d26824dad6a51b0ed5a33387a47ba"
           },
           {
             "executable": false,
             "path": "skills/imozuru/references/local-integration.md",
-            "sha256": "30d8f68066a6e37c563acaaef46ab5247d78ab853f19ffc1801af19e1b722a69"
+            "sha256": "6592b482904f81bee0e6a1d65761a714ea38552327cda36d6c51cdef3fed366d"
           },
           {
             "executable": false,
@@ -9410,7 +9456,7 @@
           {
             "executable": false,
             "path": "skills/imozuru/scripts/run.py",
-            "sha256": "d9f98c1d1a40e687df6a8395b994463ddfc56f04422cb72f7d99fb79b099f09a"
+            "sha256": "e258b91e8bfbfae9a32e1c53cbe8d1e94398b1db306f088bb735ac422535f087"
           },
           {
             "executable": false,
@@ -9420,17 +9466,22 @@
           {
             "executable": false,
             "path": "skills/imozuru/tests/test_run.py",
-            "sha256": "c54594651a97d8a8e8aaef285aa78244751c2923925f02cb96442efd18773385"
+            "sha256": "d2711ebe8e6da3299318d1d7ccf65d8499560321a1abfcdf74d6c20b158564ea"
           },
           {
             "executable": false,
             "path": "skills/research/SKILL.md",
-            "sha256": "650fcd34345d3d5d734fbe0d165967878e2948d110a34d0df9999d0540fc1054"
+            "sha256": "ecf5b7114afccc8465b54cf4392b8d98b8930c9fb438ec2c4ad7146d477b05e8"
+          },
+          {
+            "executable": false,
+            "path": "skills/research/SOURCE.md",
+            "sha256": "05c2d6334fe0b6ce94da3b2f68bc8405d573de9b3cfae8b7f59dad3bbb92bb40"
           },
           {
             "executable": false,
             "path": "skills/skill-governance/SKILL.md",
-            "sha256": "8c7022650e0e0782b7ace5599b5b3f1931a29f6d5824eab2748fb26d4eb53995"
+            "sha256": "428b8c571d9cb2bbe0f7e584430d00b1e4dec9582ef38c69306cdc3a77a37254"
           },
           {
             "executable": false,
@@ -10395,7 +10446,7 @@
           {
             "executable": false,
             "path": "skills/skill-governance/references/lifecycle.md",
-            "sha256": "d2a48e3dba9dd2146a5977dc39a8311820be1cd1b7d71ec971983bf2b6f678d4"
+            "sha256": "812acf367bce1c21211b3d2f798254edb209426ce02275a68e2bf3041644cdcd"
           },
           {
             "executable": false,
@@ -10420,12 +10471,12 @@
           {
             "executable": false,
             "path": "skills/skill-governance/scripts/governance.py",
-            "sha256": "267ab866a9ada483e9393da9913e64072e28285f74501c4f366a1e8ab322b43d"
+            "sha256": "b47cdc30d78a876342fd67ace6a39354abf8ca72e60cdfff8a39df30ff08ca1f"
           },
           {
             "executable": false,
             "path": "skills/skill-governance/scripts/restricted.py",
-            "sha256": "cca87fe5f218c449025587c0a2d1a6a9c8ee8f10addae5b4de14055f0760bf07"
+            "sha256": "2d0e3883b6d3e5ad2f8a1f572183c29b2035a8485ed494fe9dfe6688ffa54dd1"
           },
           {
             "executable": false,
@@ -10435,7 +10486,7 @@
           {
             "executable": false,
             "path": "skills/skill-governance/scripts/test_restricted.py",
-            "sha256": "5bbd5b63598a6defcf5ec7a62cec881bf0bda3be774e5825a45bf1c679235d1d"
+            "sha256": "705bb3142f3f95d00ea6acd305509483507c242c28f446c10c4eab3c39f2ed20"
           }
         ]
       },
@@ -10445,7 +10496,7 @@
           {
             "executable": false,
             "path": "AGENTS.md",
-            "sha256": "5f61eaa04a2b3d9b962d6857158a2f5f386e260b30b7e5c11d3602bddbd4f495"
+            "sha256": "60c7d03e03c40c976d48e844931c24c7d7bca36628022edfdbe24820b520139b"
           },
           {
             "executable": false,
@@ -10455,12 +10506,57 @@
           {
             "executable": false,
             "path": "skills/ask-skill-router/SKILL.md",
-            "sha256": "6bbe0158c5f53ba4c7069b129336a221ab5bf30d1304552129f1357ced1b42b9"
+            "sha256": "c8a6a60ca2844a0f6db174a06c78b60a4301f17d7961a1809fbdc0f5348aa41c"
+          },
+          {
+            "executable": false,
+            "path": "skills/creating-html-documents/LICENSE",
+            "sha256": "d050dd820d9f329c7449adaa5fbec08aa31a3bba195fcbb2e7af65c45e700819"
           },
           {
             "executable": false,
             "path": "skills/creating-html-documents/SKILL.md",
-            "sha256": "6c024c9bfb9a7410dc2e5401bee8ad7958c5cf90fdccf3402e09ebf02c87c614"
+            "sha256": "1e0c4dcd9db7c05a884724daec27cfb86c6b90e986ca97aaa610d926f3a75256"
+          },
+          {
+            "executable": false,
+            "path": "skills/creating-html-documents/SOURCE.md",
+            "sha256": "11a4a299fd9e50a88347c93e70079b79c7157cb53d94c9c9d8e4295242ee6105"
+          },
+          {
+            "executable": false,
+            "path": "skills/creating-html-documents/assets/editorial-document.html",
+            "sha256": "cc683ca9971c3c5a3482b8a8b80ba142b93c412b8065995b5e4649ae471883a6"
+          },
+          {
+            "executable": false,
+            "path": "skills/creating-html-documents/evals/evals.json",
+            "sha256": "bfbe6b3b137478abcaf493f2ee1d13a77a8ce454c0a7451c75ab111d23db7b94"
+          },
+          {
+            "executable": false,
+            "path": "skills/creating-html-documents/references/document-system.md",
+            "sha256": "6865a47a60261bc99aeba8a6b9938a6975952246d2db8b4415cacdf07f77463d"
+          },
+          {
+            "executable": false,
+            "path": "skills/creating-html-documents/references/illustrated-explainer.md",
+            "sha256": "13518be4b4cf1e47c31a9e2c480d6ec7c48e4315222930d7ef2aa0b6e1175633"
+          },
+          {
+            "executable": false,
+            "path": "skills/creating-html-documents/references/mastery-explainer.md",
+            "sha256": "ea8488083bf17fa69f438d51d7db98d273da24ad747000431df8255166404b2e"
+          },
+          {
+            "executable": false,
+            "path": "skills/creating-html-documents/references/screen-diff-explainer.md",
+            "sha256": "a026a340621d4449921a4ca88b5a68341443c3483c081a922617b7c242bd8956"
+          },
+          {
+            "executable": false,
+            "path": "skills/creating-html-documents/references/validation.md",
+            "sha256": "0a118fa1ea3b573bef52df92705936d217ce615e7ea2e7e1fdbb1da520553f55"
           },
           {
             "executable": false,
@@ -10470,17 +10566,17 @@
           {
             "executable": false,
             "path": "skills/imozuru/SKILL.md",
-            "sha256": "a0a56f475e7bdf5bb90f2a09bfd25549ffd16748cc36f67e6e46d2551ce4da4d"
+            "sha256": "36449353cc9d64e91a81dc0c598f6a9df5411e3f088def1ac3060cac49a086a4"
           },
           {
             "executable": false,
             "path": "skills/imozuru/SOURCE.md",
-            "sha256": "1cf181c1c99bd769915bc1cbe104f8dfe8d97f477f891b0bb8d06ca03c80226c"
+            "sha256": "87ad9055a05942a98edda284875a5189066d26824dad6a51b0ed5a33387a47ba"
           },
           {
             "executable": false,
             "path": "skills/imozuru/references/local-integration.md",
-            "sha256": "30d8f68066a6e37c563acaaef46ab5247d78ab853f19ffc1801af19e1b722a69"
+            "sha256": "6592b482904f81bee0e6a1d65761a714ea38552327cda36d6c51cdef3fed366d"
           },
           {
             "executable": false,
@@ -10505,7 +10601,7 @@
           {
             "executable": false,
             "path": "skills/imozuru/scripts/run.py",
-            "sha256": "d9f98c1d1a40e687df6a8395b994463ddfc56f04422cb72f7d99fb79b099f09a"
+            "sha256": "e258b91e8bfbfae9a32e1c53cbe8d1e94398b1db306f088bb735ac422535f087"
           },
           {
             "executable": false,
@@ -10515,17 +10611,22 @@
           {
             "executable": false,
             "path": "skills/imozuru/tests/test_run.py",
-            "sha256": "c54594651a97d8a8e8aaef285aa78244751c2923925f02cb96442efd18773385"
+            "sha256": "d2711ebe8e6da3299318d1d7ccf65d8499560321a1abfcdf74d6c20b158564ea"
           },
           {
             "executable": false,
             "path": "skills/research/SKILL.md",
-            "sha256": "650fcd34345d3d5d734fbe0d165967878e2948d110a34d0df9999d0540fc1054"
+            "sha256": "ecf5b7114afccc8465b54cf4392b8d98b8930c9fb438ec2c4ad7146d477b05e8"
+          },
+          {
+            "executable": false,
+            "path": "skills/research/SOURCE.md",
+            "sha256": "05c2d6334fe0b6ce94da3b2f68bc8405d573de9b3cfae8b7f59dad3bbb92bb40"
           },
           {
             "executable": false,
             "path": "skills/skill-governance/SKILL.md",
-            "sha256": "4fc8fbc02978e978d5e3f2e09410cc5b30d1cd354f94d23611613b6b1dcdb4ec"
+            "sha256": "f4c86b0754fd641194197e7725a10c8f29fefaaf32d46c491be1b65735a82c49"
           },
           {
             "executable": false,
@@ -11490,7 +11591,7 @@
           {
             "executable": false,
             "path": "skills/skill-governance/references/lifecycle.md",
-            "sha256": "d2a48e3dba9dd2146a5977dc39a8311820be1cd1b7d71ec971983bf2b6f678d4"
+            "sha256": "812acf367bce1c21211b3d2f798254edb209426ce02275a68e2bf3041644cdcd"
           },
           {
             "executable": false,
@@ -11515,12 +11616,12 @@
           {
             "executable": false,
             "path": "skills/skill-governance/scripts/governance.py",
-            "sha256": "267ab866a9ada483e9393da9913e64072e28285f74501c4f366a1e8ab322b43d"
+            "sha256": "b47cdc30d78a876342fd67ace6a39354abf8ca72e60cdfff8a39df30ff08ca1f"
           },
           {
             "executable": false,
             "path": "skills/skill-governance/scripts/restricted.py",
-            "sha256": "cca87fe5f218c449025587c0a2d1a6a9c8ee8f10addae5b4de14055f0760bf07"
+            "sha256": "2d0e3883b6d3e5ad2f8a1f572183c29b2035a8485ed494fe9dfe6688ffa54dd1"
           },
           {
             "executable": false,
@@ -11530,12 +11631,13 @@
           {
             "executable": false,
             "path": "skills/skill-governance/scripts/test_restricted.py",
-            "sha256": "5bbd5b63598a6defcf5ec7a62cec881bf0bda3be774e5825a45bf1c679235d1d"
+            "sha256": "705bb3142f3f95d00ea6acd305509483507c242c28f446c10c4eab3c39f2ed20"
           }
         ]
       }
     }
   },
+  "generation": 2,
   "governance": {
     "base_files": {
       "catalog.lock.json": "0e95398afa06c4816bdde2bce9227d9c1d53985193c72c4ba87bb9da8136c539",
@@ -11544,15 +11646,15 @@
       "registry.toml": "27d378ab08aa9a3d95dfdb271773bba17938a48ebdfaeb19ec8e0d99d2af8c1c"
     },
     "base_tree_sha256_by_package": {
-      "authority": "e3e71006877ceff11e4a83a96bbed3633ee8324668dc53684b511f53171ea1eb",
-      "replica": "9ffd3da46b60270b844816746965dc2eeeb251f868c3f072bdff396939884cbf"
+      "authority": "87bcc37a7a6f5fc9bcb08b0ea07fee9bf5e141a0a74e05311e158b1153c55b1b",
+      "replica": "8804e610113541e380a491584f7270e7006487be2514d64e19dc5b0225d8d8d7"
     },
     "file_manifest_by_package": {
       "authority": [
         {
           "executable": false,
           "path": "SKILL.md",
-          "sha256": "4fc8fbc02978e978d5e3f2e09410cc5b30d1cd354f94d23611613b6b1dcdb4ec"
+          "sha256": "f4c86b0754fd641194197e7725a10c8f29fefaaf32d46c491be1b65735a82c49"
         },
         {
           "executable": false,
@@ -12517,7 +12619,7 @@
         {
           "executable": false,
           "path": "references/lifecycle.md",
-          "sha256": "d2a48e3dba9dd2146a5977dc39a8311820be1cd1b7d71ec971983bf2b6f678d4"
+          "sha256": "812acf367bce1c21211b3d2f798254edb209426ce02275a68e2bf3041644cdcd"
         },
         {
           "executable": false,
@@ -12542,12 +12644,12 @@
         {
           "executable": false,
           "path": "scripts/governance.py",
-          "sha256": "267ab866a9ada483e9393da9913e64072e28285f74501c4f366a1e8ab322b43d"
+          "sha256": "b47cdc30d78a876342fd67ace6a39354abf8ca72e60cdfff8a39df30ff08ca1f"
         },
         {
           "executable": false,
           "path": "scripts/restricted.py",
-          "sha256": "cca87fe5f218c449025587c0a2d1a6a9c8ee8f10addae5b4de14055f0760bf07"
+          "sha256": "2d0e3883b6d3e5ad2f8a1f572183c29b2035a8485ed494fe9dfe6688ffa54dd1"
         },
         {
           "executable": false,
@@ -12557,14 +12659,14 @@
         {
           "executable": false,
           "path": "scripts/test_restricted.py",
-          "sha256": "5bbd5b63598a6defcf5ec7a62cec881bf0bda3be774e5825a45bf1c679235d1d"
+          "sha256": "705bb3142f3f95d00ea6acd305509483507c242c28f446c10c4eab3c39f2ed20"
         }
       ],
       "replica": [
         {
           "executable": false,
           "path": "SKILL.md",
-          "sha256": "8c7022650e0e0782b7ace5599b5b3f1931a29f6d5824eab2748fb26d4eb53995"
+          "sha256": "428b8c571d9cb2bbe0f7e584430d00b1e4dec9582ef38c69306cdc3a77a37254"
         },
         {
           "executable": false,
@@ -13529,7 +13631,7 @@
         {
           "executable": false,
           "path": "references/lifecycle.md",
-          "sha256": "d2a48e3dba9dd2146a5977dc39a8311820be1cd1b7d71ec971983bf2b6f678d4"
+          "sha256": "812acf367bce1c21211b3d2f798254edb209426ce02275a68e2bf3041644cdcd"
         },
         {
           "executable": false,
@@ -13554,12 +13656,12 @@
         {
           "executable": false,
           "path": "scripts/governance.py",
-          "sha256": "267ab866a9ada483e9393da9913e64072e28285f74501c4f366a1e8ab322b43d"
+          "sha256": "b47cdc30d78a876342fd67ace6a39354abf8ca72e60cdfff8a39df30ff08ca1f"
         },
         {
           "executable": false,
           "path": "scripts/restricted.py",
-          "sha256": "cca87fe5f218c449025587c0a2d1a6a9c8ee8f10addae5b4de14055f0760bf07"
+          "sha256": "2d0e3883b6d3e5ad2f8a1f572183c29b2035a8485ed494fe9dfe6688ffa54dd1"
         },
         {
           "executable": false,
@@ -13569,7 +13671,7 @@
         {
           "executable": false,
           "path": "scripts/test_restricted.py",
-          "sha256": "5bbd5b63598a6defcf5ec7a62cec881bf0bda3be774e5825a45bf1c679235d1d"
+          "sha256": "705bb3142f3f95d00ea6acd305509483507c242c28f446c10c4eab3c39f2ed20"
         }
       ]
     }
@@ -13577,11 +13679,11 @@
   "integration_files": [
     {
       "path": "/Users/yoshiki/.codex/skills/research/SKILL.md",
-      "sha256": "650fcd34345d3d5d734fbe0d165967878e2948d110a34d0df9999d0540fc1054"
+      "sha256": "ecf5b7114afccc8465b54cf4392b8d98b8930c9fb438ec2c4ad7146d477b05e8"
     },
     {
       "path": "/Users/yoshiki/.codex/skills/ask-skill-router/SKILL.md",
-      "sha256": "6bbe0158c5f53ba4c7069b129336a221ab5bf30d1304552129f1357ced1b42b9"
+      "sha256": "c8a6a60ca2844a0f6db174a06c78b60a4301f17d7961a1809fbdc0f5348aa41c"
     },
     {
       "path": "/Users/yoshiki/.codex/config/html-surfaces.json",
@@ -13589,19 +13691,19 @@
     },
     {
       "path": "/Users/yoshiki/.codex/skills/creating-html-documents/SKILL.md",
-      "sha256": "6c024c9bfb9a7410dc2e5401bee8ad7958c5cf90fdccf3402e09ebf02c87c614"
+      "sha256": "1e0c4dcd9db7c05a884724daec27cfb86c6b90e986ca97aaa610d926f3a75256"
     },
     {
       "path": "/Users/yoshiki/.codex/AGENTS.md",
-      "sha256": "5f61eaa04a2b3d9b962d6857158a2f5f386e260b30b7e5c11d3602bddbd4f495"
+      "sha256": "60c7d03e03c40c976d48e844931c24c7d7bca36628022edfdbe24820b520139b"
     },
     {
       "path": "/Users/yoshiki/.claude/skills/research/SKILL.md",
-      "sha256": "650fcd34345d3d5d734fbe0d165967878e2948d110a34d0df9999d0540fc1054"
+      "sha256": "ecf5b7114afccc8465b54cf4392b8d98b8930c9fb438ec2c4ad7146d477b05e8"
     },
     {
       "path": "/Users/yoshiki/.claude/skills/ask-skill-router/SKILL.md",
-      "sha256": "6bbe0158c5f53ba4c7069b129336a221ab5bf30d1304552129f1357ced1b42b9"
+      "sha256": "c8a6a60ca2844a0f6db174a06c78b60a4301f17d7961a1809fbdc0f5348aa41c"
     },
     {
       "path": "/Users/yoshiki/.claude/config/html-surfaces.json",
@@ -13609,11 +13711,37 @@
     },
     {
       "path": "/Users/yoshiki/.claude/skills/creating-html-documents/SKILL.md",
-      "sha256": "d0bc4035709498577928b1a2df719663aff6abb011b030a36f4be0a1d7ccf3f1"
+      "sha256": "db179e07d31b2723b045529a314f13a64c68e71bf93f6bc201652c3de75f02ba"
     },
     {
       "path": "/Users/yoshiki/.claude/CLAUDE.md",
-      "sha256": "e7642b5bb4d4c40f43ca288ba4a9ec9ebb77ce51c05d3205c9e5b3cd6b728f56"
+      "sha256": "57b1db8ff9d7c8533b1126e01f2c008e342f2b2545af5310aa7d47497593b166"
+    }
+  ],
+  "integration_trees": [
+    {
+      "path": "/Users/yoshiki/.claude/skills/ask-skill-router",
+      "tree_sha256": "5dc8bcbf0b53e69202a790a123da154e7b4daeaf51a51db151b037d6bf542585"
+    },
+    {
+      "path": "/Users/yoshiki/.claude/skills/creating-html-documents",
+      "tree_sha256": "fb8afac95bce7679d842964b68f8837a40e3d7d6da616e9ce68ac59a379e90b3"
+    },
+    {
+      "path": "/Users/yoshiki/.claude/skills/research",
+      "tree_sha256": "0aa3a8239f22a36bc09274ae8b5af4c8d3ce2fc28e599932001e2d503e5a647f"
+    },
+    {
+      "path": "/Users/yoshiki/.codex/skills/ask-skill-router",
+      "tree_sha256": "5dc8bcbf0b53e69202a790a123da154e7b4daeaf51a51db151b037d6bf542585"
+    },
+    {
+      "path": "/Users/yoshiki/.codex/skills/creating-html-documents",
+      "tree_sha256": "c0850fddec49c31a170b09496b69f3ae57d52443c5c8813edbc856db5bb7bc80"
+    },
+    {
+      "path": "/Users/yoshiki/.codex/skills/research",
+      "tree_sha256": "0aa3a8239f22a36bc09274ae8b5af4c8d3ce2fc28e599932001e2d503e5a647f"
     }
   ],
   "packages": {
@@ -13625,7 +13753,7 @@
     }
   },
   "profile_id": "marycache-imozuru-2026-10",
-  "schema_version": 1,
+  "schema_version": 2,
   "source": {
     "id": "marycache-imozuru",
     "quarantine_path": "/Users/yoshiki/.local/share/skill-governance/quarantine/marycache-imozuru/980ec7f50f0b954e9e1b1d85865c29a427c8e776/imozuru",
@@ -13637,24 +13765,24 @@
       "claude": {
         "path": "/Users/yoshiki/.local/share/skill-governance/review/marycache-imozuru-2026-10/imozuru/claude",
         "root_id": "claude",
-        "tree_sha256": "740806cc4ffadc0da4d6234e11c8e069d8ce0402cfd4d3cc4a4dd398ced65a1a"
+        "tree_sha256": "f0bd849ba38f3fcc18a8e33474f6fb7369681f75ac081bd6700cc2eb1e3b35da"
       },
       "codex": {
         "path": "/Users/yoshiki/.local/share/skill-governance/review/marycache-imozuru-2026-10/imozuru/codex",
         "root_id": "codex",
-        "tree_sha256": "740806cc4ffadc0da4d6234e11c8e069d8ce0402cfd4d3cc4a4dd398ced65a1a"
+        "tree_sha256": "f0bd849ba38f3fcc18a8e33474f6fb7369681f75ac081bd6700cc2eb1e3b35da"
       }
     },
     "runtime": {
       "claude": {
         "path": "/Users/yoshiki/.claude/skills/imozuru",
         "root_id": "claude",
-        "tree_sha256": "740806cc4ffadc0da4d6234e11c8e069d8ce0402cfd4d3cc4a4dd398ced65a1a"
+        "tree_sha256": "f0bd849ba38f3fcc18a8e33474f6fb7369681f75ac081bd6700cc2eb1e3b35da"
       },
       "codex": {
         "path": "/Users/yoshiki/.codex/skills/imozuru",
         "root_id": "codex",
-        "tree_sha256": "740806cc4ffadc0da4d6234e11c8e069d8ce0402cfd4d3cc4a4dd398ced65a1a"
+        "tree_sha256": "f0bd849ba38f3fcc18a8e33474f6fb7369681f75ac081bd6700cc2eb1e3b35da"
       }
     }
   },

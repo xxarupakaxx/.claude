@@ -77,7 +77,7 @@ session復元が必要な場合は `${MEMORY_DIR:-.local}/handovers/` のsession
 
 ## 調査と解説HTMLの原典収集
 
-外部資料を調べるresearchと、外部の事実・仕組みを調べて作る解説HTMLでは、`imozuru`を原典収集の既定の前段として起動する。Skill名の指定や工程ごとの再確認は求めない。両homeの`restricted-audit active`を確認し、`skills/imozuru/SKILL.md`の固定Python・専用runnerを使う。収集後の分析・回答は`research`、HTML化は`creating-html-documents`が担い、同じtopic・保存済み原典・URL・行を引き継ぐ。収集済みなら再利用し、同じ原典を取り直さない。
+外部資料を調べるresearchと、外部の事実・仕組みを調べて作る解説HTMLでは、`imozuru`を原典収集の既定の前段として起動する。Skill名の指定や工程ごとの再確認は求めない。両homeの`restricted-audit --phase active --json --require-capability --summary`で`capability_status=active`を確認し、`skills/imozuru/SKILL.md`の固定Python・専用runnerを使う。収集後の分析・回答は`research`、HTML化は`creating-html-documents`が担い、同じtopic・保存済み原典・URL・行を引き継ぐ。収集済みなら再利用し、同じ原典を取り直さない。
 
 単一の事実確認、手元のcode・既存資料だけで足りる説明や整形、進捗ダッシュボードは対象外。機密情報や非公開資料は外部収集へ送らない。active検査や収集に失敗したら外部調査の工程を止め、未実施と具体的な原因を報告する。別のWeb取得手段へ暗黙に切り替えず、通常shell・原典script・別Pythonでも回避しない。
 

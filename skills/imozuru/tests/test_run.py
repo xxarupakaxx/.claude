@@ -33,6 +33,27 @@ def topic():
             os.close(fd)
 
 class Boundaries(unittest.TestCase):
+    def test_activation_uses_explicit_fixed_capability_and_summary(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            package = Path(temporary) / 'imozuru'
+            profile = package.parent / 'skill-governance/restricted-profiles' / r.PROFILE_ID / 'profile.json'
+            profile.parent.mkdir(parents=True)
+            profile.write_text(json.dumps({'verifier': {'python_path': r.VERIFIER}}))
+            good = {'capability_scope': 'imozuru-public-source-v1', 'capability_status': 'active', 'restricted_status': 'blocked', 'global_drift': 'HOLD'}
+            result = subprocess.CompletedProcess([], 0, json.dumps(good).encode(), b'')
+            with patch.object(r, 'PACKAGE', package), patch.object(r.subprocess, 'run', return_value=result) as invoke:
+                r.verify_active()
+                self.assertIn('--require-capability', invoke.call_args.args[0])
+                self.assertIn('--summary', invoke.call_args.args[0])
+            for key, value in [('capability_status', 'blocked'), ('capability_scope', 'other'), ('capability_status', None)]:
+                bad = dict(good); bad[key] = value
+                result = subprocess.CompletedProcess([], 0, json.dumps(bad).encode(), b'')
+                with patch.object(r, 'PACKAGE', package), patch.object(r.subprocess, 'run', return_value=result), self.assertRaisesRegex(ValueError, 'activation'):
+                    r.verify_active()
+            result = subprocess.CompletedProcess([], 2, json.dumps(good).encode(), b'')
+            with patch.object(r, 'PACKAGE', package), patch.object(r.subprocess, 'run', return_value=result), self.assertRaisesRegex(ValueError, 'activation'):
+                r.verify_active()
+
     def test_private_and_ambiguous_urls(self):
         bad = ['file:///etc/passwd', 'http://127.0.0.1/', 'http://10.0.0.1/', 'http://169.254.169.254/', 'http://2130706433/', 'http://0x7f000001/', 'http://0177.0.0.1/', 'http://[::1]/', 'http://[::ffff:127.0.0.1]/', 'http://[64:ff9b::7f00:1]/', 'http://[2002:0808:0808::1]/', 'https://user@example.org/', 'https://example.org:8443/', 'https://example.org./', 'https://example.org/?token=secret', 'https://exa\u200bmple.org/', 'https://example.org/\npath', 'https://example.org\\@evil.org/']
         for url in bad:

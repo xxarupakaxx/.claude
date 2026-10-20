@@ -613,9 +613,9 @@ def verify_active():
         raise ValueError('unexpected governance interpreter')
     environment = clean_env()
     environment['HOME'] = str(TOPICS.parents[3])
-    result = subprocess.run([VERIFIER, '-I', '-B', str(governance / 'scripts/governance.py'), 'restricted-audit', '--phase', 'active', '--json'], stdin=subprocess.DEVNULL, capture_output=True, env=environment, timeout=60, close_fds=True)
+    result = subprocess.run([VERIFIER, '-I', '-B', str(governance / 'scripts/governance.py'), 'restricted-audit', '--phase', 'active', '--json', '--require-capability', '--summary'], stdin=subprocess.DEVNULL, capture_output=True, env=environment, timeout=60, close_fds=True)
     state = strict_json(result.stdout)
-    if result.returncode or state.get('restricted_status') != 'active':
+    if result.returncode or state.get('capability_scope') != 'imozuru-public-source-v1' or state.get('capability_status') != 'active':
         raise ValueError("restricted activation is not valid; run restricted-audit")
 
 

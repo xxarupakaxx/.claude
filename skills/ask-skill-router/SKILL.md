@@ -41,7 +41,7 @@ deprecated、in-progress、promotion不明のskillは、明示された限定用
 | 原因不明の不具合で再現器がない | `diagnosing-bugs` | model-invoked |
 | test seam があり新規ロジックやバグ修正を進める | `tdd` | model-invoked |
 | 答えが1つの外部事実・最新仕様1点の確認（imozuru対象外） | Context7、WebSearch、deepwiki。調査を伴う依頼は次行へ進む | model-invoked |
-| 外部資料のresearch、外部根拠を要する解説HTML、原典からの深掘り | `imozuru`で原典収集 → `research`で分析 → 必要なら`creating-html-documents`。両homeのrestricted-audit activeを確認し専用runnerを使い、同じtopicを再利用。失敗時は外部調査を止めて原因を報告 | model-invoked（既定の前段。Skill名の指定不要） |
+| 外部資料のresearch、外部根拠を要する解説HTML、原典からの深掘り | `imozuru`で原典収集 → `research`で分析 → 必要なら`creating-html-documents`。両homeでrestricted-audit --phase active --json --require-capability --summaryのcapability_status=activeを確認し専用runnerを使い、同じtopicを再利用。失敗時は外部調査を止めて原因を報告 | model-invoked（既定の前段。Skill名の指定不要） |
 | 外部 Skill の発見、評判、導入、更新、廃止、provenance / collision 確認 | `skill-governance`。棚卸しだけなら `skill-stocktake` | mutation は user-invoked、read-only audit は model-invoked可 |
 | 完了前の証拠が弱い | `verification-loop`、`verify`、適切な review skill | model-invoked |
 | plugin が所有する source / deliverable を扱う | `../../context/agent-team-routing.md` の plugin route | route ごとに判定 |
