@@ -17,20 +17,20 @@
     },
     {
       "kind": "code-review",
-      "path": "/Users/yoshiki/.local/share/skill-governance/evidence/marycache-imozuru-2026-10/mirror-repair-2026-10-22-01a15f25/code-review.json",
-      "sha256": "6fd894dad1a28caa23c4a6ed77824c175ca279ca5a898c018c17beafd4d48db2"
+      "path": "/Users/yoshiki/.local/share/skill-governance/evidence/marycache-imozuru-2026-10/delivery-repair-2026-10-22-01a15f25/correction-v2/code-review.json",
+      "sha256": "3e76f9d35b11c31121659ab8d52c85ffed78a9b9bf9d9c98d6e05e67ae89eef2"
     },
     {
       "kind": "safety-receipt",
-      "path": "/Users/yoshiki/.local/share/skill-governance/evidence/marycache-imozuru-2026-10/mirror-repair-2026-10-22-01a15f25/safety-receipt.json",
-      "sha256": "632c98557d2a45691d82a97a1e03b6b69524c62eb05247b6e0dc83ebb9e02718"
+      "path": "/Users/yoshiki/.local/share/skill-governance/evidence/marycache-imozuru-2026-10/delivery-repair-2026-10-22-01a15f25/correction-v2/safety-receipt.json",
+      "sha256": "c042f3c44d99ecf4bd3e7760c6565dd9e67a7aaedcce73f280189896e5d643e9"
     },
     {
       "kind": "value-receipt",
-      "path": "/Users/yoshiki/.local/share/skill-governance/evidence/marycache-imozuru-2026-10/mirror-repair-2026-10-22-01a15f25/value-receipt.json",
-      "sha256": "67a4505235421a76fe6da130826ecfc835b38174fbd16f8948b2b7261fce8b6a"
+      "path": "/Users/yoshiki/.local/share/skill-governance/evidence/marycache-imozuru-2026-10/delivery-repair-2026-10-22-01a15f25/correction-v2/value-receipt.json",
+      "sha256": "35b36835a15a4c9b26197bed5854e7f2b65b2dc7ef9a112cd9779fe159c83306"
     }
   ],
-  "profile_sha256": "a591688788b4fa8e7828418ab02b9d4b9e1fe7f920e6f3809eb4950bad3d52f2",
+  "profile_sha256": "253434ff26480a86062af3b38d7e498525b362ac7be78d5ee9f04c3333477248",
   "schema_version": 1
 }

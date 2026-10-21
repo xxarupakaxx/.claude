@@ -137,6 +137,8 @@ update は通知だけ行い、新 artifact として再審査する。retire �
 
 送達記録は両origin/mainへ到達した観測時点を示す。checkerはofflineであり、現在のremote状態の継続監視ではない。片側の未送達、期限切れ、固定対象や証拠の欠落・改変は能力も停止する。通常のshell、原典script、別のPython環境への切替や、全体baselineの再生成で回避しない。
 
+送達証拠のschema_version=2は、`observation_scope=delivery-commit-reachability`を必須とする。承認済みの送達commitがlocal HEADと観測したorigin/mainの両方の祖先であること、記録した観測OIDがlocal tracking refと一致することを検査する。送達commitの全scope本文・実行bit・4つのprofile artifactと、実行環境の固定hashは引き続き検査する。remoteで後から追加された更新は、ローカルへの適用やruntimeの承認を意味しない。観測時刻は実際のremote照会を記録するが、offline checkerが現在のremoteを再照会した証拠にはならない。旧schema1をこの意味へ読み替えない。
+
 schema_version=2・generation=2の固定profileは、全体監査とimozuruの収集能力を分けて記録する。正常に観測・検証した全findingと在庫の完全一致差分だけを`global_drift=HOLD`へ残し、`restricted_status=blocked`も維持する。`--require-capability`を明示したときだけ限定能力の成否を終了値に使い、`--summary`は検査を省かず出力を縮約する。
 
 全体の既知の欠落rootは、固定pathのlstatがENOENTと確認できる場合だけ欠落として記録する。読み取り・parse・schema・件数・root集合・TOCTOUの失敗、未知のaudit/inventory codeは能力も停止する。research・router・HTMLの両home計6packageは全treeを固定し、追加fileやsymlink/hardlinkも拒否する。これらの全fileとrunner、governance、承認chainを同じ送達commitへ結ぶ。他のSkillへの許可や全体baselineの更新には使わない。

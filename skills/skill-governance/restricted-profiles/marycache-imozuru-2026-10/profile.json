@@ -9481,7 +9481,7 @@
           {
             "executable": false,
             "path": "skills/skill-governance/SKILL.md",
-            "sha256": "428b8c571d9cb2bbe0f7e584430d00b1e4dec9582ef38c69306cdc3a77a37254"
+            "sha256": "ede8d805828b859637b01dcc5077f91deb85436c882694952d50856af923d7ed"
           },
           {
             "executable": false,
@@ -10471,12 +10471,12 @@
           {
             "executable": false,
             "path": "skills/skill-governance/scripts/governance.py",
-            "sha256": "fc543f35f0584f67c85360baf454cef77386793476df2e1dd7299983eb99ce55"
+            "sha256": "ad64a4ec1c863f1444502b1f48e1a081b684655c971eb928641bbe96124e29d5"
           },
           {
             "executable": false,
             "path": "skills/skill-governance/scripts/restricted.py",
-            "sha256": "9ab601511578221a8e6baec63123cc44de56784781450ed281eba454b8908858"
+            "sha256": "82a66e77d74e99fdf17c967929af12a7e7cc6f6b4d3ce8a4c99efb706a5792dc"
           },
           {
             "executable": false,
@@ -10486,7 +10486,7 @@
           {
             "executable": false,
             "path": "skills/skill-governance/scripts/test_restricted.py",
-            "sha256": "abe471bfe94d582bfc48b9d86ad22fd053ce4e1171db166136b1ebafcc62954b"
+            "sha256": "1cf4b1093e010eb33ca55458ac18b3a4b97c5748a229de26c11b4b88417b49cf"
           }
         ]
       },
@@ -10626,7 +10626,7 @@
           {
             "executable": false,
             "path": "skills/skill-governance/SKILL.md",
-            "sha256": "f4c86b0754fd641194197e7725a10c8f29fefaaf32d46c491be1b65735a82c49"
+            "sha256": "ddde91abdf8eba3a4ff8a988459017049ca41be0dccf2c7d8bb3025feace628d"
           },
           {
             "executable": false,
@@ -11616,12 +11616,12 @@
           {
             "executable": false,
             "path": "skills/skill-governance/scripts/governance.py",
-            "sha256": "fc543f35f0584f67c85360baf454cef77386793476df2e1dd7299983eb99ce55"
+            "sha256": "ad64a4ec1c863f1444502b1f48e1a081b684655c971eb928641bbe96124e29d5"
           },
           {
             "executable": false,
             "path": "skills/skill-governance/scripts/restricted.py",
-            "sha256": "9ab601511578221a8e6baec63123cc44de56784781450ed281eba454b8908858"
+            "sha256": "82a66e77d74e99fdf17c967929af12a7e7cc6f6b4d3ce8a4c99efb706a5792dc"
           },
           {
             "executable": false,
@@ -11631,7 +11631,7 @@
           {
             "executable": false,
             "path": "skills/skill-governance/scripts/test_restricted.py",
-            "sha256": "abe471bfe94d582bfc48b9d86ad22fd053ce4e1171db166136b1ebafcc62954b"
+            "sha256": "1cf4b1093e010eb33ca55458ac18b3a4b97c5748a229de26c11b4b88417b49cf"
           }
         ]
       }
@@ -11646,15 +11646,15 @@
       "registry.toml": "27d378ab08aa9a3d95dfdb271773bba17938a48ebdfaeb19ec8e0d99d2af8c1c"
     },
     "base_tree_sha256_by_package": {
-      "authority": "6f63fd5a2206e8451d1116902042dc93f349418f0840131717ac1959dd0b6602",
-      "replica": "ade3b3b0a01f4d406d0b5e6e208ee4aa88fb241dc66e4e6290d78bf1b736ed7a"
+      "authority": "98f212ebd6f24b5dda138f8c556edae154680eb0e4cd7a3ec6068eebeb599dc3",
+      "replica": "3bf5cc3fd5b74cec0f6a102386804445b09506d85aa5f6b64fafb26a469f031f"
     },
     "file_manifest_by_package": {
       "authority": [
         {
           "executable": false,
           "path": "SKILL.md",
-          "sha256": "f4c86b0754fd641194197e7725a10c8f29fefaaf32d46c491be1b65735a82c49"
+          "sha256": "ddde91abdf8eba3a4ff8a988459017049ca41be0dccf2c7d8bb3025feace628d"
         },
         {
           "executable": false,
@@ -12644,12 +12644,12 @@
         {
           "executable": false,
           "path": "scripts/governance.py",
-          "sha256": "fc543f35f0584f67c85360baf454cef77386793476df2e1dd7299983eb99ce55"
+          "sha256": "ad64a4ec1c863f1444502b1f48e1a081b684655c971eb928641bbe96124e29d5"
         },
         {
           "executable": false,
           "path": "scripts/restricted.py",
-          "sha256": "9ab601511578221a8e6baec63123cc44de56784781450ed281eba454b8908858"
+          "sha256": "82a66e77d74e99fdf17c967929af12a7e7cc6f6b4d3ce8a4c99efb706a5792dc"
         },
         {
           "executable": false,
@@ -12659,14 +12659,14 @@
         {
           "executable": false,
           "path": "scripts/test_restricted.py",
-          "sha256": "abe471bfe94d582bfc48b9d86ad22fd053ce4e1171db166136b1ebafcc62954b"
+          "sha256": "1cf4b1093e010eb33ca55458ac18b3a4b97c5748a229de26c11b4b88417b49cf"
         }
       ],
       "replica": [
         {
           "executable": false,
           "path": "SKILL.md",
-          "sha256": "428b8c571d9cb2bbe0f7e584430d00b1e4dec9582ef38c69306cdc3a77a37254"
+          "sha256": "ede8d805828b859637b01dcc5077f91deb85436c882694952d50856af923d7ed"
         },
         {
           "executable": false,
@@ -13656,12 +13656,12 @@
         {
           "executable": false,
           "path": "scripts/governance.py",
-          "sha256": "fc543f35f0584f67c85360baf454cef77386793476df2e1dd7299983eb99ce55"
+          "sha256": "ad64a4ec1c863f1444502b1f48e1a081b684655c971eb928641bbe96124e29d5"
         },
         {
           "executable": false,
           "path": "scripts/restricted.py",
-          "sha256": "9ab601511578221a8e6baec63123cc44de56784781450ed281eba454b8908858"
+          "sha256": "82a66e77d74e99fdf17c967929af12a7e7cc6f6b4d3ce8a4c99efb706a5792dc"
         },
         {
           "executable": false,
@@ -13671,7 +13671,7 @@
         {
           "executable": false,
           "path": "scripts/test_restricted.py",
-          "sha256": "abe471bfe94d582bfc48b9d86ad22fd053ce4e1171db166136b1ebafcc62954b"
+          "sha256": "1cf4b1093e010eb33ca55458ac18b3a4b97c5748a229de26c11b4b88417b49cf"
         }
       ]
     }

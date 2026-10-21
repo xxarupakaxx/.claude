@@ -1021,12 +1021,12 @@ def _check_delivery(
     proof = _strict_json(raw, str(DELIVERY_PROOF), findings) if raw is not None else None
     keys = {
         "schema_version", "generation", "success", "profile_sha256", "target_tree_sha256",
-        "delivery_commits", "remote_observations",
+        "delivery_commits", "remote_observations", "observation_scope",
     }
     if proof is None or not _keys(proof, keys, "delivery_proof", findings):
         return
     target_hashes = {name: entry["tree_sha256"] for name, entry in profile["targets"]["runtime"].items()}
-    if proof.get("schema_version") != 1 or proof.get("generation") != profile["generation"] or proof.get("success") is not True or proof.get("profile_sha256") != profile_sha or proof.get("target_tree_sha256") != target_hashes:
+    if proof.get("schema_version") != 2 or proof.get("observation_scope") != "delivery-commit-reachability" or proof.get("generation") != profile["generation"] or proof.get("success") is not True or proof.get("profile_sha256") != profile_sha or proof.get("target_tree_sha256") != target_hashes:
         findings.append(_finding("delivery_proof", "Delivery proof identity or target hashes differ", str(DELIVERY_PROOF)))
     repos = profile["delivery"]["repos"]
     observations = proof.get("remote_observations")
@@ -1159,9 +1159,8 @@ def _check_delivery(
         if tracking_oid != observed_oid:
             findings.append(_finding("delivery_tracking", "origin/main differs from the recorded observation", name))
             continue
-        graph = ((commit, observed_oid), (observed_oid, "HEAD"))
-        if any(_git(physical_repo, ["merge-base", "--is-ancestor", older, newer]).returncode != 0 for older, newer in graph):
-            findings.append(_finding("delivery_remote_graph", "Expected delivery <= observation == origin/main <= HEAD", name))
+        if _git(physical_repo, ["merge-base", "--is-ancestor", commit, observed_oid]).returncode != 0:
+            findings.append(_finding("delivery_remote_graph", "Expected approved delivery <= observed origin/main; remote tree is not runtime approval", name))
 
 
 def _restricted_audit_payload(profile_dir: Path, phase: str) -> tuple[dict[str, Any], list[gov.Finding]]:

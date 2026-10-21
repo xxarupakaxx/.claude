@@ -115,7 +115,7 @@ def delivery_fixture(base: Path, *, stale_ancestor: bool = False, missing_artifa
     }
     profile_sha = gov.sha256_bytes(b"profile")
     proof = {
-        "schema_version": 1, "generation": 2, "success": True,
+        "schema_version": 2, "observation_scope": "delivery-commit-reachability", "generation": 2, "success": True,
         "profile_sha256": profile_sha,
         "target_tree_sha256": {name: target_hash for name in repos},
         "delivery_commits": commits,
@@ -688,6 +688,59 @@ class RestrictedAuditTests(unittest.TestCase):
                 findings = []
                 restricted._check_delivery(profile, gov.sha256_bytes(b"profile"), fixture_artifacts(base), findings)
             self.assertIn("restricted_delivery_grafts", {item.code for item in findings})
+
+    def test_delivery_accepts_remote_updates_without_importing_them(self) -> None:
+        for name in ("codex", "claude"):
+            for topology in ("remote-descendant", "diverged", "remote-merge"):
+                with self.subTest(name=name, topology=topology), tempfile.TemporaryDirectory() as temporary:
+                    base = Path(os.path.realpath(temporary))
+                    profile, repos, proof_path = delivery_fixture(base)
+                    repo = Path(repos[name]["path"])
+                    def git(*args):
+                        return subprocess.check_output(["/usr/bin/git", "-C", str(repo), *args], text=True).strip()
+                    approved = git("rev-parse", "HEAD")
+                    if topology == "remote-merge":
+                        git("checkout", "-q", "--detach", "HEAD^")
+                    # The observed remote tree may differ; only the approved C is bound.
+                    remote_file = "remote-unreviewed" if topology == "remote-merge" else "scripts/governance.py"
+                    write(repo / remote_file, b"unreviewed remote update")
+                    git("add", remote_file)
+                    git("-c", "user.name=t", "-c", "user.email=t@example.invalid", "commit", "-qm", "remote update")
+                    if topology == "remote-merge":
+                        git("-c", "user.name=t", "-c", "user.email=t@example.invalid", "merge", "-q", "--no-edit", approved)
+                    observed = git("rev-parse", "HEAD")
+                    git("checkout", "-q", "--detach", approved)
+                    if topology == "diverged":
+                        write(repo / "local-note", b"local only")
+                        git("add", "local-note")
+                        git("-c", "user.name=t", "-c", "user.email=t@example.invalid", "commit", "-qm", "local unrelated")
+                    proof = json.loads(proof_path.read_bytes())
+                    proof["remote_observations"][name]["oid"] = observed
+                    proof_path.write_text(json.dumps(proof))
+                    git("update-ref", "refs/remotes/origin/main", observed)
+                    self.assertEqual((repo / "scripts/governance.py").read_bytes(), b"module")
+                    with mock.patch.object(restricted, "DELIVERY_PROOF", proof_path):
+                        findings = []
+                        restricted._check_delivery(profile, gov.sha256_bytes(b"profile"), fixture_artifacts(base), findings)
+                    self.assertFalse(findings)
+
+    def test_delivery_rejects_legacy_or_ambiguous_observation_scope(self) -> None:
+        for scenario in ("legacy", "missing-scope", "wrong-scope"):
+            with self.subTest(scenario=scenario), tempfile.TemporaryDirectory() as temporary:
+                base = Path(os.path.realpath(temporary))
+                profile, repos, proof_path = delivery_fixture(base)
+                proof = json.loads(proof_path.read_bytes())
+                if scenario == "legacy":
+                    proof["schema_version"] = 1
+                elif scenario == "missing-scope":
+                    del proof["observation_scope"]
+                else:
+                    proof["observation_scope"] = "remote-runtime-approved"
+                proof_path.write_text(json.dumps(proof))
+                with mock.patch.object(restricted, "DELIVERY_PROOF", proof_path):
+                    findings = []
+                    restricted._check_delivery(profile, gov.sha256_bytes(b"profile"), fixture_artifacts(base), findings)
+                self.assertTrue(findings)
 
     def test_delivery_rejects_invalid_remote_observations(self) -> None:
         for scenario in ("missing", "branch", "unreached", "tracking", "future"):
