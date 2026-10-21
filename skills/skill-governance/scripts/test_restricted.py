@@ -115,7 +115,7 @@ def delivery_fixture(base: Path, *, stale_ancestor: bool = False, missing_artifa
     }
     profile_sha = gov.sha256_bytes(b"profile")
     proof = {
-        "schema_version": 1, "generation": 2, "success": True,
+        "schema_version": 2, "observation_scope": "delivery-commit-reachability", "generation": 2, "success": True,
         "profile_sha256": profile_sha,
         "target_tree_sha256": {name: target_hash for name in repos},
         "delivery_commits": commits,
@@ -185,6 +185,92 @@ def ephemeral_findings(token: str) -> list[dict[str, object]]:
 
 
 class RestrictedAuditTests(unittest.TestCase):
+    def mirror_fixture(self, base: Path):
+        mirrors = {f"vault-{name}-mirror": base / name / "mirror" for name in ("codex", "claude")}
+        runtimes = {name: base / name / "runtime" for name in ("codex", "claude")}
+        profile = {"targets": {"runtime": {}}}
+        registry = {"roots": []}
+        records = []
+        for name, runtime in runtimes.items():
+            root_id = f"vault-{name}-mirror"
+            write(runtime / "SKILL.md", b"approved document")
+            write(runtime / "scripts/run.py", b"runtime only")
+            write(mirrors[root_id] / "imozuru/SKILL.md", b"approved document")
+            profile["targets"]["runtime"][name] = {"path": str(runtime), "root_id": name, "tree_sha256": restricted._safe_tree(runtime).tree_sha256}
+            registry["roots"].append({"id": root_id, "path": str(mirrors[root_id]), "role": "mirror-only", "collision_scope": "catalog-only", "runtimes": [], "targetable": False})
+            records.append({"root_id": root_id, "relative_path": "imozuru", "record_scope": "mirror-only", "root_role": "mirror-only", "runtimes": [], "directory_name": "imozuru", "resolved_name": "imozuru", "raw_tree_sha256": restricted._safe_tree(mirrors[root_id] / "imozuru").tree_sha256})
+        return profile, registry, records, mirrors, runtimes
+
+    def test_mirror_requires_fixed_identity_and_approved_content(self) -> None:
+        cases = [("valid", None, None)]
+        cases += [("row", key, value) for key, value in {"relative_path": "other/imozuru", "record_scope": "active", "root_role": "active", "runtimes": ["codex"], "directory_name": "other", "resolved_name": "other"}.items()]
+        cases += [("root", key, value) for key, value in {"path": "/other", "role": "active", "collision_scope": "runtime", "runtimes": ["codex"], "targetable": True}.items()]
+        cases += [("runtime", "path", "/other"), ("runtime", "root_id", "other"), ("runtime", "tree_sha256", "0" * 64), ("row", "raw_tree_sha256", "0" * 64), ("duplicate-root", None, None)]
+        for case, key, value in cases:
+            with self.subTest(case=case, key=key), tempfile.TemporaryDirectory() as temporary:
+                profile, registry, rows, mirrors, runtimes = self.mirror_fixture(Path(os.path.realpath(temporary)))
+                if case == "row":
+                    rows[0][key] = value
+                elif case == "root":
+                    registry["roots"][0][key] = value
+                elif case == "runtime":
+                    profile["targets"]["runtime"]["codex"][key] = value
+                elif case == "duplicate-root":
+                    registry["roots"].append(dict(registry["roots"][0]))
+                findings = []
+                with mock.patch.object(restricted, "EXPECTED_MIRRORS", mirrors), mock.patch.object(restricted, "EXPECTED_RUNTIMES", runtimes):
+                    pairs = restricted._verified_mirror_pairs(profile, registry, rows, findings)
+                self.assertEqual(sum(pairs.values()), 2 if case == "valid" else 1)
+                self.assertEqual(bool(findings), case != "valid")
+
+    def test_mirror_rejects_changed_content_extra_executable_and_unsafe_files(self) -> None:
+        for name in ("codex", "claude"):
+            for case in ("changed", "extra", "executable", "symlink", "hardlink", "fifo", "ancestor-symlink"):
+                with self.subTest(name=name, case=case), tempfile.TemporaryDirectory() as temporary:
+                    base = Path(os.path.realpath(temporary))
+                    profile, registry, rows, mirrors, runtimes = self.mirror_fixture(base)
+                    root_id = f"vault-{name}-mirror"
+                    mirror = mirrors[root_id] / "imozuru"
+                    document = mirror / "SKILL.md"
+                    if case == "changed":
+                        document.write_bytes(b"different document")
+                    elif case == "extra":
+                        write(mirror / "scripts/run.py")
+                    elif case == "executable":
+                        document.chmod(0o755)
+                    elif case == "symlink":
+                        document.unlink()
+                        document.symlink_to(runtimes[name] / "SKILL.md")
+                    elif case == "hardlink":
+                        document.unlink()
+                        os.link(runtimes[name] / "SKILL.md", document)
+                    elif case == "fifo":
+                        os.mkfifo(mirror / "pipe")
+                    else:
+                        moved = base / "moved"
+                        mirrors[root_id].rename(moved)
+                        mirrors[root_id].symlink_to(moved, target_is_directory=True)
+                    # Even a freshly observed inventory hash must not authorize unsafe content.
+                    for row in rows:
+                        if row["root_id"] == root_id:
+                            row["raw_tree_sha256"] = restricted._safe_tree(mirror).tree_sha256
+                    findings = []
+                    with mock.patch.object(restricted, "EXPECTED_MIRRORS", mirrors), mock.patch.object(restricted, "EXPECTED_RUNTIMES", runtimes):
+                        pairs = restricted._verified_mirror_pairs(profile, registry, rows, findings)
+                    self.assertNotIn(root_id, {pair[0] for pair in pairs})
+                    self.assertTrue(findings)
+
+    def test_mirror_rejects_observation_race_and_leaves_unknown_root_unapproved(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            profile, registry, rows, mirrors, runtimes = self.mirror_fixture(Path(os.path.realpath(temporary)))
+            unknown = dict(rows[0], root_id="unknown-mirror")
+            failed = gov.TreeResult("raced", None, [], [restricted._finding("toctou", "changed", "raced")])
+            findings = []
+            with mock.patch.object(restricted, "EXPECTED_MIRRORS", mirrors), mock.patch.object(restricted, "EXPECTED_RUNTIMES", runtimes), mock.patch.object(restricted, "_safe_tree", return_value=failed):
+                pairs = restricted._verified_mirror_pairs(profile, registry, [*rows, unknown], findings)
+            self.assertFalse(pairs)
+            self.assertEqual(len(findings), 2)
+
     def test_governance_pins_restricted_checker_bytes(self) -> None:
         self.assertEqual(gov.RESTRICTED_CHECKER_SHA256, gov.sha256_path(SCRIPTS / "restricted.py"))
 
@@ -286,6 +372,10 @@ class RestrictedAuditTests(unittest.TestCase):
             audit_rows.append({"severity": "BLOCKING", "code": "new", "message": "x", "path": "unrelated"})
             restricted._check_global(profile, "ready_absent", findings)
             self.assertIn("restricted_global_findings", {item.code for item in findings})
+            inventory["records"].append({"root_id": "unknown-mirror", "directory_name": "imozuru", "raw_tree_sha256": "a" * 64})
+            findings = []
+            restricted._check_global(profile, "ready_absent", findings)
+            self.assertIn("restricted_collision", {item.code for item in findings})
 
     def test_inventory_binding_removes_only_governance_profile_self_reference(self) -> None:
         profile = {
@@ -598,6 +688,59 @@ class RestrictedAuditTests(unittest.TestCase):
                 findings = []
                 restricted._check_delivery(profile, gov.sha256_bytes(b"profile"), fixture_artifacts(base), findings)
             self.assertIn("restricted_delivery_grafts", {item.code for item in findings})
+
+    def test_delivery_accepts_remote_updates_without_importing_them(self) -> None:
+        for name in ("codex", "claude"):
+            for topology in ("remote-descendant", "diverged", "remote-merge"):
+                with self.subTest(name=name, topology=topology), tempfile.TemporaryDirectory() as temporary:
+                    base = Path(os.path.realpath(temporary))
+                    profile, repos, proof_path = delivery_fixture(base)
+                    repo = Path(repos[name]["path"])
+                    def git(*args):
+                        return subprocess.check_output(["/usr/bin/git", "-C", str(repo), *args], text=True).strip()
+                    approved = git("rev-parse", "HEAD")
+                    if topology == "remote-merge":
+                        git("checkout", "-q", "--detach", "HEAD^")
+                    # The observed remote tree may differ; only the approved C is bound.
+                    remote_file = "remote-unreviewed" if topology == "remote-merge" else "scripts/governance.py"
+                    write(repo / remote_file, b"unreviewed remote update")
+                    git("add", remote_file)
+                    git("-c", "user.name=t", "-c", "user.email=t@example.invalid", "commit", "-qm", "remote update")
+                    if topology == "remote-merge":
+                        git("-c", "user.name=t", "-c", "user.email=t@example.invalid", "merge", "-q", "--no-edit", approved)
+                    observed = git("rev-parse", "HEAD")
+                    git("checkout", "-q", "--detach", approved)
+                    if topology == "diverged":
+                        write(repo / "local-note", b"local only")
+                        git("add", "local-note")
+                        git("-c", "user.name=t", "-c", "user.email=t@example.invalid", "commit", "-qm", "local unrelated")
+                    proof = json.loads(proof_path.read_bytes())
+                    proof["remote_observations"][name]["oid"] = observed
+                    proof_path.write_text(json.dumps(proof))
+                    git("update-ref", "refs/remotes/origin/main", observed)
+                    self.assertEqual((repo / "scripts/governance.py").read_bytes(), b"module")
+                    with mock.patch.object(restricted, "DELIVERY_PROOF", proof_path):
+                        findings = []
+                        restricted._check_delivery(profile, gov.sha256_bytes(b"profile"), fixture_artifacts(base), findings)
+                    self.assertFalse(findings)
+
+    def test_delivery_rejects_legacy_or_ambiguous_observation_scope(self) -> None:
+        for scenario in ("legacy", "missing-scope", "wrong-scope"):
+            with self.subTest(scenario=scenario), tempfile.TemporaryDirectory() as temporary:
+                base = Path(os.path.realpath(temporary))
+                profile, repos, proof_path = delivery_fixture(base)
+                proof = json.loads(proof_path.read_bytes())
+                if scenario == "legacy":
+                    proof["schema_version"] = 1
+                elif scenario == "missing-scope":
+                    del proof["observation_scope"]
+                else:
+                    proof["observation_scope"] = "remote-runtime-approved"
+                proof_path.write_text(json.dumps(proof))
+                with mock.patch.object(restricted, "DELIVERY_PROOF", proof_path):
+                    findings = []
+                    restricted._check_delivery(profile, gov.sha256_bytes(b"profile"), fixture_artifacts(base), findings)
+                self.assertTrue(findings)
 
     def test_delivery_rejects_invalid_remote_observations(self) -> None:
         for scenario in ("missing", "branch", "unreached", "tracking", "future"):

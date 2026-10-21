@@ -77,6 +77,10 @@ EXPECTED_RUNTIMES = {
     "codex": TRUSTED_HOME / ".codex/skills/imozuru",
     "claude": TRUSTED_HOME / ".claude/skills/imozuru",
 }
+EXPECTED_MIRRORS = {
+    f"vault-{name}-mirror": TRUSTED_HOME / f"Notes/Vault/_shared-ai/mirrors/{name}/skills"
+    for name in ("codex", "claude")
+}
 EXPECTED_REVIEWS = {
     name: TRUSTED_HOME / ".local/share/skill-governance/review" / PROFILE_ID / "imozuru" / name
     for name in ("codex", "claude")
@@ -713,6 +717,41 @@ def _validate_observations(audit: dict[str, Any], inventory: dict[str, Any], reg
             fail(f"Audit observation failed: {row['code']}")
 
 
+def _verified_mirror_pairs(profile: dict[str, Any], registry: dict[str, Any], records: list[dict[str, Any]], findings: list[gov.Finding]) -> Counter:
+    pairs: Counter = Counter()
+    for row in records:
+        root_id = row.get("root_id")
+        if root_id not in EXPECTED_MIRRORS:
+            continue
+        root_path = EXPECTED_MIRRORS[root_id]
+        roots = [root for root in registry.get("roots", []) if root.get("id") == root_id]
+        root_fields = {"path": str(root_path), "role": "mirror-only", "collision_scope": "catalog-only", "runtimes": [], "targetable": False}
+        row_fields = {"relative_path": "imozuru", "record_scope": "mirror-only", "root_role": "mirror-only", "runtimes": [], "directory_name": "imozuru", "resolved_name": "imozuru"}
+        if len(roots) != 1 or any(roots[0].get(key) != value for key, value in root_fields.items()) or any(row.get(key) != value for key, value in row_fields.items()):
+            findings.append(_finding("mirror_identity", "Mirror root or record identity differs", str(root_id)))
+            continue
+        name = "codex" if root_id == "vault-codex-mirror" else "claude"
+        target = profile["targets"]["runtime"].get(name, {})
+        if target.get("path") != str(EXPECTED_RUNTIMES[name]) or target.get("root_id") != name:
+            findings.append(_finding("mirror_runtime", "Mirror runtime target differs", str(root_id)))
+            continue
+        mirror = _safe_tree(root_path / "imozuru")
+        runtime = _safe_tree(EXPECTED_RUNTIMES[name])
+        mirror_files, runtime_files = _manifest(mirror), _manifest(runtime)
+        if mirror.findings or runtime.findings or not mirror.tree_sha256 or mirror.tree_sha256 != row.get("raw_tree_sha256") or runtime.tree_sha256 != target.get("tree_sha256"):
+            findings.append(_finding("mirror_tree", "Mirror/runtime scan failed or tree changed", str(root_id)))
+            continue
+        if set(mirror_files) != {"SKILL.md"} or "SKILL.md" not in runtime_files:
+            findings.append(_finding("mirror_files", "Mirror must contain only SKILL.md", str(root_id)))
+            continue
+        document, approved = mirror_files["SKILL.md"], runtime_files["SKILL.md"]
+        if document.executable or approved.executable or document.data != approved.data or document.sha256 != approved.sha256:
+            findings.append(_finding("mirror_content", "Mirror must match the non-executable approved runtime document", str(root_id)))
+            continue
+        pairs[(root_id, mirror.tree_sha256)] += 1
+    return pairs
+
+
 def _check_global(profile: dict[str, Any], state: str, findings: list[gov.Finding]) -> tuple[dict[str, Any], dict[str, Any]]:
     base = profile["governance"]["base_files"]
     package = Path(profile["packages"]["authority"]["path"])
@@ -761,6 +800,7 @@ def _check_global(profile: dict[str, Any], state: str, findings: list[gov.Findin
     imozuru = [row for row in inventory.get("records", []) if row.get("resolved_name") == "imozuru" or row.get("directory_name") == "imozuru"]
     expected_runtime = profile["targets"]["runtime"]
     expected_pairs = Counter((entry["root_id"], entry["tree_sha256"]) for entry in expected_runtime.values()) if state != "ready_absent" else Counter()
+    expected_pairs.update(_verified_mirror_pairs(profile, registry, imozuru, findings))
     actual_pairs = Counter((row.get("root_id"), row.get("raw_tree_sha256")) for row in imozuru)
     if actual_pairs != expected_pairs:
         findings.append(_finding("collision", f"expected={sorted(expected_pairs.items())} actual={sorted(actual_pairs.items())}", "imozuru"))
@@ -981,12 +1021,12 @@ def _check_delivery(
     proof = _strict_json(raw, str(DELIVERY_PROOF), findings) if raw is not None else None
     keys = {
         "schema_version", "generation", "success", "profile_sha256", "target_tree_sha256",
-        "delivery_commits", "remote_observations",
+        "delivery_commits", "remote_observations", "observation_scope",
     }
     if proof is None or not _keys(proof, keys, "delivery_proof", findings):
         return
     target_hashes = {name: entry["tree_sha256"] for name, entry in profile["targets"]["runtime"].items()}
-    if proof.get("schema_version") != 1 or proof.get("generation") != profile["generation"] or proof.get("success") is not True or proof.get("profile_sha256") != profile_sha or proof.get("target_tree_sha256") != target_hashes:
+    if proof.get("schema_version") != 2 or proof.get("observation_scope") != "delivery-commit-reachability" or proof.get("generation") != profile["generation"] or proof.get("success") is not True or proof.get("profile_sha256") != profile_sha or proof.get("target_tree_sha256") != target_hashes:
         findings.append(_finding("delivery_proof", "Delivery proof identity or target hashes differ", str(DELIVERY_PROOF)))
     repos = profile["delivery"]["repos"]
     observations = proof.get("remote_observations")
@@ -1119,9 +1159,8 @@ def _check_delivery(
         if tracking_oid != observed_oid:
             findings.append(_finding("delivery_tracking", "origin/main differs from the recorded observation", name))
             continue
-        graph = ((commit, observed_oid), (observed_oid, "HEAD"))
-        if any(_git(physical_repo, ["merge-base", "--is-ancestor", older, newer]).returncode != 0 for older, newer in graph):
-            findings.append(_finding("delivery_remote_graph", "Expected delivery <= observation == origin/main <= HEAD", name))
+        if _git(physical_repo, ["merge-base", "--is-ancestor", commit, observed_oid]).returncode != 0:
+            findings.append(_finding("delivery_remote_graph", "Expected approved delivery <= observed origin/main; remote tree is not runtime approval", name))
 
 
 def _restricted_audit_payload(profile_dir: Path, phase: str) -> tuple[dict[str, Any], list[gov.Finding]]:
