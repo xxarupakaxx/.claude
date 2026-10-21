@@ -10,6 +10,8 @@
 
 収集の前に、次の両方で終了値0と`capability_status=active`を確認する。全体の`restricted_status=blocked`や`global_drift=HOLD`が併記されても、固定能力の成功とは別の全体警告として残す。既定の監査終了値を無視せず、ここに示す明示的な限定判定を使う。
 
+runner内部のactive検査が、走査中のdirectory変更（`discovery_directory_changed`）だけで停止した場合は、同じ固定検査を最初から1回だけ再実行する。再検査でも失敗した場合や、hash・送達・scope・未知の観測・JSON・timeoutの失敗は停止する。retryと再検査の結果を記録し、失敗時には最大4件の検査codeだけを表示する。生の監査出力や環境情報は表示しない。検査は2回合わせて従来の60秒以内とし、hopと全体の時間上限も延長しない。
+
 ```bash
 /Users/yoshiki/.local/share/skill-governance/runtime/pyyaml-6.0.2/bin/python -I -B /Users/yoshiki/.codex/skills/skill-governance/scripts/governance.py restricted-audit --phase active --json --require-capability --summary
 /Users/yoshiki/.local/share/skill-governance/runtime/pyyaml-6.0.2/bin/python -I -B /Users/yoshiki/.claude/skills/skill-governance/scripts/governance.py restricted-audit --phase active --json --require-capability --summary

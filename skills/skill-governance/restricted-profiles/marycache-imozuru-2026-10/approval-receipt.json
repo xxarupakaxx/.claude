@@ -1,8 +1,8 @@
 {
   "approved": true,
-  "approved_at": "2026-10-21T16:51:07.277898+00:00",
-  "profile_sha256": "253434ff26480a86062af3b38d7e498525b362ac7be78d5ee9f04c3333477248",
-  "review_receipt_sha256": "67f4bfa2ec987cfa089dbc877349a9a25cdd092b19593a5305376f792b43fb13",
+  "approved_at": "2026-10-21T18:00:04.286039+00:00",
+  "profile_sha256": "53c1d99891e6b5f1cd12e4d7072e31c7b356d992db090ddab9f042d89ea1a5e3",
+  "review_receipt_sha256": "b81b4c4ef0bf28ace8649785adecc354d35f099e4bfd7d862436c3d436d90253",
   "schema_version": 1,
   "subject": {
     "collection_id": "marycache-imozuru-2026-10",
