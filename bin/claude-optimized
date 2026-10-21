@@ -1,0 +1,3 @@
+#!/bin/sh
+set -eu
+exec claude --exclude-dynamic-system-prompt-sections "$@"

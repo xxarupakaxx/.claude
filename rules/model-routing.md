@@ -8,6 +8,17 @@ Claude Code から Agent Tool でサブエージェントを起動する際の�
 明示的な指定は、Cost Ladder で lane を固定する必要がある場合だけ使う。
 plugin / skill / agent role の選択は `context/agent-team-routing.md` を参照する。このファイルは model 方針に集中する。
 
+## 推論量と文脈の使い方
+
+モデル・effortの既存設定を維持する。新規セッションで`~/.claude/bin/claude-optimized`を使うと、CLIのネイティブflagで可変の環境情報をsystem promptから最初のuser messageへ分ける。`--system-prompt`指定時は無視され、通常の`claude`や既存セッションには自動適用しない。
+
+- 固定の共通指示とtool定義を安定させ、作業path・時刻・差分などの可変情報は作業入力へ置く。必要なSkillの指示は保持し、無関係なSkill一覧を毎回追加しない。
+- 必要な参照先が分かる場合は最初に渡し、独立した検索・読込を出力量の範囲内でまとめる。保存済み原典と同じ版の資料を再利用し、変更があれば該当箇所と依存を読み直す。
+- effortとモデルは作業開始時に選ぶ。重要判断・セキュリティ・最終レビューの品質を下げず、セッション途中の不要な切替でキャッシュを壊さない。
+- timeoutとproviderの失敗を区別し、有限のtimeout・retryとその理由を記録する。cancel時は停止手段のある子処理も止め、残った処理は明記する。完了条件を満たした後に新しい目的のない追加turnを作らない。
+
+起動方法と効果の確かめ方は[推論最適化の手引き](../context/inference-optimization.md)を参照する。
+
 ## Dispatch Table（Source of Truth）
 
 | 用途 | 呼び出し方法 | モデル |
