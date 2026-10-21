@@ -9431,7 +9431,7 @@
           {
             "executable": false,
             "path": "skills/imozuru/references/local-integration.md",
-            "sha256": "dee8ef85a4c9c8455ada168130894168af2633617f2fcecce3034d14a22ade40"
+            "sha256": "6428142d0e7cb796b4143df66826b55326b5da7ea33bdc0fb6fe16ed82c9bed3"
           },
           {
             "executable": false,
@@ -9456,7 +9456,7 @@
           {
             "executable": false,
             "path": "skills/imozuru/scripts/run.py",
-            "sha256": "6d4a2b129c659cae704b27eeffa1631e2346c3e3ad9cfe4d8bf2f0e96516ef88"
+            "sha256": "b7a96dc76b23395b7378b8cbadda2aad5287a0f67d5d6b1295935f431ddd3078"
           },
           {
             "executable": false,
@@ -9466,7 +9466,7 @@
           {
             "executable": false,
             "path": "skills/imozuru/tests/test_run.py",
-            "sha256": "74edeb540983b4a9a830db9668775edbaca8ef00650d9616aacb2ae85271dd51"
+            "sha256": "8eadf56482c4e17442222832c2ebc484603efb8b3fc5baf5585d601b443bc1a5"
           },
           {
             "executable": false,
@@ -10576,7 +10576,7 @@
           {
             "executable": false,
             "path": "skills/imozuru/references/local-integration.md",
-            "sha256": "dee8ef85a4c9c8455ada168130894168af2633617f2fcecce3034d14a22ade40"
+            "sha256": "6428142d0e7cb796b4143df66826b55326b5da7ea33bdc0fb6fe16ed82c9bed3"
           },
           {
             "executable": false,
@@ -10601,7 +10601,7 @@
           {
             "executable": false,
             "path": "skills/imozuru/scripts/run.py",
-            "sha256": "6d4a2b129c659cae704b27eeffa1631e2346c3e3ad9cfe4d8bf2f0e96516ef88"
+            "sha256": "b7a96dc76b23395b7378b8cbadda2aad5287a0f67d5d6b1295935f431ddd3078"
           },
           {
             "executable": false,
@@ -10611,7 +10611,7 @@
           {
             "executable": false,
             "path": "skills/imozuru/tests/test_run.py",
-            "sha256": "74edeb540983b4a9a830db9668775edbaca8ef00650d9616aacb2ae85271dd51"
+            "sha256": "8eadf56482c4e17442222832c2ebc484603efb8b3fc5baf5585d601b443bc1a5"
           },
           {
             "executable": false,
@@ -13765,24 +13765,24 @@
       "claude": {
         "path": "/Users/yoshiki/.local/share/skill-governance/review/marycache-imozuru-2026-10/imozuru/claude",
         "root_id": "claude",
-        "tree_sha256": "60b020fb1540b646bad45f10fd37b079205a723de6c67bb3748d0b68b18a895a"
+        "tree_sha256": "b0f6233c738c871f358c6fd2882919829dc2ca09b78e0e9e13515262c07e75d6"
       },
       "codex": {
         "path": "/Users/yoshiki/.local/share/skill-governance/review/marycache-imozuru-2026-10/imozuru/codex",
         "root_id": "codex",
-        "tree_sha256": "60b020fb1540b646bad45f10fd37b079205a723de6c67bb3748d0b68b18a895a"
+        "tree_sha256": "b0f6233c738c871f358c6fd2882919829dc2ca09b78e0e9e13515262c07e75d6"
       }
     },
     "runtime": {
       "claude": {
         "path": "/Users/yoshiki/.claude/skills/imozuru",
         "root_id": "claude",
-        "tree_sha256": "60b020fb1540b646bad45f10fd37b079205a723de6c67bb3748d0b68b18a895a"
+        "tree_sha256": "b0f6233c738c871f358c6fd2882919829dc2ca09b78e0e9e13515262c07e75d6"
       },
       "codex": {
         "path": "/Users/yoshiki/.codex/skills/imozuru",
         "root_id": "codex",
-        "tree_sha256": "60b020fb1540b646bad45f10fd37b079205a723de6c67bb3748d0b68b18a895a"
+        "tree_sha256": "b0f6233c738c871f358c6fd2882919829dc2ca09b78e0e9e13515262c07e75d6"
       }
     }
   },

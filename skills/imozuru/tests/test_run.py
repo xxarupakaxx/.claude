@@ -12,7 +12,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 SCRIPT = Path(__file__).resolve().parents[1] / 'scripts/run.py'
 spec = importlib.util.spec_from_file_location('imozuru_run', SCRIPT)
@@ -33,6 +33,32 @@ def topic():
             os.close(fd)
 
 class Boundaries(unittest.TestCase):
+    def http_failure_fixture(self, error=None):
+        sock=MagicMock();sock.getpeername.return_value=('1.1.1.1',443)
+        conn=MagicMock()
+        if error is None:
+            wire=b'HTTP/1.1 200 OK\r\n'+b'X-Fixture: x\r\n'*33+b'\r\nbody'
+            source=MagicMock();source.makefile.return_value=io.BytesIO(wire)
+            response=r.http.client.HTTPResponse(source)
+            conn.getresponse.side_effect=response.begin
+        else:
+            conn.getresponse.side_effect=error
+        with patch.object(r.socket,'socket',return_value=sock),patch.object(r.http.client,'HTTPSConnection',return_value=conn),patch.object(r,'limits'),patch.object(r,'apply_sandbox'):
+            r.hop('https://fixture.example/','1.1.1.1',0)
+
+    def test_http_parser_header_limit_becomes_safe_failure(self):
+        with self.assertRaisesRegex(ValueError, r'^public response rejected \(http_header_limit\)$'):
+            self.http_failure_fixture()
+        self.assertEqual(r.http.client._MAXHEADERS,32)
+        self.assertEqual(r.http.client._MAXLINE,8192)
+
+    def test_http_parser_failures_do_not_expose_untrusted_details(self):
+        for error,code in [(r.http.client.LineTooLong('PRIVATE_RESPONSE'),'http_line_limit'),(r.http.client.BadStatusLine('PRIVATE_RESPONSE'),'http_response_invalid'),(r.http.client.IncompleteRead(b'PRIVATE_RESPONSE',42),'http_response_invalid'),(r.http.client.HTTPException('PRIVATE_RESPONSE'),'http_response_invalid')]:
+            with self.subTest(kind=type(error).__name__),self.assertRaises(ValueError) as caught:
+                self.http_failure_fixture(error)
+            self.assertEqual(str(caught.exception),'public response rejected ('+code+')')
+            self.assertNotIn('PRIVATE',str(caught.exception))
+
     @contextmanager
     def activation_fixture(self):
         with tempfile.TemporaryDirectory() as temporary:
