@@ -18,7 +18,8 @@
 - codeをHTMLとして解釈させずescapeする。
 - remote `src`、stylesheet、font、scriptを列挙し、許可根拠のないものを0にする。
 - Mermaid、remote resource、runtime scriptをoverviewやdetail図の表示要件にしていない。
-- overview SVGの長い説明はcaptionまたは本文へ逃がし、図中文字は短いlabelまたは明示的な折返しで読める設計にしている。
+- 全体像の図の長い説明はcaptionまたは本文へ逃がし、図中文字は短いlabelまたは明示的な折返しで読める設計にしている。
+- 全体像の図に、箱や領域の意味を表す英字一文字の略号（S、Fなど）が無く、線の種類、枠、面、番号の意味が図の中の凡例にある。
 
 ## Browser（既定はdesktopのみ）
 
@@ -39,7 +40,11 @@ SVGを含む文書では、page上で次を機械検査し、いずれも0にし
 次を記録する。
 
 - viewport、document、bodyのscroll width。
-- layout columnとrailの位置。
+- 目次の入口と展開一覧が左側にあり、右sidebarを使っていないこと（ユーザーが常設の目次を明示した場合を除く）。
+- 本文が一列で、閉じた目次用の空き列がないこと。
+- 目次の初期状態が閉じていること、クリック・タップ・Enter・Spaceでの開閉、章リンクの移動先。
+- 一画面に収まらない文書で、固定の「目次へ」リンクが冒頭の目次へ移動し、本文に重ならないこと。
+- 開閉前後の本文幅、展開内容が本文と重ならないこと、再度閉じられること。
 - text overlap、clip、意図しない横scroll。
 - table、diff、figureのoverflow。
 - first viewportのpage purpose、中心主張、status。
@@ -47,7 +52,7 @@ SVGを含む文書では、page上で次を機械検査し、いずれも0にし
 ## Accessibility
 
 - keyboardだけでlinkとcontrolへ到達できる。
-- visible focusがある。
+- visible focusがある。目次のsummaryは高さ44px以上で、nativeの開閉markerが見える。
 - hoverだけで開示する主要情報がない。
 - text、border、statusのcontrastが十分である。
 - 色以外にlabel、記号、位置、形の手がかりがある。
@@ -63,9 +68,11 @@ SVGを含む文書では、page上で次を機械検査し、いずれも0にし
 
 - 冒頭だけで結論と次の判断が分かる。
 - 冒頭の要約は、太字の長い段落や狭い補助列の長文で読ませていない。並列する要点は項目に分かれて本文の節へリンクし、要約の条件と推論の表示が本文と一致している。
-- workflow、architecture、lifecycle、before / after、dependency、failure pathなど、3つ以上の相互作用する要素関係またはfailure伝播を扱う文書では、中心主張の直後にorientationとoverview SVGがある。単にfileやevidenceが3件あるだけで必須扱いにしていない。
+- workflow、architecture、lifecycle、before / after、dependency、failure pathなど、3つ以上の相互作用する要素関係またはfailure伝播を扱う文書と、対象を業界や事業ドメインの中に位置づけないと理解・判断できない文書では、中心主張の直後にorientationと全体像の図がある。単にfileやevidenceが3件あるだけで必須扱いにしていない。
 - orientationは背景、without-this failure、対象scope、目標状態、全体内の位置を含む。背景が中心主張より前に出ていない。
-- overview SVGはactor / component / stage、主要flow、対象境界、failureの伝播先を示し、captionが読者の問いに答えている。
+- 全体像の図の形が図の問いに合い（`overview-patterns.md`）、`title` とcaptionの一文目が図の問いに答えている。部品表の主体、流れる物、範囲がすべて図にある。failureの伝播先は、図の問いに失敗が含まれるときだけ描いている。
+- 対象を業界や事業ドメインの中に位置づける必要がある文書では、ドメイン俯瞰図に、対象の外側の主体、主体の間を流れる物、この文書の範囲、詳しく扱う章がある。
+- 用語集を置いた場合、載せた語が、読者が知らない可能性が高い専門語で3つ以上の章に出る語だけである。
 - detail sliceはoverviewの番号、名称、境界を再利用し、一つのsubflow、before / after、failure path、diffへzoomしている。
 - overviewとdetailで同じ情報を再描画していない。重複するsummary、card、diagram、badgeを増やしていない。
 - 各主要主張に具体的な事実、mechanismまたは因果、source anchor、読者への含意がある。
@@ -109,7 +116,7 @@ SVGを含む文書では、page上で次を機械検査し、いずれも0にし
 - external resourceとscriptの件数。
 - heading、table、idの結果。
 - mobile、print、PDFを実行したか。未依頼なら `not requested` とする。
-- Overview gateの判定、overview SVGの有無、detail sliceとの接続結果。
+- Overview gateの判定、全体像の図の問いと選んだ形、detail sliceとの接続結果。
 - 表の件数（0が既定）と、例外時の理由。
 - lintの誤りと要確認の件数、要確認をどう判断したか。
 - 独立レビューの実施回数、反映した指摘、除外した指摘と理由。

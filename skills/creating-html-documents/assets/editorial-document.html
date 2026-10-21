@@ -23,7 +23,7 @@
       --del-bg: #fdeceb;
       --del-ink: #a3302d;
       --radius: 12px;
-      --measure: 74ch;
+      --measure: 70em;
       --sans: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", "Noto Sans JP", sans-serif;
       --mono: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
     }
@@ -35,7 +35,7 @@
     code, pre { font-family: var(--mono); }
     :not(pre) > code { padding: .08em .34em; border-radius: 4px; background: #efeee9; font-size: .92em; }
     .page { width: min(1180px, 100%); margin: 0 auto; padding: 42px 48px 72px; }
-    .masthead { max-width: 900px; margin-bottom: 32px; }
+    .masthead { max-width: var(--measure); margin-bottom: 32px; }
     .eyebrow { margin: 0 0 8px; color: var(--accent); font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
     h1, h2, h3 { color: var(--ink); line-height: 1.45; text-wrap: pretty; }
     h1 { margin: 0; padding-left: 18px; border-left: 10px solid var(--ink); font-size: clamp(1.8rem, 1.3rem + 1.7vw, 3rem); letter-spacing: -.035em; }
@@ -44,7 +44,7 @@
     p { margin: 12px 0; }
     .lede { max-width: var(--measure); margin: 18px 0 0; font-size: 1.05rem; }
     .meta, .source-note { color: var(--muted); font-family: var(--mono); font-size: .76rem; }
-    .reading-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(250px, 300px); gap: 56px; align-items: start; }
+    .reading-layout { display: block; }
     main { min-width: 0; }
     main > * { max-width: var(--measure); }
     main > .wide, main > section > .wide { max-width: none; }
@@ -76,12 +76,34 @@
     figure { margin: 26px 0; }
     .figure-frame { padding: 22px; border: 1.5px solid var(--strong-rule); border-radius: var(--radius); background: var(--surface); overflow-x: auto; overflow-y: hidden; }
     figure svg { display: block; width: 100%; height: auto; }
-    .overview-figure { min-width: 600px; }
-    .overview-figure text { fill: var(--ink); font-family: var(--sans); font-size: 18px; }
-    .overview-figure .node-label { font-weight: 700; }
-    .overview-figure .node-note { fill: var(--muted); font-size: 15px; }
-    .overview-figure .node-badge { fill: #fff; font-size: 15px; font-weight: 700; }
-    figcaption { margin-top: 9px; color: var(--muted); font-family: var(--mono); font-size: .76rem; line-height: 1.6; }
+    /* 図の形は固定しない。どの形の図でも同じ文字と線のクラスを使う（references/overview-patterns.md）。 */
+    .diagram { min-width: 600px; }
+    .diagram text { fill: var(--ink); font-family: var(--sans); font-size: 17px; }
+    .diagram .t-strong { font-weight: 700; }
+    .diagram .t-note { fill: var(--muted); font-size: 14px; }
+    .diagram .t-flow { fill: var(--body); font-size: 14px; }
+    .diagram .t-accent { fill: var(--accent); }
+    .diagram .t-warn { fill: var(--warning); }
+    .diagram .t-region { fill: var(--muted); font-size: 14px; font-weight: 700; letter-spacing: .04em; }
+    .diagram .t-scope { fill: var(--ink); font-size: 14px; font-weight: 700; }
+    .diagram .t-chapter { fill: var(--muted); font-size: 13px; font-weight: 700; }
+    .diagram .t-self { fill: var(--ink); font-size: 14px; font-weight: 700; }
+    .diagram .t-badge { fill: #fff; font-size: 14px; font-weight: 700; }
+    .diagram .region { fill: #f4f3ee; stroke: var(--rule); stroke-width: 1; }
+    .diagram .node { fill: var(--surface); stroke: var(--strong-rule); stroke-width: 1.5; }
+    .diagram .node.is-self { fill: #d3ebe1; stroke: var(--accent); stroke-width: 1.5; }
+    .diagram .node.is-outside { stroke: #9a9b95; stroke-dasharray: 5 4; }
+    .diagram .scope { fill: none; stroke: var(--strong-rule); stroke-width: 3.5; }
+    .diagram .badge { fill: var(--strong-rule); }
+    .diagram .l-accent { fill: none; stroke: var(--accent); stroke-width: 2.5; }
+    .diagram .l-ink { fill: none; stroke: var(--strong-rule); stroke-width: 2; }
+    .diagram .l-data { fill: none; stroke: var(--strong-rule); stroke-width: 2; stroke-dasharray: 7 5; }
+    .diagram .l-rule { fill: none; stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 2 4; }
+    .diagram .l-warn { fill: none; stroke: var(--warning); stroke-width: 2; stroke-dasharray: 7 5; }
+    .diagram .m-ink { fill: var(--strong-rule); }
+    .diagram .m-accent { fill: var(--accent); }
+    .diagram .m-warn { fill: var(--warning); }
+    figcaption { margin-top: 9px; color: var(--muted); font-size: .84rem; line-height: 1.7; }
     .scene text { fill: var(--ink); font-family: var(--sans); font-size: 20px; }
     .scene .small { fill: var(--muted); font-size: 15px; }
     .scene .edge { fill: var(--body); font-size: 14px; }
@@ -125,9 +147,20 @@
     .line.add::before { content: "+"; }
     .line.delete { background: var(--del-bg); color: var(--del-ink); }
     .line.delete::before { content: "−"; }
-    .rail { position: sticky; top: 24px; max-height: calc(100vh - 48px); overflow: auto; padding-left: 24px; border-left: 1px solid var(--rule); }
-    .rail h2 { margin: 0 0 8px; padding: 0; border: 0; font-size: 1rem; }
-    .rail dl { margin: 0; }
+    .document-nav { margin: 0 0 24px; }
+    .document-nav > summary { width: fit-content; min-height: 44px; padding: 8px 14px; border: 1px solid #85867f; border-radius: 6px; background: var(--surface); color: var(--ink); cursor: pointer; font-weight: 600; }
+    .document-nav > summary:hover { background: #f1f0eb; }
+    .to-toc { position: fixed; left: 16px; bottom: 16px; display: flex; align-items: center; min-height: 44px; padding: 0 12px; border: 1px solid #85867f; border-radius: 6px; background: var(--surface); color: var(--ink); font-size: .84rem; text-decoration: none; }
+    .to-toc:hover { background: #f1f0eb; }
+    /* 本文の左の余白に収まらない幅では出さない（1180pxのページと48pxの余白に対して、リンクの幅約70pxが入る下限）。 */
+    @media (max-width: 1259px) { .to-toc { display: none; } }
+    .document-nav[open] > summary { margin-bottom: 12px; }
+    .nav-content { max-width: 30rem; text-align: left; padding: 16px 20px; border: 1px solid var(--rule); background: var(--surface); }
+    .nav-content nav a { display: block; width: fit-content; padding: 7px 0; }
+    .nav-content nav { scroll-margin-top: 88px; }
+    .glossary { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--rule); }
+    .glossary h2 { margin: 0 0 8px; padding: 0; border: 0; font-size: 1rem; }
+    .glossary dl { margin: 0; }
     .term { display: grid; grid-template-columns: minmax(82px, .7fr) minmax(0, 1.3fr); gap: 12px; padding: 12px 0; border-top: 1px solid var(--rule); }
     .term:first-child { border-top-color: var(--strong-rule); }
     .term dt { color: var(--ink); font-size: .82rem; font-weight: 700; overflow-wrap: anywhere; }
@@ -135,8 +168,6 @@
     footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--rule); color: var(--muted); font-family: var(--mono); font-size: .72rem; }
     @media (max-width: 860px) {
       .page { padding: 28px 24px 56px; }
-      .reading-layout { grid-template-columns: minmax(0, 1fr); gap: 48px; }
-      .rail { position: static; max-height: none; overflow: visible; padding: 28px 0 0; border-left: 0; border-top: 2px solid var(--strong-rule); }
     }
     @media (max-width: 560px) {
       body { font-size: 15px; line-height: 1.85; }
@@ -159,7 +190,6 @@
       html, body { background: #fff; font-size: 10.5pt; line-height: 1.6; }
       .page { width: auto; padding: 0; }
       .reading-layout { display: block; }
-      .rail { position: static; max-height: none; margin-top: 12mm; padding: 8mm 0 0; border: 0; border-top: 1.5pt solid #000; break-before: page; }
       h1, h2, h3 { break-after: avoid; }
       .decision-band, .wave, figure, .diff, table, tr { break-inside: avoid; }
       a { color: #000; }
@@ -174,6 +204,20 @@
       <p class="lede">{{CENTRAL_CLAIM}}</p>
       <p class="meta">{{SCOPE_AND_PROVENANCE}}</p>
     </header>
+    <!-- 目次は本文の左上で、初期状態は閉じる。用語集は既定で置かない。SKILL.mdの「目次と用語集は必要なときに開く」の条件に当たるときだけ、
+         </nav>の後に次を足し、summaryを「目次・用語」にする。
+         <aside class="glossary" aria-labelledby="glossary-title"><h2 id="glossary-title">用語</h2><dl><div class="term"><dt>語</dt><dd>4行以内の定義</dd></div></dl></aside> -->
+    <details class="document-nav" id="toc">
+      <summary>目次</summary>
+      <div class="nav-content">
+        <nav aria-label="目次" id="toc-list">
+          <a href="#orientation-title">{{ORIENTATION_TITLE}}</a>
+          <a href="#section-one">{{SECTION_ONE_TITLE}}</a>
+          <a href="#section-two">{{SECTION_TWO_TITLE}}</a>
+          <a href="#self-test">{{SELF_TEST_TITLE}}</a>
+        </nav>
+      </div>
+    </details>
     <div class="reading-layout">
       <main id="main-content">
         <!-- 結論は通常の太さのリード文にする。段落全体を太字や大きい文字にせず、状態注記は狭い右列ではなく下端の一行に置く。 -->
@@ -208,58 +252,19 @@
           </div>
           <figure class="wide">
             <div class="figure-frame">
-              <!-- viewBoxの幅は図枠の実幅（1440x900で約680px）に合わせ、縮小で文字を小さくしない。段階を増やすときは縦に積む。
-                   ラベルと補足は箱の内側に余白を残して収め、収まらない説明はcaptionか本文へ移す。矢印は箱と箱の間の余白だけを通す。 -->
-              <svg class="overview-figure" role="img" aria-labelledby="overview-title overview-desc" viewBox="0 0 680 380" xmlns="http://www.w3.org/2000/svg">
-                <title id="overview-title">{{OVERVIEW_SVG_TITLE}}</title>
-                <desc id="overview-desc">{{OVERVIEW_SVG_DESC}}</desc>
-                <defs>
-                  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
-                    <path d="M0,0 L0,6 L9,3 z" fill="#242522"></path>
-                  </marker>
-                  <marker id="failure-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
-                    <path d="M0,0 L0,6 L9,3 z" fill="#9a3a30"></path>
-                  </marker>
-                </defs>
-                <rect x="16" y="16" width="360" height="92" rx="10" fill="#fff" stroke="#242522" stroke-width="2"></rect>
-                <circle cx="48" cy="46" r="15" fill="#242522"></circle>
-                <text class="node-badge" x="48" y="51" text-anchor="middle">1</text>
-                <text class="node-label" x="74" y="52">{{STAGE_1}}</text>
-                <text class="node-note" x="36" y="88">{{STAGE_1_NOTE}}</text>
-                <rect x="16" y="144" width="360" height="92" rx="10" fill="#fff" stroke="#242522" stroke-width="2"></rect>
-                <circle cx="48" cy="174" r="15" fill="#242522"></circle>
-                <text class="node-badge" x="48" y="179" text-anchor="middle">2</text>
-                <text class="node-label" x="74" y="180">{{STAGE_2}}</text>
-                <text class="node-note" x="36" y="216">{{STAGE_2_NOTE}}</text>
-                <rect x="16" y="272" width="360" height="92" rx="10" fill="#fff" stroke="#242522" stroke-width="2"></rect>
-                <circle cx="48" cy="302" r="15" fill="#242522"></circle>
-                <text class="node-badge" x="48" y="307" text-anchor="middle">3</text>
-                <text class="node-label" x="74" y="308">{{STAGE_3}}</text>
-                <text class="node-note" x="36" y="344">{{STAGE_3_NOTE}}</text>
-                <rect x="420" y="144" width="244" height="92" rx="10" fill="#f2f1ec" stroke="#242522" stroke-width="2" stroke-dasharray="6 5"></rect>
-                <circle cx="452" cy="174" r="15" fill="#187c6a"></circle>
-                <text class="node-badge" x="452" y="179" text-anchor="middle">S</text>
-                <text class="node-label" x="478" y="180">{{SCOPE}}</text>
-                <text class="node-note" x="440" y="216">{{SCOPE_NOTE}}</text>
-                <rect x="420" y="272" width="244" height="92" rx="10" fill="#fdf1ef" stroke="#9a3a30" stroke-width="2"></rect>
-                <circle cx="452" cy="302" r="15" fill="#9a3a30"></circle>
-                <text class="node-badge" x="452" y="307" text-anchor="middle">F</text>
-                <text class="node-label" x="478" y="308">{{FAILURE}}</text>
-                <text class="node-note" x="440" y="344">{{FAILURE_NOTE}}</text>
-                <path d="M196 108 V138" fill="none" stroke="#242522" stroke-width="2.5" marker-end="url(#arrow)"></path>
-                <path d="M196 236 V266" fill="none" stroke="#242522" stroke-width="2.5" marker-end="url(#arrow)"></path>
-                <path d="M376 190 H414" fill="none" stroke="#242522" stroke-width="2.5" marker-end="url(#arrow)"></path>
-                <path d="M542 236 V266" fill="none" stroke="#9a3a30" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#failure-arrow)"></path>
-              </svg>
+              <!-- 全体像の図。形は固定しない。references/overview-patterns.md の手順で、図の問いを一文で決め、部品表を作り、
+                   ドメイン俯瞰図、流れ図、層の図、分解ツリー、位置づけの地図、状態遷移図、影響マップ、時間軸、場面の絵から選んで描く。
+                   viewBoxの幅は図枠の内側の実幅（1440x900で約1040px）に合わせる。線の種類、枠、番号の意味は図の中の凡例に書く。
+                   英字一文字の記号は使わない。失敗の経路は図の問いに含まれるときだけ描く。 -->
+              {{OVERVIEW_SVG}}
             </div>
-            <!-- Detail sliceは1、2、3、S、Fの記号を再利用し、このoverviewを描き直さない。captionで実線（主な流れ）と破線（失敗の伝播先）の意味を書く。 -->
             <figcaption>{{OVERVIEW_CAPTION}}</figcaption>
           </figure>
         </section>
         <section aria-labelledby="section-one">
           <h2 id="section-one">{{SECTION_ONE_TITLE}}</h2>
           <p>{{SECTION_ONE_LEDE}}</p>
-          <!-- Detail slice: overviewの番号や名称に接続するcomparison、wave、figure、diff、tableの一つを置く。 -->
+          <!-- Detail slice: 全体像の図の主体、流れ、番号の名前をそのまま使い、comparison、wave、figure、diffの一つを置く。 -->
           <!-- 理解のための解説では、主要章の前に予想の問いを置き、答えの位置を正確に書く。不要なら削る。 -->
           <div class="predict">
             <span class="label">読む前に予想</span>
@@ -285,15 +290,12 @@
           </dl>
         </section>
       </main>
-      <aside class="rail" aria-labelledby="rail-title">
-        <h2 id="rail-title">{{RAIL_TITLE}}</h2>
-        <dl>
-          <div class="term"><dt>{{TERM_ONE}}</dt><dd>{{TERM_ONE_DESCRIPTION}}</dd></div>
-          <div class="term"><dt>{{TERM_TWO}}</dt><dd>{{TERM_TWO_DESCRIPTION}}</dd></div>
-        </dl>
-      </aside>
+
     </div>
     <footer>{{DOCUMENT_FOOTER}}</footer>
+    <!-- 読み進めた途中から冒頭の目次へ戻るリンク。本文の左の余白に固定する。リンク先は閉じたdetailsの中のnavにする
+         （閉じたdetailsの中を指すと、対応するブラウザでは目次が開く）。一画面に収まる文書では削る。 -->
+    <a class="to-toc" href="#toc-list">目次へ</a>
   </div>
 </body>
 </html>
