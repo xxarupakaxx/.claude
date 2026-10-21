@@ -10471,12 +10471,12 @@
           {
             "executable": false,
             "path": "skills/skill-governance/scripts/governance.py",
-            "sha256": "b47cdc30d78a876342fd67ace6a39354abf8ca72e60cdfff8a39df30ff08ca1f"
+            "sha256": "fc543f35f0584f67c85360baf454cef77386793476df2e1dd7299983eb99ce55"
           },
           {
             "executable": false,
             "path": "skills/skill-governance/scripts/restricted.py",
-            "sha256": "2d0e3883b6d3e5ad2f8a1f572183c29b2035a8485ed494fe9dfe6688ffa54dd1"
+            "sha256": "9ab601511578221a8e6baec63123cc44de56784781450ed281eba454b8908858"
           },
           {
             "executable": false,
@@ -10486,7 +10486,7 @@
           {
             "executable": false,
             "path": "skills/skill-governance/scripts/test_restricted.py",
-            "sha256": "705bb3142f3f95d00ea6acd305509483507c242c28f446c10c4eab3c39f2ed20"
+            "sha256": "abe471bfe94d582bfc48b9d86ad22fd053ce4e1171db166136b1ebafcc62954b"
           }
         ]
       },
@@ -11616,12 +11616,12 @@
           {
             "executable": false,
             "path": "skills/skill-governance/scripts/governance.py",
-            "sha256": "b47cdc30d78a876342fd67ace6a39354abf8ca72e60cdfff8a39df30ff08ca1f"
+            "sha256": "fc543f35f0584f67c85360baf454cef77386793476df2e1dd7299983eb99ce55"
           },
           {
             "executable": false,
             "path": "skills/skill-governance/scripts/restricted.py",
-            "sha256": "2d0e3883b6d3e5ad2f8a1f572183c29b2035a8485ed494fe9dfe6688ffa54dd1"
+            "sha256": "9ab601511578221a8e6baec63123cc44de56784781450ed281eba454b8908858"
           },
           {
             "executable": false,
@@ -11631,7 +11631,7 @@
           {
             "executable": false,
             "path": "skills/skill-governance/scripts/test_restricted.py",
-            "sha256": "705bb3142f3f95d00ea6acd305509483507c242c28f446c10c4eab3c39f2ed20"
+            "sha256": "abe471bfe94d582bfc48b9d86ad22fd053ce4e1171db166136b1ebafcc62954b"
           }
         ]
       }
@@ -11646,8 +11646,8 @@
       "registry.toml": "27d378ab08aa9a3d95dfdb271773bba17938a48ebdfaeb19ec8e0d99d2af8c1c"
     },
     "base_tree_sha256_by_package": {
-      "authority": "87bcc37a7a6f5fc9bcb08b0ea07fee9bf5e141a0a74e05311e158b1153c55b1b",
-      "replica": "8804e610113541e380a491584f7270e7006487be2514d64e19dc5b0225d8d8d7"
+      "authority": "6f63fd5a2206e8451d1116902042dc93f349418f0840131717ac1959dd0b6602",
+      "replica": "ade3b3b0a01f4d406d0b5e6e208ee4aa88fb241dc66e4e6290d78bf1b736ed7a"
     },
     "file_manifest_by_package": {
       "authority": [
@@ -12644,12 +12644,12 @@
         {
           "executable": false,
           "path": "scripts/governance.py",
-          "sha256": "b47cdc30d78a876342fd67ace6a39354abf8ca72e60cdfff8a39df30ff08ca1f"
+          "sha256": "fc543f35f0584f67c85360baf454cef77386793476df2e1dd7299983eb99ce55"
         },
         {
           "executable": false,
           "path": "scripts/restricted.py",
-          "sha256": "2d0e3883b6d3e5ad2f8a1f572183c29b2035a8485ed494fe9dfe6688ffa54dd1"
+          "sha256": "9ab601511578221a8e6baec63123cc44de56784781450ed281eba454b8908858"
         },
         {
           "executable": false,
@@ -12659,7 +12659,7 @@
         {
           "executable": false,
           "path": "scripts/test_restricted.py",
-          "sha256": "705bb3142f3f95d00ea6acd305509483507c242c28f446c10c4eab3c39f2ed20"
+          "sha256": "abe471bfe94d582bfc48b9d86ad22fd053ce4e1171db166136b1ebafcc62954b"
         }
       ],
       "replica": [
@@ -13656,12 +13656,12 @@
         {
           "executable": false,
           "path": "scripts/governance.py",
-          "sha256": "b47cdc30d78a876342fd67ace6a39354abf8ca72e60cdfff8a39df30ff08ca1f"
+          "sha256": "fc543f35f0584f67c85360baf454cef77386793476df2e1dd7299983eb99ce55"
         },
         {
           "executable": false,
           "path": "scripts/restricted.py",
-          "sha256": "2d0e3883b6d3e5ad2f8a1f572183c29b2035a8485ed494fe9dfe6688ffa54dd1"
+          "sha256": "9ab601511578221a8e6baec63123cc44de56784781450ed281eba454b8908858"
         },
         {
           "executable": false,
@@ -13671,7 +13671,7 @@
         {
           "executable": false,
           "path": "scripts/test_restricted.py",
-          "sha256": "705bb3142f3f95d00ea6acd305509483507c242c28f446c10c4eab3c39f2ed20"
+          "sha256": "abe471bfe94d582bfc48b9d86ad22fd053ce4e1171db166136b1ebafcc62954b"
         }
       ]
     }
