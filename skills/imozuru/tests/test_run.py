@@ -33,6 +33,90 @@ def topic():
             os.close(fd)
 
 class Boundaries(unittest.TestCase):
+    @contextmanager
+    def activation_fixture(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            package = Path(temporary) / 'imozuru'
+            profile = package.parent / 'skill-governance/restricted-profiles' / r.PROFILE_ID / 'profile.json'
+            profile.parent.mkdir(parents=True)
+            profile.write_text(json.dumps({'verifier': {'python_path': r.VERIFIER}}))
+            with patch.object(r, 'PACKAGE', package):
+                yield
+
+    def activation_result(self, *, race=False, extra=(), scope='imozuru-public-source-v1', code=None):
+        rows = [{'code': 'restricted_observation', 'severity': 'BLOCKING', 'message': 'Audit observation failed: discovery_directory_changed', 'path': 'audit/inventory'}] if race else []
+        rows.extend(extra)
+        state = {'capability_scope': scope, 'capability_status': 'blocked' if rows else 'active', 'findings': rows}
+        return subprocess.CompletedProcess([], (2 if rows else 0) if code is None else code, json.dumps(state).encode(), b'UNRELATED_PRIVATE_STDERR')
+
+    def test_activation_retries_only_fresh_scan_once(self):
+        race = self.activation_result(race=True)
+        with self.activation_fixture(), patch.object(r.subprocess, 'run', side_effect=[race, self.activation_result()]) as invoke, patch.object(sys, 'stderr', new_callable=io.StringIO) as errors:
+            r.verify_active()
+        self.assertEqual(invoke.call_count, 2)
+        self.assertEqual(invoke.call_args_list[0].args, invoke.call_args_list[1].args)
+        first, second = [call.kwargs for call in invoke.call_args_list]
+        self.assertGreater(first['timeout'], second['timeout'])
+        self.assertLessEqual(first['timeout'], 60)
+        self.assertEqual({k:v for k,v in first.items() if k!='timeout'}, {k:v for k,v in second.items() if k!='timeout'})
+        self.assertEqual(errors.getvalue().count('retrying fresh audit'), 1)
+        self.assertIn('fresh activation recheck passed (2/2)', errors.getvalue())
+        self.assertNotIn('UNRELATED_PRIVATE_STDERR', errors.getvalue())
+
+    def test_activation_persistent_scan_race_stops_after_two_attempts(self):
+        race = self.activation_result(race=True)
+        with self.activation_fixture(), patch.object(r.subprocess, 'run', return_value=race) as invoke, patch.object(sys, 'stderr', new_callable=io.StringIO) as errors, self.assertRaisesRegex(ValueError, 'discovery_directory_changed'):
+            r.verify_active()
+        self.assertEqual(invoke.call_count, 2)
+        self.assertNotIn('recheck passed', errors.getvalue())
+
+    def test_activation_other_and_mixed_failures_never_retry(self):
+        for result in [
+            self.activation_result(race=True, extra=[{'code': 'restricted_package_hash', 'severity': 'BLOCKING', 'message': 'changed bytes'}]),
+            self.activation_result(race=True, extra=[{'code': 'restricted_inventory', 'severity': 'unknown', 'message': 'invalid global row', 'path': []}]),
+            self.activation_result(race=True, extra=[{'code': 'restricted_global_findings', 'severity': 'BLOCKING', 'message': 'global drift', 'path': 'active'}]),
+            self.activation_result(extra=[{'code': 'restricted_observation', 'severity': 'BLOCKING', 'message': 'Audit observation failed: discovery_directory_changed', 'path': 'unexpected'}]),
+            self.activation_result(extra=[{'code': 'restricted_observation', 'severity': 'BLOCKING', 'message': 'Audit observation failed: discovery_lstat_failed'}]),
+            self.activation_result(extra=[{'code': 'restricted_observation', 'severity': 'BLOCKING', 'message': 'Audit observation failed: unknown_future_code'}]),
+            self.activation_result(extra=[{'code': 'restricted_inventory', 'severity': 'BLOCKING', 'message': 'global drift'}]),
+            self.activation_result(race=True, scope='other'),
+            self.activation_result(race=True, code=1),
+            self.activation_result(code=2),
+        ]:
+            with self.subTest(state=result.stdout), self.activation_fixture(), patch.object(r.subprocess, 'run', return_value=result) as invoke, self.assertRaisesRegex(ValueError, 'activation failed'):
+                r.verify_active()
+            self.assertEqual(invoke.call_count, 1)
+
+    def test_activation_invalid_json_and_malformed_state_stop(self):
+        for raw in [b'{', b'{"x":1,"x":2}', b'{"x":NaN}', b'\xff', b'[]', b'null', b'{"capability_scope":"imozuru-public-source-v1","capability_status":"blocked","findings":[{"code":[],"message":{}}]}']:
+            result = subprocess.CompletedProcess([], 2, raw, b'UNRELATED_PRIVATE_STDERR')
+            with self.subTest(raw=raw), self.activation_fixture(), patch.object(r.subprocess, 'run', return_value=result) as invoke, self.assertRaisesRegex(ValueError, 'activation failed') as error:
+                r.verify_active()
+            self.assertEqual(invoke.call_count, 1)
+            self.assertNotIn('UNRELATED_PRIVATE_STDERR', str(error.exception))
+
+    def test_activation_timeout_never_retries(self):
+        with self.activation_fixture(), patch.object(r.subprocess, 'run', side_effect=subprocess.TimeoutExpired('PRIVATE_ARGUMENT', 60)) as invoke, self.assertRaisesRegex(ValueError, 'audit_timeout') as error:
+            r.verify_active()
+        self.assertEqual(invoke.call_count, 1)
+        self.assertNotIn('PRIVATE_ARGUMENT', str(error.exception))
+
+    def test_activation_retries_share_original_sixty_second_deadline(self):
+        with self.activation_fixture(), patch.object(r.time, 'monotonic', side_effect=[0, 0, 59]), patch.object(r.subprocess, 'run', side_effect=[self.activation_result(race=True), self.activation_result()]) as invoke, patch.object(sys, 'stderr', new_callable=io.StringIO):
+            r.verify_active()
+        self.assertEqual([call.kwargs['timeout'] for call in invoke.call_args_list], [60, 1])
+        with self.activation_fixture(), patch.object(r.time, 'monotonic', side_effect=[0, 0, 60]), patch.object(r.subprocess, 'run', return_value=self.activation_result(race=True)) as invoke, patch.object(sys, 'stderr', new_callable=io.StringIO), self.assertRaisesRegex(ValueError, 'audit_timeout'):
+            r.verify_active()
+        self.assertEqual(invoke.call_count, 1)
+
+    def test_activation_diagnostics_are_bounded_codes_only(self):
+        rows = [{'code': 'restricted_' + value, 'path': 'PRIVATE_PATH', 'message': 'PRIVATE_MESSAGE'} for value in ['one', 'two', 'three', 'four', 'five']]
+        rows.extend([{'code': 'restricted_newline\nPRIVATE_VALUE'}, {'code': 'restricted_' + 'x' * 49}, {'code': ['bad']}])
+        text = r.activation_failure_codes({'findings': rows})
+        self.assertEqual(len(text.split(',')), 4)
+        self.assertNotIn('PRIVATE', text)
+        self.assertNotIn('\n', text)
+
     def test_activation_uses_explicit_fixed_capability_and_summary(self):
         with tempfile.TemporaryDirectory() as temporary:
             package = Path(temporary) / 'imozuru'

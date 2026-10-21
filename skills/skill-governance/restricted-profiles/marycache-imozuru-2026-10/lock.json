@@ -1,6 +1,6 @@
 {
-  "approval_receipt_sha256": "bc512afec8c314b0d34d37c496b22e31f83438d25bc94bd7ab18a4a6ff6a4547",
-  "profile_sha256": "253434ff26480a86062af3b38d7e498525b362ac7be78d5ee9f04c3333477248",
-  "review_receipt_sha256": "67f4bfa2ec987cfa089dbc877349a9a25cdd092b19593a5305376f792b43fb13",
+  "approval_receipt_sha256": "5393d9146bd33e83af366ef3d394534118dfe5e0861212833c371bdda8afc217",
+  "profile_sha256": "53c1d99891e6b5f1cd12e4d7072e31c7b356d992db090ddab9f042d89ea1a5e3",
+  "review_receipt_sha256": "b81b4c4ef0bf28ace8649785adecc354d35f099e4bfd7d862436c3d436d90253",
   "schema_version": 1
 }

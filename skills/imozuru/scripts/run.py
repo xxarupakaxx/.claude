@@ -606,6 +606,36 @@ def run_worker(topic, fd, chain, command, args, payload=None):
         os.close(from_child_r)
 
 
+SCAN_RACE_MESSAGES = frozenset({
+    'Unknown audit observation: discovery_directory_changed',
+    'Audit observation failed: discovery_directory_changed',
+    'Unknown or failed inventory observation: discovery_directory_changed',
+})
+
+
+def activation_scan_race(state):
+    rows = state.get('findings')
+    return isinstance(rows, list) and bool(rows) and all(
+        isinstance(row, dict) and set(row) == {'code', 'severity', 'message', 'path'}
+        and row['code'] == 'restricted_observation' and row['severity'] == 'BLOCKING'
+        and row['path'] == 'audit/inventory' and isinstance(row['message'], str)
+        and row['message'] in SCAN_RACE_MESSAGES for row in rows
+    )
+
+
+def activation_failure_codes(state):
+    rows = state.get('findings', []) if isinstance(state, dict) else []
+    codes = set()
+    if isinstance(rows, list):
+        for row in rows:
+            code = row.get('code') if isinstance(row, dict) else None
+            if isinstance(code, str) and re.fullmatch(r'restricted_[a-z_]{1,48}', code):
+                codes.add(code)
+            if isinstance(row, dict) and isinstance(row.get('message'), str) and row['message'] in SCAN_RACE_MESSAGES:
+                codes.add('discovery_directory_changed')
+    return ','.join(sorted(codes)[:4]) or 'invalid_audit_state'
+
+
 def verify_active():
     governance = PACKAGE.parent / 'skill-governance'
     profile = strict_json((governance / 'restricted-profiles' / PROFILE_ID / 'profile.json').read_bytes())
@@ -614,10 +644,28 @@ def verify_active():
     environment = clean_env()
     environment['HOME'] = str(TOPICS.parents[3])
     environment['PATH'] = '/usr/bin:/bin'
-    result = subprocess.run([VERIFIER, '-I', '-B', str(governance / 'scripts/governance.py'), 'restricted-audit', '--phase', 'active', '--json', '--require-capability', '--summary'], stdin=subprocess.DEVNULL, capture_output=True, env=environment, timeout=60, close_fds=True)
-    state = strict_json(result.stdout)
-    if result.returncode or state.get('capability_scope') != 'imozuru-public-source-v1' or state.get('capability_status') != 'active':
-        raise ValueError("restricted activation is not valid; run restricted-audit")
+    deadline = time.monotonic() + 60
+    for attempt in range(2):
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise ValueError('restricted activation failed (audit_timeout); run restricted-audit')
+        try:
+            result = subprocess.run([VERIFIER, '-I', '-B', str(governance / 'scripts/governance.py'), 'restricted-audit', '--phase', 'active', '--json', '--require-capability', '--summary'], stdin=subprocess.DEVNULL, capture_output=True, env=environment, timeout=remaining, close_fds=True)
+        except subprocess.TimeoutExpired:
+            raise ValueError('restricted activation failed (audit_timeout); run restricted-audit') from None
+        try:
+            state = strict_json(result.stdout)
+        except ValueError:
+            raise ValueError('restricted activation failed (invalid_audit_json); run restricted-audit') from None
+        scope_matches = isinstance(state, dict) and state.get('capability_scope') == 'imozuru-public-source-v1'
+        if result.returncode == 0 and scope_matches and state.get('capability_status') == 'active':
+            if attempt:
+                print('imozuru: fresh activation recheck passed (2/2)', file=sys.stderr)
+            return
+        if attempt == 0 and result.returncode == 2 and scope_matches and state.get('capability_status') == 'blocked' and activation_scan_race(state):
+            print('imozuru: activation failed (discovery_directory_changed); retrying fresh audit (2/2)', file=sys.stderr)
+            continue
+        raise ValueError('restricted activation failed (' + activation_failure_codes(state) + '); run restricted-audit')
 
 
 def validate_worker_topic(topic, supplied_fd):
