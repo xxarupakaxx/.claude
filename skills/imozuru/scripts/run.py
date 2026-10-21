@@ -267,6 +267,13 @@ def hop(url, ip, connected_fd):
         else:
             raise ValueError('HTTP status ' + str(response.status))
         return {'status': response.status, 'location': location, 'content_type': response.headers.get('Content-Type', ''), 'body': base64.b64encode(body).decode('ascii')}
+    except http.client.HTTPException as error:
+        code = 'http_response_invalid'
+        if isinstance(error, http.client.LineTooLong):
+            code = 'http_line_limit'
+        elif type(error) is http.client.HTTPException and str(error) == 'got more than 32 headers':
+            code = 'http_header_limit'
+        raise ValueError('public response rejected (' + code + ')') from None
     finally:
         conn.close()
 

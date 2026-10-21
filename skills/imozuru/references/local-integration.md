@@ -31,6 +31,8 @@ runner内部のactive検査が、走査中のdirectory変更（`discovery_direct
 
 取得処理ごとに15秒で打ち切り、HTTP応答はヘッダ・chunkを含む受信量と本文をそれぞれ8MiBに制限する（TLSの暗号化overheadは含めない）。DNS解決に失敗した試行も通信回数に数える。
 
+HTTP parserが拒否した応答は、header超過を`http_header_limit`、行超過を`http_line_limit`、その他を`http_response_invalid`として停止する。例外の本文やTracebackは表示せず、上限は変更しない。
+
 上限はCPU30秒、全体90秒、RSS256MiB、FD64、1file16MiB、topic合計64MiB・256entry、通信20回、1応答8MiB、IPC14MiB、通常出力1MiB。headerは1行8KiB・32個まで。Accept-Encodingはidentityとし、圧縮応答を拒否する。上限を超えたら処理を止める。
 
 ## 審査と成果物
