@@ -226,7 +226,7 @@ map.md を下の書式で作り、**問い**と、答えるのに要る**主張*
 
 ## 道具
 
-すべて `/Users/yoshiki/.local/share/skill-governance/runtime/pyyaml-6.0.2/bin/python -I -S -B <skill_dir>/scripts/run.py <話題> <command>` から起動する。起動時に、固定source、両homeの同一tree、統合設定、独立審査と承認、両push完了の証拠を検査する。検査に失敗したら停止し、通常のshellや原典scriptへ切り替えない。`fetch.py`、`chain.py`、`watch.py`、`report.py` の直接起動は無効。
+すべて `/Users/yoshiki/.local/share/skill-governance/runtime/pyyaml-6.0.2/bin/python -I -S -B <skill_dir>/scripts/run.py <話題> <command>` から起動する。起動時に、固定source、両homeの同一tree、統合設定、独立審査と承認、両push完了の証拠を検査する。検査に失敗したらimozuruの実行を止め、理由を伝えて通常のWeb検索・閲覧で調査を続ける。この切替に例外指定や追加承認は求めない。通常shell・原典script・別Pythonから専用runnerの検査を迂回して実行しない。`fetch.py`、`chain.py`、`watch.py`、`report.py` の直接起動は無効。
 
 - `init` — 専用topicを作る。既存のprivateでないフォルダ、symlink、hardlink、特殊fileは拒否する。
 - `put map.md|log.md|extracts.json` — 標準入力のUTF-8本文を専用workerで保存する（1MiBまで）。調査メモと引用データの作成・更新はこの入口だけを使う。JSONは重複key・非有限数を拒否する。

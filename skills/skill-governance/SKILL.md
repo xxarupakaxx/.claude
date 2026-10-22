@@ -131,11 +131,11 @@ update は通知だけ行い、新 artifact として再審査する。retire �
 /Users/yoshiki/.local/share/skill-governance/runtime/pyyaml-6.0.2/bin/python -I -B <skill_dir>/scripts/governance.py restricted-audit --phase active --json --require-capability --summary
 ```
 
-`<skill_dir>`はこのSkillの絶対pathへ置き換える。profileは `restricted-profiles/marycache-imozuru-2026-10/` の4fileで管理する。6種類の検査証拠と送達記録はruntime外の `~/.local/share/skill-governance/` に置き、pathとhashを照合する。公開Webの取得は `imozuru/scripts/run.py` からだけ行い、固定scope `imozuru-public-source-v1`の`capability_status=active`かつ終了値0でなければ停止する。
+`<skill_dir>`はこのSkillの絶対pathへ置き換える。profileは `restricted-profiles/marycache-imozuru-2026-10/` の4fileで管理する。6種類の検査証拠と送達記録はruntime外の `~/.local/share/skill-governance/` に置き、pathとhashを照合する。imozuruによる公開Webの取得は `imozuru/scripts/run.py` からだけ行い、固定scope `imozuru-public-source-v1`の`capability_status=active`かつ終了値0でなければimozuruの実行を止める。公開資料の調査は通常のWeb検索・閲覧で続け、切替理由を伝える。この切替に例外指定や追加承認は求めない。
 
 限定検査では、Codexの既存除外済み一時directoryにある3種類の補助symlinkについて、固定された宛先と属性が一致する場合だけ乱数path成分を正規化する。symlinkの件数、種類、宛先、属性は比較に残す。通常のglobal auditの出力と、他のpath・findingは変更しない。
 
-送達記録は両origin/mainへ到達した観測時点を示す。checkerはofflineであり、現在のremote状態の継続監視ではない。片側の未送達、期限切れ、固定対象や証拠の欠落・改変は能力も停止する。通常のshell、原典script、別のPython環境への切替や、全体baselineの再生成で回避しない。
+送達記録は両origin/mainへ到達した観測時点を示す。checkerはofflineであり、現在のremote状態の継続監視ではない。片側の未送達、期限切れ、固定対象や証拠の欠落・改変は能力も停止する。imozuruの検査を通常のshell、原典script、別のPython環境への切替や、全体baselineの再生成で回避しない。
 
 送達証拠のschema_version=2は、`observation_scope=delivery-commit-reachability`を必須とする。承認済みの送達commitがlocal HEADと観測したorigin/mainの両方の祖先であること、記録した観測OIDがlocal tracking refと一致することを検査する。送達commitの全scope本文・実行bit・4つのprofile artifactと、実行環境の固定hashは引き続き検査する。remoteで後から追加された更新は、ローカルへの適用やruntimeの承認を意味しない。観測時刻は実際のremote照会を記録するが、offline checkerが現在のremoteを再照会した証拠にはならない。旧schema1をこの意味へ読み替えない。
 
