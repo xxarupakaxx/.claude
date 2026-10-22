@@ -60,7 +60,7 @@ Skillは明示指定、または現在の作業に固有の知識・手順が役
 | HTMLを生成・更新・配布する | `context/html-artifact-contract.md`、`config/html-surfaces.json` |
 | Team Runを使う | `context/team-run.md`、`commands/team-run.md` |
 | 複数loopを管理する | `context/graph-engineering.md`、`skills/graph-engineering/SKILL.md` |
-| UIの画面・component追加、見える挙動・layout構造を変更する | `rules/ui-fresh-review.md`。余白・色・文言だけの微修正には適用しない |
+| UIの画面・component追加、見える挙動・layout構造を変更する | `rules/ui-fresh-review.md`（レビュー起動条件。余白・色・文言だけの微修正には適用しない）、`rules/ui-copy.md`（UI文言の既定方針） |
 | code変更量・重要設計判断を扱う | `rules/complexity-budget.md`、`rules/adr-criteria.md` |
 | batch・queue・durable workflow・pollingを変更する | `~/.codex/rules/durable-workflow-safety.md` |
 | secretや対象pathを扱う | `rules/security.md` |

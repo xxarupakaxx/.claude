@@ -23,6 +23,15 @@
 - リトライが必要な場合はexponential backoff
 - 外部API呼び出しには必ずタイムアウトを設定
 
+## バグ修正
+
+- バグは第一原理と確立されたベストプラクティスから原因を特定し、その原因を直す。症状が出ている箇所だけに条件分岐やガードを足して覆い隠さない。
+- 原因を特定できないまま修正しない。深い調査が必要な場合は`diagnosing-bugs`スキルを使う。
+
+> Fix a bug at its cause, reasoning from first principles and established best practice. Do not patch over the symptom.
+
+出典: https://x.com/luinlee/status/2113123496549347762
+
 ## 入力バリデーション
 
 - システム境界（ユーザー入力、外部API）では必ずバリデーション
