@@ -13,8 +13,9 @@ fi
 
 CWD=$(echo "$INPUT" | jq -r '.cwd // ""')
 LAST_MSG=$(echo "$INPUT" | jq -r '.last_assistant_message // ""')
+SESSION_ID=$(echo "$INPUT" | jq -r '.session_id // ""')
 
-if [ -z "$CWD" ] || [ -z "$LAST_MSG" ]; then
+if [ -z "$CWD" ] || [ -z "$LAST_MSG" ] || [ -z "$SESSION_ID" ]; then
   exit 0
 fi
 
@@ -32,33 +33,31 @@ if [ -z "$MEMORY_BASE" ]; then
   exit 0
 fi
 
-# 最新のメモリディレクトリを検索
-# タスクディレクトリ名（YYMMDD_taskname）は同日に複数あると命名の文字列順が日付順と一致しないため、
-# 名前のsort -rではなく05_log.mdの更新時刻（無ければディレクトリ自体のmtime）で最新を判定する。
-LATEST_DIR=""
-LATEST_MTIME=-1
-while IFS= read -r dir; do
-  target="$dir/05_log.md"
-  [ -f "$target" ] || target="$dir"
-  mtime=$(stat -f %m "$target" 2>/dev/null || stat -c %Y "$target" 2>/dev/null)
-  [ -z "$mtime" ] && continue
-  if [ "$mtime" -gt "$LATEST_MTIME" ]; then
-    LATEST_MTIME=$mtime
-    LATEST_DIR=$dir
-  fi
-done < <(find "$MEMORY_BASE" -maxdepth 1 -type d -name "[0-9]*" 2>/dev/null)
-
-if [ -z "$LATEST_DIR" ]; then
+# 対象タスクは、task-meta.jsonのsession_idがこのsessionと完全一致するものだけにする。
+# 更新時刻や名前で選ぶと、同じcwdで並行する別sessionのタスクを理由にblockしてしまう。
+# task-meta.jsonの無い旧タスクも同じ理由で推定せず、検査しない。
+# 一致なし・複数・metadata破損・context不一致の判定は共通CLIのresolveに任せ、
+# いずれもblockせずに終える（context/memory-file-formats.md「task metadataとsession復元」）。
+CORE="${SESSION_HANDOVER_CORE:-${CODEX_HOME:-$HOME/.codex}/scripts/session_handover.py}"
+if [ ! -f "$CORE" ]; then
+  echo 'stop-workflow-check: core_not_found' >&2
   exit 0
 fi
+TASK_DIR=$(python3 "$CORE" resolve --runtime claude --cwd "$CWD" --session-id "$SESSION_ID") || exit 0
+CWD_REAL=$(cd "$CWD" 2>/dev/null && pwd -P) || exit 0
 
-LOG_FILE="$LATEST_DIR/05_log.md"
+# initはmetadataをruntime homeに作るため、その場合はcwd側の同名タスクで05_log.mdを探す
+case "$TASK_DIR" in
+  "$CWD_REAL"/*) LOG_DIR="$TASK_DIR" ;;
+  *) LOG_DIR="$MEMORY_BASE/$(basename "$TASK_DIR")" ;;
+esac
+LOG_FILE="$LOG_DIR/05_log.md"
 
 # 05_log.md が存在しない場合
 if [ ! -f "$LOG_FILE" ]; then
   # Phase関連のキーワードがあるときだけ警告
   if echo "$LAST_MSG" | grep -qiE '(Phase [0-5]|調査|計画|実装|品質|完了)'; then
-    echo '{"decision": "block", "reason": "05_log.md が存在しません。タスク開始時にPhase 0でメモリディレクトリとログファイルを作成してください。パス: '"$LATEST_DIR"'/05_log.md"}'
+    jq -cn --arg path "$LOG_FILE" '{decision: "block", reason: ("05_log.md が存在しません。タスク開始時にPhase 0でメモリディレクトリとログファイルを作成してください。パス: " + $path)}'
     exit 0
   fi
   exit 0
