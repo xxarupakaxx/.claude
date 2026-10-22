@@ -375,6 +375,20 @@
       "artifactKind": "html-document",
       "staticProfile": "strict-self-contained",
       "browserProfile": "html-document-matrix"
+    },
+    {
+      "id": "pr-newcomer-review-guide",
+      "route": "html",
+      "owner": "explaining-pr-reviews-to-newcomers",
+      "source": "skills/explaining-pr-reviews-to-newcomers/SKILL.md",
+      "templates": [],
+      "outputPatterns": [
+        ".local/memory/pr-review-*/review-guide.html",
+        "~/.claude/.local/pr-review-guides/*/review-guide.html"
+      ],
+      "artifactKind": "html-document",
+      "staticProfile": "strict-self-contained",
+      "browserProfile": "html-document-matrix"
     }
   ],
   "surfaces": [

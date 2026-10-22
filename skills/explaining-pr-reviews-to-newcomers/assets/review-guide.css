@@ -1,0 +1,72 @@
+/* creating-html-documents のテンプレートの CSS の後に読み込む、レビュー解説専用の部品 */
+a:focus-visible, summary:focus-visible { outline-offset: -3px; }
+:not(pre) > code { overflow-wrap: anywhere; }
+h4 { margin: 18px 0 6px; color: var(--accent); font-size: .98rem; line-height: 1.45; }
+.reading-order { color: var(--muted); font-size: .88rem; }
+.legend { margin: 18px 0; padding: 10px 16px; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); font-size: .86rem; line-height: 1.8; }
+.legend p { margin: 4px 0; }
+.defs dt { margin-top: 14px; color: var(--ink); font-weight: 700; }
+.defs dd { margin: 2px 0 0; padding-left: 1em; border-left: 3px solid var(--rule); }
+
+/* 旧・新・同じの並び */
+.ba { margin: 14px 0 22px; border-top: 2px solid var(--strong-rule); }
+.ba-row { display: grid; grid-template-columns: 56px 120px minmax(0, 1fr); gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--rule); }
+.ba-tag { display: inline-block; padding: 0 8px; border: 1.5px solid; border-radius: 5px; font-size: .78rem; font-weight: 700; text-align: center; }
+.ba-tag.old { color: var(--warning); } .ba-tag.new { color: var(--add-ink); } .ba-tag.same { color: var(--muted); }
+.ba-name { color: var(--ink); font-size: .88rem; font-weight: 600; }
+.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.chip { display: inline-block; padding: 1px 9px; border: 1px solid var(--strong-rule); border-radius: 6px; background: var(--surface); font-family: var(--mono); font-size: .82rem; line-height: 1.7; }
+.chip.add { border-color: var(--add-ink); background: var(--add-bg); color: var(--add-ink); font-weight: 700; }
+.chip.warn { border-color: var(--warning); background: #fdf1ef; color: var(--warning); font-family: var(--sans); }
+.chip-note { margin-left: 6px; padding: 0 4px; border: 1px solid var(--add-ink); border-radius: 3px; font-family: var(--sans); font-size: .7rem; }
+.arr { color: var(--muted); }
+
+/* 1件を追う手順（番号はブラウザ標準のリストの番号を使う） */
+.cases { margin: 14px 0; padding-left: 1.8em; border-top: 2px solid var(--strong-rule); }
+.cases li { padding: 10px 0; border-bottom: 1px solid var(--rule); }
+.cases strong { display: block; color: var(--ink); }
+
+/* ファイルの索引と呼び出し順 */
+.file-index li, .todo li, .author-qs li { margin: 8px 0; }
+.author-qs strong { display: block; color: var(--ink); }
+.calltree { margin: 14px 0; padding: 12px 16px; overflow-x: auto; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); font-size: .78rem; line-height: 1.7; }
+
+/* 指摘カード */
+.finding { margin: 24px 0; padding: 4px 22px 16px; border: 1.5px solid var(--strong-rule); border-radius: var(--radius); background: var(--surface); }
+.finding h3 { margin-top: 16px; }
+.oneline { padding: 8px 12px; border-left: 4px solid var(--ink); background: #f6f5f1; }
+.judge { margin-top: 14px; padding-top: 10px; border-top: 1px dashed var(--rule); color: var(--muted); font-size: .86rem; }
+.sev { display: inline-block; margin-right: 6px; padding: 0 7px; border: 1.5px solid; border-radius: 5px; font-size: .76rem; font-weight: 700; vertical-align: 2px; }
+.sev.high { color: var(--warning); background: #fdf1ef; } .sev.mid { color: #6f5200; background: #fbf4dc; } .sev.low { color: var(--muted); background: #f3f3ef; } .sev.ask { color: var(--link); background: #eaf2fa; }
+
+/* 抜き書き */
+.quote { margin: 16px 0; border: 1px solid #bfc0ba; border-radius: 10px; background: var(--surface); }
+.qhead { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; margin: 0; padding: 8px 12px; border-bottom: 1px solid var(--rule); border-radius: 10px 10px 0 0; background: #f6f5f1; font-size: .8rem; line-height: 1.6; }
+.qid { color: var(--accent); font-family: var(--mono); font-weight: 700; }
+.qtitle { color: var(--ink); font-weight: 600; }
+.qhead .path { padding: 0; background: transparent; overflow-wrap: anywhere; }
+.rev { color: var(--muted); }
+pre.src { margin: 0; padding: 8px 0; overflow-x: auto; font-size: .78rem; line-height: 1.6; }
+pre.src code { display: block; min-width: max-content; }
+.ln { display: block; padding-right: 16px; white-space: pre; }
+.ln.hl, .ln.fx { background: #fff4c2; }
+.no { display: inline-block; width: 4.2em; padding-right: 1em; color: var(--muted); text-align: right; user-select: none; }
+.mk { margin-left: 12px; padding: 0 5px; border: 1px solid #8a6d00; border-radius: 3px; color: #6f5200; font-family: var(--sans); font-size: .7rem; }
+details.ctx > summary { padding: 6px 12px; border-top: 1px solid var(--rule); color: var(--link); font-size: .8rem; cursor: pointer; }
+details.ctx[open] > summary { border-bottom: 1px solid var(--rule); }
+
+/* 代替案と条件のチェック */
+.rec-line { padding: 10px 14px; border: 1.5px solid var(--accent); border-radius: var(--radius); background: var(--surface); }
+.alts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 16px 0; }
+.alt { padding: 4px 16px 10px; border: 1.5px solid var(--rule); border-radius: var(--radius); background: var(--surface); font-size: .9rem; line-height: 1.75; }
+.alt.rec { border-color: var(--accent); border-width: 2.5px; }
+.alt-head { color: var(--ink); font-weight: 700; }
+.alt-tag { display: inline-block; margin-right: 8px; padding: 0 7px; border: 1.5px solid var(--muted); border-radius: 5px; color: var(--muted); font-size: .74rem; }
+.alt-tag.rec { border-color: var(--accent); color: var(--accent); } .alt-tag.no { border-color: var(--warning); color: var(--warning); }
+.checks { padding-left: 0; list-style: none; }
+.checks li { margin: 10px 0; padding: 8px 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); }
+.ok { display: inline-block; margin-right: 8px; padding: 0 7px; border: 1.5px solid var(--add-ink); border-radius: 5px; color: var(--add-ink); font-size: .76rem; font-weight: 700; }
+.qa summary, .explain-check summary { color: var(--link); font-weight: 600; cursor: pointer; }
+.sources li { margin: 6px 0; overflow-wrap: anywhere; }
+@media (max-width: 980px) { .alts { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 860px) { .ba-row { grid-template-columns: 56px minmax(0, 1fr); } .ba-row .flow { grid-column: 1 / -1; } }
