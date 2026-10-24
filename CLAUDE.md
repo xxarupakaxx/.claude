@@ -54,7 +54,7 @@ Skillは明示指定、または現在の作業に固有の知識・手順が役
 | 作業規模や完了境界を判断する | `context/workflow-rules.md` |
 | Phase記録、計画、引継ぎを管理する | `context/workflow-rules.md` の「管理する作業」、`context/memory-file-formats.md` |
 | 実装・作業用ファイル・エラー処理・Skill起動を扱う | `context/claude-code-practices.md` |
-| 委譲・専門Skillを選ぶ | `context/agent-team-routing.md`、`rules/model-routing.md` |
+| 委譲・専門Skillを選ぶ | `context/agent-team-routing.md`、`rules/model-routing.md`、`rules/agent-architecture.md`（subagentを使うか・foldするかの基準） |
 | 複数moduleの影響を地図で追う | `context/codemap.md` |
 | 毎セッションの計画・費用・進捗を表示する | `context/session-dashboard.md`、`skills/viewing-plans/SKILL.md` |
 | HTMLを生成・更新・配布する | `context/html-artifact-contract.md`、`config/html-surfaces.json` |

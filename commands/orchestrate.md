@@ -19,7 +19,30 @@ description: "エージェントチェーンを順次実行するオーケスト
 ## ワークフロー種別
 
 ### `feature` — 新機能開発
-チェーン: `requirement-parser` → `implementation-planner` → 実装 → `test-reviewer` → `security-reviewer`
+チェーン: lead（要件の構造化→実装計画、同じ文脈で実施） → 実装 → `test-reviewer` + `security-reviewer`（独立検証として従来どおりsubagent）
+
+要件の構造化と計画はユーザーと直接話す必要がある仕事であり、subagentはユーザーに質問できない。計画を書いた者が実装する方が計画を途中で直せるため、leadが同じ文脈で行う。基準は `rules/agent-architecture.md`。
+
+#### leadが行う要件の構造化と計画
+
+要件（旧`requirement-parser`の手順を落とさず引き継ぐ）:
+1. 入力分析: ユーザー要求のキーワード・意図を抽出
+2. 既存コード調査: 関連する既存実装を確認
+3. 要件構造化: 機能要件（必須/推奨/任意）、非機能要件（パフォーマンス・セキュリティ・保守性）、前提条件・制約、確認事項に整理
+4. 質問観点5つを確認: スコープ境界、優先度、期待動作の詳細、エラー時の挙動、既存機能との関係
+5. 不明点はleadがAskUserQuestion（使えなければチャット）でユーザーに直接聞く
+
+計画（旧`implementation-planner`の手順を落とさず引き継ぐ）:
+1. 要件確認: 上記の構造化要件を受け取る
+2. 既存コード調査: 変更対象・影響範囲を特定
+3. タスク分解: 作業単位に分解
+4. 依存関係分析: タスク間の順序を決定
+5. 計画出力: 概要、Phase別タスク表（Task・変更対象・依存・見積）、詳細タスク（調査・計画・実行・レビュー）、リスク・対策表、見積凡例（S/M/L）
+6. 原則4つを守る: 1タスク=1コミット、依存関係は最小化、早期にリスクを検証、テストは実装と同時
+
+出力形式は `agents/requirement-parser.md` と `agents/implementation-planner.md` の「出力形式」をそのまま使う。要件と計画は05_log.mdに記録する（従来のhandoff記録の代わり）。
+
+独立した計画レビューが要る（大きい・高リスク）なら、計画を書いた後に `implementation-planner` か `technical-evaluator` をcheckerとしてsubagentで起動してよい。
 
 ### `bugfix` — バグ修正
 チェーン: `data-flow-tracer`（原因調査） → 修正実装 → `test-reviewer`
@@ -79,7 +102,7 @@ description: "エージェントチェーンを順次実行するオーケスト
 ## Overview
 - **Workflow**: [種別]
 - **Task**: [タスク説明]
-- **Agents**: [チェーン]
+- **Agents**: [チェーン。featureなら要件・計画段階は「lead(要件・計画)」と書く]
 
 ## Summary
 [1段落の要約]
@@ -125,3 +148,4 @@ Delegation Gate を通り、read / write scope が重ならない独立 stage �
 - 各エージェントのハンドオフは05_log.mdにも記録する
 - チェーン中にブロッカーが出たら中断してユーザーに報告
 - エージェント名は `~/.claude/agents/` 配下の定義に準拠
+- agentを足す・chainを変えるときは `rules/agent-architecture.md` を確認する

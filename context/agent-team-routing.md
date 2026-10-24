@@ -32,6 +32,8 @@ Agent()、Workflow、reviewerを起動する前に全条件を評価する。
 
 同一fileの密結合作業、逐次依存、低価値要約はleadが行う。Gateを満たす非自明な実装だけをAgent()へ渡し、capability不在ならleadが逐次実行して理由を記録する。makerはEvidence Bundle draft、checkerはreview sectionを担当し、makerが最終判定を兼ねない。
 
+Agent()／subagentを足す前に、独自の文脈とloopが本当に要るかを問う。分け方は問題種別でなく文脈で切り、並列の独立作業・独立検証・文脈隔離のどれにも当たらない手順や領域知識はSkillとしてleadが読む。foldの基準と確認手順は `rules/agent-architecture.md`。
+
 ### Delegation Decision
 
 route、実装単位、acceptance、write scopeを決めた直後、対象成果物の最初のwriteより前に05_log.mdへDecisionを保存する。decision_unit、gate、passed_conditions、failed_conditions、local_first_evidence、reason、write_scope、acceptance、lead_retainsを含める。material change後はsupersedesを付けて再評価する。
